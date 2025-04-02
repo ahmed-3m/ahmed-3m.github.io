@@ -18,6 +18,7 @@ params:
   title: "Ahmed Mohammed"
   description: "AI/ML Engineer with expertise in anomaly detection, deep learning, and computer vision"
   favicon: "/images/favicon.ico"
+  copyright: "Ahmed Mohammed"
 
   # Hero Section
   hero:
@@ -30,6 +31,7 @@ params:
       enable: true
       name: "View My Projects"
       url: "#projects"
+      download: false
     socialLinks:
       fontAwesomeIcons:
         - icon: "fab fa-github"
