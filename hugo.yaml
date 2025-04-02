@@ -5,6 +5,15 @@ languageCode: "en-us"
 title: "Ahmed Mohammed | AI/ML Engineer"
 theme: "hugo-profile"
 
+# Navigation menu
+menu:
+  main:
+    - identifier: blogs
+      name: Blog
+      title: Blog posts
+      url: /blogs
+      weight: 2
+
 params:
   title: "Ahmed Mohammed"
   description: "AI/ML Engineer with expertise in anomaly detection, deep learning, and computer vision"
@@ -13,7 +22,6 @@ params:
   # Hero Section
   hero:
     enable: true
-    intro: "Hi, I'm"
     title: "Ahmed Mohammed"
     subtitle: "AI/ML Engineer"
     content: "AI/ML Engineer with 2+ years' experience in anomaly detection, deep learning, and computer vision, adept at solving challenges like defect detection and occluded object recognition."
@@ -184,5 +192,6 @@ params:
   blog:
     enable: true
     title: "Blog"
+    disableFeaturedImage: false
     # link your blog page to this section
-    blogPageURL: "blog"
+    blogPageURL: "blogs"
