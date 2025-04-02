@@ -2,10 +2,123 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Ahmed Mohammed | AI/ML Engineer</title>
-    <link>http://localhost:1314/tags/</link>
+    <link>http://localhost:1313/tags/</link>
     <description>Recent content in Tags on Ahmed Mohammed | AI/ML Engineer</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <atom:link href="http://localhost:1314/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 02 Apr 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Anomaly Detection</title>
+      <link>http://localhost:1313/tags/anomaly-detection/</link>
+      <pubDate>Tue, 02 Apr 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/anomaly-detection/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Computer Vision</title>
+      <link>http://localhost:1313/tags/computer-vision/</link>
+      <pubDate>Tue, 02 Apr 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/computer-vision/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Diffusion Models</title>
+      <link>http://localhost:1313/tags/diffusion-models/</link>
+      <pubDate>Tue, 02 Apr 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/diffusion-models/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>YOLO</title>
+      <link>http://localhost:1313/tags/yolo/</link>
+      <pubDate>Tue, 02 Apr 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/yolo/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Bi-LSTM</title>
+      <link>http://localhost:1313/tags/bi-lstm/</link>
+      <pubDate>Fri, 01 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/bi-lstm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Deep Learning</title>
+      <link>http://localhost:1313/tags/deep-learning/</link>
+      <pubDate>Fri, 01 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/deep-learning/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>EEG Analysis</title>
+      <link>http://localhost:1313/tags/eeg-analysis/</link>
+      <pubDate>Fri, 01 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/eeg-analysis/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>TensorFlow</title>
+      <link>http://localhost:1313/tags/tensorflow/</link>
+      <pubDate>Fri, 01 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/tensorflow/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Autoencoders</title>
+      <link>http://localhost:1313/tags/autoencoders/</link>
+      <pubDate>Mon, 15 May 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/autoencoders/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Object Tracking</title>
+      <link>http://localhost:1313/tags/object-tracking/</link>
+      <pubDate>Mon, 15 May 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/object-tracking/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>GANs</title>
+      <link>http://localhost:1313/tags/gans/</link>
+      <pubDate>Thu, 10 Nov 2022 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/gans/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Image Processing</title>
+      <link>http://localhost:1313/tags/image-processing/</link>
+      <pubDate>Thu, 10 Nov 2022 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/image-processing/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Control Systems</title>
+      <link>http://localhost:1313/tags/control-systems/</link>
+      <pubDate>Mon, 15 Jan 2018 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/control-systems/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Machine Vision</title>
+      <link>http://localhost:1313/tags/machine-vision/</link>
+      <pubDate>Mon, 15 Jan 2018 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/machine-vision/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Mechatronics</title>
+      <link>http://localhost:1313/tags/mechatronics/</link>
+      <pubDate>Mon, 15 Jan 2018 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/mechatronics/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Robotics</title>
+      <link>http://localhost:1313/tags/robotics/</link>
+      <pubDate>Mon, 15 Jan 2018 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/robotics/</guid>
+      <description></description>
+    </item>
   </channel>
 </rss>

@@ -105,7 +105,7 @@ params:
         image: "/images/projects/placeholder.jpg"
         featured:
           name: "Learn more"
-          link: "#"
+          link: "/projects/anomaly-detection"
       - title: "EEG Signal Classification Using Bi-LSTMs"
         content: "Designed and implemented a Bi-LSTM model for classifying EEG signals into distinct categories, achieving 91% accuracy."
         badges:
@@ -115,7 +115,7 @@ params:
         image: "/images/projects/placeholder.jpg"
         featured:
           name: "Learn more"
-          link: "#"
+          link: "/projects/eeg-signal-classification"
       - title: "Occlusion Removal Using Deep Autoencoder"
         content: "Combined object detection and tracking models to enhance detection accuracy under occlusion."
         badges:
@@ -125,7 +125,7 @@ params:
         image: "/images/projects/placeholder.jpg"
         featured:
           name: "Learn more"
-          link: "#"
+          link: "/projects/occlusion-removal"
       - title: "Image Extrapolation Challenge"
         content: "Participated in a challenge to reconstruct image boundaries and extend visual data."
         badges:
@@ -135,7 +135,17 @@ params:
         image: "/images/projects/placeholder.jpg"
         featured:
           name: "Learn more"
-          link: "#"
+          link: "/projects/image-extrapolation"
+      - title: "SCARA Robotic System for Dynamic Object Tracking"
+        content: "Built and developed a SCARA robotic system for dynamic object tracking using machine vision and control systems."
+        badges:
+          - "Robotics"
+          - "Machine Vision" 
+          - "Control Systems"
+        image: "/images/projects/placeholder.jpg"
+        featured:
+          name: "Learn more"
+          link: "/projects/scara-robot"
 
   # Skills section
   skills:

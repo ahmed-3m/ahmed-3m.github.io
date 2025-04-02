@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Diffusion Models on Ahmed Mohammed | AI/ML Engineer</title>
+    <link>http://localhost:1313/tags/diffusion-models/</link>
+    <description>Recent content in Diffusion Models on Ahmed Mohammed | AI/ML Engineer</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 02 Apr 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/diffusion-models/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Anomaly Detection for Inkjet Printing</title>
+      <link>http://localhost:1313/projects/anomaly-detection/</link>
+      <pubDate>Tue, 02 Apr 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/projects/anomaly-detection/</guid>
+      <description>&lt;h2 id=&#34;anomaly-detection-for-inkjet-printing&#34;&gt;Anomaly Detection for Inkjet Printing&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;Master&amp;rsquo;s Research | 2024&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;Developed defect detection models for multi-feature industrial images, combining traditional computer vision and deep learning techniques.&lt;/p&gt;&#xA;&lt;h3 id=&#34;key-achievements&#34;&gt;Key Achievements&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Achieved high-quality generated images with a diffusion model&lt;/li&gt;&#xA;&lt;li&gt;Implemented YOLO for accurate defect classification&lt;/li&gt;&#xA;&lt;li&gt;Designed and conducted experiments independently, using multiple techniques to address dataset and labeling challenges&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;technologies-used&#34;&gt;Technologies Used&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Computer Vision&lt;/li&gt;&#xA;&lt;li&gt;YOLO&lt;/li&gt;&#xA;&lt;li&gt;Diffusion Models&lt;/li&gt;&#xA;&lt;li&gt;Anomaly Detection&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+    </item>
+  </channel>
+</rss>

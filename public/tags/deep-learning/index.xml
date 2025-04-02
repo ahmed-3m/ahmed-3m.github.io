@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Deep Learning on Ahmed Mohammed | AI/ML Engineer</title>
+    <link>http://localhost:1313/tags/deep-learning/</link>
+    <description>Recent content in Deep Learning on Ahmed Mohammed | AI/ML Engineer</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 01 Sep 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/deep-learning/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>EEG Signal Classification Using Bi-LSTMs</title>
+      <link>http://localhost:1313/projects/eeg-signal-classification/</link>
+      <pubDate>Fri, 01 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/projects/eeg-signal-classification/</guid>
+      <description>&lt;h2 id=&#34;eeg-signal-classification-using-bi-lstms&#34;&gt;EEG Signal Classification Using Bi-LSTMs&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;Research Project | 2023&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;Designed and implemented a Bi-LSTM model for classifying EEG signals into distinct categories, achieving 91% accuracy.&lt;/p&gt;&#xA;&lt;h3 id=&#34;key-achievements&#34;&gt;Key Achievements&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Processed and analyzed complex EEG data using MNE library&lt;/li&gt;&#xA;&lt;li&gt;Implemented and compared multiple deep learning architectures (LSTM, Bi-LSTM, GRU, CNN-LSTM)&lt;/li&gt;&#xA;&lt;li&gt;Wrote a research paper detailing methodologies and findings, focusing on feature extraction and sequence modeling&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;technologies-used&#34;&gt;Technologies Used&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Deep Learning&lt;/li&gt;&#xA;&lt;li&gt;Bi-LSTM&lt;/li&gt;&#xA;&lt;li&gt;TensorFlow&lt;/li&gt;&#xA;&lt;li&gt;EEG Analysis&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+    </item>
+    <item>
+      <title>Occlusion Removal Using Deep Autoencoder</title>
+      <link>http://localhost:1313/projects/occlusion-removal/</link>
+      <pubDate>Mon, 15 May 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/projects/occlusion-removal/</guid>
+      <description>&lt;h2 id=&#34;occlusion-removal-using-deep-autoencoder&#34;&gt;Occlusion Removal Using Deep Autoencoder&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;Research Project | 2023&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;Combined object detection and tracking models to enhance detection accuracy under occlusion.&lt;/p&gt;&#xA;&lt;h3 id=&#34;key-achievements&#34;&gt;Key Achievements&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Utilized bounding box prediction and motion tracking to improve performance&lt;/li&gt;&#xA;&lt;li&gt;Developed algorithms to handle partial object occlusion&lt;/li&gt;&#xA;&lt;li&gt;Applied deep autoencoders for feature reconstruction&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;technologies-used&#34;&gt;Technologies Used&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Computer Vision&lt;/li&gt;&#xA;&lt;li&gt;Autoencoders&lt;/li&gt;&#xA;&lt;li&gt;Object Tracking&lt;/li&gt;&#xA;&lt;li&gt;Deep Learning&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+    </item>
+    <item>
+      <title>Image Extrapolation Challenge</title>
+      <link>http://localhost:1313/projects/image-extrapolation/</link>
+      <pubDate>Thu, 10 Nov 2022 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/projects/image-extrapolation/</guid>
+      <description>&lt;h2 id=&#34;image-extrapolation-challenge&#34;&gt;Image Extrapolation Challenge&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;Competition | 2022&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;Participated in a challenge to reconstruct image boundaries and extend visual data, demonstrating deep learning models and image processing expertise.&lt;/p&gt;&#xA;&lt;h3 id=&#34;key-achievements&#34;&gt;Key Achievements&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Implemented generative models for image completion and extension&lt;/li&gt;&#xA;&lt;li&gt;Worked with GANs for realistic image generation&lt;/li&gt;&#xA;&lt;li&gt;Applied advanced computer vision techniques for boundary prediction&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;technologies-used&#34;&gt;Technologies Used&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Image Processing&lt;/li&gt;&#xA;&lt;li&gt;GANs&lt;/li&gt;&#xA;&lt;li&gt;Computer Vision&lt;/li&gt;&#xA;&lt;li&gt;Deep Learning&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+    </item>
+  </channel>
+</rss>

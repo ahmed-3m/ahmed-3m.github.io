@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Control Systems on Ahmed Mohammed | AI/ML Engineer</title>
+    <link>http://localhost:1313/tags/control-systems/</link>
+    <description>Recent content in Control Systems on Ahmed Mohammed | AI/ML Engineer</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 15 Jan 2018 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/control-systems/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SCARA Robotic System for Dynamic Object Tracking</title>
+      <link>http://localhost:1313/projects/scara-robot/</link>
+      <pubDate>Mon, 15 Jan 2018 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/projects/scara-robot/</guid>
+      <description>&lt;h2 id=&#34;scara-robotic-system-for-dynamic-object-tracking&#34;&gt;SCARA Robotic System for Dynamic Object Tracking&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;Bachelor&amp;rsquo;s Final Project | 2018&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;Built and developed a SCARA robotic system for dynamic object tracking using machine vision and control systems.&lt;/p&gt;&#xA;&lt;h3 id=&#34;key-achievements&#34;&gt;Key Achievements&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Designed and constructed a 3-axis SCARA robot with precision movement capabilities&lt;/li&gt;&#xA;&lt;li&gt;Implemented computer vision algorithms for real-time object detection and tracking&lt;/li&gt;&#xA;&lt;li&gt;Developed control systems for coordinating robot movement with visual input&lt;/li&gt;&#xA;&lt;li&gt;Demonstrated practical application of mechatronics principles in a complete working system&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;technologies-used&#34;&gt;Technologies Used&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Robotics&lt;/li&gt;&#xA;&lt;li&gt;Machine Vision&lt;/li&gt;&#xA;&lt;li&gt;Control Systems&lt;/li&gt;&#xA;&lt;li&gt;Mechatronics Engineering&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+    </item>
+  </channel>
+</rss>
