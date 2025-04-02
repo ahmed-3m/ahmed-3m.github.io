@@ -3,4 +3,9 @@
 &lt;h2 id="fundamental-techniques">Fundamental Techniques&lt;/h2>
 &lt;p>Several key techniques form the foundation of computer vision:&lt;/p>
 &lt;h3 id="image-classification">Image Classification&lt;/h3>
+&lt;p>Image classification involves categorizing an image into one of several predefined classes. Convolutional Neural Networks (CNNs) have revolutionized this task, with architectures like ResNet, VGG, and EfficientNet pushing the boundaries of accuracy.&lt;/p></description></item><item><title>An Overview of Computer Vision Techniques</title><link>https://ahmed-3m.github.io/blogs/computer-vision-overview/</link><pubDate>Tue, 01 Apr 2025 00:00:00 +0000</pubDate><guid>https://ahmed-3m.github.io/blogs/computer-vision-overview/</guid><description>&lt;h1 id="an-overview-of-computer-vision-techniques">An Overview of Computer Vision Techniques&lt;/h1>
+&lt;p>Computer vision enables machines to &amp;ldquo;see&amp;rdquo; and interpret the visual world. As one of the most exciting areas of AI, it&amp;rsquo;s transforming industries from healthcare to autonomous vehicles.&lt;/p>
+&lt;h2 id="fundamental-techniques">Fundamental Techniques&lt;/h2>
+&lt;p>Several key techniques form the foundation of computer vision:&lt;/p>
+&lt;h3 id="image-classification">Image Classification&lt;/h3>
 &lt;p>Image classification involves categorizing an image into one of several predefined classes. Convolutional Neural Networks (CNNs) have revolutionized this task, with architectures like ResNet, VGG, and EfficientNet pushing the boundaries of accuracy.&lt;/p></description></item></channel></rss>
