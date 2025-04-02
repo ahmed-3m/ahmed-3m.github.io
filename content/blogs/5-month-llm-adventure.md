@@ -1,6 +1,6 @@
 ---
 title: "Your 5-Month LLM Adventure: From Zero to AI Whisperer"
-date: 2025-04-04
+date: 2024-07-10
 description: "A friendly, practical guide to mastering Large Language Models in just 5 months, even for beginners"
 draft: false
 tags: ["LLMs", "Machine Learning", "NLP", "AI", "Learning Path"]
