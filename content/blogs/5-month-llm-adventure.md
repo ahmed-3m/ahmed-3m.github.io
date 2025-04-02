@@ -6,7 +6,7 @@ draft: false
 tags: ["LLMs", "Machine Learning", "NLP", "AI", "Learning Path"]
 ---
 
-Your 5-Month LLM Adventure: From Zero to AI Whisperer
+# Your 5-Month LLM Adventure: From Zero to AI Whisperer
 Hey there, future AI whisperer! 👋
 
 So, you've heard the buzz about Large Language Models (LLMs) – things like ChatGPT, Gemini, Claude – and you're thinking, "How does that magic actually work? And could I learn it?" The answer is a resounding "YES", but like any epic question, it requires a map.
