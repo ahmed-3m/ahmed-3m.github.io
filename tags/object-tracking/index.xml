@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Object Tracking on Ahmed Mohammed | AI/ML Engineer</title><link>https://ahmed-3m.github.io/tags/object-tracking/</link><description>Recent content in Object Tracking on Ahmed Mohammed | AI/ML Engineer</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Mon, 15 May 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://ahmed-3m.github.io/tags/object-tracking/index.xml" rel="self" type="application/rss+xml"/><item><title>Occlusion Removal Using Deep Autoencoder</title><link>https://ahmed-3m.github.io/projects/occlusion-removal/</link><pubDate>Mon, 15 May 2023 00:00:00 +0000</pubDate><guid>https://ahmed-3m.github.io/projects/occlusion-removal/</guid><description>&lt;h2 id="occlusion-removal-using-deep-autoencoder">Occlusion Removal Using Deep Autoencoder&lt;/h2>
+&lt;p>&lt;strong>Research Project | 2023&lt;/strong>&lt;/p>
+&lt;p>Combined object detection and tracking models to enhance detection accuracy under occlusion.&lt;/p>
+&lt;h3 id="key-achievements">Key Achievements&lt;/h3>
+&lt;ul>
+&lt;li>Utilized bounding box prediction and motion tracking to improve performance&lt;/li>
+&lt;li>Developed algorithms to handle partial object occlusion&lt;/li>
+&lt;li>Applied deep autoencoders for feature reconstruction&lt;/li>
+&lt;/ul>
+&lt;h3 id="technologies-used">Technologies Used&lt;/h3>
+&lt;ul>
+&lt;li>Computer Vision&lt;/li>
+&lt;li>Autoencoders&lt;/li>
+&lt;li>Object Tracking&lt;/li>
+&lt;li>Deep Learning&lt;/li>
+&lt;/ul></description></item></channel></rss>
