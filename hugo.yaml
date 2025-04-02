@@ -1,4 +1,5 @@
 # Main Hugo configuration for ahmed-3m.github.io
+# Updated to trigger new workflow
 baseURL: "https://ahmed-3m.github.io/"
 languageCode: "en-us"
 title: "Ahmed Mohammed | AI/ML Engineer"
