@@ -17,7 +17,7 @@ menu:
 params:
   title: "Ahmed Mohammed"
   description: "AI/ML Engineer with expertise in anomaly detection, deep learning, and computer vision"
-  favicon: "/images/favicon.ico"
+  favicon: "/fav.png"
   copyright: "Ahmed Mohammed"
 
   # Hero Section
