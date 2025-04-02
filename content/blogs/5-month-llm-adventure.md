@@ -1,16 +1,15 @@
 ---
 title: "Your 5-Month LLM Adventure: From Zero to AI Whisperer"
-date: 2024-07-10
+date: 2025-02-10
 description: "A friendly, practical guide to mastering Large Language Models in just 5 months, even for beginners"
 draft: false
 tags: ["LLMs", "Machine Learning", "NLP", "AI", "Learning Path"]
 ---
 
-# Your 5-Month LLM Adventure: From Zero to AI Whisperer
 
 Hey there, future AI whisperer! 👋
 
-So, you've heard the buzz about Large Language Models (LLMs) – things like ChatGPT, Gemini, Claude – and you're thinking, "How does that magic actually work? And could I learn it?" The answer is a resounding YES, but like any epic quest, it requires a map.
+So, you've heard the buzz about Large Language Models (LLMs) – things like ChatGPT, Gemini, Claude – and you're thinking, "How does that magic actually work? And could I learn it?" The answer is a resounding "YES", but like any epic question, it requires a map.
 
 Forget dense textbooks for a moment. This is your 5-month, down-to-earth guide to understanding, using, and maybe even building with LLMs. It's intense, but totally doable. Ready? Let's dive in!
 
@@ -112,7 +111,7 @@ Forget dense textbooks for a moment. This is your 5-month, down-to-earth guide t
 
 **Checkpoint**: You can discuss advanced LLM techniques like RAG, understand the ethical challenges, know where to find the latest research, and have a good grasp of the current LLM landscape. You are ready to keep learning!
 
-## Keeping it Human: Tips for the Journey
+## Tips for the Journey
 
 - **Don't Boil the Ocean**: Focus on understanding, not memorizing everything.
 - **Code, Code, Code**: Theory is great, but making things work solidifies knowledge.
