@@ -12,6 +12,11 @@ menu:
       name: Blog
       title: Blog posts
       url: /blogs
+      weight: 1
+    - identifier: contact
+      name: Contact
+      title: Contact me
+      url: "#contact"
       weight: 2
 
 params:
@@ -43,13 +48,10 @@ params:
 
   # About Section
   about:
-    enable: true
+    enable: false
     title: "About Me"
     image: "/images/mypic.jpg"
-    content: |
-      AI/ML Engineer with expertise in anomaly detection, deep learning, and computer vision. Skilled in developing custom architectures and end-to-end models using diffusion models, autoencoders, and YOLO. 
-      
-      Currently exploring generative classifiers, generative AI, and LLMs, with familiarity in REST API concepts. Passionate about driving digitalization and innovation in industrial automation and healthcare.
+    content: "AI/ML Engineer with 2+ years' experience in anomaly detection, deep learning, and computer vision, adept at solving challenges like defect detection and occluded object recognition."
 
   # Experience Section
   experience:
@@ -58,7 +60,7 @@ params:
     items:
       - job: "Machine Vision Researcher"
         company: "PROFACTOR GmbH"
-        companyUrl: "#"
+        companyUrl: "https://www.profactor.at/en/"
         date: "Apr 2024 - Nov 2024"
         content: |
           - Conducted research to develop models for detecting defects in industrial inkjet printing
@@ -67,7 +69,7 @@ params:
           - Designed a framework to classify multi-feature images
       - job: "AI Research Intern"
         company: "Karunya University"
-        companyUrl: "#"
+        companyUrl: "https://karunya.edu/"
         date: "Aug 2023 - Sep 2023"
         content: |
           - Motor Imagery Classification Project
@@ -75,7 +77,7 @@ params:
           - Applied LSTM, Bi-LSTM, GRU, and CNN-LSTM models for classification
       - job: "Electronics Technician"
         company: "LED-Zone"
-        companyUrl: "#"
+        companyUrl: "https://yandex.com/maps/org/ledzone_technology/138986127313/?ll=28.971180%2C41.025003&z=15"
         date: "Dec 2018 - Sep 2020"
         content: |
           - Assembled, soldered, and tested PCB boards
@@ -109,7 +111,7 @@ params:
     title: "Projects"
     items:
       - title: "Anomaly Detection for Inkjet Printing"
-        content: "Developed defect detection models for multi-feature industrial images, combining traditional computer vision and deep learning techniques."
+        content: "Developed defect detection models for multi-feature industrial images using YOLO and diffusion models, achieving 87% accuracy by combining traditional computer vision with deep learning techniques."
         badges:
           - "Computer Vision"
           - "YOLO"
@@ -119,7 +121,7 @@ params:
           name: "Learn more"
           link: "/projects/anomaly-detection"
       - title: "EEG Signal Classification Using Bi-LSTMs"
-        content: "Designed and implemented a Bi-LSTM model for classifying EEG signals into distinct categories, achieving 91% accuracy."
+        content: "Designed and implemented a Bi-LSTM model for classifying EEG signals into distinct categories, achieving 91% accuracy. Used MNE library and TensorFlow for data processing and model development."
         badges:
           - "Deep Learning"
           - "Bi-LSTM"
@@ -129,7 +131,7 @@ params:
           name: "Learn more"
           link: "/projects/eeg-signal-classification"
       - title: "Occlusion Removal Using Deep Autoencoder"
-        content: "Combined object detection and tracking models to enhance detection accuracy under occlusion."
+        content: "Developed a deep autoencoder-based solution to enhance object detection accuracy under occlusion. Combined state-of-the-art tracking models with custom detection algorithms."
         badges:
           - "Computer Vision"
           - "Autoencoders"
@@ -138,18 +140,8 @@ params:
         featured:
           name: "Learn more"
           link: "/projects/occlusion-removal"
-      - title: "Image Extrapolation Challenge"
-        content: "Participated in a challenge to reconstruct image boundaries and extend visual data."
-        badges:
-          - "Image Processing"
-          - "GANs"
-          - "Computer Vision"
-        image: "/images/projects/placeholder.jpg"
-        featured:
-          name: "Learn more"
-          link: "/projects/image-extrapolation"
-      - title: "SCARA Robotic System for Dynamic Object Tracking"
-        content: "Built and developed a SCARA robotic system for dynamic object tracking using machine vision and control systems."
+      - title: "SCARA Robotic System"
+        content: "Designed and implemented a SCARA robotic system capable of real-time object tracking using computer vision. Integrated motion control systems with visual servoing for precise manipulation."
         badges:
           - "Robotics"
           - "Machine Vision" 
@@ -183,13 +175,6 @@ params:
           - "Arabic: Native"
           - "German: Intermediate"
 
-  # Contact section
-  contact:
-    enable: true
-    title: "Contact"
-    email: "ahmed.mo.0595@gmail.com"
-    content: "Feel free to contact me for any questions or opportunities."
-    
   # Blog section
   blog:
     enable: true
@@ -197,3 +182,10 @@ params:
     disableFeaturedImage: false
     # link your blog page to this section
     blogPageURL: "blogs"
+    
+  # Contact section
+  contact:
+    enable: true
+    title: "Contact"
+    email: "ahmed.mo.0595@gmail.com"
+    content: "Feel free to contact me for any questions or opportunities."
