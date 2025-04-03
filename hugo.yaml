@@ -41,13 +41,14 @@ params:
       fontAwesomeIcons:
         - icon: "fab fa-github"
           url: "https://github.com/ahmed-3m"
+      customIcons:
+        - icon: "/images/icons/hf.png"
+          url: "https://huggingface.co/ahmed-3m"
+      fontAwesomeIcons:
         - icon: "fab fa-linkedin"
           url: "https://www.linkedin.com/in/ahmed-3m"
         - icon: "fas fa-envelope"
           url: "mailto:ahmed.mo.0595@gmail.com"
-      customIcons:
-        - icon: "/images/icons/hf.png"
-          url: "https://huggingface.co/ahmed-3m"
 
   # About Section
   about:
