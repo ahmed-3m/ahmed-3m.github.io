@@ -43,6 +43,8 @@ params:
           url: "https://github.com/ahmed-3m"
         - icon: "fab fa-linkedin"
           url: "https://www.linkedin.com/in/ahmed-3m"
+        - icon: "fab fa-huggingface"
+          url: "https://huggingface.co/ahmed-3m"
         - icon: "fas fa-envelope"
           url: "mailto:ahmed.mo.0595@gmail.com"
 
