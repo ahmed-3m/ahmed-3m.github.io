@@ -5,6 +5,17 @@ languageCode: "en-us"
 title: "Ahmed Mohammed | AI/ML Engineer"
 theme: "hugo-profile"
 
+# SEO optimization
+enableRobotsTXT: true
+canonifyURLs: true
+enableGitInfo: true
+
+# Generate a better sitemap
+sitemap:
+  changefreq: weekly
+  filename: sitemap.xml
+  priority: 0.5
+
 # Navigation menu
 menu:
   main:
@@ -21,9 +32,15 @@ menu:
 
 params:
   title: "Ahmed Mohammed"
-  description: "AI/ML Engineer with expertise in anomaly detection, deep learning, and computer vision"
+  description: "AI/ML Engineer with expertise in anomaly detection, deep learning, and computer vision. Specializing in defect detection and occluded object recognition with 2+ years of experience."
   favicon: "/fav.png"
   copyright: "Ahmed Mohammed"
+  # SEO keywords
+  keywords: ["AI Engineer", "ML Engineer", "Computer Vision", "Deep Learning", "Anomaly Detection", "YOLO", "Defect Detection"]
+  # Default image for social sharing
+  images: ["/images/mypic.jpg"]
+  # Author info for rich snippets
+  author: "Ahmed Mohammed"
 
   # Hero Section
   hero:

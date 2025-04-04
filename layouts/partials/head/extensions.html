@@ -1,0 +1,20 @@
+<!-- Include SEO enhancements -->
+{{ partial "head/seo.html" . }}
+
+<!-- Additional SEO elements -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="application-name" content="Ahmed Mohammed">
+<meta name="apple-mobile-web-app-title" content="Ahmed Mohammed">
+<meta name="theme-color" content="#212529">
+<meta name="msapplication-navbutton-color" content="#212529">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="msapplication-starturl" content="/">
+
+<!-- Preload critical assets -->
+<link rel="preload" href="{{ .Site.Params.hero.image }}" as="image">
+<link rel="preload" href="{{ .Site.Params.favicon }}" as="image">
+
+<!-- Additional meta tags for better indexing -->
+<meta name="googlebot" content="index,follow">
+<meta name="revisit-after" content="7 days"> 
