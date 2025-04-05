@@ -8,7 +8,6 @@ theme: "hugo-profile"
 # SEO optimization
 enableRobotsTXT: true
 canonifyURLs: true
-enableGitInfo: true
 
 # Generate a better sitemap
 sitemap:
