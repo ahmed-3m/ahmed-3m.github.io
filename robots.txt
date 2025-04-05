@@ -1,1 +1,8 @@
 User-agent: *
+Allow: /
+
+# Allow all bots to access all content
+Disallow: /404.html
+
+# Sitemap location
+Sitemap: https://ahmed-3m.github.io/sitemap.xml 
