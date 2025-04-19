@@ -192,7 +192,15 @@ header .navbar.animate {
     width: 100%;
 }
 
+#hero .hero-content {
+    user-select: none;
+    cursor: default;
+}
 
+#hero h1, #hero h2 {
+    user-select: none;
+    cursor: default;
+}
 
 /* about me */
 #about h3 {
