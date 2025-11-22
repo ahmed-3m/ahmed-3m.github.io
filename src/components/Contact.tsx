@@ -1,13 +1,14 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Mail, Github, Linkedin, Phone, Bot, BarChart3 } from 'lucide-react';
+import { Mail, Github, Linkedin, Phone, Bot, BarChart3, Twitter } from 'lucide-react';
 import { useI18n } from '@/lib/i18n';
 
 const socials = [
   { icon: Github, label: 'GitHub', href: 'https://github.com/ahmed-3m' },
   { icon: Bot, label: 'Hugging Face', href: 'https://huggingface.co/ahmed-3m' },
   { icon: BarChart3, label: 'W&B', href: 'https://wandb.ai/ahmed-mu-0593' },
+  { icon: Twitter, label: 'X', href: 'https://x.com/Ahmed_mo_93' },
   { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/ahmed-3m/' },
   { icon: Mail, label: 'Email', href: 'mailto:ahmed@faultrix.com' },
   { icon: Phone, label: 'Phone', href: 'tel:+4368120567353' },
