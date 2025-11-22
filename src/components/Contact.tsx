@@ -38,8 +38,8 @@ export default function Contact() {
               rel={social.href.startsWith('http') ? 'noopener noreferrer' : undefined}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              whileHover={{ y: -4 }}
-              whileTap={{ y: 2 }}
+              whileHover={{ y: -4, transition: { duration: 0.1 } }}
+              whileTap={{ y: 2, transition: { duration: 0.05 } }}
               transition={{ duration: 0.3, delay: i * 0.1 }}
               viewport={{ once: true }}
               className="btn-3d flex flex-col items-center gap-2 p-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 min-w-[100px]"
