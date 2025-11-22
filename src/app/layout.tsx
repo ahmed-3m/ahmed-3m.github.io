@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/lib/ThemeContext";
 import { I18nProvider } from "@/lib/i18n";
 import { PersonSchema, WebsiteSchema, OrganizationSchema } from "@/components/JsonLd";
+import { Analytics } from "@/components/Analytics";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -72,6 +73,9 @@ export const metadata: Metadata = {
       'de': 'https://ahmed-3m.github.io',
     },
   },
+  verification: {
+    google: 'YOUR_GOOGLE_SEARCH_CONSOLE_VERIFICATION_CODE',
+  },
 };
 
 export default function RootLayout({
@@ -87,6 +91,7 @@ export default function RootLayout({
         <OrganizationSchema />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
+        <Analytics />
         <ThemeProvider>
           <I18nProvider>
             {children}
