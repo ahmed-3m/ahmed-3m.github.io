@@ -40,7 +40,7 @@ export default function Contact() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: i * 0.1 }}
               viewport={{ once: true }}
-              className="card-3d flex flex-col items-center gap-2 p-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 min-w-[100px]"
+              className="btn-3d flex flex-col items-center gap-2 p-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 min-w-[100px]"
             >
               <social.icon size={28} className="text-blue-600" />
               <span className="text-sm">{social.label}</span>
