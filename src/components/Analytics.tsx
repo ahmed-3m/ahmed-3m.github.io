@@ -2,7 +2,7 @@
 
 import Script from 'next/script';
 
-const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+const GA_MEASUREMENT_ID = 'G-N9WZD1WLDZ';
 
 export function Analytics() {
   if (!GA_MEASUREMENT_ID) return null;
