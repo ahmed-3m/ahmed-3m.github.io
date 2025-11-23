@@ -31,17 +31,19 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Fix cursor issue */
-*:not(a):not(button):not(input):not(textarea) {
-  cursor: default !important;
-}
+/* Fix cursor issue - Tailwind v4 compatible */
+@layer base {
+  *, *::before, *::after {
+    cursor: default;
+  }
 
-a, button, [role="button"] {
-  cursor: pointer !important;
-}
+  a, button, [role="button"], label[for] {
+    cursor: pointer;
+  }
 
-input, textarea {
-  cursor: text !important;
+  input, textarea, [contenteditable="true"] {
+    cursor: text;
+  }
 }
 
 /* 3D Button Effects */
