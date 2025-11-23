@@ -32,6 +32,33 @@ const experiences = [
       de: '98.4% Genauigkeit bei der industriellen Fehlererkennung mit YOLO erreicht',
     },
   },
+  {
+    date: 'Aug - Oct 2023',
+    company: 'Karunya University',
+    role: { en: 'AI Research Intern', de: 'KI-Forschungspraktikant' },
+    description: {
+      en: 'Implemented and compared RNN/CNN architectures for EEG motor imagery classification with hyperparameter optimization',
+      de: 'Implementierung und Vergleich von RNN/CNN-Architekturen für EEG-Motorbildklassifikation mit Hyperparameter-Optimierung',
+    },
+  },
+  {
+    date: 'Jan 2021 - Present',
+    company: 'Freelance',
+    role: { en: 'AI & Programming Tutor', de: 'KI- & Programmier-Tutor' },
+    description: {
+      en: 'Providing tailored training in Python, ML, and Deep Learning. Mentoring on portfolio projects and GitHub best practices',
+      de: 'Maßgeschneidertes Training in Python, ML und Deep Learning. Mentoring für Portfolio-Projekte und GitHub Best Practices',
+    },
+  },
+  {
+    date: 'Dec 2018 - Sep 2020',
+    company: 'LED-Zone',
+    role: { en: 'Electronics Technician', de: 'Elektroniktechniker' },
+    description: {
+      en: 'PCB assembly, test processes, and QA standards. Developed test scripts and diagnostic procedures',
+      de: 'Leiterplattenbestückung, Testprozesse und QA-Standards. Entwicklung von Testskripten und Diagnoseverfahren',
+    },
+  },
 ];
 
 export default function Experience() {
