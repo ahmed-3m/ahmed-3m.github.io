@@ -31,19 +31,25 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Fix cursor issue - Tailwind v4 compatible */
-@layer base {
-  *, *::before, *::after {
-    cursor: default;
-  }
+/* Fix cursor issue - disable text selection cursor */
+body {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: default;
+}
 
-  a, button, [role="button"], label[for] {
-    cursor: pointer;
-  }
+a, button, [role="button"], label[for] {
+  cursor: pointer;
+}
 
-  input, textarea, [contenteditable="true"] {
-    cursor: text;
-  }
+input, textarea, [contenteditable="true"], pre, code {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+  cursor: text;
 }
 
 /* 3D Button Effects */
