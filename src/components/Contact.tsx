@@ -1,15 +1,28 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Mail, Github, Linkedin, Phone, Bot, BarChart3, Twitter } from 'lucide-react';
+import { Mail, Github, Linkedin, Phone, Bot, BarChart3 } from 'lucide-react';
 import { useI18n } from '@/lib/i18n';
+
+// Custom X (formerly Twitter) icon
+const XIcon = ({ size = 24, className = '' }: { size?: number; className?: string }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className={className}
+  >
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
 
 const socials = [
   { icon: Github, label: 'GitHub', href: 'https://github.com/ahmed-3m' },
   { icon: Bot, label: 'Hugging Face', href: 'https://huggingface.co/ahmed-3m' },
   { icon: BarChart3, label: 'W&B', href: 'https://wandb.ai/ahmed-mu-0593' },
-  { icon: Twitter, label: 'X', href: 'https://x.com/Ahmed_mo_93' },
   { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/ahmed-3m/' },
+  { icon: XIcon, label: 'X', href: 'https://x.com/Ahmed_mo_93' },
   { icon: Mail, label: 'Email', href: 'mailto:ahmed@faultrix.com' },
   { icon: Phone, label: 'Phone', href: 'tel:+4368120567353' },
 ];
