@@ -51,10 +51,10 @@ export default function About() {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-6 py-3 rounded-lg font-medium transition-all ${
+            className={`btn-3d px-6 py-3 rounded-lg font-medium ${
               activeTab === tab.id
                 ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
-                : 'bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700'
+                : 'bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700'
             }`}
           >
             {t(tab.en, tab.de)}
@@ -69,7 +69,7 @@ export default function About() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.3 }}
-          className="bg-slate-50 dark:bg-slate-800 p-8 rounded-xl border border-slate-200 dark:border-slate-700"
+          className="card-3d bg-slate-50 dark:bg-slate-800 p-8 rounded-xl border border-slate-200 dark:border-slate-700"
         >
           <h3 className="text-xl font-semibold text-blue-600 mb-4">
             {t(current.title.en, current.title.de)}

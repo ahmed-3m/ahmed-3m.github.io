@@ -32,6 +32,33 @@ const experiences = [
       de: '98.4% Genauigkeit bei der industriellen Fehlererkennung mit YOLO erreicht',
     },
   },
+  {
+    date: 'Aug - Oct 2023',
+    company: 'Karunya University',
+    role: { en: 'AI Research Intern', de: 'KI-Forschungspraktikant' },
+    description: {
+      en: 'Implemented and compared RNN/CNN architectures for EEG motor imagery classification with hyperparameter optimization',
+      de: 'Implementierung und Vergleich von RNN/CNN-Architekturen für EEG-Motorbildklassifikation mit Hyperparameter-Optimierung',
+    },
+  },
+  {
+    date: 'Jan 2021 - Present',
+    company: 'Freelance',
+    role: { en: 'AI & Programming Tutor', de: 'KI- & Programmier-Tutor' },
+    description: {
+      en: 'Providing tailored training in Python, ML, and Deep Learning. Mentoring on portfolio projects and GitHub best practices',
+      de: 'Maßgeschneidertes Training in Python, ML und Deep Learning. Mentoring für Portfolio-Projekte und GitHub Best Practices',
+    },
+  },
+  {
+    date: 'Dec 2018 - Sep 2020',
+    company: 'LED-Zone',
+    role: { en: 'Electronics Technician', de: 'Elektroniktechniker' },
+    description: {
+      en: 'PCB assembly, test processes, and QA standards. Developed test scripts and diagnostic procedures',
+      de: 'Leiterplattenbestückung, Testprozesse und QA-Standards. Entwicklung von Testskripten und Diagnoseverfahren',
+    },
+  },
 ];
 
 export default function Experience() {
@@ -65,7 +92,7 @@ export default function Experience() {
               } transform md:translate-x-0 -translate-x-1/2`}
             />
 
-            <div className="bg-slate-50 dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700">
+            <div className="card-3d bg-slate-50 dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700">
               <div className="text-blue-600 font-semibold mb-2">{exp.date}</div>
               <h3 className="text-lg font-bold mb-1">{exp.company}</h3>
               <p className="font-medium text-slate-600 dark:text-slate-400 mb-2">

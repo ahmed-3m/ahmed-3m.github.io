@@ -4,12 +4,26 @@ import { motion } from 'framer-motion';
 import { Mail, Github, Linkedin, Phone, Bot, BarChart3 } from 'lucide-react';
 import { useI18n } from '@/lib/i18n';
 
+// Custom X (formerly Twitter) icon
+const XIcon = ({ size = 24, className = '' }: { size?: number; className?: string }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className={className}
+  >
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
+
 const socials = [
-  { icon: Mail, label: 'Email', href: 'mailto:ahmed@faultrix.com' },
   { icon: Github, label: 'GitHub', href: 'https://github.com/ahmed-3m' },
-  { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/ahmed-3m/' },
   { icon: Bot, label: 'Hugging Face', href: 'https://huggingface.co/ahmed-3m' },
   { icon: BarChart3, label: 'W&B', href: 'https://wandb.ai/ahmed-mu-0593' },
+  { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/ahmed-3m/' },
+  { icon: XIcon, label: 'X', href: 'https://x.com/Ahmed_mo_93' },
+  { icon: Mail, label: 'Email', href: 'mailto:ahmed@faultrix.com' },
   { icon: Phone, label: 'Phone', href: 'tel:+4368120567353' },
 ];
 
@@ -40,7 +54,7 @@ export default function Contact() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: i * 0.1 }}
               viewport={{ once: true }}
-              className="flex flex-col items-center gap-2 p-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 hover:shadow-lg hover:-translate-y-1 transition-all min-w-[100px]"
+              className="card-3d flex flex-col items-center gap-2 p-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 min-w-[100px]"
             >
               <social.icon size={28} className="text-blue-600" />
               <span className="text-sm">{social.label}</span>

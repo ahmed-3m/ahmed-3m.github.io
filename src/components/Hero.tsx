@@ -54,13 +54,13 @@ export default function Hero() {
         >
           <a
             href="#contact"
-            className="px-6 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium hover:shadow-lg hover:-translate-y-0.5 transition-all"
+            className="btn-3d px-6 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium"
           >
             {t('Get In Touch', 'Kontakt aufnehmen')}
           </a>
           <a
             href="#projects"
-            className="px-6 py-3 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-medium hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+            className="btn-3d px-6 py-3 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-medium"
           >
             {t('View Projects', 'Projekte ansehen')}
           </a>
