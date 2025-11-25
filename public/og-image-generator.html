@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1200, height=630">
+    <title>OG Image Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            width: 1200px;
+            height: 630px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            color: white;
+            padding: 60px;
+        }
+        .title {
+            font-size: 72px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .subtitle {
+            font-size: 36px;
+            font-weight: 300;
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+        .skills {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+        .skill-badge {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: 500;
+        }
+        .metrics {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 50px;
+        }
+        .metric {
+            text-align: center;
+        }
+        .metric-value {
+            font-size: 48px;
+            font-weight: bold;
+            color: #fbbf24;
+        }
+        .metric-label {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Ahmed Mohammed</h1>
+        <p class="subtitle">AI/ML Engineer & Entrepreneur</p>
+
+        <div class="skills">
+            <span class="skill-badge">Computer Vision</span>
+            <span class="skill-badge">Deep Learning</span>
+            <span class="skill-badge">YOLO</span>
+            <span class="skill-badge">PyTorch</span>
+            <span class="skill-badge">Diffusion Models</span>
+        </div>
+
+        <div class="metrics">
+            <div class="metric">
+                <div class="metric-value">98.4%</div>
+                <div class="metric-label">Defect Detection</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">4+</div>
+                <div class="metric-label">Years Experience</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">15%</div>
+                <div class="metric-label">Efficiency Gain</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,41 +1,61 @@
-'use client';
-
+import { Metadata } from 'next';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, ArrowRight } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { useI18n } from '@/lib/i18n';
+import { getAllBlogPosts } from '@/lib/blog-posts';
 
-const blogPosts = [
-  {
-    slug: '5-month-llm-adventure',
-    title: '5 Month LLM Adventure',
-    date: '2024-11-15',
-    excerpt: 'My journey exploring large language models over the past 5 months.',
-    tags: ['LLM', 'AI', 'Deep Learning'],
+export const metadata: Metadata = {
+  title: 'Blog | AI/ML Insights and Tutorials',
+  description: 'Explore articles on AI, machine learning, computer vision, and deep learning. Practical insights from production deployments and research.',
+  keywords: ['AI Blog', 'Machine Learning Articles', 'Deep Learning Tutorials', 'Computer Vision', 'Ahmed Mohammed Blog'],
+  openGraph: {
+    title: 'Blog | Ahmed Mohammed',
+    description: 'AI/ML insights, tutorials, and experiences from production deployments',
+    type: 'website',
+    url: 'https://ahmed-3m.github.io/blog',
   },
-  {
-    slug: 'computer-vision-overview',
-    title: 'Computer Vision Overview',
-    date: '2024-10-20',
-    excerpt: 'A comprehensive overview of computer vision techniques and applications.',
-    tags: ['Computer Vision', 'Deep Learning', 'CNN'],
+  alternates: {
+    canonical: 'https://ahmed-3m.github.io/blog',
   },
-  {
-    slug: 'mcp-model-context-protocol',
-    title: 'MCP: Model Context Protocol',
-    date: '2024-09-15',
-    excerpt: 'Understanding the Model Context Protocol and its applications.',
-    tags: ['MCP', 'AI', 'Protocol'],
-  },
-];
+};
+
+// Blog list schema
+function BlogListJsonLd() {
+  const posts = getAllBlogPosts();
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    name: 'Ahmed Mohammed AI/ML Blog',
+    description: 'Articles on AI, machine learning, and computer vision',
+    url: 'https://ahmed-3m.github.io/blog',
+    author: {
+      '@type': 'Person',
+      name: 'Ahmed Mohammed',
+    },
+    blogPost: posts.map(post => ({
+      '@type': 'BlogPosting',
+      headline: post.title,
+      description: post.excerpt,
+      datePublished: post.date,
+      url: `https://ahmed-3m.github.io/blog/${post.slug}`,
+    })),
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  );
+}
 
 export default function BlogPage() {
-  const { t } = useI18n();
+  const blogPosts = getAllBlogPosts();
 
   return (
     <>
+      <BlogListJsonLd />
       <Header />
       <main className="pt-24 pb-20 min-h-screen">
         <div className="max-w-4xl mx-auto px-5">
@@ -44,34 +64,66 @@ export default function BlogPage() {
             className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-8"
           >
             <ArrowLeft size={18} />
-            {t('Back to Home', 'Zurück zur Startseite')}
+            Back to Home
           </Link>
 
-          <h1 className="text-4xl font-bold mb-8">{t('Blog', 'Blog')}</h1>
+          <h1 className="text-4xl font-bold mb-2">Blog</h1>
+          <p className="text-slate-600 dark:text-slate-300 mb-8">
+            Insights and experiences from AI/ML research and production deployments
+          </p>
 
           <div className="space-y-6">
-            {blogPosts.map((post, i) => (
-              <motion.article
+            {blogPosts.map((post) => (
+              <article
                 key={post.slug}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="bg-slate-50 dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 hover:shadow-lg transition-shadow"
+                className="card-3d bg-slate-50 dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 hover:shadow-lg transition-shadow"
               >
-                <time className="text-sm text-blue-600">{post.date}</time>
-                <h2 className="text-xl font-semibold mt-2 mb-3">{post.title}</h2>
-                <p className="text-slate-600 dark:text-slate-300 mb-4">{post.excerpt}</p>
-                <div className="flex flex-wrap gap-2">
-                  {post.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-2 py-1 bg-slate-200 dark:bg-slate-700 rounded text-xs"
-                    >
-                      {tag}
+                <div className="flex items-center gap-4 text-sm text-slate-500 mb-3">
+                  <time dateTime={post.date} className="flex items-center gap-1">
+                    <Calendar size={14} />
+                    {new Date(post.date).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric',
+                    })}
+                  </time>
+                  {post.readingTime && (
+                    <span className="flex items-center gap-1">
+                      <Clock size={14} />
+                      {post.readingTime}
                     </span>
-                  ))}
+                  )}
                 </div>
-              </motion.article>
+
+                <Link href={`/blog/${post.slug}`} className="group">
+                  <h2 className="text-xl font-semibold mb-3 group-hover:text-blue-600 transition-colors">
+                    {post.title}
+                  </h2>
+                </Link>
+
+                <p className="text-slate-600 dark:text-slate-300 mb-4">{post.excerpt}</p>
+
+                <div className="flex items-center justify-between">
+                  <div className="flex flex-wrap gap-2">
+                    {post.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-2 py-1 bg-slate-200 dark:bg-slate-700 rounded text-xs"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-700 font-medium"
+                  >
+                    Read more
+                    <ArrowRight size={16} />
+                  </Link>
+                </div>
+              </article>
             ))}
           </div>
         </div>
