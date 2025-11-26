@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icon Generator for Ahmed Mohammed Portfolio</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            padding: 40px;
+            background: #f3f4f6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1f2937;
+            margin-bottom: 20px;
+        }
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .icon-item {
+            text-align: center;
+        }
+        .icon-wrapper {
+            display: inline-block;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .icon-label {
+            font-size: 14px;
+            color: #6b7280;
+            margin-top: 10px;
+        }
+        .icon {
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border-radius: 25%;
+        }
+        .instructions {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .instructions h2 {
+            color: #1e40af;
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+        .instructions ol {
+            margin-left: 20px;
+            color: #374151;
+        }
+        .instructions li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Portfolio Icon Generator</h1>
+
+        <div class="instructions">
+            <h2>📸 How to Save These Icons:</h2>
+            <ol>
+                <li>Right-click on each icon below</li>
+                <li>Select "Save image as..."</li>
+                <li>Save with the exact filename shown</li>
+                <li>Save all icons in the <code>public/</code> directory</li>
+                <li>The favicon.ico can be created at <a href="https://favicon.io/" target="_blank">favicon.io</a> using the 512x512 icon</li>
+            </ol>
+        </div>
+
+        <div class="icon-grid">
+            <!-- 16x16 Favicon -->
+            <div class="icon-item">
+                <div class="icon-wrapper">
+                    <div class="icon" style="width: 16px; height: 16px; font-size: 10px; border-radius: 20%;">
+                        A
+                    </div>
+                </div>
+                <div class="icon-label">
+                    <strong>favicon-16x16.png</strong><br>
+                    16×16px (Browser tabs)
+                </div>
+            </div>
+
+            <!-- 32x32 Favicon -->
+            <div class="icon-item">
+                <div class="icon-wrapper">
+                    <div class="icon" style="width: 32px; height: 32px; font-size: 18px;">
+                        AM
+                    </div>
+                </div>
+                <div class="icon-label">
+                    <strong>favicon-32x32.png</strong><br>
+                    32×32px (Standard favicon)
+                </div>
+            </div>
+
+            <!-- 180x180 Apple Touch Icon -->
+            <div class="icon-item">
+                <div class="icon-wrapper">
+                    <div class="icon" style="width: 180px; height: 180px; font-size: 72px;">
+                        AM
+                    </div>
+                </div>
+                <div class="icon-label">
+                    <strong>apple-touch-icon.png</strong><br>
+                    180×180px (iOS devices)
+                </div>
+            </div>
+
+            <!-- 192x192 PWA Icon -->
+            <div class="icon-item">
+                <div class="icon-wrapper">
+                    <div class="icon" style="width: 192px; height: 192px; font-size: 76px;">
+                        AM
+                    </div>
+                </div>
+                <div class="icon-label">
+                    <strong>icon-192.png</strong><br>
+                    192×192px (PWA, Android)
+                </div>
+            </div>
+
+            <!-- 512x512 PWA Icon Large -->
+            <div class="icon-item">
+                <div class="icon-wrapper">
+                    <div class="icon" style="width: 200px; height: 200px; font-size: 80px;">
+                        AM
+                    </div>
+                </div>
+                <div class="icon-label">
+                    <strong>icon-512.png</strong><br>
+                    512×512px (PWA splash screen)<br>
+                    <em>Note: Save and resize to 512×512</em>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 40px; padding: 20px; background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px;">
+            <h3 style="color: #16a34a; margin-bottom: 10px;">✅ Next Steps:</h3>
+            <ol style="margin-left: 20px; color: #374151;">
+                <li>Take screenshots of each icon using browser DevTools or a screenshot tool</li>
+                <li>Save them with the exact filenames shown</li>
+                <li>For the ICO file, use <a href="https://www.favicon-generator.org/" target="_blank">favicon-generator.org</a> or <a href="https://favicon.io/" target="_blank">favicon.io</a></li>
+                <li>Place all files in the <code>public/</code> directory</li>
+                <li>Rebuild your Next.js app to see the changes</li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>

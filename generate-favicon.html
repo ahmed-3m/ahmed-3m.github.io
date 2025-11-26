@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Generate Favicon - Ahmed Mohammed</title>
+    <style>
+        body {
+            font-family: system-ui;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #f3f4f6;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .icon {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            border-radius: 25%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 80px;
+            font-weight: bold;
+            margin: 0 auto 30px;
+        }
+        h1 {
+            color: #1f2937;
+            margin-bottom: 20px;
+        }
+        .instructions {
+            background: #eff6ff;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: left;
+            margin-top: 20px;
+        }
+        code {
+            background: #e5e7eb;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Your New Favicon</h1>
+        <div class="icon">AM</div>
+
+        <p><strong>Quick Method:</strong> Use this design at <a href="https://favicon.io/favicon-generator/" target="_blank">favicon.io</a></p>
+
+        <div class="instructions">
+            <h3>Steps to Replace Favicon:</h3>
+            <ol>
+                <li>Go to <a href="https://favicon.io/favicon-generator/" target="_blank">favicon.io/favicon-generator/</a></li>
+                <li>Enter settings:
+                    <ul>
+                        <li>Text: <strong>AM</strong></li>
+                        <li>Background Color: <code>#2563eb</code></li>
+                        <li>Text Color: <code>#ffffff</code></li>
+                        <li>Font Family: <strong>Roboto</strong> or <strong>Montserrat</strong></li>
+                    </ul>
+                </li>
+                <li>Click "Download" to get the favicon package</li>
+                <li>Extract the ZIP file</li>
+                <li>Copy <code>favicon.ico</code> to replace <code>src/app/favicon.ico</code></li>
+                <li>Clear browser cache:
+                    <ul>
+                        <li>Press <kbd>Ctrl+Shift+Delete</kbd> (Windows) or <kbd>Cmd+Shift+Delete</kbd> (Mac)</li>
+                        <li>Or hard refresh: <kbd>Ctrl+Shift+R</kbd> (Windows) or <kbd>Cmd+Shift+R</kbd> (Mac)</li>
+                    </ul>
+                </li>
+                <li>Restart the dev server: <code>npm run dev</code></li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>

@@ -20,6 +20,9 @@ export function Analytics() {
           gtag('js', new Date());
           gtag('config', '${GA_MEASUREMENT_ID}', {
             page_path: window.location.pathname,
+            cookie_flags: 'SameSite=None;Secure',
+            allow_google_signals: false,
+            anonymize_ip: true,
           });
         `}
       </Script>

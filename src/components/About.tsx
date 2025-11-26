@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { useI18n } from '@/lib/i18n';
 
 const tabs = [
@@ -62,13 +61,7 @@ export default function About() {
         ))}
       </div>
 
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activeTab}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.3 }}
+      <div
           className="card-3d bg-slate-50 dark:bg-slate-800 p-8 rounded-xl border border-slate-200 dark:border-slate-700"
         >
           <h3 className="text-xl font-semibold text-blue-600 mb-4">
@@ -87,8 +80,7 @@ export default function About() {
               </span>
             ))}
           </div>
-        </motion.div>
-      </AnimatePresence>
+        </div>
     </section>
   );
 }
