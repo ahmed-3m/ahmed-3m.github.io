@@ -158,6 +158,8 @@ for epoch in range(num_epochs):
         noisy_batch = add_noise(batch, noise, t)
         predicted_noise = model(noisy_batch, t)
         loss = F.mse_loss(predicted_noise, noise)
+        optimizer.zero_grad()
+        loss.backward()
         optimizer.step()
 \`\`\`
 
