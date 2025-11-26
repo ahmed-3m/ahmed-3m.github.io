@@ -18,11 +18,15 @@ export function Analytics() {
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
+          gtag('set', {'analytics_storage': 'denied'});
           gtag('config', '${GA_MEASUREMENT_ID}', {
             page_path: window.location.pathname,
-            cookie_flags: 'SameSite=None;Secure',
-            allow_google_signals: false,
+            cookie_flags: 'SameSite=Strict',
+            enable_display_features: false,
             anonymize_ip: true,
+            allow_google_signals: false,
+            cookie_domain: 'none',
+            storage: 'none'
           });
         `}
       </Script>
