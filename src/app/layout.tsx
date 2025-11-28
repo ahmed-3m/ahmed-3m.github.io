@@ -84,7 +84,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: 'your-google-verification-code', // Will be replaced when you get the code
+    google: 'google939eb896825506d2',
   },
 };
 
