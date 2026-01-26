@@ -23,7 +23,7 @@ const socials = [
   { icon: BarChart3, label: 'W&B', href: 'https://wandb.ai/ahmed-mu-0593' },
   { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/ahmed-3m/' },
   { icon: XIcon, label: 'X', href: 'https://x.com/Ahmed_mo_93' },
-  { icon: Mail, label: 'Email', href: 'mailto:ahmed@faultrix.com' },
+  { icon: Mail, label: 'Email', href: 'mailto:ahmed.mo.0595@gmail.com' },
   { icon: Phone, label: 'Phone', href: 'tel:+4368120567353' },
 ];
 

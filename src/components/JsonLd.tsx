@@ -115,7 +115,7 @@ export function FAQSchema() {
         name: 'How can I contact you for a project?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'You can reach me via email at ahmed@faultrix.com, through LinkedIn at linkedin.com/in/ahmed-3m, or via the contact section on my portfolio.',
+          text: 'You can reach me via email at ahmed.mo.0595@gmail.com, through LinkedIn at linkedin.com/in/ahmed-3m, or via the contact section on my portfolio.',
         },
       },
     ],
