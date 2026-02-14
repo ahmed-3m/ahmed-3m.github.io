@@ -95,7 +95,21 @@ export default function Projects() {
             className={`card-3d group relative bg-gradient-to-br ${project.gradient} p-6 rounded-xl border border-slate-200 dark:border-slate-700 ${project.borderHover} transition-all duration-300`}
           >
             {/* Project icon */}
-            <div className="text-3xl mb-4">{project.icon}</div>
+            {project.title.en === 'Faultrix' ? (
+              <div className="w-10 h-10 mb-4">
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="50" cy="50" r="38" stroke="#1e293b" strokeWidth="10" className="dark:stroke-slate-200" />
+                  <line x1="50" y1="4" x2="50" y2="20" stroke="#1e293b" strokeWidth="7" strokeLinecap="round" className="dark:stroke-slate-200" />
+                  <line x1="50" y1="80" x2="50" y2="96" stroke="#1e293b" strokeWidth="7" strokeLinecap="round" className="dark:stroke-slate-200" />
+                  <line x1="4" y1="50" x2="20" y2="50" stroke="#1e293b" strokeWidth="7" strokeLinecap="round" className="dark:stroke-slate-200" />
+                  <line x1="80" y1="50" x2="96" y2="50" stroke="#1e293b" strokeWidth="7" strokeLinecap="round" className="dark:stroke-slate-200" />
+                  <line x1="35" y1="35" x2="65" y2="65" stroke="#ea580c" strokeWidth="9" strokeLinecap="round" />
+                  <line x1="65" y1="35" x2="35" y2="65" stroke="#ea580c" strokeWidth="9" strokeLinecap="round" />
+                </svg>
+              </div>
+            ) : (
+              <div className="text-3xl mb-4">{project.icon}</div>
+            )}
 
             <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100 mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
               {t(project.title.en, project.title.de)}
