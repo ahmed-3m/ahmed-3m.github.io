@@ -14,10 +14,10 @@ export const metadata: Metadata = {
     title: 'Blog | Ahmed Mohammed',
     description: 'AI/ML insights, tutorials, and experiences from production deployments',
     type: 'website',
-    url: 'https://ahmed-3m.github.io/blog',
+    url: 'https://ahmed-3m.github.io/blog/',
   },
   alternates: {
-    canonical: 'https://ahmed-3m.github.io/blog',
+    canonical: 'https://ahmed-3m.github.io/blog/',
   },
 };
 
@@ -29,7 +29,7 @@ function BlogListJsonLd() {
     '@type': 'Blog',
     name: 'Ahmed Mohammed AI/ML Blog',
     description: 'Articles on AI, machine learning, and computer vision',
-    url: 'https://ahmed-3m.github.io/blog',
+    url: 'https://ahmed-3m.github.io/blog/',
     author: {
       '@type': 'Person',
       name: 'Ahmed Mohammed',
@@ -39,7 +39,7 @@ function BlogListJsonLd() {
       headline: post.title,
       description: post.excerpt,
       datePublished: post.date,
-      url: `https://ahmed-3m.github.io/blog/${post.slug}`,
+      url: `https://ahmed-3m.github.io/blog/${post.slug}/`,
     })),
   };
 

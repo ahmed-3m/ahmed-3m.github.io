@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       publishedTime: post.date,
       authors: ['Ahmed Mohammed'],
       tags: post.tags,
-      url: `https://ahmed-3m.github.io/blog/${post.slug}`,
+      url: `https://ahmed-3m.github.io/blog/${post.slug}/`,
       images: [
         {
           url: `/og-${post.slug}.png`,
@@ -60,7 +60,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       images: [`/og-${post.slug}.png`],
     },
     alternates: {
-      canonical: `https://ahmed-3m.github.io/blog/${post.slug}`,
+      canonical: `https://ahmed-3m.github.io/blog/${post.slug}/`,
     },
   };
 }
@@ -88,7 +88,7 @@ function BlogPostJsonLd({ post }: { post: any }) {
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `https://ahmed-3m.github.io/blog/${post.slug}`,
+      '@id': `https://ahmed-3m.github.io/blog/${post.slug}/`,
     },
     keywords: post.tags.join(', '),
     articleSection: 'Technology',
@@ -114,13 +114,13 @@ function Breadcrumbs({ title }: { title: string }) {
         '@type': 'ListItem',
         position: 1,
         name: 'Home',
-        item: 'https://ahmed-3m.github.io',
+        item: 'https://ahmed-3m.github.io/',
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: 'Blog',
-        item: 'https://ahmed-3m.github.io/blog',
+        item: 'https://ahmed-3m.github.io/blog/',
       },
       {
         '@type': 'ListItem',
