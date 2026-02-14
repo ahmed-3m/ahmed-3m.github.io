@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, ReactNode } from 'react';
 import { useI18n } from '@/lib/i18n';
 
 const tabs = [
@@ -9,20 +9,24 @@ const tabs = [
   { id: 'engineer', en: 'Engineer', de: 'Ingenieur' },
 ];
 
-const content = {
+const content: Record<string, {
+  title: { en: string; de: string };
+  text: { en: ReactNode; de: ReactNode };
+  tags: string[];
+}> = {
   founder: {
     title: { en: 'Building the Future', de: 'Die Zukunft gestalten' },
     text: {
-      en: "As Founder of Faultrix, I built an AI-powered SaaS for construction quality control. The platform analyzes building photos and generates ÖNORM-compliant technical reports in under 1 minute — with SHA-256 evidence chain, DSGVO compliance, and AES-256 encryption. Live at faultrix.com.",
-      de: 'Als Gründer von Faultrix habe ich eine KI-gestützte SaaS für Bauqualitätskontrolle entwickelt. Die Plattform analysiert Gebäudefotos und erstellt ÖNORM-konforme technische Berichte in unter 1 Minute — mit SHA-256 Beweiskette, DSGVO-Konformität und AES-256 Verschlüsselung. Live unter faultrix.com.',
+      en: <>As Founder of <a href="https://faultrix.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">Faultrix</a>, I built an AI-powered SaaS for construction quality control. The platform analyzes building photos and generates ÖNORM-compliant technical reports in under 1 minute — with SHA-256 evidence chain, DSGVO compliance, and AES-256 encryption.</>,
+      de: <>Als Gründer von <a href="https://faultrix.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">Faultrix</a> habe ich eine KI-gestützte SaaS für Bauqualitätskontrolle entwickelt. Die Plattform analysiert Gebäudefotos und erstellt ÖNORM-konforme technische Berichte in unter 1 Minute — mit SHA-256 Beweiskette, DSGVO-Konformität und AES-256 Verschlüsselung.</>,
     },
     tags: ['AI/ML', 'Computer Vision', 'Full-Stack Development', 'Product Strategy'],
   },
   researcher: {
     title: { en: 'Machine Learning Researcher', de: 'Machine Learning Forscher' },
     text: {
-      en: 'Currently researching out-of-distribution detection with diffusion models under Prof. Sepp Hochreiter at JKU. Previously achieved 98.4% accuracy in industrial defect detection at PROFACTOR GmbH using YOLO and diffusion-based classifiers.',
-      de: 'Derzeit erforsche ich Out-of-Distribution-Erkennung mit Diffusionsmodellen unter Prof. Sepp Hochreiter an der JKU. Zuvor erreichte ich 98.4% Genauigkeit bei der industriellen Fehlererkennung bei PROFACTOR GmbH.',
+      en: <>Currently researching out-of-distribution detection with diffusion models under <a href="https://www.jku.at/institut-fuer-machine-learning/" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">Prof. Sepp Hochreiter at JKU Linz</a>. Previously achieved 98.4% accuracy in industrial defect detection at <a href="https://www.profactor.at" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">PROFACTOR GmbH</a> using YOLO and diffusion-based classifiers.</>,
+      de: <>Derzeit erforsche ich Out-of-Distribution-Erkennung mit Diffusionsmodellen unter <a href="https://www.jku.at/institut-fuer-machine-learning/" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">Prof. Sepp Hochreiter an der JKU Linz</a>. Zuvor erreichte ich 98.4% Genauigkeit bei der industriellen Fehlererkennung bei <a href="https://www.profactor.at" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">PROFACTOR GmbH</a>.</>,
     },
     tags: ['Diffusion Models', 'PyTorch', 'YOLO', 'Self-Supervised Learning', 'Computer Vision'],
   },
@@ -38,8 +42,8 @@ const content = {
 
 export default function About() {
   const [activeTab, setActiveTab] = useState('founder');
-  const { t } = useI18n();
-  const current = content[activeTab as keyof typeof content];
+  const { t, lang } = useI18n();
+  const current = content[activeTab];
 
   return (
     <section id="about" className="py-20 max-w-6xl mx-auto px-5">
@@ -51,8 +55,8 @@ export default function About() {
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={`btn-3d px-6 py-3 rounded-lg font-medium ${activeTab === tab.id
-                ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
-                : 'bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700'
+              ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
+              : 'bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700'
               }`}
           >
             {t(tab.en, tab.de)}
@@ -67,7 +71,7 @@ export default function About() {
           {t(current.title.en, current.title.de)}
         </h3>
         <p className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
-          {t(current.text.en, current.text.de)}
+          {lang === 'en' ? current.text.en : current.text.de}
         </p>
         <div className="flex flex-wrap gap-2">
           {current.tags.map((tag) => (

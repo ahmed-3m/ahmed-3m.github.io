@@ -153,7 +153,7 @@ export default function Projects() {
                     className="inline-flex items-center gap-1.5 text-sm text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors"
                   >
                     <Github size={15} />
-                    Code
+                    {t('Source Code', 'Quellcode')}
                   </a>
                 )}
                 {project.link && (

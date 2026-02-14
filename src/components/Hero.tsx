@@ -58,7 +58,7 @@ export default function Hero() {
               <div className="relative w-40 h-40 md:w-52 md:h-52 rounded-full overflow-hidden border-4 border-white dark:border-slate-800 shadow-2xl">
                 <Image
                   src="/headshot.jpg"
-                  alt="Ahmed Mohammed"
+                  alt="Ahmed Mohammed — AI/ML Engineer and Entrepreneur based in Linz, Austria"
                   fill
                   className="object-cover"
                   priority
