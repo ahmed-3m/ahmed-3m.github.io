@@ -12,10 +12,10 @@ const experiences = [
       en: 'Leading development of AI-powered construction analysis platform with cutting-edge machine learning architecture',
       de: 'Leitung der Entwicklung einer KI-gestützten Bauanalyseplattform mit modernster Machine-Learning-Architektur',
     },
-    note: '(NormKI Co-Founder & Full-stack dev.)',
+    note: 'Co-founded NormKI → built Faultrix as the technical product',
   },
   {
-    date: 'Dec 2024 - Present',
+    date: 'Dec 2024 - Mar 2026',
     company: 'JKU Machine Learning Institute',
     role: { en: 'ML Researcher', de: 'ML Forscher' },
     description: {
@@ -81,15 +81,13 @@ export default function Experience() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: i * 0.1 }}
             viewport={{ once: true }}
-            className={`relative mb-8 md:w-1/2 ${
-              i % 2 === 0 ? 'md:pr-12' : 'md:ml-auto md:pl-12'
-            } pl-8 md:pl-0`}
+            className={`relative mb-8 md:w-1/2 ${i % 2 === 0 ? 'md:pr-12' : 'md:ml-auto md:pl-12'
+              } pl-8 md:pl-0`}
           >
             {/* Dot */}
             <div
-              className={`absolute w-4 h-4 bg-blue-600 rounded-full border-4 border-white dark:border-slate-900 top-0 ${
-                i % 2 === 0 ? 'left-0 md:left-auto md:-right-2' : 'left-0 md:-left-2'
-              } transform md:translate-x-0 -translate-x-1/2`}
+              className={`absolute w-4 h-4 bg-blue-600 rounded-full border-4 border-white dark:border-slate-900 top-0 ${i % 2 === 0 ? 'left-0 md:left-auto md:-right-2' : 'left-0 md:-left-2'
+                } transform md:translate-x-0 -translate-x-1/2`}
             />
 
             <div className="card-3d bg-slate-50 dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700">

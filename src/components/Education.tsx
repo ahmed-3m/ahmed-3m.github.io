@@ -7,7 +7,7 @@ const education = [
   {
     degree: 'Master of Artificial Intelligence',
     school: 'Johannes Kepler University, Linz',
-    date: 'Oct 2020 - Present',
+    date: 'Oct 2020 - Mar 2026',
     thesis: {
       en: 'Thesis: Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection',
       de: 'Thesis: Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection',

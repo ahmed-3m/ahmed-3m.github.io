@@ -13,8 +13,8 @@ const content = {
   founder: {
     title: { en: 'Building the Future', de: 'Die Zukunft gestalten' },
     text: {
-      en: "As Founder of Faultrix, I'm building AI-powered tools for construction quality control. Our platform takes building images, analyzes them, and produces professional technical reports that meet legal and regulatory standards—turning hours of documentation into minutes.",
-      de: 'Als Gründer von Faultrix entwickle ich KI-gestützte Tools für die Qualitätskontrolle im Bauwesen. Unsere Plattform analysiert Gebäudebilder und erstellt professionelle technische Berichte, die rechtlichen und regulatorischen Standards entsprechen—und verwandelt Stunden der Dokumentation in Minuten.',
+      en: "As Founder of Faultrix, I built an AI-powered SaaS for construction quality control. The platform analyzes building photos and generates ÖNORM-compliant technical reports in under 1 minute — with SHA-256 evidence chain, DSGVO compliance, and AES-256 encryption. Live at faultrix.com.",
+      de: 'Als Gründer von Faultrix habe ich eine KI-gestützte SaaS für Bauqualitätskontrolle entwickelt. Die Plattform analysiert Gebäudefotos und erstellt ÖNORM-konforme technische Berichte in unter 1 Minute — mit SHA-256 Beweiskette, DSGVO-Konformität und AES-256 Verschlüsselung. Live unter faultrix.com.',
     },
     tags: ['AI/ML', 'Computer Vision', 'Full-Stack Development', 'Product Strategy'],
   },
@@ -50,11 +50,10 @@ export default function About() {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`btn-3d px-6 py-3 rounded-lg font-medium ${
-              activeTab === tab.id
+            className={`btn-3d px-6 py-3 rounded-lg font-medium ${activeTab === tab.id
                 ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
                 : 'bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700'
-            }`}
+              }`}
           >
             {t(tab.en, tab.de)}
           </button>
@@ -62,25 +61,25 @@ export default function About() {
       </div>
 
       <div
-          className="card-3d bg-slate-50 dark:bg-slate-800 p-8 rounded-xl border border-slate-200 dark:border-slate-700"
-        >
-          <h3 className="text-xl font-semibold text-blue-600 mb-4">
-            {t(current.title.en, current.title.de)}
-          </h3>
-          <p className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
-            {t(current.text.en, current.text.de)}
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {current.tags.map((tag) => (
-              <span
-                key={tag}
-                className="px-3 py-1 bg-slate-200 dark:bg-slate-700 rounded text-sm text-slate-600 dark:text-slate-300"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
+        className="card-3d bg-slate-50 dark:bg-slate-800 p-8 rounded-xl border border-slate-200 dark:border-slate-700"
+      >
+        <h3 className="text-xl font-semibold text-blue-600 mb-4">
+          {t(current.title.en, current.title.de)}
+        </h3>
+        <p className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
+          {t(current.text.en, current.text.de)}
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {current.tags.map((tag) => (
+            <span
+              key={tag}
+              className="px-3 py-1 bg-slate-200 dark:bg-slate-700 rounded text-sm text-slate-600 dark:text-slate-300"
+            >
+              {tag}
+            </span>
+          ))}
         </div>
+      </div>
     </section>
   );
 }

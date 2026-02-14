@@ -2,6 +2,18 @@
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
+@keyframes gradient-shift {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
 :root {
   --background: #ffffff;
   --foreground: #0f172a;
@@ -31,25 +43,11 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Fix cursor issue - disable text selection cursor */
-body {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  cursor: default;
-}
-
-a, button, [role="button"], label[for] {
+a,
+button,
+[role="button"],
+label[for] {
   cursor: pointer;
-}
-
-input, textarea, [contenteditable="true"], pre, code {
-  -webkit-user-select: text;
-  -moz-user-select: text;
-  -ms-user-select: text;
-  user-select: text;
-  cursor: text;
 }
 
 /* 3D Button Effects with Blue Glow */

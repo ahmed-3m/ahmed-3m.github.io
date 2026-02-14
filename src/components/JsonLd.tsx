@@ -169,11 +169,6 @@ export function SocialProfileSchema() {
         '@type': 'Occupation',
         name: 'AI/ML Engineer',
         occupationalCategory: '15-1299.08',
-        estimatedSalary: {
-          '@type': 'MonetaryAmountDistribution',
-          currency: 'EUR',
-          duration: 'P1Y',
-        },
       },
     },
   };
