@@ -71,16 +71,19 @@ function BlogPostJsonLd({ post }: { post: any }) {
     '@type': 'BlogPosting',
     headline: post.title,
     description: post.excerpt,
+    image: 'https://ahmed-3m.github.io/og-image.png',
     author: {
       '@type': 'Person',
       name: 'Ahmed Mohammed',
       url: 'https://ahmed-3m.github.io',
+      image: 'https://ahmed-3m.github.io/headshot.jpg',
     },
     datePublished: post.date,
     dateModified: post.date,
     publisher: {
       '@type': 'Person',
       name: 'Ahmed Mohammed',
+      image: 'https://ahmed-3m.github.io/headshot.jpg',
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
@@ -88,6 +91,7 @@ function BlogPostJsonLd({ post }: { post: any }) {
     },
     keywords: post.tags.join(', '),
     articleSection: 'Technology',
+    inLanguage: 'en',
     wordCount: post.content ? post.content.split(' ').length : 0,
   };
 

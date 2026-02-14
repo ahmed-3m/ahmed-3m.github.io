@@ -8,7 +8,9 @@ import {
   WebsiteSchema,
   OrganizationSchema,
   FAQSchema,
-  SocialProfileSchema
+  SocialProfileSchema,
+  ProjectsSchema,
+  ResearchSchema
 } from "@/components/JsonLd";
 import { Analytics } from "@/components/Analytics";
 
@@ -32,8 +34,8 @@ export const metadata: Metadata = {
     default: 'Ahmed Mohammed | AI/ML Engineer & Entrepreneur',
     template: '%s | Ahmed Mohammed'
   },
-  description: "AI/ML Engineer & Entrepreneur specializing in computer vision, anomaly detection, and generative models. Expert in YOLO, PyTorch, and diffusion models with 98.4% accuracy in defect detection.",
-  keywords: ["AI Engineer", "Machine Learning", "Computer Vision", "Deep Learning", "PyTorch", "YOLO", "Diffusion Models", "Anomaly Detection", "Ahmed Mohammed", "Faultrix", "AI Entrepreneur"],
+  description: "Ahmed Mohammed — AI/ML Engineer & Entrepreneur based in Linz, Austria. Specializing in computer vision, anomaly detection, and diffusion models. Founder of Faultrix. 98.4% accuracy in industrial defect detection. M.Sc. AI from JKU Linz.",
+  keywords: ["AI Engineer", "Machine Learning Engineer", "Computer Vision", "Deep Learning", "PyTorch", "YOLO", "Diffusion Models", "Anomaly Detection", "Ahmed Mohammed", "Faultrix", "AI Entrepreneur", "Linz Austria", "JKU", "OOD Detection", "Industrial Quality Control", "Construction AI"],
   authors: [{ name: "Ahmed Mohammed", url: 'https://ahmed-3m.github.io' }],
   creator: 'Ahmed Mohammed',
   publisher: 'Ahmed Mohammed',
@@ -44,7 +46,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Ahmed Mohammed | AI/ML Engineer & Entrepreneur",
-    description: "AI/ML Engineer & Entrepreneur specializing in computer vision, anomaly detection, and generative models. Founder of Faultrix.",
+    description: "AI/ML Engineer & Entrepreneur based in Linz, Austria. Specializing in computer vision, anomaly detection, and diffusion models. Founder of Faultrix. M.Sc. AI from JKU Linz.",
     url: 'https://ahmed-3m.github.io',
     siteName: 'Ahmed Mohammed Portfolio',
     images: [
@@ -78,10 +80,6 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: 'https://ahmed-3m.github.io',
-    languages: {
-      'en': 'https://ahmed-3m.github.io',
-      'de': 'https://ahmed-3m.github.io?lang=de',
-    },
   },
   verification: {
     google: 'google939eb896825506d2',
@@ -116,6 +114,8 @@ export default function RootLayout({
         <OrganizationSchema />
         <FAQSchema />
         <SocialProfileSchema />
+        <ProjectsSchema />
+        <ResearchSchema />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
         <ThemeProvider>
