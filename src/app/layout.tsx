@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Ahmed Mohammed | AI/ML Engineer & Entrepreneur",
     description: "AI/ML Engineer & Entrepreneur based in Linz, Austria. Specializing in computer vision, anomaly detection, and diffusion models. Founder of Faultrix. M.Sc. AI from JKU Linz.",
-    url: 'https://ahmed-3m.github.io',
+    url: 'https://ahmed-3m.github.io/',
     siteName: 'Ahmed Mohammed Portfolio',
     images: [
       {
@@ -79,7 +79,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: 'https://ahmed-3m.github.io',
+    canonical: 'https://ahmed-3m.github.io/',
   },
   verification: {
     google: 'google939eb896825506d2',
