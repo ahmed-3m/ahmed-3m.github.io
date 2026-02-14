@@ -8,13 +8,13 @@ import { useTheme } from '@/lib/ThemeContext';
 import { useI18n } from '@/lib/i18n';
 
 const navItems = [
-  { href: '#about', en: 'About', de: 'Über' },
-  { href: '#projects', en: 'Projects', de: 'Projekte' },
-  { href: '#experience', en: 'Experience', de: 'Erfahrung' },
-  { href: '#research', en: 'Research', de: 'Forschung' },
-  { href: '#skills', en: 'Skills', de: 'Fähigkeiten' },
+  { href: '/#about', en: 'About', de: 'Über' },
+  { href: '/#projects', en: 'Projects', de: 'Projekte' },
+  { href: '/#experience', en: 'Experience', de: 'Erfahrung' },
+  { href: '/#research', en: 'Research', de: 'Forschung' },
+  { href: '/#skills', en: 'Skills', de: 'Fähigkeiten' },
   { href: '/blog', en: 'Blog', de: 'Blog' },
-  { href: '#contact', en: 'Contact', de: 'Kontakt' },
+  { href: '/#contact', en: 'Contact', de: 'Kontakt' },
 ];
 
 export default function Header() {
