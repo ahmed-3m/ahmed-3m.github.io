@@ -6,15 +6,19 @@ import { useI18n } from '@/lib/i18n';
 const skillCategories = [
   {
     title: { en: 'Machine Learning', de: 'Machine Learning' },
-    skills: ['CNNs', 'LSTMs', 'Autoencoders', 'GANs', 'Diffusion Models', 'YOLO', 'Self-Supervised Learning', 'OOD Detection', 'Anomaly Detection'],
+    skills: ['CNNs', 'LSTMs', 'Autoencoders', 'GANs', 'Diffusion Models', 'YOLO', 'Self-Supervised Learning', 'OOD Detection', 'Anomaly Detection', 'Transfer Learning'],
   },
   {
     title: { en: 'Tools & Frameworks', de: 'Tools & Frameworks' },
-    skills: ['Python', 'TensorFlow', 'PyTorch', 'OpenCV', 'Scikit-learn', 'NumPy', 'Pandas', 'MATLAB'],
+    skills: ['Python', 'TensorFlow', 'PyTorch', 'OpenCV', 'Scikit-learn', 'NumPy', 'Pandas', 'MATLAB', 'Hugging Face'],
+  },
+  {
+    title: { en: 'Full-Stack & Web', de: 'Full-Stack & Web' },
+    skills: ['TypeScript', 'React', 'Next.js', 'Convex', 'Tailwind CSS', 'Node.js', 'Vercel', 'REST APIs'],
   },
   {
     title: { en: 'Infrastructure', de: 'Infrastruktur' },
-    skills: ['Docker', 'MLflow', 'CI/CD', 'Git', 'REST APIs', 'MLOps'],
+    skills: ['Docker', 'MLflow', 'CI/CD', 'Git', 'GitHub Actions', 'MLOps', 'Linux'],
   },
 ];
 
@@ -27,7 +31,7 @@ export default function Skills() {
         {t('Technical Skills', 'Technische Fähigkeiten')}
       </h2>
 
-      <div className="grid md:grid-cols-3 gap-6">
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
         {skillCategories.map((category, i) => (
           <motion.div
             key={i}

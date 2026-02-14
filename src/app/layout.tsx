@@ -118,6 +118,29 @@ export default function RootLayout({
         <ResearchSchema />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
+        <noscript>
+          <div style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto', fontFamily: 'system-ui, sans-serif' }}>
+            <h1>Ahmed Mohammed — AI/ML Engineer &amp; Entrepreneur</h1>
+            <p>Based in Linz, Austria. Specializing in computer vision, anomaly detection, and diffusion models. Founder of <a href="https://faultrix.com">Faultrix</a>.</p>
+            <h2>About</h2>
+            <p>M.Sc. Artificial Intelligence from Johannes Kepler University Linz (JKU). Achieved 98.4% accuracy in industrial defect detection at PROFACTOR GmbH. Research focus on conditional diffusion models for out-of-distribution detection.</p>
+            <h2>Projects</h2>
+            <ul>
+              <li><strong>Faultrix</strong> — AI-powered construction quality control SaaS. ÖNORM-compliant reports in under 1 minute. <a href="https://faultrix.com">faultrix.com</a></li>
+              <li><strong>Industrial Anomaly Detection</strong> — YOLO + diffusion models pipeline. 98.4% accuracy. <a href="https://github.com/ahmed-3m/Occluded-Object-Detection-With-Tracking">GitHub</a></li>
+              <li><strong>OOD Detection Framework</strong> — Conditional diffusion models as generative classifiers. <a href="https://github.com/ahmed-3m/OOD-diffusion-detector">GitHub</a></li>
+              <li><strong>EEG Signal Classification</strong> — Deep RNN architectures for brain-computer interfaces. <a href="https://github.com/ahmed-3m/Motor-Imagery-classification">GitHub</a></li>
+            </ul>
+            <h2>Experience</h2>
+            <ul>
+              <li>Founder &amp; Full-Stack Developer — Faultrix (2025–Present)</li>
+              <li>ML Researcher — JKU Machine Learning Institute (Dec 2024–Mar 2026)</li>
+              <li>Machine Vision Researcher — PROFACTOR GmbH (Mar 2024–Nov 2024)</li>
+            </ul>
+            <h2>Contact</h2>
+            <p>Email: <a href="mailto:ahmed.mo.0595@gmail.com">ahmed.mo.0595@gmail.com</a> | <a href="https://www.linkedin.com/in/ahmed-3m/">LinkedIn</a> | <a href="https://github.com/ahmed-3m">GitHub</a></p>
+          </div>
+        </noscript>
         <ThemeProvider>
           <I18nProvider>
             {children}

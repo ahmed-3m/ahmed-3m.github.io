@@ -24,7 +24,7 @@ const socials = [
   { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/ahmed-3m/' },
   { icon: XIcon, label: 'X', href: 'https://x.com/Ahmed_mo_93' },
   { icon: Mail, label: 'Email', href: 'mailto:ahmed.mo.0595@gmail.com' },
-  { icon: Phone, label: 'Phone', href: 'tel:+4368120567353' },
+  { icon: Phone, label: 'Phone', href: 'tel:+4368120567353', ariaLabel: 'Call Ahmed' },
 ];
 
 export default function Contact() {
