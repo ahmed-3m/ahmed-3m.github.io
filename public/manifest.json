@@ -1,7 +1,7 @@
 {
   "name": "Ahmed Mohammed - AI/ML Engineer Portfolio",
   "short_name": "Ahmed Portfolio",
-  "description": "AI/ML Engineer & Entrepreneur specializing in computer vision, anomaly detection, and generative models",
+  "description": "AI/ML Engineer & Entrepreneur specializing in computer vision, anomaly detection, and generative models. Based in Linz, Austria.",
   "theme_color": "#2563eb",
   "background_color": "#ffffff",
   "display": "standalone",
@@ -9,6 +9,38 @@
   "start_url": "/",
   "orientation": "portrait-primary",
   "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/favicon-16x16.png",
+      "type": "image/png",
+      "sizes": "16x16"
+    },
+    {
+      "src": "/favicon-32x32.png",
+      "type": "image/png",
+      "sizes": "32x32"
+    },
+    {
+      "src": "/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "type": "image/png",
+      "sizes": "180x180"
+    },
     {
       "src": "/icon.svg",
       "type": "image/svg+xml",

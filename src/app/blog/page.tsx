@@ -4,6 +4,7 @@ import { ArrowLeft, Calendar, Clock, ArrowRight } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { getAllBlogPosts } from '@/lib/blog-posts';
+import { BlogTranslations } from '@/components/BlogTranslations';
 
 export const metadata: Metadata = {
   title: 'Blog | AI/ML Insights and Tutorials',
@@ -64,12 +65,12 @@ export default function BlogPage() {
             className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-8"
           >
             <ArrowLeft size={18} />
-            Back to Home
+            <BlogTranslations textKey="backToHome" />
           </Link>
 
           <h1 className="text-4xl font-bold mb-2">Blog</h1>
           <p className="text-slate-600 dark:text-slate-300 mb-8">
-            Insights and experiences from AI/ML research and production deployments
+            <BlogTranslations textKey="blogSubtitle" />
           </p>
 
           <div className="space-y-6">
@@ -119,7 +120,7 @@ export default function BlogPage() {
                     href={`/blog/${post.slug}`}
                     className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-700 font-medium"
                   >
-                    Read more
+                    <BlogTranslations textKey="readMore" />
                     <ArrowRight size={16} />
                   </Link>
                 </div>

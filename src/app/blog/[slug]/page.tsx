@@ -5,6 +5,7 @@ import { ArrowLeft, Calendar, Clock, Tag } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { getBlogPost, getAllBlogPosts } from '@/lib/blog-posts';
+import { BlogTranslations } from '@/components/BlogTranslations';
 
 interface BlogPostPageProps {
   params: {
@@ -45,7 +46,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       url: `https://ahmed-3m.github.io/blog/${post.slug}`,
       images: [
         {
-          url: '/og-image.png',
+          url: `/og-${post.slug}.png`,
           width: 1200,
           height: 630,
           alt: post.title,
@@ -56,7 +57,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       card: 'summary_large_image',
       title: post.title,
       description: post.excerpt,
-      images: ['/og-image.png'],
+      images: [`/og-${post.slug}.png`],
     },
     alternates: {
       canonical: `https://ahmed-3m.github.io/blog/${post.slug}`,
@@ -71,7 +72,7 @@ function BlogPostJsonLd({ post }: { post: any }) {
     '@type': 'BlogPosting',
     headline: post.title,
     description: post.excerpt,
-    image: 'https://ahmed-3m.github.io/og-image.png',
+    image: `https://ahmed-3m.github.io/og-${post.slug}.png`,
     author: {
       '@type': 'Person',
       name: 'Ahmed Mohammed',
@@ -216,7 +217,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
             className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-8"
           >
             <ArrowLeft size={18} />
-            Back to Blog
+            <BlogTranslations textKey="backToBlog" />
           </Link>
 
           <header className="mb-8">
@@ -265,10 +266,10 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
                 href="/blog"
                 className="text-blue-600 hover:text-blue-700 font-medium"
               >
-                ← View All Posts
+                <BlogTranslations textKey="viewAllPosts" />
               </Link>
               <div className="text-sm text-slate-500">
-                Written by Ahmed Mohammed
+                <BlogTranslations textKey="writtenBy" />
               </div>
             </div>
           </footer>
