@@ -8,9 +8,9 @@ import { getBlogPost, getAllBlogPosts } from '@/lib/blog-posts';
 import { BlogTranslations } from '@/components/BlogTranslations';
 
 interface BlogPostPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 // Generate static params for all blog posts
@@ -23,7 +23,8 @@ export async function generateStaticParams() {
 
 // Generate metadata for each blog post
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
-  const post = getBlogPost(params.slug);
+  const { slug } = await params;
+  const post = getBlogPost(slug);
 
   if (!post) {
     return {
@@ -157,8 +158,9 @@ function Breadcrumbs({ title }: { title: string }) {
   );
 }
 
-export default function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = getBlogPost(params.slug);
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const { slug } = await params;
+  const post = getBlogPost(slug);
 
   if (!post) {
     notFound();
@@ -170,36 +172,37 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
 
     return content
       .split('\n\n')
-      .map((paragraph, index) => {
+      .map((paragraph) => {
         // Handle headings
         if (paragraph.startsWith('## ')) {
-          return `<h2 class="text-2xl font-bold mt-8 mb-4" key="${index}">${paragraph.replace('## ', '')}</h2>`;
+          return `<h2 class="text-2xl font-bold mt-8 mb-4">${paragraph.replace('## ', '')}</h2>`;
         }
         if (paragraph.startsWith('### ')) {
-          return `<h3 class="text-xl font-semibold mt-6 mb-3" key="${index}">${paragraph.replace('### ', '')}</h3>`;
+          return `<h3 class="text-xl font-semibold mt-6 mb-3">${paragraph.replace('### ', '')}</h3>`;
         }
-        // Handle lists
+        // Handle unordered lists
         if (paragraph.startsWith('- ') || paragraph.startsWith('* ')) {
-          const items = paragraph.split('\n').map((item, i) =>
-            `<li key="${i}">${item.replace(/^[-*]\s/, '')}</li>`
+          const items = paragraph.split('\n').map((item) =>
+            `<li>${item.replace(/^[-*]\s/, '')}</li>`
           ).join('');
-          return `<ul class="list-disc list-inside mb-4 space-y-2" key="${index}">${items}</ul>`;
+          return `<ul class="list-disc list-inside mb-4 space-y-2">${items}</ul>`;
         }
+        // Handle ordered lists
         if (paragraph.match(/^\d+\./)) {
-          const items = paragraph.split('\n').map((item, i) =>
-            `<li key="${i}">${item.replace(/^\d+\.\s/, '')}</li>`
+          const items = paragraph.split('\n').map((item) =>
+            `<li>${item.replace(/^\d+\.\s/, '')}</li>`
           ).join('');
-          return `<ol class="list-decimal list-inside mb-4 space-y-2" key="${index}">${items}</ol>`;
+          return `<ol class="list-decimal list-inside mb-4 space-y-2">${items}</ol>`;
         }
         // Handle code blocks
         if (paragraph.startsWith('```')) {
           const code = paragraph.replace(/```[\w]*\n?/g, '').replace(/```/g, '');
-          return `<pre class="bg-slate-100 dark:bg-slate-800 p-4 rounded-lg overflow-x-auto mb-4" key="${index}"><code>${code}</code></pre>`;
+          return `<pre class="bg-slate-100 dark:bg-slate-800 p-4 rounded-lg overflow-x-auto mb-4"><code>${code}</code></pre>`;
         }
         // Handle bold text
         paragraph = paragraph.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
         // Regular paragraph
-        return `<p class="mb-4 leading-relaxed text-slate-600 dark:text-slate-300" key="${index}">${paragraph}</p>`;
+        return `<p class="mb-4 leading-relaxed text-slate-600 dark:text-slate-300">${paragraph}</p>`;
       })
       .join('');
   };

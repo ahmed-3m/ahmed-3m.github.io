@@ -65,11 +65,11 @@ export function PersonSchema() {
       },
       {
         '@type': 'CollegeOrUniversity',
-        name: 'Karunya Institute of Technology and Sciences',
+        name: 'Eastern Mediterranean University',
         address: {
           '@type': 'PostalAddress',
-          addressLocality: 'Coimbatore',
-          addressCountry: 'IN',
+          addressLocality: 'Famagusta',
+          addressCountry: 'CY',
         },
       },
     ],
@@ -92,9 +92,9 @@ export function PersonSchema() {
         educationalLevel: "Bachelor's Degree",
         recognizedBy: {
           '@type': 'CollegeOrUniversity',
-          name: 'Karunya Institute of Technology and Sciences',
+          name: 'Eastern Mediterranean University',
         },
-        dateCreated: '2020',
+        dateCreated: '2018',
       },
     ],
     hasOccupation: {
@@ -275,7 +275,7 @@ export function SocialProfileSchema() {
         },
         {
           '@type': 'CollegeOrUniversity',
-          name: 'Karunya Institute of Technology and Sciences',
+          name: 'Eastern Mediterranean University',
         },
       ],
       knowsAbout: [
