@@ -1,6 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { FormEvent, useState } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Mail, Github, Linkedin, Phone, Bot, BarChart3 } from 'lucide-react';
 import { useI18n } from '@/lib/i18n';
 
@@ -29,10 +30,21 @@ const socials = [
 
 export default function Contact() {
   const { t } = useI18n();
+  const shouldReduceMotion = useReducedMotion();
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const subject = encodeURIComponent(`Portfolio inquiry from ${formData.name || 'Website visitor'}`);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
+    );
+    window.location.href = `mailto:ahmed.mo.0595@gmail.com?subject=${subject}&body=${body}`;
+  };
 
   return (
     <section id="contact" className="py-20 bg-slate-50 dark:bg-slate-800">
-      <div className="max-w-6xl mx-auto px-5 text-center">
+      <div className="max-w-6xl mx-auto px-5">
         <h2 className="text-4xl font-bold mb-4">
           {t("Let's Build Something Amazing", 'Lassen Sie uns etwas Großartiges schaffen')}
         </h2>
@@ -43,23 +55,95 @@ export default function Contact() {
           )}
         </p>
 
-        <div className="flex justify-center gap-4 flex-wrap">
-          {socials.map((social, i) => (
-            <motion.a
-              key={i}
-              href={social.href}
-              target={social.href.startsWith('http') ? '_blank' : undefined}
-              rel={social.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: i * 0.1 }}
-              viewport={{ once: true }}
-              className="card-3d flex flex-col items-center gap-2 p-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 min-w-[100px]"
+        <div className="grid gap-6 lg:grid-cols-[1.25fr_1fr]">
+          <motion.form
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.45 }}
+            viewport={{ once: true }}
+            className="glass-surface glass-medium glass-noise p-6 sm:p-8"
+            onSubmit={handleSubmit}
+          >
+            <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-5">
+              {t('Send a quick message', 'Senden Sie eine kurze Nachricht')}
+            </h3>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-1.5">
+                  {t('Name', 'Name')}
+                </label>
+                <input
+                  id="name"
+                  type="text"
+                  value={formData.name}
+                  onChange={(event) => setFormData((prev) => ({ ...prev, name: event.target.value }))}
+                  className="w-full rounded-lg border border-slate-300/80 dark:border-slate-600 bg-white/80 dark:bg-slate-900/75 px-3 py-2.5 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 dark:placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/80 focus-visible:border-blue-500"
+                  placeholder={t('Your name', 'Ihr Name')}
+                />
+              </div>
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-1.5">
+                  {t('Email', 'E-Mail')}
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={(event) => setFormData((prev) => ({ ...prev, email: event.target.value }))}
+                  required
+                  className="w-full rounded-lg border border-slate-300/80 dark:border-slate-600 bg-white/80 dark:bg-slate-900/75 px-3 py-2.5 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 dark:placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/80 focus-visible:border-blue-500"
+                  placeholder={t('you@company.com', 'sie@firma.com')}
+                />
+              </div>
+            </div>
+
+            <div className="mt-4">
+              <label htmlFor="message" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-1.5">
+                {t('Message', 'Nachricht')}
+              </label>
+              <textarea
+                id="message"
+                rows={5}
+                value={formData.message}
+                onChange={(event) => setFormData((prev) => ({ ...prev, message: event.target.value }))}
+                required
+                className="w-full rounded-lg border border-slate-300/80 dark:border-slate-600 bg-white/80 dark:bg-slate-900/75 px-3 py-2.5 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 dark:placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/80 focus-visible:border-blue-500"
+                placeholder={t('Tell me about your project or challenge', 'Erzählen Sie mir von Ihrem Projekt oder Ihrer Herausforderung')}
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="mt-5 inline-flex items-center justify-center rounded-lg bg-blue-600 px-4 py-2.5 text-white font-semibold hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/80 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent transition-colors"
             >
-              <social.icon size={28} className="text-blue-600" />
-              <span className="text-sm">{social.label}</span>
-            </motion.a>
-          ))}
+              {t('Send Message', 'Nachricht senden')}
+            </button>
+          </motion.form>
+
+          <div className="glass-surface glass-subtle glass-noise p-5 sm:p-6">
+            <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-4">
+              {t('Or reach me directly', 'Oder kontaktieren Sie mich direkt')}
+            </h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 gap-3">
+              {socials.map((social, i) => (
+                <motion.a
+                  key={i}
+                  href={social.href}
+                  target={social.href.startsWith('http') ? '_blank' : undefined}
+                  rel={social.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.3, delay: i * 0.05 }}
+                  viewport={{ once: true }}
+                  className="glass-surface glass-subtle flex flex-col items-center gap-2 p-3.5 min-w-[100px] text-center"
+                >
+                  <social.icon size={24} className="text-blue-600" />
+                  <span className="text-sm font-medium text-slate-700 dark:text-slate-200">{social.label}</span>
+                </motion.a>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

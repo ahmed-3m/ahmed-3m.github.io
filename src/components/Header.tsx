@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { Moon, Sun, Menu, X } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { Moon, Sun, Menu, X, Droplets } from 'lucide-react';
 import { useTheme } from '@/lib/ThemeContext';
 import { useI18n } from '@/lib/i18n';
 
@@ -18,14 +18,17 @@ const navItems = [
 ];
 
 export default function Header() {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme, reduceTransparency, toggleReduceTransparency } = useTheme();
   const { lang, toggleLang, t } = useI18n();
+  const shouldReduceMotion = useReducedMotion();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const controlButtonClass =
+    'h-9 w-9 inline-flex items-center justify-center rounded-lg text-slate-700 dark:text-slate-200 hover:text-blue-700 dark:hover:text-blue-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/80 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent';
 
   return (
-    <header className="fixed top-0 w-full bg-white/90 dark:bg-slate-900/95 backdrop-blur-md z-50 border-b border-slate-200 dark:border-slate-700 transition-all">
-      <div className="max-w-6xl mx-auto px-5">
-        <nav className="flex justify-between items-center py-4">
+    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5">
+      <div className="max-w-6xl mx-auto">
+        <nav className="glass-surface glass-medium glass-noise flex justify-between items-center px-4 py-3 sm:px-5">
           <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             AM
           </Link>
@@ -36,7 +39,7 @@ export default function Header() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors relative group"
+                  className="rounded-md px-1 py-1 text-slate-700 dark:text-slate-100 hover:text-blue-700 dark:hover:text-blue-300 font-medium transition-colors relative group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/80 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
                 >
                   {t(item.en, item.de)}
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full" />
@@ -48,21 +51,30 @@ export default function Header() {
           <div className="flex items-center gap-3">
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+              className={controlButtonClass}
               aria-label="Toggle theme"
             >
               {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
             </button>
             <button
+              onClick={toggleReduceTransparency}
+              className={`${controlButtonClass} ${reduceTransparency ? 'text-blue-700 dark:text-blue-300' : ''}`}
+              aria-label={t('Toggle reduced transparency', 'Reduzierte Transparenz umschalten')}
+              aria-pressed={reduceTransparency}
+              title={t('Reduce transparency', 'Transparenz reduzieren')}
+            >
+              <Droplets size={18} className={reduceTransparency ? 'opacity-55' : ''} />
+            </button>
+            <button
               onClick={toggleLang}
-              className="w-[34px] h-[34px] rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors flex items-center justify-center"
+              className={`${controlButtonClass} text-[18px] leading-none`}
               aria-label="Toggle language"
             >
-              <span className="text-[18px] leading-none">{lang === 'en' ? '🇬🇧' : '🇦🇹'}</span>
+              <span>{lang === 'en' ? '🇬🇧' : '🇦🇹'}</span>
             </button>
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden p-2"
+              className={`md:hidden ${controlButtonClass}`}
               aria-label="Toggle menu"
             >
               {mobileOpen ? <X size={24} /> : <Menu size={24} />}
@@ -73,16 +85,17 @@ export default function Header() {
         {/* Mobile Nav */}
         {mobileOpen && (
           <motion.ul
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="md:hidden py-4 border-t border-slate-200 dark:border-slate-700"
+            initial={shouldReduceMotion ? false : { opacity: 0, y: -8 }}
+            animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.2 }}
+            className="glass-surface glass-strong glass-noise md:hidden mt-3 p-3"
           >
             {navItems.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
-                  className="block py-3 text-slate-600 dark:text-slate-300 hover:text-blue-600"
+                  className="block rounded-lg px-3 py-2.5 text-slate-700 dark:text-slate-100 hover:text-blue-700 dark:hover:text-blue-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/80"
                 >
                   {t(item.en, item.de)}
                 </Link>

@@ -53,6 +53,42 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000)
 
+## Liquid Glass system usage
+
+Core utilities are defined in `src/app/globals.css`.
+
+```html
+<!-- Base surface + variant -->
+<div class="glass-surface glass-subtle">...</div>
+<div class="glass-surface glass-medium">...</div>
+<div class="glass-surface glass-strong">...</div>
+
+<!-- Add subtle texture when needed -->
+<div class="glass-surface glass-medium glass-noise">...</div>
+
+<!-- Card behavior: subtle by default, medium on hover -->
+<article class="glass-surface glass-subtle glass-card glass-noise">...</article>
+```
+
+Available token groups:
+
+- `--glass-bg`, `--glass-border`, `--glass-shadow`, `--glass-highlight`
+- `--glass-blur`, `--glass-sat`, `--radius`, `--elevation`
+- Light and dark token values are both included; dark values live under `[data-theme="dark"]`.
+
+Preferences and fallbacks:
+
+- `Reduce Transparency` toggle is available in the header and persists via `localStorage`.
+- If `backdrop-filter` is unsupported, all glass surfaces automatically fall back to premium opaque backgrounds.
+- Reduced-motion users get shortened/disabled transitions and animation-heavy effects are suppressed.
+
+Before/after checklist:
+
+- Readability: glass surfaces keep high-contrast text/icon colors.
+- Fallback behavior: no-blur environments render opaque premium surfaces.
+- Reduced motion: `prefers-reduced-motion` and motion reduction logic are applied.
+- Reduced transparency: user toggle and system preference fallback are both respected.
+
 ## 📫 Contact
 
 - **Email**: [ahmed.mo.0595@gmail.com](mailto:ahmed.mo.0595@gmail.com)

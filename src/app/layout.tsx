@@ -99,9 +99,14 @@ export default function RootLayout({
           (function() {
             try {
               var theme = localStorage.getItem('theme');
-              if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.setAttribute('data-theme', 'dark');
-              }
+              var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+              var initialTheme = theme === 'dark' || (!theme && prefersDark) ? 'dark' : 'light';
+              document.documentElement.setAttribute('data-theme', initialTheme);
+
+              var storedTransparency = localStorage.getItem('reduceTransparency');
+              var prefersReducedTransparency = window.matchMedia('(prefers-reduced-transparency: reduce)').matches;
+              var reduceTransparency = storedTransparency === 'true' || (!storedTransparency && prefersReducedTransparency);
+              document.documentElement.setAttribute('data-reduce-transparency', reduceTransparency ? 'true' : 'false');
             } catch (e) {}
           })();
         `}} />

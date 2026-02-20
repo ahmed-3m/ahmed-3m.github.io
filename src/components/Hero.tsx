@@ -1,12 +1,13 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
 import { useI18n } from '@/lib/i18n';
 import { ChevronDown } from 'lucide-react';
 
 export default function Hero() {
   const { t } = useI18n();
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <section className="relative pt-32 pb-24 overflow-hidden min-h-[90vh] flex items-center">
@@ -24,21 +25,21 @@ export default function Hero() {
 
       {/* Floating gradient orbs */}
       <motion.div
-        animate={{
+        animate={shouldReduceMotion ? { x: 0, y: 0, scale: 1 } : {
           x: [0, 30, -20, 0],
           y: [0, -40, 20, 0],
           scale: [1, 1.1, 0.95, 1],
         }}
-        transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+        transition={shouldReduceMotion ? { duration: 0 } : { duration: 20, repeat: Infinity, ease: 'linear' }}
         className="absolute top-20 right-1/4 w-72 h-72 bg-blue-400/20 dark:bg-blue-500/10 rounded-full blur-3xl"
       />
       <motion.div
-        animate={{
+        animate={shouldReduceMotion ? { x: 0, y: 0, scale: 1 } : {
           x: [0, -30, 20, 0],
           y: [0, 30, -30, 0],
           scale: [1, 0.9, 1.1, 1],
         }}
-        transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+        transition={shouldReduceMotion ? { duration: 0 } : { duration: 25, repeat: Infinity, ease: 'linear' }}
         className="absolute bottom-20 left-1/4 w-96 h-96 bg-purple-400/15 dark:bg-purple-500/10 rounded-full blur-3xl"
       />
 
@@ -47,9 +48,9 @@ export default function Hero() {
 
           {/* Headshot */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
+            initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6 }}
             className="flex-shrink-0"
           >
             <div className="relative">
@@ -71,9 +72,9 @@ export default function Hero() {
           <div className="text-center md:text-left">
             {/* Availability badge */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
               className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100/80 dark:bg-blue-900/30 border border-blue-200/50 dark:border-blue-800/50 mb-6"
             >
               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
@@ -83,9 +84,9 @@ export default function Hero() {
             </motion.div>
 
             <motion.h1
-              initial={{ opacity: 0, y: 20 }}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.1 }}
               className="text-5xl md:text-7xl font-extrabold mb-4 leading-tight"
             >
               <span className="text-slate-800 dark:text-slate-100">Ahmed </span>
@@ -95,9 +96,9 @@ export default function Hero() {
             </motion.h1>
 
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: 0.2 }}
               className="text-xl md:text-2xl text-slate-500 dark:text-slate-400 mb-8"
             >
               {t('AI/ML Engineer & Entrepreneur', 'AI/ML Ingenieur & Unternehmer')}
@@ -105,9 +106,9 @@ export default function Hero() {
 
             {/* Stats row */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: 0.3 }}
               className="flex justify-center md:justify-start gap-10 md:gap-14 flex-wrap mb-10"
             >
               {[
@@ -117,9 +118,9 @@ export default function Hero() {
               ].map((stat, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, scale: 0.8 }}
+                  initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.4, delay: 0.4 + i * 0.1 }}
+                  transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.4, delay: 0.4 + i * 0.1 }}
                   className="text-center group"
                 >
                   <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent group-hover:scale-110 transition-transform">
@@ -132,9 +133,9 @@ export default function Hero() {
 
             {/* CTA buttons */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: 0.5 }}
               className="flex gap-4 justify-center md:justify-start flex-wrap"
             >
               <a
@@ -155,15 +156,15 @@ export default function Hero() {
 
         {/* Scroll indicator */}
         <motion.div
-          initial={{ opacity: 0 }}
+          initial={shouldReduceMotion ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 1 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { delay: 1.5, duration: 1 }}
           className="mt-16 text-center"
         >
           <motion.a
             href="#about"
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+            animate={shouldReduceMotion ? { y: 0 } : { y: [0, 8, 0] }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 2, repeat: Infinity, ease: 'easeInOut' }}
             className="inline-flex flex-col items-center text-slate-400 hover:text-blue-500 transition-colors"
           >
             <span className="text-xs mb-1">{t('Scroll', 'Scrollen')}</span>

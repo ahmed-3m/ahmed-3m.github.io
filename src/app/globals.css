@@ -17,12 +17,81 @@
 :root {
   --background: #ffffff;
   --foreground: #0f172a;
+  --radius: 1rem;
+  --elevation: 0 18px 40px -26px rgba(15, 23, 42, 0.45);
+
+  --glass-blur: 14px;
+  --glass-sat: 145%;
+  --glass-bg: rgba(255, 255, 255, 0.64);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --glass-shadow: 0 20px 45px -30px rgba(15, 23, 42, 0.45);
+  --glass-highlight: rgba(255, 255, 255, 0.52);
+  --glass-fallback-bg: #f8fafc;
+  --glass-foreground: #0f172a;
+
+  --glass-subtle-bg: rgba(255, 255, 255, 0.54);
+  --glass-subtle-border: rgba(255, 255, 255, 0.58);
+  --glass-subtle-shadow: 0 12px 30px -24px rgba(15, 23, 42, 0.42);
+  --glass-subtle-highlight: rgba(255, 255, 255, 0.45);
+  --glass-subtle-fallback-bg: rgba(248, 250, 252, 0.98);
+  --glass-subtle-blur: 10px;
+  --glass-subtle-sat: 130%;
+
+  --glass-medium-bg: rgba(255, 255, 255, 0.68);
+  --glass-medium-border: rgba(255, 255, 255, 0.72);
+  --glass-medium-shadow: 0 18px 38px -24px rgba(15, 23, 42, 0.42);
+  --glass-medium-highlight: rgba(255, 255, 255, 0.56);
+  --glass-medium-fallback-bg: rgba(241, 245, 249, 0.98);
+  --glass-medium-blur: 14px;
+  --glass-medium-sat: 145%;
+
+  --glass-strong-bg: rgba(255, 255, 255, 0.78);
+  --glass-strong-border: rgba(255, 255, 255, 0.86);
+  --glass-strong-shadow: 0 24px 48px -26px rgba(15, 23, 42, 0.48);
+  --glass-strong-highlight: rgba(255, 255, 255, 0.62);
+  --glass-strong-fallback-bg: rgba(226, 232, 240, 0.99);
+  --glass-strong-blur: 18px;
+  --glass-strong-sat: 160%;
+  --glass-focus-ring: rgba(37, 99, 235, 0.78);
 }
 
 [data-theme="dark"] {
   --background: #0f172a;
   --foreground: #f1f5f9;
   color-scheme: dark;
+  --elevation: 0 24px 50px -28px rgba(2, 6, 23, 0.8);
+
+  --glass-bg: rgba(15, 23, 42, 0.62);
+  --glass-border: rgba(148, 163, 184, 0.24);
+  --glass-shadow: 0 22px 45px -30px rgba(2, 6, 23, 0.78);
+  --glass-highlight: rgba(226, 232, 240, 0.15);
+  --glass-fallback-bg: #111b30;
+  --glass-foreground: #f8fafc;
+
+  --glass-subtle-bg: rgba(15, 23, 42, 0.52);
+  --glass-subtle-border: rgba(148, 163, 184, 0.22);
+  --glass-subtle-shadow: 0 16px 36px -24px rgba(2, 6, 23, 0.74);
+  --glass-subtle-highlight: rgba(226, 232, 240, 0.12);
+  --glass-subtle-fallback-bg: rgba(15, 23, 42, 0.96);
+  --glass-subtle-blur: 10px;
+  --glass-subtle-sat: 125%;
+
+  --glass-medium-bg: rgba(15, 23, 42, 0.65);
+  --glass-medium-border: rgba(148, 163, 184, 0.28);
+  --glass-medium-shadow: 0 22px 42px -24px rgba(2, 6, 23, 0.8);
+  --glass-medium-highlight: rgba(226, 232, 240, 0.16);
+  --glass-medium-fallback-bg: rgba(15, 23, 42, 0.98);
+  --glass-medium-blur: 14px;
+  --glass-medium-sat: 140%;
+
+  --glass-strong-bg: rgba(15, 23, 42, 0.76);
+  --glass-strong-border: rgba(148, 163, 184, 0.35);
+  --glass-strong-shadow: 0 28px 54px -26px rgba(2, 6, 23, 0.86);
+  --glass-strong-highlight: rgba(226, 232, 240, 0.2);
+  --glass-strong-fallback-bg: rgba(2, 6, 23, 0.99);
+  --glass-strong-blur: 18px;
+  --glass-strong-sat: 155%;
+  --glass-focus-ring: rgba(96, 165, 250, 0.82);
 }
 
 @theme inline {
@@ -48,6 +117,142 @@ button,
 [role="button"],
 label[for] {
   cursor: pointer;
+}
+
+.glass-surface {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: var(--radius);
+  color: var(--glass-foreground);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    box-shadow 220ms ease,
+    transform 220ms ease;
+}
+
+.glass-surface::before,
+.glass-surface::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.glass-surface::before {
+  background: linear-gradient(140deg, var(--glass-highlight), transparent 55%);
+  opacity: 0.7;
+}
+
+.glass-surface::after {
+  opacity: 0;
+}
+
+.glass-noise::after {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.25) 0.6px, transparent 0.6px);
+  background-size: 3px 3px;
+  mix-blend-mode: soft-light;
+  opacity: 0.04;
+}
+
+.glass-surface:hover {
+  border-color: color-mix(in srgb, var(--glass-border), #ffffff 12%);
+}
+
+.glass-surface:active {
+  box-shadow: var(--elevation);
+}
+
+.glass-surface:focus-visible {
+  outline: 2px solid var(--glass-focus-ring);
+  outline-offset: 2px;
+}
+
+.glass-subtle {
+  --glass-bg: var(--glass-subtle-bg);
+  --glass-border: var(--glass-subtle-border);
+  --glass-shadow: var(--glass-subtle-shadow);
+  --glass-highlight: var(--glass-subtle-highlight);
+  --glass-fallback-bg: var(--glass-subtle-fallback-bg);
+  --glass-blur: var(--glass-subtle-blur);
+  --glass-sat: var(--glass-subtle-sat);
+}
+
+.glass-medium {
+  --glass-bg: var(--glass-medium-bg);
+  --glass-border: var(--glass-medium-border);
+  --glass-shadow: var(--glass-medium-shadow);
+  --glass-highlight: var(--glass-medium-highlight);
+  --glass-fallback-bg: var(--glass-medium-fallback-bg);
+  --glass-blur: var(--glass-medium-blur);
+  --glass-sat: var(--glass-medium-sat);
+}
+
+.glass-strong {
+  --glass-bg: var(--glass-strong-bg);
+  --glass-border: var(--glass-strong-border);
+  --glass-shadow: var(--glass-strong-shadow);
+  --glass-highlight: var(--glass-strong-highlight);
+  --glass-fallback-bg: var(--glass-strong-fallback-bg);
+  --glass-blur: var(--glass-strong-blur);
+  --glass-sat: var(--glass-strong-sat);
+}
+
+.glass-card {
+  border-color: var(--glass-subtle-border);
+  background: var(--glass-subtle-bg);
+  box-shadow: var(--glass-subtle-shadow);
+}
+
+.glass-card:hover,
+.glass-card:focus-within {
+  background: var(--glass-medium-bg);
+  border-color: var(--glass-medium-border);
+  box-shadow: var(--glass-medium-shadow);
+  transform: translateY(-4px);
+}
+
+.glass-card:active {
+  transform: translateY(-1px);
+}
+
+.glass-modal-panel {
+  --glass-bg: var(--glass-strong-bg);
+  --glass-border: var(--glass-strong-border);
+  --glass-shadow: var(--glass-strong-shadow);
+  --glass-highlight: var(--glass-strong-highlight);
+  --glass-fallback-bg: var(--glass-strong-fallback-bg);
+  --glass-blur: var(--glass-strong-blur);
+  --glass-sat: var(--glass-strong-sat);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-surface {
+    background: var(--glass-fallback-bg);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .glass-surface::before {
+    opacity: 0.45;
+  }
+}
+
+html[data-reduce-transparency="true"] .glass-surface {
+  background: var(--glass-fallback-bg);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+html[data-reduce-transparency="true"] .glass-surface::before {
+  opacity: 0.35;
 }
 
 /* 3D Button Effects with Blue Glow */
@@ -131,4 +336,25 @@ label[for] {
     0 10px 10px -5px rgba(0, 0, 0, 0.3),
     0 0 25px rgba(59, 130, 246, 0.3),
     0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  .glass-card:hover,
+  .glass-card:focus-within,
+  .glass-card:active {
+    transform: none;
+  }
 }

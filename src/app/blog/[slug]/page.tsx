@@ -5,6 +5,7 @@ import { ArrowLeft, Calendar, Clock, Tag } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { getBlogPost, getAllBlogPosts } from '@/lib/blog-posts';
+import type { BlogPost } from '@/lib/blog-posts';
 import { BlogTranslations } from '@/components/BlogTranslations';
 
 interface BlogPostPageProps {
@@ -67,7 +68,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 }
 
 // Blog post component with structured data
-function BlogPostJsonLd({ post }: { post: any }) {
+function BlogPostJsonLd({ post }: { post: BlogPost }) {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -226,35 +227,37 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <header className="mb-8">
             <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
 
-            <div className="flex items-center gap-4 text-sm text-slate-500 dark:text-slate-400">
-              <span className="flex items-center gap-1">
-                <Calendar size={16} />
-                <time dateTime={post.date}>
-                  {new Date(post.date).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                  })}
-                </time>
-              </span>
-              {post.readingTime && (
+            <div className="glass-surface glass-subtle glass-noise p-4 sm:p-5">
+              <div className="flex flex-wrap items-center gap-4 text-sm text-slate-600 dark:text-slate-300">
                 <span className="flex items-center gap-1">
-                  <Clock size={16} />
-                  {post.readingTime}
+                  <Calendar size={16} />
+                  <time dateTime={post.date}>
+                    {new Date(post.date).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
+                  </time>
                 </span>
-              )}
-            </div>
+                {post.readingTime && (
+                  <span className="flex items-center gap-1">
+                    <Clock size={16} />
+                    {post.readingTime}
+                  </span>
+                )}
+              </div>
 
-            <div className="flex flex-wrap gap-2 mt-4">
-              {post.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-full text-sm"
-                >
-                  <Tag size={12} />
-                  {tag}
-                </span>
-              ))}
+              <div className="flex flex-wrap gap-2 mt-4">
+                {post.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100/90 dark:bg-blue-900/75 text-blue-800 dark:text-blue-200 rounded-full text-sm border border-blue-200/80 dark:border-blue-800/80"
+                  >
+                    <Tag size={12} />
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </div>
           </header>
 

@@ -1,7 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { Github, ExternalLink, ArrowUpRight } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { Github, ArrowUpRight } from 'lucide-react';
 import { useI18n } from '@/lib/i18n';
 
 const projects = [
@@ -63,13 +63,14 @@ const projects = [
 
 export default function Projects() {
   const { t } = useI18n();
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <section id="projects" className="py-20 max-w-6xl mx-auto px-5">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
         viewport={{ once: true }}
         className="text-center mb-14"
       >
@@ -88,11 +89,11 @@ export default function Projects() {
         {projects.map((project, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, y: 20 }}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: i * 0.1 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: i * 0.1 }}
             viewport={{ once: true }}
-            className={`card-3d group relative bg-gradient-to-br ${project.gradient} p-6 rounded-xl border border-slate-200 dark:border-slate-700 ${project.borderHover} transition-all duration-300`}
+            className={`glass-surface glass-subtle glass-card glass-noise group relative bg-gradient-to-br ${project.gradient} p-6 rounded-xl ${project.borderHover} transition-all duration-300`}
           >
             {/* Project icon */}
             {project.title.en === 'Faultrix' ? (
@@ -123,7 +124,7 @@ export default function Projects() {
               {project.metrics.map((metric) => (
                 <span
                   key={metric}
-                  className="px-2.5 py-1 bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-md text-xs font-semibold text-blue-700 dark:text-blue-300 border border-blue-200/50 dark:border-blue-800/50"
+                  className="px-2.5 py-1 bg-white/70 dark:bg-slate-900/70 rounded-md text-xs font-semibold text-blue-700 dark:text-blue-300 border border-blue-200/70 dark:border-blue-800/70"
                 >
                   {metric}
                 </span>
