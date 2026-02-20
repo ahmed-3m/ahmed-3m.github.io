@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useSyncExternalStore } from 'react';
 import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Moon, Sun, Menu, X, Droplets } from 'lucide-react';
@@ -21,6 +21,13 @@ export default function Header() {
   const { theme, toggleTheme, reduceTransparency, toggleReduceTransparency } = useTheme();
   const { lang, toggleLang, t } = useI18n();
   const shouldReduceMotion = useReducedMotion();
+  const isHydrated = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
+  const safeTheme = isHydrated ? theme : 'light';
+  const safeReduceTransparency = isHydrated ? reduceTransparency : false;
   const [mobileOpen, setMobileOpen] = useState(false);
   const controlButtonClass =
     'h-9 w-9 inline-flex items-center justify-center rounded-lg text-slate-700 dark:text-slate-200 hover:text-blue-700 dark:hover:text-blue-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/80 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent';
@@ -54,16 +61,16 @@ export default function Header() {
               className={controlButtonClass}
               aria-label="Toggle theme"
             >
-              {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+              {safeTheme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
             </button>
             <button
               onClick={toggleReduceTransparency}
-              className={`${controlButtonClass} ${reduceTransparency ? 'text-blue-700 dark:text-blue-300' : ''}`}
+              className={`${controlButtonClass} ${safeReduceTransparency ? 'text-blue-700 dark:text-blue-300' : ''}`}
               aria-label={t('Toggle reduced transparency', 'Reduzierte Transparenz umschalten')}
-              aria-pressed={reduceTransparency}
+              aria-pressed={safeReduceTransparency}
               title={t('Reduce transparency', 'Transparenz reduzieren')}
             >
-              <Droplets size={18} className={reduceTransparency ? 'opacity-55' : ''} />
+              <Droplets size={18} className={safeReduceTransparency ? 'opacity-55' : ''} />
             </button>
             <button
               onClick={toggleLang}
