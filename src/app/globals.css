@@ -168,8 +168,7 @@ body::before {
 
 /* ── HERO ── */
 .cd-hero {
-  padding: 80px 0 80px; min-height: 100vh;
-  display: flex; align-items: flex-start;
+  padding: 80px 0 96px;
   border-bottom: 1px solid var(--cd-b0);
 }
 .cd-hero-grid {
