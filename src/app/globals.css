@@ -168,7 +168,7 @@ body::before {
 
 /* ── HERO ── */
 .cd-hero {
-  padding: 160px 0 96px; min-height: 100vh;
+  padding: 100px 0 80px; min-height: 100vh;
   display: flex; align-items: center;
   border-bottom: 1px solid var(--cd-b0);
 }
