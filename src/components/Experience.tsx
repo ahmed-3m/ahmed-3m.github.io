@@ -51,7 +51,7 @@ export default function Experience() {
   return (
     <section id="experience" className="cd-section">
       <div className="cd-container">
-         <div className="cd-section-eyebrow">// 03 — Experience</div>
+        <div className="cd-section-eyebrow">// 03 — Experience</div>
         <h2 className="cd-section-title" style={{ marginBottom: 48 }}>Where I&apos;ve worked.</h2>
 
         <div className="cd-timeline">

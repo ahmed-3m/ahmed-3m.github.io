@@ -40,7 +40,7 @@ export default function Research() {
   return (
     <section id="research" className="cd-section">
       <div className="cd-container">
-         <div className="cd-section-eyebrow">// 05 — Research</div>
+        <div className="cd-section-eyebrow">// 04 — Research</div>
         <h2 className="cd-section-title" style={{ marginBottom: 32 }}>Publications &amp; Thesis</h2>
 
          <div className="cd-research-featured reveal">

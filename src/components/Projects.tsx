@@ -7,7 +7,7 @@ export default function Projects() {
   return (
     <section id="projects" className="cd-section">
       <div className="cd-container">
-         <div className="cd-section-eyebrow">// 02 — Projects</div>
+        <div className="cd-section-eyebrow">// 02 — Projects</div>
         <h2 className="cd-section-title">Research that ships.</h2>
 
         <div className="cd-projects-grid">
