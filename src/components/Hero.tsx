@@ -33,24 +33,24 @@ export default function Hero() {
               <a href="#projects" className="cd-btn-primary">View work →</a>
               <a href="#contact" className="cd-btn-ghost">Get in touch</a>
             </div>
-            <div className="cd-hero-stats">
-              <div className="cd-stat">
-                <div className="cd-stat-num">4<span className="a">+</span></div>
-                <div className="cd-stat-label">Years in AI/ML</div>
-              </div>
-              <div className="cd-stat">
-                <div className="cd-stat-num">98<span className="a">.</span>4<span style={{ fontSize: 14, color: 'var(--cd-fg3)', fontWeight: 400 }}>%</span></div>
-                <div className="cd-stat-label">Detection accuracy</div>
-              </div>
-              <div className="cd-stat">
-                <div className="cd-stat-num">~15<span className="g" style={{ fontSize: 16 }}>%</span></div>
-                <div className="cd-stat-label">Efficiency gain</div>
-              </div>
-              <div className="cd-stat">
-                <div className="cd-stat-num">&lt;1<span style={{ fontSize: 14, color: 'var(--cd-fg3)', fontWeight: 400 }}> min</span></div>
-                <div className="cd-stat-label">Report generation</div>
-              </div>
-            </div>
+             <div className="cd-hero-stats">
+               <div className="cd-stat">
+                 <div className="cd-stat-num">4<span className="a">+</span></div>
+                 <div className="cd-stat-label">Years in AI/ML</div>
+               </div>
+               <div className="cd-stat">
+                 <div className="cd-stat-num">99<span className="a">.</span>03<span style={{ fontSize: 14, color: 'var(--cd-fg3)', fontWeight: 400 }}>%</span></div>
+                 <div className="cd-stat-label">OOD Detection AUROC</div>
+               </div>
+               <div className="cd-stat">
+                 <div className="cd-stat-num">+18.8<span className="g" style={{ fontSize: 14 }}>pp</span></div>
+                 <div className="cd-stat-label">Improvement over baseline</div>
+               </div>
+               <div className="cd-stat">
+                 <div className="cd-stat-num">&lt;1<span style={{ fontSize: 14, color: 'var(--cd-fg3)', fontWeight: 400 }}> min</span></div>
+                 <div className="cd-stat-label">Thesis plots generation</div>
+               </div>
+             </div>
           </div>
 
            {/* Right: terminal */}
