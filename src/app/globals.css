@@ -168,8 +168,8 @@ body::before {
 
 /* ── HERO ── */
 .cd-hero {
-  padding: 100px 0 80px; min-height: 100vh;
-  display: flex; align-items: center;
+  padding: 80px 0 80px; min-height: 100vh;
+  display: flex; align-items: flex-start;
   border-bottom: 1px solid var(--cd-b0);
 }
 .cd-hero-grid {
@@ -623,7 +623,7 @@ body::before {
   .cd-container { padding: 0 20px; }
   .cd-nav-links { display: none; }
   .cd-nav-mobile-btn { display: block; }
-  .cd-hero { padding: 100px 0 60px; }
+  .cd-hero { padding: 80px 0 60px; }
   .cd-hero-grid { grid-template-columns: 1fr; gap: 40px; }
   .cd-about-grid { grid-template-columns: 1fr; gap: 40px; }
   .cd-projects-grid { grid-template-columns: 1fr; }

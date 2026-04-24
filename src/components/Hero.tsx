@@ -54,7 +54,7 @@ export default function Hero() {
           </div>
 
           {/* Right: terminal */}
-          <div style={{ paddingTop: 48 }}>
+          <div>
             <div className="cd-hero-terminal">
               <div className="cd-term-bar">
                 <div className="cd-term-dot" style={{ background: '#ff5f57' }} />
