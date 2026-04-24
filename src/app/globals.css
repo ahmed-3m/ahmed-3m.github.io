@@ -248,8 +248,8 @@ body::before {
 .tg { color: var(--cd-success); }
 .tw { color: var(--cd-warn); }
 .cd-cursor {
-  display: inline-block; width: 7px; height: 13px;
-  background: var(--cd-accent); vertical-align: text-bottom;
+  display: inline-block; width: 8px; height: 2px;
+  background: var(--cd-accent); vertical-align: baseline;
   animation: blink 1s step-end infinite;
 }
 
