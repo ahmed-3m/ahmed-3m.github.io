@@ -15,10 +15,9 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window === 'undefined') return 'light';
+    if (typeof window === 'undefined') return 'dark';
     const saved = localStorage.getItem('theme') as Theme | null;
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    return saved || (systemPrefersDark ? 'dark' : 'light');
+    return saved || 'dark';
   });
 
   const [reduceTransparency, setReduceTransparency] = useState<boolean>(() => {

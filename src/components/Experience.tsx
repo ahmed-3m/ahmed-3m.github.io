@@ -1,111 +1,77 @@
-'use client';
-
-import { motion } from 'framer-motion';
-import { useI18n } from '@/lib/i18n';
+'use client'
+import { useReveal } from '@/lib/useReveal'
 
 const experiences = [
   {
-    date: 'Jul 2025 - Present',
-    company: 'Faultrix',
-    role: { en: 'Founder & Full-Stack Developer', de: 'Gründer & Full-Stack-Entwickler' },
-    description: {
-      en: 'Leading development of AI-powered construction analysis platform with cutting-edge machine learning architecture',
-      de: 'Leitung der Entwicklung einer KI-gestützten Bauanalyseplattform mit modernster Machine-Learning-Architektur',
-    },
-    note: 'Co-founded NormKI → built Faultrix as the technical product',
+    date: 'Jul 2025\nPresent',
+    role: 'Founder & Full-Stack Developer',
+    company: 'Faultrix · Linz, Austria',
+    desc: 'Built AI construction analysis platform solo from zero to production. Next.js, Convex, Clerk, Cloudflare R2, Stripe. ÖNORM-compliant reports with SHA-256 evidence chain and AES-256 encryption.',
+    badge: 'Active · faultrix.com',
+    active: true,
   },
   {
-    date: 'Dec 2024 - Mar 2026',
-    company: 'JKU Machine Learning Institute',
-    role: { en: 'ML Researcher', de: 'ML Forscher' },
-    description: {
-      en: 'Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection',
-      de: 'Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection',
-    },
+    date: 'Dec 2024\nMar 2026',
+    role: 'ML Researcher',
+    company: 'JKU Machine Learning Institute · Linz',
+    desc: 'Thesis: "Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection" under Prof. Sepp Hochreiter. ~15% sampling efficiency improvement.',
+    badge: null,
+    active: true,
   },
   {
-    date: 'Apr - Nov 2024',
-    company: 'PROFACTOR GmbH',
-    role: { en: 'Machine Vision Researcher', de: 'Machine Vision Forscher' },
-    description: {
-      en: 'Achieved 98.4% accuracy in industrial defect detection using YOLO',
-      de: '98.4% Genauigkeit bei der industriellen Fehlererkennung mit YOLO erreicht',
-    },
+    date: 'Apr 2024\nNov 2024',
+    role: 'Machine Vision Researcher',
+    company: 'PROFACTOR GmbH · Steyr, Austria',
+    desc: 'YOLO + diffusion model pipeline for industrial defect detection. 98.4% accuracy in real-time production environment.',
+    badge: '98.4% accuracy',
+    active: false,
   },
   {
-    date: 'Aug - Oct 2023',
-    company: 'Karunya University',
-    role: { en: 'AI Research Intern', de: 'KI-Forschungspraktikant' },
-    description: {
-      en: 'Implemented and compared RNN/CNN architectures for EEG motor imagery classification with hyperparameter optimization',
-      de: 'Implementierung und Vergleich von RNN/CNN-Architekturen für EEG-Motorbildklassifikation mit Hyperparameter-Optimierung',
-    },
+    date: 'Aug 2023\nOct 2023',
+    role: 'AI Research Intern',
+    company: 'Karunya University · India (Remote)',
+    desc: 'RNN/CNN architectures for EEG motor imagery classification. Hyperparameter optimization across LSTM, Bi-LSTM, and GRU models.',
+    badge: null,
+    active: false,
   },
   {
-    date: 'Jan 2021 - Present',
+    date: 'Jan 2021\nPresent',
+    role: 'AI & Programming Tutor',
     company: 'Freelance',
-    role: { en: 'AI & Programming Tutor', de: 'KI- & Programmier-Tutor' },
-    description: {
-      en: 'Providing tailored training in Python, ML, and Deep Learning. Mentoring on portfolio projects and GitHub best practices',
-      de: 'Maßgeschneidertes Training in Python, ML und Deep Learning. Mentoring für Portfolio-Projekte und GitHub Best Practices',
-    },
+    desc: 'Tailored training in Python, ML, and Deep Learning. Mentoring on portfolio projects and GitHub best practices.',
+    badge: null,
+    active: false,
+    last: true,
   },
-  {
-    date: 'Dec 2018 - Sep 2020',
-    company: 'LED-Zone',
-    role: { en: 'Electronics Technician', de: 'Elektroniktechniker' },
-    description: {
-      en: 'PCB assembly, test processes, and QA standards. Developed test scripts and diagnostic procedures',
-      de: 'Leiterplattenbestückung, Testprozesse und QA-Standards. Entwicklung von Testskripten und Diagnoseverfahren',
-    },
-  },
-];
+]
 
 export default function Experience() {
-  const { t } = useI18n();
+  useReveal()
 
   return (
-    <section id="experience" className="py-20 max-w-6xl mx-auto px-5">
-      <h2 className="text-4xl font-bold text-center mb-12">
-        {t('Professional Journey', 'Beruflicher Werdegang')}
-      </h2>
+    <section id="experience" className="cd-section">
+      <div className="cd-container">
+        <div className="cd-section-eyebrow">// 03 — Experience</div>
+        <h2 className="cd-section-title" style={{ marginBottom: 48 }}>Where I&apos;ve worked.</h2>
 
-      <div className="relative">
-        {/* Timeline line */}
-        <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-0.5 bg-slate-200 dark:bg-slate-700 transform md:-translate-x-1/2" />
-
-        {experiences.map((exp, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: i * 0.1 }}
-            viewport={{ once: true }}
-            className={`relative mb-8 md:w-1/2 ${i % 2 === 0 ? 'md:pr-12' : 'md:ml-auto md:pl-12'
-              } pl-8 md:pl-0`}
-          >
-            {/* Dot */}
-            <div
-              className={`absolute w-4 h-4 bg-blue-600 rounded-full border-4 border-white dark:border-slate-900 top-0 ${i % 2 === 0 ? 'left-0 md:left-auto md:-right-2' : 'left-0 md:-left-2'
-                } transform md:translate-x-0 -translate-x-1/2`}
-            />
-
-            <div className="card-3d bg-slate-50 dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700">
-              <div className="text-blue-600 font-semibold mb-2">{exp.date}</div>
-              <h3 className="text-lg font-bold mb-1">{exp.company}</h3>
-              <p className="font-medium text-slate-600 dark:text-slate-400 mb-2">
-                {t(exp.role.en, exp.role.de)}
-              </p>
-              <p className="text-sm text-slate-500 dark:text-slate-400">
-                {t(exp.description.en, exp.description.de)}
-              </p>
-              {exp.note && (
-                <p className="text-xs text-slate-400 mt-2 italic">{exp.note}</p>
-              )}
+        <div className="cd-timeline">
+          {experiences.map((exp, i) => (
+            <div key={i} className="cd-tl-item reveal">
+              <div className="cd-tl-date" style={{ whiteSpace: 'pre-line' }}>{exp.date}</div>
+              <div className="cd-tl-spine">
+                <div className={`cd-tl-dot${exp.active ? '' : ' dim'}`} />
+                {!exp.last && <div className="cd-tl-line" />}
+              </div>
+              <div className="cd-tl-content">
+                <div className="cd-tl-role">{exp.role}</div>
+                <div className="cd-tl-company">{exp.company}</div>
+                <div className="cd-tl-desc">{exp.desc}</div>
+                {exp.badge && <div className="cd-tl-badge">{exp.badge}</div>}
+              </div>
             </div>
-          </motion.div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
-  );
+  )
 }

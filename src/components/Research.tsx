@@ -1,86 +1,74 @@
-'use client';
+'use client'
+import { useReveal } from '@/lib/useReveal'
 
-import { motion } from 'framer-motion';
-import { FileText } from 'lucide-react';
-import { useI18n } from '@/lib/i18n';
+const publications = [
+  {
+    title: 'Motor Imagery Classification Based Brain-Computer Interface for Rehabilitation',
+    venue: 'Karunya University · 2023',
+    href: 'https://ahmed-3m.github.io/Motor%20Imagery%20classification%20Based%20Brain%20Computer.pdf',
+  },
+  {
+    title: 'Reading Thoughts Using GANs',
+    venue: 'JKU Linz · 2023',
+    href: 'https://ahmed-3m.github.io/Reading%20Thoughts%20Using%20GANs.pdf',
+  },
+  {
+    title: 'Diffusion-Based Multi-class Defect Detection: A Generative Approach to Industrial QC',
+    venue: 'PROFACTOR GmbH · JKU Linz · 2024',
+    href: 'https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf',
+  },
+]
 
 export default function Research() {
-  const { t } = useI18n();
+  useReveal()
 
   return (
-    <section id="research" className="py-20 max-w-6xl mx-auto px-5">
-      <h2 className="text-4xl font-bold text-center mb-12">
-        {t('Research & Publications', 'Forschung & Publikationen')}
-      </h2>
+    <section id="research" className="cd-section">
+      <div className="cd-container">
+        <div className="cd-section-eyebrow">// 04 — Research</div>
+        <h2 className="cd-section-title" style={{ marginBottom: 32 }}>Publications &amp; Thesis</h2>
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        viewport={{ once: true }}
-        className="bg-slate-50 dark:bg-slate-800 p-8 rounded-xl border border-slate-200 dark:border-slate-700"
-      >
-        <h3 className="text-xl font-semibold text-blue-600 mb-4">
-          {t("Master's Thesis", 'Masterarbeit')}
-        </h3>
-        <p className="font-semibold mb-2">
-          &quot;Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection&quot;
-        </p>
-        <p className="text-slate-600 dark:text-slate-300 mb-4">
-          {t(
-            'Designing class-conditional diffusion frameworks with improved sampling efficiency (~15% improvement)',
-            'Entwicklung klassen-konditionaler Diffusionsrahmen mit verbesserter Sampling-Effizienz (~15% Verbesserung)'
-          )}
-        </p>
-        <a
-          href="/research-poster.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors mb-6"
-        >
-          <FileText size={18} />
-          {t('View Research Poster', 'Forschungsposter ansehen')}
-        </a>
+        <div className="cd-research-featured reveal">
+          <div className="cd-rf-label">Master&apos;s Thesis · JKU Linz · 2026</div>
+          <div className="cd-rf-title">
+            Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection
+          </div>
+          <div className="cd-rf-desc">
+            Novel approach using conditional diffusion models as generative classifiers for robust
+            out-of-distribution detection. ~15% sampling efficiency improvement over baseline methods.
+          </div>
+          <div className="cd-rf-meta">
+            Supervisor: Prof. Sepp Hochreiter · Assistant: Claus Hofmann · JKU Linz · 2026
+          </div>
+          <a
+            href="https://ahmed-3m.github.io/research-poster.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cd-proj-link"
+            style={{ marginTop: 16 }}
+          >
+            View Research Poster ↗
+          </a>
+        </div>
 
-        <h4 className="font-semibold mb-3">
-          {t('Manuscripts in Preparation:', 'Manuskripte in Vorbereitung:')}
-        </h4>
-        <ul className="space-y-3 text-slate-600 dark:text-slate-300">
-          <li>
+        <div className="cd-pub-list">
+          {publications.map(pub => (
             <a
-              href="/Motor Imagery classification Based Brain Computer.pdf"
+              key={pub.href}
+              href={pub.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              className="cd-pub-item reveal"
             >
-              <FileText size={16} />
-              Motor Imagery Classification Based Brain-Computer Interface for Rehabilitation
+              <div>
+                <div className="cd-pub-title">{pub.title}</div>
+                <div className="cd-pub-venue">{pub.venue}</div>
+              </div>
+              <div className="cd-pub-arrow">↗</div>
             </a>
-          </li>
-          <li>
-            <a
-              href="/Reading Thoughts Using GANs.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-            >
-              <FileText size={16} />
-              Reading Thoughts Using GANs
-            </a>
-          </li>
-          <li>
-            <a
-              href="/Diffusion-Based Multi-class Defect Detection.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-            >
-              <FileText size={16} />
-              Diffusion-Based Multi-class Defect Detection: A Generative Approach to Industrial QC
-            </a>
-          </li>
-        </ul>
-      </motion.div>
+          ))}
+        </div>
+      </div>
     </section>
-  );
+  )
 }

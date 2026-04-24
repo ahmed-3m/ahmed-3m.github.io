@@ -1,116 +1,58 @@
-'use client';
+'use client'
+import { useState } from 'react'
 
-import { useState, useSyncExternalStore } from 'react';
-import Link from 'next/link';
-import { motion, useReducedMotion } from 'framer-motion';
-import { Moon, Sun, Menu, X, Droplets } from 'lucide-react';
-import { useTheme } from '@/lib/ThemeContext';
-import { useI18n } from '@/lib/i18n';
-
-const navItems = [
-  { href: '/#about', en: 'About', de: 'Über' },
-  { href: '/#projects', en: 'Projects', de: 'Projekte' },
-  { href: '/#experience', en: 'Experience', de: 'Erfahrung' },
-  { href: '/#research', en: 'Research', de: 'Forschung' },
-  { href: '/#skills', en: 'Skills', de: 'Fähigkeiten' },
-  { href: '/blog', en: 'Blog', de: 'Blog' },
-  { href: '/#contact', en: 'Contact', de: 'Kontakt' },
-];
+const links = [
+  { href: '#about', label: 'About' },
+  { href: '#projects', label: 'Projects' },
+  { href: '#experience', label: 'Experience' },
+  { href: '#research', label: 'Research' },
+  { href: '#contact', label: 'Contact' },
+]
 
 export default function Header() {
-  const { theme, toggleTheme, reduceTransparency, toggleReduceTransparency } = useTheme();
-  const { lang, toggleLang, t } = useI18n();
-  const shouldReduceMotion = useReducedMotion();
-  const isHydrated = useSyncExternalStore(
-    () => () => {},
-    () => true,
-    () => false
-  );
-  const safeTheme = isHydrated ? theme : 'light';
-  const safeReduceTransparency = isHydrated ? reduceTransparency : false;
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const controlButtonClass =
-    'h-9 w-9 inline-flex items-center justify-center rounded-lg text-slate-700 dark:text-slate-200 hover:text-blue-700 dark:hover:text-blue-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/80 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent';
+  const [open, setOpen] = useState(false)
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5">
-      <div className="max-w-6xl mx-auto">
-        <nav className="glass-surface glass-medium glass-noise flex justify-between items-center px-4 py-3 sm:px-5">
-          <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            AM
-          </Link>
+    <nav className="cd-nav">
+      <div className="cd-nav-inner">
+        <a href="#hero" className="cd-nav-logo">Ahmed<span>.</span></a>
 
-          {/* Desktop Nav */}
-          <ul className="hidden md:flex items-center gap-8">
-            {navItems.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className="rounded-md px-1 py-1 text-slate-700 dark:text-slate-100 hover:text-blue-700 dark:hover:text-blue-300 font-medium transition-colors relative group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/80 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
-                >
-                  {t(item.en, item.de)}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full" />
-                </Link>
-              </li>
-            ))}
-          </ul>
+        <ul className="cd-nav-links">
+          {links.map(l => (
+            <li key={l.href}>
+              <a href={l.href} className="cd-nav-link">{l.label}</a>
+            </li>
+          ))}
+        </ul>
 
-          <div className="flex items-center gap-3">
-            <button
-              onClick={toggleTheme}
-              className={controlButtonClass}
-              aria-label="Toggle theme"
-            >
-              {safeTheme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-            </button>
-            <button
-              onClick={toggleReduceTransparency}
-              className={`${controlButtonClass} ${safeReduceTransparency ? 'text-blue-700 dark:text-blue-300' : ''}`}
-              aria-label={t('Toggle reduced transparency', 'Reduzierte Transparenz umschalten')}
-              aria-pressed={safeReduceTransparency}
-              title={t('Reduce transparency', 'Transparenz reduzieren')}
-            >
-              <Droplets size={18} className={safeReduceTransparency ? 'opacity-55' : ''} />
-            </button>
-            <button
-              onClick={toggleLang}
-              className={`${controlButtonClass} text-[18px] leading-none`}
-              aria-label="Toggle language"
-            >
-              <span>{lang === 'en' ? '🇬🇧' : '🇦🇹'}</span>
-            </button>
-            <button
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className={`md:hidden ${controlButtonClass}`}
-              aria-label="Toggle menu"
-            >
-              {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
-        </nav>
+        <a href="#contact" className="cd-nav-cta">Get in touch</a>
 
-        {/* Mobile Nav */}
-        {mobileOpen && (
-          <motion.ul
-            initial={shouldReduceMotion ? false : { opacity: 0, y: -8 }}
-            animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
-            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.2 }}
-            className="glass-surface glass-strong glass-noise md:hidden mt-3 p-3"
-          >
-            {navItems.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="block rounded-lg px-3 py-2.5 text-slate-700 dark:text-slate-100 hover:text-blue-700 dark:hover:text-blue-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/80"
-                >
-                  {t(item.en, item.de)}
-                </Link>
-              </li>
-            ))}
-          </motion.ul>
-        )}
+        <button
+          className="cd-nav-mobile-btn"
+          onClick={() => setOpen(o => !o)}
+          aria-label={open ? 'Close menu' : 'Open menu'}
+        >
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            {open
+              ? <><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></>
+              : <><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></>
+            }
+          </svg>
+        </button>
       </div>
-    </header>
-  );
+
+      {open && (
+        <div style={{ borderTop: '1px solid var(--cd-b0)', background: 'var(--cd-bg)', padding: '16px 20px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          {links.map(l => (
+            <a key={l.href} href={l.href} className="cd-nav-link" onClick={() => setOpen(false)} style={{ fontSize: '15px' }}>
+              {l.label}
+            </a>
+          ))}
+          <a href="#contact" className="cd-nav-cta" style={{ textAlign: 'center' }} onClick={() => setOpen(false)}>
+            Get in touch
+          </a>
+        </div>
+      )}
+    </nav>
+  )
 }

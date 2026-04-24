@@ -1,18 +1,14 @@
-'use client';
-
-import { useI18n } from '@/lib/i18n';
+'use client'
 
 export default function Footer() {
-  const { t } = useI18n();
-
   return (
-    <footer className="py-8 bg-slate-100 dark:bg-slate-900 text-center text-slate-600 dark:text-slate-400">
-      <div className="max-w-6xl mx-auto px-5">
-        <p>
-          &copy; 2026 Ahmed Mohammed.{' '}
-          {t('All rights reserved.', 'Alle Rechte vorbehalten.')}
-        </p>
+    <footer className="cd-footer">
+      <div className="cd-container">
+        <div className="cd-footer-inner">
+          <div className="cd-footer-brand">Ahmed<span>.</span></div>
+          <div className="cd-footer-meta">© 2026 · AI/ML Engineer · Linz, Austria</div>
+        </div>
       </div>
     </footer>
-  );
+  )
 }
