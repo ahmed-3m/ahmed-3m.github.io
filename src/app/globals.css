@@ -706,7 +706,64 @@ body::before {
   .cd-footer-inner { flex-direction: column; gap: 8px; text-align: center; }
 }
 
-/* ── Reduced motion ── */
+  /* ── EDUCATION ── */
+  .cd-education-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  
+  .cd-education-card {
+    background: var(--cd-surf);
+    border: 1px solid var(--cd-b0);
+    border-radius: 12px;
+    padding: 24px;
+    transition: border-color 300ms var(--cd-ease), transform 300ms var(--cd-ease);
+  }
+  
+  .cd-education-card:hover {
+    border-color: var(--cd-b-accent);
+    transform: translateY(-2px);
+  }
+  
+  .cd-edu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+  
+  .cd-edu-degree {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--cd-fg1);
+  }
+  
+  .cd-edu-date {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 13px;
+    color: var(--cd-fg3);
+    background: var(--cd-elev);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  
+  .cd-edu-institution {
+    font-family: var(--font-display, 'Space Grotesk', sans-serif);
+    font-size: 15px;
+    color: var(--cd-fg2);
+    margin-bottom: 8px;
+  }
+  
+  .cd-edu-description {
+    font-size: 14px;
+    color: var(--cd-fg2);
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {

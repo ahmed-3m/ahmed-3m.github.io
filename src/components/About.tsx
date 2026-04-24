@@ -60,18 +60,21 @@ export default function About() {
                 in under a minute. Open to research collaborations and senior AI/ML roles.
               </p>
             </div>
-            <div style={{ marginTop: '40px' }}>
-              <div className="cd-section-eyebrow" style={{ marginBottom: '16px' }}>Education</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                {education.map((edu, i) => (
-                  <div key={i} style={{ paddingLeft: '12px', borderLeft: '2px solid var(--cd-b1)' }}>
-                    <div style={{ fontSize: '14px', color: 'var(--cd-fg1)', fontWeight: 600 }}>{edu.degree}</div>
-                    <div style={{ fontSize: '13px', color: 'var(--cd-fg2)', marginTop: '2px' }}>{edu.school} · {edu.date}</div>
-                    {edu.desc && <div style={{ fontSize: '13px', color: 'var(--cd-fg3)', marginTop: '4px' }}>{edu.desc}</div>}
-                  </div>
-                ))}
-              </div>
-            </div>
+             <div style={{ marginTop: '40px' }}>
+               <div className="cd-section-eyebrow" style={{ marginBottom: '16px' }}>Education</div>
+               <div className="cd-education-grid">
+                 {education.map((edu, i) => (
+                   <div key={i} className="cd-education-card reveal">
+                     <div className="cd-edu-header">
+                       <div className="cd-edu-degree">{edu.degree}</div>
+                       <div className="cd-edu-date">{edu.date}</div>
+                     </div>
+                     <div className="cd-edu-institution">{edu.school}</div>
+                     {edu.desc && <div className="cd-edu-description">{edu.desc}</div>}
+                   </div>
+                 ))}
+               </div>
+             </div>
 
             <div style={{ marginTop: '40px' }}>
               <div className="cd-section-eyebrow" style={{ marginBottom: '16px' }}>Skills & Technologies</div>
