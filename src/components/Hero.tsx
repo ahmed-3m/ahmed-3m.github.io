@@ -67,7 +67,7 @@ export default function Hero() {
                <div className="cd-term-line"><span className="tg">✓</span> Epoch 200/200 · loss: <span className="ta">0.015</span></div>
                <div className="cd-term-line">OOD Detection AUROC: <span className="tg" style={{ fontWeight: 600 }}>99.03%</span> <span className="tc">← SOTA</span></div>
                <div className="cd-term-line"><span className="tw">→</span> Generating thesis plots... <span className="ta">&lt;1 min</span></div>
-               <div className="cd-term-line"><span className="tc">~/thesis $ </span><span className="cd-cursor" /></div>
+                <div className="cd-term-line"><span className="tc">~/thesis $ </span><span className="cd-cursor" style={{ display: 'inline-block', width: '12px', height: '12px', backgroundColor: '#ff0000', verticalAlign: 'baseline', borderRadius: '50%' }} /></div>
              </div>
 
             <div style={{ marginTop: 20, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
