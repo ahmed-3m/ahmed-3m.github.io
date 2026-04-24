@@ -22,12 +22,11 @@ const languages = [
 ]
 
 const infoRows = [
-  { label: 'Location', value: 'Linz, Austria', accent: false },
-  { label: 'Education', value: 'M.Sc. AI · JKU Linz', accent: false },
-  { label: 'Supervisor', value: 'Prof. Sepp Hochreiter', accent: false },
-  { label: 'Company', value: 'Faultrix.com — Founder', accent: true },
-  { label: 'Open to', value: 'AI/ML Roles · Research Collaborations', accent: false },
-]
+   { label: 'Location', value: 'Linz, Austria', accent: false },
+   { label: 'Supervisor', value: 'Prof. Sepp Hochreiter', accent: false },
+   { label: 'Company', value: 'Faultrix.com — Founder', accent: true },
+   { label: 'Open to', value: 'AI/ML Roles · Research Collaborations', accent: false },
+ ]
 
 export default function About() {
   useReveal()
