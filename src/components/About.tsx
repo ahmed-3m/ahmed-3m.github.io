@@ -1,9 +1,24 @@
 'use client'
 import { useReveal } from '@/lib/useReveal'
 
-const chips = [
-  'Computer Vision', 'Diffusion Models', 'OOD Detection', 'PyTorch',
-  'CUDA', 'Python', 'OpenCV', 'MLOps', 'Research', 'Entrepreneurship',
+const education = [
+  { degree: 'M.Sc. in Artificial Intelligence', school: 'Johannes Kepler University Linz', date: 'Oct 2024 – Mar 2026', desc: '' },
+  { degree: 'B.Sc. in Mechatronics Engineering', school: 'Eastern Mediterranean University, Cyprus', date: 'Feb 2015 – Jan 2018', desc: 'Thesis: SCARA robotic system for dynamic object tracking (real-time control + sensor integration)' }
+]
+
+const skillCategories = [
+  { name: 'Deep Learning', skills: ['PyTorch', 'PyTorch Lightning', 'Diffusion Models (DDPM/UNet)', 'CNNs', 'Transformers', 'RNNs', 'LLMs'] },
+  { name: 'Computer Vision', skills: ['OOD Detection', 'Object Detection (YOLOv8)', 'Defect Detection', 'Image Classification'] },
+  { name: 'Research & Experimentation', skills: ['Hydra', 'Experiment Design', 'Ablation Studies', 'AUROC/FPR95', 'Monte Carlo', 'Cross-Validation'] },
+  { name: 'ML Engineering', skills: ['End-to-End Pipelines', 'LLM Inference', 'Prompt Engineering', 'Structured Output Extraction', 'OpenAI API'] },
+  { name: 'Infrastructure', skills: ['Docker', 'Git', 'Linux', 'REST APIs', 'TypeScript', 'Next.js', 'Convex', 'CUDA', 'Python', 'OpenCV'] },
+  { name: 'AI Tools', skills: ['Claude Code (daily)', 'GitHub Copilot', 'ChatGPT'] }
+]
+
+const languages = [
+  { lang: 'Arabic', level: 'Native' },
+  { lang: 'English', level: 'B2 Professional Working' },
+  { lang: 'German', level: 'B1 CEFR (actively improving)' },
 ]
 
 const infoRows = [
@@ -29,7 +44,7 @@ export default function About() {
             </h2>
             <div className="cd-about-text">
               <p>
-                I&apos;m an AI/ML engineer completing my{' '}
+                I&apos;m an AI/ML engineer who completed my{' '}
                 <strong>M.Sc. in Artificial Intelligence at JKU Linz</strong>, working under{' '}
                 <strong>Prof. Sepp Hochreiter</strong> — the inventor of LSTM.
               </p>
@@ -45,8 +60,43 @@ export default function About() {
                 in under a minute. Open to research collaborations and senior AI/ML roles.
               </p>
             </div>
-            <div className="cd-chips">
-              {chips.map(c => <span key={c} className="cd-chip">{c}</span>)}
+            <div style={{ marginTop: '40px' }}>
+              <div className="cd-section-eyebrow" style={{ marginBottom: '16px' }}>Education</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                {education.map((edu, i) => (
+                  <div key={i} style={{ paddingLeft: '12px', borderLeft: '2px solid var(--cd-b1)' }}>
+                    <div style={{ fontSize: '14px', color: 'var(--cd-fg1)', fontWeight: 600 }}>{edu.degree}</div>
+                    <div style={{ fontSize: '13px', color: 'var(--cd-fg2)', marginTop: '2px' }}>{edu.school} · {edu.date}</div>
+                    {edu.desc && <div style={{ fontSize: '13px', color: 'var(--cd-fg3)', marginTop: '4px' }}>{edu.desc}</div>}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div style={{ marginTop: '40px' }}>
+              <div className="cd-section-eyebrow" style={{ marginBottom: '16px' }}>Skills & Technologies</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                {skillCategories.map(cat => (
+                  <div key={cat.name}>
+                    <div style={{ fontSize: '13px', color: 'var(--cd-fg1)', fontWeight: 600, marginBottom: '8px' }}>{cat.name}</div>
+                    <div className="cd-chips" style={{ marginTop: 0 }}>
+                      {cat.skills.map(skill => <span key={skill} className="cd-chip">{skill}</span>)}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div style={{ marginTop: '40px' }}>
+              <div className="cd-section-eyebrow" style={{ marginBottom: '16px' }}>Languages</div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
+                {languages.map(l => (
+                  <div key={l.lang} style={{ background: 'var(--cd-surf)', border: '1px solid var(--cd-b0)', padding: '12px 16px', borderRadius: '8px' }}>
+                    <div style={{ color: 'var(--cd-fg1)', fontWeight: 600, fontSize: '14px' }}>{l.lang}</div>
+                    <div style={{ color: 'var(--cd-fg2)', fontSize: '12px', marginTop: '2px' }}>{l.level}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 

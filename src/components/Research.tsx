@@ -10,12 +10,12 @@ const publications = [
   },
   {
     title: 'Reading Thoughts Using GANs',
-    venue: 'JKU Linz · 2023',
+    venue: 'Project Report · JKU Linz · 2023',
     href: 'https://ahmed-3m.github.io/Reading%20Thoughts%20Using%20GANs.pdf',
   },
   {
     title: 'Diffusion-Based Multi-class Defect Detection: A Generative Approach to Industrial QC',
-    venue: 'PROFACTOR GmbH · JKU Linz · 2024',
+    venue: 'Technical Report · PROFACTOR GmbH · JKU Linz · 2024',
     href: 'https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf',
   },
 ]
