@@ -7,13 +7,16 @@
 
 ## 👋 About
 
-AI/ML Engineer based in **Linz, Austria** specializing in computer vision, anomaly detection, and diffusion models. M.Sc. Artificial Intelligence from [Johannes Kepler University Linz](https://www.jku.at).
+AI/ML Engineer based in **Linz, Austria** specializing in computer vision, anomaly detection, and diffusion models. Recently completed M.Sc. Artificial Intelligence from [Johannes Kepler University Linz](https://www.jku.at) with research on conditional diffusion models for out-of-distribution detection.
 
 **Founder of [Faultrix](https://faultrix.com)** — AI-powered construction quality control SaaS generating ÖNORM-compliant reports from building photos in under 1 minute.
 
 ## 🔬 Research
 
 - **Master's Thesis**: *Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection* (JKU Linz)
+  - Achieved 99.03% AUROC on CIFAR-10 with class-conditional separation loss
+  - 18.8 percentage point improvement over baseline methods
+  - Applied to industrial quality control with multi-head conditioning for structured manufacturing data
 - **98.4% accuracy** in industrial defect detection using optimized YOLO at [PROFACTOR GmbH](https://www.profactor.at)
 - Published research on EEG signal classification, GANs, and diffusion-based defect detection
 
@@ -22,8 +25,8 @@ AI/ML Engineer based in **Linz, Austria** specializing in computer vision, anoma
 | Project | Description | Links |
 |---------|-------------|-------|
 | **Faultrix** | AI construction quality control SaaS — ÖNORM B 2110, SHA-256, DSGVO | [Live](https://faultrix.com) |
+| **OOD Detection Framework** | Conditional diffusion models as generative classifiers achieving 99.03% AUROC | [Code](https://github.com/ahmed-3m/OOD-diffusion-detector) |
 | **Industrial Anomaly Detection** | YOLO + diffusion models for quality control | [Code](https://github.com/ahmed-3m/Occluded-Object-Detection-With-Tracking) |
-| **OOD Detection Framework** | Conditional diffusion models as generative classifiers | [Code](https://github.com/ahmed-3m/OOD-diffusion-detector) |
 | **EEG Signal Classification** | Deep RNN for brain-computer interfaces | [Code](https://github.com/ahmed-3m/Motor-Imagery-classification) |
 
 ## 🛠️ Tech Stack
