@@ -29,31 +29,51 @@ export default function Research() {
         <h2 className="cd-section-title" style={{ marginBottom: 32 }}>Publications &amp; Thesis</h2>
 
          <div className="cd-research-featured reveal">
-           <div className="cd-rf-label">Master&apos;s Thesis · JKU Linz · 2026</div>
-           <div className="cd-rf-title">
-             Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection
+           <div className="cd-rf-header">
+             <div className="cd-rf-left">
+               <div className="cd-rf-label">Master&apos;s Thesis · JKU Linz · 2026</div>
+               <div className="cd-rf-title">
+                 Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection
+               </div>
+               <div className="cd-rf-desc">
+                 Novel approach using conditional diffusion models as generative classifiers for robust
+                 out-of-distribution detection. Introduced class-conditional separation loss improving
+                 AUROC by 18.8 percentage points. Applied to industrial quality control with multi-head conditioning.
+               </div>
+               <div className="cd-rf-meta">
+                 Supervisor: Prof. Sepp Hochreiter · Assistant: Claus Hofmann · JKU Linz · 2026
+               </div>
+             </div>
+             <div className="cd-rf-metric">
+               <div className="cd-rf-metric-num">99.03<span className="cd-rf-metric-unit">%</span></div>
+               <div className="cd-rf-metric-label">AUROC · CIFAR-10</div>
+               <div className="cd-rf-metric-delta">+18.8pp over baseline</div>
+             </div>
            </div>
-           <div className="cd-rf-desc">
-             Novel approach using conditional diffusion models as generative classifiers for robust
-             out-of-distribution detection. Achieved 99.03% AUROC on CIFAR-10 with class-conditional separation loss.
+
+           <div className="cd-rf-charts">
+             {[
+               { src: '/ood-roc-cifar10.png', alt: 'ROC Curves', caption: 'ROC Curves — CIFAR-10 vs 5 OOD datasets' },
+               { src: '/ood-score-distributions.png', alt: 'Score Distributions', caption: 'ID vs OOD score distributions per class' },
+               { src: '/ood-separation-loss-ablation.png', alt: 'Separation Loss Ablation', caption: 'Separation loss weight λ ablation study' },
+             ].map(({ src, alt, caption }) => (
+               <div key={src} className="cd-rf-chart">
+                 <img src={src} alt={alt} />
+                 <div className="cd-rf-chart-caption">{caption}</div>
+               </div>
+             ))}
            </div>
-           <div className="cd-rf-meta">
-             Supervisor: Prof. Sepp Hochreiter · Assistant: Claus Hofmann · JKU Linz · 2026
+
+           <div className="cd-rf-footer">
+             <a
+               href="https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf"
+               target="_blank"
+               rel="noopener noreferrer"
+               className="cd-proj-link"
+             >
+               View Full Thesis ↗
+             </a>
            </div>
-           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem', marginTop: '1rem' }}>
-             <img src="/ood-roc-cifar10.png" alt="ROC Curves CIFAR-10" style={{ width: '100%', borderRadius: '8px' }} />
-             <img src="/ood-score-distributions.png" alt="Score Distributions" style={{ width: '100%', borderRadius: '8px' }} />
-             <img src="/ood-separation-loss-ablation.png" alt="Separation Loss Ablation" style={{ width: '100%', borderRadius: '8px' }} />
-           </div>
-           <a
-             href="https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf"
-             target="_blank"
-             rel="noopener noreferrer"
-             className="cd-proj-link"
-             style={{ marginTop: 16 }}
-           >
-             View Full Thesis ↗
-           </a>
          </div>
 
         <div className="cd-pub-list">
