@@ -268,10 +268,52 @@ body::before {
 }
 
 /* ── ABOUT ── */
-.cd-about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.cd-about-bio-row {
+  display: grid; grid-template-columns: 1fr 320px;
+  gap: 56px; align-items: start; margin-bottom: 56px;
+}
 .cd-about-text { font-size: 15px; color: var(--cd-fg2); line-height: 1.75; }
 .cd-about-text p + p { margin-top: 16px; }
 .cd-about-text strong { color: var(--cd-fg1); font-weight: 500; }
+
+.cd-about-side { display: flex; flex-direction: column; gap: 12px; }
+.cd-info-row {
+  display: flex; flex-direction: column; gap: 4px; padding: 14px 16px;
+  background: var(--cd-surf); border: 1px solid var(--cd-b0); border-radius: 8px;
+  transition: border-color 200ms;
+}
+.cd-info-row:hover { border-color: rgba(0,212,255,0.25); }
+.cd-info-label {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cd-fg3);
+}
+.cd-info-val { font-size: 14px; color: var(--cd-fg1); font-weight: 500; }
+.cd-info-val.accent { color: var(--cd-accent); }
+
+/* Shared band pattern (education / skills / languages) */
+.cd-about-band { border-top: 1px solid var(--cd-b0); padding-top: 40px; margin-bottom: 0; }
+.cd-about-band + .cd-about-band { margin-top: 40px; }
+.cd-band-eyebrow {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--cd-accent); margin-bottom: 20px;
+}
+
+/* Education */
+.cd-education-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.cd-education-card {
+  background: var(--cd-surf); border: 1px solid var(--cd-b0);
+  border-radius: 12px; padding: 24px;
+  transition: border-color 300ms var(--cd-ease), transform 300ms var(--cd-ease);
+}
+.cd-education-card:hover { border-color: var(--cd-b-accent); transform: translateY(-2px); }
+.cd-edu-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+.cd-edu-degree { font-family: var(--font-display, 'Space Grotesk', sans-serif); font-size: 16px; font-weight: 600; color: var(--cd-fg1); }
+.cd-edu-date { font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px; color: var(--cd-fg3); background: var(--cd-elev); padding: 3px 8px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; }
+.cd-edu-institution { font-size: 13px; color: var(--cd-accent); margin-bottom: 8px; }
+.cd-edu-description { font-size: 13px; color: var(--cd-fg2); line-height: 1.6; font-style: italic; }
+
+/* Skills */
 .cd-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
 .cd-chip {
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
@@ -279,20 +321,22 @@ body::before {
   background: var(--cd-elev); border: 1px solid var(--cd-b0);
   padding: 5px 10px; border-radius: 4px; letter-spacing: 0.02em;
 }
-.cd-about-side { display: flex; flex-direction: column; gap: 16px; }
-.cd-info-row {
-  display: flex; flex-direction: column; gap: 4px; padding: 16px;
-  background: var(--cd-surf); border: 1px solid var(--cd-b0); border-radius: 8px;
-  transition: border-color 200ms;
+.cd-skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.cd-skill-category {
+  background: var(--cd-surf); border: 1px solid var(--cd-b0);
+  border-radius: 10px; padding: 20px;
 }
-.cd-info-row:hover { border-color: rgba(0,212,255,0.25); }
-.cd-info-label {
-  font-family: var(--font-mono, 'JetBrains Mono', monospace);
-  font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--cd-fg3);
+.cd-skill-cat-name { font-size: 12px; font-weight: 600; color: var(--cd-fg1); margin-bottom: 12px; letter-spacing: 0.01em; }
+
+/* Languages */
+.cd-lang-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.cd-lang-card {
+  background: var(--cd-surf); border: 1px solid var(--cd-b0);
+  border-radius: 8px; padding: 16px 20px;
+  display: flex; flex-direction: column; gap: 4px;
 }
-.cd-info-val { font-size: 14px; color: var(--cd-fg1); font-weight: 500; }
-.cd-info-val.accent { color: var(--cd-accent); }
+.cd-lang-name { font-size: 15px; font-weight: 600; color: var(--cd-fg1); }
+.cd-lang-level { font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px; color: var(--cd-fg3); }
 
 /* ── PROJECTS ── */
 .cd-projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -678,8 +722,6 @@ body::before {
   .cd-stat:nth-child(3), .cd-stat:nth-child(4) { border-bottom: none; }
   .cd-stat-num { font-size: 22px; }
 
-  /* About */
-  .cd-about-grid { grid-template-columns: 1fr; gap: 40px; }
 
   /* Projects */
   .cd-projects-grid { grid-template-columns: 1fr; }
@@ -702,66 +744,15 @@ body::before {
   /* Contact */
   .cd-contact-email { font-size: 12px; word-break: break-all; }
 
+  /* About */
+  .cd-about-bio-row { grid-template-columns: 1fr; gap: 32px; margin-bottom: 0; }
+  .cd-education-grid { grid-template-columns: 1fr; }
+  .cd-skills-grid { grid-template-columns: 1fr; }
+  .cd-lang-row { grid-template-columns: 1fr; }
+
   /* Footer */
   .cd-footer-inner { flex-direction: column; gap: 8px; text-align: center; }
 }
-
-  /* ── EDUCATION ── */
-  .cd-education-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-  }
-  
-  .cd-education-card {
-    background: var(--cd-surf);
-    border: 1px solid var(--cd-b0);
-    border-radius: 12px;
-    padding: 24px;
-    transition: border-color 300ms var(--cd-ease), transform 300ms var(--cd-ease);
-  }
-  
-  .cd-education-card:hover {
-    border-color: var(--cd-b-accent);
-    transform: translateY(-2px);
-  }
-  
-  .cd-edu-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 12px;
-  }
-  
-  .cd-edu-degree {
-    font-family: var(--font-display, 'Space Grotesk', sans-serif);
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--cd-fg1);
-  }
-  
-  .cd-edu-date {
-    font-family: var(--font-mono, 'JetBrains Mono', monospace);
-    font-size: 13px;
-    color: var(--cd-fg3);
-    background: var(--cd-elev);
-    padding: 2px 8px;
-    border-radius: 4px;
-  }
-  
-  .cd-edu-institution {
-    font-family: var(--font-display, 'Space Grotesk', sans-serif);
-    font-size: 15px;
-    color: var(--cd-fg2);
-    margin-bottom: 8px;
-  }
-  
-  .cd-edu-description {
-    font-size: 14px;
-    color: var(--cd-fg2);
-    line-height: 1.6;
-    font-style: italic;
-  }
 
   /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
