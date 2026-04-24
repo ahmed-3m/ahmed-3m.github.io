@@ -664,7 +664,11 @@ body::before {
   .cd-hero-grid { grid-template-columns: 1fr; gap: 40px; }
   .cd-about-grid { grid-template-columns: 1fr; gap: 40px; }
   .cd-projects-grid { grid-template-columns: 1fr; }
-  .cd-project-featured { grid-column: span 1; grid-template-columns: 1fr; }
+  .cd-project-featured { 
+    grid-column: span 1; 
+    grid-template-columns: 1fr; 
+    gap: 16px; 
+  }
   .cd-proj-metric-big { text-align: left; }
   .cd-hero-stats { flex-wrap: wrap; width: 100%; }
   .cd-stat { flex: 1; min-width: 110px; }
