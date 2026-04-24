@@ -48,13 +48,13 @@ export default function Hero() {
                </div>
                <div className="cd-stat">
                  <div className="cd-stat-num">&lt;1<span style={{ fontSize: 14, color: 'var(--cd-fg3)', fontWeight: 400 }}> min</span></div>
-                 <div className="cd-stat-label">Thesis plots generation</div>
+                 <div className="cd-stat-label">Report generation</div>
                </div>
              </div>
           </div>
 
            {/* Right: terminal */}
-           <div>
+           <div className="cd-hero-terminal-wrap">
              <div className="cd-hero-terminal">
                <div className="cd-term-bar">
                  <div className="cd-term-dot" style={{ background: '#ff5f57' }} />

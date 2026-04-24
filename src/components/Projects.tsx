@@ -66,8 +66,7 @@ export default function Projects() {
             href="https://github.com/ahmed-3m/Motor-Imagery-classification"
             target="_blank"
             rel="noopener noreferrer"
-            className="cd-project-card reveal"
-            style={{ gridColumn: 'span 2' }}
+            className="cd-project-card cd-project-card--full reveal"
           >
             <div className="cd-pc-eyebrow">Karunya University · BCI Research</div>
             <div className="cd-pc-title">EEG Signal Classification</div>
