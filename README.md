@@ -1,105 +1,60 @@
-# Ahmed Mohammed — AI/ML Engineer & Entrepreneur
+# Ahmed Mohammed — AI/ML Engineer & Researcher
 
 [![Portfolio](https://img.shields.io/badge/Portfolio-ahmed--3m.github.io-2563eb?style=for-the-badge&logo=google-chrome&logoColor=white)](https://ahmed-3m.github.io)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-ahmed--3m-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ahmed-3m/)
 [![Faultrix](https://img.shields.io/badge/Faultrix-Live_SaaS-10b981?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSIzOCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxMCIgZmlsbD0ibm9uZSIvPjwvc3ZnPg==&logoColor=white)](https://faultrix.com)
-[![HuggingFace](https://img.shields.io/badge/HuggingFace-ahmed--3m-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black)](https://huggingface.co/ahmed-3m)
+[![Research Gate](https://img.shields.io/badge/Research-Gate-00CCBB?style=for-the-badge&logo=researchgate&logoColor=white)](https://www.researchgate.net/profile/Ahmed-Mohammed-114)
 
 ## 👋 About
 
-AI/ML Engineer based in **Linz, Austria** specializing in computer vision, anomaly detection, and diffusion models. Recently completed M.Sc. Artificial Intelligence from [Johannes Kepler University Linz](https://www.jku.at) with research on conditional diffusion models for out-of-distribution detection.
+I'm an AI/ML Engineer based in Linz, Austria, specializing in computer vision, diffusion models, and out-of-distribution detection. I recently completed my M.Sc. in Artificial Intelligence at Johannes Kepler University Linz, working under Prof. Sepp Hochreiter (co-inventor of LSTM).
 
-**Founder of [Faultrix](https://faultrix.com)** — AI-powered construction quality control SaaS generating ÖNORM-compliant reports from building photos in under 1 minute.
+As founder of Faultrix, I build AI-powered systems that bridge cutting-edge research with real-world applications — from novel OOD detection frameworks to production-grade quality control SaaS.
 
-## 🔬 Research
+## 🔬 Research Highlights
 
-- **Master's Thesis**: *Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection* (JKU Linz)
-  - Achieved 99.03% AUROC on CIFAR-10 with class-conditional separation loss
-  - 18.8 percentage point improvement over baseline methods
-  - Applied to industrial quality control with multi-head conditioning for structured manufacturing data
-- **98.4% accuracy** in industrial defect detection using optimized YOLO at [PROFACTOR GmbH](https://www.profactor.at)
-- Published research on EEG signal classification, GANs, and diffusion-based defect detection
+**Master's Thesis** (JKU Linz, 2026):  
+*Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection*  
+- **99.03% AUROC** on CIFAR-10 — State-of-the-art performance  
+- **18.8 percentage point improvement** via novel class-conditional separation loss  
+- Extended to industrial quality control with multi-head conditioning for structured manufacturing data  
 
-## 🚀 Featured Projects
+**Professional Experience**:  
+- **98.4% accuracy** in industrial defect detection (PROFACTOR GmbH) using optimized YOLO pipelines  
+- Research contributions in EEG signal classification, GANs, and diffusion-based defect detection  
 
-| Project | Description | Links |
-|---------|-------------|-------|
-| **Faultrix** | AI construction quality control SaaS — ÖNORM B 2110, SHA-256, DSGVO | [Live](https://faultrix.com) |
-| **OOD Detection Framework** | Conditional diffusion models as generative classifiers achieving 99.03% AUROC | [Code](https://github.com/ahmed-3m/OOD-diffusion-detector) |
-| **Industrial Anomaly Detection** | YOLO + diffusion models for quality control | [Code](https://github.com/ahmed-3m/Occluded-Object-Detection-With-Tracking) |
-| **EEG Signal Classification** | Deep RNN for brain-computer interfaces | [Code](https://github.com/ahmed-3m/Motor-Imagery-classification) |
+## 🚀 Selected Projects
 
-## 🛠️ Tech Stack
+| Project | Focus | Impact |
+|---------|-------|--------|
+| **[Faultrix](https://faultrix.com)** | AI Construction QC SaaS | ÖNORM-compliant reports in <1 min, built solo from zero to production |
+| **[OOD Detection Framework](https://github.com/ahmed-3m/OOD-diffusion-detector)** | Diffusion Models for Anomaly Detection | 99.03% AUROC on CIFAR-10, separation loss innovation |
+| **[Industrial Anomaly Detection](https://github.com/ahmed-3m/Occluded-Object-Detection-With-Tracking)** | YOLO + Diffusion for QC | Real-time defect detection in manufacturing |
+| **[EEG Signal Classification](https://github.com/ahmed-3m/Motor-Imagery-classification)** | Deep Learning for BCI | LSTM/Bi-LSTM/GRU architectures for motor imagery |
 
-**ML/DL**: PyTorch · TensorFlow · YOLO · Diffusion Models · CNNs · LSTMs · GANs · OpenCV
+## 🛠️ Core Technologies
 
-**Full-Stack**: TypeScript · React · Next.js · Convex · Tailwind CSS · Node.js · Vercel
+**Machine Learning**: PyTorch · Diffusion Models · YOLO · CNNs · Transformers · LLMs  
+**Computer Vision**: OOD Detection · Object Detection · Defect Detection · Image Classification  
+**Full-Stack**: TypeScript · Next.js · React · Convex · Tailwind CSS  
+**Infrastructure**: Docker · Git · Linux · CUDA · REST APIs  
+**AI Tools**: Claude Code · GitHub Copilot · OpenAPI · LangChain  
 
-**Infrastructure**: Docker · MLflow · GitHub Actions · CI/CD · MLOps · Linux
+## 🌐 Live & Code
 
-## 📊 Portfolio Site
+- **Portfolio**: https://ahmed-3m.github.io  
+- **Thesis PDF**: https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf  
+- **Research Code**: https://github.com/ahmed-3m/OOD-diffusion-detector  
+- **Faultrix SaaS**: https://faultrix.com  
 
-This repository hosts my portfolio built with:
+## 📫 Connect
 
-- **Framework**: Next.js 16 (Static Export)
-- **Styling**: Tailwind CSS v4
-- **Animations**: Framer Motion
-- **SEO**: 7 JSON-LD schemas, Open Graph, Twitter Cards, sitemap, robots.txt
-- **Deploy**: GitHub Pages via GitHub Actions
-
-### Quick Start
-
-```bash
-npm install
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000)
-
-## Liquid Glass system usage
-
-Core utilities are defined in `src/app/globals.css`.
-
-```html
-<!-- Base surface + variant -->
-<div class="glass-surface glass-subtle">...</div>
-<div class="glass-surface glass-medium">...</div>
-<div class="glass-surface glass-strong">...</div>
-
-<!-- Add subtle texture when needed -->
-<div class="glass-surface glass-medium glass-noise">...</div>
-
-<!-- Card behavior: subtle by default, medium on hover -->
-<article class="glass-surface glass-subtle glass-card glass-noise">...</article>
-```
-
-Available token groups:
-
-- `--glass-bg`, `--glass-border`, `--glass-shadow`, `--glass-highlight`
-- `--glass-blur`, `--glass-sat`, `--radius`, `--elevation`
-- Light and dark token values are both included; dark values live under `[data-theme="dark"]`.
-
-Preferences and fallbacks:
-
-- `Reduce Transparency` toggle is available in the header and persists via `localStorage`.
-- If `backdrop-filter` is unsupported, all glass surfaces automatically fall back to premium opaque backgrounds.
-- Reduced-motion users get shortened/disabled transitions and animation-heavy effects are suppressed.
-
-Before/after checklist:
-
-- Readability: glass surfaces keep high-contrast text/icon colors.
-- Fallback behavior: no-blur environments render opaque premium surfaces.
-- Reduced motion: `prefers-reduced-motion` and motion reduction logic are applied.
-- Reduced transparency: user toggle and system preference fallback are both respected.
-
-## 📫 Contact
-
-- **Email**: [ahmed.mo.0595@gmail.com](mailto:ahmed.mo.0595@gmail.com)
-- **LinkedIn**: [linkedin.com/in/ahmed-3m](https://www.linkedin.com/in/ahmed-3m/)
-- **Portfolio**: [ahmed-3m.github.io](https://ahmed-3m.github.io)
+- **Email**: ahmed.mo.0595@gmail.com  
+- **LinkedIn**: linkedin.com/in/ahmed-3m  
+- **ResearchGate**: researchgate.net/profile/Ahmed-Mohammed-114  
 
 ---
 
 <p align="center">
-  <i>Open to AI/ML consulting, research collaborations, and full-stack development projects.</i>
+  <i>Open to AI/ML research collaborations, ML engineering roles, and deep tech ventures.</i>
 </p>
