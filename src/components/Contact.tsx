@@ -15,9 +15,9 @@ export default function Contact() {
   return (
     <section id="contact" className="cd-section cd-contact-section">
       <div className="cd-container">
-        <div className="cd-section-eyebrow" style={{ justifyContent: 'center', marginBottom: 16 }}>
-          // 05 — Contact
-        </div>
+         <div className="cd-section-eyebrow" style={{ justifyContent: 'center', marginBottom: 16 }}>
+           // 05 — Contact
+         </div>
 
         <h2 className="cd-contact-heading reveal">
           Let&apos;s build <span className="outline">something</span> extraordinary

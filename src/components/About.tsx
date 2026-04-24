@@ -82,9 +82,9 @@ export default function About() {
           </div>
         </div>
 
-        {/* ── Band 2: Education ── */}
-        <div className="cd-about-band reveal">
-          <div className="cd-band-eyebrow">Education</div>
+         {/* ── Band 2: Education ── */}
+         <div className="cd-about-band reveal">
+           <div className="cd-band-eyebrow">// 02 — Education</div>
           <div className="cd-education-grid">
             {education.map((edu, i) => (
               <div key={i} className="cd-education-card">
