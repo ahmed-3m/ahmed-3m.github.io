@@ -58,7 +58,7 @@ export default function Research() {
                { src: '/ood-separation-loss-ablation.png', alt: 'Separation Loss Ablation', caption: 'Separation loss weight λ ablation study' },
              ].map(({ src, alt, caption }) => (
                <div key={src} className="cd-rf-chart">
-                 <img src={src} alt={alt} />
+                  <img src={src} alt={alt} style={{ width: '100%', height: '200px', objectFit: 'contain', borderRadius: '8px' }} />
                  <div className="cd-rf-chart-caption">{caption}</div>
                </div>
              ))}
