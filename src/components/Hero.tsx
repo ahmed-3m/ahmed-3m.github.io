@@ -53,22 +53,22 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Right: terminal */}
-          <div>
-            <div className="cd-hero-terminal">
-              <div className="cd-term-bar">
-                <div className="cd-term-dot" style={{ background: '#ff5f57' }} />
-                <div className="cd-term-dot" style={{ background: '#febc2e' }} />
-                <div className="cd-term-dot" style={{ background: '#28c840' }} />
-              </div>
-              <div className="cd-term-line"><span className="tc">~/faultrix $ </span><span className="ta">python</span> train.py --model diffusion</div>
-              <div className="cd-term-line" style={{ color: 'var(--cd-fg3)' }}>Loading 42,810 samples · GPU: RTX 4090</div>
-              <div className="cd-term-line"><span className="tg">✓</span> Model init · params: 87M · dtype: bf16</div>
-              <div className="cd-term-line"><span className="tg">✓</span> Epoch 100/100 · loss: <span className="ta">0.0023</span></div>
-              <div className="cd-term-line">Detection accuracy: <span className="tg" style={{ fontWeight: 600 }}>98.4%</span> <span className="tc">← SOTA</span></div>
-              <div className="cd-term-line"><span className="tw">→</span> Generating QC report... <span className="ta">&lt;1 min</span></div>
-              <div className="cd-term-line"><span className="tc">~/faultrix $ </span><span className="cd-cursor" /></div>
-            </div>
+           {/* Right: terminal */}
+           <div>
+             <div className="cd-hero-terminal">
+               <div className="cd-term-bar">
+                 <div className="cd-term-dot" style={{ background: '#ff5f57' }} />
+                 <div className="cd-term-dot" style={{ background: '#febc2e' }} />
+                 <div className="cd-term-dot" style={{ background: '#28c840' }} />
+               </div>
+               <div className="cd-term-line"><span className="tc">~/thesis $ </span><span className="ta">python</span> train_ood.py --model cdm --dataset cifar10</div>
+               <div className="cd-term-line" style={{ color: 'var(--cd-fg3)' }}>Loading CIFAR-10 + 5 OOD datasets · GPU: RTX 4090</div>
+               <div className="cd-term-line"><span className="tg">✓</span> Model init · params: 12M · dtype: fp16</div>
+               <div className="cd-term-line"><span className="tg">✓</span> Epoch 200/200 · loss: <span className="ta">0.015</span></div>
+               <div className="cd-term-line">OOD Detection AUROC: <span className="tg" style={{ fontWeight: 600 }}>99.03%</span> <span className="tc">← SOTA</span></div>
+               <div className="cd-term-line"><span className="tw">→</span> Generating thesis plots... <span className="ta">&lt;1 min</span></div>
+               <div className="cd-term-line"><span className="tc">~/thesis $ </span><span className="cd-cursor" /></div>
+             </div>
 
             <div style={{ marginTop: 20, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
               {['PyTorch', 'Diffusion Models', 'Computer Vision', 'OOD Detection', 'CUDA', 'Python'].map(t => (
