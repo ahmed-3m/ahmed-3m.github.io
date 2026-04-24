@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ahmed Mohammed — AI/ML Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg:       #06090f;
+  --surf:     #0b1018;
+  --elev:     #111820;
+  --b0:       #1a2235;
+  --b1:       #242d40;
+  --cyan:     #00e5ff;
+  --cyan-h:   #00b8cc;
+  --cyan-dim: rgba(0,229,255,0.10);
+  --cyan-glow:rgba(0,229,255,0.06);
+  --green:    #00ff88;
+  --fg1:      #e8edf5;
+  --fg2:      #7a8a9e;
+  --fg3:      #3a4a5a;
+  --mono:     'JetBrains Mono', monospace;
+  --display:  'Space Grotesk', sans-serif;
+  --ease:     cubic-bezier(0.16,1,0.3,1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--fg1);
+  font-family: var(--display);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── BG: dot grid + scanlines ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.022) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+body::after {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg, transparent, transparent 3px,
+    rgba(0,0,0,0.06) 3px, rgba(0,0,0,0.06) 4px
+  );
+}
+
+/* ── Ambient glow ── */
+.ambient {
+  position: fixed; top: -300px; left: 50%; transform: translateX(-50%);
+  width: 900px; height: 600px; pointer-events: none; z-index: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(0,229,255,0.06) 0%, transparent 65%);
+  animation: pulse 7s ease-in-out infinite alternate;
+}
+@keyframes pulse { from { opacity: 0.5; } to { opacity: 1; } }
+
+/* ── Layout ── */
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 36px; position: relative; z-index: 1; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 58px; display: flex; align-items: center;
+  background: rgba(6,9,15,0.88); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--b0);
+}
+.nav-inner {
+  max-width: 1100px; margin: 0 auto; padding: 0 36px;
+  width: 100%; display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo {
+  font-family: var(--mono); font-size: 13px; font-weight: 600;
+  color: var(--fg1); text-decoration: none; letter-spacing: 0.02em;
+  display: flex; align-items: center; gap: 6px;
+}
+.nav-logo .dot { color: var(--cyan); }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a {
+  font-size: 12px; color: var(--fg2); text-decoration: none;
+  letter-spacing: 0.04em; transition: color 150ms;
+}
+.nav-links a:hover { color: var(--fg1); }
+.nav-cta {
+  font-family: var(--mono); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--bg); background: var(--cyan);
+  padding: 7px 16px; border-radius: 5px; text-decoration: none;
+  transition: background 150ms, box-shadow 150ms;
+}
+.nav-cta:hover { background: var(--cyan-h); box-shadow: 0 0 20px rgba(0,229,255,0.25); }
+
+/* ── HERO ── */
+#hero {
+  min-height: 100vh; padding: 120px 0 80px;
+  display: flex; align-items: center;
+  border-bottom: 1px solid var(--b0);
+}
+.hero-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 64px; align-items: center;
+}
+.hero-eyebrow {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--cyan);
+  display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
+}
+.hero-eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--cyan); }
+
+.hero-name {
+  font-size: clamp(52px, 7vw, 84px); font-weight: 700;
+  letter-spacing: -0.04em; line-height: 0.95; margin-bottom: 20px;
+}
+.hero-name .solid { color: var(--fg1); display: block; }
+.hero-name .outline {
+  color: transparent; display: block;
+  -webkit-text-stroke: 1.5px var(--cyan);
+}
+
+.hero-title {
+  font-family: var(--mono); font-size: 12px; color: var(--fg2);
+  letter-spacing: 0.06em; margin-bottom: 28px;
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+.hero-title .sep { color: var(--b1); }
+
+.hero-body {
+  font-size: 15px; color: var(--fg2); max-width: 440px;
+  line-height: 1.75; margin-bottom: 36px;
+}
+.hero-body strong { color: var(--fg1); font-weight: 500; }
+
+.hero-ctas { display: flex; gap: 12px; margin-bottom: 48px; }
+.btn-primary {
+  font-family: var(--mono); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 10px 22px; background: var(--cyan); color: var(--bg);
+  border: none; border-radius: 5px; text-decoration: none; cursor: pointer;
+  transition: background 150ms, box-shadow 150ms;
+}
+.btn-primary:hover { background: var(--cyan-h); box-shadow: 0 0 24px rgba(0,229,255,0.2); }
+.btn-ghost {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 10px 22px; background: transparent; color: var(--fg2);
+  border: 1px solid var(--b1); border-radius: 5px; text-decoration: none;
+  transition: border-color 150ms, color 150ms;
+}
+.btn-ghost:hover { border-color: var(--fg2); color: var(--fg1); }
+
+/* Stats */
+.hero-stats {
+  display: flex; width: fit-content;
+  background: var(--surf); border: 1px solid var(--b0); border-radius: 8px; overflow: hidden;
+}
+.stat { padding: 16px 28px; border-right: 1px solid var(--b0); }
+.stat:last-child { border-right: none; }
+.stat-num {
+  font-family: var(--mono); font-size: 26px; font-weight: 600;
+  color: var(--fg1); line-height: 1; letter-spacing: -0.03em;
+}
+.stat-num .a { color: var(--cyan); }
+.stat-num .g { color: var(--green); }
+.stat-label { font-size: 11px; color: var(--fg3); margin-top: 4px; letter-spacing: 0.04em; }
+
+/* Terminal */
+.hero-terminal {
+  background: var(--surf); border: 1px solid var(--b0); border-radius: 10px;
+  overflow: hidden; box-shadow: 0 8px 48px rgba(0,0,0,0.4);
+}
+.term-titlebar {
+  display: flex; align-items: center; gap: 6px;
+  padding: 12px 16px; border-bottom: 1px solid var(--b0);
+  background: var(--elev);
+}
+.term-dot { width: 10px; height: 10px; border-radius: 50%; }
+.term-title {
+  font-family: var(--mono); font-size: 10px; color: var(--fg3);
+  letter-spacing: 0.06em; margin-left: 8px;
+}
+.term-body { padding: 18px 20px; }
+.tl { font-family: var(--mono); font-size: 12px; line-height: 1.8; }
+.tc { color: var(--fg3); }
+.ta { color: var(--cyan); }
+.tg { color: var(--green); }
+.tw { color: #f59e0b; }
+.cursor {
+  display: inline-block; width: 7px; height: 13px;
+  background: var(--cyan); vertical-align: text-bottom;
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+.hero-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+
+/* ── SECTION COMMONS ── */
+section { padding: 80px 0; border-top: 1px solid var(--b0); }
+.sec-eyebrow {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--cyan); margin-bottom: 10px;
+}
+.sec-title {
+  font-size: clamp(26px, 3vw, 40px); font-weight: 700;
+  letter-spacing: -0.03em; color: var(--fg1); margin-bottom: 40px;
+}
+
+/* ── ABOUT ── */
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+.about-text { font-size: 14px; color: var(--fg2); line-height: 1.8; }
+.about-text p + p { margin-top: 14px; }
+.about-text strong { color: var(--fg1); font-weight: 500; }
+.chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 20px; }
+.chip {
+  font-family: var(--mono); font-size: 10px; color: var(--fg2);
+  background: var(--elev); border: 1px solid var(--b0);
+  padding: 4px 10px; border-radius: 4px; letter-spacing: 0.04em;
+  transition: border-color 150ms, color 150ms;
+}
+.chip:hover { border-color: rgba(0,229,255,0.35); color: var(--cyan); }
+
+.info-rows { display: flex; flex-direction: column; gap: 10px; }
+.info-row {
+  padding: 14px 16px; background: var(--surf);
+  border: 1px solid var(--b0); border-radius: 7px;
+  transition: border-color 200ms;
+}
+.info-row:hover { border-color: rgba(0,229,255,0.25); }
+.info-label {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--fg3); margin-bottom: 4px;
+}
+.info-val { font-size: 13px; color: var(--fg1); font-weight: 500; }
+.info-val.accent { color: var(--cyan); }
+
+/* ── PROJECTS ── */
+.projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.proj-featured {
+  grid-column: span 2; background: var(--surf); border: 1px solid var(--b0);
+  border-radius: 10px; padding: 28px 32px;
+  display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: start;
+  transition: border-color 250ms var(--ease), transform 250ms var(--ease), box-shadow 250ms var(--ease);
+  text-decoration: none; color: inherit; cursor: pointer;
+  position: relative; overflow: hidden;
+}
+.proj-featured::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--cyan), transparent);
+  opacity: 0; transition: opacity 250ms;
+}
+.proj-featured:hover { border-color: rgba(0,229,255,0.35); transform: translateY(-2px); box-shadow: 0 8px 40px rgba(0,229,255,0.06); }
+.proj-featured:hover::before { opacity: 1; }
+
+.proj-card {
+  background: var(--surf); border: 1px solid var(--b0); border-radius: 8px; padding: 22px 24px;
+  transition: border-color 250ms var(--ease), transform 250ms var(--ease);
+  text-decoration: none; color: inherit; display: block; cursor: pointer;
+}
+.proj-card:hover { border-color: rgba(0,229,255,0.3); transform: translateY(-2px); }
+
+.proj-eyebrow {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--green); margin-bottom: 8px;
+}
+.proj-title {
+  font-size: 22px; font-weight: 700; letter-spacing: -0.02em;
+  color: var(--fg1); margin-bottom: 8px;
+}
+.proj-card .proj-title { font-size: 16px; }
+.proj-desc { font-size: 13px; color: var(--fg2); line-height: 1.65; margin-bottom: 16px; }
+.proj-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+.proj-tag {
+  font-family: var(--mono); font-size: 10px; color: var(--fg2);
+  background: var(--elev); border: 1px solid var(--b0);
+  padding: 3px 8px; border-radius: 3px;
+}
+.proj-link {
+  font-family: var(--mono); font-size: 11px; color: var(--cyan);
+  text-decoration: none; display: inline-flex; align-items: center;
+  gap: 5px; margin-top: 14px; letter-spacing: 0.04em;
+}
+.proj-metric-big { text-align: right; flex-shrink: 0; }
+.proj-metric-big .num {
+  font-family: var(--mono); font-size: 48px; font-weight: 600;
+  color: var(--green); line-height: 1; letter-spacing: -0.03em;
+}
+.proj-metric-big .unit { font-size: 11px; color: var(--fg3); margin-top: 4px; font-family: var(--mono); }
+
+.pc-metric {
+  font-family: var(--mono); font-size: 22px; font-weight: 600;
+  color: var(--cyan); letter-spacing: -0.02em; margin-top: 12px;
+}
+.pc-metric span { font-size: 11px; color: var(--fg3); font-weight: 400; }
+
+/* ── EXPERIENCE ── */
+.timeline { display: flex; flex-direction: column; }
+.tl-item { display: grid; grid-template-columns: 130px 1px 1fr; gap: 0 24px; }
+.tl-date {
+  font-family: var(--mono); font-size: 10px; color: var(--fg3);
+  padding-top: 5px; text-align: right; line-height: 1.5;
+}
+.tl-spine { display: flex; flex-direction: column; align-items: center; }
+.tl-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--cyan);
+  flex-shrink: 0; margin-top: 6px;
+  box-shadow: 0 0 10px rgba(0,229,255,0.5);
+}
+.tl-dot.dim { background: var(--b1); box-shadow: none; }
+.tl-line { flex: 1; width: 1px; background: var(--b0); margin: 5px 0; }
+.tl-content { padding-bottom: 28px; }
+.tl-role { font-size: 15px; font-weight: 600; color: var(--fg1); }
+.tl-company { font-family: var(--mono); font-size: 11px; color: var(--cyan); margin-top: 3px; margin-bottom: 8px; letter-spacing: 0.03em; }
+.tl-desc { font-size: 13px; color: var(--fg2); line-height: 1.65; }
+.tl-badge {
+  display: inline-block; font-family: var(--mono); font-size: 10px;
+  color: var(--green); background: rgba(0,255,136,0.07);
+  border: 1px solid rgba(0,255,136,0.2); padding: 2px 8px;
+  border-radius: 4px; margin-top: 8px; letter-spacing: 0.06em;
+}
+
+/* ── CONTACT ── */
+#contact { text-align: center; }
+.contact-heading {
+  font-size: clamp(32px, 4vw, 52px); font-weight: 700;
+  letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 12px;
+}
+.contact-heading .outline {
+  color: transparent; -webkit-text-stroke: 1.5px var(--cyan);
+}
+.contact-sub { font-size: 14px; color: var(--fg2); margin-bottom: 36px; }
+.contact-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 32px; }
+.contact-link {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 18px; background: var(--surf);
+  border: 1px solid var(--b0); border-radius: 7px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.07em;
+  color: var(--fg2); text-decoration: none;
+  transition: border-color 200ms, color 200ms;
+}
+.contact-link:hover { border-color: rgba(0,229,255,0.4); color: var(--cyan); }
+.contact-email {
+  font-family: var(--mono); font-size: 15px; color: var(--cyan);
+  text-decoration: none; border-bottom: 1px solid rgba(0,229,255,0.3);
+  padding-bottom: 3px; transition: border-color 150ms;
+}
+.contact-email:hover { border-color: var(--cyan); }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--b0); padding: 24px 0;
+  position: relative; z-index: 1;
+}
+.footer-inner {
+  display: flex; justify-content: space-between; align-items: center;
+  max-width: 1100px; margin: 0 auto; padding: 0 36px;
+}
+.footer-brand { font-family: var(--mono); font-size: 12px; color: var(--fg2); }
+.footer-brand span { color: var(--cyan); }
+.footer-meta { font-family: var(--mono); font-size: 10px; color: var(--fg3); letter-spacing: 0.06em; }
+
+/* ── SCROLL REVEAL ── */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 500ms var(--ease), transform 500ms var(--ease); }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .hero-grid, .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .proj-featured { grid-column: span 1; grid-template-columns: 1fr; }
+  .proj-metric-big { text-align: left; }
+  .hero-stats { flex-wrap: wrap; width: 100%; }
+  .stat { flex: 1; min-width: 110px; }
+  .nav-links { display: none; }
+  .wrap { padding: 0 20px; }
+  .footer-inner { flex-direction: column; gap: 8px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<div class="ambient"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">ahmed_3m<span class="dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Get in touch</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero" style="border-top:none;">
+  <div class="wrap">
+    <div class="hero-grid">
+
+      <!-- Left: Text -->
+      <div>
+        <div class="hero-eyebrow">AI/ML Engineer · Linz, Austria</div>
+        <h1 class="hero-name">
+          <span class="solid">Ahmed</span>
+          <span class="outline">Mohammed</span>
+        </h1>
+        <div class="hero-title">
+          <span>Computer Vision</span>
+          <span class="sep">/</span>
+          <span>Diffusion Models</span>
+          <span class="sep">/</span>
+          <span>OOD Detection</span>
+        </div>
+        <p class="hero-body">
+          M.Sc. AI at <strong>JKU Linz</strong> under Prof. Sepp Hochreiter.
+          Founder of <strong>Faultrix.com</strong>. Building AI systems that
+          bridge research and production.
+        </p>
+        <div class="hero-ctas">
+          <a href="#projects" class="btn-primary">View work →</a>
+          <a href="#contact" class="btn-ghost">Get in touch</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat">
+            <div class="stat-num">4<span class="a">+</span></div>
+            <div class="stat-label">Years in AI/ML</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">98<span class="a">.</span>4<span style="font-size:13px;color:var(--fg3)">%</span></div>
+            <div class="stat-label">Detection accuracy</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">~15<span class="g" style="font-size:15px">%</span></div>
+            <div class="stat-label">Efficiency gain</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">&lt;1<span style="font-size:13px;color:var(--fg3)"> min</span></div>
+            <div class="stat-label">Report generation</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Terminal -->
+      <div style="padding-top:16px;">
+        <div class="hero-terminal">
+          <div class="term-titlebar">
+            <div class="term-dot" style="background:#ff5f57"></div>
+            <div class="term-dot" style="background:#febc2e"></div>
+            <div class="term-dot" style="background:#28c840"></div>
+            <span class="term-title">ahmed@jku ~ python train.py</span>
+          </div>
+          <div class="term-body">
+            <div class="tl"><span class="tc">~/faultrix $ </span><span class="ta">python</span> train.py --model diffusion</div>
+            <div class="tl" style="color:var(--fg3)">Loading 42,810 samples · GPU: RTX 4090</div>
+            <div class="tl"><span class="tg">✓</span> Model init · params: 87M · dtype: bf16</div>
+            <div class="tl"><span class="tg">✓</span> Epoch 100/100 · loss: <span class="ta">0.0023</span></div>
+            <div class="tl">Detection accuracy: <span class="tg" style="font-weight:600">98.4%</span> <span class="tc">← SOTA</span></div>
+            <div class="tl"><span class="tw">→</span> Generating QC report... <span class="ta">&lt;1 min</span></div>
+            <div class="tl"><span class="tc">~/faultrix $ </span><span class="cursor"></span></div>
+          </div>
+        </div>
+        <div class="hero-chips">
+          <span class="chip">PyTorch</span>
+          <span class="chip">Diffusion Models</span>
+          <span class="chip">Computer Vision</span>
+          <span class="chip">OOD Detection</span>
+          <span class="chip">CUDA</span>
+          <span class="chip">Next.js</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="sec-eyebrow">// 01 — About</div>
+    <div class="about-grid">
+      <div class="reveal">
+        <h2 class="sec-title">Built on research.<br>Deployed in production.</h2>
+        <div class="about-text">
+          <p>I'm an AI/ML engineer completing my <strong>M.Sc. in Artificial Intelligence at JKU Linz</strong>, working under <strong>Prof. Sepp Hochreiter</strong> — inventor of LSTM.</p>
+          <p>My work spans the full stack: from novel training methods for diffusion models and out-of-distribution detection in academic settings, to shipping production-grade CV pipelines that catch defects at <strong>98.4% accuracy</strong>.</p>
+          <p>I founded <strong>Faultrix</strong> to turn this research into a real product — AI-powered construction quality control that generates ÖNORM-compliant reports in under a minute.</p>
+        </div>
+        <div class="chips">
+          <span class="chip">Computer Vision</span>
+          <span class="chip">Diffusion Models</span>
+          <span class="chip">OOD Detection</span>
+          <span class="chip">Full-Stack AI</span>
+          <span class="chip">PyTorch</span>
+          <span class="chip">Startup Founder</span>
+          <span class="chip">Arabic · English · German</span>
+        </div>
+      </div>
+      <div class="info-rows reveal">
+        <div class="info-row">
+          <div class="info-label">Location</div>
+          <div class="info-val">Linz, Austria</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Education</div>
+          <div class="info-val">M.Sc. AI · JKU Linz</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Supervisor</div>
+          <div class="info-val">Prof. Sepp Hochreiter</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Company</div>
+          <div class="info-val accent">Faultrix.com — Founder</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Open to</div>
+          <div class="info-val">AI/ML Roles · Research Collaborations</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Status</div>
+          <div class="info-val" style="display:flex;align-items:center;gap:8px;">
+            <span style="width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 6px var(--green);flex-shrink:0;animation:pulse 2s ease-in-out infinite alternate;"></span>
+            Open to opportunities
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-eyebrow">// 02 — Projects</div>
+    <h2 class="sec-title">Research that ships.</h2>
+    <div class="projects-grid">
+
+      <a href="https://faultrix.com" target="_blank" class="proj-featured reveal">
+        <div>
+          <div class="proj-eyebrow">⬡ Live SaaS · Founder</div>
+          <div class="proj-title">Faultrix</div>
+          <div class="proj-desc">AI-powered construction quality control. Analyzes building photos and generates ÖNORM-compliant reports in under 1 minute — with SHA-256 evidence chain and AES-256 encryption.</div>
+          <div class="proj-tags">
+            <span class="proj-tag">Next.js</span>
+            <span class="proj-tag">Convex</span>
+            <span class="proj-tag">OpenAI</span>
+            <span class="proj-tag">Cloudflare R2</span>
+            <span class="proj-tag">Stripe</span>
+          </div>
+          <span class="proj-link">faultrix.com ↗</span>
+        </div>
+        <div class="proj-metric-big">
+          <div class="num">98.4</div>
+          <div class="unit">% detection accuracy</div>
+          <div style="font-family:var(--mono);font-size:10px;color:var(--fg3);margin-top:6px;">&lt;1 min · ÖNORM compliant</div>
+        </div>
+      </a>
+
+      <a href="https://github.com/ahmed-3m/OOD-diffusion-detector" target="_blank" class="proj-card reveal">
+        <div class="proj-eyebrow" style="color:var(--cyan)">Master's Thesis · JKU Linz</div>
+        <div class="proj-title">OOD Detection Framework</div>
+        <div class="proj-desc">Conditional diffusion models as generative classifiers for robust out-of-distribution detection. ~15% sampling efficiency improvement.</div>
+        <div class="pc-metric">~15<span>% efficiency gain</span></div>
+      </a>
+
+      <a href="https://github.com/ahmed-3m/Occluded-Object-Detection-With-Tracking" target="_blank" class="proj-card reveal">
+        <div class="proj-eyebrow" style="color:var(--cyan)">PROFACTOR GmbH</div>
+        <div class="proj-title">Industrial Anomaly Detection</div>
+        <div class="proj-desc">YOLO + diffusion model pipeline for industrial quality control. Real-time defect detection at 98.4% accuracy in production.</div>
+        <div class="pc-metric">98.4<span>% accuracy</span></div>
+      </a>
+
+      <a href="https://github.com/ahmed-3m/Motor-Imagery-classification" target="_blank" class="proj-card reveal" style="grid-column:span 2">
+        <div class="proj-eyebrow" style="color:var(--cyan)">Karunya University · BCI</div>
+        <div class="proj-title">EEG Signal Classification</div>
+        <div class="proj-desc">LSTM · Bi-LSTM · GRU architectures for motor imagery classification in brain-computer interface applications.</div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-eyebrow">// 03 — Experience</div>
+    <h2 class="sec-title">Where I've worked.</h2>
+    <div class="timeline">
+
+      <div class="tl-item reveal">
+        <div class="tl-date">Jul 2025<br>Present</div>
+        <div class="tl-spine"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <div class="tl-role">Founder & Full-Stack Developer</div>
+          <div class="tl-company">Faultrix · Linz, Austria</div>
+          <div class="tl-desc">Built AI-powered construction analysis platform solo from zero to production. Next.js, Convex, Clerk, Cloudflare R2, Stripe. ÖNORM-compliant reports with SHA-256 evidence chain.</div>
+          <div class="tl-badge">Active · faultrix.com</div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-date">Dec 2024<br>Mar 2026</div>
+        <div class="tl-spine"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <div class="tl-role">ML Researcher</div>
+          <div class="tl-company">JKU Machine Learning Institute · Linz</div>
+          <div class="tl-desc">Thesis: "Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection" under Prof. Sepp Hochreiter. ~15% sampling efficiency improvement.</div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-date">Apr 2024<br>Nov 2024</div>
+        <div class="tl-spine"><div class="tl-dot dim"></div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <div class="tl-role">Machine Vision Researcher</div>
+          <div class="tl-company">PROFACTOR GmbH · Steyr, Austria</div>
+          <div class="tl-desc">YOLO + diffusion model pipeline for industrial defect detection. 98.4% accuracy in real-time production environment.</div>
+          <div class="tl-badge">98.4% accuracy</div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-date">Aug 2023<br>Oct 2023</div>
+        <div class="tl-spine"><div class="tl-dot dim"></div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <div class="tl-role">AI Research Intern</div>
+          <div class="tl-company">Karunya University · India (Remote)</div>
+          <div class="tl-desc">RNN/CNN architectures for EEG motor imagery classification. Hyperparameter optimization across LSTM, Bi-LSTM, and GRU models.</div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-date">Jan 2021<br>Present</div>
+        <div class="tl-spine"><div class="tl-dot dim"></div><div class="tl-line" style="opacity:0"></div></div>
+        <div class="tl-content">
+          <div class="tl-role">AI & Programming Tutor</div>
+          <div class="tl-company">Freelance</div>
+          <div class="tl-desc">Tailored training in Python, ML, and Deep Learning. Mentoring on portfolio projects and GitHub best practices.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div class="sec-eyebrow" style="text-align:center;margin-bottom:16px;">// 04 — Contact</div>
+    <h2 class="contact-heading reveal">
+      Let's build <span class="outline">something</span> extraordinary
+    </h2>
+    <p class="contact-sub reveal">Open to AI/ML roles, research collaborations, and product partnerships.</p>
+    <div class="contact-links reveal">
+      <a href="https://github.com/ahmed-3m" target="_blank" class="contact-link">GitHub ↗</a>
+      <a href="https://www.linkedin.com/in/ahmed-3m/" target="_blank" class="contact-link">LinkedIn ↗</a>
+      <a href="https://huggingface.co/ahmed-3m" target="_blank" class="contact-link">Hugging Face ↗</a>
+      <a href="https://wandb.ai/ahmed-mu-0593" target="_blank" class="contact-link">W&B ↗</a>
+      <a href="https://x.com/Ahmed_mo_93" target="_blank" class="contact-link">X / Twitter ↗</a>
+    </div>
+    <a href="mailto:ahmed.mo.0595@gmail.com" class="contact-email reveal">ahmed.mo.0595@gmail.com</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">ahmed_3m<span>.</span></div>
+    <div class="footer-meta">© 2026 · Linz, Austria · Built with precision & caffeine</div>
+  </div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 50);
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Subtle glitch on hero name every few seconds
+const heroName = document.querySelector('.hero-name');
+if (heroName) {
+  setInterval(() => {
+    heroName.style.textShadow = `${(Math.random()*3-1.5).toFixed(1)}px 0 var(--cyan)`;
+    setTimeout(() => heroName.style.textShadow = '', 90);
+  }, 5000 + Math.random() * 4000);
+}
+</script>
+</body>
+</html>

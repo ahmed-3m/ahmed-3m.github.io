@@ -40,5 +40,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# claude code - local settings may contain sensitive credentials
+.claude/settings.local.json
+
 # build scripts
 /scripts/

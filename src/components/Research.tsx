@@ -28,28 +28,33 @@ export default function Research() {
         <div className="cd-section-eyebrow">// 04 — Research</div>
         <h2 className="cd-section-title" style={{ marginBottom: 32 }}>Publications &amp; Thesis</h2>
 
-        <div className="cd-research-featured reveal">
-          <div className="cd-rf-label">Master&apos;s Thesis · JKU Linz · 2026</div>
-          <div className="cd-rf-title">
-            Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection
-          </div>
-          <div className="cd-rf-desc">
-            Novel approach using conditional diffusion models as generative classifiers for robust
-            out-of-distribution detection. ~15% sampling efficiency improvement over baseline methods.
-          </div>
-          <div className="cd-rf-meta">
-            Supervisor: Prof. Sepp Hochreiter · Assistant: Claus Hofmann · JKU Linz · 2026
-          </div>
-          <a
-            href="https://ahmed-3m.github.io/research-poster.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="cd-proj-link"
-            style={{ marginTop: 16 }}
-          >
-            View Research Poster ↗
-          </a>
-        </div>
+         <div className="cd-research-featured reveal">
+           <div className="cd-rf-label">Master&apos;s Thesis · JKU Linz · 2026</div>
+           <div className="cd-rf-title">
+             Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection
+           </div>
+           <div className="cd-rf-desc">
+             Novel approach using conditional diffusion models as generative classifiers for robust
+             out-of-distribution detection. Achieved 99.03% AUROC on CIFAR-10 with class-conditional separation loss.
+           </div>
+           <div className="cd-rf-meta">
+             Supervisor: Prof. Sepp Hochreiter · Assistant: Claus Hofmann · JKU Linz · 2026
+           </div>
+           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem', marginTop: '1rem' }}>
+             <img src="/ood-roc-cifar10.png" alt="ROC Curves CIFAR-10" style={{ width: '100%', borderRadius: '8px' }} />
+             <img src="/ood-score-distributions.png" alt="Score Distributions" style={{ width: '100%', borderRadius: '8px' }} />
+             <img src="/ood-separation-loss-ablation.png" alt="Separation Loss Ablation" style={{ width: '100%', borderRadius: '8px' }} />
+           </div>
+           <a
+             href="https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf"
+             target="_blank"
+             rel="noopener noreferrer"
+             className="cd-proj-link"
+             style={{ marginTop: 16 }}
+           >
+             View Full Thesis ↗
+           </a>
+         </div>
 
         <div className="cd-pub-list">
           {publications.map(pub => (
