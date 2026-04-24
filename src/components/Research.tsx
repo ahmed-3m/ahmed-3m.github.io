@@ -58,7 +58,7 @@ export default function Research() {
                { src: '/ood-score-distributions.png', alt: 'Score Distributions', caption: 'ID vs OOD score distributions per class', lightBg: true },
              ].map(({ src, alt, caption, lightBg }) => (
                <div key={src} className="cd-rf-chart">
-                  <img src={src} alt={alt} style={{ width: '100%', height: '200px', objectFit: 'contain', borderRadius: '8px', ...(lightBg ? { filter: 'invert(1) hue-rotate(180deg)' } : {}) }} />
+                  <img src={src} alt={alt} style={{ width: '100%', height: '260px', objectFit: 'contain', borderRadius: '8px', ...(lightBg ? { filter: 'invert(1) hue-rotate(180deg)' } : {}) }} />
                  <div className="cd-rf-chart-caption">{caption}</div>
                </div>
              ))}
