@@ -247,9 +247,10 @@ body::before {
 .tg { color: var(--cd-success); }
 .tw { color: var(--cd-warn); }
 .cd-cursor {
-  display: inline-block; width: 8px; height: 2px;
-  background: var(--cd-accent) !important; vertical-align: baseline !important;
+  display: inline-block; width: 12px; height: 12px;
+  background: #ff0000 !important; vertical-align: baseline !important;
   animation: blink 1s step-end infinite !important;
+  border-radius: 50% !important;
 }
 
 /* ── SECTIONS ── */
