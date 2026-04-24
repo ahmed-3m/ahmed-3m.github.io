@@ -1,4 +1,5 @@
 'use client'
+import { useState, useEffect } from 'react'
 import { useReveal } from '@/lib/useReveal'
 
 const publications = [
@@ -19,8 +20,22 @@ const publications = [
   },
 ]
 
+const charts = [
+  { src: '/ood-separation-loss-ablation.png', alt: 'Separation Loss Ablation', caption: 'Separation loss weight λ — key contribution', lightBg: false },
+  { src: '/ood-roc-cifar10.png', alt: 'ROC Curves', caption: 'ROC curves — CIFAR-10 vs 5 OOD datasets', lightBg: true },
+  { src: '/ood-score-distributions.png', alt: 'Score Distributions', caption: 'ID vs OOD score distributions per class', lightBg: true },
+]
+
 export default function Research() {
   useReveal()
+  const [lightbox, setLightbox] = useState<number | null>(null)
+
+  useEffect(() => {
+    if (lightbox === null) return
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setLightbox(null) }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [lightbox])
 
   return (
     <section id="research" className="cd-section">
@@ -52,13 +67,21 @@ export default function Research() {
            </div>
 
            <div className="cd-rf-charts">
-             {[
-               { src: '/ood-separation-loss-ablation.png', alt: 'Separation Loss Ablation', caption: 'Separation loss weight λ — key contribution', lightBg: false },
-               { src: '/ood-roc-cifar10.png', alt: 'ROC Curves', caption: 'ROC curves — CIFAR-10 vs 5 OOD datasets', lightBg: true },
-               { src: '/ood-score-distributions.png', alt: 'Score Distributions', caption: 'ID vs OOD score distributions per class', lightBg: true },
-             ].map(({ src, alt, caption, lightBg }) => (
-               <div key={src} className="cd-rf-chart">
-                  <img src={src} alt={alt} style={{ width: '100%', height: '260px', objectFit: 'contain', borderRadius: '8px', ...(lightBg ? { filter: 'invert(1) hue-rotate(180deg)' } : {}) }} />
+             {charts.map(({ src, alt, caption, lightBg }, i) => (
+               <div
+                 key={src}
+                 className="cd-rf-chart cd-rf-chart--zoom"
+                 onClick={() => setLightbox(i)}
+                 title="Click to expand"
+               >
+                 <img
+                   src={src}
+                   alt={alt}
+                   style={{
+                     width: '100%', height: '260px', objectFit: 'contain', borderRadius: '8px',
+                     ...(lightBg ? { filter: 'invert(1) hue-rotate(180deg)' } : {}),
+                   }}
+                 />
                  <div className="cd-rf-chart-caption">{caption}</div>
                </div>
              ))}
@@ -94,6 +117,21 @@ export default function Research() {
           ))}
         </div>
       </div>
+
+      {/* Lightbox */}
+      {lightbox !== null && (
+        <div className="cd-lightbox" onClick={() => setLightbox(null)}>
+          <div className="cd-lightbox-inner" onClick={e => e.stopPropagation()}>
+            <button className="cd-lightbox-close" onClick={() => setLightbox(null)}>✕</button>
+            <img
+              src={charts[lightbox].src}
+              alt={charts[lightbox].alt}
+              style={charts[lightbox].lightBg ? { filter: 'invert(1) hue-rotate(180deg)' } : {}}
+            />
+            <div className="cd-lightbox-caption">{charts[lightbox].caption}</div>
+          </div>
+        </div>
+      )}
     </section>
   )
 }
