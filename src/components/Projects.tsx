@@ -15,7 +15,7 @@ export default function Projects() {
           {/* Featured */}
           <a href="https://faultrix.com" target="_blank" rel="noopener noreferrer" className="cd-project-featured reveal">
             <div>
-              <div className="cd-proj-eyebrow">⬡ Featured · Founder</div>
+              <div className="cd-proj-eyebrow">⬡ Live SaaS · Founder</div>
               <div className="cd-proj-title">Faultrix</div>
               <div className="cd-proj-desc">
                 AI-powered construction quality control SaaS. Analyzes building photos and generates
@@ -30,24 +30,25 @@ export default function Projects() {
               <span className="cd-proj-link">faultrix.com ↗</span>
             </div>
             <div className="cd-proj-metric-big">
-              <div className="num">98.4</div>
-              <div className="unit">% detection accuracy</div>
+              <div className="num">&lt;1</div>
+              <div className="unit">min per report</div>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-fg3)', marginTop: 8 }}>
-                &lt;1 min reports
+                ÖNORM · DSGVO compliant
               </div>
             </div>
           </a>
 
-          {/* OOD */}
-          <a href="https://github.com/ahmed-3m/OOD-diffusion-detector" target="_blank" rel="noopener noreferrer" className="cd-project-card reveal">
-            <div className="cd-pc-eyebrow">Master&apos;s Thesis · JKU Linz</div>
-            <div className="cd-pc-title">OOD Detection Framework</div>
-            <div className="cd-pc-desc">
-              Conditional diffusion models as generative classifiers for robust
-              out-of-distribution detection. Research at JKU ML Institute under Prof. Hochreiter.
-            </div>
-            <div className="cd-pc-metric">~15<span>% efficiency gain</span></div>
-          </a>
+           {/* OOD */}
+           <a href="https://github.com/ahmed-3m/OOD-diffusion-detector" target="_blank" rel="noopener noreferrer" className="cd-project-card reveal">
+             <div className="cd-pc-eyebrow">Master&apos;s Thesis · JKU Linz</div>
+             <div className="cd-pc-title">OOD Detection Framework</div>
+             <div className="cd-pc-desc">
+               Conditional diffusion models as generative classifiers achieving 99.03% AUROC for robust out-of-distribution detection. 
+               Introduced class-conditional separation loss improving performance by 18.8 percentage points. Applied to industrial 
+               quality control with multi-head conditioning for structured manufacturing data.
+             </div>
+             <div className="cd-pc-metric">99.0<span>% AUROC (CIFAR-10)</span></div>
+           </a>
 
           {/* Anomaly */}
           <a href="https://github.com/ahmed-3m/Occluded-Object-Detection-With-Tracking" target="_blank" rel="noopener noreferrer" className="cd-project-card reveal">
