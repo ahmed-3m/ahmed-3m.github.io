@@ -53,12 +53,12 @@ export default function Research() {
 
            <div className="cd-rf-charts">
              {[
-               { src: '/ood-roc-cifar10.png', alt: 'ROC Curves', caption: 'ROC Curves — CIFAR-10 vs 5 OOD datasets' },
-               { src: '/ood-score-distributions.png', alt: 'Score Distributions', caption: 'ID vs OOD score distributions per class' },
-               { src: '/ood-separation-loss-ablation.png', alt: 'Separation Loss Ablation', caption: 'Separation loss weight λ ablation study' },
-             ].map(({ src, alt, caption }) => (
+               { src: '/ood-separation-loss-ablation.png', alt: 'Separation Loss Ablation', caption: 'Separation loss weight λ — key contribution', lightBg: false },
+               { src: '/ood-roc-cifar10.png', alt: 'ROC Curves', caption: 'ROC curves — CIFAR-10 vs 5 OOD datasets', lightBg: true },
+               { src: '/ood-score-distributions.png', alt: 'Score Distributions', caption: 'ID vs OOD score distributions per class', lightBg: true },
+             ].map(({ src, alt, caption, lightBg }) => (
                <div key={src} className="cd-rf-chart">
-                  <img src={src} alt={alt} style={{ width: '100%', height: '200px', objectFit: 'contain', borderRadius: '8px' }} />
+                  <img src={src} alt={alt} style={{ width: '100%', height: '200px', objectFit: 'contain', borderRadius: '8px', ...(lightBg ? { filter: 'invert(1) hue-rotate(180deg)' } : {}) }} />
                  <div className="cd-rf-chart-caption">{caption}</div>
                </div>
              ))}

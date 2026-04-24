@@ -249,8 +249,8 @@ body::before {
 .tw { color: var(--cd-warn); }
 .cd-cursor {
   display: inline-block; width: 8px; height: 2px;
-  background: var(--cd-accent); vertical-align: baseline;
-  animation: blink 1s step-end infinite;
+  background: var(--cd-accent) !important; vertical-align: baseline !important;
+  animation: blink 1s step-end infinite !important;
 }
 
 /* ── SECTIONS ── */
