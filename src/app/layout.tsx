@@ -9,7 +9,8 @@ import {
   FAQSchema,
   SocialProfileSchema,
   ProjectsSchema,
-  ResearchSchema
+  ResearchSchema,
+  WebPageSchema
 } from "@/components/JsonLd";
 import { Analytics } from "@/components/Analytics";
 import CustomCursor from "@/components/CustomCursor";
@@ -49,7 +50,7 @@ export const metadata: Metadata = {
   formatDetection: { email: false, address: false, telephone: false },
   openGraph: {
     title: "Ahmed Mohammed | AI/ML Engineer & Entrepreneur",
-    description: "AI/ML Engineer & Entrepreneur based in Linz, Austria. Specializing in computer vision, anomaly detection, and diffusion models. Founder of Faultrix. M.Sc. AI from JKU Linz.",
+    description: "AI/ML Engineer in Linz, Austria. 99% AUROC OOD detection · 98.4% defect accuracy · Founder of Faultrix · M.Sc. AI from JKU Linz (Hochreiter lab).",
     url: 'https://ahmed-3m.github.io/',
     siteName: 'Ahmed Mohammed Portfolio',
     images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Ahmed Mohammed - AI/ML Engineer & Entrepreneur' }],
@@ -82,6 +83,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <link rel="icon" type="image/svg+xml" href="/icon.svg" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="alternate" type="application/rss+xml" title="Ahmed Mohammed Blog" href="/feed.xml" />
         <PersonSchema />
         <WebsiteSchema />
         <OrganizationSchema />
@@ -89,6 +91,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <SocialProfileSchema />
         <ProjectsSchema />
         <ResearchSchema />
+        <WebPageSchema />
       </head>
       <body
         className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased`}
