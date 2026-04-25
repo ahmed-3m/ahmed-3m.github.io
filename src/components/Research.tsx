@@ -13,11 +13,6 @@ const publications = [
     venue: 'Project Report · JKU Linz · 2023',
     href: 'https://ahmed-3m.github.io/Reading%20Thoughts%20Using%20GANs.pdf',
   },
-  {
-    title: 'Diffusion-Based Multi-class Defect Detection: A Generative Approach to Industrial QC',
-    venue: 'Technical Report · PROFACTOR GmbH · JKU Linz · 2024',
-    href: 'https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf',
-  },
 ]
 
 const charts = [
@@ -123,13 +118,17 @@ export default function Research() {
            </div>
 
            <div className="cd-rf-charts" style={{ gridTemplateColumns: '1fr' }}>
-             <div className="cd-rf-chart">
+             <div
+               className="cd-rf-chart cd-rf-chart--zoom"
+               onClick={() => setLightbox(-1)}
+               title="Click to expand"
+             >
                <img
                  src="/ood-industrial-roc.png"
                  alt="Industrial ROC Curves"
                  style={{ width: '100%', height: '260px', objectFit: 'contain', borderRadius: '8px' }}
                />
-               <div className="cd-rf-chart-caption">Industrial ROC curves - inkjet dataset</div>
+               <div className="cd-rf-chart-caption">ROC curves — inkjet CDM vs baseline, 5-fold CV</div>
              </div>
            </div>
 
@@ -169,12 +168,21 @@ export default function Research() {
         <div className="cd-lightbox" onClick={() => setLightbox(null)}>
           <div className="cd-lightbox-inner" onClick={e => e.stopPropagation()}>
             <button className="cd-lightbox-close" onClick={() => setLightbox(null)}>✕</button>
-            <img
-              src={charts[lightbox].src}
-              alt={charts[lightbox].alt}
-              style={charts[lightbox].lightBg ? { filter: 'invert(1) hue-rotate(180deg)' } : {}}
-            />
-            <div className="cd-lightbox-caption">{charts[lightbox].caption}</div>
+            {lightbox === -1 ? (
+              <>
+                <img src="/ood-industrial-roc.png" alt="Industrial ROC Curves" />
+                <div className="cd-lightbox-caption">ROC curves — inkjet CDM vs baseline, 5-fold CV</div>
+              </>
+            ) : (
+              <>
+                <img
+                  src={charts[lightbox].src}
+                  alt={charts[lightbox].alt}
+                  style={charts[lightbox].lightBg ? { filter: 'invert(1) hue-rotate(180deg)' } : {}}
+                />
+                <div className="cd-lightbox-caption">{charts[lightbox].caption}</div>
+              </>
+            )}
           </div>
         </div>
       )}
