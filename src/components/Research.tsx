@@ -97,6 +97,52 @@ export default function Research() {
                View Full Thesis ↗
              </a>
            </div>
+          </div>
+
+         <div className="cd-research-featured reveal">
+           <div className="cd-rf-header">
+             <div className="cd-rf-left">
+               <div className="cd-rf-label">Industrial Technical Report · PROFACTOR GmbH · 2024</div>
+               <div className="cd-rf-title">
+                 Diffusion-Based Multi-class Defect Detection: A Generative Approach to Industrial QC
+               </div>
+               <div className="cd-rf-desc">
+                 Production-oriented industrial quality control pipeline combining YOLO-based feature extraction
+                 with diffusion modeling for robust multi-class defect detection on inkjet-printed building components.
+                 Includes cross-domain and per-feature evaluation protocols used in real manufacturing settings.
+               </div>
+               <div className="cd-rf-meta">
+                 PROFACTOR GmbH · Zer0P context · Proprietary industrial dataset
+               </div>
+             </div>
+             <div className="cd-rf-metric">
+               <div className="cd-rf-metric-num">98.4<span className="cd-rf-metric-unit">%</span></div>
+               <div className="cd-rf-metric-label">Defect Detection</div>
+               <div className="cd-rf-metric-delta">Real-time production setting</div>
+             </div>
+           </div>
+
+           <div className="cd-rf-charts" style={{ gridTemplateColumns: '1fr' }}>
+             <div className="cd-rf-chart">
+               <img
+                 src="/ood-industrial-roc.png"
+                 alt="Industrial ROC Curves"
+                 style={{ width: '100%', height: '260px', objectFit: 'contain', borderRadius: '8px' }}
+               />
+               <div className="cd-rf-chart-caption">Industrial ROC curves - inkjet dataset</div>
+             </div>
+           </div>
+
+           <div className="cd-rf-footer">
+             <a
+               href="https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf"
+               target="_blank"
+               rel="noopener noreferrer"
+               className="cd-proj-link"
+             >
+               View Industrial Report ↗
+             </a>
+           </div>
          </div>
 
         <div className="cd-pub-list">
