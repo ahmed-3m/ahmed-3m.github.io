@@ -1,0 +1,62 @@
+# Ahmed Mohammed — AI/ML Engineer & Entrepreneur
+
+> AI/ML Engineer and entrepreneur based in Linz, Austria. M.Sc. Artificial Intelligence from Johannes Kepler University Linz (supervised by Prof. Sepp Hochreiter, inventor of LSTM). Founder of Faultrix. Specializing in computer vision, diffusion models, out-of-distribution detection, and industrial defect detection.
+
+## Identity
+
+- **Full name:** Ahmed Mohammed
+- **Location:** Linz, Upper Austria, Austria
+- **Email:** ahmed.mo.0595@gmail.com
+- **Portfolio:** https://ahmed-3m.github.io
+- **Company:** Faultrix (Founder) — https://faultrix.com
+- **Open to:** Senior AI/ML roles · Research collaborations · Enterprise partnerships
+
+## Key Achievements
+
+- 99.03% AUROC on CIFAR-10 OOD detection benchmark (Master's Thesis, JKU Linz, 2026)
+- Introduced class-conditional separation loss improving OOD AUROC by +18.8 percentage points over baseline
+- 98.4% defect detection accuracy in real-time industrial production environment (PROFACTOR GmbH, Zer0P project, Upper Austria government funded)
+- Built Faultrix solo from zero to production — AI construction QC SaaS generating ÖNORM-compliant reports in under 1 minute
+
+## Projects
+
+- [Faultrix](https://faultrix.com): AI-powered construction quality control SaaS. Analyzes building photos, generates ÖNORM B 2110-compliant technical reports in under 1 minute. SHA-256 evidence chain, DSGVO compliant, AES-256 encryption. Stack: Next.js, Convex, OpenAI API, Cloudflare R2, Stripe, Clerk, Docker.
+- [OOD Detection Framework](https://github.com/ahmed-3m/OOD-diffusion-detector): Novel use of conditional diffusion models as generative classifiers for out-of-distribution detection. 99.03% AUROC on CIFAR-10. Introduced class-conditional separation loss. Applied to industrial quality control with multi-head conditioning.
+- [Industrial Anomaly Detection](https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf): YOLO + diffusion model pipeline for real-time industrial defect detection on inkjet-printed building components. 98.4% accuracy in production. Part of Zer0P project (PROFACTOR GmbH).
+- [EEG Signal Classification](https://github.com/ahmed-3m/Motor-Imagery-classification): LSTM, Bi-LSTM, GRU architectures for EEG motor imagery classification in brain-computer interface applications. Hyperparameter optimization across architectures (Karunya University, 2023).
+
+## Research & Publications
+
+- **Master's Thesis (2026):** "Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection" — Johannes Kepler University Linz, supervised by Prof. Sepp Hochreiter and Claus Hofmann. [PDF](https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf)
+- **Industrial Technical Report (2024):** "Diffusion-Based Multi-class Defect Detection: A Generative Approach to Industrial QC" — PROFACTOR GmbH, Zer0P project. [PDF](https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf)
+- **Conference Paper (2023):** "Motor Imagery Classification Based Brain-Computer Interface for Rehabilitation" — Karunya University. [PDF](https://ahmed-3m.github.io/Motor%20Imagery%20classification%20Based%20Brain%20Computer.pdf)
+- **Project Report (2023):** "Reading Thoughts Using GANs" — JKU Linz. [PDF](https://ahmed-3m.github.io/Reading%20Thoughts%20Using%20GANs.pdf)
+
+## Education
+
+- **M.Sc. Artificial Intelligence** — Johannes Kepler University Linz, Austria (Oct 2024 – Mar 2026). Supervisor: Prof. Sepp Hochreiter (inventor of LSTM). Thesis: Conditional Diffusion Models for OOD Detection.
+- **B.Sc. Mechatronics Engineering** — Eastern Mediterranean University, Famagusta, Cyprus (Feb 2015 – Jan 2018). Thesis: SCARA robotic system for dynamic object tracking.
+
+## Experience
+
+- **Founder & Full-Stack Developer, Faultrix** (Jul 2025 – Present): Built AI construction analysis platform solo from zero to production.
+- **ML Researcher, JKU Machine Learning Institute** (Dec 2024 – Mar 2026): Thesis on diffusion-based OOD detection under Prof. Sepp Hochreiter.
+- **Machine Vision Researcher, PROFACTOR GmbH** (Apr 2024 – Nov 2024): YOLO + diffusion pipeline for industrial defect detection. 98.4% accuracy in real-time production.
+- **AI Research Intern, Karunya University** (Aug 2023 – Oct 2023, Remote): RNN/CNN architectures for EEG motor imagery classification.
+- **AI & Programming Tutor, Freelance** (Jan 2021 – Present): Python, ML, Deep Learning mentoring.
+
+## Technical Skills
+
+- **Deep Learning:** PyTorch, PyTorch Lightning, Diffusion Models (DDPM/UNet), CNNs, Transformers, RNNs, LLMs
+- **Computer Vision:** OOD Detection, Object Detection (YOLOv8), Defect Detection, Image Classification
+- **Research:** Hydra, Experiment Design, Ablation Studies, AUROC/FPR95, Monte Carlo, Cross-Validation, Weights & Biases
+- **ML Engineering:** End-to-End Pipelines, LLM Inference, Prompt Engineering, Structured Output Extraction, OpenAI API
+- **Infrastructure:** Docker, Git, Linux, REST APIs, TypeScript, Next.js, Convex, CUDA, Python, OpenCV
+
+## Online Profiles
+
+- GitHub: https://github.com/ahmed-3m
+- LinkedIn: https://www.linkedin.com/in/ahmed-3m/
+- HuggingFace: https://huggingface.co/ahmed-3m
+- Weights & Biases: https://wandb.ai/ahmed-mu-0593
+- X / Twitter: https://x.com/Ahmed_mo_93
