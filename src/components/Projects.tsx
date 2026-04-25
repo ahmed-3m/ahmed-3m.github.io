@@ -51,7 +51,8 @@ export default function Projects() {
            </a>
 
           {/* Anomaly */}
-          <a href="https://github.com/ahmed-3m/Occluded-Object-Detection-With-Tracking" target="_blank" rel="noopener noreferrer" className="cd-project-card reveal">
+          {/* TODO: Replace with the correct GitHub repository URL for this project. */}
+          <a href="https://github.com/ahmed-3m" target="_blank" rel="noopener noreferrer" className="cd-project-card reveal">
             <div className="cd-pc-eyebrow">PROFACTOR GmbH</div>
             <div className="cd-pc-title">Industrial Anomaly Detection</div>
             <div className="cd-pc-desc">

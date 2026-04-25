@@ -40,7 +40,7 @@ const experiences = [
     company: 'Freelance',
     desc: 'Tailored training in Python, ML, and Deep Learning. Mentoring on portfolio projects and GitHub best practices.',
     badge: null,
-    active: false,
+    active: true,
     last: true,
   },
 ]

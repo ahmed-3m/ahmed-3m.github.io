@@ -713,6 +713,7 @@ body::before {
   .cd-hero { padding: 80px 0 48px; }
   .cd-hero-grid { grid-template-columns: 1fr; gap: 40px; }
   .cd-hero-terminal-wrap { display: none; }
+  .cd-hero-ctas { margin-bottom: 32px; }
   .cd-hero-stats {
     display: grid; grid-template-columns: repeat(2, 1fr);
     width: 100%; border-radius: 10px;

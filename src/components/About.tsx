@@ -6,7 +6,7 @@ const education = [
     degree: 'M.Sc. in Artificial Intelligence',
     school: 'Johannes Kepler University Linz',
     date: 'Oct 2024 – Mar 2026',
-    desc: '',
+    desc: 'Thesis: Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection — 99.03% AUROC on CIFAR-10',
   },
   {
     degree: 'B.Sc. in Mechatronics Engineering',
@@ -22,7 +22,7 @@ const skillCategories = [
   { name: 'Research & Experimentation',skills: ['Hydra', 'Experiment Design', 'Ablation Studies', 'AUROC/FPR95', 'Monte Carlo', 'Cross-Validation'] },
   { name: 'ML Engineering',            skills: ['End-to-End Pipelines', 'LLM Inference', 'Prompt Engineering', 'Structured Output Extraction', 'OpenAI API'] },
   { name: 'Infrastructure',            skills: ['Docker', 'Git', 'Linux', 'REST APIs', 'TypeScript', 'Next.js', 'Convex', 'CUDA', 'Python', 'OpenCV'] },
-  { name: 'AI Tools',                  skills: ['Claude Code (daily)', 'GitHub Copilot', 'ChatGPT'] },
+  { name: 'AI Tools',                  skills: ['GitHub Copilot', 'ChatGPT', 'Weights & Biases'] },
 ]
 
 const languages = [
