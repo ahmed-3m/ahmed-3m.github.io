@@ -7,6 +7,8 @@ export interface BlogPost {
   content?: string;
   readingTime?: string;
   ogImage?: string;
+  lastModified?: string;
+  faq?: Array<{ question: string; answer: string }>;
 }
 
 export const blogPosts: BlogPost[] = [
@@ -18,6 +20,21 @@ export const blogPosts: BlogPost[] = [
     tags: ['Diffusion Models', 'OOD Detection', 'Deep Learning', 'PyTorch', 'CIFAR-10', 'Generative Models', 'JKU Linz'],
     readingTime: '14 min read',
     ogImage: '/og-diffusion-models-anomaly-detection.png',
+    lastModified: '2026-04-25',
+    faq: [
+      {
+        question: 'What AUROC did Ahmed Mohammed achieve on CIFAR-10 OOD detection?',
+        answer: '99.03% AUROC on CIFAR-10, a +18.8 percentage point improvement over the 80.25% baseline, using a class-conditional separation loss in conditional diffusion models.'
+      },
+      {
+        question: 'What is class-conditional separation loss in diffusion models?',
+        answer: 'A training objective that explicitly pushes class-conditional representations apart in feature space during diffusion model training. It is added as a weighted term to the standard DDPM noise prediction loss. At λ=0.02, it improves OOD AUROC from 80.25% to 99.11% on CIFAR-10.'
+      },
+      {
+        question: "Who supervised Ahmed Mohammed's Master's thesis at JKU Linz?",
+        answer: 'Prof. Sepp Hochreiter (inventor of LSTM, head of the JKU Institute for Machine Learning) and Claus Hofmann (research assistant, JKU Linz).'
+      },
+    ],
     content: `
 ## What I Built and Why It Matters
 
@@ -129,6 +146,21 @@ Reach me at ahmed.mo.0595@gmail.com or [LinkedIn](https://www.linkedin.com/in/ah
     tags: ['Diffusion Models', 'Anomaly Detection', 'YOLOv8', 'Industrial AI', 'Computer Vision', 'Quality Control'],
     readingTime: '11 min read',
     ogImage: '/og-diffusion-models-anomaly-detection.png',
+    lastModified: '2026-04-25',
+    faq: [
+      {
+        question: 'What accuracy did the industrial defect detection system achieve at PROFACTOR?',
+        answer: '98.4% binary classification accuracy (GOOD/BAD) in the production deployment. The AUROC was 86.7% baseline, improving to 87.3% with separation loss (not statistically significant on the small industrial dataset).'
+      },
+      {
+        question: 'What is the Zer0P project at PROFACTOR GmbH?',
+        answer: 'Zer0P is a zero-defect manufacturing initiative funded by the Government of Upper Austria. It aims to eliminate defects in inkjet-printed construction components using machine vision and AI-based quality control.'
+      },
+      {
+        question: 'How does multi-head conditioning work in diffusion models for industrial QC?',
+        answer: 'Each feature type (edge, dots, distance, angle) gets its own learned embedding while sharing a single U-Net backbone. This allows the model to handle 8 distinct feature types with different defect patterns using one model.'
+      },
+    ],
     content: `
 ## The Result First
 
@@ -237,6 +269,21 @@ Questions or want to discuss industrial computer vision? Reach me at ahmed.mo.05
     tags: ['Computer Vision', 'YOLOv8', 'Deep Learning', 'Industrial AI', 'PyTorch', 'Production ML'],
     readingTime: '10 min read',
     ogImage: '/og-computer-vision-yolo-mastery.png',
+    lastModified: '2026-04-25',
+    faq: [
+      {
+        question: 'Why use YOLO as a feature extractor instead of a detector?',
+        answer: 'The 8 feature types in inkjet-printed building components (edge quality, dot density, distance measurements, angular precision) do not naturally decompose into bounding boxes. The whole component image is the input; the output is a single GOOD/BAD classification per feature type.'
+      },
+      {
+        question: 'What inference latency did the production system achieve?',
+        answer: '~35ms per component using FP16 precision on an NVIDIA Jetson AGX edge device. INT8 quantization achieved 18ms but showed occasional instability on specific edge/angle features, so FP16 was used in production.'
+      },
+      {
+        question: 'How was the model evaluated with only 1,327 images?',
+        answer: '5-fold stratified cross-validation (seed=42), stratified on GOOD/BAD ratio per feature type. No data leakage between folds. Per-feature AUROC was reported to capture heterogeneity across feature types.'
+      },
+    ],
     content: `
 ## Not a Tutorial — A Post-Mortem
 
@@ -328,6 +375,21 @@ The full technical report is published: [Diffusion-Based Multi-class Defect Dete
     tags: ['LLM', 'SaaS', 'Next.js', 'OpenAI', 'Production AI', 'Faultrix', 'Entrepreneurship'],
     readingTime: '9 min read',
     ogImage: '/og-5-month-llm-adventure.png',
+    lastModified: '2026-04-25',
+    faq: [
+      {
+        question: 'What is Faultrix and what does it do?',
+        answer: 'Faultrix is an AI-powered construction quality control SaaS. Building inspectors upload photos of a construction site, and Faultrix analyzes them and generates a legally compliant ÖNORM B 2110 technical report in under 1 minute with SHA-256 evidence chain and DSGVO compliance.'
+      },
+      {
+        question: 'What tech stack does Faultrix use?',
+        answer: 'Next.js 14 App Router with TypeScript, Convex for database and backend logic, Clerk for authentication, Cloudflare R2 for file storage, OpenAI API (GPT-4o + Vision) for AI analysis, and Stripe for payments.'
+      },
+      {
+        question: 'What was the hardest part of building Faultrix?',
+        answer: 'The hardest part was not the AI but achieving ÖNORM B 2110 compliance. Getting the output to match the exact required section structure, terminology, and formatting took 3 weeks of iteration with real building inspectors.'
+      },
+    ],
     content: `
 ## What I Built
 

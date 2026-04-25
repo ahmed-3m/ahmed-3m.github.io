@@ -82,11 +82,16 @@ function BlogPostJsonLd({ post }: { post: BlogPost }) {
       image: 'https://ahmed-3m.github.io/headshot.jpg',
     },
     datePublished: post.date,
-    dateModified: post.date,
+    dateModified: post.lastModified ?? post.date,
     publisher: {
       '@type': 'Person',
       name: 'Ahmed Mohammed',
       image: 'https://ahmed-3m.github.io/headshot.jpg',
+    },
+    isPartOf: {
+      '@type': 'Blog',
+      '@id': 'https://ahmed-3m.github.io/blog/',
+      name: 'Ahmed Mohammed AI/ML Blog',
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
@@ -155,6 +160,43 @@ function Breadcrumbs({ title }: { title: string }) {
           <li className="text-slate-500">{title}</li>
         </ol>
       </nav>
+    </>
+  );
+}
+
+function BlogPostFAQ({ post }: { post: BlogPost }) {
+  if (!post.faq || post.faq.length === 0) return null;
+
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: post.faq.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <section className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-700">
+        <h2 className="text-2xl font-bold mb-6">Frequently Asked Questions</h2>
+        <div className="space-y-6">
+          {post.faq.map((item, index) => (
+            <div key={index}>
+              <h3 className="text-lg font-semibold mb-2">{item.question}</h3>
+              <p className="text-slate-600 dark:text-slate-300 leading-relaxed">{item.answer}</p>
+            </div>
+          ))}
+        </div>
+      </section>
     </>
   );
 }
@@ -265,6 +307,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             className="prose prose-slate dark:prose-invert max-w-none"
             dangerouslySetInnerHTML={{ __html: formatContent(post.content) }}
           />
+
+          <BlogPostFAQ post={post} />
 
           <footer className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-700">
             <div className="flex justify-between items-center">

@@ -1,6 +1,7 @@
 export function PersonSchema() {
   const personSchema = {
     '@context': 'https://schema.org',
+    '@id': 'https://ahmed-3m.github.io/#person',
     '@type': 'Person',
     name: 'Ahmed Mohammed',
     alternateName: 'Ahmed 3M',
@@ -99,6 +100,20 @@ export function PersonSchema() {
       occupationalCategory: '15-1299.08',
       skills: 'PyTorch, YOLO, Diffusion Models, Computer Vision, Deep Learning, OOD Detection, Industrial Defect Detection',
     },
+    contactPoint: {
+      '@type': 'ContactPoint',
+      email: 'ahmed.mo.0595@gmail.com',
+      contactType: 'professional inquiry',
+      availableLanguage: ['English', 'Arabic', 'German'],
+    },
+    makesOffer: {
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name: 'AI/ML Engineering & Consulting',
+        description: 'Computer vision systems, anomaly detection pipelines, diffusion model research, and production ML engineering for industrial and construction applications.',
+      },
+    },
   };
 
   return (
@@ -112,6 +127,7 @@ export function PersonSchema() {
 export function WebsiteSchema() {
   const websiteSchema = {
     '@context': 'https://schema.org',
+    '@id': 'https://ahmed-3m.github.io/#website',
     '@type': 'WebSite',
     name: 'Ahmed Mohammed — AI/ML Engineer & Entrepreneur',
     url: 'https://ahmed-3m.github.io',
@@ -121,7 +137,7 @@ export function WebsiteSchema() {
       name: 'Ahmed Mohammed',
       url: 'https://ahmed-3m.github.io',
     },
-    inLanguage: ['en', 'de'],
+    inLanguage: 'en',
   };
 
   return (
@@ -135,6 +151,7 @@ export function WebsiteSchema() {
 export function OrganizationSchema() {
   const orgSchema = {
     '@context': 'https://schema.org',
+    '@id': 'https://faultrix.com/#organization',
     '@type': 'Organization',
     name: 'Faultrix',
     url: 'https://faultrix.com',
@@ -165,6 +182,23 @@ export function OrganizationSchema() {
       'DSGVO Compliance',
     ],
     sameAs: ['https://faultrix.com'],
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Faultrix AI Construction Services',
+      itemListElement: [
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'SoftwareApplication',
+            name: 'ÖNORM B 2110 AI Report Generator',
+            description: 'AI-powered construction defect analysis that generates legally compliant ÖNORM B 2110 technical reports in under 1 minute. SHA-256 evidence chain, DSGVO compliant, AES-256 encryption.',
+            applicationCategory: 'BusinessApplication',
+            operatingSystem: 'Web',
+            url: 'https://faultrix.com',
+          },
+        },
+      ],
+    },
   };
 
   return (
@@ -226,6 +260,30 @@ export function FAQSchema() {
         acceptedAnswer: {
           '@type': 'Answer',
           text: "Ahmed Mohammed's Master's thesis at JKU Linz (2026) is titled 'Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection'. He achieved 99.03% AUROC on CIFAR-10, improving the baseline by 18.8 percentage points through a novel class-conditional separation loss. The work was supervised by Prof. Sepp Hochreiter and applied to industrial quality control with multi-head conditioning.",
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Is Ahmed Mohammed available for hire or freelance AI/ML projects?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Ahmed Mohammed is open to senior AI/ML engineering roles and research collaborations. He specializes in computer vision, diffusion models, and out-of-distribution detection. Based in Linz, Austria, he is available for positions in the DACH region and remote roles. Contact: ahmed.mo.0595@gmail.com or LinkedIn: linkedin.com/in/ahmed-3m',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'What AI services does Faultrix offer for the construction industry?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Faultrix is an AI-powered construction quality control SaaS. It analyzes building site photos and generates ÖNORM B 2110-compliant technical reports in under 1 minute. The platform provides SHA-256 evidence chains for legal defensibility, DSGVO-compliant data handling, and AES-256 encryption. It serves building inspectors, construction companies, and real estate developers primarily in Austria, Germany, and Switzerland. Visit faultrix.com for details.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'What types of AI problems does Ahmed Mohammed solve?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Ahmed Mohammed specializes in: (1) industrial defect detection and anomaly detection systems using YOLO and diffusion models — achieving 98.4% accuracy in production at PROFACTOR GmbH; (2) out-of-distribution detection for production AI safety — 99.03% AUROC on CIFAR-10 benchmark; (3) full-stack AI product development, from research to deployed SaaS (Faultrix); (4) computer vision pipelines for manufacturing and construction industries.',
         },
       },
     ],
@@ -327,7 +385,7 @@ export function ProjectsSchema() {
           '@type': 'SoftwareApplication',
           name: 'OOD Detection Framework',
           description: 'Novel use of conditional diffusion models as generative classifiers for out-of-distribution detection. Achieved 99.03% AUROC on CIFAR-10 benchmark, improving over baseline by 18.8 percentage points via class-conditional separation loss. Master\'s Thesis at JKU Linz, 2026.',
-          applicationCategory: 'ResearchApplication',
+          applicationCategory: 'DeveloperApplication',
           url: 'https://github.com/ahmed-3m/OOD-diffusion-detector',
           author: { '@type': 'Person', name: 'Ahmed Mohammed' },
         },
@@ -351,7 +409,6 @@ export function ProjectsSchema() {
           '@type': 'SoftwareApplication',
           name: 'EEG Signal Classification — Brain-Computer Interface',
           description: 'Deep RNN architectures (LSTM, Bi-LSTM, GRU) for EEG motor imagery classification in brain-computer interface applications. Hyperparameter optimization across multiple architectures. Karunya University, 2023.',
-          applicationCategory: 'ResearchApplication',
           url: 'https://github.com/ahmed-3m/Motor-Imagery-classification',
           author: { '@type': 'Person', name: 'Ahmed Mohammed' },
         },
@@ -431,6 +488,33 @@ export function ResearchSchema() {
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(researchSchema) }}
+    />
+  );
+}
+
+export function WebPageSchema() {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': 'https://ahmed-3m.github.io/#webpage',
+    url: 'https://ahmed-3m.github.io/',
+    name: 'Ahmed Mohammed — AI/ML Engineer & Entrepreneur',
+    isPartOf: { '@id': 'https://ahmed-3m.github.io/#website' },
+    about: { '@id': 'https://ahmed-3m.github.io/#person' },
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['[data-speakable]'],
+    },
+    primaryImageOfPage: {
+      '@type': 'ImageObject',
+      url: 'https://ahmed-3m.github.io/og-image.png',
+    },
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
     />
   );
 }
