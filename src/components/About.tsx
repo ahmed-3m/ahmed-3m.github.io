@@ -50,7 +50,7 @@ export default function About() {
         <div className="cd-about-bio-row reveal">
           <div>
             <h2 className="cd-section-title" style={{ marginBottom: 24 }}>
-              Built on research.<br />Deployed in production.
+              AI/ML Engineer —<br />research that ships.
             </h2>
             <div className="cd-about-text" data-speakable>
               <p>

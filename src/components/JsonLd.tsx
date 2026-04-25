@@ -122,10 +122,6 @@ export function WebsiteSchema() {
       url: 'https://ahmed-3m.github.io',
     },
     inLanguage: ['en', 'de'],
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: 'https://ahmed-3m.github.io',
-    },
   };
 
   return (
@@ -331,7 +327,7 @@ export function ProjectsSchema() {
           '@type': 'SoftwareApplication',
           name: 'OOD Detection Framework',
           description: 'Novel use of conditional diffusion models as generative classifiers for out-of-distribution detection. Achieved 99.03% AUROC on CIFAR-10 benchmark, improving over baseline by 18.8 percentage points via class-conditional separation loss. Master\'s Thesis at JKU Linz, 2026.',
-          applicationCategory: 'AI/ML Research',
+          applicationCategory: 'ResearchApplication',
           url: 'https://github.com/ahmed-3m/OOD-diffusion-detector',
           author: { '@type': 'Person', name: 'Ahmed Mohammed' },
         },
@@ -343,7 +339,7 @@ export function ProjectsSchema() {
           '@type': 'SoftwareApplication',
           name: 'Industrial Anomaly Detection — PROFACTOR GmbH',
           description: 'YOLO + diffusion model pipeline for real-time industrial defect detection on inkjet-printed building components. 98.4% accuracy in production environment. Part of the Zer0P project funded by the Government of Upper Austria.',
-          applicationCategory: 'AI/ML',
+          applicationCategory: 'BusinessApplication',
           url: 'https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf',
           author: { '@type': 'Person', name: 'Ahmed Mohammed' },
         },
@@ -355,7 +351,7 @@ export function ProjectsSchema() {
           '@type': 'SoftwareApplication',
           name: 'EEG Signal Classification — Brain-Computer Interface',
           description: 'Deep RNN architectures (LSTM, Bi-LSTM, GRU) for EEG motor imagery classification in brain-computer interface applications. Hyperparameter optimization across multiple architectures. Karunya University, 2023.',
-          applicationCategory: 'AI/ML Research',
+          applicationCategory: 'ResearchApplication',
           url: 'https://github.com/ahmed-3m/Motor-Imagery-classification',
           author: { '@type': 'Person', name: 'Ahmed Mohammed' },
         },

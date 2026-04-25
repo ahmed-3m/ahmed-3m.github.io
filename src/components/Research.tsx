@@ -38,20 +38,23 @@ export default function Research() {
         <div className="cd-section-eyebrow">// 04 — Research</div>
         <h2 className="cd-section-title" style={{ marginBottom: 32 }}>Reports &amp; Thesis</h2>
 
-         <div className="cd-research-featured reveal">
+         <div className="cd-research-featured reveal" itemScope itemType="https://schema.org/Thesis">
            <div className="cd-rf-header">
              <div className="cd-rf-left">
                <div className="cd-rf-label">Master&apos;s Thesis · JKU Linz · 2026</div>
-               <div className="cd-rf-title">
+               <div className="cd-rf-title" itemProp="name">
                  Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection
                </div>
-               <div className="cd-rf-desc">
+               <div className="cd-rf-desc" itemProp="description">
                  Novel approach using conditional diffusion models as generative classifiers for robust
                  out-of-distribution detection. Introduced class-conditional separation loss improving
                  AUROC by 18.8 percentage points. Applied to industrial quality control with multi-head conditioning.
                </div>
                <div className="cd-rf-meta">
-                 Supervisor: Prof. Sepp Hochreiter · Assistant: Claus Hofmann · JKU Linz · 2026
+                 Supervisor: <span itemProp="contributor" itemScope itemType="https://schema.org/Person"><span itemProp="name">Prof. Sepp Hochreiter</span></span>
+                 {' · '}Assistant: <span itemProp="contributor" itemScope itemType="https://schema.org/Person"><span itemProp="name">Claus Hofmann</span></span>
+                 {' · '}<span itemProp="publisher" itemScope itemType="https://schema.org/CollegeOrUniversity"><span itemProp="name">JKU Linz</span></span>
+                 {' · '}<span itemProp="datePublished">2026</span>
                </div>
              </div>
              <div className="cd-rf-metric">

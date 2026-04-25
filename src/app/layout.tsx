@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     default: 'Ahmed Mohammed | AI/ML Engineer & Entrepreneur',
     template: '%s | Ahmed Mohammed'
   },
-  description: "Ahmed Mohammed — AI/ML Engineer & Entrepreneur based in Linz, Austria. Specializing in computer vision, anomaly detection, and diffusion models. Founder of Faultrix. 98.4% accuracy in industrial defect detection. M.Sc. AI from JKU Linz.",
+  description: "AI/ML Engineer in Linz, Austria. 99% AUROC OOD detection · 98.4% defect accuracy · Founder of Faultrix · M.Sc. AI from JKU Linz (Hochreiter lab).",
   keywords: ["AI Engineer", "Machine Learning Engineer", "Computer Vision", "Deep Learning", "PyTorch", "YOLO", "Diffusion Models", "Anomaly Detection", "Ahmed Mohammed", "Faultrix", "AI Entrepreneur", "Linz Austria", "JKU", "OOD Detection", "Industrial Quality Control", "Construction AI"],
   authors: [{ name: "Ahmed Mohammed", url: 'https://ahmed-3m.github.io' }],
   creator: 'Ahmed Mohammed',
