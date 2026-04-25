@@ -12,6 +12,7 @@ import {
   ResearchSchema
 } from "@/components/JsonLd";
 import { Analytics } from "@/components/Analytics";
+import CustomCursor from "@/components/CustomCursor";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-display",
@@ -105,6 +106,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           {children}
         </I18nProvider>
         <Analytics />
+        <CustomCursor />
       </body>
     </html>
   );

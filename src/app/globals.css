@@ -766,3 +766,100 @@ body::before {
   .reveal { opacity: 1; transform: none; }
   .glass-card:hover, .glass-card:focus-within { transform: none; }
 }
+
+
+/* ═══════════════════════════════════════════════════════
+   Custom Cursor  ·  desktop / pointer: fine only
+   ═══════════════════════════════════════════════════════ */
+@media (pointer: fine) {
+  /* Hide native cursor everywhere */
+  *, *::before, *::after { cursor: none !important; }
+
+  /* ── Dot ─────────────────────────────────────────────
+     Follows mouse exactly via JS transform.
+     Starts off-screen; opacity toggled by JS on first move.
+  ── */
+  .cd-cursor-dot {
+    position: fixed;
+    top: 0; left: 0;
+    z-index: 99999;
+    pointer-events: none;
+    width: 7px; height: 7px;
+    margin-top: -3.5px; margin-left: -3.5px;
+    border-radius: 50%;
+    background: var(--cd-accent);
+    box-shadow: 0 0 7px var(--cd-accent);
+    opacity: 0;
+    will-change: transform;
+    transition:
+      width   .2s var(--cd-ease),
+      height  .2s var(--cd-ease),
+      margin  .2s var(--cd-ease),
+      opacity .35s ease;
+  }
+  /* Shrink dot when hovering an interactive element */
+  .cd-cursor-dot.cd-cursor-dot--hover {
+    width: 3px; height: 3px;
+    margin-top: -1.5px; margin-left: -1.5px;
+  }
+
+  /* ── Ring ────────────────────────────────────────────
+     Follows mouse with lerp lag via JS transform.
+     Morphs between circle ↔ rounded-rect on hover.
+  ── */
+  .cd-cursor-ring {
+    position: fixed;
+    top: 0; left: 0;
+    z-index: 99998;
+    pointer-events: none;
+    width: 32px; height: 32px;
+    margin-top: -16px; margin-left: -16px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(0, 212, 255, 0.5);
+    opacity: 0;
+    will-change: transform;
+    transition:
+      width         .32s var(--cd-ease),
+      height        .32s var(--cd-ease),
+      margin        .32s var(--cd-ease),
+      border-radius .32s var(--cd-ease),
+      border-color  .32s ease,
+      box-shadow    .32s ease,
+      opacity       .35s ease;
+  }
+
+  /* HOVER state: morph to rounded rectangle + glow */
+  .cd-cursor-ring.cd-cursor-ring--hover {
+    width: 46px; height: 46px;
+    margin-top: -23px; margin-left: -23px;
+    border-radius: 10px;
+    border-color: var(--cd-accent);
+    box-shadow:
+      0 0 14px rgba(0, 212, 255, 0.30),
+      inset 0 0 10px rgba(0, 212, 255, 0.06);
+  }
+
+  /* EXPAND state: chart / image hover — keep circle, grow bigger */
+  .cd-cursor-ring.cd-cursor-ring--expand {
+    width: 54px; height: 54px;
+    margin-top: -27px; margin-left: -27px;
+    border-radius: 50%;
+    border-color: rgba(0, 212, 255, 0.75);
+    box-shadow:
+      0 0 18px rgba(0, 212, 255, 0.35),
+      inset 0 0 18px rgba(0, 212, 255, 0.05);
+  }
+
+  /* CLICK state: sharp punch inward */
+  .cd-cursor-ring.cd-cursor-ring--click {
+    width: 16px; height: 16px;
+    margin-top: -8px; margin-left: -8px;
+    border-color: var(--cd-accent);
+    box-shadow: 0 0 24px rgba(0, 212, 255, 0.75);
+    transition:
+      width     .08s ease,
+      height    .08s ease,
+      margin    .08s ease,
+      box-shadow .08s ease;
+  }
+}
