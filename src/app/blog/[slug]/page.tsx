@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       url: `https://ahmed-3m.github.io/blog/${post.slug}/`,
       images: [
         {
-          url: `/og-${post.slug}.png`,
+          url: post.ogImage ?? '/og-image.png',
           width: 1200,
           height: 630,
           alt: post.title,
@@ -59,7 +59,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       card: 'summary_large_image',
       title: post.title,
       description: post.excerpt,
-      images: [`/og-${post.slug}.png`],
+      images: [post.ogImage ?? '/og-image.png'],
     },
     alternates: {
       canonical: `https://ahmed-3m.github.io/blog/${post.slug}/`,
@@ -74,7 +74,7 @@ function BlogPostJsonLd({ post }: { post: BlogPost }) {
     '@type': 'BlogPosting',
     headline: post.title,
     description: post.excerpt,
-    image: `https://ahmed-3m.github.io/og-${post.slug}.png`,
+    image: `https://ahmed-3m.github.io${post.ogImage ?? '/og-image.png'}`,
     author: {
       '@type': 'Person',
       name: 'Ahmed Mohammed',

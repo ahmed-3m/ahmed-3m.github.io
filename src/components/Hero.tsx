@@ -26,7 +26,7 @@ export default function Hero() {
               {' · '}
               <span>OOD Detection</span>
             </div>
-            <p className="cd-hero-body">
+            <p className="cd-hero-body" data-speakable>
               AI/ML engineer and entrepreneur. I build systems that work in the real world — from research to production.
             </p>
             <div className="cd-hero-ctas">

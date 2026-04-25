@@ -52,7 +52,7 @@ export default function About() {
             <h2 className="cd-section-title" style={{ marginBottom: 24 }}>
               Built on research.<br />Deployed in production.
             </h2>
-            <div className="cd-about-text">
+            <div className="cd-about-text" data-speakable>
               <p>
                 I&apos;m an AI/ML engineer who completed my{' '}
                 <strong>M.Sc. in Artificial Intelligence at JKU Linz</strong>, working under{' '}
