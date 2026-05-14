@@ -5,8 +5,8 @@ const education = [
   {
     degree: 'M.Sc. in Artificial Intelligence',
     school: 'Johannes Kepler University Linz',
-    date: 'Oct 2024 – Mar 2026',
-    desc: 'Thesis: Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection — 99.03% AUROC on CIFAR-10',
+    date: 'Oct 2020 – Present',
+    desc: 'Thesis: Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection — 99.03% AUROC on CIFAR-10. Submitted Mar 2026, under review.',
   },
   {
     degree: 'B.Sc. in Mechatronics Engineering',
@@ -54,20 +54,21 @@ export default function About() {
             </h2>
             <div className="cd-about-text" data-speakable>
               <p>
-                I&apos;m an AI/ML engineer who completed my{' '}
-                <strong>M.Sc. in Artificial Intelligence at JKU Linz</strong>, working under{' '}
+                I&apos;m an AI/ML engineer and <strong>M.Sc. candidate in Artificial Intelligence
+                at JKU Linz</strong>, supervised by{' '}
                 <strong>Prof. Sepp Hochreiter</strong> — the inventor of LSTM.
               </p>
               <p>
-                My work spans the full stack: from novel training methods for diffusion models
-                and out-of-distribution detection in academic settings, to shipping
-                production-grade CV pipelines that catch defects at{' '}
-                <strong>98.4% accuracy</strong>.
+                My thesis work on conditional diffusion models achieves{' '}
+                <strong>99.03% AUROC</strong> on OOD detection. At PROFACTOR GmbH I built
+                a YOLO + diffusion pipeline that reached <strong>98.4% defect detection
+                accuracy</strong> in real manufacturing — part of the Zer0P project funded
+                by the Government of Upper Austria.
               </p>
               <p>
-                I founded <strong>Faultrix</strong> to turn this research into a real product —
-                AI-powered construction quality control that generates ÖNORM-compliant reports
-                in under a minute. Open to research collaborations and senior AI/ML roles.
+                In parallel, I founded <strong>Faultrix</strong> — an AI-powered construction
+                QC platform that generates ÖNORM-compliant reports in under a minute.
+                Open to research collaborations and senior AI/ML roles.
               </p>
             </div>
           </div>

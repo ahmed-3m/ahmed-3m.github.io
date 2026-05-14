@@ -35,7 +35,7 @@ export default function Hero() {
             </div>
              <div className="cd-hero-stats">
                <div className="cd-stat">
-                 <div className="cd-stat-num">4<span className="a">+</span></div>
+                 <div className="cd-stat-num">5<span className="a">+</span></div>
                  <div className="cd-stat-label">Years in AI/ML</div>
                </div>
                <div className="cd-stat">

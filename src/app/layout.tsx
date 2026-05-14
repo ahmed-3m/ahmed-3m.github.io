@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     default: 'Ahmed Mohammed | AI/ML Engineer & Entrepreneur',
     template: '%s | Ahmed Mohammed'
   },
-  description: "AI/ML Engineer in Linz, Austria. 99% AUROC OOD detection · 98.4% defect accuracy · Founder of Faultrix · M.Sc. AI from JKU Linz (Hochreiter lab).",
+  description: "AI/ML Engineer in Linz, Austria. 99.03% AUROC OOD detection · 98.4% defect accuracy · Founder of Faultrix · M.Sc. AI candidate at JKU Linz (Hochreiter lab).",
   keywords: ["AI Engineer", "Machine Learning Engineer", "Computer Vision", "Deep Learning", "PyTorch", "YOLO", "Diffusion Models", "Anomaly Detection", "Ahmed Mohammed", "Faultrix", "AI Entrepreneur", "Linz Austria", "JKU", "OOD Detection", "Industrial Quality Control", "Construction AI"],
   authors: [{ name: "Ahmed Mohammed", url: 'https://ahmed-3m.github.io' }],
   creator: 'Ahmed Mohammed',
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
   formatDetection: { email: false, address: false, telephone: false },
   openGraph: {
     title: "Ahmed Mohammed | AI/ML Engineer & Entrepreneur",
-    description: "AI/ML Engineer in Linz, Austria. 99% AUROC OOD detection · 98.4% defect accuracy · Founder of Faultrix · M.Sc. AI from JKU Linz (Hochreiter lab).",
+    description: "AI/ML Engineer in Linz, Austria. 99.03% AUROC OOD detection · 98.4% defect accuracy · Founder of Faultrix · M.Sc. AI candidate at JKU Linz (Hochreiter lab).",
     url: 'https://ahmed-3m.github.io/',
     siteName: 'Ahmed Mohammed Portfolio',
     images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Ahmed Mohammed - AI/ML Engineer & Entrepreneur' }],

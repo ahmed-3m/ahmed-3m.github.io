@@ -8,7 +8,7 @@ export function PersonSchema() {
     givenName: 'Ahmed',
     familyName: 'Mohammed',
     jobTitle: 'AI/ML Engineer & Entrepreneur',
-    description: 'AI/ML Engineer specializing in computer vision, anomaly detection, and diffusion models. Founder of Faultrix. M.Sc. Artificial Intelligence from Johannes Kepler University Linz, supervised by Prof. Sepp Hochreiter (inventor of LSTM). Achieved 99.03% AUROC on CIFAR-10 OOD detection and 98.4% industrial defect detection accuracy.',
+    description: 'AI/ML Engineer specializing in computer vision, anomaly detection, and diffusion models. Founder of Faultrix. M.Sc. candidate in Artificial Intelligence at Johannes Kepler University Linz, supervised by Prof. Sepp Hochreiter (inventor of LSTM). Achieved 99.03% AUROC on CIFAR-10 OOD detection and 98.4% industrial defect detection accuracy.',
     url: 'https://ahmed-3m.github.io',
     image: 'https://ahmed-3m.github.io/headshot.jpg',
     email: 'ahmed.mo.0595@gmail.com',
@@ -80,7 +80,7 @@ export function PersonSchema() {
           '@type': 'CollegeOrUniversity',
           name: 'Johannes Kepler University Linz',
         },
-        dateCreated: '2026-03',
+        description: 'Thesis submitted March 2026, pending final acceptance.',
       },
       {
         '@type': 'EducationalOccupationalCredential',
@@ -251,7 +251,7 @@ export function FAQSchema() {
         name: "What is Ahmed Mohammed's educational background?",
         acceptedAnswer: {
           '@type': 'Answer',
-          text: "Ahmed Mohammed holds a Master of Science in Artificial Intelligence from Johannes Kepler University Linz (JKU), where his thesis on conditional diffusion models for out-of-distribution detection was supervised by Prof. Sepp Hochreiter (inventor of LSTM). He also holds a Bachelor of Science in Mechatronics Engineering from Eastern Mediterranean University in Cyprus.",
+          text: "Ahmed Mohammed is an M.Sc. candidate in Artificial Intelligence at Johannes Kepler University Linz (JKU). His thesis on conditional diffusion models for out-of-distribution detection was supervised by Prof. Sepp Hochreiter (inventor of LSTM); submitted March 2026 and currently under review. He also holds a Bachelor of Science in Mechatronics Engineering from Eastern Mediterranean University in Cyprus.",
         },
       },
       {
