@@ -158,7 +158,7 @@ export default function ChatBot() {
       ]
 
       const response = await fetch(
-        'https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3/v1/chat/completions',
+        'https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-beta/v1/chat/completions',
         {
           method: 'POST',
           headers: {
@@ -166,7 +166,7 @@ export default function ChatBot() {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            model: 'mistralai/Mistral-7B-Instruct-v0.3',
+            model: 'HuggingFaceH4/zephyr-7b-beta',
             messages: payloadMessages,
             max_tokens: 300,
             temperature: 0.7,
