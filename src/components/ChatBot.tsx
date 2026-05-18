@@ -242,9 +242,6 @@ export default function ChatBot() {
               >
                 Ask about Ahmed
               </h2>
-              <p className="mt-1 text-xs" style={{ color: 'var(--cd-fg2)' }}>
-                Portfolio assistant powered by Groq
-              </p>
             </div>
             <button
               type="button"
