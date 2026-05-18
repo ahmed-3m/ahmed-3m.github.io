@@ -137,9 +137,9 @@ export default function ChatBot() {
     const content = messageText.trim()
     if (!content || isLoading) return
 
-    const token = process.env.NEXT_PUBLIC_HF_TOKEN
-    if (!token || token === 'your_hf_token_here') {
-      setError('Add a valid Hugging Face token to NEXT_PUBLIC_HF_TOKEN to enable the assistant.')
+    const token = process.env.NEXT_PUBLIC_GROQ_TOKEN
+    if (!token || token === 'your_groq_token_here') {
+      setError('Add a valid Groq token to NEXT_PUBLIC_GROQ_TOKEN to enable the assistant.')
       return
     }
 
@@ -158,7 +158,7 @@ export default function ChatBot() {
       ]
 
       const response = await fetch(
-        'https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-beta/v1/chat/completions',
+        'https://api.groq.com/openai/v1/chat/completions',
         {
           method: 'POST',
           headers: {
@@ -166,7 +166,7 @@ export default function ChatBot() {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            model: 'HuggingFaceH4/zephyr-7b-beta',
+            model: 'llama-3.1-8b-instant',
             messages: payloadMessages,
             max_tokens: 300,
             temperature: 0.7,
@@ -243,7 +243,7 @@ export default function ChatBot() {
                 Ask about Ahmed
               </h2>
               <p className="mt-1 text-xs" style={{ color: 'var(--cd-fg2)' }}>
-                Portfolio assistant powered by Hugging Face
+                Portfolio assistant powered by Groq
               </p>
             </div>
             <button
