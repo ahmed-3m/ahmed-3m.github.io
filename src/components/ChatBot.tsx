@@ -26,6 +26,9 @@ type HuggingFaceChatResponse = {
   error?: string
 }
 
+const HF_CHAT_ENDPOINT = 'https://router.huggingface.co/v1/chat/completions'
+const HF_CHAT_MODEL = 'meta-llama/Llama-3.1-8B-Instruct:cerebras'
+
 const SYSTEM_PROMPT = `You are Ahmed Mohammed's portfolio assistant. Answer questions about Ahmed concisely and professionally, as if you are his representative. Stay on topic — only answer questions related to Ahmed's work, skills, projects, and background. If asked something unrelated, politely redirect.
 
 Here is Ahmed's full profile:
@@ -158,7 +161,7 @@ export default function ChatBot() {
       ]
 
       const response = await fetch(
-        'https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3/v1/chat/completions',
+        HF_CHAT_ENDPOINT,
         {
           method: 'POST',
           headers: {
@@ -166,7 +169,7 @@ export default function ChatBot() {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            model: 'mistralai/Mistral-7B-Instruct-v0.3',
+            model: HF_CHAT_MODEL,
             messages: payloadMessages,
             max_tokens: 300,
             temperature: 0.7,
