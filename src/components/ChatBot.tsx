@@ -131,6 +131,24 @@ GITHUB PROJECTS:
     - Thesis title: "Conditional Diffusion Models for Out-of-Distribution Detection and Industrial Quality Control."
     - Public artefacts: DiffusionOOD (CIFAR-10 code), InkjetOOD (industrial code), FTI_Zer0P dataset on Zenodo.
 
+11. Image-extrapolation-challenge-2021 (github.com/ahmed-3m/Image-extrapolation-challenge-2021)
+    - CNN-based image extrapolation: predicts masked/missing pixel regions in images.
+    - Configurable architecture: n_hidden_layers, n_kernels, kernel_size as hyperparameters.
+    - Input: 2-channel tensor (image + mask). Output: predicted missing pixels.
+    - University challenge project from 2021. Stack: Python, PyTorch.
+
+12. zer0p_notebooks (github.com/ahmed-3m/zer0p_notebooks)
+    - Research experiment notebooks from the PROFACTOR Zer0P project (zero-defect inkjet printing).
+    - Contains 4 experiment notebooks including feature classifier experiments (Experiment_0_3, Experiment_7_10, Experiment_14_10, Experiment_15_10).
+    - These are the raw R&D notebooks behind the InkjetOOD paper work done at PROFACTOR GmbH.
+    - Stack: Python, Jupyter.
+
+13. PPO-for-Beginners (github.com/ahmed-3m/PPO-for-Beginners)
+    - Forked reference repo: a clean PyTorch PPO implementation by Eric Yu used as a study resource.
+    - Implements Proximal Policy Optimization from scratch with continuous action/observation spaces.
+    - Ahmed used this while studying deep reinforcement learning (alongside the DRL- assignments repo).
+    - Stack: Python, PyTorch, Gym.
+
 HUGGING FACE: huggingface.co/ahmed-3m — hosts pretrained InkjetOOD model weights (cdm_v3_baseline.pt, yolo_best.pt, per-feature checkpoints).
 
 ---
