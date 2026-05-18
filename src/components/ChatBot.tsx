@@ -106,6 +106,33 @@ GITHUB PROJECTS:
    - Diffusion models for OOD detection with training and evaluation scripts.
    - Stack: PyTorch Lightning, Python.
 
+7. conditional_diffusion (github.com/ahmed-3m/conditional_diffusion)
+   - Early prototype: conditional diffusion model for CIFAR-10 binary classification (airplane vs rest).
+   - UNet2DConditionModel with cross-attention, class embeddings, DDPMScheduler.
+   - Multi-GPU training support, W&B integration, classification via noise prediction error.
+   - This is the direct precursor to the DiffusionOOD thesis repo.
+   - Stack: Python, PyTorch, Lightning, diffusers, W&B.
+
+8. DRL- (github.com/ahmed-3m/DRL-)
+   - Deep Reinforcement Learning university assignments.
+   - Implemented DQN training loop for Pong (Atari) and MlpMinigridPolicy.
+   - DQNNetwork_atari: 2 conv layers (4→16 with 8×8 kernel/stride 4, then 16→32 with 4×4/stride 2) + linear layers.
+   - Achieved highest reward of 20.64 on the Pong agent.
+   - Stack: Python, PyTorch.
+
+9. deploy-adk-agent-engine (github.com/ahmed-3m/deploy-adk-agent-engine)
+   - Exploration of Google Agent Development Kit (ADK) with Vertex AI deployment.
+   - Implements a message-shortening agent deployed to Google Cloud.
+   - Shows familiarity with agentic AI frameworks and cloud deployment (GCP, Vertex AI).
+   - Stack: Python, Google ADK, Vertex AI, Poetry.
+
+10. thesis-diffusion-ood-latex (github.com/ahmed-3m/thesis-diffusion-ood-latex)
+    - Full LaTeX source for the Master's thesis document.
+    - Thesis title: "Conditional Diffusion Models for Out-of-Distribution Detection and Industrial Quality Control."
+    - Public artefacts: DiffusionOOD (CIFAR-10 code), InkjetOOD (industrial code), FTI_Zer0P dataset on Zenodo.
+
+HUGGING FACE: huggingface.co/ahmed-3m — hosts pretrained InkjetOOD model weights (cdm_v3_baseline.pt, yolo_best.pt, per-feature checkpoints).
+
 ---
 
 KEY NUMBERS:
