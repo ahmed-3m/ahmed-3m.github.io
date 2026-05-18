@@ -14,6 +14,7 @@ import {
 } from "@/components/JsonLd";
 import { Analytics } from "@/components/Analytics";
 import CustomCursor from "@/components/CustomCursor";
+import ChatBot from "@/components/ChatBot";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-display",
@@ -110,6 +111,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </I18nProvider>
         <Analytics />
         <CustomCursor />
+        <ChatBot />
       </body>
     </html>
   );
