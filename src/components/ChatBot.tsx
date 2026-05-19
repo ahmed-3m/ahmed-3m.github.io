@@ -10,6 +10,7 @@ type ApiRole = ChatRole | 'system'
 type ChatMessage = {
   role: ChatRole
   content: string
+  followUps?: string[]
 }
 
 type ApiMessage = {
@@ -17,7 +18,7 @@ type ApiMessage = {
   content: string
 }
 
-type HuggingFaceChatResponse = {
+type GroqChatResponse = {
   choices?: Array<{
     message?: {
       content?: string
@@ -161,6 +162,170 @@ KEY NUMBERS:
 - <1 min report generation — Faultrix
 - 4+ years in AI/ML`
 
+// ── Follow-up chip generation ─────────────────────────────────────────────
+
+const FOLLOWUP_MAP: Array<{ pattern: RegExp; chips: readonly string[] }> = [
+  {
+    pattern: /faultrix|saas|construction|report|önorm|dsgvo|sha.?256|aes.?256/i,
+    chips: [
+      'What tech stack powers Faultrix?',
+      'How long does a report take?',
+      'Is Faultrix DSGVO compliant?',
+      'How was Faultrix built?',
+    ],
+  },
+  {
+    pattern: /thesis|ood|out.of.distribution|diffusion|auroc|cifar|separation loss|generative classifier/i,
+    chips: [
+      "What's the key innovation in the thesis?",
+      'How does the separation loss work?',
+      'What datasets were tested on?',
+      'How does it compare to other OOD methods?',
+    ],
+  },
+  {
+    pattern: /profactor|inkjet|defect|yolo|zer0p|industrial/i,
+    chips: [
+      'What accuracy did the system achieve?',
+      'What is the Zer0P project?',
+      'How does the YOLO + diffusion pipeline work?',
+    ],
+  },
+  {
+    pattern: /tech|stack|framework|pytorch|next\.?js|python|docker|convex/i,
+    chips: [
+      'What AI frameworks does he use?',
+      "What's his web dev stack?",
+      'Any cloud or infra experience?',
+    ],
+  },
+  {
+    pattern: /hire|open to work|available|role|position|job|looking|recruit/i,
+    chips: [
+      'What kind of roles interest him?',
+      "What's his email?",
+      'Can I see his LinkedIn?',
+    ],
+  },
+  {
+    pattern: /eeg|bci|brain|motor imagery/i,
+    chips: [
+      'What architectures were compared?',
+      'Where was the BCI research done?',
+    ],
+  },
+  {
+    pattern: /reinforcement|dqn|ppo|rl\b|atari|pong/i,
+    chips: [
+      'What RL algorithms were implemented?',
+      'What environments were used?',
+    ],
+  },
+  {
+    pattern: /education|degree|university|jku|master|m\.sc/i,
+    chips: [
+      'Who supervised his thesis?',
+      'What was his undergraduate degree in?',
+      'What is JKU known for in AI?',
+    ],
+  },
+]
+
+function generateFollowUps(reply: string): string[] {
+  for (const { pattern, chips } of FOLLOWUP_MAP) {
+    if (pattern.test(reply)) {
+      const pool = [...chips]
+      for (let i = pool.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1))
+        ;[pool[i], pool[j]] = [pool[j], pool[i]]
+      }
+      return pool.slice(0, 2)
+    }
+  }
+  return ["What's his strongest skill?", 'Tell me about Faultrix']
+}
+
+// ── Markdown renderer ─────────────────────────────────────────────────────
+
+function renderInline(text: string, keyPrefix: string): React.ReactNode[] {
+  const parts = text.split(/(\*\*[^*]+\*\*|\*[^*]+\*)/g)
+  return parts.map((part, i) => {
+    if (part.startsWith('**') && part.endsWith('**') && part.length > 4) {
+      return <strong key={`${keyPrefix}-b${i}`}>{part.slice(2, -2)}</strong>
+    }
+    if (part.startsWith('*') && part.endsWith('*') && part.length > 2) {
+      return <em key={`${keyPrefix}-i${i}`}>{part.slice(1, -1)}</em>
+    }
+    return part
+  })
+}
+
+function renderMarkdown(text: string): React.ReactNode {
+  const lines = text.split('\n')
+  const result: React.ReactNode[] = []
+  const pending: string[] = []
+  let k = 0
+
+  const flushList = () => {
+    if (pending.length === 0) return
+    const key = `ul-${k++}`
+    result.push(
+      <ul key={key} style={{ paddingLeft: '1.1em', margin: '0.25em 0', listStyleType: 'disc' }}>
+        {pending.map((item, i) => (
+          <li key={i} style={{ margin: '0.1em 0' }}>
+            {renderInline(item, `${key}-li${i}`)}
+          </li>
+        ))}
+      </ul>
+    )
+    pending.length = 0
+  }
+
+  for (const [i, line] of lines.entries()) {
+    const heading = line.match(/^(#{1,3})\s+(.+)/)
+    const bullet = line.match(/^[-*]\s+(.+)/)
+
+    if (heading) {
+      flushList()
+      result.push(
+        <span key={`h-${i}`} style={{ display: 'block', fontWeight: 600, marginTop: '0.5em', marginBottom: '0.1em' }}>
+          {renderInline(heading[2], `h-${i}`)}
+        </span>
+      )
+    } else if (bullet) {
+      pending.push(bullet[1])
+    } else {
+      flushList()
+      if (line.trim() === '') {
+        if (result.length > 0) result.push(<div key={`sp-${i}`} style={{ height: '0.4em' }} />)
+      } else {
+        result.push(
+          <span key={`l-${i}`} style={{ display: 'block' }}>
+            {renderInline(line, `l-${i}`)}
+          </span>
+        )
+      }
+    }
+  }
+  flushList()
+
+  return <>{result}</>
+}
+
+// ── GA4 event tracking (fires only if Analytics is configured) ────────────
+
+function trackChatEvent(question: string) {
+  if (typeof window !== 'undefined' && 'gtag' in window) {
+    // @ts-expect-error gtag is injected by Google Analytics
+    window.gtag('event', 'chat_message', {
+      event_category: 'chatbot',
+      event_label: question.slice(0, 100),
+    })
+  }
+}
+
+// ── Styles ────────────────────────────────────────────────────────────────
+
 const STARTER_PROMPTS = [
   'What is Faultrix?',
   'Tell me about the thesis',
@@ -169,7 +334,7 @@ const STARTER_PROMPTS = [
 ] as const
 
 const panelStyle = {
-  background: 'linear-gradient(180deg, rgba(19, 23, 31, 0.98) 0%, rgba(8, 9, 13, 0.98) 100%)',
+  background: 'linear-gradient(180deg, rgba(19, 23, 31, 0.99) 0%, rgba(8, 9, 13, 0.99) 100%)',
   borderColor: 'var(--cd-border, rgba(255,255,255,0.08))',
   boxShadow: '0 28px 80px rgba(0, 0, 0, 0.48), 0 0 0 1px rgba(255,255,255,0.02)',
   fontFamily: 'var(--font-body)',
@@ -187,6 +352,14 @@ const bubbleStyles = {
     color: '#031018',
   },
 } satisfies Record<ChatRole, CSSProperties>
+
+const chipStyle = {
+  borderColor: 'var(--cd-border, rgba(255,255,255,0.08))',
+  background: 'rgba(255,255,255,0.03)',
+  color: 'var(--cd-fg2)',
+} satisfies CSSProperties
+
+// ── Sub-components ────────────────────────────────────────────────────────
 
 function LoadingDots() {
   return (
@@ -209,6 +382,8 @@ function LoadingDots() {
   )
 }
 
+// ── Main component ────────────────────────────────────────────────────────
+
 export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false)
   const [input, setInput] = useState('')
@@ -220,11 +395,7 @@ export default function ChatBot() {
   useEffect(() => {
     const container = messagesRef.current
     if (!container) return
-
-    container.scrollTo({
-      top: container.scrollHeight,
-      behavior: 'smooth',
-    })
+    container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' })
   }, [messages, isLoading])
 
   async function sendMessage(messageText: string) {
@@ -244,6 +415,7 @@ export default function ChatBot() {
     setInput('')
     setError(null)
     setIsLoading(true)
+    trackChatEvent(content)
 
     try {
       const payloadMessages: ApiMessage[] = [
@@ -251,49 +423,40 @@ export default function ChatBot() {
         ...nextMessages,
       ]
 
-      const response = await fetch(
-        'https://api.groq.com/openai/v1/chat/completions',
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            model: 'llama-3.1-8b-instant',
-            messages: payloadMessages,
-            max_tokens: 300,
-            temperature: 0.7,
-          }),
-        }
-      )
+      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'llama-3.1-8b-instant',
+          messages: payloadMessages,
+          max_tokens: 300,
+          temperature: 0.7,
+        }),
+      })
 
-      const data = (await response.json()) as HuggingFaceChatResponse
+      const data = (await response.json()) as GroqChatResponse
 
       if (!response.ok) {
-        if (response.status === 503) {
-          throw new Error('Model is warming up, try again in a moment.')
-        }
-
-        throw new Error(data.error || 'The assistant could not respond right now.')
+        if (response.status === 503) throw new Error('Model is warming up, try again in a moment.')
+        throw new Error(data.error ?? 'The assistant could not respond right now.')
       }
 
       const reply = data.choices?.[0]?.message?.content?.trim()
-      if (!reply) {
-        throw new Error('The assistant returned an empty response.')
-      }
+      if (!reply) throw new Error('The assistant returned an empty response.')
 
-      setMessages((currentMessages) => [
-        ...currentMessages,
-        { role: 'assistant', content: reply },
+      setMessages((prev) => [
+        ...prev,
+        { role: 'assistant', content: reply, followUps: generateFollowUps(reply) },
       ])
     } catch (caughtError) {
-      const message =
+      setError(
         caughtError instanceof Error
           ? caughtError.message
           : 'Something went wrong while contacting the assistant.'
-
-      setError(message)
+      )
     } finally {
       setIsLoading(false)
     }
@@ -304,12 +467,13 @@ export default function ChatBot() {
     void sendMessage(input)
   }
 
-  function handleStarterPrompt(prompt: string) {
+  function handleChip(prompt: string) {
     void sendMessage(prompt)
   }
 
   return (
     <>
+      {/* ── Chat panel ── */}
       <div
         className={`fixed bottom-20 right-4 z-[9998] w-[min(380px,calc(100vw-2rem))] transition-all duration-300 ease-out sm:bottom-24 sm:right-6 ${
           isOpen
@@ -320,23 +484,22 @@ export default function ChatBot() {
       >
         <section
           id="ahmed-chatbot-panel"
-          className="flex h-[min(480px,calc(100vh-7.5rem))] flex-col overflow-hidden rounded-3xl border backdrop-blur-xl"
+          className="flex h-[min(480px,calc(100vh-7.5rem))] flex-col overflow-hidden rounded-3xl border"
           style={panelStyle}
           role="dialog"
           aria-label="Ask about Ahmed"
         >
+          {/* Header */}
           <header
             className="flex items-center justify-between border-b px-4 py-4"
             style={{ borderColor: 'var(--cd-border, rgba(255,255,255,0.08))' }}
           >
-            <div>
-              <h2
-                className="text-sm font-semibold tracking-[0.02em]"
-                style={{ color: 'var(--cd-fg1)' }}
-              >
-                Ask about Ahmed
-              </h2>
-            </div>
+            <h2
+              className="text-sm font-semibold tracking-[0.02em]"
+              style={{ color: 'var(--cd-fg1)' }}
+            >
+              Ask about Ahmed
+            </h2>
             <button
               type="button"
               onClick={() => setIsOpen(false)}
@@ -352,7 +515,8 @@ export default function ChatBot() {
             </button>
           </header>
 
-          <div ref={messagesRef} className="flex-1 space-y-4 overflow-y-auto px-4 py-4">
+          {/* Messages */}
+          <div ref={messagesRef} className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
             {messages.length === 0 ? (
               <div className="space-y-4">
                 <div
@@ -366,14 +530,10 @@ export default function ChatBot() {
                     <button
                       key={prompt}
                       type="button"
-                      onClick={() => handleStarterPrompt(prompt)}
+                      onClick={() => handleChip(prompt)}
                       disabled={isLoading}
                       className="rounded-full border px-3 py-2 text-left text-xs transition-all disabled:cursor-not-allowed disabled:opacity-60"
-                      style={{
-                        borderColor: 'var(--cd-border, rgba(255,255,255,0.08))',
-                        background: 'rgba(255,255,255,0.03)',
-                        color: 'var(--cd-fg2)',
-                      }}
+                      style={chipStyle}
                     >
                       {prompt}
                     </button>
@@ -381,42 +541,75 @@ export default function ChatBot() {
                 </div>
               </div>
             ) : (
-              messages.map((message, index) => (
-                <div
-                  key={`${message.role}-${index}`}
-                  className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                >
-                  <div
-                    className="max-w-[85%] whitespace-pre-wrap rounded-2xl border px-3 py-2.5 text-sm leading-6 shadow-[0_10px_30px_rgba(0,0,0,0.16)]"
-                    style={bubbleStyles[message.role]}
-                  >
-                    {message.content}
+              messages.map((message, index) => {
+                const isLastAssistant =
+                  message.role === 'assistant' &&
+                  !messages.slice(index + 1).some((m) => m.role === 'assistant')
+
+                return (
+                  <div key={`${message.role}-${index}`} className="space-y-2">
+                    {/* Bubble */}
+                    <div
+                      className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                    >
+                      <div
+                        className={`max-w-[85%] rounded-2xl border px-3 py-2.5 text-sm leading-6 shadow-[0_10px_30px_rgba(0,0,0,0.16)]${
+                          message.role === 'user' ? ' whitespace-pre-wrap' : ''
+                        }`}
+                        style={bubbleStyles[message.role]}
+                      >
+                        {message.role === 'assistant'
+                          ? renderMarkdown(message.content)
+                          : message.content}
+                      </div>
+                    </div>
+
+                    {/* Follow-up chips — only under the last assistant reply */}
+                    {isLastAssistant &&
+                      !isLoading &&
+                      message.followUps &&
+                      message.followUps.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 pl-1">
+                          {message.followUps.map((chip) => (
+                            <button
+                              key={chip}
+                              type="button"
+                              onClick={() => handleChip(chip)}
+                              disabled={isLoading}
+                              className="rounded-full border px-3 py-1.5 text-left text-xs transition-all disabled:cursor-not-allowed disabled:opacity-60"
+                              style={chipStyle}
+                            >
+                              {chip}
+                            </button>
+                          ))}
+                        </div>
+                      )}
                   </div>
-                </div>
-              ))
+                )
+              })
             )}
 
-            {isLoading ? (
+            {isLoading && (
               <div className="flex justify-start">
                 <LoadingDots />
               </div>
-            ) : null}
+            )}
           </div>
 
+          {/* Input */}
           <div
             className="border-t px-4 pb-4 pt-3"
             style={{ borderColor: 'var(--cd-border, rgba(255,255,255,0.08))' }}
           >
-            {error ? (
+            {error && (
               <p className="mb-3 text-xs leading-5" style={{ color: '#f59e0b' }}>
                 {error}
               </p>
-            ) : null}
-
+            )}
             <form onSubmit={handleSubmit} className="flex items-center gap-2">
               <input
                 value={input}
-                onChange={(event) => setInput(event.target.value)}
+                onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask about Ahmed..."
                 className="h-11 flex-1 rounded-2xl border px-4 text-sm outline-none transition-colors"
                 style={{
@@ -444,9 +637,10 @@ export default function ChatBot() {
         </section>
       </div>
 
+      {/* ── Toggle button ── */}
       <button
         type="button"
-        onClick={() => setIsOpen((currentState) => !currentState)}
+        onClick={() => setIsOpen((s) => !s)}
         className="fixed bottom-6 right-6 z-[9999] inline-flex h-14 w-14 items-center justify-center rounded-full border transition-transform duration-300 ease-out hover:-translate-y-0.5"
         style={{
           background: 'var(--cd-accent, #7c3aed)',
