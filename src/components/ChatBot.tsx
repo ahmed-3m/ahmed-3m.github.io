@@ -18,13 +18,15 @@ type ApiMessage = {
   content: string
 }
 
+type GroqErrorDetail = { message?: string; type?: string; code?: string }
+
 type GroqChatResponse = {
   choices?: Array<{
     message?: {
       content?: string
     }
   }>
-  error?: string
+  error?: string | GroqErrorDetail
 }
 
 const SYSTEM_PROMPT = `You are Ahmed Mohammed's portfolio assistant. Answer questions about Ahmed concisely and professionally, as if you are his representative. Stay on topic — only answer questions related to Ahmed's work, skills, projects, and background. If asked something unrelated, politely redirect.
@@ -441,7 +443,12 @@ export default function ChatBot() {
 
       if (!response.ok) {
         if (response.status === 503) throw new Error('Model is warming up, try again in a moment.')
-        throw new Error(data.error ?? 'The assistant could not respond right now.')
+        const errMsg =
+          typeof data.error === 'string'
+            ? data.error
+            : (data.error as GroqErrorDetail | undefined)?.message ??
+              'The assistant could not respond right now.'
+        throw new Error(errMsg)
       }
 
       const reply = data.choices?.[0]?.message?.content?.trim()
