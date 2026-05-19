@@ -422,7 +422,7 @@ export default function ChatBot() {
     try {
       const payloadMessages: ApiMessage[] = [
         { role: 'system', content: SYSTEM_PROMPT },
-        ...nextMessages,
+        ...nextMessages.map(({ role, content }) => ({ role, content })),
       ]
 
       const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
