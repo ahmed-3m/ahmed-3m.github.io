@@ -697,6 +697,113 @@ body::before {
 }
 .btn-3d:active { transform: translateY(1px); }
 
+/* ── OPEN TO ROLES BADGE ── */
+.cd-open-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 11px; letter-spacing: 0.06em; color: var(--cd-success);
+  margin-bottom: 18px;
+}
+.cd-open-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--cd-success);
+  box-shadow: 0 0 8px var(--cd-success);
+  animation: pulse-dot 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+/* ── FORMULA BOX (Research) ── */
+.cd-rf-formula-box {
+  margin: 24px 0 0;
+  padding: 20px 24px;
+  background: var(--cd-elev);
+  border: 1px solid var(--cd-b-accent);
+  border-radius: 10px;
+}
+.cd-rf-baselines {
+  margin: 16px 0 0;
+  padding: 20px 24px;
+  background: var(--cd-surf);
+  border: 1px solid var(--cd-b0);
+  border-radius: 10px;
+}
+.cd-rfc-label {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--cd-fg3); margin-bottom: 12px;
+}
+.cd-rfc-code {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 12.5px; line-height: 1.9; color: var(--cd-fg1);
+}
+.cd-rfc-accent { color: var(--cd-accent); }
+.cd-rfc-green  { color: var(--cd-success); }
+.cd-rfc-dim    { color: var(--cd-fg3); }
+
+/* Baselines table */
+.cd-baselines-scroll { overflow-x: auto; }
+.cd-baselines-table {
+  width: 100%; border-collapse: collapse;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 12px;
+}
+.cd-baselines-table th {
+  font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--cd-fg3); text-align: left; padding: 6px 12px 10px;
+  border-bottom: 1px solid var(--cd-b0); white-space: nowrap;
+}
+.cd-baselines-table td {
+  padding: 7px 12px; color: var(--cd-fg2);
+  border-bottom: 1px solid rgba(28,32,48,0.6); white-space: nowrap;
+}
+.cd-baselines-table tbody tr:last-child td { border-bottom: none; }
+.cd-bt-ours td { color: var(--cd-fg1) !important; font-weight: 600; }
+.cd-bt-ours td:last-child { color: var(--cd-accent) !important; }
+.cd-bt-new {
+  display: inline-block; margin-left: 8px;
+  font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--cd-bg); background: var(--cd-accent);
+  padding: 1px 6px; border-radius: 4px; vertical-align: middle;
+}
+
+/* ── WRITING SECTION ── */
+.cd-writing-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+}
+.cd-writing-card {
+  display: flex; flex-direction: column; gap: 12px;
+  padding: 24px; background: var(--cd-surf);
+  border: 1px solid var(--cd-b0); border-radius: 12px;
+  text-decoration: none;
+  transition: border-color 200ms, transform 200ms;
+}
+.cd-writing-card:hover {
+  border-color: rgba(0,212,255,0.3);
+  transform: translateY(-3px);
+}
+.cd-wc-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.cd-wc-tag {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--cd-accent); opacity: 0.75;
+}
+.cd-wc-title {
+  font-size: 15px; font-weight: 600; color: var(--cd-fg1);
+  line-height: 1.4;
+}
+.cd-wc-excerpt {
+  font-size: 13px; color: var(--cd-fg2); line-height: 1.65; flex: 1;
+}
+.cd-wc-footer {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: auto; padding-top: 14px;
+  border-top: 1px solid var(--cd-b0);
+}
+.cd-wc-time {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 11px; color: var(--cd-fg3);
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
   .cd-container { padding: 0 20px; }
@@ -750,6 +857,13 @@ body::before {
   .cd-education-grid { grid-template-columns: 1fr; }
   .cd-skills-grid { grid-template-columns: 1fr; }
   .cd-lang-row { grid-template-columns: 1fr; }
+
+  /* Writing */
+  .cd-writing-grid { grid-template-columns: 1fr; }
+
+  /* Formula box */
+  .cd-rf-formula-box, .cd-rf-baselines { padding: 16px; }
+  .cd-rfc-code { font-size: 11px; }
 
   /* Footer */
   .cd-footer-inner { flex-direction: column; gap: 8px; text-align: center; }

@@ -15,7 +15,11 @@ export default function Hero() {
 
           {/* Left: text */}
           <div>
-            <div className="cd-hero-eyebrow">Based in Linz, Austria</div>
+            <div className="cd-open-badge">
+            <span className="cd-open-dot" />
+            Open to AI/ML roles &amp; research collaborations
+          </div>
+          <div className="cd-hero-eyebrow">Based in Linz, Austria</div>
             <h1 className="cd-hero-name">
               Ahmed<br />Mohammed
             </h1>
