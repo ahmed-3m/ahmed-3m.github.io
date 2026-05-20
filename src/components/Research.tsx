@@ -85,15 +85,53 @@ export default function Research() {
              ))}
            </div>
 
-           <div className="cd-rf-footer">
-             <a
-               href="https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf"
-               target="_blank"
-               rel="noopener noreferrer"
-               className="cd-proj-link"
-             >
-               View Full Thesis ↗
-             </a>
+           {/* Novel contribution formula */}
+           <div className="cd-rf-formula-box">
+             <div className="cd-rfc-label">Novel contribution · Class-conditional separation loss</div>
+             <div className="cd-rfc-code">
+               <div><span className="cd-rfc-accent">L_total</span>{' = L_diffusion + λ · '}<span className="cd-rfc-green">L_sep</span></div>
+               <div><span className="cd-rfc-green">L_sep</span>{'   = −MSE(pred_c=0, pred_c=1)'}<span className="cd-rfc-dim">{'   ← widens ID/OOD reconstruction gap'}</span></div>
+               <div className="cd-rfc-dim">{'λ = 0.02  →  99.03% AUROC  '}<span className="cd-rfc-green">{'(↑ from 80.3% baseline, +18.8pp)'}</span></div>
+             </div>
+           </div>
+
+           {/* Baselines comparison */}
+           <div className="cd-rf-baselines">
+             <div className="cd-rfc-label">vs published one-class baselines · CIFAR-10 airplane (one-vs-rest)</div>
+             <div className="cd-baselines-scroll">
+               <table className="cd-baselines-table">
+                 <thead>
+                   <tr>
+                     <th>Method</th>
+                     <th>Type</th>
+                     <th>AUROC</th>
+                   </tr>
+                 </thead>
+                 <tbody>
+                   <tr><td>OC-SVM</td><td>One-class</td><td>63.0%</td></tr>
+                   <tr><td>Deep SVDD</td><td>One-class</td><td>61.7%</td></tr>
+                   <tr><td>DROCC</td><td>One-class</td><td>81.7%</td></tr>
+                   <tr><td>CSI</td><td>Contrastive</td><td>89.8%</td></tr>
+                   <tr><td>PANDA</td><td>Pretrained + OC</td><td>95.4%</td></tr>
+                   <tr><td>Mean-Shifted CL</td><td>Contrastive</td><td>97.5%</td></tr>
+                   <tr className="cd-bt-ours">
+                     <td>Binary CDM (ours, λ=0.02)</td>
+                     <td>Generative</td>
+                     <td>99.03% <span className="cd-bt-new">new</span></td>
+                   </tr>
+                 </tbody>
+               </table>
+             </div>
+           </div>
+
+           <div className="cd-rf-footer" style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center' }}>
+             <a href="https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf" target="_blank" rel="noopener noreferrer" className="cd-proj-link">View Full Thesis ↗</a>
+             <a href="https://github.com/ahmed-3m/DiffusionOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ opacity: 0.8 }}>Code: DiffusionOOD ↗</a>
+             <a href="https://github.com/ahmed-3m/InkjetOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ opacity: 0.8 }}>Code: InkjetOOD ↗</a>
+             <a href="https://huggingface.co/ahmed-3m/DiffusionOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ opacity: 0.8 }}>HF: CIFAR-10 Weights ↗</a>
+             <a href="https://huggingface.co/ahmed-3m/InkjetOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ opacity: 0.8 }}>HF: Inkjet Weights ↗</a>
+             <a href="https://github.com/ahmed-3m/thesis-diffusion-ood-latex" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ opacity: 0.7 }}>LaTeX Source ↗</a>
+             <a href="https://wandb.ai/ahmed-mu-0593" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ opacity: 0.7 }}>W&amp;B Runs (CIFAR-10) ↗</a>
            </div>
           </div>
 
@@ -135,15 +173,11 @@ export default function Research() {
              </div>
            </div>
 
-           <div className="cd-rf-footer">
-             <a
-               href="https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf"
-               target="_blank"
-               rel="noopener noreferrer"
-               className="cd-proj-link"
-             >
-               View Industrial Report ↗
-             </a>
+           <div className="cd-rf-footer" style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center' }}>
+             <a href="https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf" target="_blank" rel="noopener noreferrer" className="cd-proj-link">View Industrial Report ↗</a>
+             <a href="https://github.com/ahmed-3m/InkjetOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ opacity: 0.8 }}>Code: InkjetOOD ↗</a>
+             <a href="https://huggingface.co/ahmed-3m/InkjetOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ opacity: 0.8 }}>HF: Model Weights ↗</a>
+             <a href="https://github.com/ahmed-3m/zer0p_notebooks" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ opacity: 0.7 }}>R&amp;D Notebooks ↗</a>
            </div>
          </div>
 
