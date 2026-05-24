@@ -3,6 +3,7 @@
 import type { CSSProperties, FormEvent } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { ArrowUp, MessageCircle, X } from 'lucide-react'
+import { useI18n, type Language, type TranslationMap } from '@/lib/i18n'
 
 type ChatRole = 'user' | 'assistant'
 type ApiRole = ChatRole | 'system'
@@ -191,6 +192,44 @@ KEY NUMBERS:
 
 const MAX_REPLY_CHARS = 650
 
+const LANGUAGE_NAMES: Record<Language, string> = {
+  en: 'English',
+  de: 'German',
+  fr: 'French',
+  es: 'Spanish',
+  ar: 'Arabic',
+}
+
+const CHAT_COPY = {
+  dialogLabel: { en: 'Ask about Ahmed', de: 'Frage zu Ahmed', fr: 'Questions sur Ahmed', es: 'Pregunta sobre Ahmed', ar: 'اسأل عن أحمد' },
+  title: { en: 'Ask about Ahmed', de: 'Frage zu Ahmed', fr: 'Questions sur Ahmed', es: 'Pregunta sobre Ahmed', ar: 'اسأل عن أحمد' },
+  welcome: {
+    en: "Ask anything about Ahmed's work, research, projects, or background.",
+    de: 'Frag alles uber Ahmeds Arbeit, Forschung, Projekte oder Hintergrund.',
+    fr: 'Posez une question sur le travail, la recherche, les projets ou le parcours d Ahmed.',
+    es: 'Pregunta sobre el trabajo, la investigacion, los proyectos o la trayectoria de Ahmed.',
+    ar: 'اسأل عن عمل أحمد أو أبحاثه أو مشاريعه أو خلفيته.',
+  },
+  placeholder: { en: 'Ask about Ahmed...', de: 'Frage zu Ahmed...', fr: 'Question sur Ahmed...', es: 'Pregunta sobre Ahmed...', ar: 'اسأل عن أحمد...' },
+  close: { en: 'Close chat', de: 'Chat schliessen', fr: 'Fermer le chat', es: 'Cerrar chat', ar: 'إغلاق الدردشة' },
+  open: { en: 'Open chat', de: 'Chat offnen', fr: 'Ouvrir le chat', es: 'Abrir chat', ar: 'فتح الدردشة' },
+  send: { en: 'Send message', de: 'Nachricht senden', fr: 'Envoyer le message', es: 'Enviar mensaje', ar: 'إرسال الرسالة' },
+  missingToken: {
+    en: 'Add NEXT_PUBLIC_GROQ_TOKEN or NEXT_PUBLIC_ZAI_TOKEN to enable the assistant.',
+    de: 'Fuge NEXT_PUBLIC_GROQ_TOKEN oder NEXT_PUBLIC_ZAI_TOKEN hinzu, um den Assistenten zu aktivieren.',
+    fr: 'Ajoutez NEXT_PUBLIC_GROQ_TOKEN ou NEXT_PUBLIC_ZAI_TOKEN pour activer l assistant.',
+    es: 'Agrega NEXT_PUBLIC_GROQ_TOKEN o NEXT_PUBLIC_ZAI_TOKEN para activar el asistente.',
+    ar: 'أضف NEXT_PUBLIC_GROQ_TOKEN أو NEXT_PUBLIC_ZAI_TOKEN لتفعيل المساعد.',
+  },
+  genericError: {
+    en: 'Something went wrong while contacting the assistant.',
+    de: 'Beim Kontaktieren des Assistenten ist etwas schiefgelaufen.',
+    fr: 'Une erreur est survenue en contactant l assistant.',
+    es: 'Algo salio mal al contactar al asistente.',
+    ar: 'حدث خطأ أثناء الاتصال بالمساعد.',
+  },
+} satisfies Record<string, TranslationMap>
+
 // ── Follow-up chip generation ─────────────────────────────────────────────
 
 const FOLLOWUP_MAP: Array<{ pattern: RegExp; chips: readonly string[] }> = [
@@ -284,6 +323,35 @@ const DEFAULT_FOLLOWUPS = [
   'Is he open to work?',
   'How can I contact him?',
 ] as const
+
+const CHIP_TRANSLATIONS: Record<string, TranslationMap> = {
+  'What is Faultrix?': { en: 'What is Faultrix?', de: 'Was ist Faultrix?', fr: 'Qu est-ce que Faultrix ?', es: 'Que es Faultrix?', ar: 'ما هو Faultrix؟' },
+  'Tell me about the thesis': { en: 'Tell me about the thesis', de: 'Erzahl mir von der Thesis', fr: 'Parlez-moi du memoire', es: 'Cuéntame sobre la tesis', ar: 'حدثني عن الرسالة' },
+  "What's his tech stack?": { en: "What's his tech stack?", de: 'Was ist sein Tech-Stack?', fr: 'Quel est son stack technique ?', es: 'Cual es su stack tecnico?', ar: 'ما هي تقنياته؟' },
+  'Is he open to work?': { en: 'Is he open to work?', de: 'Ist er offen fur Arbeit?', fr: 'Est-il ouvert aux opportunites ?', es: 'Esta abierto a trabajo?', ar: 'هل هو متاح للعمل؟' },
+  'Show key achievements': { en: 'Show key achievements', de: 'Zeig wichtige Erfolge', fr: 'Voir les principales reussites', es: 'Mostrar logros clave', ar: 'اعرض أهم الإنجازات' },
+  'How can I contact him?': { en: 'How can I contact him?', de: 'Wie kann ich ihn kontaktieren?', fr: 'Comment le contacter ?', es: 'Como puedo contactarlo?', ar: 'كيف يمكنني التواصل معه؟' },
+  "What's Ahmed's strongest skill?": { en: "What's Ahmed's strongest skill?", de: 'Was ist Ahmeds starkste Fahigkeit?', fr: 'Quelle est la competence la plus forte d Ahmed ?', es: 'Cual es la habilidad mas fuerte de Ahmed?', ar: 'ما أقوى مهارة لدى أحمد؟' },
+  'Tell me about Faultrix': { en: 'Tell me about Faultrix', de: 'Erzahl mir von Faultrix', fr: 'Parlez-moi de Faultrix', es: 'Cuéntame sobre Faultrix', ar: 'حدثني عن Faultrix' },
+  'Summarize his thesis': { en: 'Summarize his thesis', de: 'Fasse seine Thesis zusammen', fr: 'Resumez son memoire', es: 'Resume su tesis', ar: 'لخص رسالته' },
+  'What projects should I see?': { en: 'What projects should I see?', de: 'Welche Projekte soll ich ansehen?', fr: 'Quels projets devrais-je voir ?', es: 'Que proyectos deberia ver?', ar: 'أي مشاريع يجب أن أرى؟' },
+  'What tech stack powers Faultrix?': { en: 'What tech stack powers Faultrix?', de: 'Welcher Tech-Stack treibt Faultrix an?', fr: 'Quel stack alimente Faultrix ?', es: 'Que stack impulsa Faultrix?', ar: 'ما التقنيات التي تشغل Faultrix؟' },
+  'How long does a report take?': { en: 'How long does a report take?', de: 'Wie lange dauert ein Bericht?', fr: 'Combien de temps prend un rapport ?', es: 'Cuanto tarda un informe?', ar: 'كم يستغرق التقرير؟' },
+  'Is Faultrix DSGVO compliant?': { en: 'Is Faultrix DSGVO compliant?', de: 'Ist Faultrix DSGVO-konform?', fr: 'Faultrix est-il conforme DSGVO ?', es: 'Faultrix cumple DSGVO?', ar: 'هل Faultrix متوافق مع DSGVO؟' },
+  'How was Faultrix built?': { en: 'How was Faultrix built?', de: 'Wie wurde Faultrix gebaut?', fr: 'Comment Faultrix a ete construit ?', es: 'Como se construyo Faultrix?', ar: 'كيف تم بناء Faultrix؟' },
+  "What's the key innovation in the thesis?": { en: "What's the key innovation in the thesis?", de: 'Was ist die Kerninnovation der Thesis?', fr: 'Quelle est l innovation cle du memoire ?', es: 'Cual es la innovacion clave de la tesis?', ar: 'ما الابتكار الأساسي في الرسالة؟' },
+  'How does the separation loss work?': { en: 'How does the separation loss work?', de: 'Wie funktioniert die Separation Loss?', fr: 'Comment fonctionne la separation loss ?', es: 'Como funciona la separation loss?', ar: 'كيف تعمل خسارة الفصل؟' },
+  'What datasets were tested on?': { en: 'What datasets were tested on?', de: 'Welche Datensatze wurden getestet?', fr: 'Quels jeux de donnees ont ete testes ?', es: 'Que datasets se probaron?', ar: 'ما مجموعات البيانات التي تم اختبارها؟' },
+  'What was the best AUROC?': { en: 'What was the best AUROC?', de: 'Was war der beste AUROC?', fr: 'Quel etait le meilleur AUROC ?', es: 'Cual fue el mejor AUROC?', ar: 'ما أفضل AUROC؟' },
+  'What accuracy did the system achieve?': { en: 'What accuracy did the system achieve?', de: 'Welche Genauigkeit erreichte das System?', fr: 'Quelle precision le systeme a-t-il atteinte ?', es: 'Que precision logro el sistema?', ar: 'ما الدقة التي حققها النظام؟' },
+  'What AI frameworks does he use?': { en: 'What AI frameworks does he use?', de: 'Welche KI-Frameworks nutzt er?', fr: 'Quels frameworks IA utilise-t-il ?', es: 'Que frameworks de IA usa?', ar: 'ما أطر الذكاء الاصطناعي التي يستخدمها؟' },
+  "What's his email?": { en: "What's his email?", de: 'Wie lautet seine E-Mail?', fr: 'Quel est son email ?', es: 'Cual es su email?', ar: 'ما بريده الإلكتروني؟' },
+  'Where is Ahmed based?': { en: 'Where is Ahmed based?', de: 'Wo ist Ahmed ansassig?', fr: 'Ou est base Ahmed ?', es: 'Donde esta Ahmed?', ar: 'أين يقيم أحمد؟' },
+}
+
+function translateChip(chip: string, t: (copy: TranslationMap | string, de?: string) => string): string {
+  return CHIP_TRANSLATIONS[chip] ? t(CHIP_TRANSLATIONS[chip]) : chip
+}
 
 function shuffle<T>(items: readonly T[]): T[] {
   const pool = [...items]
@@ -520,6 +588,7 @@ function LoadingDots() {
 // ── Main component ────────────────────────────────────────────────────────
 
 export default function ChatBot() {
+  const { lang, t } = useI18n()
   const [isOpen, setIsOpen] = useState(false)
   const [input, setInput] = useState('')
   const [messages, setMessages] = useState<ChatMessage[]>([])
@@ -543,7 +612,7 @@ export default function ChatBot() {
     const hasZaiToken = isConfiguredToken(zaiToken)
 
     if (!hasGroqToken && !hasZaiToken) {
-      setError('Add NEXT_PUBLIC_GROQ_TOKEN or NEXT_PUBLIC_ZAI_TOKEN to enable the assistant.')
+      setError(t(CHAT_COPY.missingToken))
       return
     }
 
@@ -559,6 +628,10 @@ export default function ChatBot() {
     try {
       const payloadMessages: ApiMessage[] = [
         { role: 'system', content: SYSTEM_PROMPT },
+        {
+          role: 'system',
+          content: `Answer in ${LANGUAGE_NAMES[lang]}. Keep names, product names, repository names, and technical metrics unchanged.`,
+        },
         ...nextMessages.map(({ role, content }) => ({ role, content })),
       ]
 
@@ -612,7 +685,7 @@ export default function ChatBot() {
       setError(
         caughtError instanceof Error
           ? caughtError.message
-          : 'Something went wrong while contacting the assistant.'
+          : t(CHAT_COPY.genericError)
       )
     } finally {
       setIsLoading(false)
@@ -644,7 +717,7 @@ export default function ChatBot() {
           className="flex h-[min(480px,calc(100vh-7.5rem))] flex-col overflow-hidden rounded-3xl border"
           style={panelStyle}
           role="dialog"
-          aria-label="Ask about Ahmed"
+          aria-label={t(CHAT_COPY.dialogLabel)}
         >
           {/* Header */}
           <header
@@ -655,7 +728,7 @@ export default function ChatBot() {
               className="text-sm font-semibold tracking-[0.02em]"
               style={{ color: 'var(--cd-fg1)' }}
             >
-              Ask about Ahmed
+              {t(CHAT_COPY.title)}
             </h2>
             <button
               type="button"
@@ -666,7 +739,7 @@ export default function ChatBot() {
                 background: 'rgba(255,255,255,0.03)',
                 color: 'var(--cd-fg2)',
               }}
-              aria-label="Close chat"
+              aria-label={t(CHAT_COPY.close)}
             >
               <X size={16} />
             </button>
@@ -680,19 +753,19 @@ export default function ChatBot() {
                   className="max-w-[85%] rounded-2xl border px-3 py-2.5 text-sm leading-6"
                   style={bubbleStyles.assistant}
                 >
-                  Ask anything about Ahmed&apos;s work, research, projects, or background.
+                  {t(CHAT_COPY.welcome)}
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {STARTER_PROMPTS.map((prompt) => (
                     <button
                       key={prompt}
                       type="button"
-                      onClick={() => handleChip(prompt)}
+                      onClick={() => handleChip(translateChip(prompt, t))}
                       disabled={isLoading}
                       className="rounded-full border px-3 py-2 text-left text-xs transition-all disabled:cursor-not-allowed disabled:opacity-60"
                       style={chipStyle}
                     >
-                      {prompt}
+                      {translateChip(prompt, t)}
                     </button>
                   ))}
                 </div>
@@ -731,12 +804,12 @@ export default function ChatBot() {
                             <button
                               key={chip}
                               type="button"
-                              onClick={() => handleChip(chip)}
+                              onClick={() => handleChip(translateChip(chip, t))}
                               disabled={isLoading}
                               className="rounded-full border px-3 py-1.5 text-left text-xs transition-all disabled:cursor-not-allowed disabled:opacity-60"
                               style={chipStyle}
                             >
-                              {chip}
+                              {translateChip(chip, t)}
                             </button>
                           ))}
                         </div>
@@ -767,14 +840,14 @@ export default function ChatBot() {
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask about Ahmed..."
+                placeholder={t(CHAT_COPY.placeholder)}
                 className="h-11 flex-1 rounded-2xl border px-4 text-sm outline-none transition-colors"
                 style={{
                   borderColor: 'var(--cd-border, rgba(255,255,255,0.08))',
                   background: 'rgba(255,255,255,0.03)',
                   color: 'var(--cd-fg1)',
                 }}
-                aria-label="Ask about Ahmed"
+                aria-label={t(CHAT_COPY.dialogLabel)}
               />
               <button
                 type="submit"
@@ -785,7 +858,7 @@ export default function ChatBot() {
                   color: 'var(--cd-bg)',
                   boxShadow: '0 12px 30px rgba(0, 212, 255, 0.22)',
                 }}
-                aria-label="Send message"
+                aria-label={t(CHAT_COPY.send)}
               >
                 <ArrowUp size={17} />
               </button>
@@ -807,7 +880,7 @@ export default function ChatBot() {
         }}
         aria-expanded={isOpen}
         aria-controls="ahmed-chatbot-panel"
-        aria-label={isOpen ? 'Close chat' : 'Open chat'}
+        aria-label={isOpen ? t(CHAT_COPY.close) : t(CHAT_COPY.open)}
       >
         {isOpen ? <X size={22} /> : <MessageCircle size={22} />}
       </button>

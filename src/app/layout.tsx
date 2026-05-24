@@ -110,11 +110,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <ThemeProvider>
           <I18nProvider>
             {children}
+            <ChatBot />
           </I18nProvider>
         </ThemeProvider>
         <Analytics />
         <CustomCursor />
-        <ChatBot />
       </body>
     </html>
   );
