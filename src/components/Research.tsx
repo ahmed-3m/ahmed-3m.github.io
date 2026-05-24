@@ -140,17 +140,13 @@ export default function Research() {
               ))}
             </div>
 
-            <div className="cd-rf-footer">
-              <a
-                href="https://github.com/ahmed-3m/InkjetOOD"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="cd-proj-link"
-              >
-                View InkjetOOD Repository ↗
-              </a>
+            <div className="cd-rf-footer" style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center' }}>
+              <a href="https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf" target="_blank" rel="noopener noreferrer" className="cd-proj-link">View Industrial Report ↗</a>
+              <a href="https://github.com/ahmed-3m/InkjetOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ opacity: 0.8 }}>Code: InkjetOOD ↗</a>
+              <a href="https://huggingface.co/ahmed-3m/InkjetOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ opacity: 0.8 }}>HF: Model Weights ↗</a>
+              <a href="https://github.com/ahmed-3m/zer0p_notebooks" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ opacity: 0.7 }}>R&amp;D Notebooks ↗</a>
             </div>
-          </div>
+         </div>
 
          <div className="cd-pub-list">
            {publications.map(pub => (

@@ -28,7 +28,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         question: 'What is class-conditional separation loss in diffusion models?',
-        answer: 'A training objective that explicitly pushes class-conditional noise predictions apart in feature space during conditional diffusion model training. It is added as a weighted term to the standard DDPM noise prediction loss. At λ=0.02, it improves the average CIFAR-10 OOD AUROC to 99.03% ± 0.07% across independent seeds, stabilizing performance against random initializations.'
+        answer: 'A training objective that explicitly pushes class-conditional noise predictions apart in feature space during conditional diffusion model training. It is added as a weighted term to the standard DDPM noise prediction loss. At λ=0.02 (averaged over 3 seeds), it improves OOD AUROC from 92.52% ± 11.07% (unstable) to 99.03% ± 0.07% (stable) on CIFAR-10, stabilizing performance against random initializations.'
       },
       {
         question: "Who supervised Ahmed Mohammed's Master's thesis at JKU Linz?",
@@ -129,7 +129,7 @@ If you're building a production ML system today, OOD detection is non-negotiable
 2. **Generative classifiers are interpretable**: You can visualize what the model thinks "normal" looks like per class
 3. **The separation loss is cheap**: It adds ~5% training overhead but delivers a +6.5pp average AUROC improvement while completely eliminating seed volatility
 
-The framework is open-sourced at [github.com/ahmed-3m/OOD-diffusion-detector](https://github.com/ahmed-3m/OOD-diffusion-detector). Full thesis PDF available [here](https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf).
+The code is open-sourced at [github.com/ahmed-3m/DiffusionOOD](https://github.com/ahmed-3m/DiffusionOOD). Full thesis PDF available [here](https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf).
 
 ## Supervisor
 

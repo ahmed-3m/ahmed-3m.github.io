@@ -39,7 +39,7 @@ export default function Projects() {
           </a>
 
            {/* OOD */}
-           <a href="https://github.com/ahmed-3m/OOD-diffusion-detector" target="_blank" rel="noopener noreferrer" className="cd-project-card reveal">
+           <a href="https://github.com/ahmed-3m/DiffusionOOD" target="_blank" rel="noopener noreferrer" className="cd-project-card reveal">
              <div className="cd-pc-eyebrow">Master&apos;s Thesis · JKU Linz</div>
              <div className="cd-pc-title">OOD Detection Framework</div>
              <div className="cd-pc-desc">
@@ -47,6 +47,10 @@ export default function Projects() {
                Introduced class-conditional separation loss improving average performance by 6.5 percentage points with high seed stability. Applied to public FTI_Zer0P inkjet benchmark (0.8673 ± 0.0230 AUROC).
              </div>
              <div className="cd-pc-metric">99.03%<span> ± 0.07% Avg AUROC</span></div>
+             <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
+               <span className="cd-proj-link" style={{ fontSize: 12 }}>DiffusionOOD ↗</span>
+               <span className="cd-proj-link" style={{ fontSize: 12, opacity: 0.65 }}>+ InkjetOOD · HF Weights</span>
+             </div>
            </a>
 
           {/* Anomaly */}
@@ -57,6 +61,10 @@ export default function Projects() {
               YOLO+CDM quality classification pipeline evaluated on the public FTI_Zer0P benchmark under strict 5-fold cross-validation. Characterized boundary conditions of separation loss.
             </div>
             <div className="cd-pc-metric">0.8673<span> AUROC (5-Fold CV)</span></div>
+            <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
+              <span className="cd-proj-link" style={{ fontSize: 12 }}>InkjetOOD ↗</span>
+              <span className="cd-proj-link" style={{ fontSize: 12, opacity: 0.65 }}>+ HF Weights · Report PDF</span>
+            </div>
           </a>
 
           {/* EEG */}
