@@ -1,60 +1,77 @@
-# Ahmed Mohammed — AI/ML Engineer & Researcher
+# Ahmed Mohammed
 
-[![Portfolio](https://img.shields.io/badge/Portfolio-ahmed--3m.github.io-2563eb?style=for-the-badge&logo=google-chrome&logoColor=white)](https://ahmed-3m.github.io)
+> AI/ML engineer in Linz, Austria, building computer-vision systems that move from research notebooks to production workflows.
+
+[![Portfolio](https://img.shields.io/badge/Portfolio-ahmed--3m.github.io-00d4ff?style=for-the-badge&logo=google-chrome&logoColor=white)](https://ahmed-3m.github.io)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-ahmed--3m-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ahmed-3m/)
-[![Faultrix](https://img.shields.io/badge/Faultrix-Live_SaaS-10b981?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSIzOCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxMCIgZmlsbD0ibm9uZSIvPjwvc3ZnPg==&logoColor=white)](https://faultrix.com)
-[![Research Gate](https://img.shields.io/badge/Research-Gate-00CCBB?style=for-the-badge&logo=researchgate&logoColor=white)](https://www.researchgate.net/profile/Ahmed-Mohammed-114)
+[![Hugging Face](https://img.shields.io/badge/Hugging_Face-ahmed--3m-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black)](https://huggingface.co/ahmed-3m)
+[![Faultrix](https://img.shields.io/badge/Faultrix-Live_AI_SaaS-00ff88?style=for-the-badge)](https://faultrix.com)
 
-## 👋 About
+This repository powers my portfolio: a compact record of the systems, research, and products I am building around diffusion models, out-of-distribution detection, industrial quality control, and AI-assisted construction workflows.
 
-I'm an AI/ML Engineer based in Linz, Austria, specializing in computer vision, diffusion models, and out-of-distribution detection. I recently completed my M.Sc. in Artificial Intelligence at Johannes Kepler University Linz, working under Prof. Sepp Hochreiter (co-inventor of LSTM).
+## Signal
 
-As founder of Faultrix, I build AI-powered systems that bridge cutting-edge research with real-world applications — from novel OOD detection frameworks to production-grade quality control SaaS.
+| Track | What changed | Result |
+| --- | --- | --- |
+| Master's thesis, JKU Linz | Conditional diffusion models used as generative classifiers, with a class-conditional separation loss | **99.03% +/- 0.07% AUROC** across 3 seeds on CIFAR-10 airplane-vs-rest |
+| External OOD checks | Seed-42 model tested zero-shot on CIFAR-100, Places365, FashionMNIST, Textures, and SVHN | **90.50%-96.97% AUROC**, 94.17% external-set mean |
+| Industrial transfer | Public YOLO + CDM pipeline for inkjet print quality control | **86.73% +/- 2.30% AUROC** under 5-fold CV; separation loss did not transfer automatically |
+| Production AI | Faultrix construction quality-control SaaS | Photo-to-report workflow with evidence chain, DSGVO-minded storage, and OpenAI-powered analysis |
 
-## 🔬 Research Highlights
+## Research Thread
 
-**Master's Thesis** (JKU Linz, 2026):  
-*Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control*  
-- **99.03% ± 0.07% average AUROC** on CIFAR-10 benchmark.
-- **+6.5 percentage-point gain** over the non-separated baseline ($92.52\% \pm 11.07\%$) and dramatically lower seed variance via novel class-conditional separation loss.
-- Evaluated on the public **FTI_Zer0P** inkjet quality dataset under strict 5-fold cross-validation ($0.8673 \pm 0.0230$ AUROC) to analyze cross-domain transfer and boundary conditions.
+My M.Sc. thesis at Johannes Kepler University Linz, supervised by Prof. Sepp Hochreiter and Claus Hofmann, asks a practical question:
 
-**Professional Experience**:  
-- **98.4% accuracy** in industrial defect detection (PROFACTOR GmbH) using optimized YOLO pipelines  
-- Research contributions in EEG signal classification, GANs, and diffusion-based defect detection  
+> Can a diffusion model be used not only to generate images, but to decide whether an input belongs?
 
-## 🚀 Selected Projects
+The answer I explored is a generative-classification setup. The model reconstructs an image under competing class conditions, then uses the reconstruction-error gap as the out-of-distribution signal. The key contribution is the separation loss: a small objective term that pushes the conditional predictions apart so the final score becomes more stable.
 
-| Project | Focus | Impact |
-|---------|-------|--------|
-| **[Faultrix](https://faultrix.com)** | AI Construction QC SaaS | ÖNORM-compliant reports in <1 min, built solo from zero to production |
-| **[OOD Detection Framework](https://github.com/ahmed-3m/OOD-diffusion-detector)** | Diffusion Models for Anomaly Detection | 99.03% AUROC on CIFAR-10, separation loss innovation |
-| **[Industrial Anomaly Detection](https://github.com/ahmed-3m/Occluded-Object-Detection-With-Tracking)** | YOLO + Diffusion for QC | Real-time defect detection in manufacturing |
-| **[EEG Signal Classification](https://github.com/ahmed-3m/Motor-Imagery-classification)** | Deep Learning for BCI | LSTM/Bi-LSTM/GRU architectures for motor imagery |
+```text
+total loss = denoising loss + lambda * separation loss
+```
 
-## 🛠️ Core Technologies
+At `lambda = 0.02`, the three-seed mean improved from a seed-sensitive `92.52% +/- 11.07%` to `99.03% +/- 0.07%` AUROC. The interesting part is not only the higher score; it is the collapse in variance.
 
-**Machine Learning**: PyTorch · Diffusion Models · YOLO · CNNs · Transformers · LLMs  
-**Computer Vision**: OOD Detection · Object Detection · Defect Detection · Image Classification  
-**Full-Stack**: TypeScript · Next.js · React · Convex · Tailwind CSS  
-**Infrastructure**: Docker · Git · Linux · CUDA · REST APIs  
-**AI Tools**: Claude Code · GitHub Copilot · OpenAPI · LangChain  
+## Featured Work
 
-## 🌐 Live & Code
+| Project | Role | Links |
+| --- | --- | --- |
+| DiffusionOOD | Thesis implementation for CIFAR-10 OOD detection | [Code](https://github.com/ahmed-3m/DiffusionOOD) / [Weights](https://huggingface.co/ahmed-3m/DiffusionOOD) / [Thesis PDF](https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf) |
+| InkjetOOD | Industrial quality-control transfer study | [Code](https://github.com/ahmed-3m/InkjetOOD) / [Weights](https://huggingface.co/ahmed-3m/InkjetOOD) |
+| Faultrix | Founder and full-stack builder | [Live SaaS](https://faultrix.com) |
+| Portfolio | Research, writing, projects, and contact surface | [Site](https://ahmed-3m.github.io) / [Blog](https://ahmed-3m.github.io/blog) |
 
-- **Portfolio**: https://ahmed-3m.github.io  
-- **Thesis PDF**: https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf  
-- **Research Code**: https://github.com/ahmed-3m/OOD-diffusion-detector  
-- **Faultrix SaaS**: https://faultrix.com  
+## Engineering Palette
 
-## 📫 Connect
+```text
+Deep learning       PyTorch, PyTorch Lightning, DDPMs, UNet, CNNs, Transformers
+Computer vision     OOD detection, YOLOv8, defect detection, image classification
+Experimentation     Hydra, Weights & Biases, AUROC, FPR95, cross-validation
+Product systems     Next.js, React, TypeScript, Convex, OpenAI API, Docker
+Deployment habits   GitHub, Linux, CUDA, REST APIs, reproducible public artefacts
+```
 
-- **Email**: ahmed.mo.0595@gmail.com  
-- **LinkedIn**: linkedin.com/in/ahmed-3m  
-- **ResearchGate**: researchgate.net/profile/Ahmed-Mohammed-114  
+## Writing
 
----
+- [How I Hit 99.03% AUROC on OOD Detection Using Conditional Diffusion Models](https://ahmed-3m.github.io/blog/ood-diffusion-thesis)
+- [Diffusion Models for Industrial Defect Detection: 98.4% at PROFACTOR GmbH](https://ahmed-3m.github.io/blog/diffusion-models-anomaly-detection)
+- [Shipping Faultrix: Research-to-Product in 5 Months](https://ahmed-3m.github.io/blog/5-month-llm-adventure)
 
-<p align="center">
-  <i>Open to AI/ML research collaborations, ML engineering roles, and deep tech ventures.</i>
-</p>
+## This Site
+
+The portfolio is built with Next.js, React, TypeScript, and a custom dark research-console visual system. It is intentionally small: fast to scan, easy to verify, and focused on work that can be inspected through public artefacts.
+
+```bash
+npm ci
+npm run dev
+npm run build
+```
+
+## Contact
+
+- Portfolio: [ahmed-3m.github.io](https://ahmed-3m.github.io)
+- LinkedIn: [linkedin.com/in/ahmed-3m](https://www.linkedin.com/in/ahmed-3m/)
+- Email: [ahmed.mo.0595@gmail.com](mailto:ahmed.mo.0595@gmail.com)
+- ResearchGate: [Ahmed Mohammed](https://www.researchgate.net/profile/Ahmed-Mohammed-114)
+
+Open to senior AI/ML roles, research collaborations, and serious industrial AI problems where model quality has to survive contact with real data.
