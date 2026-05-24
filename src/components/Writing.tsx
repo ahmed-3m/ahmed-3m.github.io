@@ -1,18 +1,34 @@
 'use client'
-import { useReveal } from '@/lib/useReveal'
+import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { getAllBlogPosts } from '@/lib/blog-posts'
+import { useReveal } from '@/lib/useReveal'
+
+const copy = {
+  eyebrow: { en: '// 05 - Writing', de: '// 05 - Schreiben', fr: '// 05 - Ecriture', es: '// 05 - Escritura', ar: '// 05 - الكتابة' },
+  title: { en: 'Thinking out loud.', de: 'Gedanken laut gedacht.', fr: 'Reflexions ouvertes.', es: 'Pensando en voz alta.', ar: 'أفكار بصوت عال.' },
+  intro: {
+    en: 'Deep-dives on research decisions, production lessons, and the gap between papers and products.',
+    de: 'Deep-Dives zu Forschungsentscheidungen, Produktionslektionen und der Lucke zwischen Papers und Produkten.',
+    fr: 'Analyses sur les choix de recherche, les lecons de production et l ecart entre articles et produits.',
+    es: 'Analisis sobre decisiones de investigacion, lecciones de produccion y la brecha entre papers y productos.',
+    ar: 'مقالات عميقة عن قرارات البحث ودروس الإنتاج والفجوة بين الأوراق العلمية والمنتجات.',
+  },
+  read: { en: 'Read', de: 'Lesen', fr: 'Lire', es: 'Leer', ar: 'اقرأ' },
+  all: { en: 'View all posts', de: 'Alle Beitrage ansehen', fr: 'Voir tous les articles', es: 'Ver todos los articulos', ar: 'عرض كل المقالات' },
+} satisfies Record<string, TranslationMap>
 
 export default function Writing() {
   useReveal()
+  const { t } = useI18n()
   const posts = getAllBlogPosts().slice(0, 3)
 
   return (
     <section id="writing" className="cd-section">
       <div className="cd-container">
-        <div className="cd-section-eyebrow">// 05 — Writing</div>
-        <h2 className="cd-section-title" style={{ marginBottom: 8 }}>Thinking out loud.</h2>
+        <div className="cd-section-eyebrow">{t(copy.eyebrow)}</div>
+        <h2 className="cd-section-title" style={{ marginBottom: 8 }}>{t(copy.title)}</h2>
         <p style={{ color: 'var(--cd-fg2)', fontSize: 15, marginBottom: 40, maxWidth: 560 }}>
-          Deep-dives on research decisions, production lessons, and the gap between papers and products.
+          {t(copy.intro)}
         </p>
 
         <div className="cd-writing-grid">
@@ -30,11 +46,11 @@ export default function Writing() {
               </div>
               <div className="cd-wc-title">{post.title}</div>
               <div className="cd-wc-excerpt">
-                {post.excerpt.length > 140 ? post.excerpt.slice(0, 140) + '…' : post.excerpt}
+                {post.excerpt.length > 140 ? `${post.excerpt.slice(0, 140)}...` : post.excerpt}
               </div>
               <div className="cd-wc-footer">
                 <span className="cd-wc-time">{post.readingTime}</span>
-                <span className="cd-proj-link" style={{ fontSize: 12 }}>Read ↗</span>
+                <span className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.read)} &rarr;</span>
               </div>
             </a>
           ))}
@@ -42,7 +58,7 @@ export default function Writing() {
 
         <div style={{ textAlign: 'center', marginTop: 32 }}>
           <a href="/blog" className="cd-btn-ghost" style={{ fontSize: 13 }}>
-            View all posts ↗
+            {t(copy.all)} &rarr;
           </a>
         </div>
       </div>
