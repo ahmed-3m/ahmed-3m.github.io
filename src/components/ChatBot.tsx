@@ -29,7 +29,14 @@ type GroqChatResponse = {
   error?: string | GroqErrorDetail
 }
 
-const SYSTEM_PROMPT = `You are Ahmed Mohammed's portfolio assistant. Answer questions about Ahmed concisely and professionally, as if you are his representative. Stay on topic — only answer questions related to Ahmed's work, skills, projects, and background. If asked something unrelated, politely redirect.
+const SYSTEM_PROMPT = `You are Ahmed Mohammed's portfolio assistant. Answer questions about Ahmed in a short, friendly, professional way, as if you are his representative. Stay on topic — only answer questions related to Ahmed's work, skills, projects, and background. If asked something unrelated, politely redirect.
+
+RESPONSE STYLE:
+- Keep every answer under 60 words unless the user explicitly asks for detail.
+- Prefer 1-3 short sentences or 2-3 compact bullets.
+- Lead with the direct answer, then stop.
+- Avoid repeating background facts unless they are needed.
+- End naturally; the UI will provide follow-up questions separately.
 
 ---
 
@@ -164,6 +171,8 @@ KEY NUMBERS:
 - <1 min report generation — Faultrix
 - 4+ years in AI/ML`
 
+const MAX_REPLY_CHARS = 650
+
 // ── Follow-up chip generation ─────────────────────────────────────────────
 
 const FOLLOWUP_MAP: Array<{ pattern: RegExp; chips: readonly string[] }> = [
@@ -174,6 +183,8 @@ const FOLLOWUP_MAP: Array<{ pattern: RegExp; chips: readonly string[] }> = [
       'How long does a report take?',
       'Is Faultrix DSGVO compliant?',
       'How was Faultrix built?',
+      'What makes Faultrix different?',
+      'Can I see the product story?',
     ],
   },
   {
@@ -183,6 +194,8 @@ const FOLLOWUP_MAP: Array<{ pattern: RegExp; chips: readonly string[] }> = [
       'How does the separation loss work?',
       'What datasets were tested on?',
       'How does it compare to other OOD methods?',
+      'What was the best AUROC?',
+      'Why use diffusion for OOD?',
     ],
   },
   {
@@ -191,6 +204,8 @@ const FOLLOWUP_MAP: Array<{ pattern: RegExp; chips: readonly string[] }> = [
       'What accuracy did the system achieve?',
       'What is the Zer0P project?',
       'How does the YOLO + diffusion pipeline work?',
+      'What was Ahmed responsible for?',
+      'Where was this work done?',
     ],
   },
   {
@@ -199,6 +214,8 @@ const FOLLOWUP_MAP: Array<{ pattern: RegExp; chips: readonly string[] }> = [
       'What AI frameworks does he use?',
       "What's his web dev stack?",
       'Any cloud or infra experience?',
+      'What tools does he use for research?',
+      'What is his strongest stack?',
     ],
   },
   {
@@ -207,6 +224,8 @@ const FOLLOWUP_MAP: Array<{ pattern: RegExp; chips: readonly string[] }> = [
       'What kind of roles interest him?',
       "What's his email?",
       'Can I see his LinkedIn?',
+      'What are his strongest selling points?',
+      'Where is Ahmed based?',
     ],
   },
   {
@@ -214,6 +233,8 @@ const FOLLOWUP_MAP: Array<{ pattern: RegExp; chips: readonly string[] }> = [
     chips: [
       'What architectures were compared?',
       'Where was the BCI research done?',
+      'What dataset did he use?',
+      'Was it deep learning based?',
     ],
   },
   {
@@ -221,6 +242,8 @@ const FOLLOWUP_MAP: Array<{ pattern: RegExp; chips: readonly string[] }> = [
     chips: [
       'What RL algorithms were implemented?',
       'What environments were used?',
+      'What score did the Pong agent reach?',
+      'Was PPO from scratch?',
     ],
   },
   {
@@ -229,22 +252,47 @@ const FOLLOWUP_MAP: Array<{ pattern: RegExp; chips: readonly string[] }> = [
       'Who supervised his thesis?',
       'What was his undergraduate degree in?',
       'What is JKU known for in AI?',
+      'When did he study AI?',
+      'Where did he study before JKU?',
     ],
   },
 ]
 
-function generateFollowUps(reply: string): string[] {
+const DEFAULT_FOLLOWUPS = [
+  "What's Ahmed's strongest skill?",
+  'Tell me about Faultrix',
+  'Summarize his thesis',
+  'What projects should I see?',
+  'Is he open to work?',
+  'How can I contact him?',
+] as const
+
+function shuffle<T>(items: readonly T[]): T[] {
+  const pool = [...items]
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[pool[i], pool[j]] = [pool[j], pool[i]]
+  }
+  return pool
+}
+
+function generateFollowUps(reply: string, question = ''): string[] {
+  const context = `${question} ${reply}`
   for (const { pattern, chips } of FOLLOWUP_MAP) {
-    if (pattern.test(reply)) {
-      const pool = [...chips]
-      for (let i = pool.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1))
-        ;[pool[i], pool[j]] = [pool[j], pool[i]]
-      }
-      return pool.slice(0, 2)
+    if (pattern.test(context)) {
+      return shuffle(chips).slice(0, 4)
     }
   }
-  return ["What's his strongest skill?", 'Tell me about Faultrix']
+  return shuffle(DEFAULT_FOLLOWUPS).slice(0, 4)
+}
+
+function shortenReply(reply: string): string {
+  if (reply.length <= MAX_REPLY_CHARS) return reply
+
+  const compact = reply.replace(/\n{3,}/g, '\n\n').trim()
+  const boundary = compact.lastIndexOf('.', MAX_REPLY_CHARS)
+  const end = boundary > 220 ? boundary + 1 : MAX_REPLY_CHARS
+  return `${compact.slice(0, end).trim()}...`
 }
 
 // ── Markdown renderer ─────────────────────────────────────────────────────
@@ -333,6 +381,8 @@ const STARTER_PROMPTS = [
   'Tell me about the thesis',
   "What's his tech stack?",
   'Is he open to work?',
+  'Show key achievements',
+  'How can I contact him?',
 ] as const
 
 const panelStyle = {
@@ -434,8 +484,8 @@ export default function ChatBot() {
         body: JSON.stringify({
           model: 'llama-3.1-8b-instant',
           messages: payloadMessages,
-          max_tokens: 300,
-          temperature: 0.7,
+          max_tokens: 140,
+          temperature: 0.55,
         }),
       })
 
@@ -451,12 +501,14 @@ export default function ChatBot() {
         throw new Error(errMsg)
       }
 
-      const reply = data.choices?.[0]?.message?.content?.trim()
-      if (!reply) throw new Error('The assistant returned an empty response.')
+      const rawReply = data.choices?.[0]?.message?.content?.trim()
+      if (!rawReply) throw new Error('The assistant returned an empty response.')
+
+      const reply = shortenReply(rawReply)
 
       setMessages((prev) => [
         ...prev,
-        { role: 'assistant', content: reply, followUps: generateFollowUps(reply) },
+        { role: 'assistant', content: reply, followUps: generateFollowUps(reply, content) },
       ])
     } catch (caughtError) {
       setError(

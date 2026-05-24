@@ -16,6 +16,8 @@ export default function CustomCursor() {
     let rx = -200, ry = -200   // ring (lerped)
     let raf: number
     let entered = false
+    let isHover = false
+    let isExpanded = false
 
     /* ── Reveal on first move ── */
     const reveal = () => {
@@ -27,16 +29,23 @@ export default function CustomCursor() {
 
     /* ── State helpers ── */
     const setHover   = (on: boolean) => {
+      if (on === isHover) return
+      isHover = on
       ring.classList.toggle('cd-cursor-ring--hover', on)
       dot.classList.toggle('cd-cursor-dot--hover',  on)
     }
-    const setExpand  = (on: boolean) => ring.classList.toggle('cd-cursor-ring--expand', on)
+    const setExpand  = (on: boolean) => {
+      if (on === isExpanded) return
+      isExpanded = on
+      ring.classList.toggle('cd-cursor-ring--expand', on)
+    }
     const setClick   = (on: boolean) => ring.classList.toggle('cd-cursor-ring--click',  on)
 
     /* ── Per-move: check what's under the cursor ── */
     const onMove = (e: MouseEvent) => {
       mx = e.clientX
       my = e.clientY
+      dot.style.transform = `translate3d(${mx}px,${my}px,0)`
       reveal()
 
       const el = e.target as Element | null
@@ -55,17 +64,16 @@ export default function CustomCursor() {
 
     /* ── rAF loop: lerp ring position ── */
     const tick = () => {
-      dot.style.transform  = `translate(${mx}px,${my}px)`
-      rx += (mx - rx) * 0.11
-      ry += (my - ry) * 0.11
-      ring.style.transform = `translate(${rx}px,${ry}px)`
+      rx += (mx - rx) * 0.32
+      ry += (my - ry) * 0.32
+      ring.style.transform = `translate3d(${rx}px,${ry}px,0)`
       raf = requestAnimationFrame(tick)
     }
     raf = requestAnimationFrame(tick)
 
-    window.addEventListener('mousemove',  onMove)
-    window.addEventListener('mousedown',  onDown)
-    window.addEventListener('mouseup',    onUp)
+    window.addEventListener('mousemove',  onMove, { passive: true })
+    window.addEventListener('mousedown',  onDown, { passive: true })
+    window.addEventListener('mouseup',    onUp, { passive: true })
     document.documentElement.addEventListener('mouseleave', onLeave)
     document.documentElement.addEventListener('mouseenter', onEnter)
 
