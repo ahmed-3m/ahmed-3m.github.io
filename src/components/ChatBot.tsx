@@ -43,7 +43,7 @@ type ChatCompletionError = Error & {
 }
 
 const GROQ_MODEL = 'llama-3.1-8b-instant'
-const ZAI_MODEL = 'glm-4.5-flash'
+const ZAI_MODEL = 'glm-4.5-airx'
 const GROQ_CHAT_URL = 'https://api.groq.com/openai/v1/chat/completions'
 const ZAI_CHAT_URL = 'https://api.z.ai/api/paas/v4/chat/completions'
 
