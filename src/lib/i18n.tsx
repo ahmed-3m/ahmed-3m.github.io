@@ -8,9 +8,9 @@ export type TranslationMap = Partial<Record<Language, string>> & { en: string };
 export const languageOptions: Array<{ code: Language; label: string; short: string }> = [
   { code: 'en', label: 'English', short: 'EN' },
   { code: 'de', label: 'Deutsch', short: 'DE' },
-  { code: 'fr', label: 'Francais', short: 'FR' },
-  { code: 'es', label: 'Espanol', short: 'ES' },
-  { code: 'ar', label: 'Arabic', short: 'AR' },
+  { code: 'fr', label: 'Français', short: 'FR' },
+  { code: 'es', label: 'Español', short: 'ES' },
+  { code: 'ar', label: 'العربية', short: 'AR' },
 ];
 
 const isLanguage = (value: string | null): value is Language =>

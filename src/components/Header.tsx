@@ -1,6 +1,6 @@
 'use client'
-import { useState } from 'react'
-import { Moon, Sun } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { Check, ChevronDown, Globe2, Moon, Sun } from 'lucide-react'
 import { useTheme } from '@/lib/ThemeContext'
 import { languageOptions, useI18n, type TranslationMap, type Language } from '@/lib/i18n'
 
@@ -37,26 +37,62 @@ function isLanguage(value: string): value is Language {
 
 function LanguageSelector() {
   const { lang, setLanguage } = useI18n()
+  const [open, setOpen] = useState(false)
+  const menuRef = useRef<HTMLDivElement>(null)
+  const current = languageOptions.find(({ code }) => code === lang) ?? languageOptions[0]
+
+  useEffect(() => {
+    if (!open) return
+    const closeOnOutside = (event: MouseEvent) => {
+      if (!menuRef.current?.contains(event.target as Node)) setOpen(false)
+    }
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false)
+    }
+    document.addEventListener('mousedown', closeOnOutside)
+    document.addEventListener('keydown', closeOnEscape)
+    return () => {
+      document.removeEventListener('mousedown', closeOnOutside)
+      document.removeEventListener('keydown', closeOnEscape)
+    }
+  }, [open])
 
   return (
-    <label className="cd-lang-select-wrap" title="Language">
-      <span className="cd-sr-only">Language</span>
-      <select
-        className="cd-lang-select"
-        value={lang}
-        aria-label="Language"
-        onChange={(event) => {
-          const nextLang = event.target.value
-          if (isLanguage(nextLang)) setLanguage(nextLang)
-        }}
+    <div className="cd-lang-menu" ref={menuRef}>
+      <button
+        type="button"
+        className="cd-lang-trigger"
+        aria-label="Change language"
+        aria-expanded={open}
+        onClick={() => setOpen((value) => !value)}
       >
-        {languageOptions.map(({ code, short }) => (
-          <option key={code} value={code}>
-            {short} - {languageNames[code]}
-          </option>
-        ))}
-      </select>
-    </label>
+        <Globe2 size={15} strokeWidth={2.1} />
+        <span>{current.short}</span>
+        <ChevronDown size={13} strokeWidth={2.1} className={open ? 'is-open' : ''} />
+      </button>
+
+      {open && (
+        <div className="cd-lang-popover" role="menu" aria-label="Language">
+          {languageOptions.map(({ code, short, label }) => (
+            <button
+              key={code}
+              type="button"
+              role="menuitemradio"
+              aria-checked={lang === code}
+              className={`cd-lang-option${lang === code ? ' active' : ''}`}
+              onClick={() => {
+                if (isLanguage(code)) setLanguage(code)
+                setOpen(false)
+              }}
+            >
+              <span className="cd-lang-option-code">{short}</span>
+              <span className="cd-lang-option-name">{label}</span>
+              {lang === code && <Check size={14} strokeWidth={2.2} />}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
   )
 }
 
