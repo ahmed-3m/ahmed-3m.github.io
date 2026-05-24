@@ -209,6 +209,33 @@ body::before {
 .cd-nav-actions {
   display: flex; align-items: center; gap: 10px;
 }
+.cd-sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+.cd-lang-select-wrap {
+  position: relative; display: inline-flex; align-items: center;
+}
+.cd-lang-select {
+  height: 34px; min-width: 74px; max-width: 104px;
+  appearance: none; border-radius: 8px; border: 1px solid var(--cd-b0);
+  background: var(--cd-surf); color: var(--cd-fg2);
+  padding: 0 24px 0 10px;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 11px; letter-spacing: 0.04em;
+  transition: color 150ms, border-color 150ms, background 150ms, box-shadow 150ms;
+}
+.cd-lang-select-wrap::after {
+  content: ''; position: absolute; right: 9px; top: 50%;
+  width: 6px; height: 6px; pointer-events: none;
+  border-right: 1.5px solid var(--cd-fg3);
+  border-bottom: 1.5px solid var(--cd-fg3);
+  transform: translateY(-65%) rotate(45deg);
+}
+.cd-lang-select:hover, .cd-lang-select:focus {
+  color: var(--cd-accent); border-color: var(--cd-b-accent);
+  box-shadow: 0 0 16px var(--cd-accent-dim); outline: none;
+}
 .cd-theme-toggle {
   width: 34px; height: 34px; border-radius: 8px;
   display: inline-flex; align-items: center; justify-content: center;
@@ -239,6 +266,14 @@ body::before {
 
 [data-theme="light"] .cd-nav-cta {
   color: #fff8ee;
+}
+
+[dir="rtl"] .cd-lang-select {
+  padding: 0 10px 0 24px;
+}
+
+[dir="rtl"] .cd-lang-select-wrap::after {
+  right: auto; left: 9px;
 }
 
 /* ── HERO ── */
