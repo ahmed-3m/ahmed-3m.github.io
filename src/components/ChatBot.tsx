@@ -18,16 +18,34 @@ type ApiMessage = {
   content: string
 }
 
-type GroqErrorDetail = { message?: string; type?: string; code?: string }
+type ApiErrorDetail = { message?: string; type?: string; code?: string }
 
-type GroqChatResponse = {
+type ChatCompletionResponse = {
   choices?: Array<{
     message?: {
       content?: string
     }
   }>
-  error?: string | GroqErrorDetail
+  error?: string | ApiErrorDetail
 }
+
+type ProviderConfig = {
+  name: 'Groq' | 'Z.ai'
+  token: string
+  url: string
+  body: Record<string, unknown>
+}
+
+type ChatCompletionError = Error & {
+  status?: number
+  code?: string
+  provider?: ProviderConfig['name']
+}
+
+const GROQ_MODEL = 'llama-3.1-8b-instant'
+const ZAI_MODEL = 'glm-4.5-flash'
+const GROQ_CHAT_URL = 'https://api.groq.com/openai/v1/chat/completions'
+const ZAI_CHAT_URL = 'https://api.z.ai/api/paas/v4/chat/completions'
 
 const SYSTEM_PROMPT = `You are Ahmed Mohammed's portfolio assistant. Answer questions about Ahmed in a short, friendly, professional way, as if you are his representative. Stay on topic — only answer questions related to Ahmed's work, skills, projects, and background. If asked something unrelated, politely redirect.
 
@@ -295,6 +313,71 @@ function shortenReply(reply: string): string {
   return `${compact.slice(0, end).trim()}...`
 }
 
+function isConfiguredToken(token: string | undefined): token is string {
+  return Boolean(token && token !== 'your_groq_token_here' && token !== 'your_zai_token_here')
+}
+
+function createChatError(
+  message: string,
+  provider: ProviderConfig['name'],
+  status?: number,
+  code?: string
+): ChatCompletionError {
+  const error = new Error(message) as ChatCompletionError
+  error.provider = provider
+  error.status = status
+  error.code = code
+  return error
+}
+
+function isGroqLimitError(error: unknown): error is ChatCompletionError {
+  if (!(error instanceof Error)) return false
+
+  const err = error as ChatCompletionError
+  const message = err.message.toLowerCase()
+  return (
+    err.provider === 'Groq' &&
+    (err.status === 429 ||
+      err.code === 'rate_limit_exceeded' ||
+      err.code === 'quota_exceeded' ||
+      message.includes('rate limit') ||
+      message.includes('quota') ||
+      message.includes('limit reached'))
+  )
+}
+
+async function requestChatCompletion(provider: ProviderConfig): Promise<string> {
+  const response = await fetch(provider.url, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${provider.token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(provider.body),
+  })
+
+  const data = (await response.json()) as ChatCompletionResponse
+
+  if (!response.ok) {
+    const errorDetail = typeof data.error === 'string' ? undefined : data.error
+    const errMsg =
+      typeof data.error === 'string'
+        ? data.error
+        : errorDetail?.message ?? `${provider.name} could not respond right now.`
+
+    if (provider.name === 'Groq' && response.status === 503) {
+      throw createChatError('Model is warming up, try again in a moment.', provider.name, response.status)
+    }
+
+    throw createChatError(errMsg, provider.name, response.status, errorDetail?.code)
+  }
+
+  const reply = data.choices?.[0]?.message?.content?.trim()
+  if (!reply) throw createChatError(`${provider.name} returned an empty response.`, provider.name)
+
+  return reply
+}
+
 // ── Markdown renderer ─────────────────────────────────────────────────────
 
 function renderInline(text: string, keyPrefix: string): React.ReactNode[] {
@@ -454,9 +537,13 @@ export default function ChatBot() {
     const content = messageText.trim()
     if (!content || isLoading) return
 
-    const token = process.env.NEXT_PUBLIC_GROQ_TOKEN
-    if (!token || token === 'your_groq_token_here') {
-      setError('Add a valid Groq token to NEXT_PUBLIC_GROQ_TOKEN to enable the assistant.')
+    const groqToken = process.env.NEXT_PUBLIC_GROQ_TOKEN
+    const zaiToken = process.env.NEXT_PUBLIC_ZAI_TOKEN ?? process.env.NEXT_PUBLIC_ZAI_API_KEY
+    const hasGroqToken = isConfiguredToken(groqToken)
+    const hasZaiToken = isConfiguredToken(zaiToken)
+
+    if (!hasGroqToken && !hasZaiToken) {
+      setError('Add NEXT_PUBLIC_GROQ_TOKEN or NEXT_PUBLIC_ZAI_TOKEN to enable the assistant.')
       return
     }
 
@@ -475,34 +562,45 @@ export default function ChatBot() {
         ...nextMessages.map(({ role, content }) => ({ role, content })),
       ]
 
-      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          model: 'llama-3.1-8b-instant',
-          messages: payloadMessages,
-          max_tokens: 140,
-          temperature: 0.55,
-        }),
-      })
+      const groqProvider: ProviderConfig | null = hasGroqToken
+        ? {
+            name: 'Groq',
+            token: groqToken,
+            url: GROQ_CHAT_URL,
+            body: {
+              model: GROQ_MODEL,
+              messages: payloadMessages,
+              max_tokens: 140,
+              temperature: 0.55,
+            },
+          }
+        : null
 
-      const data = (await response.json()) as GroqChatResponse
+      const zaiProvider: ProviderConfig | null = hasZaiToken
+        ? {
+            name: 'Z.ai',
+            token: zaiToken,
+            url: ZAI_CHAT_URL,
+            body: {
+              model: ZAI_MODEL,
+              messages: payloadMessages,
+              max_tokens: 140,
+              temperature: 0.55,
+              stream: false,
+              thinking: { type: 'disabled' },
+            },
+          }
+        : null
 
-      if (!response.ok) {
-        if (response.status === 503) throw new Error('Model is warming up, try again in a moment.')
-        const errMsg =
-          typeof data.error === 'string'
-            ? data.error
-            : (data.error as GroqErrorDetail | undefined)?.message ??
-              'The assistant could not respond right now.'
-        throw new Error(errMsg)
+      let rawReply: string
+      try {
+        rawReply = groqProvider
+          ? await requestChatCompletion(groqProvider)
+          : await requestChatCompletion(zaiProvider!)
+      } catch (providerError) {
+        if (!isGroqLimitError(providerError) || !zaiProvider) throw providerError
+        rawReply = await requestChatCompletion(zaiProvider)
       }
-
-      const rawReply = data.choices?.[0]?.message?.content?.trim()
-      if (!rawReply) throw new Error('The assistant returned an empty response.')
 
       const reply = shortenReply(rawReply)
 
