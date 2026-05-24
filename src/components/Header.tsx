@@ -1,5 +1,7 @@
 'use client'
 import { useState } from 'react'
+import { Moon, Sun } from 'lucide-react'
+import { useTheme } from '@/lib/ThemeContext'
 
 const links = [
   { href: '#about', label: 'About' },
@@ -12,6 +14,8 @@ const links = [
 
 export default function Header() {
   const [open, setOpen] = useState(false)
+  const { theme, toggleTheme } = useTheme()
+  const isDark = theme === 'dark'
 
   return (
     <nav className="cd-nav">
@@ -26,7 +30,18 @@ export default function Header() {
           ))}
         </ul>
 
-        <a href="#contact" className="cd-nav-cta">Get in touch</a>
+        <div className="cd-nav-actions">
+          <button
+            type="button"
+            className="cd-theme-toggle"
+            onClick={toggleTheme}
+            aria-label={isDark ? 'Switch to cream mode' : 'Switch to dark mode'}
+            title={isDark ? 'Cream mode' : 'Dark mode'}
+          >
+            {isDark ? <Sun size={16} strokeWidth={2.1} /> : <Moon size={16} strokeWidth={2.1} />}
+          </button>
+          <a href="#contact" className="cd-nav-cta">Get in touch</a>
+        </div>
 
         <button
           className="cd-nav-mobile-btn"
