@@ -15,6 +15,7 @@ import {
 import { Analytics } from "@/components/Analytics";
 import CustomCursor from "@/components/CustomCursor";
 import ChatBot from "@/components/ChatBot";
+import { ThemeProvider } from "@/lib/ThemeContext";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-display",
@@ -106,9 +107,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <p>Email: <a href="mailto:ahmed.mo.0595@gmail.com">ahmed.mo.0595@gmail.com</a> | <a href="https://www.linkedin.com/in/ahmed-3m/">LinkedIn</a> | <a href="https://github.com/ahmed-3m">GitHub</a></p>
           </div>
         </noscript>
-        <I18nProvider>
-          {children}
-        </I18nProvider>
+        <ThemeProvider>
+          <I18nProvider>
+            {children}
+          </I18nProvider>
+        </ThemeProvider>
         <Analytics />
         <CustomCursor />
         <ChatBot />
