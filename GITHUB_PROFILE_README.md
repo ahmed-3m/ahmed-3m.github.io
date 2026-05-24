@@ -11,8 +11,8 @@ I build systems that work in the real world — from novel research on diffusion
 | Project | What | Result |
 |---------|------|--------|
 | **[Faultrix](https://faultrix.com)** | AI construction QC SaaS — ÖNORM-compliant reports from photos | < 1 min per report · Live production |
-| **[OOD Detection Framework](https://github.com/ahmed-3m/OOD-diffusion-detector)** | Conditional diffusion models as generative classifiers | **99.03% AUROC** on CIFAR-10 |
-| **Industrial Anomaly Detection** | YOLO + diffusion pipeline, PROFACTOR GmbH (Zer0P project) | **98.4% accuracy** in real-time production |
+| **[OOD Detection Framework](https://github.com/ahmed-3m/OOD-diffusion-detector)** | Generative classifiers with class-conditional separation loss | **99.03% ± 0.07% average AUROC** on CIFAR-10 |
+| **Industrial Anomaly Detection** | YOLO+CDM inkjet QC baseline on public FTI_Zer0P benchmark | **0.8673 ± 0.0230 AUROC** (5-fold CV) |
 | **[EEG Classification](https://github.com/ahmed-3m/Motor-Imagery-classification)** | LSTM/Bi-LSTM/GRU for brain-computer interfaces | Karunya University, 2023 |
 
 ---

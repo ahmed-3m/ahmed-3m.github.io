@@ -259,7 +259,7 @@ export function FAQSchema() {
         name: "What was Ahmed Mohammed's Master's thesis about?",
         acceptedAnswer: {
           '@type': 'Answer',
-          text: "Ahmed Mohammed's Master's thesis at JKU Linz (2026) is titled 'Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection'. He achieved 99.03% AUROC on CIFAR-10, improving the baseline by 18.8 percentage points through a novel class-conditional separation loss. The work was supervised by Prof. Sepp Hochreiter and applied to industrial quality control with multi-head conditioning.",
+          text: "Ahmed Mohammed's Master's thesis at JKU Linz (2026) is titled 'Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control'. He achieved a 99.03% ± 0.07% average AUROC on CIFAR-10, improving the baseline by 6.5 percentage points with high seed stability through a novel class-conditional separation loss. The work was supervised by Prof. Sepp Hochreiter and applied to industrial quality control on the public FTI_Zer0P benchmark under strict 5-fold cross-validation.",
         },
       },
       {
@@ -384,7 +384,7 @@ export function ProjectsSchema() {
         item: {
           '@type': 'SoftwareApplication',
           name: 'OOD Detection Framework',
-          description: 'Novel use of conditional diffusion models as generative classifiers for out-of-distribution detection. Achieved 99.03% AUROC on CIFAR-10 benchmark, improving over baseline by 18.8 percentage points via class-conditional separation loss. Master\'s Thesis at JKU Linz, 2026.',
+          description: 'Novel use of conditional diffusion models as generative classifiers for out-of-distribution detection. Achieved 99.03% ± 0.07% average AUROC on CIFAR-10 benchmark, improving over non-separated baseline by 6.5 percentage points via class-conditional separation loss with high seed stability. Master\'s Thesis at JKU Linz, 2026.',
           applicationCategory: 'DeveloperApplication',
           url: 'https://github.com/ahmed-3m/OOD-diffusion-detector',
           author: { '@type': 'Person', name: 'Ahmed Mohammed' },
@@ -428,9 +428,9 @@ export function ResearchSchema() {
   const researchSchema = {
     '@context': 'https://schema.org',
     '@type': 'Thesis',
-    headline: 'Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection',
-    name: 'Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection',
-    abstract: 'This thesis introduces a novel approach using conditional diffusion models as generative classifiers for robust out-of-distribution detection. A class-conditional separation loss is proposed that improves AUROC by 18.8 percentage points over the baseline, achieving 99.03% AUROC on CIFAR-10. The method is further applied to industrial quality control using multi-head conditioning for structured manufacturing data.',
+    headline: 'Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control',
+    name: 'Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control',
+    abstract: 'This thesis treats conditional diffusion models as generative classifiers where class-conditional reconstruction error serves as the OOD signal. We develop a binary conditional diffusion model for CIFAR-10 OOD detection and introduce a class-conditional separation loss that improves both performance and stability. The separation loss achieves a 99.03% ± 0.07% average AUROC, showing a +6.5pp gain and dramatically lower seed variance over the baseline. We further evaluate the public InkjetOOD pipeline on the public FTI_Zer0P dataset under strict 5-fold cross-validation, reaching 0.8673 ± 0.0230 AUROC and characterizing its boundary conditions.',
     url: 'https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf',
     datePublished: '2026-03',
     inSupportOf: "Master's Degree in Artificial Intelligence",

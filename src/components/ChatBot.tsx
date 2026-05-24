@@ -45,7 +45,7 @@ OPEN TO: Senior AI/ML roles and research collaborations.
 ---
 
 EDUCATION:
-- M.Sc. in Artificial Intelligence, Johannes Kepler University Linz (Oct 2024 – Mar 2026). Thesis: "Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection" — 99.03% AUROC on CIFAR-10, supervised by Prof. Sepp Hochreiter (inventor of LSTM).
+- M.Sc. in Artificial Intelligence, Johannes Kepler University Linz (Oct 2024 – Mar 2026). Thesis: "Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control" — 99.03% ± 0.07% average AUROC with Separation Loss, supervised by Prof. Sepp Hochreiter (inventor of LSTM).
 - B.Sc. in Mechatronics Engineering, Eastern Mediterranean University, Cyprus (Feb 2015 – Jan 2018). Thesis: SCARA robotic system for dynamic object tracking with real-time control and sensor integration.
 
 ---
@@ -53,7 +53,7 @@ EDUCATION:
 EXPERIENCE:
 - Founder & Full-Stack Developer at Faultrix (Jul 2025 – Present): Built AI construction analysis SaaS platform solo from zero to production. Stack: Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2, Stripe. Generates ÖNORM-compliant reports with SHA-256 evidence chain and AES-256 encryption in under 1 minute. DSGVO compliant.
 - ML Researcher at JKU Machine Learning Institute (Dec 2024 – Mar 2026): Master's thesis research under Prof. Sepp Hochreiter.
-- Machine Vision Researcher at PROFACTOR GmbH, Steyr, Austria (Apr 2024 – Nov 2024): YOLO + diffusion model pipeline for industrial defect detection. 98.4% accuracy in real-time production. Part of the Zer0P project (funded by the Government of Upper Austria) — zero-defect inkjet printing on building components.
+- Machine Vision Researcher at PROFACTOR GmbH / JKU Linz (Apr 2024 – Nov 2024): YOLO + diffusion model pipeline for industrial defect detection (Track 2 of M.Sc. thesis). Evaluated on the public FTI_Zer0P dataset under strict 5-fold CV, achieving a baseline of 0.8673 ± 0.0230 AUROC.
 - AI Research Intern at Karunya University, India — Remote (Aug 2023 – Oct 2023): RNN/CNN for EEG motor imagery classification. LSTM, Bi-LSTM, GRU hyperparameter optimization.
 - AI & Programming Tutor, Freelance (Jan 2021 – Present): Python, ML, Deep Learning mentoring.
 
@@ -131,7 +131,7 @@ GITHUB PROJECTS:
 
 10. thesis-diffusion-ood-latex (github.com/ahmed-3m/thesis-diffusion-ood-latex)
     - Full LaTeX source for the Master's thesis document.
-    - Thesis title: "Conditional Diffusion Models for Out-of-Distribution Detection and Industrial Quality Control."
+    - Thesis title: "Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control."
     - Public artefacts: DiffusionOOD (CIFAR-10 code), InkjetOOD (industrial code), FTI_Zer0P dataset on Zenodo.
 
 11. Image-extrapolation-challenge-2021 (github.com/ahmed-3m/Image-extrapolation-challenge-2021)
@@ -157,10 +157,10 @@ HUGGING FACE: huggingface.co/ahmed-3m — hosts pretrained InkjetOOD model weigh
 ---
 
 KEY NUMBERS:
-- 99.03% AUROC — OOD detection on CIFAR-10 (thesis, DiffusionOOD)
-- +18.8pp improvement over baseline with separation loss
-- 98.4% defect detection accuracy — PROFACTOR industrial project
-- 0.8673 AUROC — inkjet print quality control (5-fold CV)
+- 99.03% ± 0.07% average AUROC — OOD detection on CIFAR-10 (thesis, DiffusionOOD)
+- +6.5pp improvement over non-separated baseline (from 92.52% ± 11.07% to 99.03% ± 0.07% average AUROC) with separation loss
+- 98.98% AUROC (seed 42) — within-CIFAR airplane-vs-rest split
+- 0.8673 ± 0.0230 AUROC — inkjet print quality control public FTI_Zer0P benchmark (5-fold CV)
 - <1 min report generation — Faultrix
 - 4+ years in AI/ML`
 
