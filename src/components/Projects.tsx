@@ -43,11 +43,10 @@ export default function Projects() {
              <div className="cd-pc-eyebrow">Master&apos;s Thesis · JKU Linz</div>
              <div className="cd-pc-title">OOD Detection Framework</div>
              <div className="cd-pc-desc">
-               Conditional diffusion models as generative classifiers achieving 99.03% AUROC for robust out-of-distribution detection.
-               Introduced class-conditional separation loss improving performance by 18.8 percentage points. Applied to industrial
-               quality control with multi-head conditioning for structured manufacturing data.
+               Conditional diffusion models as generative classifiers achieving 99.03% ± 0.07% average AUROC on CIFAR-10 OOD detection. 
+               Introduced class-conditional separation loss improving average performance by 6.5 percentage points with high seed stability. Applied to public FTI_Zer0P inkjet benchmark (0.8673 ± 0.0230 AUROC).
              </div>
-             <div className="cd-pc-metric">99.0<span>% AUROC (CIFAR-10)</span></div>
+             <div className="cd-pc-metric">99.03%<span> ± 0.07% Avg AUROC</span></div>
              <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
                <span className="cd-proj-link" style={{ fontSize: 12 }}>DiffusionOOD ↗</span>
                <span className="cd-proj-link" style={{ fontSize: 12, opacity: 0.65 }}>+ InkjetOOD · HF Weights</span>
@@ -56,13 +55,12 @@ export default function Projects() {
 
           {/* Anomaly */}
           <a href="https://github.com/ahmed-3m/InkjetOOD" target="_blank" rel="noopener noreferrer" className="cd-project-card reveal">
-            <div className="cd-pc-eyebrow">PROFACTOR GmbH · Zer0P</div>
-            <div className="cd-pc-title">Industrial Anomaly Detection</div>
+            <div className="cd-pc-eyebrow">Master&apos;s Thesis Track 2</div>
+            <div className="cd-pc-title">InkjetOOD Defect Detection</div>
             <div className="cd-pc-desc">
-              YOLO + diffusion model pipeline for inkjet print quality control on building components.
-              Open-source: YOLOv8 detector (0.950 mAP@50) + CDM scorer, pretrained weights on HuggingFace.
+              YOLO+CDM quality classification pipeline evaluated on the public FTI_Zer0P benchmark under strict 5-fold cross-validation. Characterized boundary conditions of separation loss.
             </div>
-            <div className="cd-pc-metric">98.4<span>% accuracy</span></div>
+            <div className="cd-pc-metric">0.8673<span> AUROC (5-Fold CV)</span></div>
             <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
               <span className="cd-proj-link" style={{ fontSize: 12 }}>InkjetOOD ↗</span>
               <span className="cd-proj-link" style={{ fontSize: 12, opacity: 0.65 }}>+ HF Weights · Report PDF</span>

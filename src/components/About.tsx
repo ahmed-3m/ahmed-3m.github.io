@@ -6,7 +6,7 @@ const education = [
     degree: 'M.Sc. in Artificial Intelligence',
     school: 'Johannes Kepler University Linz',
     date: 'Oct 2024 – Mar 2026',
-    desc: 'Thesis: Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection — 99.03% AUROC on CIFAR-10',
+    desc: 'Thesis: Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control — 99.03% ± 0.07% average AUROC under supervision of LSTM inventor Prof. Sepp Hochreiter',
   },
   {
     degree: 'B.Sc. in Mechatronics Engineering',
@@ -56,13 +56,10 @@ export default function About() {
               <p>
                 I&apos;m an AI/ML engineer who completed my{' '}
                 <strong>M.Sc. in Artificial Intelligence at JKU Linz</strong>, working under{' '}
-                <strong>Prof. Sepp Hochreiter</strong> — the inventor of LSTM.
+                <strong>Prof. Sepp Hochreiter</strong> — the pioneer of LSTM and deep learning.
               </p>
               <p>
-                My work spans the full stack: from novel training methods for diffusion models
-                and out-of-distribution detection in academic settings, to shipping
-                production-grade CV pipelines that catch defects at{' '}
-                <strong>98.4% accuracy</strong>.
+                My work spans the full stack: from pioneering class-conditional separation loss in diffusion-based out-of-distribution detection (achieving an outstanding <strong>99.03% ± 0.07% average AUROC</strong>) to deploying industrial computer vision quality control pipelines on public benchmarks under rigorous cross-validation (<strong>0.8673 AUROC</strong>).
               </p>
               <p>
                 I founded <strong>Faultrix</strong> to turn this research into a real product —

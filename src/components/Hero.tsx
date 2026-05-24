@@ -47,8 +47,8 @@ export default function Hero() {
                  <div className="cd-stat-label">OOD Detection AUROC</div>
                </div>
                <div className="cd-stat">
-                 <div className="cd-stat-num">+18.8<span className="g" style={{ fontSize: 14 }}>pp</span></div>
-                 <div className="cd-stat-label">Improvement over baseline</div>
+                 <div className="cd-stat-num">+6.5<span className="g" style={{ fontSize: 14 }}>pp</span></div>
+                 <div className="cd-stat-label">Gain over baseline (stable)</div>
                </div>
                <div className="cd-stat">
                  <div className="cd-stat-num">&lt;1<span style={{ fontSize: 14, color: 'var(--cd-fg3)', fontWeight: 400 }}> min</span></div>

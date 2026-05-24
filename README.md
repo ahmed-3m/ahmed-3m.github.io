@@ -14,10 +14,10 @@ As founder of Faultrix, I build AI-powered systems that bridge cutting-edge rese
 ## 🔬 Research Highlights
 
 **Master's Thesis** (JKU Linz, 2026):  
-*Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection*  
-- **99.03% AUROC** on CIFAR-10 — State-of-the-art performance  
-- **18.8 percentage point improvement** via novel class-conditional separation loss  
-- Extended to industrial quality control with multi-head conditioning for structured manufacturing data  
+*Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control*  
+- **99.03% ± 0.07% average AUROC** on CIFAR-10 benchmark.
+- **+6.5 percentage-point gain** over the non-separated baseline ($92.52\% \pm 11.07\%$) and dramatically lower seed variance via novel class-conditional separation loss.
+- Evaluated on the public **FTI_Zer0P** inkjet quality dataset under strict 5-fold cross-validation ($0.8673 \pm 0.0230$ AUROC) to analyze cross-domain transfer and boundary conditions.
 
 **Professional Experience**:  
 - **98.4% accuracy** in industrial defect detection (PROFACTOR GmbH) using optimized YOLO pipelines  

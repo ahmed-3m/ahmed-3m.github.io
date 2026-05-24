@@ -16,7 +16,7 @@ export const blogPosts: BlogPost[] = [
     slug: 'ood-diffusion-thesis',
     title: 'How I Hit 99.03% AUROC on OOD Detection Using Conditional Diffusion Models',
     date: '2026-03-20',
-    excerpt: 'My Master\'s thesis at JKU Linz (supervised by Prof. Sepp Hochreiter) introduced class-conditional separation loss into conditional diffusion models used as generative classifiers — improving out-of-distribution detection from 80.25% to 99.03% AUROC on CIFAR-10, an 18.8 percentage-point gain.',
+    excerpt: 'My Master\'s thesis at JKU Linz (supervised by Prof. Sepp Hochreiter) introduced class-conditional separation loss into conditional diffusion models used as generative classifiers — achieving an average of 99.03% ± 0.07% AUROC on CIFAR-10, stable over seeds and showing a +6.5pp gain over the non-separated baseline.',
     tags: ['Diffusion Models', 'OOD Detection', 'Deep Learning', 'PyTorch', 'CIFAR-10', 'Generative Models', 'JKU Linz'],
     readingTime: '14 min read',
     ogImage: '/og-diffusion-models-anomaly-detection.png',
@@ -24,15 +24,15 @@ export const blogPosts: BlogPost[] = [
     faq: [
       {
         question: 'What AUROC did Ahmed Mohammed achieve on CIFAR-10 OOD detection?',
-        answer: '99.03% AUROC on CIFAR-10, a +18.8 percentage point improvement over the 80.25% baseline, using a class-conditional separation loss in conditional diffusion models.'
+        answer: '99.03% ± 0.07% average AUROC on CIFAR-10 OOD detection (reproducible seed-42 achieved 98.98%), demonstrating a robust +6.5 percentage point improvement over the non-separated baseline while dramatically reducing seed variance.'
       },
       {
         question: 'What is class-conditional separation loss in diffusion models?',
-        answer: 'A training objective that explicitly pushes class-conditional representations apart in feature space during diffusion model training. It is added as a weighted term to the standard DDPM noise prediction loss. At λ=0.02 (averaged over 3 seeds), it improves OOD AUROC from 92.52% ± 11.07% (unstable) to 99.03% ± 0.07% (stable) on CIFAR-10.'
+        answer: 'A training objective that explicitly pushes class-conditional noise predictions apart in feature space during conditional diffusion model training. It is added as a weighted term to the standard DDPM noise prediction loss. At λ=0.02 (averaged over 3 seeds), it improves OOD AUROC from 92.52% ± 11.07% (unstable) to 99.03% ± 0.07% (stable) on CIFAR-10, stabilizing performance against random initializations.'
       },
       {
         question: "Who supervised Ahmed Mohammed's Master's thesis at JKU Linz?",
-        answer: 'Prof. Sepp Hochreiter (inventor of LSTM, head of the JKU Institute for Machine Learning) and Claus Hofmann (research assistant, JKU Linz).'
+        answer: 'Prof. Sepp Hochreiter (inventor of LSTM, head of the JKU Institute for Machine Learning) and Claus Hofmann, MSc (research assistant, JKU Linz).'
       },
     ],
     content: `
@@ -40,7 +40,7 @@ export const blogPosts: BlogPost[] = [
 
 Out-of-distribution (OOD) detection is the ability of a neural network to say "I don't know" when it sees something it was never trained on. It's a critical safety property for any production AI system — from autonomous vehicles to medical imaging to industrial quality control. Without it, models silently produce confident wrong answers.
 
-My Master's thesis at Johannes Kepler University Linz (under Prof. Sepp Hochreiter, inventor of LSTM) achieved **99.03% AUROC on CIFAR-10** OOD detection — a gain of **+18.8 percentage points** over the baseline — by introducing a class-conditional separation loss into conditional diffusion models used as generative classifiers.
+My Master's thesis at Johannes Kepler University Linz (under Prof. Sepp Hochreiter, inventor of LSTM) achieved **99.03% ± 0.07% average AUROC on CIFAR-10** OOD detection — stabilizing performance and delivering a **+6.5 percentage-point gain** with far lower variance over the non-separated baseline ($92.52\% \pm 11.07\%$) — by introducing a class-conditional separation loss into conditional diffusion models used as generative classifiers.
 
 ## The Core Problem With Existing OOD Methods
 
@@ -64,11 +64,11 @@ Unlike discriminative classifiers, a generative classifier must model the actual
 
 ### The Baseline Problem
 
-The baseline conditional diffusion model (without my contribution) achieved **80.25% AUROC**. This is decent but not production-grade. The issue: the diffusion model has no explicit pressure to keep class-conditional distributions **separate**. The features learned for each class can overlap significantly in embedding space, making the score boundaries ambiguous.
+Without an explicit separation signal, the baseline conditional diffusion model ($\lambda = 0.0$) is competitive on average but highly seed-sensitive, reaching **92.52% ± 11.07% AUROC** (with individual seeds varying from a low 79.73% to 99.01%). The issue: the conditional diffusion model has no explicit pressure to keep class-conditional noise predictions **separate** across conditions. The predicted noises can overlap, causing degenerate scoring directions for out-of-distribution samples.
 
 ## My Key Contribution: Class-Conditional Separation Loss
 
-I introduced a **class-conditional separation loss** λ·L_sep that explicitly encourages the model's intermediate representations to cluster by class and push different classes apart, analogous to contrastive learning but applied to the generative process.
+I introduced a **class-conditional separation loss** $\lambda \cdot L_{\mathrm{sep}}$ that explicitly pushes apart the class-conditional noise predictions in feature space, indirectly widening the reconstruction-error gap between in-distribution and out-of-distribution conditioned predictions.
 
 The total training objective becomes:
 
@@ -76,37 +76,37 @@ The total training objective becomes:
 loss = L_diffusion + λ * L_separation
 
 # L_diffusion: standard DDPM noise prediction loss
-# L_separation: pushes class embeddings apart in feature space
+# L_separation: maximizes distance between class-conditional noise predictions
 # λ: separation loss weight (ablated over [0.0, 0.001, 0.01, 0.02, 0.05, 0.1])
 \`\`\`
 
 ### Ablation Results on CIFAR-10
 
-| λ (separation weight) | AUROC | FPR@95TPR |
-|----------------------|-------|-----------|
-| 0.0 (baseline) | 80.25% | — |
-| 0.001 | 97.32% | — |
-| **0.01** | 98.69% | — |
-| **0.02 (best)** | **99.11%** | — |
-| 0.05 | 98.51% | — |
-| 0.1 | 96.67% | — |
+| λ (separation weight) | Within-CIFAR AUROC | SVHN AUROC |
+|----------------------|--------------------|------------|
+| 0.0 (baseline) | 92.52% ± 11.07% | ( degenerate ) |
+| 0.001 | 97.32% | 92.00% |
+| 0.01 | 98.82% ± 0.06% | 90.50% |
+| **0.02 (best)** | **99.03% ± 0.07%** | 96.60% |
+| 0.05 | 98.51% | 97.30% |
+| 0.1 | 96.67% | 86.90% |
 
-The sweet spot is λ=0.02, achieving **99.11% AUROC** peak. The reported thesis result of **99.03% AUROC** is the average across 5 OOD test datasets (SVHN, LSUN, iSUN, Textures, Places365) against CIFAR-10 as in-distribution.
+The sweet spot is λ=0.02, achieving an outstanding **99.03% ± 0.07% average AUROC** across three independent seeds, which corresponds to a +6.5 percentage-point gain with far tighter variance. Individual seed-42 achieves 98.98% AUROC within-CIFAR (airplane-vs-rest) and 90.50%–96.97% zero-shot generalization across five external OOD datasets (CIFAR-100, Places365, FashionMNIST, Textures, SVHN).
 
-The gain is not marginal — going from 80% to 99% AUROC is the difference between "interesting research" and "production deployable."
+The gain is highly significant — moving from a highly volatile 92.5% to a stable, reproducible 99.0% average AUROC is the difference between an unstable heuristic and a production-ready safety layer.
 
-## Applying It to Industrial Quality Control (PROFACTOR GmbH)
+## Applying It to Industrial Quality Control (FTI_Zer0P Benchmark)
 
-After validating on CIFAR-10, I applied the same framework to real industrial data from PROFACTOR GmbH's Zer0P project (funded by the Government of Upper Austria). The task: detect defects in inkjet-printed building components using multi-head conditioning.
+After validating on CIFAR-10, I applied the same framework to industrial data in Track 2 of my thesis, evaluating the public **YOLO+CDM** defect classification pipeline on the public **FTI_Zer0P** inkjet quality dataset (from PROFACTOR / Zenodo) under rigorous 5-fold cross-validation.
 
-Industrial datasets are fundamentally different:
-- Much smaller scale (~1,327 images vs 60,000 for CIFAR-10)
-- 8 distinct feature types with wildly different defect rates
-- 5-fold cross-validation required (no test set leakage)
+Industrial datasets present unique challenges:
+- Localized textures rather than broad semantic class changes.
+- Small sample size (573 source groups / 6,408 feature crops vs 50,000 for CIFAR-10).
+- High variance across folds (strict cross-validation is non-negotiable).
 
-The industrial baseline AUROC was **86.73% ± 2.3%** (5-fold CV). Separation loss improved it to **87.3% ± 2.1%** — a small, statistically **non-significant** improvement. This is itself an important research finding: the separation loss effect is domain-dependent. CIFAR-10 (large, balanced, well-separated classes) benefits enormously. A small industrial dataset with noisy labels and few BAD samples per class barely moves.
+At $\lambda = 0.0$, the crop-based CDM baseline achieves a robust **0.8673 ± 0.0230 AUROC** under 5-fold stratified cross-validation. Crucially, non-zero separation loss weights (like $\lambda=0.01$ or $0.02$) did not significantly improve performance (p-values $>0.05$ after Holm correction).
 
-This cross-domain analysis became a key thesis contribution — not just "we improved X" but "we understand **when and why** the method works."
+This represents a major, mathematically rigorous finding: the separation loss requires class-conditional noise gaps to map directly to reconstruction error gaps, which happens in high-dimensional semantic spaces (like CIFAR-10) but does not automatically transfer to localized, fine-grained manufacturing textures. Highlighting this boundary condition demonstrates research maturity over typical AI hype.
 
 ## Implementation Stack
 
@@ -127,7 +127,7 @@ If you're building a production ML system today, OOD detection is non-negotiable
 
 1. **Silent failure is the worst kind**: A confident wrong answer is far more dangerous than "I don't know"
 2. **Generative classifiers are interpretable**: You can visualize what the model thinks "normal" looks like per class
-3. **The separation loss is cheap**: It adds ~5% training overhead but 18.8pp AUROC improvement
+3. **The separation loss is cheap**: It adds ~5% training overhead but delivers a +6.5pp average AUROC improvement while completely eliminating seed volatility
 
 The code is open-sourced at [github.com/ahmed-3m/DiffusionOOD](https://github.com/ahmed-3m/DiffusionOOD). Full thesis PDF available [here](https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf).
 
@@ -142,7 +142,7 @@ Reach me at ahmed.mo.0595@gmail.com or [LinkedIn](https://www.linkedin.com/in/ah
     slug: 'diffusion-models-anomaly-detection',
     title: 'Diffusion Models for Industrial Defect Detection: 98.4% Accuracy at PROFACTOR GmbH',
     date: '2024-11-20',
-    excerpt: 'How I combined YOLOv8 feature extraction with conditional diffusion models to achieve 98.4% defect detection accuracy on inkjet-printed building components in a real-time production environment — part of the Zer0P project funded by the Government of Upper Austria.',
+    excerpt: 'How I evaluated the public YOLO+CDM defect classification pipeline on the public FTI_Zer0P inkjet dataset, achieving a baseline of 0.8673 ± 0.0230 AUROC under strict 5-fold cross-validation — part of the Zer0P project funded by the Government of Upper Austria.',
     tags: ['Diffusion Models', 'Anomaly Detection', 'YOLOv8', 'Industrial AI', 'Computer Vision', 'Quality Control'],
     readingTime: '11 min read',
     ogImage: '/og-diffusion-models-anomaly-detection.png',
@@ -150,7 +150,7 @@ Reach me at ahmed.mo.0595@gmail.com or [LinkedIn](https://www.linkedin.com/in/ah
     faq: [
       {
         question: 'What accuracy did the industrial defect detection system achieve at PROFACTOR?',
-        answer: '98.4% binary classification accuracy (GOOD/BAD) in the production deployment. The AUROC was 86.7% baseline, improving to 87.3% with separation loss (not statistically significant on the small industrial dataset).'
+        answer: '0.8673 ± 0.0230 AUROC under strict 5-fold cross-validation on the public FTI_Zer0P benchmark (λ = 0.0). The 98.4% defect classification accuracy was achieved in a production deployment, while the rigorous cross-validation benchmark characterizes the true, robust generalization.'
       },
       {
         question: 'What is the Zer0P project at PROFACTOR GmbH?',
@@ -234,7 +234,7 @@ class MultiHeadConditionalDiffusion(nn.Module):
 | edge3 | 0.744 | 0.875 | +13.1% |
 | edge4 | 0.762 | 0.736 | −2.6% |
 
-Overall AUROC: **86.7% baseline → 87.3% with separation loss** (not statistically significant at p<0.05 after Holm correction — small dataset, high variance). The **98.4% accuracy** figure refers to the binary classification accuracy (GOOD/BAD) in the production deployment.
+Overall AUROC: **0.8673 ± 0.0230 baseline (λ = 0.0)** under strict 5-fold cross-validation on the public FTI_Zer0P dataset. Separation loss weights (λ ∈ {0.01, 0.02, 0.05}) produced AUROC scores within the standard deviation (e.g., 0.8670 ± 0.0256 at λ = 0.05), which proved statistically non-significant after Holm correction (adjusted p > 0.05). The **98.4% accuracy** figure refers to the threshold-dependent binary defect classification accuracy in the edge deployment.
 
 ## Production Deployment
 
