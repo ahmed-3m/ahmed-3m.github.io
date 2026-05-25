@@ -14,6 +14,7 @@ const copy = {
     ar: 'منصة SaaS لمراقبة جودة البناء بالذكاء الاصطناعي. تحلل صور المواقع وتنشئ تقارير متوافقة مع ONORM خلال أقل من دقيقة مع سلسلة أدلة SHA-256 وتشفير AES-256.',
   },
   reportMetric: { en: 'min per report', de: 'Min. pro Bericht', fr: 'min par rapport', es: 'min por informe', ar: 'دقيقة لكل تقرير' },
+  caseStudy: { en: 'Case study', de: 'Case Study', fr: 'Etude de cas', es: 'Caso de estudio', ar: 'دراسة حالة' },
   thesis: { en: "Master's Thesis - JKU Linz", de: 'Masterarbeit - JKU Linz', fr: 'Memoire de master - JKU Linz', es: 'Tesis de master - JKU Linz', ar: 'رسالة ماجستير - JKU Linz' },
   oodTitle: { en: 'OOD Detection Framework', de: 'OOD-Erkennungsframework', fr: 'Framework de detection OOD', es: 'Framework de deteccion OOD', ar: 'إطار كشف الخارج عن التوزيع' },
   oodDesc: {
@@ -70,6 +71,10 @@ export default function Projects() {
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-fg3)', marginTop: 8 }}>
                 ONORM · DSGVO compliant
               </div>
+              <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+                <span className="cd-proj-link" style={{ fontSize: 12 }}>faultrix.com &rarr;</span>
+                <span className="cd-proj-link" style={{ fontSize: 12, opacity: 0.78 }}>{t(copy.caseStudy)}: /case-studies/faultrix</span>
+              </div>
             </div>
           </a>
 
@@ -80,7 +85,7 @@ export default function Projects() {
             <div className="cd-pc-metric">99.03%<span> +/- 0.07% Avg AUROC</span></div>
             <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
               <span className="cd-proj-link" style={{ fontSize: 12 }}>DiffusionOOD &rarr;</span>
-              <span className="cd-proj-link" style={{ fontSize: 12, opacity: 0.65 }}>+ InkjetOOD · HF Weights</span>
+              <span className="cd-proj-link" style={{ fontSize: 12, opacity: 0.65 }}>{t(copy.caseStudy)}: /case-studies/diffusion-ood</span>
             </div>
           </a>
 
@@ -91,7 +96,7 @@ export default function Projects() {
             <div className="cd-pc-metric">0.8673<span> AUROC (5-Fold CV)</span></div>
             <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
               <span className="cd-proj-link" style={{ fontSize: 12 }}>InkjetOOD &rarr;</span>
-              <span className="cd-proj-link" style={{ fontSize: 12, opacity: 0.65 }}>+ HF Weights · Report PDF</span>
+              <span className="cd-proj-link" style={{ fontSize: 12, opacity: 0.65 }}>{t(copy.caseStudy)}: /case-studies/inkjet-ood</span>
             </div>
           </a>
 

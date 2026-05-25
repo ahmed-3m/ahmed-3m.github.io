@@ -1,68 +1,65 @@
-'use client';
+'use client'
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
+import {
+  getDirection,
+  isLanguage,
+  LANGUAGE_COOKIE,
+  LANGUAGE_STORAGE_KEY,
+  languageOptions,
+  translateValue,
+  type Language,
+  type TranslationMap,
+} from '@/lib/i18n-config'
 
-export type Language = 'en' | 'de' | 'fr' | 'es' | 'ar';
-export type TranslationMap = Partial<Record<Language, string>> & { en: string };
-
-export const languageOptions: Array<{ code: Language; label: string; short: string }> = [
-  { code: 'en', label: 'English', short: 'EN' },
-  { code: 'de', label: 'Deutsch', short: 'DE' },
-  { code: 'fr', label: 'Français', short: 'FR' },
-  { code: 'es', label: 'Español', short: 'ES' },
-  { code: 'ar', label: 'العربية', short: 'AR' },
-];
-
-const isLanguage = (value: string | null): value is Language =>
-  languageOptions.some(({ code }) => code === value);
+export type { Language, TranslationMap } from '@/lib/i18n-config'
+export { languageOptions } from '@/lib/i18n-config'
 
 interface I18nContextType {
-  lang: Language;
-  setLanguage: (lang: Language) => void;
-  toggleLang: () => void;
-  t: (copy: TranslationMap | string, de?: string) => string;
+  lang: Language
+  setLanguage: (lang: Language) => void
+  toggleLang: () => void
+  t: (copy: TranslationMap | string, de?: string) => string
 }
 
-const I18nContext = createContext<I18nContextType | undefined>(undefined);
+const I18nContext = createContext<I18nContextType | undefined>(undefined)
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Language>('en');
+  const [lang, setLang] = useState<Language>('en')
 
   useEffect(() => {
-    const saved = localStorage.getItem('language');
-    if (isLanguage(saved)) setLang(saved);
-  }, []);
+    const saved = localStorage.getItem(LANGUAGE_STORAGE_KEY)
+    if (isLanguage(saved)) setLang(saved)
+  }, [])
 
   useEffect(() => {
-    document.documentElement.lang = lang;
-    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-  }, [lang]);
+    document.documentElement.lang = lang
+    document.documentElement.dir = getDirection(lang)
+    document.cookie = `${LANGUAGE_COOKIE}=${lang}; path=/; max-age=31536000; samesite=lax`
+  }, [lang])
 
   const setLanguage = (nextLang: Language) => {
-    setLang(nextLang);
-    localStorage.setItem('language', nextLang);
-  };
+    setLang(nextLang)
+    localStorage.setItem(LANGUAGE_STORAGE_KEY, nextLang)
+  }
 
   const toggleLang = () => {
-    const index = languageOptions.findIndex(({ code }) => code === lang);
-    const nextLang = languageOptions[(index + 1) % languageOptions.length].code;
-    setLanguage(nextLang);
-  };
+    const index = languageOptions.findIndex(({ code }) => code === lang)
+    const nextLang = languageOptions[(index + 1) % languageOptions.length].code
+    setLanguage(nextLang)
+  }
 
-  const t = (copy: TranslationMap | string, de?: string) => {
-    if (typeof copy === 'string') return lang === 'de' && de ? de : copy;
-    return copy[lang] ?? copy.en;
-  };
+  const t = (copy: TranslationMap | string, de?: string) => translateValue(lang, copy, de)
 
   return (
     <I18nContext.Provider value={{ lang, setLanguage, toggleLang, t }}>
       {children}
     </I18nContext.Provider>
-  );
+  )
 }
 
 export function useI18n() {
-  const context = useContext(I18nContext);
-  if (!context) throw new Error('useI18n must be used within I18nProvider');
-  return context;
+  const context = useContext(I18nContext)
+  if (!context) throw new Error('useI18n must be used within I18nProvider')
+  return context
 }

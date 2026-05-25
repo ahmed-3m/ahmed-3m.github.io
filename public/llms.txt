@@ -60,3 +60,12 @@
 - HuggingFace: https://huggingface.co/ahmed-3m
 - Weights & Biases: https://wandb.ai/ahmed-mu-0593
 - X / Twitter: https://x.com/Ahmed_mo_93
+
+## Selected Evidence
+
+- Thesis PDF: https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf
+- Industrial report PDF: https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf
+- Research poster PDF: https://ahmed-3m.github.io/research-poster.pdf
+- DiffusionOOD case study: https://ahmed-3m.github.io/case-studies/diffusion-ood/
+- InkjetOOD case study: https://ahmed-3m.github.io/case-studies/inkjet-ood/
+- Faultrix case study: https://ahmed-3m.github.io/case-studies/faultrix/
