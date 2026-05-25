@@ -1,6 +1,7 @@
 'use client'
 
 import RequestCvButton from '@/components/RequestCvButton'
+import ScheduleMeetingButton from '@/components/ScheduleMeetingButton'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { useReveal } from '@/lib/useReveal'
 
@@ -67,6 +68,7 @@ export default function Hero() {
             <div className="cd-hero-ctas">
               <a href="#projects" className="cd-btn-primary">{t(copy.viewWork)} &rarr;</a>
               <a href="#contact" className="cd-btn-ghost">{t(copy.contact)}</a>
+              <ScheduleMeetingButton />
               <RequestCvButton />
             </div>
             <div className="cd-hero-stats">

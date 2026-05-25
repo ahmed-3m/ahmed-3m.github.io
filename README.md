@@ -77,6 +77,8 @@ npm run dev
 npm run build
 ```
 
+The Calendly booking button points to `https://calendly.com/ahmed-3m` by default. To override it, set `NEXT_PUBLIC_CALENDLY_URL` before starting the app.
+
 ## Contact
 
 - Portfolio: [ahmed-3m.github.io](https://ahmed-3m.github.io)

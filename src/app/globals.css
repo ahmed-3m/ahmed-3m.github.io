@@ -347,6 +347,23 @@ body::before {
   font-weight: 500; text-decoration: none; transition: border-color 150ms;
 }
 .cd-btn-ghost:hover { border-color: var(--cd-fg2); }
+.cd-btn-calendly {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 22px;
+  background: linear-gradient(135deg, var(--cd-accent-dim), rgba(0, 212, 255, 0.04));
+  color: var(--cd-fg1);
+  border: 1px solid var(--cd-b-accent);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color 150ms, transform 150ms, box-shadow 150ms;
+}
+.cd-btn-calendly:hover {
+  border-color: var(--cd-accent);
+  box-shadow: 0 0 24px var(--cd-accent-dim);
+  transform: translateY(-1px);
+}
 
 .cd-hero-stats {
   display: flex; border: 1px solid var(--cd-b0); border-radius: 10px;
