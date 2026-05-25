@@ -42,6 +42,7 @@ next-env.d.ts
 
 # claude code - local settings may contain sensitive credentials
 .claude/settings.local.json
+.claude/worktrees/
 
 # build scripts
 /scripts/
