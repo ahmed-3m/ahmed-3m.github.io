@@ -1,6 +1,7 @@
 'use client'
 
 import RequestCvButton from '@/components/RequestCvButton'
+import ScheduleMeetingButton from '@/components/ScheduleMeetingButton'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { useReveal } from '@/lib/useReveal'
 
@@ -49,6 +50,7 @@ export default function Contact() {
               {social.label} &rarr;
             </a>
           ))}
+          <ScheduleMeetingButton variant="link" />
           <RequestCvButton variant="link" />
         </div>
 
