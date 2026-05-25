@@ -425,15 +425,63 @@ async function requestChatCompletion(provider: ProviderConfig): Promise<string> 
 }
 
 function renderInline(text: string, keyPrefix: string): ReactNode[] {
+  const renderLinkedText = (value: string, segmentKey: string): ReactNode[] => {
+    const linkPattern = /((?:https?:\/\/|www\.)[^\s]+|(?:[a-z0-9-]+\.)+[a-z]{2,}(?:\/[^\s]*)?|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/gi
+    const nodes: ReactNode[] = []
+    let lastIndex = 0
+    let matchIndex = 0
+
+    for (const match of value.matchAll(linkPattern)) {
+      const raw = match[0]
+      const start = match.index ?? 0
+      const end = start + raw.length
+
+      if (start > lastIndex) {
+        nodes.push(value.slice(lastIndex, start))
+      }
+
+      const isEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(raw)
+      const href = isEmail ? `mailto:${raw}` : raw.startsWith('http') ? raw : `https://${raw}`
+      const display = raw.replace(/[),.;!?]+$/, '')
+      const trailing = raw.slice(display.length)
+
+      nodes.push(
+        <a
+          key={`${segmentKey}-link-${matchIndex++}`}
+          href={isEmail ? `mailto:${display}` : display.startsWith('http') ? display : `https://${display}`}
+          target={isEmail ? undefined : '_blank'}
+          rel={isEmail ? undefined : 'noopener noreferrer'}
+          style={{
+            color: 'inherit',
+            textDecoration: 'underline',
+            textUnderlineOffset: '0.18em',
+            textDecorationColor: 'color-mix(in srgb, currentColor 55%, transparent)',
+          }}
+        >
+          {display}
+        </a>
+      )
+
+      if (trailing) nodes.push(trailing)
+      lastIndex = end
+    }
+
+    if (lastIndex < value.length) {
+      nodes.push(value.slice(lastIndex))
+    }
+
+    return nodes.length > 0 ? nodes : [value]
+  }
+
   const parts = text.split(/(\*\*[^*]+\*\*|\*[^*]+\*)/g)
   return parts.map((part, index) => {
     if (part.startsWith('**') && part.endsWith('**') && part.length > 4) {
-      return <strong key={`${keyPrefix}-b${index}`}>{part.slice(2, -2)}</strong>
+      return <strong key={`${keyPrefix}-b${index}`}>{renderLinkedText(part.slice(2, -2), `${keyPrefix}-b${index}`)}</strong>
     }
     if (part.startsWith('*') && part.endsWith('*') && part.length > 2) {
-      return <em key={`${keyPrefix}-i${index}`}>{part.slice(1, -1)}</em>
+      return <em key={`${keyPrefix}-i${index}`}>{renderLinkedText(part.slice(1, -1), `${keyPrefix}-i${index}`)}</em>
     }
-    return part
+    return <span key={`${keyPrefix}-t${index}`}>{renderLinkedText(part, `${keyPrefix}-t${index}`)}</span>
   })
 }
 
