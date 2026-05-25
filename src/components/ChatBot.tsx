@@ -451,11 +451,16 @@ function renderInline(text: string, keyPrefix: string): ReactNode[] {
           href={isEmail ? `mailto:${display}` : display.startsWith('http') ? display : `https://${display}`}
           target={isEmail ? undefined : '_blank'}
           rel={isEmail ? undefined : 'noopener noreferrer'}
+          onClick={(event) => event.stopPropagation()}
           style={{
-            color: 'inherit',
+            color: 'var(--cd-accent)',
+            pointerEvents: 'auto',
+            cursor: 'pointer',
             textDecoration: 'underline',
             textUnderlineOffset: '0.18em',
-            textDecorationColor: 'color-mix(in srgb, currentColor 55%, transparent)',
+            textDecorationThickness: '1.5px',
+            textDecorationColor: 'color-mix(in srgb, var(--cd-accent) 72%, transparent)',
+            wordBreak: 'break-word',
           }}
         >
           {display}
@@ -862,7 +867,7 @@ export default function ChatBot() {
                         className={`max-w-[88%] rounded-2xl border px-3 py-2.5 text-sm leading-6 shadow-[0_12px_32px_rgba(0,0,0,0.14)]${
                           message.role === 'user' ? ' whitespace-pre-wrap' : ''
                         }`}
-                        style={bubbleStyles[message.role]}
+                        style={{ ...bubbleStyles[message.role], pointerEvents: 'auto' }}
                       >
                         {message.role === 'assistant' ? renderMarkdown(message.content) : message.content}
                       </div>

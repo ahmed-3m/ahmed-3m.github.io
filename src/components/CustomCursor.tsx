@@ -90,8 +90,8 @@ export default function CustomCursor() {
     }
 
     const tick = () => {
-      rx += (mx - rx) * 0.32
-      ry += (my - ry) * 0.32
+      rx += (mx - rx) * 0.52
+      ry += (my - ry) * 0.52
       ring.style.transform = `translate3d(${rx}px, ${ry}px, 0)`
       raf = requestAnimationFrame(tick)
     }
