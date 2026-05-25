@@ -7,7 +7,7 @@
 [![Hugging Face](https://img.shields.io/badge/Hugging_Face-ahmed--3m-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black)](https://huggingface.co/ahmed-3m)
 [![Faultrix](https://img.shields.io/badge/Faultrix-Live_AI_SaaS-00ff88?style=for-the-badge)](https://faultrix.com)
 
-This repository powers my portfolio: a compact record of the systems, research, and products I am building around diffusion models, out-of-distribution detection, industrial quality control, and AI-assisted construction workflows.
+This repository powers my portfolio: a compact but evidence-heavy record of the systems, research, and products I am building around diffusion models, out-of-distribution detection, industrial quality control, and AI-assisted construction workflows.
 
 ## Signal
 
@@ -41,6 +41,16 @@ At `lambda = 0.02`, the three-seed mean improved from a seed-sensitive `92.52% +
 | Faultrix | Founder and full-stack builder | [Live SaaS](https://faultrix.com) |
 | Portfolio | Research, writing, projects, and contact surface | [Site](https://ahmed-3m.github.io) / [Blog](https://ahmed-3m.github.io/blog) |
 
+## Proof Layer
+
+- Thesis PDF: [Conditional Diffusion Models as Generative Classifiers for OOD Detection](https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf)
+- Industrial report: [Diffusion-Based Multi-class Defect Detection](https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf)
+- Research poster: [Poster PDF](https://ahmed-3m.github.io/research-poster.pdf)
+- Case studies:
+  - [DiffusionOOD](https://ahmed-3m.github.io/case-studies/diffusion-ood)
+  - [InkjetOOD](https://ahmed-3m.github.io/case-studies/inkjet-ood)
+  - [Faultrix](https://ahmed-3m.github.io/case-studies/faultrix)
+
 ## Engineering Palette
 
 ```text
@@ -59,7 +69,7 @@ Deployment habits   GitHub, Linux, CUDA, REST APIs, reproducible public artefact
 
 ## This Site
 
-The portfolio is built with Next.js, React, TypeScript, and a custom dark research-console visual system. It is intentionally small: fast to scan, easy to verify, and focused on work that can be inspected through public artefacts.
+The portfolio is built with Next.js, React, TypeScript, and a custom research-console visual system with dark and cream themes, multilingual UI, localized blog content, and a theme-aware portfolio chatbot. It is intentionally compact: fast to scan, easy to verify, and anchored to public artifacts.
 
 ```bash
 npm ci

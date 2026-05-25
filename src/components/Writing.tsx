@@ -19,8 +19,8 @@ const copy = {
 
 export default function Writing() {
   useReveal()
-  const { t } = useI18n()
-  const posts = getAllBlogPosts().slice(0, 3)
+  const { lang, t } = useI18n()
+  const posts = getAllBlogPosts(lang).slice(0, 3)
 
   return (
     <section id="writing" className="cd-section">

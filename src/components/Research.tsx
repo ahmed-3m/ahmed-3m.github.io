@@ -17,6 +17,38 @@ const industrialCharts = [
 const copy = {
   eyebrow: { en: '// 04 - Research', de: '// 04 - Forschung', fr: '// 04 - Recherche', es: '// 04 - Investigacion', ar: '// 04 - الأبحاث' },
   title: { en: 'Reports & Thesis', de: 'Berichte & Thesis', fr: 'Rapports & memoire', es: 'Informes y tesis', ar: 'التقارير والرسالة' },
+  summaryProblemLabel: { en: 'Problem', de: 'Problem', fr: 'Probleme', es: 'Problema', ar: 'المشكلة' },
+  summaryProblemText: {
+    en: 'How can a model recognize when an image does not belong, instead of acting overconfident?',
+    de: 'Wie kann ein Modell erkennen, dass ein Bild nicht zur Verteilung gehoert, statt uebertrieben sicher zu reagieren?',
+    fr: 'Comment un modele peut-il reconnaitre qu une image ne lui appartient pas au lieu de repondre avec trop de confiance ?',
+    es: 'Como puede un modelo reconocer que una imagen no pertenece a su distribucion en vez de responder con exceso de confianza?',
+    ar: 'كيف يمكن للنموذج أن يدرك أن الصورة لا تنتمي إلى بياناته بدلاً من أن يجيب بثقة زائدة؟',
+  },
+  summaryContributionLabel: { en: 'Contribution', de: 'Beitrag', fr: 'Contribution', es: 'Contribucion', ar: 'المساهمة' },
+  summaryContributionText: {
+    en: 'A separation loss that forces the model s competing class explanations to move apart.',
+    de: 'Eine Separation Loss, die konkurrierende Klassenerklaerungen des Modells auseinanderdrueckt.',
+    fr: 'Une separation loss qui force les explications de classe concurrentes a s eloigner.',
+    es: 'Una separation loss que obliga a separar las explicaciones de clase rivales del modelo.',
+    ar: 'خسارة فصل تدفع تفسيرات الفئات المتنافسة داخل النموذج إلى الابتعاد عن بعضها.',
+  },
+  summaryResultLabel: { en: 'Result', de: 'Ergebnis', fr: 'Resultat', es: 'Resultado', ar: 'النتيجة' },
+  summaryResultText: {
+    en: '99.03% +/- 0.07% AUROC on CIFAR-10, with a +6.5pp gain over the non-separated baseline.',
+    de: '99.03% +/- 0.07% AUROC auf CIFAR-10 mit +6.5 Prozentpunkten gegenueber der Basis ohne Separation.',
+    fr: '99.03% +/- 0.07% AUROC sur CIFAR-10 avec un gain de +6.5 points face a la baseline sans separation.',
+    es: '99.03% +/- 0.07% AUROC en CIFAR-10 con una mejora de +6.5 puntos sobre la base sin separacion.',
+    ar: '99.03% +/- 0.07% AUROC على CIFAR-10 مع تحسن قدره +6.5 نقطة على الخط الأساسي بدون فصل.',
+  },
+  summaryImpactLabel: { en: 'Why it matters', de: 'Warum es zaehlt', fr: 'Pourquoi cela compte', es: 'Por que importa', ar: 'لماذا يهم ذلك' },
+  summaryImpactText: {
+    en: 'The score became not only higher, but dramatically more stable across seeds and easier to trust.',
+    de: 'Der Score wurde nicht nur hoeher, sondern auch deutlich stabiler ueber verschiedene Seeds hinweg.',
+    fr: 'Le score est devenu non seulement plus eleve, mais aussi beaucoup plus stable entre les seeds.',
+    es: 'La puntuacion no solo subio, sino que tambien se volvio mucho mas estable entre semillas.',
+    ar: 'لم ترتفع النتيجة فقط، بل أصبحت أكثر ثباتاً بكثير عبر البذور وأسهل في الثقة.',
+  },
   track1: { en: "Master's Thesis (Track 1) - JKU Linz - 2026", de: 'Masterarbeit (Track 1) - JKU Linz - 2026', fr: 'Memoire de master (Track 1) - JKU Linz - 2026', es: 'Tesis de master (Track 1) - JKU Linz - 2026', ar: 'رسالة ماجستير (المسار 1) - JKU Linz - 2026' },
   thesisTitle: { en: 'Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection', de: 'Konditionale Diffusionsmodelle als generative Klassifikatoren fur OOD-Erkennung', fr: 'Modeles de diffusion conditionnels comme classificateurs generatifs pour detection OOD', es: 'Modelos de difusion condicional como clasificadores generativos para deteccion OOD', ar: 'نماذج الانتشار الشرطية كمصنفات توليدية لكشف الخارج عن التوزيع' },
   thesisDesc: { en: 'A diffusion model compares how well different class explanations reconstruct an image. The new separation loss pushes those explanations apart, making the anomaly score clearer and more stable.', de: 'Ein Diffusionsmodell vergleicht, wie gut verschiedene Klassenerklarungen ein Bild rekonstruieren. Die neue Separation Loss trennt diese Erklarungen und macht den Anomalie-Score klarer und stabiler.', fr: 'Un modele de diffusion compare la reconstruction selon differentes explications de classe. La separation loss les eloigne et rend le score anomalie plus clair et stable.', es: 'Un modelo de difusion compara reconstrucciones bajo distintas explicaciones de clase. La separation loss las separa y hace el score de anomalia mas claro y estable.', ar: 'يقارن نموذج الانتشار مدى قدرة تفسيرات الفئات المختلفة على إعادة بناء الصورة. خسارة الفصل تبعد هذه التفسيرات وتجعل درجة الشذوذ أوضح وأكثر ثباتاً.' },
@@ -66,6 +98,36 @@ export default function Research() {
       <div className="cd-container">
         <div className="cd-section-eyebrow">{t(copy.eyebrow)}</div>
         <h2 className="cd-section-title" style={{ marginBottom: 32 }}>{t(copy.title)}</h2>
+
+        <div
+          className="reveal"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+            gap: 14,
+            marginBottom: 24,
+          }}
+        >
+          {[
+            [t(copy.summaryProblemLabel), t(copy.summaryProblemText)],
+            [t(copy.summaryContributionLabel), t(copy.summaryContributionText)],
+            [t(copy.summaryResultLabel), t(copy.summaryResultText)],
+            [t(copy.summaryImpactLabel), t(copy.summaryImpactText)],
+          ].map(([label, text]) => (
+            <div
+              key={label}
+              style={{
+                border: '1px solid var(--cd-b0)',
+                borderRadius: 10,
+                padding: 18,
+                background: 'var(--cd-surf)',
+              }}
+            >
+              <div className="cd-band-eyebrow" style={{ marginBottom: 10 }}>{label}</div>
+              <div style={{ color: 'var(--cd-fg2)', fontSize: 14, lineHeight: 1.65 }}>{text}</div>
+            </div>
+          ))}
+        </div>
 
         <div className="cd-research-featured reveal" itemScope itemType="https://schema.org/Thesis">
           <div className="cd-rf-header">

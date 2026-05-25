@@ -158,3 +158,14 @@ What transfers from research: systematic experimentation, evaluation rigor, unde
 Key lesson: Ship the simplest version that delivers core value first. The first version of Faultrix had a beautiful AI pipeline but terrible UX requiring 8 upload steps. Users churned before reaching the AI.
 
 Try it at faultrix.com. Feedback welcome: ahmed.mo.0595@gmail.com.
+
+---
+
+## Selected Evidence and Case Studies
+
+- Thesis PDF: https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf
+- Industrial report PDF: https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf
+- Research poster PDF: https://ahmed-3m.github.io/research-poster.pdf
+- DiffusionOOD case study: https://ahmed-3m.github.io/case-studies/diffusion-ood/
+- InkjetOOD case study: https://ahmed-3m.github.io/case-studies/inkjet-ood/
+- Faultrix case study: https://ahmed-3m.github.io/case-studies/faultrix/

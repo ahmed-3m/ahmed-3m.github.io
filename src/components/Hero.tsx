@@ -1,4 +1,6 @@
 'use client'
+
+import RequestCvButton from '@/components/RequestCvButton'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { useReveal } from '@/lib/useReveal'
 
@@ -26,7 +28,7 @@ const copy = {
   },
   viewWork: { en: 'View work', de: 'Arbeiten ansehen', fr: 'Voir les projets', es: 'Ver trabajos', ar: 'عرض الأعمال' },
   contact: { en: 'Get in touch', de: 'Kontakt', fr: 'Contact', es: 'Contacto', ar: 'تواصل' },
-  years: { en: 'Years in AI/ML', de: 'Jahre in AI/ML', fr: 'Annees en IA/ML', es: 'Años en IA/ML', ar: 'سنوات في الذكاء الاصطناعي' },
+  years: { en: 'Years in AI/ML', de: 'Jahre in AI/ML', fr: 'Annees en IA/ML', es: 'Anos en IA/ML', ar: 'سنوات في الذكاء الاصطناعي' },
   auroc: { en: 'OOD Detection AUROC', de: 'OOD-Erkennung AUROC', fr: 'Detection OOD AUROC', es: 'Deteccion OOD AUROC', ar: 'مقياس AUROC لكشف الخارج عن التوزيع' },
   gain: { en: 'Gain over baseline (stable)', de: 'Gewinn gegenuber Baseline (stabil)', fr: 'Gain face au baseline (stable)', es: 'Mejora sobre la base (estable)', ar: 'تحسن على خط الأساس (مستقر)' },
   report: { en: 'Report generation', de: 'Berichtserstellung', fr: 'Generation de rapports', es: 'Generacion de informes', ar: 'إنشاء التقارير' },
@@ -50,7 +52,9 @@ export default function Hero() {
             </div>
             <div className="cd-hero-eyebrow">{t(copy.based)}</div>
             <h1 className="cd-hero-name">
-              Ahmed<br />Mohammed
+              Ahmed
+              <br />
+              Mohammed
             </h1>
             <div className="cd-hero-title">
               <span>Computer Vision</span>
@@ -63,6 +67,7 @@ export default function Hero() {
             <div className="cd-hero-ctas">
               <a href="#projects" className="cd-btn-primary">{t(copy.viewWork)} &rarr;</a>
               <a href="#contact" className="cd-btn-ghost">{t(copy.contact)}</a>
+              <RequestCvButton />
             </div>
             <div className="cd-hero-stats">
               <div className="cd-stat">
@@ -100,7 +105,7 @@ export default function Hero() {
             </div>
 
             <div style={{ marginTop: 20, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-              {['PyTorch', 'Diffusion Models', 'Computer Vision', 'OOD Detection', 'CUDA', 'Python'].map(tag => (
+              {['PyTorch', 'Diffusion Models', 'Computer Vision', 'OOD Detection', 'CUDA', 'Python'].map((tag) => (
                 <span key={tag} className="cd-chip">{tag}</span>
               ))}
             </div>

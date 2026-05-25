@@ -1,4 +1,6 @@
 'use client'
+
+import RequestCvButton from '@/components/RequestCvButton'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { useReveal } from '@/lib/useReveal'
 
@@ -14,13 +16,13 @@ const copy = {
   eyebrow: { en: '// 06 - Contact', de: '// 06 - Kontakt', fr: '// 06 - Contact', es: '// 06 - Contacto', ar: '// 06 - التواصل' },
   titleA: { en: "Let's build", de: 'Lass uns', fr: 'Construisons', es: 'Construyamos', ar: 'لنبنِ' },
   titleB: { en: 'something', de: 'etwas', fr: 'quelque chose', es: 'algo', ar: 'شيئاً' },
-  titleC: { en: 'extraordinary', de: 'Außergewohnliches bauen', fr: 'd extraordinaire', es: 'extraordinario', ar: 'استثنائياً' },
+  titleC: { en: 'extraordinary', de: 'Aussergewohnliches bauen', fr: 'd extraordinaire', es: 'extraordinario', ar: 'استثنائياً' },
   sub: {
     en: 'Open to AI/ML roles, research collaborations, and product partnerships.',
     de: 'Offen fur AI/ML-Rollen, Forschungskooperationen und Produktpartnerschaften.',
     fr: 'Ouvert aux roles IA/ML, collaborations de recherche et partenariats produit.',
     es: 'Abierto a roles de IA/ML, colaboraciones de investigacion y alianzas de producto.',
-    ar: 'متاح لأدوار الذكاء الاصطناعي، تعاونات البحث، وشراكات المنتجات.',
+    ar: 'متاح لأدوار الذكاء الاصطناعي، وتعاونات البحث، وشراكات المنتجات.',
   },
 } satisfies Record<string, TranslationMap>
 
@@ -42,11 +44,12 @@ export default function Contact() {
         <p className="cd-contact-sub reveal">{t(copy.sub)}</p>
 
         <div className="cd-contact-links reveal">
-          {socials.map(s => (
-            <a key={s.href} href={s.href} target="_blank" rel="noopener noreferrer" className="cd-contact-link">
-              {s.label} &rarr;
+          {socials.map((social) => (
+            <a key={social.href} href={social.href} target="_blank" rel="noopener noreferrer" className="cd-contact-link">
+              {social.label} &rarr;
             </a>
           ))}
+          <RequestCvButton variant="link" />
         </div>
 
         <a href="mailto:ahmed.mo.0595@gmail.com" className="cd-contact-email reveal">

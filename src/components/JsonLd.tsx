@@ -509,6 +509,13 @@ export function WebPageSchema() {
       '@type': 'ImageObject',
       url: 'https://ahmed-3m.github.io/og-image.png',
     },
+    significantLink: [
+      'https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf',
+      'https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf',
+      'https://ahmed-3m.github.io/case-studies/diffusion-ood/',
+      'https://ahmed-3m.github.io/case-studies/inkjet-ood/',
+      'https://ahmed-3m.github.io/case-studies/faultrix/',
+    ],
   };
 
   return (
