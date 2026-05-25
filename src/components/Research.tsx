@@ -14,6 +14,12 @@ const industrialCharts = [
   { src: '/fig_inkjet_lambda.png', alt: 'Per-Feature AUROC Sweep', caption: 'Per-feature AUROC across separation weights' },
 ]
 
+const formulaVisuals = [
+  { src: '/research/separation-denoise-clean.png', alt: 'Noisy image becoming clean through denoising', caption: 'Step 1: reconstruct images under each class condition' },
+  { src: '/research/separation-apart-clean.png', alt: 'Two model explanations being pushed apart', caption: 'Step 2: push the conditional explanations apart' },
+  { src: '/research/separation-gap-clean.png', alt: 'Difference between reconstruction errors becoming an OOD signal', caption: 'Step 3: score the reconstruction gap as the OOD signal' },
+]
+
 const copy = {
   eyebrow: { en: '// 04 - Research', de: '// 04 - Forschung', fr: '// 04 - Recherche', es: '// 04 - Investigacion', ar: '// 04 - الأبحاث' },
   title: { en: 'Reports & Thesis', de: 'Berichte & Thesis', fr: 'Rapports & memoire', es: 'Informes y tesis', ar: 'التقارير والرسالة' },
@@ -84,7 +90,7 @@ const publications = [
 export default function Research() {
   useReveal()
   const { t } = useI18n()
-  const [lightbox, setLightbox] = useState<{ type: 'cifar' | 'industrial', index: number } | null>(null)
+  const [lightbox, setLightbox] = useState<{ type: 'cifar' | 'industrial' | 'formula', index: number } | null>(null)
 
   useEffect(() => {
     if (lightbox === null) return
@@ -115,13 +121,8 @@ export default function Research() {
             [t(copy.summaryImpactLabel), t(copy.summaryImpactText)],
           ].map(([label, text]) => (
             <div
+              className="cd-summary-card glass-surface glass-subtle"
               key={label}
-              style={{
-                border: '1px solid var(--cd-b0)',
-                borderRadius: 10,
-                padding: 18,
-                background: 'var(--cd-surf)',
-              }}
             >
               <div className="cd-band-eyebrow" style={{ marginBottom: 10 }}>{label}</div>
               <div style={{ color: 'var(--cd-fg2)', fontSize: 14, lineHeight: 1.65 }}>{text}</div>
@@ -162,19 +163,25 @@ export default function Research() {
             <div className="cd-rfc-summary">{t(copy.plainIdea)}</div>
             <div className="cd-rfc-flow" aria-label="Separation loss workflow">
               <div>
-                <img src="/research/separation-denoise-clean.png" alt="Noisy image becoming clean through denoising" className="cd-rfc-visual" />
+                <button type="button" className="cd-rfc-visual-button" onClick={() => setLightbox({ type: 'formula', index: 0 })} title="Click to expand">
+                  <img src={formulaVisuals[0].src} alt={formulaVisuals[0].alt} className="cd-rfc-visual cd-rf-chart--zoom" />
+                </button>
                 <span className="cd-rfc-step">1</span>
                 <strong>{t(copy.step1)}</strong>
                 <span>{t(copy.step1Text)}</span>
               </div>
               <div>
-                <img src="/research/separation-apart-clean.png" alt="Two model explanations being pushed apart" className="cd-rfc-visual" />
+                <button type="button" className="cd-rfc-visual-button" onClick={() => setLightbox({ type: 'formula', index: 1 })} title="Click to expand">
+                  <img src={formulaVisuals[1].src} alt={formulaVisuals[1].alt} className="cd-rfc-visual cd-rf-chart--zoom" />
+                </button>
                 <span className="cd-rfc-step">2</span>
                 <strong>{t(copy.step2)}</strong>
                 <span>{t(copy.step2Text)}</span>
               </div>
               <div>
-                <img src="/research/separation-gap-clean.png" alt="Difference between reconstruction errors becoming an OOD signal" className="cd-rfc-visual" />
+                <button type="button" className="cd-rfc-visual-button" onClick={() => setLightbox({ type: 'formula', index: 2 })} title="Click to expand">
+                  <img src={formulaVisuals[2].src} alt={formulaVisuals[2].alt} className="cd-rfc-visual cd-rf-chart--zoom" />
+                </button>
                 <span className="cd-rfc-step">3</span>
                 <strong>{t(copy.step3)}</strong>
                 <span>{t(copy.step3Text)}</span>
@@ -246,6 +253,11 @@ export default function Research() {
               <>
                 <img src={industrialCharts[lightbox.index].src} alt={industrialCharts[lightbox.index].alt} />
                 <div className="cd-lightbox-caption">{industrialCharts[lightbox.index].caption}</div>
+              </>
+            ) : lightbox.type === 'formula' ? (
+              <>
+                <img src={formulaVisuals[lightbox.index].src} alt={formulaVisuals[lightbox.index].alt} />
+                <div className="cd-lightbox-caption">{formulaVisuals[lightbox.index].caption}</div>
               </>
             ) : (
               <>

@@ -89,44 +89,23 @@ export default function Evidence() {
           {t(copy.intro)}
         </p>
 
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-            gap: 16,
-          }}
-        >
+        <div className="cd-evidence-grid">
           {evidenceItems.map((item) => (
             <a
               key={item.href}
               href={item.href}
               target={item.href.startsWith('http') ? '_blank' : undefined}
               rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-              className="reveal"
-              style={{
-                textDecoration: 'none',
-                color: 'inherit',
-                background: 'var(--cd-surf)',
-                border: '1px solid var(--cd-b0)',
-                borderRadius: 10,
-                padding: 20,
-                display: 'grid',
-                gap: 10,
-              }}
+              className="cd-evidence-card reveal glass-surface glass-subtle"
             >
               <div
-                style={{
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: 10,
-                  letterSpacing: '0.08em',
-                  textTransform: 'uppercase',
-                  color: item.label === 'Case study' ? 'var(--cd-success)' : 'var(--cd-accent)',
-                }}
+                className="cd-evidence-card-label"
+                style={{ color: item.label === 'Case study' ? 'var(--cd-success)' : 'var(--cd-accent)' }}
               >
                 {item.label === 'Case study' ? t(copy.caseStudy) : t(copy.proof)}
               </div>
-              <div style={{ fontSize: 18, fontWeight: 600, color: 'var(--cd-fg1)' }}>{t(item.title)}</div>
-              <div style={{ fontSize: 13, color: 'var(--cd-fg2)', lineHeight: 1.6 }}>{t(item.meta)}</div>
+              <div className="cd-evidence-card-title">{t(item.title)}</div>
+              <div className="cd-evidence-card-meta">{t(item.meta)}</div>
               <div className="cd-proj-link" style={{ marginTop: 2 }}>
                 Open &rarr;
               </div>
