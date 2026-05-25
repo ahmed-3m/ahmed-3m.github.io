@@ -84,4 +84,4 @@ npm run build
 - Email: [ahmed.mo.0595@gmail.com](mailto:ahmed.mo.0595@gmail.com)
 - ResearchGate: [Ahmed Mohammed](https://www.researchgate.net/profile/Ahmed-Mohammed-114)
 
-Open to senior AI/ML roles, research collaborations, and serious industrial AI problems where model quality has to survive contact with real data.
+Open to AI/ML roles, research collaborations, and serious industrial AI problems where model quality has to survive contact with real data.
