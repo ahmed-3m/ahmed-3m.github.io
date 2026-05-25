@@ -323,6 +323,274 @@ const DEFAULT_PROMPTS: PromptId[] = [
   'contact',
 ]
 
+const LOCAL_REPLIES = {
+  contact: {
+    en: `Here are Ahmed Mohammed's contact details:
+
+- Email: ahmed.mo.0595@gmail.com
+- LinkedIn: https://www.linkedin.com/in/ahmed-3m/
+- GitHub: https://github.com/ahmed-3m
+- Website: https://ahmed-3m.github.io`,
+    de: `Hier sind die Kontaktdaten von Ahmed Mohammed:
+
+- E-Mail: ahmed.mo.0595@gmail.com
+- LinkedIn: https://www.linkedin.com/in/ahmed-3m/
+- GitHub: https://github.com/ahmed-3m
+- Website: https://ahmed-3m.github.io`,
+    fr: `Voici les coordonnees d Ahmed Mohammed :
+
+- Email : ahmed.mo.0595@gmail.com
+- LinkedIn : https://www.linkedin.com/in/ahmed-3m/
+- GitHub : https://github.com/ahmed-3m
+- Site web : https://ahmed-3m.github.io`,
+    es: `Aqui estan los datos de contacto de Ahmed Mohammed:
+
+- Correo: ahmed.mo.0595@gmail.com
+- LinkedIn: https://www.linkedin.com/in/ahmed-3m/
+- GitHub: https://github.com/ahmed-3m
+- Sitio web: https://ahmed-3m.github.io`,
+    ar: `إليك وسائل التواصل مع أحمد محمد:
+
+- البريد الإلكتروني: ahmed.mo.0595@gmail.com
+- LinkedIn: https://www.linkedin.com/in/ahmed-3m/
+- GitHub: https://github.com/ahmed-3m
+- الموقع: https://ahmed-3m.github.io`,
+  },
+  open_to_work: {
+    en: `Yes. Ahmed is open to AI/ML roles, research collaborations, and serious industrial AI problems where model quality has to survive real data. He is based in Linz, Austria.
+
+Best contact path:
+- Email: ahmed.mo.0595@gmail.com
+- LinkedIn: https://www.linkedin.com/in/ahmed-3m/`,
+    de: `Ja. Ahmed ist offen fuer AI/ML-Rollen, Forschungskollaborationen und anspruchsvolle industrielle KI-Probleme, bei denen Modellqualitaet auch mit realen Daten bestehen muss. Er lebt in Linz, Oesterreich.
+
+Bester Kontaktweg:
+- E-Mail: ahmed.mo.0595@gmail.com
+- LinkedIn: https://www.linkedin.com/in/ahmed-3m/`,
+    fr: `Oui. Ahmed est ouvert aux roles IA/ML, aux collaborations de recherche et aux problemes industriels serieux ou la qualite du modele doit tenir face a des donnees reelles. Il est base a Linz, Autriche.
+
+Meilleur moyen de contact :
+- Email : ahmed.mo.0595@gmail.com
+- LinkedIn : https://www.linkedin.com/in/ahmed-3m/`,
+    es: `Si. Ahmed esta abierto a roles de IA/ML, colaboraciones de investigacion y problemas industriales serios donde la calidad del modelo debe resistir datos reales. Esta basado en Linz, Austria.
+
+Mejor forma de contacto:
+- Correo: ahmed.mo.0595@gmail.com
+- LinkedIn: https://www.linkedin.com/in/ahmed-3m/`,
+    ar: `نعم. أحمد متاح لفرص AI/ML، وتعاونات بحثية، ومشكلات ذكاء اصطناعي صناعية جادة يجب أن تصمد فيها جودة النموذج أمام البيانات الحقيقية. وهو مقيم في لينز، النمسا.
+
+أفضل وسيلة للتواصل:
+- البريد الإلكتروني: ahmed.mo.0595@gmail.com
+- LinkedIn: https://www.linkedin.com/in/ahmed-3m/`,
+  },
+  tech_stack: {
+    en: `Ahmed's main stack spans both research and product work:
+
+- ML/Research: Python, PyTorch, diffusion models, computer vision, YOLO, OOD detection
+- Product/Infra: Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2, Stripe
+- Tooling: Git, Linux, Weights & Biases, Hugging Face
+
+For Faultrix specifically, the stack is Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2, and Stripe.`,
+    de: `Ahmeds Stack deckt sowohl Forschung als auch Produktarbeit ab:
+
+- ML/Forschung: Python, PyTorch, Diffusionsmodelle, Computer Vision, YOLO, OOD-Erkennung
+- Produkt/Infra: Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2, Stripe
+- Tooling: Git, Linux, Weights & Biases, Hugging Face
+
+Fuer Faultrix konkret nutzt er Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2 und Stripe.`,
+    fr: `Le stack principal d Ahmed couvre la recherche et le produit :
+
+- ML/Recherche : Python, PyTorch, modeles de diffusion, computer vision, YOLO, detection OOD
+- Produit/Infra : Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2, Stripe
+- Outils : Git, Linux, Weights & Biases, Hugging Face
+
+Pour Faultrix en particulier : Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2 et Stripe.`,
+    es: `El stack principal de Ahmed cubre investigacion y producto:
+
+- ML/Investigacion: Python, PyTorch, modelos de difusion, vision por computador, YOLO, deteccion OOD
+- Producto/Infra: Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2, Stripe
+- Herramientas: Git, Linux, Weights & Biases, Hugging Face
+
+Para Faultrix en concreto usa Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2 y Stripe.`,
+    ar: `الـ stack الأساسي لدى أحمد يجمع بين البحث والمنتج:
+
+- البحث/التعلم الآلي: Python وPyTorch ونماذج الانتشار والرؤية الحاسوبية وYOLO وكشف OOD
+- المنتج/البنية: Next.js وConvex وOpenAI API وDocker وClerk وCloudflare R2 وStripe
+- الأدوات: Git وLinux وWeights & Biases وHugging Face
+
+أما Faultrix تحديدا فيعتمد على Python وNext.js وConvex وOpenAI API وDocker وClerk وCloudflare R2 وStripe.`,
+  },
+  thesis_summary: {
+    en: `Ahmed's thesis used conditional diffusion models as generative classifiers for out-of-distribution detection. The key idea was to compare class-conditional reconstruction behavior and use the gap as the anomaly signal.
+
+The main contribution was a class-conditional separation loss that pushed competing explanations apart. That made the score not only stronger, but much more stable across seeds.
+
+Best reported result:
+- 99.03% +/- 0.07% average AUROC on CIFAR-10
+- about +6.5 percentage points over the non-separated baseline
+
+It was completed at JKU Linz under Prof. Sepp Hochreiter.`,
+    de: `Ahmeds Thesis nutzte konditionale Diffusionsmodelle als generative Klassifikatoren fuer Out-of-Distribution-Erkennung. Die Kernidee war, klassenkonditionales Rekonstruktionsverhalten zu vergleichen und den Abstand als Anomaliesignal zu verwenden.
+
+Der Hauptbeitrag war eine class-conditional separation loss, die konkurrierende Erklaerungen auseinanderdrueckt. Dadurch wurde der Score nicht nur besser, sondern auch deutlich stabiler ueber verschiedene Seeds.
+
+Bestes Ergebnis:
+- 99.03% +/- 0.07% durchschnittlicher AUROC auf CIFAR-10
+- etwa +6.5 Prozentpunkte gegenueber der Basis ohne Separation
+
+Die Arbeit entstand an der JKU Linz unter Prof. Sepp Hochreiter.`,
+    fr: `Le memoire d Ahmed utilise des modeles de diffusion conditionnels comme classificateurs generatifs pour la detection out-of-distribution. L idee centrale etait de comparer la reconstruction conditionnelle par classe et d utiliser l ecart comme signal d anomalie.
+
+La contribution principale est une class-conditional separation loss qui eloigne les explications concurrentes. Le score devient ainsi plus fort et beaucoup plus stable entre les seeds.
+
+Meilleur resultat :
+- 99.03% +/- 0.07% AUROC moyen sur CIFAR-10
+- environ +6.5 points par rapport a la baseline sans separation
+
+Le travail a ete realise a JKU Linz sous la supervision du Prof. Sepp Hochreiter.`,
+    es: `La tesis de Ahmed uso modelos de difusion condicional como clasificadores generativos para deteccion out-of-distribution. La idea central fue comparar la reconstruccion condicionada por clase y usar la brecha como senal de anomalia.
+
+La contribucion principal fue una class-conditional separation loss que separa las explicaciones rivales. Eso hizo que el score fuera no solo mas alto, sino mucho mas estable entre semillas.
+
+Mejor resultado:
+- 99.03% +/- 0.07% AUROC promedio en CIFAR-10
+- alrededor de +6.5 puntos frente a la linea base sin separacion
+
+Se realizo en JKU Linz bajo la supervision del Prof. Sepp Hochreiter.`,
+    ar: `استخدمت رسالة أحمد نماذج الانتشار الشرطية كمصنفات توليدية لكشف out-of-distribution. وكانت الفكرة الأساسية هي مقارنة إعادة البناء المشروطة حسب الفئة واستخدام الفجوة بينها كإشارة للشذوذ.
+
+أما المساهمة الرئيسية فكانت class-conditional separation loss التي تُبعد التفسيرات المتنافسة عن بعضها. وهذا جعل الدرجة ليست أعلى فقط، بل أكثر ثباتا بكثير عبر البذور.
+
+أفضل نتيجة:
+- 99.03% +/- 0.07% متوسط AUROC على CIFAR-10
+- حوالي +6.5 نقطة مقارنة بخط الأساس دون الفصل
+
+وقد أُنجزت الرسالة في JKU Linz تحت إشراف Prof. Sepp Hochreiter.`,
+  },
+  faultrix_intro: {
+    en: `Faultrix is Ahmed Mohammed's AI-powered construction quality-control SaaS. It analyzes construction or building-site photos and generates ONORM-aligned reports in under 1 minute.
+
+The product is built to make documentation faster and more defensible, with details like SHA-256 evidence chaining, DSGVO-aware handling, and AES-256 encryption.
+
+Tech stack:
+- Python
+- Next.js
+- Convex
+- OpenAI API
+- Docker
+- Clerk
+- Cloudflare R2
+- Stripe`,
+    de: `Faultrix ist Ahmed Mohammeds KI-gestuetztes SaaS fuer Bauqualitaetskontrolle. Es analysiert Bau- und Baustellenfotos und erstellt ONORM-orientierte Berichte in unter 1 Minute.
+
+Das Produkt soll Dokumentation schneller und belastbarer machen, mit Punkten wie SHA-256 Evidence Chaining, DSGVO-orientierter Datenbehandlung und AES-256-Verschluesselung.
+
+Tech-Stack:
+- Python
+- Next.js
+- Convex
+- OpenAI API
+- Docker
+- Clerk
+- Cloudflare R2
+- Stripe`,
+    fr: `Faultrix est le SaaS de controle qualite construction par IA d Ahmed Mohammed. Il analyse des photos de chantier et genere des rapports alignes sur ONORM en moins d une minute.
+
+Le produit vise a rendre la documentation plus rapide et plus defendable, avec une chaine de preuve SHA-256, une gestion compatible DSGVO et un chiffrement AES-256.
+
+Stack technique :
+- Python
+- Next.js
+- Convex
+- OpenAI API
+- Docker
+- Clerk
+- Cloudflare R2
+- Stripe`,
+    es: `Faultrix es el SaaS de control de calidad en construccion con IA de Ahmed Mohammed. Analiza fotos de obra y genera informes alineados con ONORM en menos de 1 minuto.
+
+El producto esta pensado para hacer la documentacion mas rapida y mas defendible, con cadena de evidencia SHA-256, gestion compatible con DSGVO y cifrado AES-256.
+
+Stack tecnico:
+- Python
+- Next.js
+- Convex
+- OpenAI API
+- Docker
+- Clerk
+- Cloudflare R2
+- Stripe`,
+    ar: `Faultrix هي منصة SaaS للرقابة على جودة البناء بالذكاء الاصطناعي أسسها أحمد محمد. تقوم بتحليل صور مواقع البناء وتوليد تقارير متوافقة مع ONORM خلال أقل من دقيقة.
+
+والمنتج مصمم لجعل التوثيق أسرع وأكثر قابلية للدفاع عنه، مع ميزات مثل سلسلة أدلة SHA-256، والتعامل المتوافق مع DSGVO، وتشفير AES-256.
+
+الـ stack التقني:
+- Python
+- Next.js
+- Convex
+- OpenAI API
+- Docker
+- Clerk
+- Cloudflare R2
+- Stripe`,
+  },
+  achievements: {
+    en: `A few of Ahmed's strongest proof points:
+
+- 99.03% +/- 0.07% average AUROC on CIFAR-10 OOD detection in his thesis
+- about +6.5 percentage points over the non-separated baseline, with far lower variance
+- 0.8673 +/- 0.0230 AUROC industrial baseline on the public FTI_Zer0P benchmark under strict 5-fold cross-validation
+- Founder of Faultrix, an AI product that turns research thinking into a real construction workflow`,
+    de: `Einige der staerksten Nachweise von Ahmed:
+
+- 99.03% +/- 0.07% durchschnittlicher AUROC auf CIFAR-10 OOD-Erkennung in seiner Thesis
+- etwa +6.5 Prozentpunkte gegenueber der Basis ohne Separation, bei deutlich geringerer Varianz
+- 0.8673 +/- 0.0230 AUROC industrieller Baseline-Wert auf dem oeffentlichen FTI_Zer0P-Benchmark unter strenger 5-facher Kreuzvalidierung
+- Gruender von Faultrix, einem KI-Produkt, das Forschungsdenken in einen realen Bau-Workflow ueberfuehrt`,
+    fr: `Quelques preuves fortes du travail d Ahmed :
+
+- 99.03% +/- 0.07% AUROC moyen sur la detection OOD CIFAR-10 dans son memoire
+- environ +6.5 points par rapport a la baseline sans separation, avec une variance beaucoup plus faible
+- 0.8673 +/- 0.0230 AUROC comme baseline industrielle sur le benchmark public FTI_Zer0P avec validation croisee stricte en 5 plis
+- Fondateur de Faultrix, un produit IA qui transforme une logique de recherche en workflow de construction reel`,
+    es: `Algunos de los puntos de prueba mas fuertes de Ahmed:
+
+- 99.03% +/- 0.07% AUROC promedio en deteccion OOD sobre CIFAR-10 en su tesis
+- alrededor de +6.5 puntos frente a la linea base sin separacion, con mucha menos varianza
+- 0.8673 +/- 0.0230 AUROC como baseline industrial en el benchmark publico FTI_Zer0P con validacion cruzada estricta de 5 folds
+- Fundador de Faultrix, un producto de IA que convierte pensamiento de investigacion en un flujo real de construccion`,
+    ar: `بعض أقوى نقاط الإثبات لدى أحمد:
+
+- 99.03% +/- 0.07% متوسط AUROC في كشف OOD على CIFAR-10 ضمن رسالته
+- حوالي +6.5 نقطة مقارنة بخط الأساس دون الفصل، مع تباين أقل بكثير
+- 0.8673 +/- 0.0230 AUROC كخط أساس صناعي على معيار FTI_Zer0P العام مع تحقق تقاطعي صارم من 5 طيات
+- مؤسس Faultrix، وهو منتج ذكاء اصطناعي يحول عقلية البحث إلى سير عمل حقيقي في البناء`,
+  },
+} satisfies Record<string, TranslationMap>
+
+function getLocalReply(prompt: string, lang: Language): string | null {
+  const text = prompt.toLowerCase()
+  if (/(contact|email|linkedin|github|website|reach|talk to|connect)/i.test(text)) {
+    return translateValue(lang, LOCAL_REPLIES.contact)
+  }
+  if (/(open to work|available|hire|job|role|opportunit)/i.test(text)) {
+    return translateValue(lang, LOCAL_REPLIES.open_to_work)
+  }
+  if (/(tech stack|stack|tools|technolog)/i.test(text)) {
+    return translateValue(lang, LOCAL_REPLIES.tech_stack)
+  }
+  if (/(thesis|separation loss|ood|out.?of.?distribution|cifar|auroc)/i.test(text)) {
+    return translateValue(lang, LOCAL_REPLIES.thesis_summary)
+  }
+  if (/(faultrix|construction|onorm|dsgvo|report)/i.test(text)) {
+    return translateValue(lang, LOCAL_REPLIES.faultrix_intro)
+  }
+  if (/(achievement|accomplishment|highlights|best result|proof points)/i.test(text)) {
+    return translateValue(lang, LOCAL_REPLIES.achievements)
+  }
+  return null
+}
+
 const FOLLOWUP_RULES: Array<{ pattern: RegExp; prompts: PromptId[] }> = [
   {
     pattern: /faultrix|construction|report|onorm|dsgvo|sha|aes/i,
@@ -710,8 +978,22 @@ export default function ChatBot() {
     setMessages(nextMessages)
     setInput('')
     setError(null)
-    setIsLoading(true)
     trackChatEvent(content)
+
+    const localReply = getLocalReply(content, lang)
+    if (localReply) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: 'assistant',
+          content: localReply,
+          followUps: generateFollowUps(localReply, content, currentSection),
+        },
+      ])
+      return
+    }
+
+    setIsLoading(true)
 
     try {
       const payloadMessages: ApiMessage[] = [
