@@ -19,6 +19,33 @@
   from { opacity: 0.6; }
   to { opacity: 1; }
 }
+@keyframes genie-core-breathe {
+  0% { transform: scale(0.96); filter: saturate(0.96); }
+  50% { transform: scale(1.04); filter: saturate(1.08); }
+  100% { transform: scale(0.96); filter: saturate(0.96); }
+}
+@keyframes genie-halo-spin {
+  0% { transform: rotate(0deg) scale(0.98); opacity: 0.82; }
+  50% { opacity: 1; }
+  100% { transform: rotate(360deg) scale(1.02); opacity: 0.82; }
+}
+@keyframes genie-halo-spin-reverse {
+  0% { transform: rotate(360deg) scale(1); opacity: 0.72; }
+  50% { opacity: 0.92; }
+  100% { transform: rotate(0deg) scale(0.97); opacity: 0.72; }
+}
+@keyframes genie-shimmer {
+  0% { transform: translateX(-145%) rotate(18deg); opacity: 0; }
+  22% { opacity: 0.18; }
+  50% { opacity: 0.34; }
+  78% { opacity: 0.18; }
+  100% { transform: translateX(155%) rotate(18deg); opacity: 0; }
+}
+@keyframes genie-pulse-ring {
+  0% { transform: scale(0.72); opacity: 0; }
+  25% { opacity: 0.26; }
+  100% { transform: scale(1.18); opacity: 0; }
+}
 
 /* ── Design tokens (kept for blog compatibility) ── */
 :root {
@@ -942,6 +969,64 @@ body::before {
   box-shadow: 0 0 8px var(--cd-success);
   animation: pulse-dot 2s ease-in-out infinite;
   flex-shrink: 0;
+}
+
+.genie-orb {
+  animation: genie-core-breathe 5.2s ease-in-out infinite;
+}
+
+.genie-orb::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(77, 138, 255, 0.28) 0%, rgba(77, 138, 255, 0.1) 42%, transparent 72%);
+  animation: genie-pulse-ring 4.2s ease-out infinite;
+}
+
+.genie-orb::after {
+  content: "";
+  position: absolute;
+  inset: -38% 12%;
+  border-radius: 999px;
+  background: linear-gradient(115deg, transparent 18%, rgba(255, 255, 255, 0.06) 40%, rgba(255, 235, 184, 0.42) 50%, rgba(255, 255, 255, 0.06) 60%, transparent 82%);
+  filter: blur(1px);
+  animation: genie-shimmer 4.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.genie-orbit {
+  position: absolute;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.genie-orbit-a {
+  inset: 16%;
+  border: 2px solid rgba(232, 197, 109, 0.94);
+  filter: drop-shadow(0 0 6px rgba(255, 210, 120, 0.44));
+  animation: genie-halo-spin 9s linear infinite;
+}
+
+.genie-orbit-b {
+  inset: 25% 11%;
+  border: 2px solid rgba(104, 184, 255, 0.92);
+  filter: drop-shadow(0 0 8px rgba(82, 163, 255, 0.42));
+  animation: genie-halo-spin-reverse 7.4s linear infinite;
+}
+
+.genie-orbit-c {
+  inset: 22%;
+  border: 2px solid rgba(255, 226, 154, 0.64);
+  animation: genie-halo-spin 11.5s linear infinite reverse;
+}
+
+.genie-core {
+  position: absolute;
+  inset: 34%;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255, 247, 210, 0.98) 0%, rgba(138, 192, 255, 0.52) 34%, rgba(25, 47, 96, 0.04) 70%, transparent 100%);
+  box-shadow: 0 0 20px rgba(143, 196, 255, 0.38);
 }
 
 /* ── FORMULA BOX (Research) ── */

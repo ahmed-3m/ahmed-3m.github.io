@@ -2,7 +2,7 @@
 
 import type { CSSProperties, FormEvent, ReactNode } from 'react'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { ArrowUp, MessageCircle, X } from 'lucide-react'
+import { ArrowUp, X } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
 import { languageName, translateValue, type Language, type TranslationMap } from '@/lib/i18n-config'
 
@@ -70,8 +70,11 @@ const ZAI_MODEL = 'glm-4.5-airx'
 const GROQ_CHAT_URL = 'https://api.groq.com/openai/v1/chat/completions'
 const ZAI_CHAT_URL = 'https://api.z.ai/api/paas/v4/chat/completions'
 const MAX_REPLY_CHARS = 1600
+const GENIE_NAME = 'Genie\u{1F9DE}\u200D\u2642\uFE0F'
 
-const SYSTEM_PROMPT = `You are Ahmed Mohammed's portfolio assistant.
+const SYSTEM_PROMPT = `You are ${GENIE_NAME}, Ahmed Mohammed's personal assistant.
+
+Introduce yourself as ${GENIE_NAME} whenever the user asks who you are or when a brief introduction is helpful.
 
 Only answer questions about Ahmed Mohammed's work, research, products, projects, education, experience, and contact details.
 
@@ -100,28 +103,28 @@ Facts you can rely on:
 
 const CHAT_COPY = {
   dialogLabel: {
-    en: 'Ask about Ahmed',
+    en: 'Ask Genie',
     de: 'Fragen zu Ahmed',
     fr: 'Questions sur Ahmed',
     es: 'Preguntar sobre Ahmed',
     ar: 'اسأل عن أحمد',
   },
   title: {
-    en: 'Ask about Ahmed',
+    en: GENIE_NAME,
     de: 'Fragen zu Ahmed',
     fr: 'Questions sur Ahmed',
     es: 'Preguntar sobre Ahmed',
     ar: 'اسأل عن أحمد',
   },
   welcome: {
-    en: "Ask about Ahmed's research, products, projects, or background.",
+    en: `Hi, I'm ${GENIE_NAME}, Ahmed's Personal assistance. Ask me about Ahmed's research, products, projects, or background.`,
     de: 'Frage nach Ahmeds Forschung, Produkten, Projekten oder Hintergrund.',
     fr: 'Posez une question sur la recherche, les produits, les projets ou le parcours d Ahmed.',
     es: 'Pregunta sobre la investigacion, los productos, los proyectos o la trayectoria de Ahmed.',
     ar: 'اسأل عن أبحاث أحمد أو منتجاته أو مشاريعه أو خلفيته.',
   },
   placeholder: {
-    en: 'Ask about Ahmed...',
+    en: 'Ask Genie...',
     de: 'Frage zu Ahmed...',
     fr: 'Question sur Ahmed...',
     es: 'Pregunta sobre Ahmed...',
@@ -149,7 +152,7 @@ const CHAT_COPY = {
     ar: 'إرسال الرسالة',
   },
   typing: {
-    en: 'Ahmed is typing',
+    en: 'Genie is typing',
     de: 'Ahmed schreibt',
     fr: 'Ahmed repond',
     es: 'Ahmed esta respondiendo',
@@ -642,6 +645,35 @@ const chipStyle = {
   color: 'var(--cd-fg2)',
 } satisfies CSSProperties
 
+function GenieOrb({ size = 44 }: { size?: number }) {
+  return (
+    <span
+      aria-hidden="true"
+      className="genie-orb relative inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full"
+      style={{
+        width: size,
+        height: size,
+        background:
+          'radial-gradient(circle at 30% 28%, rgba(176, 245, 255, 0.98) 0%, rgba(95, 159, 255, 0.9) 20%, rgba(24, 38, 79, 0.98) 58%, rgba(10, 13, 24, 1) 100%)',
+        boxShadow:
+          '0 0 0 1px rgba(159, 228, 255, 0.18), inset 0 0 18px rgba(255, 255, 255, 0.18), 0 10px 24px rgba(26, 57, 163, 0.38)',
+      }}
+    >
+      <span
+        className="absolute inset-[8%] rounded-full"
+        style={{
+          background: 'radial-gradient(circle at 24% 20%, rgba(255, 255, 255, 0.3) 0%, transparent 40%)',
+          mixBlendMode: 'screen',
+        }}
+      />
+      <span className="genie-orbit genie-orbit-a" />
+      <span className="genie-orbit genie-orbit-b" />
+      <span className="genie-orbit genie-orbit-c" />
+      <span className="genie-core" />
+    </span>
+  )
+}
+
 function LoadingDots({ label }: { label: string }) {
   return (
     <div
@@ -936,18 +968,30 @@ export default function ChatBot() {
       <button
         type="button"
         onClick={() => setIsOpen((value) => !value)}
-        className="fixed bottom-6 right-6 z-[9999] inline-flex h-14 w-14 items-center justify-center rounded-full border transition-transform duration-300 ease-out hover:-translate-y-0.5"
+        className="group fixed bottom-6 right-6 z-[9999] inline-flex h-14 items-center gap-2 overflow-hidden rounded-full border pl-1.5 pr-4 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:pr-5 focus-visible:pr-5"
         style={{
-          background: 'var(--cd-accent)',
-          borderColor: 'var(--cd-b-accent)',
-          color: 'var(--cd-bg)',
-          boxShadow: '0 18px 40px color-mix(in srgb, var(--cd-accent) 28%, transparent)',
+          background: 'linear-gradient(135deg, rgba(22, 26, 36, 0.96) 0%, rgba(49, 44, 40, 0.98) 100%)',
+          borderColor: 'rgba(205, 189, 145, 0.28)',
+          color: '#f3eee4',
+          boxShadow: '0 18px 40px rgba(7, 11, 20, 0.38)',
         }}
         aria-expanded={isOpen}
         aria-controls="ahmed-chatbot-panel"
         aria-label={isOpen ? t(CHAT_COPY.close) : t(CHAT_COPY.open)}
       >
-        {isOpen ? <X size={22} /> : <MessageCircle size={22} />}
+        <GenieOrb />
+        <span
+          className={`whitespace-nowrap text-sm font-semibold tracking-[0.01em] transition-all duration-300 ${
+            isOpen ? 'max-w-0 opacity-0' : 'max-w-0 opacity-0 group-hover:max-w-32 group-hover:opacity-100 group-focus-visible:max-w-32 group-focus-visible:opacity-100'
+          }`}
+        >
+          Ask Genie
+        </span>
+        {isOpen && (
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/8 text-[#f3eee4]">
+            <X size={20} />
+          </span>
+        )}
       </button>
     </>
   )
