@@ -74,7 +74,7 @@ const GENIE_NAME = 'Genie\u{1F9DE}\u200D\u2642\uFE0F'
 
 const SYSTEM_PROMPT = `You are ${GENIE_NAME}, Ahmed Mohammed's personal assistant.
 
-Introduce yourself as ${GENIE_NAME} whenever the user asks who you are or when a brief introduction is helpful.
+Only introduce yourself as ${GENIE_NAME} on your first reply in a chat or when the user explicitly asks who you are.
 
 Only answer questions about Ahmed Mohammed's work, research, products, projects, education, experience, and contact details.
 
@@ -733,6 +733,7 @@ export default function ChatBot() {
 
     const nextUserMessage: ChatMessage = { role: 'user', content }
     const nextMessages = [...messages, nextUserMessage]
+    const hasAssistantReplied = messages.some((message) => message.role === 'assistant')
 
     setMessages(nextMessages)
     setInput('')
@@ -750,6 +751,12 @@ export default function ChatBot() {
         {
           role: 'system',
           content: `The user is currently viewing the "${currentSection}" section of the portfolio. Prefer relevant context when it helps.`,
+        },
+        {
+          role: 'system',
+          content: hasAssistantReplied
+            ? `Do not introduce yourself unless the user explicitly asks who you are.`
+            : `This is your first reply in this chat, so briefly introduce yourself as ${GENIE_NAME} before answering.`,
         },
         ...nextMessages.map(({ role, content: messageContent }) => ({ role, content: messageContent })),
       ]
