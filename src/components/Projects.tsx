@@ -40,6 +40,15 @@ const copy = {
     es: 'Arquitecturas LSTM, Bi-LSTM y GRU para clasificacion de imaginacion motora en interfaces cerebro-computadora.',
     ar: 'معماريات LSTM وBi-LSTM وGRU لتصنيف التخيل الحركي في تطبيقات واجهة الدماغ والحاسوب.',
   },
+  mentoEyebrow: { en: 'Personal Project · Proof of Concept', de: 'Privates Projekt · Proof of Concept', fr: 'Projet personnel · Preuve de concept', es: 'Proyecto personal · Prueba de concepto', ar: 'مشروع شخصي · إثبات مفهوم' },
+  mentoTitle: { en: 'Mento — AI Habits Assistant', de: 'Mento — KI-Gewohnheitsassistent', fr: 'Mento — Assistant IA d habitudes', es: 'Mento — Asistente de habitos con IA', ar: 'Mento — مساعد العادات بالذكاء الاصطناعي' },
+  mentoDesc: {
+    en: 'Conversational assistant for habit-building and daily routines via a Telegram bot. Multi-provider LLM routing with escalation logic, pgvector RAG long-term memory, multimodal photo understanding, and voice replies through the Alexa Reminders API — on Supabase edge functions. Early POC, in active development.',
+    de: 'Konversationsassistent fur Gewohnheiten und Tagesroutinen uber einen Telegram-Bot. Multi-Provider-LLM-Routing mit Eskalationslogik, pgvector-RAG-Langzeitgedachtnis, multimodales Bildverstandnis und Sprachausgabe uber die Alexa Reminders API — auf Supabase Edge Functions. Fruher POC, in aktiver Entwicklung.',
+    fr: 'Assistant conversationnel pour les habitudes et routines quotidiennes via un bot Telegram. Routage LLM multi-fournisseurs avec logique d escalade, memoire long terme RAG pgvector, comprehension multimodale d images et reponses vocales via l API Alexa Reminders — sur Supabase edge functions. POC en developpement actif.',
+    es: 'Asistente conversacional para habitos y rutinas diarias mediante un bot de Telegram. Enrutamiento LLM multiproveedor con logica de escalado, memoria a largo plazo RAG con pgvector, comprension multimodal de imagenes y respuestas por voz via la API Alexa Reminders — en Supabase edge functions. POC en desarrollo activo.',
+    ar: 'مساعد محادثة لبناء العادات والروتين اليومي عبر بوت تيليجرام. توجيه LLM متعدد المزودين مع منطق تصعيد، وذاكرة طويلة المدى RAG عبر pgvector، وفهم متعدد الوسائط للصور، وردود صوتية عبر Alexa — على Supabase. نموذج أولي قيد التطوير.',
+  },
 } satisfies Record<string, TranslationMap>
 
 export default function Projects() {
@@ -99,6 +108,17 @@ export default function Projects() {
               <span className="cd-proj-link" style={{ fontSize: 12, opacity: 0.65 }}>{t(copy.caseStudy)}: /case-studies/inkjet-ood</span>
             </div>
           </a>
+
+          <div className="cd-project-card reveal">
+            <div className="cd-pc-eyebrow">{t(copy.mentoEyebrow)}</div>
+            <div className="cd-pc-title">{t(copy.mentoTitle)}</div>
+            <div className="cd-pc-desc">{t(copy.mentoDesc)}</div>
+            <div className="cd-proj-tags" style={{ marginTop: 12 }}>
+              {['Python', 'TypeScript', 'LLM Routing', 'RAG / pgvector', 'Supabase', 'Telegram'].map(tag => (
+                <span key={tag} className="cd-proj-tag">{tag}</span>
+              ))}
+            </div>
+          </div>
 
           <a href="https://github.com/ahmed-3m/Motor-Imagery-classification" target="_blank" rel="noopener noreferrer" className="cd-project-card cd-project-card--full reveal">
             <div className="cd-pc-eyebrow">Karunya University · BCI Research</div>
