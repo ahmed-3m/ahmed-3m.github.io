@@ -76,7 +76,7 @@ The `/news` page is designed to be kept current by an agent. All content lives i
 `.github/workflows/news-update.yml` runs this loop automatically every Monday (and on
 manual dispatch): GLM-5.2 via the Z.ai endpoint + the Exa research MCP collect recent
 news, dedupe against `news-items.ts`, append items, then the workflow runs `npm run build`
-and `scripts/check-news-links.mjs` and **auto-merges to `main` only if both pass**. It is
+and `.github/news/check-news-links.mjs` and **auto-merges to `main` only if both pass**. It is
 fully serverless — the Action is the backend and git is the dedup store; no hosting needed.
 
 Required repository secrets:
