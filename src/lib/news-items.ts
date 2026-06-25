@@ -45,48 +45,11 @@ export interface LocalizedNewsItem extends Omit<NewsItem, 'take'> {
 }
 
 /**
- * Seed examples — real, pre-existing developments that demonstrate the format.
- * An automated agent should keep this list current; these can be replaced once
- * fresher items exist.
+ * Items are kept current by the weekly news pipeline
+ * (.github/workflows/news-update.yml). Add entries following the schema and the
+ * rules above / in AGENTS.md. Newest items sort to the top at read time.
  */
-const newsItems: NewsItem[] = [
-  {
-    id: 'mcp-open-standard',
-    date: '2024-11-25',
-    category: 'agentic',
-    headline: 'Anthropic open-sources the Model Context Protocol (MCP)',
-    source: 'Anthropic',
-    url: 'https://modelcontextprotocol.io',
-    take: {
-      en: 'A shared protocol for connecting models to tools and data is exactly the missing plumbing agentic systems needed. Standardising the integration layer is what turns one-off demos into composable agents.',
-    },
-    tags: ['MCP', 'Tool use', 'Standards'],
-  },
-  {
-    id: 'computer-use-capability',
-    date: '2024-10-22',
-    category: 'agentic',
-    headline: 'Claude gains computer-use: controlling a screen like a person',
-    source: 'Anthropic',
-    url: 'https://www.anthropic.com/news/3-5-models-and-computer-use',
-    take: {
-      en: 'Letting a model click, type and read the screen collapses the gap between "answer" and "action". The interesting frontier now is reliability and verification, not whether agents can act at all.',
-    },
-    tags: ['Computer use', 'Agents'],
-  },
-  {
-    id: 'agent-reliability-bottleneck',
-    date: '2025-01-15',
-    category: 'agentic',
-    headline: 'The bottleneck for agentic AI is reliability, not capability',
-    source: 'Editorial',
-    url: 'https://www.anthropic.com/research',
-    take: {
-      en: 'From building production CV and OOD systems, my read is the same for agents: the hard part is knowing when the system is wrong. Out-of-distribution detection and verification matter more for autonomous agents than another point of benchmark accuracy.',
-    },
-    tags: ['Reliability', 'Evaluation', 'OOD'],
-  },
-]
+const newsItems: NewsItem[] = []
 
 /**
  * Build-time guard. Runs once when the module is first imported (during
