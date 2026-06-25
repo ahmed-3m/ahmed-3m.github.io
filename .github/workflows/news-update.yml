@@ -57,22 +57,27 @@ jobs:
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
         run: |
           set +e
-          for attempt in 1 2 3; do
-            echo "::group::Agent attempt $attempt"
+          # Fall back through GLM tiers on transient overload (529): the newest
+          # model is the most capacity-constrained, so older tiers often succeed.
+          models="glm-5.2 glm-5 glm-4.7"
+          attempt=0
+          for m in $models; do
+            attempt=$((attempt + 1))
+            echo "::group::Agent attempt $attempt (model: $m)"
             # Reset any partial edits from a failed attempt before retrying.
             git checkout -- src/lib/news-items.ts 2>/dev/null || true
-            claude -p "$(cat .github/news/task.md)" \
+            ANTHROPIC_MODEL="$m" claude -p "$(cat .github/news/task.md)" \
               --mcp-config .github/news/exa-mcp.json \
               --allowedTools "Read,Edit,Write,Bash(npm run build),mcp__exa" \
               --permission-mode bypassPermissions \
               --max-turns 60
             code=$?
             echo "::endgroup::"
-            [ $code -eq 0 ] && exit 0
-            echo "Attempt $attempt failed (exit $code) — likely a transient model/API error. Retrying in 90s..."
-            sleep 90
+            [ $code -eq 0 ] && { echo "Succeeded with $m."; exit 0; }
+            echo "Attempt $attempt ($m) failed (exit $code) — likely a transient overload. Trying next tier in 60s..."
+            sleep 60
           done
-          echo "Agent failed after 3 attempts."
+          echo "Agent failed across all model tiers — Z.ai likely broadly overloaded. The weekly cron will retry."
           exit 1
 
       - name: Validate build
