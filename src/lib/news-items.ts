@@ -49,7 +49,80 @@ export interface LocalizedNewsItem extends Omit<NewsItem, 'take'> {
  * (.github/workflows/news-update.yml). Add entries following the schema and the
  * rules above / in AGENTS.md. Newest items sort to the top at read time.
  */
-const newsItems: NewsItem[] = []
+const newsItems: NewsItem[] = [
+  {
+    id: 'claude-fable-5-mythos-tier',
+    date: '2026-06-24',
+    category: 'ai',
+    headline: 'Claude Mythos 5 and Fable 5 Explained: What Anthropic Actually Shipped',
+    source: 'AI DOERS',
+    url: 'https://www.aidoers.io/blog/claude-mythos-5-and-fable-5-explained-what-anthropic-actually-shipped',
+    take: {
+      en: 'Anthropic’s new Mythos-class tier above Opus is significant for agentic coding, but at double Opus’s price, the production economics need scrutiny. The temporary free window before June 23 is telling—Anthropic is effectively trialing capacity constraints before committing to subscription inclusion.'
+    },
+    tags: ['models', 'agentic-coding', 'pricing']
+  },
+  {
+    id: 'qwen-agentworld-simulator-training',
+    date: '2026-06-24',
+    category: 'agentic',
+    headline: "Alibaba's model never trained as an agent — and improved agent performance across seven benchmarks",
+    source: 'VentureBeat',
+    url: 'https://venturebeat.com/technology/alibabas-model-never-trained-as-an-agent-and-improved-agent-performance-across-seven-benchmarks',
+    take: {
+      en: 'Training agents to predict environment states rather than actions is a clever inversion, and controlled simulation that injects edge cases real environments rarely surface is genuinely useful. But the overfitting risk is real—synthetic training should complement real-environment RL, not replace it.'
+    },
+    tags: ['world-models', 'agent-training', 'simulation']
+  },
+  {
+    id: 'google-adk-a2a-multi-language',
+    date: '2026-06-22',
+    category: 'agentic',
+    headline: 'Build Cross-Language Multi-Agent Team with Google’s Agent Development Kit and A2A',
+    source: 'Google Developers Blog',
+    url: 'https://developers.googleblog.com/build-cross-language-multi-agent-team-with-google-agent-development-kit-and-a2a/',
+    take: {
+      en: 'A2A as the "HTTP of agents" is the right interoperability abstraction—production multi-agent systems shouldn’t require rewriting services in a single language. RemoteA2aAgent’s clean wrapping of external agents enables genuinely polyglot orchestration without hand-rolling JSON-RPC clients.'
+    },
+    tags: ['a2a-protocol', 'multi-agent', 'interoperability']
+  },
+  {
+    id: 'mistral-3-large-leanstral-lean4',
+    date: '2026-06-18',
+    category: 'ai',
+    headline: 'Mistral Releases Mistral 3 Family: 675B-Parameter Large 3 MoE and Three Edge Models Under Apache 2.0',
+    source: 'TPS Report',
+    url: 'https://tpsreport.news/news/mistral-3-release-large-675b-ministral-models',
+    take: {
+      en: 'Leanstral achieving 26.3 FLTEval at $36 versus Claude Sonnet 4.6’s $549 is exactly the kind of specialized efficiency production systems need. Apache 2.0 licensing on the full Mistral 3 family matters for regulated enterprises that can’t route sensitive work through opaque SaaS APIs.'
+    },
+    tags: ['open-weights', 'moe', 'proof-assistance']
+  },
+  {
+    id: 'autonomy-dynamic-tool-synthesis',
+    date: '2026-06-20',
+    category: 'agentic',
+    headline: 'Autonomy Lets AI Agents Write Their Own Toolchains at Runtime',
+    source: 'AINews',
+    url: 'https://ainews.cool/article/20260620-autonomy-ai-agent-toolchain',
+    take: {
+      en: 'Dynamic tool synthesis solves a real production gap—static toolsets break when novel tasks emerge. But letting agents generate executable code at runtime demands serious sandboxing and validation; this is promising research, not plug-and-play infrastructure.'
+    },
+    tags: ['tool-use', 'dynamic-tools', 'agent-autonomy']
+  },
+  {
+    id: 'multiverse-pulsar-16b-nemotron',
+    date: '2026-06-23',
+    category: 'ai',
+    headline: 'Multiverse Computing Launches Pulsar 16B in collaboration with NVIDIA: Frontier-Grade Reasoning at Half the Parameters',
+    source: 'Globe Newswire',
+    url: 'https://www.globenewswire.com/news-release/2026/06/23/3315999/0/en/Multiverse-Computing-Launches-Pulsar-16B-in-collaboration-with-NVIDIA-Frontier-Grade-Reasoning-at-Half-the-Parameters.html',
+    take: {
+      en: 'Achieving 30B-class reasoning at 16B parameters through compression is meaningful for deployment cost, but "no retraining from scratch" claims need verification. Production systems care about inference latency and accuracy degradation curves, not just parameter count.'
+    },
+    tags: ['model-compression', 'reasoning', 'deployment']
+  }
+]
 
 /**
  * Build-time guard. Runs once when the module is first imported (during
