@@ -56,11 +56,24 @@ jobs:
           ANTHROPIC_SMALL_FAST_MODEL: glm-4.7-flash
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
         run: |
-          claude -p "$(cat .github/news/task.md)" \
-            --mcp-config .github/news/exa-mcp.json \
-            --allowedTools "Read,Edit,Write,Bash(npm run build),mcp__exa" \
-            --permission-mode bypassPermissions \
-            --max-turns 60
+          set +e
+          for attempt in 1 2 3; do
+            echo "::group::Agent attempt $attempt"
+            # Reset any partial edits from a failed attempt before retrying.
+            git checkout -- src/lib/news-items.ts 2>/dev/null || true
+            claude -p "$(cat .github/news/task.md)" \
+              --mcp-config .github/news/exa-mcp.json \
+              --allowedTools "Read,Edit,Write,Bash(npm run build),mcp__exa" \
+              --permission-mode bypassPermissions \
+              --max-turns 60
+            code=$?
+            echo "::endgroup::"
+            [ $code -eq 0 ] && exit 0
+            echo "Attempt $attempt failed (exit $code) — likely a transient model/API error. Retrying in 90s..."
+            sleep 90
+          done
+          echo "Agent failed after 3 attempts."
+          exit 1
 
       - name: Validate build
         run: npm run build
