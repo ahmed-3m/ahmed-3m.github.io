@@ -1,0 +1,89 @@
+name: Weekly news update
+
+# Collects recent AI / agentic-AI news with GLM-5.2 (via Z.ai) + the Exa research MCP,
+# dedupes against what's already published, validates, and auto-merges to main on green.
+# Fully serverless: this Action IS the backend. Git is the dedup store.
+#
+# Required repository secrets:
+#   NEXT_PUBLIC_ZAI_TOKEN  - existing Z.ai / GLM API key (reused here for the agent).
+#   EXA_API_KEY            - Exa API key for the research MCP (https://exa.ai).
+
+on:
+  schedule:
+    - cron: "17 6 * * 1" # Mondays 06:17 UTC
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Run the agent + validation but do NOT publish (no commit/merge/deploy)"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+  actions: write # to dispatch the deploy workflow after a successful merge
+
+concurrency:
+  group: news-update
+  cancel-in-progress: false
+
+jobs:
+  update-news:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: "24"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Claude Code CLI
+        run: npm i -g @anthropic-ai/claude-code
+
+      - name: Collect & write news (GLM-5.2 via Z.ai + Exa MCP)
+        env:
+          ANTHROPIC_BASE_URL: https://api.z.ai/api/anthropic
+          ANTHROPIC_AUTH_TOKEN: ${{ secrets.NEXT_PUBLIC_ZAI_TOKEN }}
+          ANTHROPIC_MODEL: glm-5.2
+          ANTHROPIC_SMALL_FAST_MODEL: glm-4.7-flash
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+        run: |
+          claude -p "$(cat .github/news/task.md)" \
+            --mcp-config .github/news/exa-mcp.json \
+            --allowedTools "Read,Edit,Write,Bash(npm run build),mcp__exa" \
+            --permission-mode bypassPermissions \
+            --max-turns 60
+
+      - name: Validate build
+        run: npm run build
+
+      - name: Check news links
+        run: node .github/news/check-news-links.mjs
+
+      - name: Commit, push, and trigger deploy (auto-merge on green)
+        if: github.event_name == 'schedule' || github.event.inputs.dry_run == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if git diff --quiet -- src/lib/news-items.ts; then
+            echo "No new news items this week — nothing to publish."
+            exit 0
+          fi
+          git config user.name "news-bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Path-scoped commit: ONLY the news data file is committed, even if the
+          # agent incidentally touched other files. Constrains the blast radius.
+          git commit -m "chore(news): weekly automated update" -- src/lib/news-items.ts
+          git push origin HEAD:main
+          # Keep the agents-work lane in sync with main (best-effort).
+          git push origin HEAD:agents-work || echo "agents-work not fast-forwardable; skipping sync."
+          # GITHUB_TOKEN pushes don't trigger other workflows, so kick deploy manually.
+          gh workflow run deploy.yml --ref main

@@ -7,6 +7,7 @@ import Evidence from "@/components/Evidence";
 import Experience from "@/components/Experience";
 import Research from "@/components/Research";
 import Writing from "@/components/Writing";
+import News from "@/components/News";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
@@ -24,6 +25,7 @@ export default function Home() {
         <Experience />
         <Research />
         <Writing />
+        <News />
         <Contact />
       </main>
       <Footer />
