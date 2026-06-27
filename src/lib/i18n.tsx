@@ -29,6 +29,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const saved = localStorage.getItem(LANGUAGE_STORAGE_KEY)
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- localStorage is unavailable during static-export build, so the initial render must default to 'en' and we hydrate the saved language on mount.
     if (isLanguage(saved)) setLang(saved)
   }, [])
 

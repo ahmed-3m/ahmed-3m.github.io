@@ -73,7 +73,7 @@ const copy = {
   totalLoss: { en: 'Total loss', de: 'Gesamtverlust', fr: 'Perte totale', es: 'Perdida total', ar: 'الخسارة الكلية' },
   denoiseLoss: { en: 'denoising loss', de: 'Entrauschungsverlust', fr: 'perte de denoising', es: 'perdida de limpieza', ar: 'خسارة إزالة الضوضاء' },
   sepLoss: { en: 'lambda * separation loss', de: 'lambda * Separation Loss', fr: 'lambda * separation loss', es: 'lambda * separation loss', ar: 'لامبدا * خسارة الفصل' },
-  latest: { en: 'Latest thesis result: lambda = 0.02 reached 99.03% +/- 0.07% AUROC, a +6.51pp gain over no separation loss.', de: 'Aktuelles Thesis-Ergebnis: lambda = 0.02 erreicht 99.03% +/- 0.07% AUROC, +6.51pp gegenuber ohne Separation Loss.', fr: 'Resultat thesis recent : lambda = 0.02 atteint 99.03% +/- 0.07% AUROC, +6.51pp vs sans separation loss.', es: 'Resultado reciente: lambda = 0.02 alcanzo 99.03% +/- 0.07% AUROC, +6.51pp frente a sin separation loss.', ar: 'آخر نتيجة في الرسالة: lambda = 0.02 حققت 99.03% +/- 0.07% AUROC، بزيادة +6.51pp مقارنة بدون خسارة الفصل.' },
+  latest: { en: 'Latest thesis result: lambda = 0.02 reached 99.03% +/- 0.07% AUROC, a +6.5pp gain over no separation loss.', de: 'Aktuelles Thesis-Ergebnis: lambda = 0.02 erreicht 99.03% +/- 0.07% AUROC, +6.5pp gegenuber ohne Separation Loss.', fr: 'Resultat thesis recent : lambda = 0.02 atteint 99.03% +/- 0.07% AUROC, +6.5pp vs sans separation loss.', es: 'Resultado reciente: lambda = 0.02 alcanzo 99.03% +/- 0.07% AUROC, +6.5pp frente a sin separation loss.', ar: 'آخر نتيجة في الرسالة: lambda = 0.02 حققت 99.03% +/- 0.07% AUROC، بزيادة +6.5pp مقارنة بدون خسارة الفصل.' },
   thesisPdf: { en: 'View Full Thesis (PDF) ->', de: 'Vollstandige Thesis ansehen (PDF) ->', fr: 'Voir le memoire complet (PDF) ->', es: 'Ver tesis completa (PDF) ->', ar: 'عرض الرسالة كاملة (PDF) ->' },
   track2: { en: "Master's Thesis (Track 2) - JKU Linz - 2026", de: 'Masterarbeit (Track 2) - JKU Linz - 2026', fr: 'Memoire de master (Track 2) - JKU Linz - 2026', es: 'Tesis de master (Track 2) - JKU Linz - 2026', ar: 'رسالة ماجستير (المسار 2) - JKU Linz - 2026' },
   track2Title: { en: 'Rigorous Cross-Domain Transfer & FTI_Zer0P Benchmark', de: 'Strenger Cross-Domain Transfer & FTI_Zer0P Benchmark', fr: 'Transfert cross-domain rigoureux & benchmark FTI_Zer0P', es: 'Transferencia cross-domain rigurosa y benchmark FTI_Zer0P', ar: 'انتقال صارم بين المجالات ومعيار FTI_Zer0P' },
@@ -136,7 +136,7 @@ export default function Research() {
               <div className="cd-rf-label">{t(copy.track1)}</div>
               <div className="cd-rf-title" itemProp="name">{t(copy.thesisTitle)}</div>
               <div className="cd-rf-desc" itemProp="description">
-                {t(copy.thesisDesc)} <strong>99.03% +/- 0.07% AUROC</strong>, <strong>+6.51pp gain</strong>, baseline 92.52% +/- 11.07%, external OOD 90.50%-96.97%.
+                {t(copy.thesisDesc)} <strong>99.03% +/- 0.07% AUROC</strong>, <strong>+6.5pp gain</strong>, baseline 92.52% +/- 11.07%, external OOD 90.50%-96.97%.
               </div>
               <div className="cd-rf-meta">
                 {t(copy.supervisor)}: Prof. Sepp Hochreiter (LSTM Inventor) - {t(copy.assistant)}: Claus Hofmann, MSc - JKU Linz - 2026
