@@ -7,6 +7,9 @@ export default function CustomCursor() {
   const ringRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReducedMotion) return
+
     const hasHoverPointer =
       window.matchMedia('(any-pointer: fine)').matches ||
       window.matchMedia('(pointer: fine)').matches ||

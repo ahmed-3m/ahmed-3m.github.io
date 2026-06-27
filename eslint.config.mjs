@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Tooling / generated / duplicated trees that should not be linted.
+    ".agents/**",
+    ".claude/**",
+    "node_modules/**",
   ]),
 ]);
 
