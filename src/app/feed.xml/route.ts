@@ -25,7 +25,7 @@ export async function GET() {
     <description>Articles on computer vision, diffusion models, OOD detection, and production AI engineering.</description>
     <language>en-us</language>
     <atom:link href="${baseUrl}/feed.xml" rel="self" type="application/rss+xml"/>
-    <managingEditor>ahmed.mo.0595@gmail.com (Ahmed Mohammed)</managingEditor>
+    <managingEditor>ahmed@faultrix.com (Ahmed Mohammed)</managingEditor>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     ${items}
   </channel>

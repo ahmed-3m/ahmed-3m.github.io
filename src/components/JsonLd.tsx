@@ -11,7 +11,7 @@ export function PersonSchema() {
     description: 'AI/ML Engineer specializing in computer vision, anomaly detection, and diffusion models. Founder of Faultrix. M.Sc. Artificial Intelligence from Johannes Kepler University Linz, supervised by Prof. Sepp Hochreiter (inventor of LSTM). Achieved 99.03% AUROC on CIFAR-10 OOD detection and 98.4% industrial defect detection accuracy.',
     url: 'https://ahmed-3m.github.io',
     image: 'https://ahmed-3m.github.io/headshot.jpg',
-    email: 'ahmed.mo.0595@gmail.com',
+    email: 'ahmed@faultrix.com',
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Linz',
@@ -102,7 +102,7 @@ export function PersonSchema() {
     },
     contactPoint: {
       '@type': 'ContactPoint',
-      email: 'ahmed.mo.0595@gmail.com',
+      email: 'ahmed@faultrix.com',
       contactType: 'professional inquiry',
       availableLanguage: ['English', 'Arabic', 'German'],
     },
@@ -235,7 +235,7 @@ export function FAQSchema() {
         name: 'Where is Ahmed Mohammed based and how can I contact him?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Ahmed Mohammed is based in Linz, Austria. He can be contacted via email at ahmed.mo.0595@gmail.com, on LinkedIn at linkedin.com/in/ahmed-3m, or through his portfolio at ahmed-3m.github.io. He is open to senior AI/ML roles and research collaborations.',
+          text: 'Ahmed Mohammed is based in Linz, Austria. He can be contacted via email at ahmed@faultrix.com, on LinkedIn at linkedin.com/in/ahmed-3m, or through his portfolio at ahmed-3m.github.io. He is open to senior AI/ML roles and research collaborations.',
         },
       },
       {
@@ -267,7 +267,7 @@ export function FAQSchema() {
         name: 'Is Ahmed Mohammed available for hire or freelance AI/ML projects?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Ahmed Mohammed is open to senior AI/ML engineering roles and research collaborations. He specializes in computer vision, diffusion models, and out-of-distribution detection. Based in Linz, Austria, he is available for positions in the DACH region and remote roles. Contact: ahmed.mo.0595@gmail.com or LinkedIn: linkedin.com/in/ahmed-3m',
+          text: 'Ahmed Mohammed is open to senior AI/ML engineering roles and research collaborations. He specializes in computer vision, diffusion models, and out-of-distribution detection. Based in Linz, Austria, he is available for positions in the DACH region and remote roles. Contact: ahmed@faultrix.com or LinkedIn: linkedin.com/in/ahmed-3m',
         },
       },
       {
@@ -309,7 +309,7 @@ export function SocialProfileSchema() {
       alternateName: 'Ahmed 3M',
       description: 'AI/ML Engineer & Entrepreneur specializing in computer vision, diffusion models, and out-of-distribution detection. Founder of Faultrix. M.Sc. AI from JKU Linz under Prof. Sepp Hochreiter. Based in Linz, Austria.',
       image: 'https://ahmed-3m.github.io/headshot.jpg',
-      email: 'ahmed.mo.0595@gmail.com',
+      email: 'ahmed@faultrix.com',
       sameAs: [
         'https://github.com/ahmed-3m',
         'https://www.linkedin.com/in/ahmed-3m/',
@@ -438,7 +438,7 @@ export function ResearchSchema() {
       '@type': 'Person',
       name: 'Ahmed Mohammed',
       url: 'https://ahmed-3m.github.io',
-      email: 'ahmed.mo.0595@gmail.com',
+      email: 'ahmed@faultrix.com',
       affiliation: {
         '@type': 'CollegeOrUniversity',
         name: 'Johannes Kepler University Linz',

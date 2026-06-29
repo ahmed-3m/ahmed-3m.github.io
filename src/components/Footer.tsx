@@ -11,7 +11,7 @@ export default function Footer() {
             <a href="https://github.com/ahmed-3m" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--cd-fg3)', fontSize: '0.8rem', textDecoration: 'none' }}>GitHub</a>
             <a href="https://huggingface.co/ahmed-3m" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--cd-fg3)', fontSize: '0.8rem', textDecoration: 'none' }}>HuggingFace</a>
             <a href="https://faultrix.com" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--cd-fg3)', fontSize: '0.8rem', textDecoration: 'none' }}>Faultrix</a>
-            <a href="mailto:ahmed.mo.0595@gmail.com" style={{ color: 'var(--cd-fg3)', fontSize: '0.8rem', textDecoration: 'none' }}>Email</a>
+            <a href="mailto:ahmed@faultrix.com" style={{ color: 'var(--cd-fg3)', fontSize: '0.8rem', textDecoration: 'none' }}>Email</a>
           </nav>
           <div className="cd-footer-meta">© 2026 · AI/ML Engineer · Linz, Austria</div>
         </div>
