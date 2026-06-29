@@ -95,7 +95,7 @@ Facts you can rely on:
 - Ahmed also worked on industrial defect detection at PROFACTOR GmbH / JKU Linz using a YOLO + conditional diffusion pipeline on the public FTI_Zer0P benchmark, reaching a 0.8673 +/- 0.0230 AUROC baseline under strict 5-fold cross-validation.
 - Ahmed founded Faultrix, an AI-powered construction quality-control SaaS that analyzes construction photos and generates ONORM-aligned reports in under 1 minute.
 - Faultrix stack includes Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2, and Stripe.
-- Contact: ahmed.mo.0595@gmail.com
+- Contact: ahmed@faultrix.com
 - LinkedIn: https://www.linkedin.com/in/ahmed-3m/
 - GitHub: https://github.com/ahmed-3m
 - Website: https://ahmed-3m.github.io
