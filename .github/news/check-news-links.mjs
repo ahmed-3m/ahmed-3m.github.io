@@ -12,6 +12,12 @@ import { readFile } from 'node:fs/promises'
 
 const FILE = 'src/lib/news-items.ts'
 const TIMEOUT_MS = 12000
+// Transient failures (5xx that often blips: 502/503/504, plus network errors
+// surfaced as status 0) are retried with a short backoff before counting as a
+// hard failure. Stops a single flaky upstream — like ainews.cool serving a
+// momentary 502 — from nuking an entire week's update.
+const MAX_ATTEMPTS = 3
+const RETRY_STATUSES = new Set([0, 502, 503, 504])
 const UA =
   'Mozilla/5.0 (compatible; ahmed-3m-news-linkcheck/1.0; +https://ahmed-3m.github.io/news)'
 
@@ -23,7 +29,10 @@ if (urls.length === 0) {
   process.exit(1)
 }
 
-async function check(url) {
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+
+// Single attempt. Returns { url, status, error }.
+async function probe(url) {
   const ctrl = new AbortController()
   const timer = setTimeout(() => ctrl.abort(), TIMEOUT_MS)
   try {
@@ -40,6 +49,22 @@ async function check(url) {
   } finally {
     clearTimeout(timer)
   }
+}
+
+async function check(url) {
+  let result
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+    result = await probe(url)
+    if (!RETRY_STATUSES.has(result.status)) return result
+    if (attempt < MAX_ATTEMPTS) {
+      const backoff = 2000 * attempt
+      console.log(
+        `↻ ${result.status || result.error} ${url} — retrying in ${backoff}ms (attempt ${attempt}/${MAX_ATTEMPTS})`,
+      )
+      await sleep(backoff)
+    }
+  }
+  return result
 }
 
 const results = await Promise.all([...new Set(urls)].map(check))

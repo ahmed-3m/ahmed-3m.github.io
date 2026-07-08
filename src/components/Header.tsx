@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
+import { usePathname } from 'next/navigation'
 import { Check, ChevronDown, Globe2, Moon, Sun } from 'lucide-react'
 import { useTheme } from '@/lib/ThemeContext'
 import { languageOptions, useI18n, type TranslationMap, type Language } from '@/lib/i18n'
@@ -132,11 +133,13 @@ export default function Header() {
   const { theme, toggleTheme } = useTheme()
   const { t } = useI18n()
   const isDark = theme === 'dark'
+  // On the homepage the logo scrolls to the hero; everywhere else it returns home.
+  const isHome = usePathname() === '/'
 
   return (
     <nav className="cd-nav">
       <div className="cd-nav-inner">
-        <a href="#hero" className="cd-nav-logo">Ahmed<span>.</span></a>
+        <a href={isHome ? '#hero' : '/'} className="cd-nav-logo" aria-label="Ahmed Mohammed — home">Ahmed<span>.</span></a>
 
         <ul className="cd-nav-links">
           {links.map(l => (
