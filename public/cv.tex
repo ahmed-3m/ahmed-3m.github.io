@@ -1,0 +1,158 @@
+% CV source of truth. Regenerate cv.pdf with:
+%   xelatex -interaction=nonstopmode -halt-on-error cv.tex
+% in the public/ directory.
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[a4paper,margin=1.4cm,top=1.2cm,bottom=1.2cm]{geometry}
+\usepackage{fontspec}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{tabularx}
+\usepackage{ragged2e}
+
+% Fallback-safe fonts: try common system fonts, fall back to defaults.
+\IfFontExistsTF{Latin Modern Sans}{\setsansfont{Latin Modern Sans}}{}
+\IfFontExistsTF{DejaVu Sans}{\setsansfont{DejaVu Sans}}{}
+
+\definecolor{accent}{HTML}{1F3A5F}
+\definecolor{darkgray}{HTML}{333333}
+\definecolor{midgray}{HTML}{666666}
+
+\hypersetup{colorlinks=true,urlcolor=accent,linkcolor=accent}
+
+% Use a clean sans look; fall back gracefully.
+\renewcommand{\familydefault}{\sfdefault}
+\color{darkgray}
+
+\pagestyle{empty}
+
+\titleformat{\section}[block]
+  {\large\bfseries\color{accent}}
+  {}{0pt}
+  {}
+  [{\vspace{1pt}\color{accent}\hrule\vspace{1pt}}]
+\titlespacing*{\section}{0pt}{8pt}{4pt}
+
+\setlist[itemize]{
+  leftmargin=14pt,
+  itemsep=1pt,
+  topsep=1pt,
+  parsep=0pt,
+  label={\color{accent}\textbullet}
+}
+
+\newcommand{\role}[2]{%
+  \noindent\textbf{#1}\hfill\textbf{\color{midgray}#2}\par%
+}
+
+\newcommand{\org}[1]{\noindent\textit{#1}\par\vspace{1pt}}
+
+\newcommand{\skillrow}[2]{%
+  \textbf{#1} & #2 \\[1pt]%
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+
+\begin{document}
+
+% ============ HEADER ============
+\begin{center}
+  {\LARGE\bfseries\color{accent} AHMED MOHAMMED}\\[2pt]
+  {\small Machine Learning Engineer / Applied AI / Computer Vision}\\[3pt]
+  {\footnotesize Linz, Austria \,|\, +43 681 20567353 \,|\, \href{mailto:ahmed@faultrix.com}{ahmed@faultrix.com}}\\[1pt]
+  {\footnotesize \href{https://linkedin.com/in/ahmed-3m}{linkedin.com/in/ahmed-3m} \,|\, \href{https://github.com/ahmed-3m}{github.com/ahmed-3m} \,|\, \href{https://faultrix.com}{faultrix.com}}
+\end{center}
+\vspace{2pt}
+
+% ============ SUMMARY ============
+\section*{PROFESSIONAL SUMMARY}
+ML Engineer and M.Sc.\ in Artificial Intelligence student at JKU Linz (advised by Prof.\ Sepp Hochreiter; thesis submitted Jul 2026, degree expected 2026) with a proven track record of building and deploying ML models from research to production. Hands-on experience with PyTorch, PyTorch Lightning, diffusion models, CNNs, and LLMs across diverse data types: images (computer vision), text (NLP/LLMs), and time-series (EEG/BCI). As founder of Faultrix, architected end-to-end ML pipelines with production-grade reliability; conducted industrial ML validation at PROFACTOR GmbH funded by the Government of Upper Austria (project Zer0P). Strong fundamentals in Python, Git, Docker, and Linux.
+
+% ============ SKILLS ============
+\section*{CORE SKILLS}
+\renewcommand{\arraystretch}{1.15}
+\noindent\begin{tabularx}{\textwidth}{@{}p{3.4cm}X@{}}
+\skillrow{ML Frameworks}{PyTorch \textbullet{} PyTorch Lightning \textbullet{} Scikit-learn \textbullet{} Diffusion Models (DDPM) \textbullet{} CNNs \textbullet{} UNet \textbullet{} Transformers \textbullet{} LLMs \textbullet{} Encoder-Decoder Architectures}
+\skillrow{Data \& Pipelines}{End-to-end ML pipelines \textbullet{} Data preprocessing \textbullet{} Augmentation \textbullet{} Structured \& unstructured data}
+\skillrow{Model Engineering}{Model training \& optimization \textbullet{} Hyperparameter tuning \textbullet{} OOD detection \textbullet{} Image classification \textbullet{} Object detection (YOLOv8) \textbullet{} Inference orchestration \textbullet{} Structured output extraction}
+\skillrow{Evaluation \& Monitoring}{AUROC/FPR95 evaluation \textbullet{} Ablation studies \textbullet{} Model drift monitoring \textbullet{} Latency optimization \textbullet{} Reproducible benchmarking \textbullet{} Monte Carlo methods}
+\skillrow{Software \& DevOps}{Python (advanced) \textbullet{} Git \textbullet{} Docker \textbullet{} Linux \textbullet{} REST APIs \textbullet{} CI/CD concepts \textbullet{} Structured logging \textbullet{} TypeScript}
+\skillrow{Collaboration}{Research-to-production handover \textbullet{} Technical documentation \textbullet{} Cross-functional teamwork \textbullet{} Academic writing \textbullet{} AI coding tools (Claude Code, Copilot)}
+\end{tabularx}
+
+% ============ EXPERIENCE ============
+\section*{PROFESSIONAL EXPERIENCE}
+
+\role{Founder \& ML Engineer}{Jul 2025 -- Present}
+\org{Faultrix -- Linz, Austria}
+Production ML system: image ingestion $\rightarrow$ model inference $\rightarrow$ structured extraction $\rightarrow$ automated reporting
+\begin{itemize}
+  \item Designed and deployed an end-to-end ML pipeline handling image ingestion, model inference, structured output extraction, and automated PDF report generation -- processing end-to-end in under 1 minute.
+  \item Built fault-tolerant ML workflow with idempotent processing steps, retry logic, and iterative quality loops -- achieving production-grade reliability for model inference from day one.
+  \item Optimised LLM-powered inference components for latency and output consistency through systematic prompt engineering, structured output validation, and continuous model performance monitoring.
+  \item Sole technical founder -- owned the full ML product cycle: model selection, pipeline architecture, deployment, and iteration based on real-world performance data.
+\end{itemize}
+\vspace{3pt}
+
+\role{M.Sc. Thesis Researcher}{Apr 2024 -- Present}
+\org{JKU Institute for Machine Learning \& PROFACTOR GmbH -- Linz / Steyr}
+\textit{\small Industrial research conducted on-site at PROFACTOR GmbH \textbullet{} Government of Upper Austria, project Zer0P}
+\begin{itemize}
+  \item Thesis: \emph{Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection} -- supervised by Prof.\ Sepp Hochreiter; assistant supervisor Claus Hofmann, MSc.
+  \item Developed a binary conditional diffusion model with a novel class-conditional separation loss, boosting OOD detection AUROC from 92.52\% $\pm$ 11.07\% to 99.03\% $\pm$ 0.07\% on CIFAR-10 (+6.5 pp gain, 3-seed mean).
+  \item Achieved 98.98\% AUROC on within-CIFAR split (seed-42) and 90.50--96.97\% across five external OOD benchmarks (CIFAR-100, Places365, FashionMNIST, SVHN, Textures).
+  \item Extended the framework to industrial classification of inkjet experimental prints at PROFACTOR GmbH (Government of Upper Austria, project Zer0P): designed a multi-head conditioning mechanism and conducted an 8-method comparison with 5-fold cross-validation.
+  \item Built modular, reproducible experiment infrastructure using PyTorch Lightning + Hydra with configuration tracking, seed-controlled runs, and auditable raw-score artefacts.
+\end{itemize}
+\vspace{3pt}
+
+\role{AI Research Intern}{Aug 2023 -- Oct 2023}
+\org{Karunya University -- Coimbatore, India}
+\begin{itemize}
+  \item Developed deep learning models for EEG-based motor imagery classification in Brain-Computer Interface (BCI) systems; designed signal preprocessing and feature extraction pipelines for multi-class EEG data.
+  \item Evaluated and compared CNN and RNN architectures for real-time BCI decoding; documented methods and findings for academic stakeholders.
+\end{itemize}
+
+% ============ PROJECTS ============
+\section*{SELECTED PROJECTS}
+
+\textbf{OOD Detection with Conditional Diffusion Models} (M.Sc.\ Thesis) \,|\, JKU Institute for Machine Learning -- Prof.\ Sepp Hochreiter\\
+Binary CDM achieving 99.03\% AUROC on CIFAR-10 via novel separation loss. Extended to industrial inkjet quality control with multi-head conditioning (YOLOv8 + CDM two-stage pipeline). Modular implementation: PyTorch Lightning, Hydra, reproducible auditable artefacts.
+\vspace{3pt}
+
+\textbf{Faultrix -- AI-Powered Construction Report Automation} \,|\, faultrix.com\\
+Production ML SaaS: building photo $\rightarrow$ AI inference $\rightarrow$ structured damage analysis $\rightarrow$ ONORM-compliant report in $<$1 min. Stack: Python, Next.js, OpenAI API, Convex. Fault-tolerant pipeline with iterative quality loops.
+\vspace{3pt}
+
+\textbf{EEG Motor Imagery Classification for Brain-Computer Interfaces} \,|\, Karunya University, India\\
+Deep learning models for multi-class EEG signal classification in BCI systems. Signal preprocessing, feature extraction pipelines, and CNN/RNN architecture comparison for real-time decoding.
+
+% ============ EDUCATION ============
+\section*{EDUCATION}
+
+\role{M.Sc.\ Artificial Intelligence}{Oct 2024 -- Jul 2026}
+\org{Johannes Kepler University (JKU), Linz -- Thesis submitted Jul 2026}
+\begin{itemize}
+  \item Thesis advisor: Prof.\ Sepp Hochreiter \textbullet{} Assistant: Claus Hofmann, MSc \textbullet{} Coursework: Advanced Deep Learning, Probabilistic ML, Computer Vision, Reinforcement Learning, Statistical Machine Learning
+\end{itemize}
+\vspace{3pt}
+
+\role{B.Sc.\ Mechatronics Engineering}{Feb 2015 -- Jan 2018}
+\org{Eastern Mediterranean University, Cyprus}
+\begin{itemize}
+  \item Graduation project: SCARA robotic system for dynamic object tracking -- real-time control and sensor integration
+\end{itemize}
+
+% ============ LANGUAGES ============
+\section*{LANGUAGES}
+\renewcommand{\arraystretch}{1.15}
+\noindent\begin{tabularx}{\textwidth}{@{}p{3.4cm}X@{}}
+\skillrow{English}{B2 -- Professional Working}
+\skillrow{German}{B1 -- CEFR (actively improving)}
+\skillrow{Arabic}{Native}
+\end{tabularx}
+
+\end{document}

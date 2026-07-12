@@ -25,11 +25,11 @@ const copy = {
     ar: 'PROFACTOR / FTI_Zer0P',
   },
   result: {
-    en: '99.03% AUROC thesis result',
-    de: '99.03% AUROC Thesis-Ergebnis',
-    fr: '99.03% AUROC sur le memoire',
-    es: '99.03% AUROC en la tesis',
-    ar: 'نتيجة الرسالة 99.03% AUROC',
+    en: '99.03% AUROC thesis result (binary, single-class)',
+    de: '99.03% AUROC Thesis-Ergebnis (binär, Einzelklasse)',
+    fr: '99.03% AUROC sur le memoire (binaire, classe unique)',
+    es: '99.03% AUROC en la tesis (binario, clase única)',
+    ar: 'نتيجة الرسالة 99.03% AUROC (ثنائي، فئة واحدة)',
   },
   location: {
     en: 'JKU Linz, Austria',

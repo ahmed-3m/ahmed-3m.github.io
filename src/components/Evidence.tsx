@@ -31,10 +31,16 @@ const evidenceItems = [
     label: 'Proof',
   },
   {
-    title: { en: 'Industrial technical report', de: 'Industriebericht', fr: 'Rapport technique industriel', es: 'Informe tecnico industrial', ar: 'التقرير الصناعي' },
-    meta: { en: '0.8673 +/- 0.0230 AUROC baseline', de: '0.8673 +/- 0.0230 AUROC Baseline', fr: 'baseline a 0.8673 +/- 0.0230 AUROC', es: 'baseline de 0.8673 +/- 0.0230 AUROC', ar: 'baseline بقيمة 0.8673 +/- 0.0230 AUROC' },
-    href: '/Diffusion-Based Multi-class Defect Detection.pdf',
+    title: { en: 'Industrial OOD baseline (thesis)', de: 'Industrielle OOD-Baseline (Thesis)', fr: 'Baseline OOD industrielle (memoire)', es: 'Baseline OOD industrial (tesis)', ar: 'خط الأساس OOD الصناعي (الرسالة)' },
+    meta: { en: '0.8673 +/- 0.0230 AUROC · FTI_Zer0P 5-fold', de: '0.8673 +/- 0.0230 AUROC · FTI_Zer0P 5-fach', fr: '0.8673 +/- 0.0230 AUROC · FTI_Zer0P 5-plis', es: '0.8673 +/- 0.0230 AUROC · FTI_Zer0P 5-folds', ar: '0.8673 +/- 0.0230 AUROC · FTI_Zer0P 5 طيات' },
+    href: '/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf',
     label: 'Proof',
+  },
+  {
+    title: { en: 'Early technical report (2024)', de: 'Frühzeitiger Technischer Bericht (2024)', fr: 'Rapport technique précoce (2024)', es: 'Informe técnico temprano (2024)', ar: 'تقرير تقني مبكر (2024)' },
+    meta: { en: 'Negative result — motivated the thesis approach', de: 'Negatives Ergebnis — motivierte den Thesis-Ansatz', fr: 'Résultat négatif — a motivé l approche de la thèse', es: 'Resultado negativo — motivó el enfoque de la tesis', ar: 'نتيجة سلبية — حفّزت نهج الرسالة' },
+    href: '/Diffusion-Based Multi-class Defect Detection.pdf',
+    label: 'Case study',
   },
   {
     title: { en: 'DiffusionOOD repository', de: 'DiffusionOOD Repository', fr: 'Depot DiffusionOOD', es: 'Repositorio DiffusionOOD', ar: 'مستودع DiffusionOOD' },

@@ -38,11 +38,11 @@ const copy = {
   reportReady: { en: 'QC report ready', de: 'QC-Bericht bereit', fr: 'Rapport QC pret', es: 'Informe QC listo', ar: 'تقرير الجودة جاهز' },
   imagesFlagged: { en: 'images flagged', de: 'Bilder markiert', fr: 'images signalees', es: 'imagenes marcadas', ar: 'صور تم تمييزها' },
   legend: {
-    en: '99.03% AUROC = CIFAR-10 thesis (3-seed mean) · 0.8673 AUROC = industrial FTI_Zer0P 5-fold baseline · <1 min = Faultrix report generation',
-    de: '99,03% AUROC = CIFAR-10 Thesis (3-Saat-Mittel) · 0,8673 AUROC = industrielle FTI_Zer0P 5-fach Baseline · <1 Min = Faultrix Berichtserstellung',
-    fr: '99,03% AUROC = these CIFAR-10 (moyenne 3 seeds) · 0,8673 AUROC = baseline industrielle FTI_Zer0P 5-fold · <1 min = generation de rapport Faultrix',
-    es: '99,03% AUROC = tesis CIFAR-10 (media de 3 seeds) · 0,8673 AUROC = baseline industrial FTI_Zer0P 5-fold · <1 min = generacion de informe Faultrix',
-    ar: '99.03% AUROC = رسالة CIFAR-10 (متوسط 3 تجارب) · 0.8673 AUROC = خط أساس صناعي FTI_Zer0P 5-fold · <1 دقيقة = إنشاء تقرير Faultrix',
+    en: '99.03% AUROC = CIFAR-10 thesis (binary, single-class airplane-vs-rest, 3-seed mean) · 0.8673 AUROC = industrial FTI_Zer0P 5-fold baseline · <1 min = Faultrix report generation',
+    de: '99,03% AUROC = CIFAR-10 Thesis (binär, Einzelklasse Flugzeug-vs-Rest, 3-Saat-Mittel) · 0,8673 AUROC = industrielle FTI_Zer0P 5-fach Baseline · <1 Min = Faultrix Berichtserstellung',
+    fr: '99,03% AUROC = thèse CIFAR-10 (binaire, classe unique avion-vs-reste, moyenne 3 seeds) · 0,8673 AUROC = baseline industrielle FTI_Zer0P 5-fold · <1 min = generation de rapport Faultrix',
+    es: '99,03% AUROC = tesis CIFAR-10 (binaria, clase única avión-vs-resto, media de 3 seeds) · 0,8673 AUROC = baseline industrial FTI_Zer0P 5-fold · <1 min = generacion de informe Faultrix',
+    ar: '99.03% AUROC = رسالة CIFAR-10 (ثنائي، فئة واحدة طائرة مقابل الباقي، متوسط 3 تجارب) · 0.8673 AUROC = خط أساس صناعي FTI_Zer0P 5-fold · <1 دقيقة = إنشاء تقرير Faultrix',
   },
 } satisfies Record<string, TranslationMap>
 

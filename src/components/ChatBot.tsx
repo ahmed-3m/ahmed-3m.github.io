@@ -98,8 +98,8 @@ Response rules:
 
 Facts you can rely on:
 - Ahmed Mohammed is an AI/ML Engineer and entrepreneur based in Linz, Austria.
-- He completed an M.Sc. in Artificial Intelligence at JKU Linz under Prof. Sepp Hochreiter.
-- His thesis used conditional diffusion models as generative classifiers for OOD detection and reached 99.03% +/- 0.07% average AUROC on CIFAR-10 with separation loss.
+- He submitted an M.Sc. thesis in Artificial Intelligence at JKU Linz under Prof. Sepp Hochreiter (degree expected 2026).
+- His thesis used conditional diffusion models as generative classifiers for OOD detection and reached 99.03% +/- 0.07% average AUROC on a within-CIFAR airplane-vs-rest binary split (single ID class; not comparable to multi-class CIFAR-10 OOD benchmarks) with separation loss.
 - Seed-42 achieved 98.98% AUROC within-CIFAR and generalized zero-shot to CIFAR-100, Places365, FashionMNIST, Textures, and SVHN.
 - The non-separated baseline was 92.52% +/- 11.07%, so separation loss added about +6.5 percentage points and dramatically reduced variance.
 - Ahmed also worked on industrial defect detection at PROFACTOR GmbH / JKU Linz using a YOLO + conditional diffusion pipeline on the public FTI_Zer0P benchmark, reaching a 0.8673 +/- 0.0230 AUROC baseline under strict 5-fold cross-validation.
