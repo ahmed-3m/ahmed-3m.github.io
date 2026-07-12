@@ -14,7 +14,8 @@ const copy = {
     ar: 'منصة SaaS لمراقبة جودة البناء بالذكاء الاصطناعي. تحلل صور المواقع وتنشئ تقارير متوافقة مع ONORM خلال أقل من دقيقة مع سلسلة أدلة SHA-256 وتشفير AES-256.',
   },
   reportMetric: { en: 'min per report', de: 'Min. pro Bericht', fr: 'min par rapport', es: 'min por informe', ar: 'دقيقة لكل تقرير' },
-  caseStudy: { en: 'Case study', de: 'Case Study', fr: 'Etude de cas', es: 'Caso de estudio', ar: 'دراسة حالة' },
+  caseStudy: { en: 'Case study', de: 'Fallstudie', fr: 'Etude de cas', es: 'Caso de estudio', ar: 'دراسة حالة' },
+  code: { en: 'Code', de: 'Code', fr: 'Code', es: 'Codigo', ar: 'الكود' },
   thesis: { en: "Master's Thesis - JKU Linz", de: 'Masterarbeit - JKU Linz', fr: 'Memoire de master - JKU Linz', es: 'Tesis de master - JKU Linz', ar: 'رسالة ماجستير - JKU Linz' },
   oodTitle: { en: 'OOD Detection Framework', de: 'OOD-Erkennungsframework', fr: 'Framework de detection OOD', es: 'Framework de deteccion OOD', ar: 'إطار كشف الخارج عن التوزيع' },
   oodDesc: {
@@ -62,7 +63,7 @@ export default function Projects() {
         <h2 className="cd-section-title">{t(copy.title)}</h2>
 
         <div className="cd-projects-grid">
-          <a href="https://faultrix.com" target="_blank" rel="noopener noreferrer" className="cd-project-featured reveal">
+          <article className="cd-project-featured reveal">
             <div>
               <div className="cd-proj-eyebrow">{t(copy.live)}</div>
               <div className="cd-proj-title">Faultrix</div>
@@ -72,7 +73,6 @@ export default function Projects() {
                   <span key={tag} className="cd-proj-tag">{tag}</span>
                 ))}
               </div>
-              <span className="cd-proj-link">faultrix.com &rarr;</span>
             </div>
             <div className="cd-proj-metric-big">
               <div className="num">&lt;1</div>
@@ -81,35 +81,35 @@ export default function Projects() {
                 ONORM · DSGVO compliant
               </div>
               <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-                <span className="cd-proj-link" style={{ fontSize: 12 }}>faultrix.com &rarr;</span>
-                <span className="cd-proj-link" style={{ fontSize: 12, opacity: 0.78 }}>{t(copy.caseStudy)}: /case-studies/faultrix</span>
+                <a href="https://faultrix.com" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>faultrix.com &rarr;</a>
+                <a href="/case-studies/faultrix" className="cd-proj-link" style={{ fontSize: 12, opacity: 0.78 }}>{t(copy.caseStudy)} &rarr;</a>
               </div>
             </div>
-          </a>
+          </article>
 
-          <a href="https://github.com/ahmed-3m/DiffusionOOD" target="_blank" rel="noopener noreferrer" className="cd-project-card reveal">
+          <article className="cd-project-card reveal">
             <div className="cd-pc-eyebrow">{t(copy.thesis)}</div>
             <div className="cd-pc-title">{t(copy.oodTitle)}</div>
             <div className="cd-pc-desc">{t(copy.oodDesc)}</div>
             <div className="cd-pc-metric">99.03%<span> +/- 0.07% Avg AUROC</span></div>
             <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
-              <span className="cd-proj-link" style={{ fontSize: 12 }}>DiffusionOOD &rarr;</span>
-              <span className="cd-proj-link" style={{ fontSize: 12, opacity: 0.65 }}>{t(copy.caseStudy)}: /case-studies/diffusion-ood</span>
+              <a href="https://github.com/ahmed-3m/DiffusionOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.code)} &rarr;</a>
+              <a href="/case-studies/diffusion-ood" className="cd-proj-link" style={{ fontSize: 12, opacity: 0.65 }}>{t(copy.caseStudy)} &rarr;</a>
             </div>
-          </a>
+          </article>
 
-          <a href="https://github.com/ahmed-3m/InkjetOOD" target="_blank" rel="noopener noreferrer" className="cd-project-card reveal">
+          <article className="cd-project-card reveal">
             <div className="cd-pc-eyebrow">Master&apos;s Thesis Track 2</div>
             <div className="cd-pc-title">{t(copy.inkjetTitle)}</div>
             <div className="cd-pc-desc">{t(copy.inkjetDesc)}</div>
             <div className="cd-pc-metric">0.8673<span> AUROC (5-Fold CV)</span></div>
             <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
-              <span className="cd-proj-link" style={{ fontSize: 12 }}>InkjetOOD &rarr;</span>
-              <span className="cd-proj-link" style={{ fontSize: 12, opacity: 0.65 }}>{t(copy.caseStudy)}: /case-studies/inkjet-ood</span>
+              <a href="https://github.com/ahmed-3m/InkjetOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.code)} &rarr;</a>
+              <a href="/case-studies/inkjet-ood" className="cd-proj-link" style={{ fontSize: 12, opacity: 0.65 }}>{t(copy.caseStudy)} &rarr;</a>
             </div>
-          </a>
+          </article>
 
-          <a href="https://t.me/mento_personal_bot" target="_blank" rel="noopener noreferrer" className="cd-project-card reveal">
+          <article className="cd-project-card reveal">
             <div className="cd-pc-eyebrow">{t(copy.mentoEyebrow)}</div>
             <div className="cd-pc-title">{t(copy.mentoTitle)}</div>
             <div className="cd-pc-desc">{t(copy.mentoDesc)}</div>
@@ -118,14 +118,19 @@ export default function Projects() {
                 <span key={tag} className="cd-proj-tag">{tag}</span>
               ))}
             </div>
-            <span className="cd-proj-link">@mento_personal_bot &rarr;</span>
-          </a>
+            <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
+              <a href="https://t.me/mento_personal_bot" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>Telegram &rarr;</a>
+            </div>
+          </article>
 
-          <a href="https://github.com/ahmed-3m/Motor-Imagery-classification" target="_blank" rel="noopener noreferrer" className="cd-project-card cd-project-card--full reveal">
+          <article className="cd-project-card cd-project-card--full reveal">
             <div className="cd-pc-eyebrow">Karunya University · BCI Research</div>
             <div className="cd-pc-title">{t(copy.eegTitle)}</div>
             <div className="cd-pc-desc">{t(copy.eegDesc)}</div>
-          </a>
+            <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
+              <a href="https://github.com/ahmed-3m/Motor-Imagery-classification" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.code)} &rarr;</a>
+            </div>
+          </article>
         </div>
       </div>
     </section>

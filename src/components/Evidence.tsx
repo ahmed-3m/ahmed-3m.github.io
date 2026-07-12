@@ -4,7 +4,7 @@ import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { useReveal } from '@/lib/useReveal'
 
 const copy = {
-  eyebrow: { en: '// Proof', de: '// Nachweise', fr: '// Preuves', es: '// Evidencia', ar: '// أدلة' },
+  eyebrow: { en: '// 03 - Proof', de: '// 03 - Nachweise', fr: '// 03 - Preuves', es: '// 03 - Evidencia', ar: '// 03 - أدلة' },
   title: {
     en: 'Selected evidence.',
     de: 'Ausgewaehlte Nachweise.',

@@ -14,7 +14,7 @@ const socials = [
 ]
 
 const copy = {
-  eyebrow: { en: '// 06 - Contact', de: '// 06 - Kontakt', fr: '// 06 - Contact', es: '// 06 - Contacto', ar: '// 06 - التواصل' },
+  eyebrow: { en: '// 08 - Contact', de: '// 08 - Kontakt', fr: '// 08 - Contact', es: '// 08 - Contacto', ar: '// 08 - التواصل' },
   titleA: { en: "Let's build", de: 'Lass uns', fr: 'Construisons', es: 'Construyamos', ar: 'لنبنِ' },
   titleB: { en: 'something', de: 'etwas', fr: 'quelque chose', es: 'algo', ar: 'شيئاً' },
   titleC: { en: 'extraordinary', de: 'Aussergewohnliches bauen', fr: 'd extraordinaire', es: 'extraordinario', ar: 'استثنائياً' },

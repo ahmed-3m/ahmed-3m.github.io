@@ -6,13 +6,13 @@ import { useTheme } from '@/lib/ThemeContext'
 import { languageOptions, useI18n, type TranslationMap, type Language } from '@/lib/i18n'
 
 const links = [
-  { href: '#about', label: { en: 'About', de: 'Profil', fr: 'Profil', es: 'Perfil', ar: 'نبذة' } },
-  { href: '#projects', label: { en: 'Projects', de: 'Projekte', fr: 'Projets', es: 'Proyectos', ar: 'المشاريع' } },
-  { href: '#experience', label: { en: 'Experience', de: 'Erfahrung', fr: 'Experience', es: 'Experiencia', ar: 'الخبرة' } },
-  { href: '#research', label: { en: 'Research', de: 'Forschung', fr: 'Recherche', es: 'Investigacion', ar: 'الأبحاث' } },
-  { href: '#writing', label: { en: 'Blog', de: 'Blog', fr: 'Blog', es: 'Blog', ar: 'المدونة' } },
+  { href: '/#about', label: { en: 'About', de: 'Profil', fr: 'Profil', es: 'Perfil', ar: 'نبذة' } },
+  { href: '/#projects', label: { en: 'Projects', de: 'Projekte', fr: 'Projets', es: 'Proyectos', ar: 'المشاريع' } },
+  { href: '/#experience', label: { en: 'Experience', de: 'Erfahrung', fr: 'Experience', es: 'Experiencia', ar: 'الخبرة' } },
+  { href: '/#research', label: { en: 'Research', de: 'Forschung', fr: 'Recherche', es: 'Investigacion', ar: 'الأبحاث' } },
+  { href: '/#writing', label: { en: 'Blog', de: 'Blog', fr: 'Blog', es: 'Blog', ar: 'المدونة' } },
   { href: '/news', label: { en: 'News', de: 'News', fr: 'Actualites', es: 'Noticias', ar: 'الأخبار' } },
-  { href: '#contact', label: { en: 'Contact', de: 'Kontakt', fr: 'Contact', es: 'Contacto', ar: 'تواصل' } },
+  { href: '/#contact', label: { en: 'Contact', de: 'Kontakt', fr: 'Contact', es: 'Contacto', ar: 'تواصل' } },
 ] satisfies Array<{ href: string; label: TranslationMap }>
 
 const ctaLabel: TranslationMap = {
@@ -112,7 +112,7 @@ function NavCta({ onClick }: { onClick?: () => void }) {
   const { t } = useI18n()
 
   return (
-    <a href="#contact" className="cd-nav-cta" onClick={onClick}>
+    <a href="/#contact" className="cd-nav-cta" onClick={onClick}>
       {t(ctaLabel)}
     </a>
   )
