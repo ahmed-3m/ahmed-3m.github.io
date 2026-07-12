@@ -32,6 +32,13 @@ const copy = {
     es: 'Funde Faultrix para convertir esta mentalidad de investigacion en un producto real: control de calidad en construccion con IA e informes en menos de un minuto.',
     ar: 'أسست Faultrix لتحويل عقلية البحث إلى منتج حقيقي: مراقبة جودة البناء بالذكاء الاصطناعي مع تقارير خلال أقل من دقيقة.',
   },
+  path: {
+    en: 'Transitioned from mechatronics engineering to AI/ML - bringing a hardware and systems perspective to computer vision and production ML.',
+    de: 'Uebergang von Mechatronik zu AI/ML - mit Hardware- und Systemperspektive auf Computer Vision und produktionstaugliches ML.',
+    fr: 'Transition de l ingenierie mecatronique vers l AI/ML - apportant une perspective hardware et systemes a la vision par ordinateur et au ML en production.',
+    es: 'Transicion de la ingenieria mecatronica a la IA/ML - aportando una perspectiva de hardware y sistemas a la vision por computadora y al ML en produccion.',
+    ar: 'انتقلت من هندسة الميكاترونكس إلى الذكاء الاصطناعي وتعلم الآلة — جالبًا معي منظور الأنظمة والأجهزة إلى الرؤية الحاسوبية وتعلم الآلة في الإنتاج.',
+  },
   education: { en: 'Education', de: 'Ausbildung', fr: 'Formation', es: 'Educacion', ar: 'التعليم' },
   skills: { en: 'Skills & Stack', de: 'Skills & Stack', fr: 'Competences & stack', es: 'Habilidades y stack', ar: 'المهارات والتقنيات' },
   languages: { en: 'Languages', de: 'Sprachen', fr: 'Langues', es: 'Idiomas', ar: 'اللغات' },
@@ -83,7 +90,26 @@ export default function About() {
         <div className="cd-section-eyebrow">{t(copy.eyebrow)}</div>
         <div className="cd-about-bio-row reveal">
           <div>
-            <h2 className="cd-section-title" style={{ marginBottom: 24 }}>{t(copy.title)}</h2>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginBottom: 24 }}>
+              <img
+                src="/headshot.jpg"
+                alt="Ahmed Mohammed"
+                width={120}
+                height={120}
+                loading="lazy"
+                style={{
+                  width: 120,
+                  height: 120,
+                  borderRadius: '50%',
+                  objectFit: 'cover',
+                  border: `2px solid var(--cd-b1)`,
+                  boxShadow: '0 0 24px var(--cd-accent-dim)',
+                  flexShrink: 0,
+                }}
+              />
+              <h2 className="cd-section-title" style={{ marginBottom: 0 }}>{t(copy.title)}</h2>
+            </div>
+            <p style={{ color: 'var(--cd-fg2)', fontSize: 15, marginBottom: 20 }}>{t(copy.path)}</p>
             <div className="cd-about-text" data-speakable>
               <p>{t(copy.p1)}</p>
               <p>{t(copy.p2)} <strong>99.03% +/- 0.07% AUROC</strong> · <strong>0.8673 AUROC</strong>.</p>

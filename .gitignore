@@ -49,3 +49,7 @@ next-env.d.ts
 
 # local agent skills (not part of the portfolio)
 .agents/
+
+# cloudflare worker — local secrets and cache (source files ARE tracked)
+worker/.dev.vars
+worker/.wrangler/

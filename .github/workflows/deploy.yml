@@ -59,6 +59,9 @@ jobs:
       - name: Build
         run: npm run build
         env:
+          # NEXT_PUBLIC_* tokens are inlined into the static JS bundle and are
+          # publicly extractable. Use disposable, rate-limited free-tier keys only.
+          # The news agent uses a separate private key (ZAI_NEWS_TOKEN) — see news-update.yml.
           NEXT_PUBLIC_GROQ_TOKEN: ${{ secrets.NEXT_PUBLIC_GROQ_TOKEN }}
           NEXT_PUBLIC_ZAI_TOKEN: ${{ secrets.NEXT_PUBLIC_ZAI_TOKEN }}
 

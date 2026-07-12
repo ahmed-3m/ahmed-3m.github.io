@@ -67,6 +67,12 @@ const evidenceItems = [
     label: 'Case study',
   },
   {
+    title: { en: 'InkjetOOD case study', de: 'InkjetOOD Case Study', fr: 'Etude de cas InkjetOOD', es: 'Caso de estudio InkjetOOD', ar: 'دراسة حالة InkjetOOD' },
+    meta: { en: 'Industrial transfer, results, and lessons', de: 'Industrieller Transfer, Ergebnisse und Erkenntnisse', fr: 'Transfert industriel, resultats et lecons', es: 'Transferencia industrial, resultados y lecciones', ar: 'النقل الصناعي والنتائج والدروس' },
+    href: '/case-studies/inkjet-ood',
+    label: 'Case study',
+  },
+  {
     title: { en: 'Faultrix case study', de: 'Faultrix Case Study', fr: 'Etude de cas Faultrix', es: 'Caso de estudio Faultrix', ar: 'دراسة حالة Faultrix' },
     meta: { en: 'Research-to-product build story', de: 'Geschichte vom Research zum Produkt', fr: 'Histoire du passage recherche-produit', es: 'Historia del paso de investigacion a producto', ar: 'قصة الانتقال من البحث إلى المنتج' },
     href: '/case-studies/faultrix',

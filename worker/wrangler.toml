@@ -1,0 +1,14 @@
+name = "ahmed-chat-proxy"
+main = "chat-proxy.js"
+compatibility_date = "2024-01-01"
+
+# Set the Z.ai API key as a Cloudflare secret:
+#   wrangler secret put ZAI_API_KEY
+# This key is NEVER exposed to the client — it lives only in the Worker's environment.
+
+# Optional: bind a KV namespace to enable simple IP-based rate limiting.
+# Create the namespace first with `wrangler kv namespace create CHAT_RATE_KV`,
+# then paste its id below and remove the leading `#`.
+# [[kv_namespaces]]
+# binding = "CHAT_RATE_KV"
+# id = "your-kv-namespace-id-here"

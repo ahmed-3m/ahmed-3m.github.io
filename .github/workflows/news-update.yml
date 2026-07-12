@@ -5,7 +5,8 @@ name: Weekly news update
 # Fully serverless: this Action IS the backend. Git is the dedup store.
 #
 # Required repository secrets:
-#   NEXT_PUBLIC_ZAI_TOKEN  - existing Z.ai / GLM API key (reused here for the agent).
+#   ZAI_NEWS_TOKEN         - private Z.ai / GLM API key for the news agent (NOT exposed in the client bundle).
+#   NEXT_PUBLIC_ZAI_TOKEN  - public, rate-limited Z.ai key for the portfolio chatbot (inlined in the static bundle).
 #   EXA_API_KEY            - Exa API key for the research MCP (https://exa.ai).
 
 on:
@@ -51,7 +52,7 @@ jobs:
       - name: Collect & write news (GLM-5.2 via Z.ai + Exa MCP)
         env:
           ANTHROPIC_BASE_URL: https://api.z.ai/api/anthropic
-          ANTHROPIC_AUTH_TOKEN: ${{ secrets.NEXT_PUBLIC_ZAI_TOKEN }}
+          ANTHROPIC_AUTH_TOKEN: ${{ secrets.ZAI_NEWS_TOKEN }}
           ANTHROPIC_MODEL: glm-5.2
           ANTHROPIC_SMALL_FAST_MODEL: glm-4.7-flash
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
