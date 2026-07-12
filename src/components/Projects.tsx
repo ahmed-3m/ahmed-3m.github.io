@@ -19,11 +19,11 @@ const copy = {
   thesis: { en: "Master's Thesis - JKU Linz", de: 'Masterarbeit - JKU Linz', fr: 'Memoire de master - JKU Linz', es: 'Tesis de master - JKU Linz', ar: 'رسالة ماجستير - JKU Linz' },
   oodTitle: { en: 'OOD Detection Framework', de: 'OOD-Erkennungsframework', fr: 'Framework de detection OOD', es: 'Framework de deteccion OOD', ar: 'إطار كشف الخارج عن التوزيع' },
   oodDesc: {
-    en: 'Conditional diffusion models as generative classifiers achieving 99.03% +/- 0.07% average AUROC on CIFAR-10 OOD detection. Introduced class-conditional separation loss improving average performance by 6.5 percentage points with high seed stability.',
-    de: 'Konditionale Diffusionsmodelle als generative Klassifikatoren mit 99.03% +/- 0.07% durchschnittlichem AUROC fur CIFAR-10 OOD-Erkennung. Die Separation Loss verbessert die Leistung stabil um 6.5 Prozentpunkte.',
-    fr: 'Modeles de diffusion conditionnels utilises comme classificateurs generatifs, avec 99.03% +/- 0.07% AUROC moyen sur CIFAR-10 OOD. La separation loss ameliore la stabilite et ajoute 6.5 points.',
-    es: 'Modelos de difusion condicional como clasificadores generativos con 99.03% +/- 0.07% AUROC medio en CIFAR-10 OOD. La separation loss mejora la estabilidad y suma 6.5 puntos.',
-    ar: 'نماذج انتشار شرطية كمصنفات توليدية حققت 99.03% +/- 0.07% AUROC في كشف OOD على CIFAR-10، مع خسارة فصل حسنت الثبات والأداء بمقدار 6.5 نقطة.',
+    en: 'Conditional diffusion models as generative classifiers achieving 99.03% +/- 0.07% average AUROC on a within-CIFAR airplane-vs-rest binary split (single ID class; not comparable to multi-class CIFAR-10 OOD benchmarks). Introduced class-conditional separation loss improving average performance by 6.5 percentage points with high seed stability.',
+    de: 'Konditionale Diffusionsmodelle als generative Klassifikatoren mit 99.03% +/- 0.07% durchschnittlichem AUROC auf einem Within-CIFAR Airplane-vs-Rest-Binary-Split (einzelne ID-Klasse). Die Separation Loss verbessert die Leistung stabil um 6.5 Prozentpunkte.',
+    fr: 'Modeles de diffusion conditionnels utilises comme classificateurs generatifs, avec 99.03% +/- 0.07% AUROC moyen sur un split binaire airplane-vs-rest within-CIFAR (classe ID unique). La separation loss ameliore la stabilite et ajoute 6.5 points.',
+    es: 'Modelos de difusion condicional como clasificadores generativos con 99.03% +/- 0.07% AUROC medio en un split binario airplane-vs-rest within-CIFAR (clase ID unica). La separation loss mejora la estabilidad y suma 6.5 puntos.',
+    ar: 'نماذج انتشار شرطية كمصنفات توليدية حققت 99.03% +/- 0.07% AUROC على تقسيم ثنائي airplane-vs-rest ضمن CIFAR-10 (فئة ID واحدة)، مع خسارة فصل حسنت الثبات والأداء بمقدار 6.5 نقطة.',
   },
   inkjetTitle: { en: 'InkjetOOD Defect Detection', de: 'InkjetOOD Defekterkennung', fr: 'Detection de defauts InkjetOOD', es: 'Deteccion de defectos InkjetOOD', ar: 'كشف العيوب InkjetOOD' },
   inkjetDesc: {

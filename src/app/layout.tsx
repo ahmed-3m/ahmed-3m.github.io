@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     default: 'Ahmed Mohammed | AI/ML Engineer & Entrepreneur',
     template: '%s | Ahmed Mohammed'
   },
-  description: "AI/ML Engineer in Linz, Austria. 99.03% +/- 0.07% AUROC thesis result, 0.8673 +/- 0.0230 industrial baseline, founder of Faultrix, and public proof artifacts across thesis, reports, repositories, and case studies.",
+  description: "AI/ML Engineer in Linz, Austria. 99.03% +/- 0.07% AUROC thesis result (within-CIFAR airplane-vs-rest binary split), 0.8673 +/- 0.0230 industrial baseline, founder of Faultrix, and public proof artifacts across thesis, reports, repositories, and case studies.",
   keywords: ["AI Engineer", "Machine Learning Engineer", "Computer Vision", "Deep Learning", "PyTorch", "YOLO", "Diffusion Models", "Anomaly Detection", "Ahmed Mohammed", "Faultrix", "AI Entrepreneur", "Linz Austria", "JKU", "OOD Detection", "Industrial Quality Control", "Construction AI", "DiffusionOOD", "InkjetOOD", "Case Study", "Research Portfolio"],
   authors: [{ name: "Ahmed Mohammed", url: 'https://ahmed-3m.github.io' }],
   creator: 'Ahmed Mohammed',

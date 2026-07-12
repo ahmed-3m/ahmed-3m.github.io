@@ -23,11 +23,11 @@ export const caseStudies: CaseStudy[] = [
       ar: 'DiffusionOOD',
     },
     summary: {
-      en: 'Conditional diffusion models used as generative classifiers for OOD detection, with separation loss reaching 99.03% +/- 0.07% AUROC.',
-      de: 'Konditionale Diffusionsmodelle als generative Klassifikatoren fuer OOD-Erkennung mit Separation Loss und 99.03% +/- 0.07% AUROC.',
-      fr: 'Modeles de diffusion conditionnels utilises comme classificateurs generatifs pour la detection OOD avec 99.03% +/- 0.07% AUROC.',
-      es: 'Modelos de difusion condicional usados como clasificadores generativos para deteccion OOD con 99.03% +/- 0.07% AUROC.',
-      ar: 'نماذج انتشار شرطية استُخدمت كمصنفات توليدية لكشف OOD مع 99.03% +/- 0.07% AUROC.',
+      en: 'Conditional diffusion models used as generative classifiers for OOD detection, with separation loss reaching 99.03% +/- 0.07% AUROC on a within-CIFAR airplane-vs-rest binary split (single ID class).',
+      de: 'Konditionale Diffusionsmodelle als generative Klassifikatoren fuer OOD-Erkennung mit Separation Loss und 99.03% +/- 0.07% AUROC auf einem Within-CIFAR Airplane-vs-Rest-Binary-Split (einzelne ID-Klasse).',
+      fr: 'Modeles de diffusion conditionnels utilises comme classificateurs generatifs pour la detection OOD avec 99.03% +/- 0.07% AUROC sur un split binaire airplane-vs-rest within-CIFAR (classe ID unique).',
+      es: 'Modelos de difusion condicional usados como clasificadores generativos para deteccion OOD con 99.03% +/- 0.07% AUROC en un split binario airplane-vs-rest within-CIFAR (clase ID unica).',
+      ar: 'نماذج انتشار شرطية استُخدمت كمصنفات توليدية لكشف OOD مع 99.03% +/- 0.07% AUROC على تقسيم ثنائي airplane-vs-rest ضمن CIFAR-10 (فئة ID واحدة).',
     },
     problem: {
       en: 'Build a more stable OOD detector that does not rely on classifier confidence alone.',
@@ -49,7 +49,7 @@ export const caseStudies: CaseStudy[] = [
       'Evaluate with multiple seeds and external zero-shot benchmarks instead of relying on one lucky run.',
     ],
     results: [
-      '99.03% +/- 0.07% AUROC averaged over three seeds on CIFAR-10.',
+      '99.03% +/- 0.07% AUROC averaged over three seeds on a within-CIFAR airplane-vs-rest binary split (single ID class; not comparable to multi-class CIFAR-10 OOD benchmarks).',
       '+6.5 percentage points over the non-separated baseline.',
       'Seed-42 generalized zero-shot to CIFAR-100, Places365, FashionMNIST, Textures, and SVHN.',
     ],
@@ -109,7 +109,8 @@ export const caseStudies: CaseStudy[] = [
       'A null result can still be a strong research contribution.',
     ],
     artifacts: [
-      { label: 'Industrial report PDF', href: '/Diffusion-Based Multi-class Defect Detection.pdf' },
+      { label: 'Thesis PDF (0.8673 source)', href: '/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf' },
+      { label: 'Early technical report (2024, negative result)', href: '/Diffusion-Based Multi-class Defect Detection.pdf' },
       { label: 'InkjetOOD repository', href: 'https://github.com/ahmed-3m/InkjetOOD' },
       { label: 'Model weights', href: 'https://huggingface.co/ahmed-3m/InkjetOOD' },
     ],
