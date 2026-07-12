@@ -1,4 +1,5 @@
 'use client'
+import Link from 'next/link'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { getAllBlogPosts } from '@/lib/blog-posts'
 import { useReveal } from '@/lib/useReveal'
@@ -57,9 +58,9 @@ export default function Writing() {
         </div>
 
         <div style={{ textAlign: 'center', marginTop: 32 }}>
-          <a href="/blog" className="cd-btn-ghost" style={{ fontSize: 13 }}>
+          <Link href="/blog" className="cd-btn-ghost" style={{ fontSize: 13 }}>
             {t(copy.all)} &rarr;
-          </a>
+          </Link>
         </div>
       </div>
     </section>
