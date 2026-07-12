@@ -80,7 +80,8 @@ and `.github/news/check-news-links.mjs` and **auto-merges to `main` only if both
 fully serverless — the Action is the backend and git is the dedup store; no hosting needed.
 
 Required repository secrets:
-- `NEXT_PUBLIC_ZAI_TOKEN` — existing Z.ai / GLM key, reused by the agent.
+- `ZAI_NEWS_TOKEN` — private Z.ai / GLM key for the news agent. Never prefixed with `NEXT_PUBLIC_` — must NOT appear in the client bundle.
+- `NEXT_PUBLIC_ZAI_TOKEN` — public, rate-limited Z.ai key for the portfolio chatbot. This IS inlined into the static JS bundle and is publicly extractable; use a disposable/capped key. The news agent must NOT reuse this key.
 - `EXA_API_KEY` — Exa API key (https://exa.ai).
 
 The agent's instructions live in `.github/news/task.md`; the Exa MCP config in

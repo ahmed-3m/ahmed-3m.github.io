@@ -31,7 +31,7 @@ const experiences: Array<{
     active: true,
   },
   {
-    date: 'Dec 2024\nMar 2026',
+    date: 'Dec 2024\nJul 2026',
     role: { en: 'ML Researcher', de: 'ML-Forscher', fr: 'Chercheur ML', es: 'Investigador ML', ar: 'باحث تعلم آلي' },
     company: 'JKU Machine Learning Institute · Linz',
     desc: {

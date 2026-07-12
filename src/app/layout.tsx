@@ -99,6 +99,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased`}
         suppressHydrationWarning
       >
+        <a href="#about" className="cd-skip-link">
+          Skip to content
+        </a>
         <noscript>
           <div style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto', fontFamily: 'system-ui, sans-serif' }}>
             <h1>Ahmed Mohammed — AI/ML Engineer &amp; Entrepreneur</h1>

@@ -57,6 +57,7 @@ type ProviderConfig = {
   token: string
   url: string
   body: Record<string, unknown>
+  useProxy?: boolean
 }
 
 type ChatCompletionError = Error & {
@@ -69,8 +70,17 @@ const GROQ_MODEL = 'llama-3.1-8b-instant'
 const ZAI_MODEL = 'glm-4.5-airx'
 const GROQ_CHAT_URL = 'https://api.groq.com/openai/v1/chat/completions'
 const ZAI_CHAT_URL = 'https://api.z.ai/api/paas/v4/chat/completions'
+const CHAT_PROXY_URL = process.env.NEXT_PUBLIC_CHAT_PROXY_URL
 const MAX_REPLY_CHARS = 1600
 const GENIE_NAME = 'Genie\u{1F9DE}\u200D\u2642\uFE0F'
+
+// ── Security model ──────────────────────────────────────────
+// NEXT_PUBLIC_GROQ_TOKEN / NEXT_PUBLIC_ZAI_TOKEN are inlined into
+// the static bundle and publicly extractable. Use disposable, rate-
+// limited keys only. For production, set NEXT_PUBLIC_CHAT_PROXY_URL
+// to a Cloudflare Worker proxy (see worker/README.md) — the proxy
+// holds the real API key server-side, and these tokens become unused.
+// ────────────────────────────────────────────────────────────
 
 const SYSTEM_PROMPT = `You are ${GENIE_NAME}, Ahmed Mohammed's personal assistant.
 
@@ -397,12 +407,16 @@ function isGroqLimitError(error: unknown): error is ChatCompletionError {
 }
 
 async function requestChatCompletion(provider: ProviderConfig): Promise<string> {
+  const headers: Record<string, string> = { 'Content-Type': 'application/json' }
+  // When using the Cloudflare Worker proxy, the Authorization header is added
+  // server-side from a secret — the browser must NOT send the public token.
+  if (provider.token && !provider.useProxy) {
+    headers.Authorization = `Bearer ${provider.token}`
+  }
+
   const response = await fetch(provider.url, {
     method: 'POST',
-    headers: {
-      Authorization: `Bearer ${provider.token}`,
-      'Content-Type': 'application/json',
-    },
+    headers,
     body: JSON.stringify(provider.body),
   })
 
@@ -725,8 +739,9 @@ export default function ChatBot() {
     const zaiToken = process.env.NEXT_PUBLIC_ZAI_TOKEN ?? process.env.NEXT_PUBLIC_ZAI_API_KEY
     const hasGroqToken = isConfiguredToken(groqToken)
     const hasZaiToken = isConfiguredToken(zaiToken)
+    const hasProxy = Boolean(CHAT_PROXY_URL)
 
-    if (!hasGroqToken && !hasZaiToken) {
+    if (!hasGroqToken && !hasZaiToken && !hasProxy) {
       setError(t(CHAT_COPY.missingToken))
       return
     }
@@ -775,11 +790,14 @@ export default function ChatBot() {
           }
         : null
 
-      const zaiProvider: ProviderConfig | null = hasZaiToken
+      const zaiProvider: ProviderConfig | null = (hasZaiToken || hasProxy)
         ? {
             name: 'Z.ai',
-            token: zaiToken,
-            url: ZAI_CHAT_URL,
+            // When the proxy URL is set, route through it; the Worker holds the
+            // real API key server-side. Otherwise call Z.ai directly.
+            token: zaiToken ?? '',
+            url: CHAT_PROXY_URL || ZAI_CHAT_URL,
+            useProxy: Boolean(CHAT_PROXY_URL),
             body: {
               model: ZAI_MODEL,
               messages: payloadMessages,

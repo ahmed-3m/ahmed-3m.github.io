@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { useReveal } from '@/lib/useReveal'
 
@@ -91,12 +91,23 @@ export default function Research() {
   useReveal()
   const { t } = useI18n()
   const [lightbox, setLightbox] = useState<{ type: 'cifar' | 'industrial' | 'formula', index: number } | null>(null)
+  const lightboxRef = useRef<HTMLDivElement>(null)
+  const lastFocusedRef = useRef<HTMLElement | null>(null)
 
   useEffect(() => {
-    if (lightbox === null) return
-    const onKey = (event: KeyboardEvent) => { if (event.key === 'Escape') setLightbox(null) }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    if (lightbox === null) {
+      // Restore focus to the chart thumbnail that opened the lightbox
+      if (lastFocusedRef.current) {
+        lastFocusedRef.current.focus()
+        lastFocusedRef.current = null
+      }
+      return
+    }
+    // Move focus into the lightbox when it opens
+    const t = window.setTimeout(() => {
+      lightboxRef.current?.focus()
+    }, 0)
+    return () => window.clearTimeout(t)
   }, [lightbox])
 
   return (
@@ -151,7 +162,25 @@ export default function Research() {
 
           <div className="cd-rf-charts">
             {cifarCharts.map(({ src, alt, caption }, index) => (
-              <div key={src} className="cd-rf-chart cd-rf-chart--zoom" onClick={() => setLightbox({ type: 'cifar', index })} title="Click to expand">
+              <div
+                key={src}
+                className="cd-rf-chart cd-rf-chart--zoom"
+                role="button"
+                tabIndex={0}
+                aria-label={`Open ${alt} chart in viewer. ${caption}`}
+                title="Click to expand"
+                onClick={(event) => {
+                  lastFocusedRef.current = event.currentTarget
+                  setLightbox({ type: 'cifar', index })
+                }}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault()
+                    lastFocusedRef.current = event.currentTarget
+                    setLightbox({ type: 'cifar', index })
+                  }
+                }}
+              >
                 <img src={src} alt={alt} style={{ width: '100%', height: '260px', objectFit: 'contain', borderRadius: '8px' }} />
                 <div className="cd-rf-chart-caption">{caption}</div>
               </div>
@@ -163,7 +192,7 @@ export default function Research() {
             <div className="cd-rfc-summary">{t(copy.plainIdea)}</div>
             <div className="cd-rfc-flow" aria-label="Separation loss workflow">
               <div>
-                <button type="button" className="cd-rfc-visual-button" onClick={() => setLightbox({ type: 'formula', index: 0 })} title="Click to expand">
+                <button type="button" className="cd-rfc-visual-button" onClick={(event) => { lastFocusedRef.current = event.currentTarget; setLightbox({ type: 'formula', index: 0 }) }} title="Click to expand">
                   <img src={formulaVisuals[0].src} alt={formulaVisuals[0].alt} className="cd-rfc-visual cd-rf-chart--zoom" />
                 </button>
                 <span className="cd-rfc-step">1</span>
@@ -171,7 +200,7 @@ export default function Research() {
                 <span>{t(copy.step1Text)}</span>
               </div>
               <div>
-                <button type="button" className="cd-rfc-visual-button" onClick={() => setLightbox({ type: 'formula', index: 1 })} title="Click to expand">
+                <button type="button" className="cd-rfc-visual-button" onClick={(event) => { lastFocusedRef.current = event.currentTarget; setLightbox({ type: 'formula', index: 1 }) }} title="Click to expand">
                   <img src={formulaVisuals[1].src} alt={formulaVisuals[1].alt} className="cd-rfc-visual cd-rf-chart--zoom" />
                 </button>
                 <span className="cd-rfc-step">2</span>
@@ -179,7 +208,7 @@ export default function Research() {
                 <span>{t(copy.step2Text)}</span>
               </div>
               <div>
-                <button type="button" className="cd-rfc-visual-button" onClick={() => setLightbox({ type: 'formula', index: 2 })} title="Click to expand">
+                <button type="button" className="cd-rfc-visual-button" onClick={(event) => { lastFocusedRef.current = event.currentTarget; setLightbox({ type: 'formula', index: 2 }) }} title="Click to expand">
                   <img src={formulaVisuals[2].src} alt={formulaVisuals[2].alt} className="cd-rfc-visual cd-rf-chart--zoom" />
                 </button>
                 <span className="cd-rfc-step">3</span>
@@ -217,7 +246,25 @@ export default function Research() {
 
           <div className="cd-rf-charts" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
             {industrialCharts.map(({ src, alt, caption }, index) => (
-              <div key={src} className="cd-rf-chart cd-rf-chart--zoom" onClick={() => setLightbox({ type: 'industrial', index })} title="Click to expand">
+              <div
+                key={src}
+                className="cd-rf-chart cd-rf-chart--zoom"
+                role="button"
+                tabIndex={0}
+                aria-label={`Open ${alt} chart in viewer. ${caption}`}
+                title="Click to expand"
+                onClick={(event) => {
+                  lastFocusedRef.current = event.currentTarget
+                  setLightbox({ type: 'industrial', index })
+                }}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault()
+                    lastFocusedRef.current = event.currentTarget
+                    setLightbox({ type: 'industrial', index })
+                  }
+                }}
+              >
                 <img src={src} alt={alt} style={{ width: '100%', height: '260px', objectFit: 'contain', borderRadius: '8px' }} />
                 <div className="cd-rf-chart-caption">{caption}</div>
               </div>
@@ -246,9 +293,41 @@ export default function Research() {
       </div>
 
       {lightbox !== null && (
-        <div className="cd-lightbox" onClick={() => setLightbox(null)}>
-          <div className="cd-lightbox-inner" onClick={event => event.stopPropagation()}>
-            <button className="cd-lightbox-close" onClick={() => setLightbox(null)}>x</button>
+        <div
+          className="cd-lightbox"
+          onClick={() => setLightbox(null)}
+        >
+          <div
+            ref={lightboxRef}
+            className="cd-lightbox-inner"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Image viewer — press Escape to close"
+            tabIndex={-1}
+            onClick={(event) => event.stopPropagation()}
+            onKeyDown={(event) => {
+              if (event.key === 'Escape') {
+                setLightbox(null)
+                return
+              }
+              if (event.key === 'Tab') {
+                const focusable = lightboxRef.current?.querySelectorAll(
+                  'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+                )
+                if (!focusable || focusable.length === 0) return
+                const first = focusable[0] as HTMLElement
+                const last = focusable[focusable.length - 1] as HTMLElement
+                if (event.shiftKey && document.activeElement === first) {
+                  event.preventDefault()
+                  last.focus()
+                } else if (!event.shiftKey && document.activeElement === last) {
+                  event.preventDefault()
+                  first.focus()
+                }
+              }
+            }}
+          >
+            <button type="button" className="cd-lightbox-close" aria-label="Close image viewer" onClick={() => setLightbox(null)}>x</button>
             {lightbox.type === 'industrial' ? (
               <>
                 <img src={industrialCharts[lightbox.index].src} alt={industrialCharts[lightbox.index].alt} />

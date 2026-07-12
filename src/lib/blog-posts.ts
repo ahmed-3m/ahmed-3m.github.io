@@ -32,7 +32,7 @@ export interface LocalizedBlogPost extends BlogPostTranslation {
 const blogPosts: BlogPost[] = [
   {
     slug: 'ood-diffusion-thesis',
-    date: '2026-03-20',
+    date: '2026-07-20',
     ogImage: '/og-diffusion-models-anomaly-detection.png',
     lastModified: '2026-04-25',
     translations: {
