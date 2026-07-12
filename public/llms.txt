@@ -21,7 +21,7 @@
 ## Projects
 
 - [Faultrix](https://faultrix.com): AI-powered construction quality control SaaS. Analyzes building photos, generates ÖNORM B 2110-compliant technical reports in under 1 minute. SHA-256 evidence chain, DSGVO compliant, AES-256 encryption. Stack: Next.js, Convex, OpenAI API, Cloudflare R2, Stripe, Clerk, Docker.
-- [OOD Detection Framework](https://github.com/ahmed-3m/OOD-diffusion-detector): Novel use of conditional diffusion models as generative classifiers for out-of-distribution detection. 99.03% ± 0.07% average AUROC on CIFAR-10. Introduced class-conditional separation loss. Applied to industrial quality control with multi-head conditioning on the public FTI_Zer0P benchmark (0.8673 ± 0.0230 AUROC).
+- [OOD Detection Framework](https://github.com/ahmed-3m/DiffusionOOD): Novel use of conditional diffusion models as generative classifiers for out-of-distribution detection. 99.03% ± 0.07% average AUROC on CIFAR-10. Introduced class-conditional separation loss. Applied to industrial quality control with multi-head conditioning on the public FTI_Zer0P benchmark (0.8673 ± 0.0230 AUROC).
 - [Industrial Anomaly Detection](https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf): YOLO + diffusion model pipeline for industrial defect detection (Track 2 of thesis). Baseline of 0.8673 ± 0.0230 AUROC under strict 5-fold cross-validation on the public FTI_Zer0P dataset.
 - [EEG Signal Classification](https://github.com/ahmed-3m/Motor-Imagery-classification): LSTM, Bi-LSTM, GRU architectures for EEG motor imagery classification in brain-computer interface applications. Hyperparameter optimization across architectures (Karunya University, 2023).
 

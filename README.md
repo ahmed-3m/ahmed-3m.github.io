@@ -83,7 +83,7 @@ The Calendly booking button points to `https://calendly.com/ahmed-3m` by default
 
 - Portfolio: [ahmed-3m.github.io](https://ahmed-3m.github.io)
 - LinkedIn: [linkedin.com/in/ahmed-3m](https://www.linkedin.com/in/ahmed-3m/)
-- Email: [ahmed.mo.0595@gmail.com](mailto:ahmed.mo.0595@gmail.com)
+- Email: [ahmed@faultrix.com](mailto:ahmed@faultrix.com)
 - ResearchGate: [Ahmed Mohammed](https://www.researchgate.net/profile/Ahmed-Mohammed-114)
 
 Open to AI/ML roles, research collaborations, and serious industrial AI problems where model quality has to survive contact with real data.

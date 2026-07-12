@@ -4,7 +4,7 @@ import { getAllNews, newsCategoryLabels } from '@/lib/news-items'
 import { useReveal } from '@/lib/useReveal'
 
 const copy = {
-  eyebrow: { en: '// 06 - News', de: '// 06 - News', fr: '// 06 - Actualites', es: '// 06 - Noticias', ar: '// 06 - الأخبار' },
+  eyebrow: { en: '// 07 - News', de: '// 07 - News', fr: '// 07 - Actualites', es: '// 07 - Noticias', ar: '// 07 - الأخبار' },
   title: { en: 'Tracking the field.', de: 'Das Feld im Blick.', fr: 'Suivre le domaine.', es: 'Siguiendo el campo.', ar: 'متابعة المجال.' },
   intro: {
     en: 'Curated AI news with a short take on each — with a bias toward agentic AI, where I spend most of my attention.',

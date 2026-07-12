@@ -363,7 +363,7 @@ export function ProjectsSchema() {
     '@type': 'ItemList',
     name: 'Ahmed Mohammed — AI/ML Projects',
     description: 'Featured AI/ML projects and research by Ahmed Mohammed',
-    numberOfItems: 4,
+    numberOfItems: 5,
     itemListElement: [
       {
         '@type': 'ListItem',
@@ -386,7 +386,7 @@ export function ProjectsSchema() {
           name: 'OOD Detection Framework',
           description: 'Novel use of conditional diffusion models as generative classifiers for out-of-distribution detection. Achieved 99.03% ± 0.07% average AUROC on CIFAR-10 benchmark, improving over non-separated baseline by 6.5 percentage points via class-conditional separation loss with high seed stability. Master\'s Thesis at JKU Linz, 2026.',
           applicationCategory: 'DeveloperApplication',
-          url: 'https://github.com/ahmed-3m/OOD-diffusion-detector',
+          url: 'https://github.com/ahmed-3m/DiffusionOOD',
           author: { '@type': 'Person', name: 'Ahmed Mohammed' },
         },
       },
@@ -410,6 +410,18 @@ export function ProjectsSchema() {
           name: 'EEG Signal Classification — Brain-Computer Interface',
           description: 'Deep RNN architectures (LSTM, Bi-LSTM, GRU) for EEG motor imagery classification in brain-computer interface applications. Hyperparameter optimization across multiple architectures. Karunya University, 2023.',
           url: 'https://github.com/ahmed-3m/Motor-Imagery-classification',
+          author: { '@type': 'Person', name: 'Ahmed Mohammed' },
+        },
+      },
+      {
+        '@type': 'ListItem',
+        position: 5,
+        item: {
+          '@type': 'SoftwareApplication',
+          name: 'Mento — AI Habits Assistant',
+          description: 'Conversational AI assistant for habit-building and daily routines, live as a Telegram bot in beta. Multi-provider LLM routing with escalation logic, pgvector RAG long-term memory, and multimodal photo understanding on Supabase edge functions.',
+          applicationCategory: 'BusinessApplication',
+          url: 'https://t.me/mento_personal_bot',
           author: { '@type': 'Person', name: 'Ahmed Mohammed' },
         },
       },

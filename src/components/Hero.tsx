@@ -36,6 +36,14 @@ const copy = {
   loading: { en: 'Loading 42 images - GPU: RTX 4090', de: 'Lade 42 Bilder - GPU: RTX 4090', fr: 'Chargement de 42 images - GPU: RTX 4090', es: 'Cargando 42 imagenes - GPU: RTX 4090', ar: 'تحميل 42 صورة - GPU: RTX 4090' },
   detect: { en: 'Defect detection', de: 'Defekterkennung', fr: 'Detection de defauts', es: 'Deteccion de defectos', ar: 'كشف العيوب' },
   reportReady: { en: 'QC report ready', de: 'QC-Bericht bereit', fr: 'Rapport QC pret', es: 'Informe QC listo', ar: 'تقرير الجودة جاهز' },
+  imagesFlagged: { en: 'images flagged', de: 'Bilder markiert', fr: 'images signalees', es: 'imagenes marcadas', ar: 'صور تم تمييزها' },
+  legend: {
+    en: '99.03% AUROC = CIFAR-10 thesis (3-seed mean) · 0.8673 AUROC = industrial FTI_Zer0P 5-fold baseline · <1 min = Faultrix report generation',
+    de: '99,03% AUROC = CIFAR-10 Thesis (3-Saat-Mittel) · 0,8673 AUROC = industrielle FTI_Zer0P 5-fach Baseline · <1 Min = Faultrix Berichtserstellung',
+    fr: '99,03% AUROC = these CIFAR-10 (moyenne 3 seeds) · 0,8673 AUROC = baseline industrielle FTI_Zer0P 5-fold · <1 min = generation de rapport Faultrix',
+    es: '99,03% AUROC = tesis CIFAR-10 (media de 3 seeds) · 0,8673 AUROC = baseline industrial FTI_Zer0P 5-fold · <1 min = generacion de informe Faultrix',
+    ar: '99.03% AUROC = رسالة CIFAR-10 (متوسط 3 تجارب) · 0.8673 AUROC = خط أساس صناعي FTI_Zer0P 5-fold · <1 دقيقة = إنشاء تقرير Faultrix',
+  },
 } satisfies Record<string, TranslationMap>
 
 export default function Hero() {
@@ -89,6 +97,9 @@ export default function Hero() {
                 <div className="cd-stat-label">{t(copy.report)}</div>
               </div>
             </div>
+            <p className="cd-hero-legend" style={{ fontSize: 11, color: 'var(--cd-fg3)', marginTop: 14, lineHeight: 1.6, maxWidth: 480 }}>
+              {t(copy.legend)}
+            </p>
           </div>
 
           <div className="cd-hero-terminal-wrap">
@@ -100,7 +111,7 @@ export default function Hero() {
               </div>
               <div className="cd-term-line"><span className="tc">~/faultrix $ </span><span className="ta">python</span> analyze.py --input site_photos/</div>
               <div className="cd-term-line" style={{ color: 'var(--cd-fg3)' }}>{t(copy.loading)}</div>
-              <div className="cd-term-line"><span className="tg">✓</span> {t(copy.detect)} · AUROC: <span className="ta">99.03%</span> <span className="tc">SOTA</span></div>
+              <div className="cd-term-line"><span className="tg">✓</span> {t(copy.detect)} · 12/42 <span className="ta">{t(copy.imagesFlagged)}</span></div>
               <div className="cd-term-line"><span className="tg">✓</span> Generating ONORM report... AES-256 encrypted</div>
               <div className="cd-term-line"><span className="tw">→</span> {t(copy.reportReady)} <span className="ta">&lt;1 min</span></div>
               <div className="cd-term-line"><span className="tc">~/faultrix $ </span><span className="cd-cursor" /></div>

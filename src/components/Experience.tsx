@@ -3,7 +3,7 @@ import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { useReveal } from '@/lib/useReveal'
 
 const copy = {
-  eyebrow: { en: '// 03 - Experience', de: '// 03 - Erfahrung', fr: '// 03 - Experience', es: '// 03 - Experiencia', ar: '// 03 - الخبرة' },
+  eyebrow: { en: '// 04 - Experience', de: '// 04 - Erfahrung', fr: '// 04 - Experience', es: '// 04 - Experiencia', ar: '// 04 - الخبرة' },
   title: { en: "Where I've worked.", de: 'Wo ich gearbeitet habe.', fr: 'Ou j ai travaille.', es: 'Donde he trabajado.', ar: 'أماكن عملي.' },
 } satisfies Record<string, TranslationMap>
 

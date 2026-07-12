@@ -5,7 +5,7 @@ import { getAllBlogPosts } from '@/lib/blog-posts'
 import { useReveal } from '@/lib/useReveal'
 
 const copy = {
-  eyebrow: { en: '// 05 - Writing', de: '// 05 - Schreiben', fr: '// 05 - Ecriture', es: '// 05 - Escritura', ar: '// 05 - الكتابة' },
+  eyebrow: { en: '// 06 - Writing', de: '// 06 - Schreiben', fr: '// 06 - Ecriture', es: '// 06 - Escritura', ar: '// 06 - الكتابة' },
   title: { en: 'Thinking out loud.', de: 'Gedanken laut gedacht.', fr: 'Reflexions ouvertes.', es: 'Pensando en voz alta.', ar: 'أفكار بصوت عال.' },
   intro: {
     en: 'Deep-dives on research decisions, production lessons, and the gap between papers and products.',

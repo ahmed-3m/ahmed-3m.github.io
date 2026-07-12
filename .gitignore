@@ -46,3 +46,6 @@ next-env.d.ts
 
 # build scripts
 /scripts/
+
+# local agent skills (not part of the portfolio)
+.agents/
