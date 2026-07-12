@@ -109,7 +109,7 @@ export default function Projects() {
             </div>
           </article>
 
-          <article className="cd-project-card reveal">
+          <article className="cd-project-card cd-project-card--full reveal">
             <div className="cd-pc-eyebrow">{t(copy.mentoEyebrow)}</div>
             <div className="cd-pc-title">{t(copy.mentoTitle)}</div>
             <div className="cd-pc-desc">{t(copy.mentoDesc)}</div>
