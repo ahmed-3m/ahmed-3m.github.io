@@ -418,10 +418,10 @@ export function ProjectsSchema() {
         position: 5,
         item: {
           '@type': 'SoftwareApplication',
-          name: 'Mento — AI Habits Assistant',
-          description: 'Conversational AI assistant for habit-building and daily routines, live as a Telegram bot in beta. Multi-provider LLM routing with escalation logic, pgvector RAG long-term memory, and multimodal photo understanding on Supabase edge functions.',
+          name: 'Sihem — AI Mentor Assistant',
+          description: 'Proactive personal-mentor assistant on Telegram that plans your week, sends morning briefings and evening reviews, and fires smart check-in triggers. Built on Supabase edge functions with a generic activity model, a deterministic generators→arbiter→composer decision engine for adaptive nudging, pgvector RAG memory, multi-provider LLM routing with failover, multimodal meal-photo vision, TTS voice reminders, Google Calendar sync, and optional Alexa Echo integration. In beta at @sihem_ai_bot.',
           applicationCategory: 'BusinessApplication',
-          url: 'https://t.me/mento_personal_bot',
+          url: 'https://t.me/sihem_ai_bot',
           author: { '@type': 'Person', name: 'Ahmed Mohammed' },
         },
       },
