@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Check, ChevronDown, Globe2, Moon, Sun } from 'lucide-react'
 import { useTheme } from '@/lib/ThemeContext'
@@ -102,9 +103,9 @@ function NavLink({ href, label, onClick }: { href: string; label: TranslationMap
   const { t } = useI18n()
 
   return (
-    <a href={href} className="cd-nav-link" onClick={onClick}>
+    <Link href={href} className="cd-nav-link" onClick={onClick}>
       {t(label)}
-    </a>
+    </Link>
   )
 }
 
@@ -112,9 +113,9 @@ function NavCta({ onClick }: { onClick?: () => void }) {
   const { t } = useI18n()
 
   return (
-    <a href="/#contact" className="cd-nav-cta" onClick={onClick}>
+    <Link href="/#contact" className="cd-nav-cta" onClick={onClick}>
       {t(ctaLabel)}
-    </a>
+    </Link>
   )
 }
 
