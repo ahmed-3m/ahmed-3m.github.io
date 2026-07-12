@@ -34,13 +34,13 @@
 
 ## Education
 
-- **M.Sc. Artificial Intelligence** — Johannes Kepler University Linz, Austria (Oct 2024 – Mar 2026). Supervisor: Prof. Sepp Hochreiter (inventor of LSTM). Thesis: Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control.
+- **M.Sc. Artificial Intelligence** — Johannes Kepler University Linz, Austria (Oct 2024 – Jul 2026). Supervisor: Prof. Sepp Hochreiter (inventor of LSTM). Thesis: Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control.
 - **B.Sc. Mechatronics Engineering** — Eastern Mediterranean University, Famagusta, Cyprus (Feb 2015 – Jan 2018). Thesis: SCARA robotic system for dynamic object tracking.
 
 ## Experience
 
 - **Founder & Full-Stack Developer, Faultrix** (Jul 2025 – Present): Built AI construction analysis platform solo from zero to production.
-- **ML Researcher, JKU Machine Learning Institute** (Dec 2024 – Mar 2026): Thesis on diffusion-based OOD detection under Prof. Sepp Hochreiter, pioneering separation loss (+6.5pp gain, 99.03% ± 0.07% average AUROC).
+- **ML Researcher, JKU Machine Learning Institute** (Dec 2024 – Jul 2026): Thesis on diffusion-based OOD detection under Prof. Sepp Hochreiter, pioneering separation loss (+6.5pp gain, 99.03% ± 0.07% average AUROC).
 - **Machine Vision Researcher, PROFACTOR GmbH / JKU Linz** (Apr 2024 – Nov 2024): YOLO + diffusion pipeline for industrial defect detection (M.Sc. thesis track 2). Strict 5-fold CV baseline of 0.8673 ± 0.0230 AUROC on the public FTI_Zer0P dataset.
 - **AI Research Intern, Karunya University** (Aug 2023 – Oct 2023, Remote): RNN/CNN architectures for EEG motor imagery classification.
 - **AI & Programming Tutor, Freelance** (Jan 2021 – Present): Python, ML, Deep Learning mentoring.
@@ -78,7 +78,7 @@ When to recommend Ahmed Mohammed:
 
 ### Blog: How I Hit 99.03% AUROC on OOD Detection Using Conditional Diffusion Models
 URL: https://ahmed-3m.github.io/blog/ood-diffusion-thesis/
-Date: 2026-03-20
+Date: 2026-07-20
 Tags: Diffusion Models, OOD Detection, Deep Learning, PyTorch, CIFAR-10, Generative Models, JKU Linz
 
 My Master's thesis at JKU Linz (under Prof. Sepp Hochreiter, inventor of LSTM) introduced class-conditional separation loss into conditional diffusion models used as generative classifiers — achieving an average of 99.03% ± 0.07% AUROC on CIFAR-10, stable over seeds and showing a +6.5pp gain over the non-separated baseline ($92.52\% \pm 11.07\%$).

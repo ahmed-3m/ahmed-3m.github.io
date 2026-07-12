@@ -80,7 +80,7 @@ export function PersonSchema() {
           '@type': 'CollegeOrUniversity',
           name: 'Johannes Kepler University Linz',
         },
-        dateCreated: '2026-03',
+        dateCreated: '2026-07',
       },
       {
         '@type': 'EducationalOccupationalCredential',
@@ -444,7 +444,7 @@ export function ResearchSchema() {
     name: 'Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control',
     abstract: 'This thesis treats conditional diffusion models as generative classifiers where class-conditional reconstruction error serves as the OOD signal. We develop a binary conditional diffusion model for CIFAR-10 OOD detection and introduce a class-conditional separation loss that improves both performance and stability. The separation loss achieves a 99.03% ± 0.07% average AUROC, showing a +6.5pp gain and dramatically lower seed variance over the baseline. We further evaluate the public InkjetOOD pipeline on the public FTI_Zer0P dataset under strict 5-fold cross-validation, reaching 0.8673 ± 0.0230 AUROC and characterizing its boundary conditions.',
     url: 'https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf',
-    datePublished: '2026-03',
+    datePublished: '2026-07',
     inSupportOf: "Master's Degree in Artificial Intelligence",
     author: {
       '@type': 'Person',

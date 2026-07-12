@@ -67,7 +67,7 @@ export default function About() {
   const { t } = useI18n()
 
   const education = [
-    { degree: t(copy.degree1), school: 'Johannes Kepler University Linz', date: 'Oct 2024 - Mar 2026', desc: t(copy.desc1) },
+    { degree: t(copy.degree1), school: 'Johannes Kepler University Linz', date: 'Oct 2024 - Jul 2026', desc: t(copy.desc1) },
     { degree: t(copy.degree2), school: 'Eastern Mediterranean University, Cyprus', date: 'Feb 2015 - Jan 2018', desc: t(copy.desc2) },
   ]
 
