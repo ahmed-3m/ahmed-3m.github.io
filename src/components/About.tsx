@@ -12,11 +12,11 @@ const copy = {
     ar: 'مهندس ذكاء اصطناعي - بحث يتحول إلى منتج.',
   },
   p1: {
-    en: 'I am an AI/ML engineer who completed an M.Sc. in Artificial Intelligence at JKU Linz, working under Prof. Sepp Hochreiter, the pioneer of LSTM and deep learning.',
-    de: 'Ich bin AI/ML Engineer mit M.Sc. in Artificial Intelligence an der JKU Linz, betreut von Prof. Sepp Hochreiter, dem Pionier von LSTM und Deep Learning.',
-    fr: 'Je suis ingenieur IA/ML avec un M.Sc. en intelligence artificielle a JKU Linz, sous la supervision du Prof. Sepp Hochreiter, pionnier du LSTM et du deep learning.',
-    es: 'Soy ingeniero de IA/ML con un M.Sc. en Inteligencia Artificial en JKU Linz, bajo la supervision del Prof. Sepp Hochreiter, pionero de LSTM y deep learning.',
-    ar: 'أنا مهندس ذكاء اصطناعي وتعلم آلي، أكملت ماجستير الذكاء الاصطناعي في JKU Linz تحت إشراف البروفيسور سيب هوخرايتر، رائد LSTM والتعلم العميق.',
+    en: 'I am an AI/ML engineer who submitted an M.Sc. thesis in Artificial Intelligence at JKU Linz (degree expected 2026), working under Prof. Sepp Hochreiter, the pioneer of LSTM and deep learning.',
+    de: 'Ich bin AI/ML Engineer und habe meine M.Sc.-Arbeit in Artificial Intelligence an der JKU Linz eingereicht (Abschluss erwartet 2026), betreut von Prof. Sepp Hochreiter, dem Pionier von LSTM und Deep Learning.',
+    fr: 'Je suis ingénieur IA/ML et j ai soumis un mémoire de M.Sc. en intelligence artificielle à JKU Linz (diplôme attendu en 2026), sous la supervision du Prof. Sepp Hochreiter, pionnier du LSTM et du deep learning.',
+    es: 'Soy ingeniero de IA/ML y presenté una tesis de M.Sc. en Inteligencia Artificial en JKU Linz (titulación esperada en 2026), bajo la supervisión del Prof. Sepp Hochreiter, pionero de LSTM y deep learning.',
+    ar: 'أنا مهندس ذكاء اصطناعي وتعلم آلي، قدّمت رسالة ماجستير في الذكاء الاصطناعي في JKU Linz (الدرجة متوقعة 2026) تحت إشراف البروفيسور سيب هوخرايتر، رائد LSTM والتعلم العميق.',
   },
   p2: {
     en: 'My work spans the full stack: from class-conditional separation loss for diffusion-based OOD detection to industrial computer vision pipelines evaluated under rigorous cross-validation.',

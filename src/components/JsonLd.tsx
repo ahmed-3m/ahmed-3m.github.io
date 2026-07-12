@@ -8,7 +8,7 @@ export function PersonSchema() {
     givenName: 'Ahmed',
     familyName: 'Mohammed',
     jobTitle: 'AI/ML Engineer & Entrepreneur',
-    description: 'AI/ML Engineer specializing in computer vision, anomaly detection, and diffusion models. Founder of Faultrix. M.Sc. Artificial Intelligence from Johannes Kepler University Linz, supervised by Prof. Sepp Hochreiter (inventor of LSTM). Achieved 99.03% AUROC on CIFAR-10 OOD detection and 98.4% industrial defect detection accuracy.',
+    description: 'AI/ML Engineer specializing in computer vision, anomaly detection, and diffusion models. Founder of Faultrix. M.Sc. Artificial Intelligence (thesis submitted Jul 2026, degree expected 2026) from Johannes Kepler University Linz, supervised by Prof. Sepp Hochreiter (inventor of LSTM). Achieved 99.03% AUROC on a within-CIFAR airplane-vs-rest binary OOD split (single ID class; not comparable to multi-class CIFAR-10 OOD benchmarks) and 98.4% industrial defect detection accuracy in production (internal deployment metric, threshold-dependent binary classification).',
     url: 'https://ahmed-3m.github.io',
     image: 'https://ahmed-3m.github.io/headshot.jpg',
     email: 'ahmed@faultrix.com',
@@ -74,8 +74,8 @@ export function PersonSchema() {
       {
         '@type': 'EducationalOccupationalCredential',
         credentialCategory: 'degree',
-        name: 'Master of Science in Artificial Intelligence',
-        educationalLevel: "Master's Degree",
+        name: 'Master of Science in Artificial Intelligence (thesis submitted Jul 2026, degree expected 2026)',
+        educationalLevel: "Master's Degree (pending conferral)",
         recognizedBy: {
           '@type': 'CollegeOrUniversity',
           name: 'Johannes Kepler University Linz',
@@ -131,7 +131,7 @@ export function WebsiteSchema() {
     '@type': 'WebSite',
     name: 'Ahmed Mohammed — AI/ML Engineer & Entrepreneur',
     url: 'https://ahmed-3m.github.io',
-    description: 'Portfolio of Ahmed Mohammed — AI/ML Engineer & Entrepreneur specializing in computer vision, anomaly detection, and diffusion models. Founder of Faultrix. 99.03% AUROC on CIFAR-10 OOD detection. 98.4% industrial defect detection accuracy. M.Sc. AI from JKU Linz.',
+    description: 'Portfolio of Ahmed Mohammed — AI/ML Engineer & Entrepreneur specializing in computer vision, anomaly detection, and diffusion models. Founder of Faultrix. 99.03% AUROC on a within-CIFAR airplane-vs-rest binary OOD split (single ID class). 98.4% industrial defect detection accuracy in production (threshold-dependent binary classification). M.Sc. AI (thesis submitted Jul 2026, degree expected 2026) from JKU Linz.',
     author: {
       '@type': 'Person',
       name: 'Ahmed Mohammed',
@@ -219,7 +219,7 @@ export function FAQSchema() {
         name: "What is Ahmed Mohammed's expertise in AI/ML?",
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Ahmed Mohammed is an AI/ML Engineer specializing in computer vision, diffusion models, and out-of-distribution detection. He achieved 99.03% AUROC on CIFAR-10 OOD detection in his Master\'s thesis at JKU Linz and 98.4% defect detection accuracy at PROFACTOR GmbH. He is proficient in PyTorch, YOLOv8, conditional diffusion models, and full-stack ML engineering.',
+          text: 'Ahmed Mohammed is an AI/ML Engineer specializing in computer vision, diffusion models, and out-of-distribution detection. He achieved 99.03% AUROC on a within-CIFAR airplane-vs-rest binary OOD split (single ID class; not comparable to multi-class CIFAR-10 OOD benchmarks) in his Master\'s thesis at JKU Linz and 98.4% defect detection accuracy in production at PROFACTOR GmbH (internal deployment metric, threshold-dependent binary classification). He is proficient in PyTorch, YOLOv8, conditional diffusion models, and full-stack ML engineering.',
         },
       },
       {
@@ -251,7 +251,7 @@ export function FAQSchema() {
         name: "What is Ahmed Mohammed's educational background?",
         acceptedAnswer: {
           '@type': 'Answer',
-          text: "Ahmed Mohammed holds a Master of Science in Artificial Intelligence from Johannes Kepler University Linz (JKU), where his thesis on conditional diffusion models for out-of-distribution detection was supervised by Prof. Sepp Hochreiter (inventor of LSTM). He also holds a Bachelor of Science in Mechatronics Engineering from Eastern Mediterranean University in Cyprus.",
+          text: "Ahmed Mohammed submitted his Master of Science in Artificial Intelligence thesis at Johannes Kepler University Linz (JKU) in Jul 2026 (degree expected 2026); the thesis on conditional diffusion models for out-of-distribution detection was supervised by Prof. Sepp Hochreiter (inventor of LSTM). He also holds a Bachelor of Science in Mechatronics Engineering from Eastern Mediterranean University in Cyprus.",
         },
       },
       {
@@ -259,7 +259,7 @@ export function FAQSchema() {
         name: "What was Ahmed Mohammed's Master's thesis about?",
         acceptedAnswer: {
           '@type': 'Answer',
-          text: "Ahmed Mohammed's Master's thesis at JKU Linz (2026) is titled 'Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control'. He achieved a 99.03% ± 0.07% average AUROC on CIFAR-10, improving the baseline by 6.5 percentage points with high seed stability through a novel class-conditional separation loss. The work was supervised by Prof. Sepp Hochreiter and applied to industrial quality control on the public FTI_Zer0P benchmark under strict 5-fold cross-validation.",
+          text: "Ahmed Mohammed's Master's thesis at JKU Linz (2026) is titled 'Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control'. He achieved a 99.03% ± 0.07% average AUROC on a within-CIFAR airplane-vs-rest binary split (single ID class; not comparable to multi-class CIFAR-10 OOD benchmarks), improving the baseline by 6.5 percentage points with high seed stability through a novel class-conditional separation loss. The work was supervised by Prof. Sepp Hochreiter and applied to industrial quality control on the public FTI_Zer0P benchmark under strict 5-fold cross-validation.",
         },
       },
       {
@@ -283,7 +283,7 @@ export function FAQSchema() {
         name: 'What types of AI problems does Ahmed Mohammed solve?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Ahmed Mohammed specializes in: (1) industrial defect detection and anomaly detection systems using YOLO and diffusion models — achieving 98.4% accuracy in production at PROFACTOR GmbH; (2) out-of-distribution detection for production AI safety — 99.03% AUROC on CIFAR-10 benchmark; (3) full-stack AI product development, from research to deployed SaaS (Faultrix); (4) computer vision pipelines for manufacturing and construction industries.',
+          text: 'Ahmed Mohammed specializes in: (1) industrial defect detection and anomaly detection systems using YOLO and diffusion models — achieving 98.4% threshold-dependent accuracy in production at PROFACTOR GmbH (internal deployment metric, binary classification); (2) out-of-distribution detection for production AI safety — 99.03% AUROC on a within-CIFAR airplane-vs-rest binary split (single ID class); (3) full-stack AI product development, from research to deployed SaaS (Faultrix); (4) computer vision pipelines for manufacturing and construction industries.',
         },
       },
     ],
@@ -384,7 +384,7 @@ export function ProjectsSchema() {
         item: {
           '@type': 'SoftwareApplication',
           name: 'OOD Detection Framework',
-          description: 'Novel use of conditional diffusion models as generative classifiers for out-of-distribution detection. Achieved 99.03% ± 0.07% average AUROC on CIFAR-10 benchmark, improving over non-separated baseline by 6.5 percentage points via class-conditional separation loss with high seed stability. Master\'s Thesis at JKU Linz, 2026.',
+          description: 'Novel use of conditional diffusion models as generative classifiers for out-of-distribution detection. Achieved 99.03% ± 0.07% average AUROC on a within-CIFAR airplane-vs-rest binary split (single ID class; not comparable to multi-class CIFAR-10 OOD benchmarks), improving over non-separated baseline by 6.5 percentage points via class-conditional separation loss with high seed stability. Master\'s Thesis at JKU Linz, 2026.',
           applicationCategory: 'DeveloperApplication',
           url: 'https://github.com/ahmed-3m/DiffusionOOD',
           author: { '@type': 'Person', name: 'Ahmed Mohammed' },
@@ -396,7 +396,7 @@ export function ProjectsSchema() {
         item: {
           '@type': 'SoftwareApplication',
           name: 'Industrial Anomaly Detection — PROFACTOR GmbH',
-          description: 'YOLO + diffusion model pipeline for real-time industrial defect detection on inkjet-printed building components. 98.4% accuracy in production environment. Part of the Zer0P project funded by the Government of Upper Austria.',
+          description: 'YOLO + diffusion model pipeline for real-time industrial defect detection on inkjet-printed building components. 98.4% accuracy in production environment (internal deployment metric, threshold-dependent binary classification). Part of the Zer0P project funded by the Government of Upper Austria.',
           applicationCategory: 'BusinessApplication',
           url: 'https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf',
           author: { '@type': 'Person', name: 'Ahmed Mohammed' },
@@ -442,7 +442,7 @@ export function ResearchSchema() {
     '@type': 'Thesis',
     headline: 'Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control',
     name: 'Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control',
-    abstract: 'This thesis treats conditional diffusion models as generative classifiers where class-conditional reconstruction error serves as the OOD signal. We develop a binary conditional diffusion model for CIFAR-10 OOD detection and introduce a class-conditional separation loss that improves both performance and stability. The separation loss achieves a 99.03% ± 0.07% average AUROC, showing a +6.5pp gain and dramatically lower seed variance over the baseline. We further evaluate the public InkjetOOD pipeline on the public FTI_Zer0P dataset under strict 5-fold cross-validation, reaching 0.8673 ± 0.0230 AUROC and characterizing its boundary conditions.',
+    abstract: 'This thesis treats conditional diffusion models as generative classifiers where class-conditional reconstruction error serves as the OOD signal. We develop a binary conditional diffusion model for CIFAR-10 OOD detection (within-CIFAR airplane-vs-rest split, single ID class; not comparable to multi-class CIFAR-10 OOD benchmarks) and introduce a class-conditional separation loss that improves both performance and stability. The separation loss achieves a 99.03% ± 0.07% average AUROC, showing a +6.5pp gain and dramatically lower seed variance over the baseline. We further evaluate the public InkjetOOD pipeline on the public FTI_Zer0P dataset under strict 5-fold cross-validation, reaching 0.8673 ± 0.0230 AUROC and characterizing its boundary conditions.',
     url: 'https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf',
     datePublished: '2026-07',
     inSupportOf: "Master's Degree in Artificial Intelligence",
