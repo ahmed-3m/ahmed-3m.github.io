@@ -553,7 +553,10 @@ body::before {
   font-size: 26px; font-weight: 700; letter-spacing: -0.02em;
   color: var(--cd-fg1); margin-bottom: 10px;
 }
-.cd-proj-desc { font-size: 14px; color: var(--cd-fg2); line-height: 1.65; max-width: 480px; margin-bottom: 20px; }
+.cd-proj-desc {
+  font-size: 14px; color: var(--cd-fg2); line-height: 1.65; max-width: 480px; margin-bottom: 20px;
+  text-align: justify; text-justify: inter-word;
+}
 .cd-proj-tags { display: flex; flex-wrap: wrap; gap: 8px; }
 .cd-proj-tag {
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
@@ -598,7 +601,10 @@ body::before {
   font-family: var(--font-display, 'Space Grotesk', sans-serif);
   font-size: 17px; font-weight: 600; color: var(--cd-fg1); margin-bottom: 8px;
 }
-.cd-pc-desc { font-size: 13px; color: var(--cd-fg2); line-height: 1.55; margin-bottom: 16px; }
+.cd-pc-desc {
+  font-size: 13px; color: var(--cd-fg2); line-height: 1.55; margin-bottom: 16px;
+  text-align: justify; text-justify: inter-word;
+}
 .cd-pc-metric {
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 24px; font-weight: 600; color: var(--cd-accent); letter-spacing: -0.02em;

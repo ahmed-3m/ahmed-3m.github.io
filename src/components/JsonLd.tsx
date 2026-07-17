@@ -76,10 +76,12 @@ export function PersonSchema() {
         credentialCategory: 'degree',
         name: 'Master of Science in Artificial Intelligence (thesis submitted Jul 2026, degree expected 2026)',
         educationalLevel: "Master's Degree (pending conferral)",
+        description: 'Thesis submitted Jul 2026; degree expected 2026 (not yet conferred).',
         recognizedBy: {
           '@type': 'CollegeOrUniversity',
           name: 'Johannes Kepler University Linz',
         },
+        // Submission window, not conferral date — status is pending in educationalLevel/name.
         dateCreated: '2026-07',
       },
       {

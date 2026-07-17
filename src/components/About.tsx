@@ -49,7 +49,7 @@ const copy = {
   roles: { en: 'AI/ML Roles - Research Collaborations', de: 'AI/ML-Rollen - Forschungskooperationen', fr: 'Roles IA/ML - collaborations recherche', es: 'Roles IA/ML - colaboraciones de investigacion', ar: 'أدوار الذكاء الاصطناعي - تعاونات بحثية' },
   degree1: { en: 'M.Sc. in Artificial Intelligence', de: 'M.Sc. Artificial Intelligence', fr: 'M.Sc. en intelligence artificielle', es: 'M.Sc. en Inteligencia Artificial', ar: 'ماجستير في الذكاء الاصطناعي' },
   degree2: { en: 'B.Sc. in Mechatronics Engineering', de: 'B.Sc. Mechatronik', fr: 'B.Sc. en genie mecatronique', es: 'B.Sc. en Ingenieria Mecatronica', ar: 'بكالوريوس في هندسة الميكاترونكس' },
-  desc1: { en: 'Thesis: conditional diffusion models for OOD detection - 99.03% +/- 0.07% average AUROC.', de: 'Thesis: konditionale Diffusionsmodelle fur OOD-Erkennung - 99.03% +/- 0.07% AUROC.', fr: 'Memoire : modeles de diffusion conditionnels pour detection OOD - 99.03% +/- 0.07% AUROC.', es: 'Tesis: modelos de difusion condicional para deteccion OOD - 99.03% +/- 0.07% AUROC.', ar: 'الرسالة: نماذج انتشار شرطية لكشف OOD - 99.03% +/- 0.07% AUROC.' },
+  desc1: { en: 'Thesis: conditional diffusion models for OOD detection - 99.03% +/- 0.07% average AUROC (binary airplane-vs-rest, 3-seed mean).', de: 'Thesis: konditionale Diffusionsmodelle fuer OOD-Erkennung - 99.03% +/- 0.07% AUROC (binaer airplane-vs-rest, 3-Seed-Mittel).', fr: 'Memoire : modeles de diffusion conditionnels pour detection OOD - 99.03% +/- 0.07% AUROC (binaire airplane-vs-rest, moyenne 3 seeds).', es: 'Tesis: modelos de difusion condicional para deteccion OOD - 99.03% +/- 0.07% AUROC (binaria airplane-vs-rest, media 3 seeds).', ar: 'الرسالة: نماذج انتشار شرطية لكشف OOD - 99.03% +/- 0.07% AUROC (ثنائي airplane-vs-rest، متوسط 3 بذور).' },
   desc2: { en: 'Thesis: SCARA robotic system for dynamic object tracking.', de: 'Thesis: SCARA-Robotersystem fur dynamische Objektverfolgung.', fr: 'Memoire : systeme robotique SCARA pour suivi dynamique d objets.', es: 'Tesis: sistema robotico SCARA para seguimiento dinamico de objetos.', ar: 'المشروع: نظام روبوت SCARA لتتبع الأجسام المتحركة.' },
 } satisfies Record<string, TranslationMap>
 
@@ -112,7 +112,7 @@ export default function About() {
             <p style={{ color: 'var(--cd-fg2)', fontSize: 15, marginBottom: 20 }}>{t(copy.path)}</p>
             <div className="cd-about-text" data-speakable>
               <p>{t(copy.p1)}</p>
-              <p>{t(copy.p2)} <strong>99.03% +/- 0.07% AUROC</strong> · <strong>0.8673 AUROC</strong>.</p>
+              <p>{t(copy.p2)} <strong>99.03% +/- 0.07% AUROC</strong> (binary airplane-vs-rest, 3-seed mean) · <strong>0.8673 AUROC</strong> (FTI_Zer0P 5-fold).</p>
               <p>{t(copy.p3)}</p>
             </div>
           </div>

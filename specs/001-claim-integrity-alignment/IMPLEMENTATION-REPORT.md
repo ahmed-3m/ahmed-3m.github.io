@@ -74,15 +74,31 @@ Did NOT assume `ZAI_NEWS_TOKEN` was missing — the failure was downstream of co
 ## Degree wording chosen
 "thesis submitted Jul 2026, degree expected 2026" — applied uniformly across About, CV, JsonLd, Experience. Does not claim conferral.
 
+## Follow-up residual pass (2026-07-13)
+
+Closed gaps from post-implementation review:
+
+| Gap | Fix |
+|-----|-----|
+| Spanish `Anos en IA/ML` | `Hero.tsx` → `Años en IA/ML` |
+| Bare 98.4 / 99.03 in `llms*.txt` | Key achievements + projects scoped/qualified |
+| `llms-full.txt` future blog date | `2026-07-20` → `2026-07-12` |
+| CV merged role | Split ML Researcher (Dec 2024–Jul 2026, JKU) + Machine Vision Researcher (Apr–Nov 2024, PROFACTOR); regen PDF |
+| Research thesis title suffix | Full title incl. inkjet QC |
+| About / Experience / Research scope | airplane-vs-rest on About + Research summary; Experience badge threshold-dep. |
+| JsonLd degree residual | description + pending conferral on credential |
+
 ## Deferred
 - **Repo-wide diacritics sweep** — larger task, not in this spec's core scope.
-- **CV two-column / visual redesign** — out of scope; CV structure preserved from original.
-- **News workflow** — fix already deployed (`e5328eb`); monitoring next scheduled run.
+- **CV page-count polish** — regenerated CV is 3 pages after role split; optional layout tighten later.
+- **News workflow** — fix already deployed (`e5328eb`); monitoring scheduled run.
 
 ## Anti-regression checks
 - [x] `80.25` — 0 hits in CV, 0 in src/, 0 in llms
 - [x] `+18.8 pp` — 0 hits anywhere
 - [x] `0.8673` card → thesis PDF (confirmed `href`)
-- [x] Primary OOD headline still `99.03% ± 0.07%` (3-seed) — Hero: 2 hits, JsonLd: 7 hits. NOT demoted to seed-42-only `98.98%`.
+- [x] Primary OOD headline still `99.03% ± 0.07%` (3-seed) — NOT demoted to seed-42-only `98.98%`
+- [x] `Anos en` — 0 hits; `Años` present
+- [x] `2026-07-20` — 0 hits in blog/llms sources
+- [x] CV roles sequential (JKU / PROFACTOR), not merged Apr 2024–Present
 - [x] `npm run build` — 16/16 pages, 0 errors
-- [x] `npm run lint` — 0 errors

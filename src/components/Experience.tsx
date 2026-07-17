@@ -54,7 +54,7 @@ const experiences: Array<{
       es: 'Pipeline YOLO + difusion para deteccion industrial de defectos en impresion inkjet de cero defectos.',
       ar: 'خط معالجة YOLO مع الانتشار لكشف العيوب الصناعية في طباعة inkjet بدون عيوب على مكونات البناء.',
     },
-    badge: { en: '98.4% accuracy (deployed)', de: '98.4% Genauigkeit (deployed)', fr: '98.4% precision (deployed)', es: '98.4% precision (deployed)', ar: 'دقة 98.4% (deployed)' },
+    badge: { en: '98.4% (threshold-dep., production)', de: '98.4% (threshold-abh., Produktion)', fr: '98.4% (seuil, production)', es: '98.4% (umbral, produccion)', ar: '98.4% (عتبة تشغيل، إنتاج)' },
     active: false,
   },
   {

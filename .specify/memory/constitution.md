@@ -1,50 +1,113 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report
+- Version change: template → 1.0.0
+- Modified principles: placeholders → portfolio-specific principles
+- Added sections: Branch Model, Claim Integrity, Quality Gates
+- Removed sections: none (template placeholders replaced)
+- Templates requiring updates: none required for v1.0.0 (standard Speckit templates retained)
+- Follow-up TODOs: none
+-->
+# Ahmed Mohammed Portfolio Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Evidence-First Claims (NON-NEGOTIABLE)
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+Every quantitative claim on the site, CV, schemas, AI-recall files, and case studies
+MUST be traceable to a public artifact (thesis PDF, repository, benchmark report, or
+case study). Numbers that cannot be verified from a public source MUST be removed or
+explicitly labeled as internal/operational metrics with scope qualifiers.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+**Rationale**: The portfolio invites verification (proof section, legend footnotes,
+llms.txt). Mismatched claims destroy more credibility than missing claims.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### II. Cross-Artifact Consistency
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+The site, downloadable CV, thesis PDF, industrial reports, JSON-LD, blog posts, and
+`llms*.txt` form one system. Headline metrics, dates, degree status, contact email,
+role timelines, and thesis title MUST agree across all of them. When a claim is
+corrected in one place, all other surfaces MUST be updated in the same change set
+whenever practical.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+**Rationale**: A hiring manager who downloads the CV one click from the hero will
+compare it to the page above it.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### III. Honest Scope Qualifiers
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+Leaderboard-adjacent metrics (AUROC, accuracy, pp gains) MUST carry evaluation scope
+where experts would otherwise misread them (e.g. airplane-vs-rest / single-ID split,
+3-seed mean, 5-fold CV, threshold-dependent production accuracy). Prefer smaller
+honest numbers over larger unqualified ones.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+**Rationale**: The audience that can hire for this work is the audience that checks
+benchmark protocol.
+
+### IV. Static Export Integrity
+
+The site MUST remain a statically exported Next.js app suitable for GitHub Pages.
+`npm run build` is the production gate. Features that require a server MUST either
+be optional client-side paths, documented edge workers, or out of scope for the
+static host.
+
+**Rationale**: Deploy path is `.github/workflows/deploy.yml` → `gh-pages`. Server-only
+APIs break the hosting model.
+
+### V. Multilingual Completeness & Locale Quality
+
+User-facing UI strings MUST include all supported languages (en, de, fr, es, ar).
+German and Spanish copy MUST use correct orthography (umlauts/ñ or consistent
+ASCII transliteration such as `ue`/`oe`/`ae` — never stripped forms that change
+meaning, e.g. Spanish "Anos").
+
+**Rationale**: DACH recruiters are a primary audience; the site advertises German B1.
+
+## Branch Model
+
+Only three long-lived source branches plus deploy output:
+
+| Branch | Purpose |
+|--------|---------|
+| `main` | Source of truth; change only via PR |
+| `claude-work` | Claude Code working lane |
+| `agents-work` | Shared lane for other agents |
+| `gh-pages` | Deploy output — never edit by hand |
+
+No per-feature branches. Speckit feature directories under `specs/` are independent of
+git branch names.
+
+## Claim Integrity Standards
+
+- Baseline thesis OOD result: **99.03% ± 0.07% AUROC** (3-seed mean) with
+  **+6.5 pp** over **92.52% ± 11.07%** baseline; CIFAR-10 **airplane-vs-rest**
+  (single ID class) unless multi-class is explicitly claimed.
+- Industrial public baseline: **0.8673 ± 0.0230 AUROC** (5-fold CV on FTI_Zer0P)
+  documented in the **thesis**, not the 2024 negative-result industrial report.
+- **98.4%** production accuracy MUST always be qualified as threshold-dependent /
+  operational unless removed from headline surfaces.
+- Degree language MUST reflect true status (submitted / expected / awarded) on
+  every surface that mentions it.
+- Contact email on CV and site MUST match the preferred public contact.
+
+## Quality Gates
+
+- `npm ci` for installs (lockfile committed).
+- `npm run lint` and `npm run build` MUST pass before merge.
+- News items in `src/lib/news-items.ts` self-validate at build time; never invent
+  future dates for public content.
+- Prefer reversible local changes; never force-push shared history; never edit
+  `gh-pages` by hand.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution guides Speckit specs, plans, and implementation for this
+repository. When principles conflict with convenience, principles win.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+- Amendments: update this file, bump version (MAJOR for principle removals or
+  redefinitions; MINOR for new principles; PATCH for clarifications), set
+  Last Amended to the change date.
+- PR reviews SHOULD check claim integrity for any change that touches metrics,
+  dates, education, or downloadable artifacts.
+- Runtime agent guidance lives in `AGENTS.md` / `Claude.md` and MUST remain
+  consistent with the Branch Model section above.
+
+**Version**: 1.0.0 | **Ratified**: 2026-07-12 | **Last Amended**: 2026-07-12
