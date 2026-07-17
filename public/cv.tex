@@ -97,15 +97,22 @@ Production ML system: image ingestion $\rightarrow$ model inference $\rightarrow
 \end{itemize}
 \vspace{3pt}
 
-\role{M.Sc. Thesis Researcher}{Apr 2024 -- Present}
-\org{JKU Institute for Machine Learning \& PROFACTOR GmbH -- Linz / Steyr}
-\textit{\small Industrial research conducted on-site at PROFACTOR GmbH \textbullet{} Government of Upper Austria, project Zer0P}
+\role{ML Researcher}{Dec 2024 -- Jul 2026}
+\org{JKU Institute for Machine Learning -- Linz, Austria}
 \begin{itemize}
-  \item Thesis: \emph{Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection} -- supervised by Prof.\ Sepp Hochreiter; assistant supervisor Claus Hofmann, MSc.
-  \item Developed a binary conditional diffusion model with a novel class-conditional separation loss, boosting OOD detection AUROC from 92.52\% $\pm$ 11.07\% to 99.03\% $\pm$ 0.07\% on CIFAR-10 (+6.5 pp gain, 3-seed mean).
-  \item Achieved 98.98\% AUROC on within-CIFAR split (seed-42) and 90.50--96.97\% across five external OOD benchmarks (CIFAR-100, Places365, FashionMNIST, SVHN, Textures).
-  \item Extended the framework to industrial classification of inkjet experimental prints at PROFACTOR GmbH (Government of Upper Austria, project Zer0P): designed a multi-head conditioning mechanism and conducted an 8-method comparison with 5-fold cross-validation.
+  \item Thesis: \emph{Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control} -- supervised by Prof.\ Sepp Hochreiter; assistant supervisor Claus Hofmann, MSc.
+  \item Developed a binary conditional diffusion model with a novel class-conditional separation loss, boosting OOD detection AUROC from 92.52\% $\pm$ 11.07\% to 99.03\% $\pm$ 0.07\% on a CIFAR-10 airplane-vs-rest split (single ID class; +6.5 pp gain, 3-seed mean).
+  \item Achieved 98.98\% AUROC on the within-CIFAR airplane-vs-rest split (seed-42) and 90.50--96.97\% across five external OOD benchmarks (CIFAR-100, Places365, FashionMNIST, SVHN, Textures).
   \item Built modular, reproducible experiment infrastructure using PyTorch Lightning + Hydra with configuration tracking, seed-controlled runs, and auditable raw-score artefacts.
+\end{itemize}
+\vspace{3pt}
+
+\role{Machine Vision Researcher}{Apr 2024 -- Nov 2024}
+\org{PROFACTOR GmbH -- Steyr, Austria (with JKU Linz)}
+\textit{\small Government of Upper Austria, project Zer0P}
+\begin{itemize}
+  \item Designed a multi-head conditioning mechanism and YOLO + conditional diffusion pipeline for industrial classification of inkjet experimental prints; conducted an 8-method comparison with 5-fold cross-validation on the public FTI\_Zer0P benchmark (thesis-documented baseline 0.8673 $\pm$ 0.0230 AUROC).
+  \item Evaluated production decision thresholds in a real-time inkjet quality setting (threshold-dependent operational accuracy; distinct from public AUROC baseline).
 \end{itemize}
 \vspace{3pt}
 
@@ -120,7 +127,7 @@ Production ML system: image ingestion $\rightarrow$ model inference $\rightarrow
 \section*{SELECTED PROJECTS}
 
 \textbf{OOD Detection with Conditional Diffusion Models} (M.Sc.\ Thesis) \,|\, JKU Institute for Machine Learning -- Prof.\ Sepp Hochreiter\\
-Binary CDM achieving 99.03\% AUROC on CIFAR-10 via novel separation loss. Extended to industrial inkjet quality control with multi-head conditioning (YOLOv8 + CDM two-stage pipeline). Modular implementation: PyTorch Lightning, Hydra, reproducible auditable artefacts.
+Binary CDM achieving 99.03\% $\pm$ 0.07\% AUROC (3-seed mean) on CIFAR-10 airplane-vs-rest via novel separation loss. Extended to industrial inkjet quality control with multi-head conditioning (YOLOv8 + CDM two-stage pipeline). Modular implementation: PyTorch Lightning, Hydra, reproducible auditable artefacts.
 \vspace{3pt}
 
 \textbf{Faultrix -- AI-Powered Construction Report Automation} \,|\, faultrix.com\\
