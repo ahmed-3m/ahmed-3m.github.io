@@ -23,21 +23,20 @@ npm run lint    # eslint
 
 ## Branch structure — read before you branch
 
-The repo is intentionally kept to **three working branches plus the deploy branch.**
-**Do not create new branches** (no `codex/*`, `fix/*`, `feature/*` — those were cleaned up).
+**`main` is the only long-lived branch.** Every change goes through a short-lived branch
+that is merged into `main` via a PR and then deleted automatically.
 
-| Branch        | Purpose                                                        |
-| ------------- | ------------------------------------------------------------- |
-| `main`        | Source of truth. Stable, deployable. Change only via PR.       |
-| `claude-work` | Claude Code's working lane.                                    |
-| `agents-work` | Shared lane for **all other agents** (Codex, Gemini, Cursor…). |
-| `gh-pages`    | Auto-generated deploy output. **Never edit by hand.**          |
+| Branch     | Purpose                                                   |
+| ---------- | --------------------------------------------------------- |
+| `main`     | Source of truth. Stable, deployable. Change only via PR.  |
+| `gh-pages` | Auto-generated deploy output. **Never edit by hand.**     |
 
 Rules:
-- If you are **not** Claude Code, do all work on **`agents-work`**. Commit there, then
-  open a PR into `main`.
-- Never commit feature work directly to `main` — always go through a PR from your lane.
-- Do not open per-feature branches. Keep everything on your single lane.
+- Branch off `main` for each change — this applies to every agent (Claude, Codex, Gemini,
+  Cursor…). Name it for the work (e.g. `fix/…`, `chore/…`); it is short-lived.
+- Never commit feature work directly to `main` — always go through a PR.
+- On merge, GitHub deletes the branch automatically ("Automatically delete head branches"
+  is enabled). Prune locally with `git fetch --prune`, then `git branch -d <branch>`.
 - Never touch `gh-pages`; the deploy workflow owns it.
 
 ## History
@@ -69,7 +68,7 @@ The `/news` page is designed to be kept current by an agent. All content lives i
 3. **Dedupe:** skip items whose URL or substance already exists. Never duplicate `id`.
 4. **Verify:** run `npm run build` — `news-items.ts` self-validates at build time and
    the build fails on malformed entries (bad id/date/category/url or empty `take.en`).
-5. Commit on **`agents-work`** and open a PR into `main` (see branch rules above).
+5. Commit on a short-lived branch and open a PR into `main` (see branch rules above).
 
 ### Automated weekly pipeline
 
