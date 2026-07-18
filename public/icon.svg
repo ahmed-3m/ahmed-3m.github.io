@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" role="img" aria-label="A3M">
   <defs>
-    <linearGradient id="a3mMark" x1="0%" y1="0%" x2="70%" y2="100%">
-      <stop offset="0%" stop-color="#38bdf8"/>
-      <stop offset="55%" stop-color="#2563c9"/>
+    <linearGradient id="a3mMark" x1="12%" y1="0%" x2="78%" y2="100%">
+      <stop offset="0%" stop-color="#4cc9f8"/>
+      <stop offset="45%" stop-color="#2a7fd4"/>
       <stop offset="100%" stop-color="#6d3fd1"/>
     </linearGradient>
   </defs>
@@ -13,12 +13,29 @@
   <!-- Subtle border -->
   <rect x="0.75" y="0.75" width="98.5" height="98.5" rx="19.25" fill="none" stroke="#1c2030" stroke-width="1.5"/>
 
-  <!-- "A" — triangle outline, left stroke weighted heavier than the right -->
-  <path fill-rule="evenodd" fill="url(#a3mMark)"
-        d="M50 15 L89 87 L11 87 Z M50 45 L68 75 L32 75 Z"/>
+  <!--
+    Everything inside #mark is extracted verbatim by tools/generate-icons.mjs to
+    build the full-bleed variants, so this group is the one source of truth for
+    the mark. Keep it flat: the extractor matches to the first closing </g>, so
+    a nested group here would silently truncate it.
+  -->
+  <g id="mark">
+    <!--
+      The "A" as a real letterform, not a triangle: outer silhouette minus a
+      triangular counter minus the open wedge between the feet. Counter and
+      wedge both sit right of centre, which is what makes the left stroke read
+      heavier than the right - the defining trait of the A3M mark.
+    -->
+    <path fill-rule="evenodd" fill="url(#a3mMark)"
+          d="M50 13 L88 87 L12 87 Z
+             M53 39 L65 62 L42 62 Z
+             M42 70 L65 70 L77 87 L30 87 Z"/>
 
-  <!-- Dissolve particles trailing off the lower-left, echoing the full lockup -->
-  <circle cx="21" cy="79" r="2.6" fill="#6d3fd1"/>
-  <circle cx="14" cy="84" r="1.9" fill="#7c4ddb" opacity="0.8"/>
-  <circle cx="27" cy="85" r="1.5" fill="#38bdf8" opacity="0.7"/>
+    <!-- Halftone dissolve trailing off the lower-left, in ordered rows -->
+    <circle cx="22" cy="79" r="1.9" fill="#6d3fd1"/>
+    <circle cx="16" cy="83" r="1.6" fill="#6d3fd1" opacity="0.85"/>
+    <circle cx="10" cy="87" r="1.3" fill="#6d3fd1" opacity="0.7"/>
+    <circle cx="23" cy="88" r="1.4" fill="#3f8fe0" opacity="0.75"/>
+    <circle cx="16" cy="92" r="1.1" fill="#6d3fd1" opacity="0.6"/>
+  </g>
 </svg>
