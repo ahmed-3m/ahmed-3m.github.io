@@ -1,0 +1,54 @@
+{
+  "updatedAt": "2026-07-18T07:47:27.619Z",
+  "source": "https://github.com/ahmed-3m",
+  "items": [
+    {
+      "id": "11953407611",
+      "type": "PullRequestEvent",
+      "repo": "ahmed-3m/ahmed-3m.github.io",
+      "message": "Merged PR #34: docs(specs): spec 004 + delegation-ready tasks for 002/003/004",
+      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/34",
+      "createdAt": "2026-07-17T23:03:15Z"
+    },
+    {
+      "id": "11953267115",
+      "type": "PullRequestEvent",
+      "repo": "ahmed-3m/ahmed-3m.github.io",
+      "message": "Merged PR #33: docs(specs): CV/claim reconciliation + interactive OOD demo",
+      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/33",
+      "createdAt": "2026-07-17T22:57:56Z"
+    },
+    {
+      "id": "11952868762",
+      "type": "PullRequestEvent",
+      "repo": "ahmed-3m/ahmed-3m.github.io",
+      "message": "Merged PR #32: docs: adopt trunk-based single-branch policy",
+      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/32",
+      "createdAt": "2026-07-17T22:43:23Z"
+    },
+    {
+      "id": "repo-753596965",
+      "type": "Repository",
+      "repo": "ahmed-3m/ahmed-3m",
+      "message": "Updated ahmed-3m/ahmed-3m",
+      "url": "https://github.com/ahmed-3m/ahmed-3m",
+      "createdAt": "2026-06-27T16:58:39Z"
+    },
+    {
+      "id": "repo-1234948928",
+      "type": "Repository",
+      "repo": "ahmed-3m/thesis-diffusion-ood-latex",
+      "message": "Updated ahmed-3m/thesis-diffusion-ood-latex — LaTeX source for the thesis Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control",
+      "url": "https://github.com/ahmed-3m/thesis-diffusion-ood-latex",
+      "createdAt": "2026-05-31T21:43:19Z"
+    },
+    {
+      "id": "repo-1224969592",
+      "type": "Repository",
+      "repo": "ahmed-3m/InkjetOOD",
+      "message": "Updated ahmed-3m/InkjetOOD — Conditional Diffusion Model for OOD detection in industrial inkjet quality control | Master's Thesis @ JKU Linz",
+      "url": "https://github.com/ahmed-3m/InkjetOOD",
+      "createdAt": "2026-05-12T21:36:12Z"
+    }
+  ]
+}

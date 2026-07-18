@@ -462,6 +462,24 @@ body::before {
   letter-spacing: -0.03em; color: var(--cd-fg1); margin-bottom: 16px;
 }
 
+/* ── ACTIVITY STRIP ── */
+.cd-activity-item:hover,
+.cd-activity-item:focus-visible {
+  border-color: var(--cd-accent) !important;
+  outline: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cd-activity-item { transition: none !important; }
+}
+@media (max-width: 640px) {
+  .cd-activity-item {
+    grid-template-columns: minmax(64px, auto) minmax(0, 1fr) !important;
+  }
+  .cd-activity-item .cd-wc-time {
+    grid-column: 2;
+  }
+}
+
 /* ── ABOUT ── */
 .cd-about-bio-row {
   display: grid; grid-template-columns: 1fr 320px;
