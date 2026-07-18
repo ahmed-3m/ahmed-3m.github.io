@@ -10,7 +10,9 @@ env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 permissions:
-  contents: read
+  # contents: write so the build job can commit a refreshed activity snapshot.
+  # pages + id-token remain for the Pages deploy job.
+  contents: write
   pages: write
   id-token: write
 
@@ -46,6 +48,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          # Need a token-backed checkout so we can push the activity snapshot
+          # back to main after a successful refresh (non-PR only).
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v5
@@ -55,6 +61,29 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      # Refresh the committed activity snapshot before the static export.
+      # Script always exits 0; on failure the existing JSON is left untouched.
+      - name: Fetch GitHub activity
+        run: node .github/activity/fetch-activity.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Persist the snapshot so local/PR builds render without a token.
+      # GITHUB_TOKEN pushes do not re-trigger workflows (no deploy loop).
+      - name: Commit activity snapshot
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: |
+          if git diff --quiet -- src/lib/github-activity.json; then
+            echo "Activity snapshot unchanged."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/lib/github-activity.json
+          git commit -m "chore(activity): refresh GitHub activity snapshot"
+          git push origin HEAD:${{ github.ref_name }}
 
       - name: Build
         run: npm run build
