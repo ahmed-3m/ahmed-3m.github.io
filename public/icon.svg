@@ -1,36 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" role="img" aria-label="A3M">
   <defs>
-    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0e1117"/>
-      <stop offset="100%" stop-color="#08090d"/>
+    <linearGradient id="a3mMark" x1="0%" y1="0%" x2="70%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="55%" stop-color="#2563c9"/>
+      <stop offset="100%" stop-color="#6d3fd1"/>
     </linearGradient>
-    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#00d4ff"/>
-      <stop offset="100%" stop-color="#0099cc"/>
-    </linearGradient>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="2" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
   </defs>
 
   <!-- Background rounded square -->
-  <rect width="100" height="100" rx="20" fill="url(#bgGrad)"/>
+  <rect width="100" height="100" rx="20" fill="#08090d"/>
 
   <!-- Subtle border -->
-  <rect width="100" height="100" rx="20" fill="none" stroke="#1c2030" stroke-width="1.5"/>
+  <rect x="0.75" y="0.75" width="98.5" height="98.5" rx="19.25" fill="none" stroke="#1c2030" stroke-width="1.5"/>
 
-  <!-- "A" — two diagonal strokes meeting at apex -->
-  <!-- Left stroke -->
-  <line x1="22" y1="80" x2="50" y2="20" stroke="url(#accentGrad)" stroke-width="8" stroke-linecap="round" filter="url(#glow)"/>
-  <!-- Right stroke -->
-  <line x1="78" y1="80" x2="50" y2="20" stroke="url(#accentGrad)" stroke-width="8" stroke-linecap="round" filter="url(#glow)"/>
-  <!-- Crossbar -->
-  <line x1="32" y1="57" x2="68" y2="57" stroke="url(#accentGrad)" stroke-width="6" stroke-linecap="round" filter="url(#glow)"/>
+  <!-- "A" — triangle outline, left stroke weighted heavier than the right -->
+  <path fill-rule="evenodd" fill="url(#a3mMark)"
+        d="M50 15 L89 87 L11 87 Z M50 45 L68 75 L32 75 Z"/>
 
-  <!-- Accent dot at apex -->
-  <circle cx="50" cy="20" r="5" fill="#00d4ff" filter="url(#glow)"/>
+  <!-- Dissolve particles trailing off the lower-left, echoing the full lockup -->
+  <circle cx="21" cy="79" r="2.6" fill="#6d3fd1"/>
+  <circle cx="14" cy="84" r="1.9" fill="#7c4ddb" opacity="0.8"/>
+  <circle cx="27" cy="85" r="1.5" fill="#38bdf8" opacity="0.7"/>
 </svg>
