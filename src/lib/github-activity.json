@@ -1,7 +1,15 @@
 {
-  "updatedAt": "2026-07-18T09:57:33.903Z",
+  "updatedAt": "2026-07-18T09:58:55.469Z",
   "source": "https://github.com/ahmed-3m",
   "items": [
+    {
+      "id": "11964097791",
+      "type": "PullRequestEvent",
+      "repo": "ahmed-3m/ahmed-3m.github.io",
+      "message": "Merged PR #36: docs(specs): thesis ground truth, claims matrix, demo feasibility…",
+      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/36",
+      "createdAt": "2026-07-18T09:57:43Z"
+    },
     {
       "id": "11964082676",
       "type": "PullRequestEvent",
@@ -17,14 +25,6 @@
       "message": "Merged PR #34: docs(specs): spec 004 + delegation-ready tasks for 002/003/004",
       "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/34",
       "createdAt": "2026-07-17T23:03:15Z"
-    },
-    {
-      "id": "11953267115",
-      "type": "PullRequestEvent",
-      "repo": "ahmed-3m/ahmed-3m.github.io",
-      "message": "Merged PR #33: docs(specs): CV/claim reconciliation + interactive OOD demo",
-      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/33",
-      "createdAt": "2026-07-17T22:57:56Z"
     },
     {
       "id": "repo-753596965",
