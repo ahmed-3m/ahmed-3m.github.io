@@ -1,7 +1,15 @@
 {
-  "updatedAt": "2026-07-18T07:47:27.619Z",
+  "updatedAt": "2026-07-18T09:57:33.903Z",
   "source": "https://github.com/ahmed-3m",
   "items": [
+    {
+      "id": "11964082676",
+      "type": "PullRequestEvent",
+      "repo": "ahmed-3m/ahmed-3m.github.io",
+      "message": "Merged PR #35: feat(activity): build-time GitHub activity strip (spec 004)",
+      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/35",
+      "createdAt": "2026-07-18T09:56:37Z"
+    },
     {
       "id": "11953407611",
       "type": "PullRequestEvent",
@@ -17,14 +25,6 @@
       "message": "Merged PR #33: docs(specs): CV/claim reconciliation + interactive OOD demo",
       "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/33",
       "createdAt": "2026-07-17T22:57:56Z"
-    },
-    {
-      "id": "11952868762",
-      "type": "PullRequestEvent",
-      "repo": "ahmed-3m/ahmed-3m.github.io",
-      "message": "Merged PR #32: docs: adopt trunk-based single-branch policy",
-      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/32",
-      "createdAt": "2026-07-17T22:43:23Z"
     },
     {
       "id": "repo-753596965",
