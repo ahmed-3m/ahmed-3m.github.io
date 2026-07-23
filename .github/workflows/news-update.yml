@@ -1,8 +1,12 @@
-name: Weekly news update
+name: Daily news update
 
 # Collects recent AI / agentic-AI news with GLM-5.2 (via Z.ai) + the Exa research MCP,
 # dedupes against what's already published, validates, and auto-merges to main on green.
 # Fully serverless: this Action IS the backend. Git is the dedup store.
+#
+# Runs daily. On a quiet day with nothing new, the agent writes no items and the
+# publish step is a no-op — so a daily cadence costs little more than weekly but
+# keeps the page noticeably fresher.
 #
 # Required repository secrets:
 #   ZAI_NEWS_TOKEN         - private Z.ai / GLM API key for the news agent (NOT exposed in the client bundle).
@@ -11,7 +15,7 @@ name: Weekly news update
 
 on:
   schedule:
-    - cron: "17 6 * * 1" # Mondays 06:17 UTC
+    - cron: "23 6 * * *" # Daily 06:23 UTC (off-round minute to dodge GH load peaks)
   workflow_dispatch:
     inputs:
       dry_run:
@@ -60,6 +64,8 @@ jobs:
           set +e
           # Fall back through GLM tiers on transient overload (529): the newest
           # model is the most capacity-constrained, so older tiers often succeed.
+          # Short backoff (15s) because the run is daily — failing fast and letting
+          # tomorrow's run pick it up beats sitting idle for minutes on overload.
           models="glm-5.2 glm-5 glm-4.7"
           attempt=0
           for m in $models; do
@@ -75,10 +81,10 @@ jobs:
             code=$?
             echo "::endgroup::"
             [ $code -eq 0 ] && { echo "Succeeded with $m."; exit 0; }
-            echo "Attempt $attempt ($m) failed (exit $code) — likely a transient overload. Trying next tier in 60s..."
-            sleep 60
+            echo "Attempt $attempt ($m) failed (exit $code) — likely a transient overload. Trying next tier in 15s..."
+            sleep 15
           done
-          echo "Agent failed across all model tiers — Z.ai likely broadly overloaded. The weekly cron will retry."
+          echo "Agent failed across all model tiers — Z.ai likely broadly overloaded. The daily run will retry tomorrow."
           exit 1
 
       - name: Validate build
@@ -93,14 +99,14 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           if git diff --quiet -- src/lib/news-items.ts; then
-            echo "No new news items this week — nothing to publish."
+            echo "No new news items today — nothing to publish."
             exit 0
           fi
           git config user.name "news-bot"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           # Path-scoped commit: ONLY the news data file is committed, even if the
           # agent incidentally touched other files. Constrains the blast radius.
-          git commit -m "chore(news): weekly automated update" -- src/lib/news-items.ts
+          git commit -m "chore(news): daily automated update" -- src/lib/news-items.ts
           git push origin HEAD:main
           # Keep the agents-work lane in sync with main (best-effort).
           git push origin HEAD:agents-work || echo "agents-work not fast-forwardable; skipping sync."
