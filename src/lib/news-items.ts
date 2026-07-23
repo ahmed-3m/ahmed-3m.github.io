@@ -45,7 +45,7 @@ export interface LocalizedNewsItem extends Omit<NewsItem, 'take'> {
 }
 
 /**
- * Items are kept current by the weekly news pipeline
+ * Items are kept current by the daily news pipeline
  * (.github/workflows/news-update.yml). Add entries following the schema and the
  * rules above / in AGENTS.md. Newest items sort to the top at read time.
  */

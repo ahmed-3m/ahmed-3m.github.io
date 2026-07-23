@@ -17,6 +17,11 @@
  *     ainews.cool served a chronic 502).
  *   - 4xx client rejections (401/403/429): auth/anti-bot/rate-limit responses.
  *   - generic network errors (status 0): transient TCP/TLS issues.
+ *
+ * Self-test: `node check-news-links.mjs --self-test` probes a known-404 and
+ * asserts it is still classified as a hard failure. Guards this checker — the
+ * only runtime reachability gate — against being silently neutered by a future
+ * refactor. No-op on the production path (no flag).
  */
 import { readFile } from 'node:fs/promises'
 
@@ -24,14 +29,6 @@ const FILE = 'src/lib/news-items.ts'
 const TIMEOUT_MS = 12000
 const UA =
   'Mozilla/5.0 (compatible; ahmed-3m-news-linkcheck/1.0; +https://ahmed-3m.github.io/news)'
-
-const src = await readFile(FILE, 'utf8')
-const urls = [...src.matchAll(/url:\s*'([^']+)'/g)].map((m) => m[1])
-
-if (urls.length === 0) {
-  console.error(`No urls found in ${FILE} — refusing to pass silently.`)
-  process.exit(1)
-}
 
 // Single attempt. Returns { url, status, error }. No retries: a transient 5xx
 // or network blip is a warning, not a failure, so retrying would only slow the
@@ -55,24 +52,62 @@ async function probe(url) {
   }
 }
 
-const results = await Promise.all([...new Set(urls)].map(probe))
-
 const isHardFail = (r) =>
   // 404 = the resource genuinely does not exist.
   r.status === 404 ||
   // DNS / domain gone: the hostname itself cannot be resolved, so the URL is
   // broken regardless of upstream health. Timeouts (status 0 with no DNS code)
   // are NOT here — those are transient and only warn.
+  // NOTE: a resolvable host that refuses connections (ECONNREFUSED) is treated
+  // as a transient warning, not a hard fail — distinguishing "host permanently
+  // dark" from "upstream having a bad day" is unreliable, and the whole point
+  // of demoting non-404 errors was to stop upstream state from blocking the
+  // pipeline. Residual risk (a truly dead-but-resolvable URL slipping through)
+  // is low: this checker is the only runtime reachability gate, but the
+  // build-time validateNewsItems() separately enforces url schema.
   (r.status === 0 && typeof r.error === 'string' && /ENOTFOUND|EAI_AGAIN|ENODATA/.test(r.error))
 
-const failures = results.filter(isHardFail)
-const warnings = results.filter((r) => !isHardFail(r) && (r.status === 0 || r.status >= 400))
+// --- Self-test (runs only with --self-test, before touching the data file) ---
+async function selfTest() {
+  // A GitHub 404 is stable, fast, and not anti-bot.
+  const url = 'https://github.com/ahmed-3m/nonexistent-self-test-xyz'
+  const r = await probe(url)
+  const pass = typeof r.status === 'number' && isHardFail(r)
+  console.log(`self-test: ${url} -> status ${r.status}, isHardFail=${isHardFail(r)}`)
+  if (!pass) {
+    console.error('self-test FAILED: a known-404 was not classified as a hard failure.')
+    process.exit(1)
+  }
+  // On success, exit code 0 implicitly (return from main) rather than calling
+  // process.exit(0): a forced exit while the fetch/AbortController handles are
+  // still tearing down trips a libuv assertion on Windows. Letting the event
+  // loop drain avoids it and is the documented Node pattern.
+  console.log('self-test OK: 404 is still a hard failure.')
+}
 
-for (const w of warnings)
-  console.warn(`⚠️  ${w.status || w.error} (allowed) ${w.url}`)
-for (const f of failures) console.error(`❌  ${f.status || f.error} ${f.url}`)
+if (process.argv.includes('--self-test')) {
+  await selfTest()
+} else {
+  // --- Production path ---
+  const src = await readFile(FILE, 'utf8')
+  const urls = [...src.matchAll(/url:\s*'([^']+)'/g)].map((m) => m[1])
 
-console.log(
-  `\nChecked ${results.length} unique links — ${failures.length} hard failures, ${warnings.length} warnings.`,
-)
-process.exit(failures.length > 0 ? 1 : 0)
+  if (urls.length === 0) {
+    console.error(`No urls found in ${FILE} — refusing to pass silently.`)
+    process.exit(1)
+  }
+
+  const results = await Promise.all([...new Set(urls)].map(probe))
+
+  const failures = results.filter(isHardFail)
+  const warnings = results.filter((r) => !isHardFail(r) && (r.status === 0 || r.status >= 400))
+
+  for (const w of warnings)
+    console.warn(`⚠️  ${w.status || w.error} (allowed) ${w.url}`)
+  for (const f of failures) console.error(`❌  ${f.status || f.error} ${f.url}`)
+
+  console.log(
+    `\nChecked ${results.length} unique links — ${failures.length} hard failures, ${warnings.length} warnings.`,
+  )
+  process.exit(failures.length > 0 ? 1 : 0)
+}
