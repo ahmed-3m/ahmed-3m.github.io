@@ -1,7 +1,15 @@
 {
-  "updatedAt": "2026-07-18T09:58:55.469Z",
+  "updatedAt": "2026-07-26T15:06:43.027Z",
   "source": "https://github.com/ahmed-3m",
   "items": [
+    {
+      "id": "12314248452",
+      "type": "PullRequestEvent",
+      "repo": "ahmed-3m/ahmed-3m.github.io",
+      "message": "Merged PR #38: fix(news): daily pipeline + resilient link checker",
+      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/38",
+      "createdAt": "2026-07-26T15:05:43Z"
+    },
     {
       "id": "11964097791",
       "type": "PullRequestEvent",
@@ -17,14 +25,6 @@
       "message": "Merged PR #35: feat(activity): build-time GitHub activity strip (spec 004)",
       "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/35",
       "createdAt": "2026-07-18T09:56:37Z"
-    },
-    {
-      "id": "11953407611",
-      "type": "PullRequestEvent",
-      "repo": "ahmed-3m/ahmed-3m.github.io",
-      "message": "Merged PR #34: docs(specs): spec 004 + delegation-ready tasks for 002/003/004",
-      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/34",
-      "createdAt": "2026-07-17T23:03:15Z"
     },
     {
       "id": "repo-753596965",
