@@ -6,6 +6,7 @@
  *
  * HARD failure (blocks merge): the link itself is wrong —
  *   - 404 Not Found
+ *   - 410 Gone (permanent removal — closer to 404 than to a transient 5xx)
  *   - DNS does not resolve / domain is gone (ENOTFOUND, EAI_AGAIN)
  * These mean the agent wrote a bad URL and must never have committed it.
  *
@@ -52,9 +53,12 @@ async function probe(url) {
   }
 }
 
+// Status codes that mean the link itself is wrong, regardless of upstream health.
+// 410 is permanent removal — semantically a deletion, closer to 404 than to a 5xx outage.
+const HARD_FAIL_STATUSES = new Set([404, 410])
+
 const isHardFail = (r) =>
-  // 404 = the resource genuinely does not exist.
-  r.status === 404 ||
+  HARD_FAIL_STATUSES.has(r.status) ||
   // DNS / domain gone: the hostname itself cannot be resolved, so the URL is
   // broken regardless of upstream health. Timeouts (status 0 with no DNS code)
   // are NOT here — those are transient and only warn.
@@ -69,20 +73,42 @@ const isHardFail = (r) =>
 
 // --- Self-test (runs only with --self-test, before touching the data file) ---
 async function selfTest() {
-  // A GitHub 404 is stable, fast, and not anti-bot.
+  let failed = false
+  const expectHard = (label, r, expected) => {
+    const got = isHardFail(r)
+    const ok = got === expected
+    console.log(
+      `self-test: ${label} -> status ${r.status}, isHardFail=${got} (expected ${expected}) ${ok ? '✓' : '✗'}`,
+    )
+    if (!ok) failed = true
+  }
+
+  // Live check: a GitHub 404 is stable, fast, and not anti-bot.
   const url = 'https://github.com/ahmed-3m/nonexistent-self-test-xyz'
-  const r = await probe(url)
-  const pass = typeof r.status === 'number' && isHardFail(r)
-  console.log(`self-test: ${url} -> status ${r.status}, isHardFail=${isHardFail(r)}`)
-  if (!pass) {
-    console.error('self-test FAILED: a known-404 was not classified as a hard failure.')
+  const live = await probe(url)
+  expectHard(`live ${url}`, live, true)
+
+  // Synthetic checks against the pure predicate: pin BOTH halves of the policy
+  // so a future refactor can't re-introduce the bug this PR fixed (treating 5xx
+  // as hard failures) or the inverse (dropping 404/410). No network needed.
+  expectHard('synthetic 404', { status: 404 }, true)
+  expectHard('synthetic 410', { status: 410 }, true)
+  expectHard('synthetic 502', { status: 502 }, false)
+  expectHard('synthetic 503', { status: 503 }, false)
+  expectHard('synthetic 429', { status: 429 }, false)
+  expectHard('synthetic 403', { status: 403 }, false)
+  expectHard('synthetic DNS gone', { status: 0, error: 'ENOTFOUND' }, true)
+  expectHard('synthetic timeout', { status: 0, error: 'HeadersTimeoutError' }, false)
+
+  if (failed) {
+    console.error('self-test FAILED: link classification drifted from the documented policy.')
     process.exit(1)
   }
   // On success, exit code 0 implicitly (return from main) rather than calling
   // process.exit(0): a forced exit while the fetch/AbortController handles are
   // still tearing down trips a libuv assertion on Windows. Letting the event
   // loop drain avoids it and is the documented Node pattern.
-  console.log('self-test OK: 404 is still a hard failure.')
+  console.log('self-test OK: link classification matches the documented policy.')
 }
 
 if (process.argv.includes('--self-test')) {
@@ -90,7 +116,10 @@ if (process.argv.includes('--self-test')) {
 } else {
   // --- Production path ---
   const src = await readFile(FILE, 'utf8')
-  const urls = [...src.matchAll(/url:\s*'([^']+)'/g)].map((m) => m[1])
+  // Accept single or double quotes around the URL; the file's convention is
+  // single, but Prettier or a manual edit could flip it and a silent miss is
+  // worse than a slightly looser match.
+  const urls = [...src.matchAll(/url:\s*['"]([^'"]+)['"]/g)].map((m) => m[1])
 
   if (urls.length === 0) {
     console.error(`No urls found in ${FILE} — refusing to pass silently.`)

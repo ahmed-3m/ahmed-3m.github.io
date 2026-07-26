@@ -88,6 +88,10 @@ jobs:
           exit 1
 
       - name: Validate build
+        # Intentionally a second build: the agent already ran `npm run build` in
+        # its sandbox for self-validation, but that was on the agent's in-flight
+        # tree. This re-verifies the final committed state as the gate the
+        # auto-merge pivots on. Belt-and-suspenders by design.
         run: npm run build
 
       - name: Check news links
@@ -107,6 +111,13 @@ jobs:
           # Path-scoped commit: ONLY the news data file is committed, even if the
           # agent incidentally touched other files. Constrains the blast radius.
           git commit -m "chore(news): daily automated update" -- src/lib/news-items.ts
+          # `main` may have moved (a PR merge, or the deploy workflow's own
+          # commits) during the ~5-15 min this run took. Rebase our single-file
+          # news commit on top before pushing so the push is fast-forward and
+          # isn't silently rejected. The commit only ever touches news-items.ts,
+          # so conflicts are effectively impossible unless main also edited it.
+          git fetch origin main
+          git rebase origin/main
           git push origin HEAD:main
           # Keep the agents-work lane in sync with main (best-effort).
           git push origin HEAD:agents-work || echo "agents-work not fast-forwardable; skipping sync."
