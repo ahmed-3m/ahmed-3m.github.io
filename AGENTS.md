@@ -70,13 +70,14 @@ The `/news` page is designed to be kept current by an agent. All content lives i
    the build fails on malformed entries (bad id/date/category/url or empty `take.en`).
 5. Commit on a short-lived branch and open a PR into `main` (see branch rules above).
 
-### Automated weekly pipeline
+### Automated daily pipeline
 
-`.github/workflows/news-update.yml` runs this loop automatically every Monday (and on
-manual dispatch): GLM-5.2 via the Z.ai endpoint + the Exa research MCP collect recent
+`.github/workflows/news-update.yml` runs this loop automatically **daily** (06:23 UTC,
+and on manual dispatch): GLM-5.2 via the Z.ai endpoint + the Exa research MCP collect recent
 news, dedupe against `news-items.ts`, append items, then the workflow runs `npm run build`
 and `.github/news/check-news-links.mjs` and **auto-merges to `main` only if both pass**. It is
 fully serverless — the Action is the backend and git is the dedup store; no hosting needed.
+On a quiet day with nothing new, the agent writes no items and publish is a no-op.
 
 Required repository secrets:
 - `ZAI_NEWS_TOKEN` — private Z.ai / GLM key for the news agent. Never prefixed with `NEXT_PUBLIC_` — must NOT appear in the client bundle.
