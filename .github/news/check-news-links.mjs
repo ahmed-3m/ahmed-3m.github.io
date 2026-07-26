@@ -83,10 +83,18 @@ async function selfTest() {
     if (!ok) failed = true
   }
 
-  // Live check: a GitHub 404 is stable, fast, and not anti-bot.
+  // Live check: a GitHub 404 is usually stable and not anti-bot. Soft-fail if
+  // GitHub is unhappy (429/403/5xx/network) so CI does not flake on upstream
+  // state — the synthetic assertions below are the hard policy pins.
   const url = 'https://github.com/ahmed-3m/nonexistent-self-test-xyz'
   const live = await probe(url)
-  expectHard(`live ${url}`, live, true)
+  if (live.status === 404 || live.status === 410) {
+    expectHard(`live ${url}`, live, true)
+  } else {
+    console.log(
+      `self-test: live ${url} -> status ${live.status || live.error} (skipped; expected 404, upstream not cooperative)`,
+    )
+  }
 
   // Synthetic checks against the pure predicate: pin BOTH halves of the policy
   // so a future refactor can't re-introduce the bug this PR fixed (treating 5xx

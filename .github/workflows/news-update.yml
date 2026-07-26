@@ -94,6 +94,11 @@ jobs:
         # auto-merge pivots on. Belt-and-suspenders by design.
         run: npm run build
 
+      - name: Self-test link-check policy
+        # Pins HARD_FAIL classification so a future refactor cannot silently
+        # re-introduce 5xx-as-hard-fail (or drop 404/410) without failing CI.
+        run: node .github/news/check-news-links.mjs --self-test
+
       - name: Check news links
         run: node .github/news/check-news-links.mjs
 
@@ -111,6 +116,10 @@ jobs:
           # Path-scoped commit: ONLY the news data file is committed, even if the
           # agent incidentally touched other files. Constrains the blast radius.
           git commit -m "chore(news): daily automated update" -- src/lib/news-items.ts
+          # Path-scoped commit leaves any incidental agent edits to other tracked
+          # files unstaged. `git rebase` refuses a dirty tree, so drop that dirt
+          # (only news-items.ts was committed — everything else is out of scope).
+          git reset --hard HEAD
           # `main` may have moved (a PR merge, or the deploy workflow's own
           # commits) during the ~5-15 min this run took. Rebase our single-file
           # news commit on top before pushing so the push is fast-forward and
