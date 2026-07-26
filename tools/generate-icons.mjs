@@ -12,10 +12,11 @@
  *                   OS-chosen shape, so the mark is inset into the safe zone
  *                   and the background runs edge to edge.
  *
- * Requires `sharp`, which Next.js already pulls in. It is not a direct
- * dependency, so if a future Next release drops it, `npm i -D sharp` first.
+ * Requires `sharp`, declared as a direct devDependency in package.json so the
+ * generator keeps working even if a future Next.js release stops pulling it in.
  * Nothing in `npm run build` calls this script — it is run by hand when the
- * logo changes, and the outputs are committed.
+ * logo changes, and the outputs are committed. See tools/README.md for the
+ * regeneration checklist.
  */
 
 import { readFile, writeFile } from "node:fs/promises";

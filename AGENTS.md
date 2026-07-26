@@ -93,3 +93,8 @@ The agent's instructions live in `.github/news/task.md`; the Exa MCP config in
 - UI strings are multilingual (en / de / fr / es / ar) — see the `copy` objects in
   components such as `src/components/Hero.tsx`. Add a translation for every language key.
 - Run `npm run build` before pushing; the static export must succeed.
+- The site icons (`favicon.ico`, `favicon-*.png`, `apple-touch-icon.png`, `icon-192/512.png`)
+  are generated from one source, `public/icon.svg`. If you edit that SVG, you MUST run
+  `node tools/generate-icons.mjs` and commit all regenerated PNGs + the mirrored
+  `src/app/favicon.ico` together with the SVG — see `tools/README.md`. There is no CI
+  drift check, so this is a manual obligation.
