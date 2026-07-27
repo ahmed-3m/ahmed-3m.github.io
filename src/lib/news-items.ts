@@ -121,6 +121,54 @@ const newsItems: NewsItem[] = [
       en: 'Achieving 30B-class reasoning at 16B parameters through compression is meaningful for deployment cost, but "no retraining from scratch" claims need verification. Production systems care about inference latency and accuracy degradation curves, not just parameter count.'
     },
     tags: ['model-compression', 'reasoning', 'deployment']
+  },
+  {
+    id: 'kimi-k3-open-weights-largest-open-model',
+    date: '2026-07-27',
+    category: 'ai',
+    headline: 'Moonshot AI releases Kimi K3 open weights making the world\'s largest open-weight model free to download',
+    source: 'Startup Fortune',
+    url: 'https://startupfortune.com/moonshot-ai-releases-kimi-k3-open-weights-making-the-worlds-largest-open-weight-model-free-to-download/',
+    take: {
+      en: 'Moonshot actually shipping the 2.8T-parameter weights — not just a spec sheet — is the part that matters: anyone can now reproduce the benchmarks instead of trusting a leaderboard. For production, the real question isn\'t whether K3 matches Fable 5 on a chart, but whether open weights at this scale finally make self-hosting defensible against closed-lab pricing.'
+    },
+    tags: ['open-weights', 'frontier-models', 'moe']
+  },
+  {
+    id: 'openai-presence-enterprise-agents',
+    date: '2026-07-22',
+    category: 'agentic',
+    headline: 'Introducing OpenAI Presence',
+    source: 'OpenAI',
+    url: 'https://openai.com/index/introducing-openai-presence/',
+    take: {
+      en: 'The interesting part of Presence isn\'t the model — it\'s that OpenAI is productizing the eval loop: simulations and graders before launch, then a Codex-driven improvement cycle fed by production escalations. Selling it forward-deployed instead of self-serve is the honest admission that the hard part of enterprise agents is policy, evaluation, and integration, not intelligence.'
+    },
+    tags: ['enterprise-agents', 'evaluation', 'governance']
+  },
+  {
+    id: 'vercel-agent-plan-to-permission',
+    date: '2026-07-21',
+    category: 'agentic',
+    headline: 'Introducing the new Vercel Agent',
+    source: 'Vercel',
+    url: 'https://vercel.com/blog/vercel-agent',
+    take: {
+      en: 'Vercel\'s plan-to-permission model — read-only by default, scoped short-lived capabilities per approved plan, generated code in a Firecracker sandbox — is the right architecture for letting autonomous agents touch production safely. Their framing is exactly right: a non-deterministic system can\'t earn trust by being right, so the trust has to live in the infrastructure, and a mistake\'s blast radius is the metric that counts.'
+    },
+    tags: ['agent-safety', 'least-privilege', 'production']
+  },
+  {
+    id: 'flux-3-multimodal-flow-model',
+    date: '2026-07-23',
+    category: 'ai',
+    headline: 'FLUX 3 - Real World Models: Towards Multimodal Flow Models as the Backbone of Visual Intelligence',
+    source: 'Black Forest Labs',
+    url: 'https://bfl.ai/blog/flux-3',
+    take: {
+      en: 'Training one flow-matching backbone jointly on image, video, and audio — and extending it to action prediction with FLUX-mimic — is the part I find most interesting: it pushes diffusion beyond generation toward a unified perception-and-action model. A multimodal backbone is only as credible as its eval methodology, so I\'ll judge it when the open weights land and the benchmarks can be re-run.'
+    },
+    tags: ['flow-matching', 'multimodal', 'computer-vision']
   }
 ]
 
