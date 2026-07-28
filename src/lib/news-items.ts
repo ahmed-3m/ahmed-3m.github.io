@@ -169,6 +169,54 @@ const newsItems: NewsItem[] = [
       en: 'Training one flow-matching backbone jointly on image, video, and audio — and extending it to action prediction with FLUX-mimic — is the part I find most interesting: it pushes diffusion beyond generation toward a unified perception-and-action model. A multimodal backbone is only as credible as its eval methodology, so I\'ll judge it when the open weights land and the benchmarks can be re-run.'
     },
     tags: ['flow-matching', 'multimodal', 'computer-vision']
+  },
+  {
+    id: 'claude-opus-5-launch',
+    date: '2026-07-24',
+    category: 'ai',
+    headline: 'Introducing Claude Opus 5',
+    source: 'Anthropic',
+    url: 'https://www.anthropic.com/news/claude-opus-5',
+    take: {
+      en: 'Opus 5 landing near Fable 5 quality at half the price is what changes day-to-day work — but the 30.2% ARC-AGI-3 jump is the number I trust least, since the benchmark went public before training and could be targeted. Thinking-on-by-default and automatic fallback replacing hard refusals are the production-relevant wins; I would migrate a workload only after re-running my own evals, not theirs.'
+    },
+    tags: ['models', 'reasoning', 'evaluation']
+  },
+  {
+    id: 'cursor-agent-swarm-model-economics',
+    date: '2026-07-20',
+    category: 'agentic',
+    headline: 'Agent swarms and the new model economics',
+    source: 'Cursor',
+    url: 'https://cursor.com/blog/agent-swarm-model-economics',
+    take: {
+      en: 'Cursor\'s planner/worker swarm rebuilding SQLite from the manual for $1,339 versus $10,565 all-frontier is the cleanest evidence yet that most coding work belongs to cheap workers steered by one frontier planner. The economics are real, but it is a closed-book stress test — and the 68%-of-agents-stall-within-ten-steps stat Cursor itself cites is the caveat that matters: orchestration savings never show up until agents can run long enough to use them.'
+    },
+    tags: ['agentic-coding', 'multi-agent', 'model-routing']
+  },
+  {
+    id: 'nvidia-molt-agentic-rl-framework',
+    date: '2026-07-22',
+    category: 'agentic',
+    headline: 'Molt: A Scalable PyTorch-Native Training Framework for Agentic Reinforcement Learning',
+    source: 'arXiv',
+    url: 'https://arxiv.org/abs/2607.21653',
+    take: {
+      en: 'Molt matters because agentic RL infrastructure — not the models — is now the binding constraint, and a ~9,000-line PyTorch-native stack that scales to trillion-parameter MoE while staying readable is a genuine gift to researchers. The deeper signal is methodological: reward from verifiable checkers (test suites, tool execution, math verifiers) instead of a learned human-preference model makes the evaluation loop first-class, which is where production agent quality is actually forged.'
+    },
+    tags: ['agent-training', 'reinforcement-learning', 'infrastructure']
+  },
+  {
+    id: 'microsoft-project-perception-cyber-agents',
+    date: '2026-07-27',
+    category: 'agentic',
+    headline: 'Microsoft\'s first cybersecurity model powers new Project Perception agents',
+    source: 'SiliconANGLE',
+    url: 'https://siliconangle.com/2026/07/27/microsofts-first-cybersecurity-model-powers-new-project-perception-agents/',
+    take: {
+      en: 'Project Perception is the clearest commercial proof yet that a well-designed multi-model harness beats throwing the biggest model at every step: a compact purpose-built cyber model carrying 90% of the load and farming only the hardest 10% to GPT-5.4 halved cost and still out-scored Mythos 5 and GPT-5.6 Sol on CyberGym. The takeaway is the one I keep arguing — in production, the harness and its eval gates matter more than the model.'
+    },
+    tags: ['cybersecurity', 'model-routing', 'enterprise-agents']
   }
 ]
 
