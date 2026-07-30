@@ -10,9 +10,9 @@ const links = [
   { href: '/#about', label: { en: 'About', de: 'Profil', fr: 'Profil', es: 'Perfil', ar: 'نبذة' } },
   { href: '/#projects', label: { en: 'Projects', de: 'Projekte', fr: 'Projets', es: 'Proyectos', ar: 'المشاريع' } },
   { href: '/#experience', label: { en: 'Experience', de: 'Erfahrung', fr: 'Experience', es: 'Experiencia', ar: 'الخبرة' } },
-  { href: '/#research', label: { en: 'Research', de: 'Forschung', fr: 'Recherche', es: 'Investigacion', ar: 'الأبحاث' } },
+  { href: '/#research', label: { en: 'Research', de: 'Forschung', fr: 'Recherche', es: 'Investigación', ar: 'الأبحاث' } },
   { href: '/#writing', label: { en: 'Blog', de: 'Blog', fr: 'Blog', es: 'Blog', ar: 'المدونة' } },
-  { href: '/news', label: { en: 'News', de: 'News', fr: 'Actualites', es: 'Noticias', ar: 'الأخبار' } },
+  { href: '/news', label: { en: 'News', de: 'News', fr: 'Actualités', es: 'Noticias', ar: 'الأخبار' } },
   { href: '/#contact', label: { en: 'Contact', de: 'Kontakt', fr: 'Contact', es: 'Contacto', ar: 'تواصل' } },
 ] satisfies Array<{ href: string; label: TranslationMap }>
 
@@ -27,8 +27,8 @@ const ctaLabel: TranslationMap = {
 const languageNames: Record<Language, string> = {
   en: 'English',
   de: 'Deutsch',
-  fr: 'Francais',
-  es: 'Espanol',
+  fr: 'Français',
+  es: 'Español',
   ar: 'Arabic',
 }
 
@@ -120,12 +120,12 @@ function NavCta({ onClick }: { onClick?: () => void }) {
 }
 
 const menuLabels = {
-  open: { en: 'Open menu', de: 'Menu offnen', fr: 'Ouvrir le menu', es: 'Abrir menu', ar: 'افتح القائمة' },
-  close: { en: 'Close menu', de: 'Menu schliessen', fr: 'Fermer le menu', es: 'Cerrar menu', ar: 'أغلق القائمة' },
+  open: { en: 'Open menu', de: 'Menü öffnen', fr: 'Ouvrir le menu', es: 'Abrir menú', ar: 'افتح القائمة' },
+  close: { en: 'Close menu', de: 'Menü schließen', fr: 'Fermer le menu', es: 'Cerrar menú', ar: 'أغلق القائمة' },
 } satisfies Record<string, TranslationMap>
 
 const themeLabels = {
-  cream: { en: 'Switch to cream mode', de: 'Zum Creme-Modus wechseln', fr: 'Passer au mode creme', es: 'Cambiar al modo crema', ar: 'التبديل إلى النمط الكريمي' },
+  cream: { en: 'Switch to cream mode', de: 'Zum Creme-Modus wechseln', fr: 'Passer au mode crème', es: 'Cambiar al modo crema', ar: 'التبديل إلى النمط الكريمي' },
   dark: { en: 'Switch to dark mode', de: 'Zum dunklen Modus wechseln', fr: 'Passer au mode sombre', es: 'Cambiar al modo oscuro', ar: 'التبديل إلى النمط الداكن' },
 } satisfies Record<string, TranslationMap>
 

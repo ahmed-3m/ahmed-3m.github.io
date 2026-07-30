@@ -1,14 +1,14 @@
-# Ahmed Mohammed — AI/ML Engineer & Entrepreneur
+# Ahmed Mohammed — AI/ML Engineer
 
-> AI/ML Engineer and entrepreneur based in Linz, Austria. M.Sc. Artificial Intelligence thesis submitted Jul 2026 (degree expected 2026) at Johannes Kepler University Linz (supervised by Prof. Sepp Hochreiter, inventor of LSTM). Founder of Faultrix. Specializing in computer vision, diffusion models, out-of-distribution detection, and industrial defect detection.
+> AI/ML Engineer based in Linz, Austria. M.Sc. Artificial Intelligence thesis submitted Jul 2026 (degree expected 2026) at Johannes Kepler University Linz (supervised by Prof. Sepp Hochreiter, inventor of LSTM). Builder of Sihem (LLM assistant) and Faultrix (AI QC platform). Specializing in computer vision, diffusion models, out-of-distribution detection, and industrial defect detection.
 
 ## Identity
 
 - **Full name:** Ahmed Mohammed
 - **Location:** Linz, Upper Austria, Austria
-- **Email:** ahmed@faultrix.com
+- **Email:** ahmed.mo.0595@gmail.com
 - **Portfolio:** https://ahmed-3m.github.io
-- **Company:** Faultrix (Founder) — https://faultrix.com
+- **Company:** Faultrix (built solo) — https://faultrix.com
 - **Open to:** Senior AI/ML roles · Research collaborations · Enterprise partnerships
 
 ## Key Achievements
@@ -39,7 +39,7 @@
 
 ## Experience
 
-- **Founder & Full-Stack Developer, Faultrix** (Jul 2025 – Present): Built AI construction analysis platform solo from zero to production.
+- **AI/ML & Full-Stack Engineer, Faultrix** (Jul 2025 – Present): Built AI construction analysis platform solo from zero to production.
 - **ML Researcher, JKU Machine Learning Institute** (Dec 2024 – Jul 2026): Thesis on diffusion-based OOD detection under Prof. Sepp Hochreiter, pioneering separation loss (+6.5pp gain, 99.03% ± 0.07% average AUROC on airplane-vs-rest binary split).
 - **Machine Vision Researcher, PROFACTOR GmbH / JKU Linz** (Apr 2024 – Nov 2024): YOLO + diffusion pipeline for industrial defect detection (M.Sc. thesis track 2). Strict 5-fold CV baseline of 0.8673 ± 0.0230 AUROC on the public FTI_Zer0P dataset.
 - **AI Research Intern, Karunya University** (Aug 2023 – Oct 2023, Remote): RNN/CNN architectures for EEG motor imagery classification.

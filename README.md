@@ -38,7 +38,7 @@ At `lambda = 0.02`, the three-seed mean improved from a seed-sensitive `92.52% +
 | --- | --- | --- |
 | DiffusionOOD | Thesis implementation for CIFAR-10 OOD detection | [Code](https://github.com/ahmed-3m/DiffusionOOD) / [Weights](https://huggingface.co/ahmed-3m/DiffusionOOD) / [Thesis PDF](https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf) |
 | InkjetOOD | Industrial quality-control transfer study | [Code](https://github.com/ahmed-3m/InkjetOOD) / [Weights](https://huggingface.co/ahmed-3m/InkjetOOD) |
-| Faultrix | Founder and full-stack builder | [Live SaaS](https://faultrix.com) |
+| Faultrix | Full-stack builder (built solo) | [Live SaaS](https://faultrix.com) |
 | Portfolio | Research, writing, projects, and contact surface | [Site](https://ahmed-3m.github.io) / [Blog](https://ahmed-3m.github.io/blog) |
 
 ## Proof Layer
@@ -83,7 +83,7 @@ The Calendly booking button points to `https://calendly.com/ahmed-3m` by default
 
 - Portfolio: [ahmed-3m.github.io](https://ahmed-3m.github.io)
 - LinkedIn: [linkedin.com/in/ahmed-3m](https://www.linkedin.com/in/ahmed-3m/)
-- Email: [ahmed@faultrix.com](mailto:ahmed@faultrix.com)
+- Email: [ahmed.mo.0595@gmail.com](mailto:ahmed.mo.0595@gmail.com)
 - ResearchGate: [Ahmed Mohammed](https://www.researchgate.net/profile/Ahmed-Mohammed-114)
 
 Open to AI/ML roles, research collaborations, and serious industrial AI problems where model quality has to survive contact with real data.

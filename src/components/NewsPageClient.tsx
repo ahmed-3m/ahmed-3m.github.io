@@ -10,15 +10,15 @@ import { getAllNews, newsCategoryLabels, type NewsCategory } from '@/lib/news-it
 type Filter = 'all' | NewsCategory
 
 const copy = {
-  title: { en: 'News', de: 'News', fr: 'Actualites', es: 'Noticias', ar: 'الأخبار' },
+  title: { en: 'News', de: 'News', fr: 'Actualités', es: 'Noticias', ar: 'الأخبار' },
   subtitle: {
     en: 'Curated AI news, each with a short take. Filter for agentic AI — the corner I follow most closely.',
     de: 'Kuratierte KI-News mit kurzer Einordnung. Nach agentischer KI filtern — meinem Schwerpunkt.',
-    fr: 'Actualites IA selectionnees, chacune avec une analyse courte. Filtrez sur l IA agentique, mon principal axe.',
-    es: 'Noticias de IA seleccionadas, cada una con un breve analisis. Filtra por IA agentica, mi enfoque principal.',
+    fr: "Actualités IA sélectionnées, chacune avec une analyse courte. Filtrez sur l'IA agentique, mon principal axe.",
+    es: 'Noticias de IA seleccionadas, cada una con un breve análisis. Filtra por IA agéntica, mi enfoque principal.',
     ar: 'أخبار مختارة عن الذكاء الاصطناعي مع تعليق موجز. يمكنك التصفية حسب الذكاء الاصطناعي الوكيل، وهو محور اهتمامي.',
   },
-  backHome: { en: 'Back to home', de: 'Zur Startseite', fr: 'Retour a l accueil', es: 'Volver al inicio', ar: 'العودة إلى الرئيسية' },
+  backHome: { en: 'Back to home', de: 'Zur Startseite', fr: "Retour à l'accueil", es: 'Volver al inicio', ar: 'العودة إلى الرئيسية' },
   all: { en: 'All', de: 'Alle', fr: 'Tout', es: 'Todo', ar: 'الكل' },
   readSource: { en: 'Read source', de: 'Quelle lesen', fr: 'Lire la source', es: 'Leer la fuente', ar: 'اقرأ المصدر' },
   empty: { en: 'No items in this category yet.', de: 'Noch keine Eintrage in dieser Kategorie.', fr: 'Aucun element dans cette categorie pour l instant.', es: 'Aun no hay elementos en esta categoria.', ar: 'لا توجد عناصر في هذه الفئة بعد.' },

@@ -8,8 +8,8 @@ export const LANGUAGE_COOKIE = 'language'
 export const languageOptions: Array<{ code: Language; label: string; short: string }> = [
   { code: 'en', label: 'English', short: 'EN' },
   { code: 'de', label: 'Deutsch', short: 'DE' },
-  { code: 'fr', label: 'Francais', short: 'FR' },
-  { code: 'es', label: 'Espanol', short: 'ES' },
+  { code: 'fr', label: 'Français', short: 'FR' },
+  { code: 'es', label: 'Español', short: 'ES' },
   { code: 'ar', label: 'العربية', short: 'AR' },
 ]
 

@@ -9,13 +9,13 @@ const copy = {
   title: { en: 'Thinking out loud.', de: 'Gedanken laut gedacht.', fr: 'Reflexions ouvertes.', es: 'Pensando en voz alta.', ar: 'أفكار بصوت عال.' },
   intro: {
     en: 'Deep-dives on research decisions, production lessons, and the gap between papers and products.',
-    de: 'Deep-Dives zu Forschungsentscheidungen, Produktionslektionen und der Lucke zwischen Papers und Produkten.',
-    fr: 'Analyses sur les choix de recherche, les lecons de production et l ecart entre articles et produits.',
-    es: 'Analisis sobre decisiones de investigacion, lecciones de produccion y la brecha entre papers y productos.',
+    de: 'Deep-Dives zu Forschungsentscheidungen, Produktionslektionen und der Lücke zwischen Papers und Produkten.',
+    fr: "Analyses sur les choix de recherche, les leçons de production et l'écart entre articles et produits.",
+    es: 'Análisis sobre decisiones de investigación, lecciones de producción y la brecha entre papers y productos.',
     ar: 'مقالات عميقة عن قرارات البحث ودروس الإنتاج والفجوة بين الأوراق العلمية والمنتجات.',
   },
   read: { en: 'Read', de: 'Lesen', fr: 'Lire', es: 'Leer', ar: 'اقرأ' },
-  all: { en: 'View all posts', de: 'Alle Beitrage ansehen', fr: 'Voir tous les articles', es: 'Ver todos los articulos', ar: 'عرض كل المقالات' },
+  all: { en: 'View all posts', de: 'Alle Beiträge ansehen', fr: 'Voir tous les articles', es: 'Ver todos los artículos', ar: 'عرض كل المقالات' },
 } satisfies Record<string, TranslationMap>
 
 export default function Writing() {

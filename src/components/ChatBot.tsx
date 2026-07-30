@@ -97,15 +97,16 @@ Response rules:
 - If the user asks something unrelated, politely redirect to Ahmed's work and background.
 
 Facts you can rely on:
-- Ahmed Mohammed is an AI/ML Engineer and entrepreneur based in Linz, Austria.
+- Ahmed Mohammed is an AI/ML Engineer based in Linz, Austria.
 - He submitted an M.Sc. thesis in Artificial Intelligence at JKU Linz under Prof. Sepp Hochreiter (degree expected 2026).
 - His thesis used conditional diffusion models as generative classifiers for OOD detection and reached 99.03% +/- 0.07% average AUROC on a within-CIFAR airplane-vs-rest binary split (single ID class; not comparable to multi-class CIFAR-10 OOD benchmarks) with separation loss.
 - Seed-42 achieved 98.98% AUROC within-CIFAR and generalized zero-shot to CIFAR-100, Places365, FashionMNIST, Textures, and SVHN.
 - The non-separated baseline was 92.52% +/- 11.07%, so separation loss added about +6.5 percentage points and dramatically reduced variance.
 - Ahmed also worked on industrial defect detection at PROFACTOR GmbH / JKU Linz using a YOLO + conditional diffusion pipeline on the public FTI_Zer0P benchmark, reaching a 0.8673 +/- 0.0230 AUROC baseline under strict 5-fold cross-validation.
-- Ahmed founded Faultrix, an AI-powered construction quality-control SaaS that analyzes construction photos and generates ONORM-aligned reports in under 1 minute.
+- Ahmed built Faultrix, an AI-powered construction quality-control SaaS that analyzes construction photos and generates ONORM-aligned reports in under 1 minute.
+- Ahmed also built Sihem, an LLM-driven personal-mentor assistant (Telegram bot + installable PWA) with proactive cron-driven check-ins, pgvector long-term memory, and multi-provider LLM routing. It is in beta at @sihem_ai_bot.
 - Faultrix stack includes Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2, and Stripe.
-- Contact: ahmed@faultrix.com
+- Contact: ahmed.mo.0595@gmail.com
 - LinkedIn: https://www.linkedin.com/in/ahmed-3m/
 - GitHub: https://github.com/ahmed-3m
 - Website: https://ahmed-3m.github.io
@@ -128,9 +129,9 @@ const CHAT_COPY = {
   },
   welcome: {
     en: `Hi, I'm ${GENIE_NAME}, Ahmed's Personal assistant. Ask me about Ahmed's research, products, projects, or background.`,
-    de: `Hi, ich bin ${GENIE_NAME}, Ahmeds persoenlicher Assistent. Frage nach Ahmeds Forschung, Produkten, Projekten oder Hintergrund.`,
+    de: `Hi, ich bin ${GENIE_NAME}, Ahmeds persönlicher Assistent. Frage nach Ahmeds Forschung, Produkten, Projekten oder Hintergrund.`,
     fr: `Bonjour, je suis ${GENIE_NAME}, l assistant personnel d Ahmed. Posez une question sur la recherche, les produits, les projets ou le parcours d Ahmed.`,
-    es: `Hola, soy ${GENIE_NAME}, el asistente personal de Ahmed. Pregunta sobre la investigacion, los productos, los proyectos o la trayectoria de Ahmed.`,
+    es: `Hola, soy ${GENIE_NAME}, el asistente personal de Ahmed. Pregunta sobre la investigación, los productos, los proyectos o la trayectoria de Ahmed.`,
     ar: `مرحباً، أنا ${GENIE_NAME}، المساعد الشخصي لأحمد. اسألني عن أبحاث أحمد أو منتجاته أو مشاريعه أو خلفيته.`,
   },
   placeholder: {
@@ -142,14 +143,14 @@ const CHAT_COPY = {
   },
   close: {
     en: 'Close chat',
-    de: 'Chat schliessen',
+    de: 'Chat schließen',
     fr: 'Fermer le chat',
     es: 'Cerrar chat',
     ar: 'إغلاق الدردشة',
   },
   open: {
     en: 'Open chat',
-    de: 'Chat offnen',
+    de: 'Chat öffnen',
     fr: 'Ouvrir le chat',
     es: 'Abrir chat',
     ar: 'فتح الدردشة',
@@ -164,7 +165,7 @@ const CHAT_COPY = {
   typing: {
     en: 'Genie is typing',
     de: 'Ahmed schreibt',
-    fr: 'Ahmed repond',
+    fr: 'Ahmed répond',
     es: 'Ahmed esta respondiendo',
     ar: 'أحمد يكتب الآن',
   },
@@ -179,7 +180,7 @@ const CHAT_COPY = {
     en: 'Something went wrong while contacting the assistant.',
     de: 'Beim Kontakt mit dem Assistenten ist etwas schiefgelaufen.',
     fr: 'Une erreur est survenue pendant le contact avec l assistant.',
-    es: 'Ocurrio un problema al contactar al asistente.',
+    es: 'Ocurrió un problema al contactar al asistente.',
     ar: 'حدث خطأ أثناء الاتصال بالمساعد.',
   },
 } satisfies Record<string, TranslationMap>
@@ -210,14 +211,14 @@ const PROMPTS: Record<PromptId, TranslationMap> = {
     en: 'Can I see the product story?',
     de: 'Kann ich die Produktgeschichte sehen?',
     fr: 'Puis-je voir l histoire du produit ?',
-    es: 'Puedo ver la historia del producto?',
+    es: '¿Puedo ver la historia del producto?',
     ar: 'هل يمكنني رؤية قصة المنتج؟',
   },
   faultrix_speed: {
     en: 'How long does a report take?',
     de: 'Wie lange dauert ein Bericht?',
     fr: 'Combien de temps prend un rapport ?',
-    es: 'Cuanto tarda un informe?',
+    es: '¿Cuánto tarda un informe?',
     ar: 'كم يستغرق التقرير؟',
   },
   faultrix_compliance: {
@@ -229,15 +230,15 @@ const PROMPTS: Record<PromptId, TranslationMap> = {
   },
   thesis_summary: {
     en: 'Tell me about the thesis',
-    de: 'Erzahl mir von der Thesis',
-    fr: 'Parlez-moi du memoire',
+    de: 'Erzähl mir von der Thesis',
+    fr: 'Parlez-moi du mémoire',
     es: 'Cuentame sobre la tesis',
     ar: 'حدثني عن الرسالة',
   },
   thesis_innovation: {
     en: "What's the key innovation in the thesis?",
     de: 'Was ist die Kerninnovation der Thesis?',
-    fr: 'Quelle est l innovation cle du memoire ?',
+    fr: "Quelle est l'innovation clé du mémoire ?",
     es: 'Cual es la innovacion principal de la tesis?',
     ar: 'ما هي الفكرة الجديدة الأساسية في الرسالة؟',
   },
@@ -250,23 +251,23 @@ const PROMPTS: Record<PromptId, TranslationMap> = {
   },
   thesis_datasets: {
     en: 'What datasets were tested?',
-    de: 'Welche Datensatze wurden getestet?',
-    fr: 'Quels jeux de donnees ont ete testes ?',
+    de: 'Welche Datensätze wurden getestet?',
+    fr: 'Quels jeux de données ont été testés ?',
     es: 'Que datasets se probaron?',
     ar: 'ما هي البيانات التي تم اختبارها؟',
   },
   thesis_results: {
     en: 'What was the best AUROC?',
     de: 'Was war der beste AUROC?',
-    fr: 'Quel a ete le meilleur AUROC ?',
+    fr: 'Quel a été le meilleur AUROC ?',
     es: 'Cual fue el mejor AUROC?',
     ar: 'ما أفضل نتيجة AUROC؟',
   },
   thesis_diffusion: {
     en: 'Why use diffusion for OOD?',
-    de: 'Warum Diffusion fuer OOD?',
+    de: 'Warum Diffusion für OOD?',
     fr: 'Pourquoi utiliser la diffusion pour OOD ?',
-    es: 'Por que usar difusion para OOD?',
+    es: '¿Por qué usar difusión para OOD?',
     ar: 'لماذا استخدام نماذج الانتشار في OOD؟',
   },
   projects_best: {
@@ -280,21 +281,21 @@ const PROMPTS: Record<PromptId, TranslationMap> = {
     en: 'Show key achievements',
     de: 'Zeige wichtige Erfolge',
     fr: 'Montre les principales realisations',
-    es: 'Muestrame los logros clave',
+    es: 'Muéstrame los logros clave',
     ar: 'اعرض أهم الإنجازات',
   },
   open_to_work: {
     en: 'Is he open to work?',
-    de: 'Ist er offen fuer neue Rollen?',
+    de: 'Ist er offen für neue Rollen?',
     fr: 'Est-il ouvert a des opportunites ?',
-    es: 'Esta abierto a nuevas oportunidades?',
+    es: '¿Está abierto a nuevas oportunidades?',
     ar: 'هل هو متاح لفرص عمل؟',
   },
   contact: {
     en: 'How can I contact him?',
     de: 'Wie kann ich ihn kontaktieren?',
     fr: 'Comment puis-je le contacter ?',
-    es: 'Como puedo contactarlo?',
+    es: '¿Cómo puedo contactarlo?',
     ar: 'كيف يمكنني التواصل معه؟',
   },
   tech_stack: {
@@ -308,13 +309,13 @@ const PROMPTS: Record<PromptId, TranslationMap> = {
     en: 'How does the industrial YOLO + diffusion pipeline work?',
     de: 'Wie funktioniert die industrielle YOLO + Diffusion Pipeline?',
     fr: 'Comment fonctionne la pipeline industrielle YOLO + diffusion ?',
-    es: 'Como funciona la pipeline industrial de YOLO + difusion?',
+    es: '¿Cómo funciona la pipeline industrial de YOLO + difusión?',
     ar: 'كيف يعمل خط YOLO + diffusion الصناعي؟',
   },
   industrial_result: {
     en: 'What result did the industrial system achieve?',
     de: 'Welches Ergebnis erreichte das Industriesystem?',
-    fr: 'Quel resultat le systeme industriel a-t-il atteint ?',
+    fr: 'Quel résultat le système industriel a-t-il atteint ?',
     es: 'Que resultado logro el sistema industrial?',
     ar: 'ما النتيجة التي حققها النظام الصناعي؟',
   },

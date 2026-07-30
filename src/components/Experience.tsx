@@ -4,7 +4,7 @@ import { useReveal } from '@/lib/useReveal'
 
 const copy = {
   eyebrow: { en: '// 04 - Experience', de: '// 04 - Erfahrung', fr: '// 04 - Experience', es: '// 04 - Experiencia', ar: '// 04 - الخبرة' },
-  title: { en: "Where I've worked.", de: 'Wo ich gearbeitet habe.', fr: 'Ou j ai travaille.', es: 'Donde he trabajado.', ar: 'أماكن عملي.' },
+  title: { en: "Where I've worked.", de: 'Wo ich gearbeitet habe.', fr: 'Où j ai travaillé.', es: 'Donde he trabajado.', ar: 'أماكن عملي.' },
 } satisfies Record<string, TranslationMap>
 
 const experiences: Array<{
@@ -18,13 +18,13 @@ const experiences: Array<{
 }> = [
   {
     date: 'Jul 2025\nPresent',
-    role: { en: 'Founder & Full-Stack Developer', de: 'Grunder & Full-Stack Developer', fr: 'Fondateur & developpeur full-stack', es: 'Fundador y desarrollador full-stack', ar: 'المؤسس ومطور متكامل' },
+    role: { en: 'AI/ML & Full-Stack Engineer', de: 'AI/ML- & Full-Stack-Engineer', fr: 'Ingénieur IA/ML & full-stack', es: 'Ingeniero de IA/ML y full-stack', ar: 'مهندس ذكاء اصطناعي وتطوير متكامل' },
     company: 'Faultrix · Linz, Austria',
     desc: {
       en: 'Built an AI construction analysis platform solo from zero to production with Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2, and Stripe.',
-      de: 'Baute allein eine KI-Plattform fur Bauanalyse von null bis Produktion mit Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2 und Stripe.',
-      fr: 'Creation solo d une plateforme IA d analyse construction, de zero a la production, avec Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2 et Stripe.',
-      es: 'Construyo solo una plataforma de analisis de construccion con IA, de cero a produccion, usando Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2 y Stripe.',
+      de: 'Baute allein eine KI-Plattform für Bauanalyse von null bis Produktion mit Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2 und Stripe.',
+      fr: 'Création solo d une plateforme IA d analyse construction, de zéro à la production, avec Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2 et Stripe.',
+      es: 'Construyo solo una plataforma de análisis de construcción con IA, de cero a producción, usando Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2 y Stripe.',
       ar: 'بنيت منفرداً منصة ذكاء اصطناعي لتحليل البناء من الصفر إلى الإنتاج باستخدام Python وNext.js وConvex وOpenAI API وDocker وStripe.',
     },
     badge: { en: 'Active - faultrix.com', de: 'Aktiv - faultrix.com', fr: 'Actif - faultrix.com', es: 'Activo - faultrix.com', ar: 'نشط - faultrix.com' },
@@ -36,49 +36,49 @@ const experiences: Array<{
     company: 'JKU Machine Learning Institute · Linz',
     desc: {
       en: 'Master thesis on conditional diffusion models as generative classifiers for out-of-distribution detection under Prof. Sepp Hochreiter.',
-      de: 'Masterarbeit uber konditionale Diffusionsmodelle als generative Klassifikatoren fur OOD-Erkennung unter Prof. Sepp Hochreiter.',
-      fr: 'Memoire sur les modeles de diffusion conditionnels comme classificateurs generatifs pour la detection OOD sous Prof. Sepp Hochreiter.',
-      es: 'Tesis sobre modelos de difusion condicional como clasificadores generativos para deteccion OOD bajo Prof. Sepp Hochreiter.',
+      de: 'Masterarbeit über konditionale Diffusionsmodelle als generative Klassifikatoren für OOD-Erkennung unter Prof. Sepp Hochreiter.',
+      fr: 'Mémoire sur les modèles de diffusion conditionnels comme classificateurs génératifs pour la détection OOD sous Prof. Sepp Hochreiter.',
+      es: 'Tesis sobre modelos de difusión condicional como clasificadores generativos para detección OOD bajo Prof. Sepp Hochreiter.',
       ar: 'رسالة ماجستير عن نماذج الانتشار الشرطية كمصنفات توليدية لكشف الخارج عن التوزيع بإشراف البروفيسور سيب هوخرايتر.',
     },
     active: true,
   },
   {
     date: 'Apr 2024\nNov 2024',
-    role: { en: 'Machine Vision Researcher', de: 'Machine-Vision-Forscher', fr: 'Chercheur en vision industrielle', es: 'Investigador de vision artificial', ar: 'باحث رؤية حاسوبية' },
+    role: { en: 'Machine Vision Researcher', de: 'Machine-Vision-Forscher', fr: 'Chercheur en vision industrielle', es: 'Investigador de visión artificial', ar: 'باحث رؤية حاسوبية' },
     company: 'PROFACTOR GmbH · Steyr, Austria',
     desc: {
       en: 'YOLO + diffusion pipeline for industrial defect detection in zero-defect inkjet printing on building components.',
-      de: 'YOLO + Diffusionspipeline fur industrielle Defekterkennung im Zero-Defect-Inkjetdruck auf Bauteilen.',
-      fr: 'Pipeline YOLO + diffusion pour detection de defauts industriels dans l impression inkjet zero-defaut.',
-      es: 'Pipeline YOLO + difusion para deteccion industrial de defectos en impresion inkjet de cero defectos.',
+      de: 'YOLO + Diffusionspipeline für industrielle Defekterkennung im Zero-Defect-Inkjetdruck auf Bauteilen.',
+      fr: "Pipeline YOLO + diffusion pour détection de défauts industriels dans l'impression inkjet zero-défaut.",
+      es: 'Pipeline YOLO + difusión para detección industrial de defectos en impresión inkjet de cero defectos.',
       ar: 'خط معالجة YOLO مع الانتشار لكشف العيوب الصناعية في طباعة inkjet بدون عيوب على مكونات البناء.',
     },
-    badge: { en: '98.4% (threshold-dep., production)', de: '98.4% (threshold-abh., Produktion)', fr: '98.4% (seuil, production)', es: '98.4% (umbral, produccion)', ar: '98.4% (عتبة تشغيل، إنتاج)' },
+    badge: { en: '98.4% (threshold-dep., production)', de: '98.4% (threshold-abh., Produktion)', fr: '98.4% (seuil, production)', es: '98.4% (umbral, producción)', ar: '98.4% (عتبة تشغيل، إنتاج)' },
     active: false,
   },
   {
     date: 'Aug 2023\nOct 2023',
-    role: { en: 'AI Research Intern', de: 'KI-Forschungspraktikant', fr: 'Stagiaire recherche IA', es: 'Practicante de investigacion IA', ar: 'متدرب بحث ذكاء اصطناعي' },
+    role: { en: 'AI Research Intern', de: 'KI-Forschungspraktikant', fr: 'Stagiaire recherche IA', es: 'Practicante de investigación IA', ar: 'متدرب بحث ذكاء اصطناعي' },
     company: 'Karunya University · India (Remote)',
     desc: {
       en: 'RNN/CNN architectures for EEG motor imagery classification with hyperparameter optimization.',
-      de: 'RNN/CNN-Architekturen fur EEG-Motor-Imagery-Klassifikation mit Hyperparameteroptimierung.',
-      fr: 'Architectures RNN/CNN pour classification EEG d imagerie motrice avec optimisation des hyperparametres.',
-      es: 'Arquitecturas RNN/CNN para clasificacion EEG de imaginacion motora con optimizacion de hiperparametros.',
+      de: 'RNN/CNN-Architekturen für EEG-Motor-Imagery-Klassifikation mit Hyperparameteroptimierung.',
+      fr: 'Architectures RNN/CNN pour classification EEG d imagerie motrice avec optimisation des hyperparamètres.',
+      es: 'Arquitecturas RNN/CNN para clasificación EEG de imaginación motora con optimización de hiperparámetros.',
       ar: 'معماريات RNN/CNN لتصنيف EEG للتخيل الحركي مع تحسين المعاملات.',
     },
     active: false,
   },
   {
     date: 'Jan 2021\nPresent',
-    role: { en: 'AI & Programming Tutor', de: 'KI- & Programmier-Tutor', fr: 'Tuteur IA & programmation', es: 'Tutor de IA y programacion', ar: 'مدرب ذكاء اصطناعي وبرمجة' },
+    role: { en: 'AI & Programming Tutor', de: 'KI- & Programmier-Tutor', fr: 'Tuteur IA & programmation', es: 'Tutor de IA y programación', ar: 'مدرب ذكاء اصطناعي وبرمجة' },
     company: 'Freelance',
     desc: {
       en: 'Tailored training in Python, ML, and deep learning, plus mentoring on portfolio projects and GitHub practice.',
-      de: 'Individuelles Training in Python, ML und Deep Learning sowie Mentoring fur Portfolio-Projekte und GitHub-Praxis.',
-      fr: 'Formation personnalisee en Python, ML et deep learning, avec mentorat projets portfolio et GitHub.',
-      es: 'Formacion personalizada en Python, ML y deep learning, con mentorias de proyectos y GitHub.',
+      de: 'Individuelles Training in Python, ML und Deep Learning sowie Mentoring für Portfolio-Projekte und GitHub-Praxis.',
+      fr: 'Formation personnalisée en Python, ML et deep learning, avec mentorat projets portfolio et GitHub.',
+      es: 'Formación personalizada en Python, ML y deep learning, con mentorías de proyectos y GitHub.',
       ar: 'تدريب مخصص في Python والتعلم الآلي والعميق، مع إرشاد لمشاريع البورتفوليو وممارسات GitHub.',
     },
     active: true,
