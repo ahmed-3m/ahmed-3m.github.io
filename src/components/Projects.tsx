@@ -42,7 +42,6 @@ const copy = {
     es: 'Arquitecturas LSTM, Bi-LSTM y GRU para clasificación de imaginación motora en interfaces cerebro-computadora.',
     ar: 'معماريات LSTM وBi-LSTM وGRU لتصنيف التخيل الحركي في تطبيقات واجهة الدماغ والحاسوب.',
   },
-  mentoEyebrow: { en: 'Personal Project · Beta', de: 'Privates Projekt · Beta', fr: 'Projet personnel · Beta', es: 'Proyecto personal · Beta', ar: 'مشروع شخصي · نسخة تجريبية' },
   mentoTitle: { en: 'Sihem — AI Mentor Assistant', de: 'Sihem — KI-Mentor-Assistent', fr: 'Sihem — Assistant mentor IA', es: 'Sihem — Asistente mentor con IA', ar: 'Sihem — مساعد موجه بالذكاء الاصطناعي' },
   mentoDesc: {
     en: 'A proactive personal-mentor assistant on Telegram that plans your week, sends morning briefings and evening reviews, and fires smart check-in triggers. Built on Supabase edge functions (Deno/TS) with a generic activity model (prayer, workouts, medication, custom habits — no schema change per type), a deterministic generators→arbiter→composer decision engine for adaptive nudging, pgvector long-term memory with RAG, multi-provider LLM routing (GLM/Gemini/Groq) with provider failover, multimodal meal-photo vision, TTS voice reminders (Cloudflare MeloTTS), Google Calendar sync, optional Alexa Echo integration, invite-code gated beta access, and an ops dashboard with cost rollups. Now in beta — try it on Telegram at @sihem_ai_bot.',
@@ -76,9 +75,7 @@ export default function Projects() {
               </div>
             </div>
             <div className="cd-proj-metric-big">
-              <div className="num">&lt;60s</div>
-              <div className="unit">end-to-end</div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-fg3)', marginTop: 8 }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-fg3)' }}>
                 Telegram bot · PWA · pgvector memory
               </div>
               <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
@@ -114,6 +111,7 @@ export default function Projects() {
             <div className="cd-pc-eyebrow">{t(copy.faultrixEyebrow)}</div>
             <div className="cd-pc-title">Faultrix</div>
             <div className="cd-pc-desc">{t(copy.faultrix)}</div>
+            <div className="cd-pc-metric">&lt;1<span> {t(copy.reportMetric)}</span></div>
             <div className="cd-proj-tags" style={{ marginTop: 12 }}>
               {['Next.js', 'Convex', 'OpenAI', 'Clerk', 'Cloudflare R2', 'Stripe'].map(tag => (
                 <span key={tag} className="cd-proj-tag">{tag}</span>

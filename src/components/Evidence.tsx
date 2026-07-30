@@ -79,6 +79,12 @@ const evidenceItems = [
     label: 'Case study',
   },
   {
+    title: { en: 'Sihem — live beta', de: 'Sihem — Live-Beta', fr: 'Sihem — bêta en ligne', es: 'Sihem — beta en vivo', ar: 'Sihem — نسخة تجريبية مباشرة' },
+    meta: { en: 'Running system — Telegram bot and PWA, open to try', de: 'Laufendes System — Telegram-Bot und PWA, frei testbar', fr: 'Système en production — bot Telegram et PWA, libre à essayer', es: 'Sistema en marcha — bot de Telegram y PWA, libre para probar', ar: 'نظام يعمل — بوت تيليجرام وتطبيق PWA، متاح للتجربة' },
+    href: 'https://sihem-pwa.pages.dev/',
+    label: 'Proof',
+  },
+  {
     title: { en: 'Faultrix case study', de: 'Faultrix Case Study', fr: 'Étude de cas Faultrix', es: 'Caso de estudio Faultrix', ar: 'دراسة حالة Faultrix' },
     meta: { en: 'Research-to-product build story', de: 'Geschichte vom Research zum Produkt', fr: 'Histoire du passage recherche-produit', es: 'Historia del paso de investigación a producto', ar: 'قصة الانتقال من البحث إلى المنتج' },
     href: '/case-studies/faultrix',
