@@ -1,7 +1,39 @@
 {
-  "updatedAt": "2026-07-30T09:15:34.863Z",
+  "updatedAt": "2026-07-30T21:25:25.774Z",
   "source": "https://github.com/ahmed-3m",
   "items": [
+    {
+      "id": "12558684543",
+      "type": "PullRequestEvent",
+      "repo": "ahmed-3m/ahmed-3m.github.io",
+      "message": "Merged PR #39: feat(portfolio): re-align to AI/ML Engineer + Sihem flagship",
+      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/39",
+      "createdAt": "2026-07-30T21:24:14Z"
+    },
+    {
+      "id": "12549578208",
+      "type": "PullRequestEvent",
+      "repo": "ahmed-3m/ahmed-3m",
+      "message": "Merged PR #7: Fix impact-metrics: drop unverified / mis-attributed numbers",
+      "url": "https://github.com/ahmed-3m/ahmed-3m/pull/7",
+      "createdAt": "2026-07-30T17:57:03Z"
+    },
+    {
+      "id": "12548880121",
+      "type": "PullRequestEvent",
+      "repo": "ahmed-3m/ahmed-3m",
+      "message": "Merged PR #6: Remove embedded headshot (GitHub avatar already shows it)",
+      "url": "https://github.com/ahmed-3m/ahmed-3m/pull/6",
+      "createdAt": "2026-07-30T17:42:00Z"
+    },
+    {
+      "id": "12548703777",
+      "type": "PullRequestEvent",
+      "repo": "ahmed-3m/ahmed-3m",
+      "message": "Merged PR #5: Replace vanity stat cards with impact-metrics strip",
+      "url": "https://github.com/ahmed-3m/ahmed-3m/pull/5",
+      "createdAt": "2026-07-30T17:38:04Z"
+    },
     {
       "id": "12314248452",
       "type": "PullRequestEvent",
@@ -17,38 +49,6 @@
       "message": "Merged PR #36: docs(specs): thesis ground truth, claims matrix, demo feasibility…",
       "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/36",
       "createdAt": "2026-07-18T09:57:43Z"
-    },
-    {
-      "id": "11964082676",
-      "type": "PullRequestEvent",
-      "repo": "ahmed-3m/ahmed-3m.github.io",
-      "message": "Merged PR #35: feat(activity): build-time GitHub activity strip (spec 004)",
-      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/35",
-      "createdAt": "2026-07-18T09:56:37Z"
-    },
-    {
-      "id": "repo-753596965",
-      "type": "Repository",
-      "repo": "ahmed-3m/ahmed-3m",
-      "message": "Updated ahmed-3m/ahmed-3m",
-      "url": "https://github.com/ahmed-3m/ahmed-3m",
-      "createdAt": "2026-06-27T16:58:39Z"
-    },
-    {
-      "id": "repo-1234948928",
-      "type": "Repository",
-      "repo": "ahmed-3m/thesis-diffusion-ood-latex",
-      "message": "Updated ahmed-3m/thesis-diffusion-ood-latex — LaTeX source for the thesis Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control",
-      "url": "https://github.com/ahmed-3m/thesis-diffusion-ood-latex",
-      "createdAt": "2026-05-31T21:43:19Z"
-    },
-    {
-      "id": "repo-1224969592",
-      "type": "Repository",
-      "repo": "ahmed-3m/InkjetOOD",
-      "message": "Updated ahmed-3m/InkjetOOD — Conditional Diffusion Model for OOD detection in industrial inkjet quality control | Master's Thesis @ JKU Linz",
-      "url": "https://github.com/ahmed-3m/InkjetOOD",
-      "createdAt": "2026-05-12T21:36:12Z"
     }
   ]
 }
