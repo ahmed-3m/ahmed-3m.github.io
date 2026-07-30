@@ -288,22 +288,22 @@ Artefacts publics :
       es: {
         title: 'Cómo alcancé 99.03% AUROC en detección OOD con modelos de difusión condicional',
         excerpt:
-          'Mi tesis de master en JKU Linz introdujo una class-conditional separation loss en modelos de difusión condicional usados como clasificadores generativos, alcanzando 99.03% +/- 0.07% AUROC en CIFAR-10 y una mejora estable de +6.5 puntos sobre la base sin separación.',
+          'Mi tesis de máster en JKU Linz introdujo una class-conditional separation loss en modelos de difusión condicional usados como clasificadores generativos, alcanzando 99.03% +/- 0.07% AUROC en CIFAR-10 y una mejora estable de +6.5 puntos sobre la base sin separación.',
         tags: ['Modelos de difusión', 'Detección OOD', 'Deep Learning', 'PyTorch', 'CIFAR-10', 'Modelos generativos'],
         readingTime: '14 min de lectura',
         faq: [
           {
-            question: 'Qué resultado se logró en CIFAR-10?',
+            question: '¿Qué resultado se logró en CIFAR-10?',
             answer:
               'El mejor promedio sobre tres semillas fue 99.03% +/- 0.07% AUROC. La seed-42 logró 98.98% dentro de CIFAR y generalizó zero-shot a cinco benchmarks externos.',
           },
           {
-            question: 'Qué es la separation loss?',
+            question: '¿Qué es la separation loss?',
             answer:
               'Es un término extra de entrenamiento que separa las dos predicciones condicionales de ruido para que la diferencia de error de reconstrucción sea más clara y estable.',
           },
           {
-            question: 'Por qué importa este resultado?',
+            question: '¿Por qué importa este resultado?',
             answer:
               'Porque convierte un detector generativo muy sensible a la semilla en uno mucho más confiable, algo clave si se quiere usar como capa real de seguridad.',
           },
@@ -313,7 +313,7 @@ Artefacts publics :
 
 La detección out-of-distribution es la capacidad de un sistema para decir: "esta entrada no pertenece a lo que vi durante el entrenamiento". En un sistema de IA real, eso es una propiedad de seguridad.
 
-En mi tesis de master en JKU Linz, bajo la supervisión del Prof. Sepp Hochreiter y Claus Hofmann, estudié si un **modelo de difusión condicional** podía usarse como **clasificador generativo** para detección OOD.
+En mi tesis de máster en JKU Linz, bajo la supervisión del Prof. Sepp Hochreiter y Claus Hofmann, estudié si un **modelo de difusión condicional** podía usarse como **clasificador generativo** para detección OOD.
 
 ## La idea central
 
@@ -711,22 +711,22 @@ Artefacts :
       es: {
         title: 'Modelos de difusión para detección de defectos industriales en PROFACTOR GmbH',
         excerpt:
-          'Cómo evalúa una pipeline pública YOLO + difusión condicional en el benchmark FTI_Zer0P con validación cruzada estricta de 5 folds, logrando una base de 0.8673 +/- 0.0230 AUROC.',
+          'Cómo evalué una pipeline pública YOLO + difusión condicional en el benchmark FTI_Zer0P con validación cruzada estricta de 5 folds, logrando una base de 0.8673 +/- 0.0230 AUROC.',
         tags: ['Modelos de difusión', 'Detección de anomalías', 'IA industrial', 'YOLOv8', 'Control de calidad'],
         readingTime: '11 min de lectura',
         faq: [
           {
-            question: 'Qué resultado logró el sistema industrial?',
+            question: '¿Qué resultado logró el sistema industrial?',
             answer:
               'En el benchmark público, la base con validación cruzada estricta de 5 folds alcanzó 0.8673 +/- 0.0230 AUROC. En producción, el pipeline de decisión alcanzó 98.4% de precisión de clasificación de defectos.',
           },
           {
-            question: 'Cuál era la arquitectura?',
+            question: '¿Cuál era la arquitectura?',
             answer:
               'YOLOv8 se usó como backbone de features y un modelo de difusión condicional actuó como clasificador generativo. Multi-head conditioning manejó los distintos tipos de features de inkjet.',
           },
           {
-            question: 'La separation loss también ayudó aquí?',
+            question: '¿La separation loss también ayudó aquí?',
             answer:
               'No de forma significativa. Esa fue una conclusión muy útil: el método se transfirió, pero no todos los beneficios pasaron a este pequeño dataset industrial.',
           },
@@ -755,7 +755,7 @@ Es la misma idea de clasificación generativa de mi tesis, pero dentro de un ent
 - distribución de defectos desequilibrada
 - validación cruzada obligatoria
 
-Por eso un solo run llamativo habría sido engañoso. Evalúa la pipeline sobre el benchmark público **FTI_Zer0P** con **validación cruzada estricta de 5 folds**.
+Por eso un solo run llamativo habría sido engañoso. Evalué la pipeline sobre el benchmark público **FTI_Zer0P** con **validación cruzada estricta de 5 folds**.
 
 ## Resultados
 
@@ -1101,7 +1101,7 @@ Le système final devait tourner en environnement edge. La quantification aidait
 - utiliser les features YOLO plutôt qu'imposer une logique de détection
 - une boucle d'évaluation disciplinée
 - traiter les types de feature comme des sous-problèmes différents
-- optimiser pour une inference fiable
+- optimiser pour une inférence fiable
         `,
       },
       es: {
@@ -1112,17 +1112,17 @@ Le système final devait tourner en environnement edge. La quantification aidait
         readingTime: '10 min de lectura',
         faq: [
           {
-            question: 'Por qué usar YOLO como extractor de features y no como detector?',
+            question: '¿Por qué usar YOLO como extractor de features y no como detector?',
             answer:
               'Porque la tarea no era detección clásica de objetos. Los tipos de feature se comportaban más como firmas visuales estructuradas que como objetos en bounding boxes.',
           },
           {
-            question: 'Qué latencia alcanzó el sistema?',
+            question: '¿Qué latencia alcanzó el sistema?',
             answer:
               'Alrededor de 35 ms por componente en la configuración final apta para producción edge.',
           },
           {
-            question: 'Qué fue lo más importante?',
+            question: '¿Qué fue lo más importante?',
             answer:
               'La disciplina de datos, el diseño de folds y un camino de despliegue estable importaron más que perseguir la arquitectura más llamativa.',
           },
@@ -1337,14 +1337,14 @@ If the path to value is too long, the sophistication underneath barely matters.
       de: {
         title: 'Faultrix ausliefern: Was ich beim Bau eines AI-SaaS in 5 Monaten gelernt habe',
         excerpt:
-          'Was sich verändert hat, als ich von Forschung in Produktbau gewechselt bin: Faultrix, ein AI-SaaS für Bauqualitätskontrolle mit ONORM-orientierten Berichten in unter einer Minute.',
+          'Was sich verändert hat, als ich von Forschung in Produktbau gewechselt bin: Faultrix, ein AI-SaaS für Bauqualitätskontrolle mit ÖNORM-orientierten Berichten in unter einer Minute.',
         tags: ['LLM', 'SaaS', 'Next.js', 'OpenAI', 'Production AI', 'Faultrix'],
         readingTime: '9 Min. Lesezeit',
         faq: [
           {
             question: 'Was ist Faultrix?',
             answer:
-              'Faultrix ist ein KI-basiertes SaaS für Bauqualitätskontrolle. Nutzer laden Baustellenfotos hoch und erhalten einen strukturierten ONORM-orientierten Bericht mit Evidenzkette und sicherheitsbewusster Speicherung.',
+              'Faultrix ist ein KI-basiertes SaaS für Bauqualitätskontrolle. Nutzer laden Baustellenfotos hoch und erhalten einen strukturierten ÖNORM-orientierten Bericht mit Evidenzkette und sicherheitsbewusster Speicherung.',
           },
           {
             question: 'Welcher Stack steckt dahinter?',
@@ -1360,7 +1360,7 @@ If the path to value is too long, the sophistication underneath barely matters.
         content: `
 ## Von Forschung zu Produkt
 
-Faultrix ist ein KI-basiertes SaaS für Bauqualitätskontrolle. Nutzer laden Fotos hoch, das System analysiert sie, und in weniger als einer Minute entsteht ein ONORM-orientierter Bericht.
+Faultrix ist ein KI-basiertes SaaS für Bauqualitätskontrolle. Nutzer laden Fotos hoch, das System analysiert sie, und in weniger als einer Minute entsteht ein ÖNORM-orientierter Bericht.
 
 Beim Bauen wurde mir klar: Der Schritt von Forschung zu Produkt besteht nicht primär aus einem anderen Modell, sondern daraus, das ganze System nützlich zu machen.
 
@@ -1411,14 +1411,14 @@ Wenn der Weg zum Nutzen zu lang ist, spielt die darunterliegende Raffinesse kaum
       fr: {
         title: "Livrer Faultrix : ce que j'ai appris en construisant un SaaS IA en 5 mois",
         excerpt:
-          "Ce qui a changé lorsque je suis passé de la recherche au produit : Faultrix, un SaaS IA pour le contrôle qualité construction qui génère des rapports alignés ONORM en moins d'une minute.",
+          "Ce qui a changé lorsque je suis passé de la recherche au produit : Faultrix, un SaaS IA pour le contrôle qualité construction qui génère des rapports alignés ÖNORM en moins d'une minute.",
         tags: ['LLM', 'SaaS', 'Next.js', 'OpenAI', 'IA en production', 'Faultrix'],
         readingTime: '9 min de lecture',
         faq: [
           {
             question: "Qu'est-ce que Faultrix ?",
             answer:
-              "Faultrix est un SaaS de contrôle qualité construction piloté par IA. Les utilisateurs chargent des photos de chantier et reçoivent un rapport structuré aligné ONORM avec gestion des preuves et stockage sécurisé.",
+              "Faultrix est un SaaS de contrôle qualité construction piloté par IA. Les utilisateurs chargent des photos de chantier et reçoivent un rapport structuré aligné ÖNORM avec gestion des preuves et stockage sécurisé.",
           },
           {
             question: 'Quel stack utilise-t-il ?',
@@ -1434,7 +1434,7 @@ Wenn der Weg zum Nutzen zu lang ist, spielt die darunterliegende Raffinesse kaum
         content: `
 ## De la recherche au produit
 
-Faultrix est un SaaS de contrôle qualité construction alimenté par IA. L'utilisateur charge des photos de chantier, le système les analyse, puis génère un rapport aligné ONORM en moins d'une minute.
+Faultrix est un SaaS de contrôle qualité construction alimenté par IA. L'utilisateur charge des photos de chantier, le système les analyse, puis génère un rapport aligné ÖNORM en moins d'une minute.
 
 Le vrai saut entre recherche et produit n'est pas seulement une question de modèle. C'est la capacité à rendre tout le système utile.
 
@@ -1485,22 +1485,22 @@ Si le chemin vers la valeur est trop long, la sophistication du dessous ne compe
       es: {
         title: 'Lanzando Faultrix: lo que aprendí construyendo un SaaS de IA en 5 meses',
         excerpt:
-          'Lo que cambió cuando pasé de investigación a producto: Faultrix, un SaaS de IA para control de calidad en construcción que genera informes alineados con ONORM en menos de un minuto.',
+          'Lo que cambió cuando pasé de investigación a producto: Faultrix, un SaaS de IA para control de calidad en construcción que genera informes alineados con ÖNORM en menos de un minuto.',
         tags: ['LLM', 'SaaS', 'Next.js', 'OpenAI', 'IA en producción', 'Faultrix'],
         readingTime: '9 min de lectura',
         faq: [
           {
-            question: 'Qué es Faultrix?',
+            question: '¿Qué es Faultrix?',
             answer:
-              'Faultrix es un SaaS de control de calidad en construcción impulsado por IA. Los usuarios suben fotos de obra y reciben un informe estructurado alineado con ONORM, con manejo de evidencia y almacenamiento seguro.',
+              'Faultrix es un SaaS de control de calidad en construcción impulsado por IA. Los usuarios suben fotos de obra y reciben un informe estructurado alineado con ÖNORM, con manejo de evidencia y almacenamiento seguro.',
           },
           {
-            question: 'Qué stack usa?',
+            question: '¿Qué stack usa?',
             answer:
               'Next.js, Convex, OpenAI API, Clerk, Cloudflare R2, Stripe, Docker y un flujo de IA muy apoyado en Python.',
           },
           {
-            question: 'Qué fue lo más difícil?',
+            question: '¿Qué fue lo más difícil?',
             answer:
               'No la IA en sí. Lo más difícil fue adaptar el producto a flujos reales, expectativas de formato y una UX con poca fricción.',
           },
@@ -1508,7 +1508,7 @@ Si le chemin vers la valeur est trop long, la sophistication du dessous ne compe
         content: `
 ## De investigación a producto
 
-Faultrix es un SaaS de control de calidad en construcción impulsado por IA. El usuario sube fotos de obra, el sistema las analiza y genera un informe alineado con ONORM en menos de un minuto.
+Faultrix es un SaaS de control de calidad en construcción impulsado por IA. El usuario sube fotos de obra, el sistema las analiza y genera un informe alineado con ÖNORM en menos de un minuto.
 
 El salto real entre investigación y producto no es solo elegir otro modelo. Es lograr que todo el sistema sea útil.
 

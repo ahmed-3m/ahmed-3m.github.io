@@ -54,7 +54,7 @@ const copy = {
   },
   faq: {
     en: 'Frequently Asked Questions',
-    de: 'Haufige Fragen',
+    de: 'Häufige Fragen',
     fr: 'Questions fréquentes',
     es: 'Preguntas frecuentes',
     ar: 'الاسئلة الشائعة',

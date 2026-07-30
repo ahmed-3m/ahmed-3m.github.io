@@ -38,7 +38,7 @@ const experiences: Array<{
       en: 'Built an AI construction analysis platform solo from zero to production with Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2, and Stripe.',
       de: 'Baute allein eine KI-Plattform für Bauanalyse von null bis Produktion mit Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2 und Stripe.',
       fr: 'Création solo d une plateforme IA d analyse construction, de zéro à la production, avec Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2 et Stripe.',
-      es: 'Construyo solo una plataforma de análisis de construcción con IA, de cero a producción, usando Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2 y Stripe.',
+      es: 'Construí solo una plataforma de análisis de construcción con IA, de cero a producción, usando Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2 y Stripe.',
       ar: 'بنيت منفرداً منصة ذكاء اصطناعي لتحليل البناء من الصفر إلى الإنتاج باستخدام Python وNext.js وConvex وOpenAI API وDocker وStripe.',
     },
     badge: { en: 'Shipped - faultrix.com', de: 'Ausgeliefert - faultrix.com', fr: 'Livré - faultrix.com', es: 'Entregado - faultrix.com', ar: 'تم إطلاقه - faultrix.com' },

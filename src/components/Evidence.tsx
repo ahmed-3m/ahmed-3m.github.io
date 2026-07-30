@@ -81,7 +81,7 @@ const evidenceItems = [
   {
     title: { en: 'Sihem — live beta', de: 'Sihem — Live-Beta', fr: 'Sihem — bêta en ligne', es: 'Sihem — beta en vivo', ar: 'Sihem — نسخة تجريبية مباشرة' },
     meta: { en: 'Running system — Telegram bot and PWA, open to try', de: 'Laufendes System — Telegram-Bot und PWA, frei testbar', fr: 'Système en production — bot Telegram et PWA, libre à essayer', es: 'Sistema en marcha — bot de Telegram y PWA, libre para probar', ar: 'نظام يعمل — بوت تيليجرام وتطبيق PWA، متاح للتجربة' },
-    href: 'https://sihem-pwa.pages.dev/',
+    href: 'https://t.me/sihem_ai_bot',
     label: 'Proof',
   },
   {
