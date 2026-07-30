@@ -4,7 +4,7 @@ import { useReveal } from '@/lib/useReveal'
 
 const copy = {
   eyebrow: { en: '// 04 - Experience', de: '// 04 - Erfahrung', fr: '// 04 - Experience', es: '// 04 - Experiencia', ar: '// 04 - الخبرة' },
-  title: { en: "Where I've worked.", de: 'Wo ich gearbeitet habe.', fr: 'Où j ai travaillé.', es: 'Donde he trabajado.', ar: 'أماكن عملي.' },
+  title: { en: "Where I've worked.", de: 'Wo ich gearbeitet habe.', fr: "Où j'ai travaillé.", es: 'Donde he trabajado.', ar: 'أماكن عملي.' },
 } satisfies Record<string, TranslationMap>
 
 const experiences: Array<{
@@ -37,7 +37,7 @@ const experiences: Array<{
     desc: {
       en: 'Built an AI construction analysis platform solo from zero to production with Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2, and Stripe.',
       de: 'Baute allein eine KI-Plattform für Bauanalyse von null bis Produktion mit Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2 und Stripe.',
-      fr: 'Création solo d une plateforme IA d analyse construction, de zéro à la production, avec Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2 et Stripe.',
+      fr: "Création solo d'une plateforme IA d'analyse construction, de zéro à la production, avec Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2 et Stripe.",
       es: 'Construí solo una plataforma de análisis de construcción con IA, de cero a producción, usando Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2 y Stripe.',
       ar: 'بنيت منفرداً منصة ذكاء اصطناعي لتحليل البناء من الصفر إلى الإنتاج باستخدام Python وNext.js وConvex وOpenAI API وDocker وStripe.',
     },
