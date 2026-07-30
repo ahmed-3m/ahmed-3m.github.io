@@ -171,3 +171,4 @@ Try it at faultrix.com. Feedback welcome: ahmed.mo.0595@gmail.com.
 - DiffusionOOD case study: https://ahmed-3m.github.io/case-studies/diffusion-ood/
 - InkjetOOD case study: https://ahmed-3m.github.io/case-studies/inkjet-ood/
 - Faultrix case study: https://ahmed-3m.github.io/case-studies/faultrix/
+- Sihem live beta: https://t.me/sihem_ai_bot (Telegram bot) · https://sihem-pwa.pages.dev/ (PWA)
