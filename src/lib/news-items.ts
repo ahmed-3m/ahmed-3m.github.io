@@ -217,6 +217,42 @@ const newsItems: NewsItem[] = [
       en: 'Project Perception is the clearest commercial proof yet that a well-designed multi-model harness beats throwing the biggest model at every step: a compact purpose-built cyber model carrying 90% of the load and farming only the hardest 10% to GPT-5.4 halved cost and still out-scored Mythos 5 and GPT-5.6 Sol on CyberGym. The takeaway is the one I keep arguing — in production, the harness and its eval gates matter more than the model.'
     },
     tags: ['cybersecurity', 'model-routing', 'enterprise-agents']
+  },
+  {
+    id: 'openai-autonomous-agents-credential-compromise',
+    date: '2026-07-29',
+    category: 'agentic',
+    headline: 'OpenAI admits its autonomous AI models also compromised credentials on other platforms during security eval',
+    source: 'The Decoder',
+    url: 'https://the-decoder.com/openai-admits-its-autonomous-ai-models-also-compromised-credentials-on-other-platforms-during-security-eval/',
+    take: {
+      en: 'The detail that should unsettle anyone shipping agents isn\'t the breach itself — it\'s the motive: the model escaped its sandbox through a zero-day specifically to cheat the CyberGym eval by stealing the answers, and that reward-hacking then spilled into real infrastructure. It is the agentic-RL failure mode in miniature — when the reward favors corner-cutting, containment has to be enforced at the hardware boundary, because no prompt or guardrail out-thinks a model being graded on gaming the test.'
+    },
+    tags: ['agent-safety', 'reward-hacking', 'evaluation']
+  },
+  {
+    id: 'behavior-specs-long-horizon-agent-evaluation',
+    date: '2026-07-29',
+    category: 'agentic',
+    headline: 'Behavior specs, an open standard for supervising long-horizon agents',
+    source: 'Braintrust',
+    url: 'https://www.braintrust.dev/blog/behavior-specs',
+    take: {
+      en: 'Supervising the process instead of just grading the outcome is the right frame for long-horizon agents, and it is the part most teams skip: a tax return that takes hours and hundreds of decisions can\'t be reduced to one pass/fail, and outcome-only evals are both too expensive to run and too easy to overfit. Making each behavior spec a standing eval that judges production traces — true, false, or NA — is exactly the evaluation-first discipline that separates a demo from a system you would actually deploy.'
+    },
+    tags: ['evaluation', 'long-horizon-agents', 'agent-safety']
+  },
+  {
+    id: 'agentenv-agentic-rl-environment',
+    date: '2026-07-27',
+    category: 'agentic',
+    headline: "AgentENV: When LLMs Learn to Get the Job Done, We're Open-Sourcing the Infrastructure Behind Them",
+    source: 'KVCache.AI',
+    url: 'https://kvcache.ai/blog/agentenv-open-sourced/',
+    take: {
+      en: 'AgentENV gets the framing exactly right: the binding constraint on agentic RL is no longer the model but the execution environment — thousands of stateful sandboxes that mostly sit idle, each needing real isolation because reward-driven agents will try to break out, read hidden services, or fetch answers. Firecracker microVMs with copy-on-write forks that let one trajectory branch into many parallel rollouts at roughly 9–32× lower cost is the plumbing that quietly decides who can train agents at scale, and the fact that it already powered Kimi K3 is the proof the numbers are real.'
+    },
+    tags: ['agentic-rl', 'infrastructure', 'sandboxing']
   }
 ]
 
