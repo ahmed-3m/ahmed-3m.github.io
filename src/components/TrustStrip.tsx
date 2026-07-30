@@ -10,12 +10,12 @@ const copy = {
     es: 'Supervisado por el Prof. Sepp Hochreiter',
     ar: 'بإشراف Prof. Sepp Hochreiter',
   },
-  founder: {
-    en: 'Founder of Faultrix',
-    de: 'Gruender von Faultrix',
-    fr: 'Fondateur de Faultrix',
-    es: 'Fundador de Faultrix',
-    ar: 'مؤسس Faultrix',
+  shipped: {
+    en: 'AI QC platform shipped to production',
+    de: 'KI-Qualitätskontrolle in Produktion ausgeliefert',
+    fr: 'Plateforme IA de contrôle qualité en production',
+    es: 'Plataforma de control de calidad con IA en producción',
+    ar: 'منصة ذكاء اصطناعي لضبط الجودة في الإنتاج',
   },
   industrial: {
     en: 'PROFACTOR / FTI_Zer0P',
@@ -27,7 +27,7 @@ const copy = {
   result: {
     en: '99.03% AUROC thesis result (binary, single-class)',
     de: '99.03% AUROC Thesis-Ergebnis (binär, Einzelklasse)',
-    fr: '99.03% AUROC sur le memoire (binaire, classe unique)',
+    fr: '99.03% AUROC sur le mémoire (binaire, classe unique)',
     es: '99.03% AUROC en la tesis (binario, clase única)',
     ar: 'نتيجة الرسالة 99.03% AUROC (ثنائي، فئة واحدة)',
   },
@@ -42,7 +42,7 @@ const copy = {
 
 export default function TrustStrip() {
   const { t } = useI18n()
-  const items = [t(copy.location), t(copy.supervision), t(copy.industrial), t(copy.result), t(copy.founder)]
+  const items = [t(copy.location), t(copy.supervision), t(copy.industrial), t(copy.result), t(copy.shipped)]
 
   return (
     <section className="cd-section" style={{ padding: '18px 0', borderTop: '1px solid var(--cd-b0)', borderBottom: '1px solid var(--cd-b0)' }}>

@@ -5,7 +5,6 @@ import { I18nProvider } from "@/lib/i18n";
 import {
   PersonSchema,
   WebsiteSchema,
-  OrganizationSchema,
   FAQSchema,
   SocialProfileSchema,
   ProjectsSchema,
@@ -41,21 +40,21 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL('https://ahmed-3m.github.io'),
   title: {
-    default: 'Ahmed Mohammed | AI/ML Engineer & Entrepreneur',
+    default: 'Ahmed Mohammed | AI/ML Engineer',
     template: '%s | Ahmed Mohammed'
   },
-  description: "AI/ML Engineer in Linz, Austria. 99.03% +/- 0.07% AUROC thesis result (within-CIFAR airplane-vs-rest binary split), 0.8673 +/- 0.0230 industrial baseline, founder of Faultrix, and public proof artifacts across thesis, reports, repositories, and case studies.",
-  keywords: ["AI Engineer", "Machine Learning Engineer", "Computer Vision", "Deep Learning", "PyTorch", "YOLO", "Diffusion Models", "Anomaly Detection", "Ahmed Mohammed", "Faultrix", "AI Entrepreneur", "Linz Austria", "JKU", "OOD Detection", "Industrial Quality Control", "Construction AI", "DiffusionOOD", "InkjetOOD", "Case Study", "Research Portfolio"],
+  description: "AI/ML Engineer in Linz, Austria. 99.03% +/- 0.07% AUROC thesis result (within-CIFAR airplane-vs-rest binary split), 0.8673 +/- 0.0230 industrial baseline, builder of Sihem (LLM assistant) and Faultrix (AI QC), and public proof artifacts across thesis, reports, repositories, and case studies.",
+  keywords: ["AI Engineer", "Machine Learning Engineer", "Computer Vision", "Deep Learning", "PyTorch", "YOLO", "Diffusion Models", "Anomaly Detection", "Ahmed Mohammed", "Faultrix", "Sihem", "LLM applications", "Linz Austria", "JKU", "OOD Detection", "Industrial Quality Control", "Construction AI", "DiffusionOOD", "InkjetOOD", "Case Study", "Research Portfolio"],
   authors: [{ name: "Ahmed Mohammed", url: 'https://ahmed-3m.github.io' }],
   creator: 'Ahmed Mohammed',
   publisher: 'Ahmed Mohammed',
   formatDetection: { email: false, address: false, telephone: false },
   openGraph: {
-    title: "Ahmed Mohammed | AI/ML Engineer & Entrepreneur",
+    title: "Ahmed Mohammed | AI/ML Engineer",
     description: "AI/ML Engineer in Linz, Austria. Thesis, industrial evaluation, Faultrix product work, and public proof artifacts including PDFs, repositories, and case studies.",
     url: 'https://ahmed-3m.github.io/',
     siteName: 'Ahmed Mohammed Portfolio',
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Ahmed Mohammed - AI/ML Engineer & Entrepreneur' }],
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Ahmed Mohammed - AI/ML Engineer' }],
     locale: 'en_US',
     type: 'website',
   },
@@ -88,7 +87,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <link rel="alternate" type="application/rss+xml" title="Ahmed Mohammed Blog" href="/feed.xml" />
         <PersonSchema />
         <WebsiteSchema />
-        <OrganizationSchema />
         <FAQSchema />
         <SocialProfileSchema />
         <ProjectsSchema />
@@ -104,10 +102,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </a>
         <noscript>
           <div style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto', fontFamily: 'system-ui, sans-serif' }}>
-            <h1>Ahmed Mohammed — AI/ML Engineer &amp; Entrepreneur</h1>
-            <p>Based in Linz, Austria. Specializing in computer vision, anomaly detection, and diffusion models. Founder of <a href="https://faultrix.com">Faultrix</a>.</p>
+            <h1>Ahmed Mohammed — AI/ML Engineer</h1>
+            <p>Based in Linz, Austria. Specializing in computer vision, anomaly detection, and diffusion models. Builder of <a href="https://sihem-pwa.pages.dev/">Sihem</a> and <a href="https://faultrix.com">Faultrix</a>.</p>
             <h2>Contact</h2>
-            <p>Email: <a href="mailto:ahmed@faultrix.com">ahmed@faultrix.com</a> | <a href="https://www.linkedin.com/in/ahmed-3m/">LinkedIn</a> | <a href="https://github.com/ahmed-3m">GitHub</a></p>
+            <p>Email: <a href="mailto:ahmed.mo.0595@gmail.com">ahmed.mo.0595@gmail.com</a> | <a href="https://www.linkedin.com/in/ahmed-3m/">LinkedIn</a> | <a href="https://github.com/ahmed-3m">GitHub</a></p>
           </div>
         </noscript>
         <ThemeProvider>

@@ -11,8 +11,8 @@ const copy = {
   subtitle: {
     en: 'Research notes, product lessons, and field-tested AI writing.',
     de: 'Forschungsnotizen, Produktlektionen und AI-Erfahrungen aus der Praxis.',
-    fr: 'Notes de recherche, lecons produit et retour d experience IA.',
-    es: 'Notas de investigacion, lecciones de producto y experiencia real con IA.',
+    fr: "Notes de recherche, leçons produit et retour d'expérience IA.",
+    es: 'Notas de investigación, lecciones de producto y experiencia real con IA.',
     ar: 'ملاحظات بحثية ودروس منتج وكتابة عملية عن الذكاء الاصطناعي.',
   },
   backHome: {

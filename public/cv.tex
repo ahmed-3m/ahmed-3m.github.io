@@ -1,9 +1,17 @@
 % CV source of truth. Regenerate cv.pdf with:
 %   xelatex -interaction=nonstopmode -halt-on-error cv.tex
 % in the public/ directory.
+%
+% Style rules for this file (from the job-application brief):
+%   - No em-dashes and no arrow characters anywhere in customer-facing text.
+%     En-dashes (--) only for date and numeric ranges. Use commas, colons or pipes.
+%   - Degree is "completing", never "completed", until graduation (Aug 2026).
+%   - Web / full-stack framed as familiar and AI-assisted, never deep independent mastery.
+%   - The retired unincorporated side project must not appear on this CV; it was pulled
+%     from professional materials. Sihem is the side-project block instead.
 \documentclass[11pt,a4paper]{article}
 
-\usepackage[a4paper,margin=1.4cm,top=1.2cm,bottom=1.2cm]{geometry}
+\usepackage[a4paper,margin=1.25cm,top=1.0cm,bottom=1.0cm]{geometry}
 \usepackage{fontspec}
 \usepackage{titlesec}
 \usepackage{enumitem}
@@ -33,7 +41,7 @@
   {}{0pt}
   {}
   [{\vspace{1pt}\color{accent}\hrule\vspace{1pt}}]
-\titlespacing*{\section}{0pt}{8pt}{4pt}
+\titlespacing*{\section}{0pt}{5pt}{2pt}
 
 \setlist[itemize]{
   leftmargin=14pt,
@@ -54,7 +62,7 @@
 }
 
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{2pt}
+\setlength{\parskip}{1pt}
 
 \begin{document}
 
@@ -62,77 +70,76 @@
 \begin{center}
   {\LARGE\bfseries\color{accent} AHMED MOHAMMED}\\[2pt]
   {\small Machine Learning Engineer / Applied AI / Computer Vision}\\[3pt]
-  {\footnotesize Linz, Austria \,|\, +43 681 20567353 \,|\, \href{mailto:ahmed@faultrix.com}{ahmed@faultrix.com}}\\[1pt]
-  {\footnotesize \href{https://linkedin.com/in/ahmed-3m}{linkedin.com/in/ahmed-3m} \,|\, \href{https://github.com/ahmed-3m}{github.com/ahmed-3m} \,|\, \href{https://faultrix.com}{faultrix.com}}
+  {\footnotesize Linz, Austria \,|\, +43 681 20567353 \,|\, \href{mailto:ahmed.mo.0595@gmail.com}{ahmed.mo.0595@gmail.com}}\\[1pt]
+  {\footnotesize \href{https://linkedin.com/in/ahmed-3m}{linkedin.com/in/ahmed-3m} \,|\, \href{https://github.com/ahmed-3m}{github.com/ahmed-3m} \,|\, \href{https://ahmed-3m.github.io}{ahmed-3m.github.io}}
 \end{center}
 \vspace{2pt}
 
 % ============ SUMMARY ============
 \section*{PROFESSIONAL SUMMARY}
-ML Engineer and M.Sc.\ in Artificial Intelligence student at JKU Linz (advised by Prof.\ Sepp Hochreiter; thesis submitted Jul 2026, degree expected 2026) with a proven track record of building and deploying ML models from research to production. Hands-on experience with PyTorch, PyTorch Lightning, diffusion models, CNNs, and LLMs across diverse data types: images (computer vision), text (NLP/LLMs), and time-series (EEG/BCI). As founder of Faultrix, architected end-to-end ML pipelines with production-grade reliability; conducted industrial ML validation at PROFACTOR GmbH funded by the Government of Upper Austria (project Zer0P). Strong fundamentals in Python, Git, Docker, and Linux.
+ML Engineer completing an M.Sc.\ in Artificial Intelligence at JKU Linz (advised by Prof.\ Sepp Hochreiter; thesis submitted Jul 2026, graduation expected Aug 2026). Applied machine learning across images, text, and time-series, with hands-on PyTorch, PyTorch Lightning, and diffusion models. Industrial delivery at PROFACTOR GmbH on the Government of Upper Austria project Zer0P: defect detection and inkjet print classification under real manufacturing constraints. Strong fundamentals in Python, Git, Docker, and Linux.
 
 % ============ SKILLS ============
 \section*{CORE SKILLS}
-\renewcommand{\arraystretch}{1.15}
-\noindent\begin{tabularx}{\textwidth}{@{}p{3.4cm}X@{}}
-\skillrow{ML Frameworks}{PyTorch \textbullet{} PyTorch Lightning \textbullet{} Scikit-learn \textbullet{} Diffusion Models (DDPM) \textbullet{} CNNs \textbullet{} UNet \textbullet{} Transformers \textbullet{} LLMs \textbullet{} Encoder-Decoder Architectures}
-\skillrow{Data \& Pipelines}{End-to-end ML pipelines \textbullet{} Data preprocessing \textbullet{} Augmentation \textbullet{} Structured \& unstructured data}
-\skillrow{Model Engineering}{Model training \& optimization \textbullet{} Hyperparameter tuning \textbullet{} OOD detection \textbullet{} Image classification \textbullet{} Object detection (YOLOv8) \textbullet{} Inference orchestration \textbullet{} Structured output extraction}
-\skillrow{Evaluation \& Monitoring}{AUROC/FPR95 evaluation \textbullet{} Ablation studies \textbullet{} Model drift monitoring \textbullet{} Latency optimization \textbullet{} Reproducible benchmarking \textbullet{} Monte Carlo methods}
-\skillrow{Software \& DevOps}{Python (advanced) \textbullet{} Git \textbullet{} Docker \textbullet{} Linux \textbullet{} REST APIs \textbullet{} CI/CD concepts \textbullet{} Structured logging \textbullet{} TypeScript}
-\skillrow{Collaboration}{Research-to-production handover \textbullet{} Technical documentation \textbullet{} Cross-functional teamwork \textbullet{} Academic writing \textbullet{} AI coding tools (Claude Code, Copilot)}
+\renewcommand{\arraystretch}{1.02}
+\noindent\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.9cm}X@{}}
+\skillrow{ML Frameworks}{PyTorch \textbullet{} PyTorch Lightning \textbullet{} Diffusion Models (DDPM) \textbullet{} CNNs \textbullet{} UNet \textbullet{} Transformers \textbullet{} LLMs}
+\skillrow{Research}{Hydra \textbullet{} Experiment design \textbullet{} Ablation studies \textbullet{} AUROC/FPR95 \textbullet{} Cross-validation \textbullet{} Reproducible benchmarking}
+\skillrow{Computer Vision}{OOD detection \textbullet{} Object detection (YOLOv8) \textbullet{} Defect detection \textbullet{} Image classification}
+\skillrow{ML Engineering}{End-to-end pipelines \textbullet{} Training \& optimization \textbullet{} Hyperparameter tuning \textbullet{} LLM inference \textbullet{} Prompt engineering \textbullet{} Structured output extraction}
+\skillrow{Software \& DevOps}{Python (advanced) \textbullet{} Git \textbullet{} Docker \textbullet{} Linux \textbullet{} REST APIs \textbullet{} CI/CD concepts \textbullet{} Structured logging}
+\skillrow{Web (familiar)}{TypeScript \textbullet{} Next.js \textbullet{} React/Vite PWA \textbullet{} Supabase. Built with AI-assisted tooling; core depth is Python and applied ML.}
+\skillrow{AI Tools}{Claude Code (daily) \textbullet{} GitHub Copilot \textbullet{} Microsoft 365 Copilot \textbullet{} ChatGPT}
 \end{tabularx}
 
 % ============ EXPERIENCE ============
 \section*{PROFESSIONAL EXPERIENCE}
 
-\role{Founder \& ML Engineer}{Jul 2025 -- Present}
-\org{Faultrix -- Linz, Austria}
-Production ML system: image ingestion $\rightarrow$ model inference $\rightarrow$ structured extraction $\rightarrow$ automated reporting
-\begin{itemize}
-  \item Designed and deployed an end-to-end ML pipeline handling image ingestion, model inference, structured output extraction, and automated PDF report generation -- processing end-to-end in under 1 minute.
-  \item Built fault-tolerant ML workflow with idempotent processing steps, retry logic, and iterative quality loops -- achieving production-grade reliability for model inference from day one.
-  \item Optimised LLM-powered inference components for latency and output consistency through systematic prompt engineering, structured output validation, and continuous model performance monitoring.
-  \item Sole technical founder -- owned the full ML product cycle: model selection, pipeline architecture, deployment, and iteration based on real-world performance data.
-\end{itemize}
-\vspace{3pt}
-
 \role{ML Researcher}{Dec 2024 -- Jul 2026}
-\org{JKU Institute for Machine Learning -- Linz, Austria}
+\org{JKU Institute for Machine Learning, Linz, Austria}
 \begin{itemize}
-  \item Thesis: \emph{Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control} -- supervised by Prof.\ Sepp Hochreiter; assistant supervisor Claus Hofmann, MSc.
-  \item Developed a binary conditional diffusion model with a novel class-conditional separation loss, boosting OOD detection AUROC from 92.52\% $\pm$ 11.07\% to 99.03\% $\pm$ 0.07\% on a CIFAR-10 airplane-vs-rest split (single ID class; +6.5 pp gain, 3-seed mean).
+  \item Thesis: \emph{Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control}, supervised by Prof.\ Sepp Hochreiter; assistant supervisor Claus Hofmann, MSc.
+  \item Developed a binary conditional diffusion model with a novel class-conditional separation loss, raising OOD detection AUROC from 92.52\% $\pm$ 11.07\% to 99.03\% $\pm$ 0.07\% on a CIFAR-10 airplane-vs-rest split (single ID class; +6.5 pp gain, 3-seed mean).
   \item Achieved 98.98\% AUROC on the within-CIFAR airplane-vs-rest split (seed-42) and 90.50--96.97\% across five external OOD benchmarks (CIFAR-100, Places365, FashionMNIST, SVHN, Textures).
-  \item Built modular, reproducible experiment infrastructure using PyTorch Lightning + Hydra with configuration tracking, seed-controlled runs, and auditable raw-score artefacts.
+  \item Built modular, reproducible experiment infrastructure using PyTorch Lightning and Hydra with configuration tracking, seed-controlled runs, and auditable raw-score artefacts.
 \end{itemize}
-\vspace{3pt}
+\vspace{1pt}
 
 \role{Machine Vision Researcher}{Apr 2024 -- Nov 2024}
-\org{PROFACTOR GmbH -- Steyr, Austria (with JKU Linz)}
-\textit{\small Government of Upper Austria, project Zer0P}
+\org{PROFACTOR GmbH, Steyr, Austria (with JKU Linz)}
+\textit{\small Government of Upper Austria, project Zer0P: zero-defect inkjet printing on building components}
 \begin{itemize}
-  \item Designed a multi-head conditioning mechanism and YOLO + conditional diffusion pipeline for industrial classification of inkjet experimental prints; conducted an 8-method comparison with 5-fold cross-validation on the public FTI\_Zer0P benchmark (thesis-documented baseline 0.8673 $\pm$ 0.0230 AUROC).
-  \item Evaluated production decision thresholds in a real-time inkjet quality setting (threshold-dependent operational accuracy; distinct from public AUROC baseline).
+  \item Designed a multi-head conditioning mechanism and a two-stage YOLOv8 then conditional-diffusion pipeline for classification of inkjet experimental prints; 8-method comparison with 5-fold cross-validation on the public FTI\_Zer0P benchmark (thesis-documented baseline 0.8673 $\pm$ 0.0230 AUROC).
+  \item Evaluated production decision thresholds in a real-time inkjet quality setting (threshold-dependent operational accuracy; distinct from the public AUROC baseline).
 \end{itemize}
-\vspace{3pt}
+\vspace{1pt}
 
 \role{AI Research Intern}{Aug 2023 -- Oct 2023}
-\org{Karunya University -- Coimbatore, India}
+\org{Karunya University, Coimbatore, India}
 \begin{itemize}
-  \item Developed deep learning models for EEG-based motor imagery classification in Brain-Computer Interface (BCI) systems; designed signal preprocessing and feature extraction pipelines for multi-class EEG data.
-  \item Evaluated and compared CNN and RNN architectures for real-time BCI decoding; documented methods and findings for academic stakeholders.
+  \item Developed deep learning models for EEG-based motor imagery classification in Brain-Computer Interface systems: signal preprocessing and feature extraction pipelines for multi-class EEG data, and a CNN versus RNN architecture comparison for real-time BCI decoding.
+\end{itemize}
+\vspace{1pt}
+
+\role{Technical Staff, Electronics}{2018 -- Oct 2020}
+\org{Ledzone, Karakoey / Beyoglu, Istanbul, Turkey}
+\begin{itemize}
+  \item PCB assembly, soldering, and component-level rework on LED and motor driver circuits; schematic and layout reading; functional test and final inspection with multimeter, oscilloscope, and function generator; ESD-aware handling and BOMs.
 \end{itemize}
 
 % ============ PROJECTS ============
+% Austrian CV QA note: the checklist asks for Selected Projects at the top of page 2.
+% With the current content volume a forced \newpage here spills to a third page, so the
+% section sits mid-page-2 instead. Re-add \newpage if content is trimmed further.
 \section*{SELECTED PROJECTS}
 
-\textbf{OOD Detection with Conditional Diffusion Models} (M.Sc.\ Thesis) \,|\, JKU Institute for Machine Learning -- Prof.\ Sepp Hochreiter\\
-Binary CDM achieving 99.03\% $\pm$ 0.07\% AUROC (3-seed mean) on CIFAR-10 airplane-vs-rest via novel separation loss. Extended to industrial inkjet quality control with multi-head conditioning (YOLOv8 + CDM two-stage pipeline). Modular implementation: PyTorch Lightning, Hydra, reproducible auditable artefacts.
-\vspace{3pt}
+\textbf{OOD Detection with Conditional Diffusion Models} (M.Sc.\ Thesis) \,|\, JKU Institute for Machine Learning, Prof.\ Sepp Hochreiter\\
+Binary CDM achieving 99.03\% $\pm$ 0.07\% AUROC (3-seed mean) on CIFAR-10 airplane-vs-rest via a novel separation loss. Extended to industrial inkjet quality control with multi-head conditioning (two-stage YOLOv8 and CDM pipeline). Modular implementation: PyTorch Lightning, Hydra, reproducible auditable artefacts.
+\vspace{1pt}
 
-\textbf{Faultrix -- AI-Powered Construction Report Automation} \,|\, faultrix.com\\
-Production ML SaaS: building photo $\rightarrow$ AI inference $\rightarrow$ structured damage analysis $\rightarrow$ ONORM-compliant report in $<$1 min. Stack: Python, Next.js, OpenAI API, Convex. Fault-tolerant pipeline with iterative quality loops.
-\vspace{3pt}
+\textbf{Sihem: LLM Personal-Mentor Assistant} \,|\, personal side project, solo developer\\
+Habits and daily-routine assistant delivered as a Telegram bot and an installable PWA. Supabase Postgres (RLS, pg\_cron, pgvector, Vault secrets), Supabase Edge Functions in Deno/TypeScript, React/Vite PWA with service worker and web push, multi-provider LLM routing with escalation (Zhipu GLM primary, plus Gemini, OpenRouter, Groq, Cloudflare Workers AI), GitHub Actions deploys, German and English delivery lanes. Accepted into the tech2b incubator, Linz.
+\vspace{1pt}
 
 \textbf{EEG Motor Imagery Classification for Brain-Computer Interfaces} \,|\, Karunya University, India\\
 Deep learning models for multi-class EEG signal classification in BCI systems. Signal preprocessing, feature extraction pipelines, and CNN/RNN architecture comparison for real-time decoding.
@@ -141,25 +148,34 @@ Deep learning models for multi-class EEG signal classification in BCI systems. S
 \section*{EDUCATION}
 
 \role{M.Sc.\ Artificial Intelligence}{Oct 2024 -- Jul 2026}
-\org{Johannes Kepler University (JKU), Linz -- Thesis submitted Jul 2026}
+\org{Johannes Kepler University (JKU), Linz. Thesis submitted Jul 2026, graduation expected Aug 2026}
 \begin{itemize}
   \item Thesis advisor: Prof.\ Sepp Hochreiter \textbullet{} Assistant: Claus Hofmann, MSc \textbullet{} Coursework: Advanced Deep Learning, Probabilistic ML, Computer Vision, Reinforcement Learning, Statistical Machine Learning
 \end{itemize}
-\vspace{3pt}
+\vspace{1pt}
 
 \role{B.Sc.\ Mechatronics Engineering}{Feb 2015 -- Jan 2018}
 \org{Eastern Mediterranean University, Cyprus}
 \begin{itemize}
-  \item Graduation project: SCARA robotic system for dynamic object tracking -- real-time control and sensor integration
+  \item Graduation project: SCARA robotic system for dynamic object tracking, covering real-time control and sensor integration.
 \end{itemize}
+\vspace{1pt}
+
+\role{Electrical Engineering studies (no degree)}{Oct 2011 -- Jan 2015}
+\org{Higher Technological Institute (HTI), Cairo, Egypt}
+Electrical engineering fundamentals and hands-on PCB construction. Transferred to Mechatronics Engineering at Eastern Mediterranean University; this programme was not completed.
 
 % ============ LANGUAGES ============
 \section*{LANGUAGES}
-\renewcommand{\arraystretch}{1.15}
-\noindent\begin{tabularx}{\textwidth}{@{}p{3.4cm}X@{}}
-\skillrow{English}{B2 -- Professional Working}
-\skillrow{German}{B1 -- CEFR (actively improving)}
+\renewcommand{\arraystretch}{1.02}
+\noindent\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.9cm}X@{}}
 \skillrow{Arabic}{Native}
+\skillrow{English}{B2, Professional Working}
+\skillrow{German}{B1 CEFR, currently preparing for the B2 exam}
 \end{tabularx}
+
+% ============ WORK AUTHORIZATION ============
+\section*{WORK AUTHORIZATION}
+Eligible for the Austrian \textbf{Rot-Weiss-Rot Karte for Graduates} (RWR Karte fuer Studienabsolventen) on completion of my M.Sc.\ at JKU Linz. This route requires \textbf{no AMS labour market test} and is \textbf{not subject to a quota}: an Austrian employer only needs to confirm the position and salary. There are no agency fees or sponsorship costs for the employer.
 
 \end{document}

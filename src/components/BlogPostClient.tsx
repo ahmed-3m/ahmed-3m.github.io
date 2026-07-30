@@ -47,23 +47,23 @@ function formatContent(content: string | undefined) {
 const copy = {
   backBlog: {
     en: 'Back to blog',
-    de: 'Zuruck zum Blog',
+    de: 'Zurück zum Blog',
     fr: 'Retour au blog',
     es: 'Volver al blog',
     ar: 'العودة إلى المدونة',
   },
   faq: {
     en: 'Frequently Asked Questions',
-    de: 'Haufige Fragen',
-    fr: 'Questions frequentes',
+    de: 'Häufige Fragen',
+    fr: 'Questions fréquentes',
     es: 'Preguntas frecuentes',
     ar: 'الاسئلة الشائعة',
   },
   viewAll: {
     en: 'View all posts',
-    de: 'Alle Beitrage ansehen',
+    de: 'Alle Beiträge ansehen',
     fr: 'Voir tous les articles',
-    es: 'Ver todos los articulos',
+    es: 'Ver todos los artículos',
     ar: 'عرض كل المقالات',
   },
   writtenBy: {

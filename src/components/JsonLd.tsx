@@ -7,11 +7,11 @@ export function PersonSchema() {
     alternateName: 'Ahmed 3M',
     givenName: 'Ahmed',
     familyName: 'Mohammed',
-    jobTitle: 'AI/ML Engineer & Entrepreneur',
-    description: 'AI/ML Engineer specializing in computer vision, anomaly detection, and diffusion models. Founder of Faultrix. M.Sc. Artificial Intelligence (thesis submitted Jul 2026, degree expected 2026) from Johannes Kepler University Linz, supervised by Prof. Sepp Hochreiter (inventor of LSTM). Achieved 99.03% AUROC on a within-CIFAR airplane-vs-rest binary OOD split (single ID class; not comparable to multi-class CIFAR-10 OOD benchmarks) and 98.4% industrial defect detection accuracy in production (internal deployment metric, threshold-dependent binary classification).',
+    jobTitle: 'AI/ML Engineer',
+    description: 'AI/ML Engineer specializing in computer vision, anomaly detection, and diffusion models. Builder of Sihem (LLM assistant) and Faultrix (AI quality-control platform). M.Sc. Artificial Intelligence (thesis submitted Jul 2026, degree expected 2026) from Johannes Kepler University Linz, supervised by Prof. Sepp Hochreiter. Achieved 99.03% AUROC on a within-CIFAR airplane-vs-rest binary OOD split (single ID class; not comparable to multi-class CIFAR-10 OOD benchmarks) and 98.4% industrial defect detection accuracy in production (internal deployment metric, threshold-dependent binary classification).',
     url: 'https://ahmed-3m.github.io',
     image: 'https://ahmed-3m.github.io/headshot.jpg',
-    email: 'ahmed@faultrix.com',
+    email: 'ahmed.mo.0595@gmail.com',
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Linz',
@@ -46,8 +46,8 @@ export function PersonSchema() {
     ],
     worksFor: {
       '@type': 'Organization',
-      name: 'Faultrix',
-      url: 'https://faultrix.com',
+      name: 'Sihem',
+      url: 'https://sihem-pwa.pages.dev/',
     },
     alumniOf: [
       {
@@ -104,7 +104,7 @@ export function PersonSchema() {
     },
     contactPoint: {
       '@type': 'ContactPoint',
-      email: 'ahmed@faultrix.com',
+      email: 'ahmed.mo.0595@gmail.com',
       contactType: 'professional inquiry',
       availableLanguage: ['English', 'Arabic', 'German'],
     },
@@ -131,9 +131,9 @@ export function WebsiteSchema() {
     '@context': 'https://schema.org',
     '@id': 'https://ahmed-3m.github.io/#website',
     '@type': 'WebSite',
-    name: 'Ahmed Mohammed — AI/ML Engineer & Entrepreneur',
+    name: 'Ahmed Mohammed — AI/ML Engineer',
     url: 'https://ahmed-3m.github.io',
-    description: 'Portfolio of Ahmed Mohammed — AI/ML Engineer & Entrepreneur specializing in computer vision, anomaly detection, and diffusion models. Founder of Faultrix. 99.03% AUROC on a within-CIFAR airplane-vs-rest binary OOD split (single ID class). 98.4% industrial defect detection accuracy in production (threshold-dependent binary classification). M.Sc. AI (thesis submitted Jul 2026, degree expected 2026) from JKU Linz.',
+    description: 'Portfolio of Ahmed Mohammed — AI/ML Engineer specializing in computer vision, anomaly detection, and diffusion models. Builder of Sihem and Faultrix. 99.03% AUROC on a within-CIFAR airplane-vs-rest binary OOD split (single ID class). 98.4% industrial defect detection accuracy in production (threshold-dependent binary classification). M.Sc. AI (thesis submitted Jul 2026, degree expected 2026) from JKU Linz.',
     author: {
       '@type': 'Person',
       name: 'Ahmed Mohammed',
@@ -146,67 +146,6 @@ export function WebsiteSchema() {
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
-    />
-  );
-}
-
-export function OrganizationSchema() {
-  const orgSchema = {
-    '@context': 'https://schema.org',
-    '@id': 'https://faultrix.com/#organization',
-    '@type': 'Organization',
-    name: 'Faultrix',
-    url: 'https://faultrix.com',
-    logo: 'https://faultrix.com/icon.svg',
-    founder: {
-      '@type': 'Person',
-      name: 'Ahmed Mohammed',
-      url: 'https://ahmed-3m.github.io',
-    },
-    foundingDate: '2025-07',
-    description: 'AI-powered construction quality control SaaS. Analyzes building photos and generates ÖNORM B 2110-compliant technical reports in under 1 minute. Features SHA-256 evidence chain, DSGVO compliance, and AES-256 encryption. Built with Next.js, Convex, OpenAI API, Cloudflare R2.',
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: 'Linz',
-      addressRegion: 'Upper Austria',
-      addressCountry: 'AT',
-    },
-    areaServed: [
-      { '@type': 'Country', name: 'Austria' },
-      { '@type': 'Country', name: 'Germany' },
-      { '@type': 'Country', name: 'Switzerland' },
-    ],
-    knowsAbout: [
-      'Construction Quality Control',
-      'AI Building Analysis',
-      'ÖNORM B 2110',
-      'Defect Detection',
-      'DSGVO Compliance',
-    ],
-    sameAs: ['https://faultrix.com'],
-    hasOfferCatalog: {
-      '@type': 'OfferCatalog',
-      name: 'Faultrix AI Construction Services',
-      itemListElement: [
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'SoftwareApplication',
-            name: 'ÖNORM B 2110 AI Report Generator',
-            description: 'AI-powered construction defect analysis that generates legally compliant ÖNORM B 2110 technical reports in under 1 minute. SHA-256 evidence chain, DSGVO compliant, AES-256 encryption.',
-            applicationCategory: 'BusinessApplication',
-            operatingSystem: 'Web',
-            url: 'https://faultrix.com',
-          },
-        },
-      ],
-    },
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
     />
   );
 }
@@ -229,7 +168,7 @@ export function FAQSchema() {
         name: 'What is Faultrix?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Faultrix is an AI-powered construction quality control SaaS founded by Ahmed Mohammed. It analyzes building photos and generates ÖNORM B 2110-compliant technical reports in under 1 minute. The platform features SHA-256 evidence chain, DSGVO compliance, and AES-256 encryption. Visit faultrix.com for more information.',
+          text: 'Faultrix is an AI-powered construction quality control SaaS built by Ahmed Mohammed. It analyzes building photos and generates ÖNORM B 2110-compliant technical reports in under 1 minute. The platform features SHA-256 evidence chain, DSGVO compliance, and AES-256 encryption. Visit faultrix.com for more information.',
         },
       },
       {
@@ -237,7 +176,7 @@ export function FAQSchema() {
         name: 'Where is Ahmed Mohammed based and how can I contact him?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Ahmed Mohammed is based in Linz, Austria. He can be contacted via email at ahmed@faultrix.com, on LinkedIn at linkedin.com/in/ahmed-3m, or through his portfolio at ahmed-3m.github.io. He is open to senior AI/ML roles and research collaborations.',
+          text: 'Ahmed Mohammed is based in Linz, Austria. He can be contacted via email at ahmed.mo.0595@gmail.com, on LinkedIn at linkedin.com/in/ahmed-3m, or through his portfolio at ahmed-3m.github.io. He is open to senior AI/ML roles and research collaborations.',
         },
       },
       {
@@ -253,7 +192,7 @@ export function FAQSchema() {
         name: "What is Ahmed Mohammed's educational background?",
         acceptedAnswer: {
           '@type': 'Answer',
-          text: "Ahmed Mohammed submitted his Master of Science in Artificial Intelligence thesis at Johannes Kepler University Linz (JKU) in Jul 2026 (degree expected 2026); the thesis on conditional diffusion models for out-of-distribution detection was supervised by Prof. Sepp Hochreiter (inventor of LSTM). He also holds a Bachelor of Science in Mechatronics Engineering from Eastern Mediterranean University in Cyprus.",
+          text: "Ahmed Mohammed submitted his Master of Science in Artificial Intelligence thesis at Johannes Kepler University Linz (JKU) in Jul 2026 (degree expected 2026); the thesis on conditional diffusion models for out-of-distribution detection was supervised by Prof. Sepp Hochreiter. He also holds a Bachelor of Science in Mechatronics Engineering from Eastern Mediterranean University in Cyprus.",
         },
       },
       {
@@ -269,7 +208,7 @@ export function FAQSchema() {
         name: 'Is Ahmed Mohammed available for hire or freelance AI/ML projects?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Ahmed Mohammed is open to senior AI/ML engineering roles and research collaborations. He specializes in computer vision, diffusion models, and out-of-distribution detection. Based in Linz, Austria, he is available for positions in the DACH region and remote roles. Contact: ahmed@faultrix.com or LinkedIn: linkedin.com/in/ahmed-3m',
+          text: 'Ahmed Mohammed is open to senior AI/ML engineering roles and research collaborations. He specializes in computer vision, diffusion models, and out-of-distribution detection. Based in Linz, Austria, he is available for positions in the DACH region and remote roles. Contact: ahmed.mo.0595@gmail.com or LinkedIn: linkedin.com/in/ahmed-3m',
         },
       },
       {
@@ -309,9 +248,9 @@ export function SocialProfileSchema() {
       '@type': 'Person',
       name: 'Ahmed Mohammed',
       alternateName: 'Ahmed 3M',
-      description: 'AI/ML Engineer & Entrepreneur specializing in computer vision, diffusion models, and out-of-distribution detection. Founder of Faultrix. M.Sc. AI from JKU Linz under Prof. Sepp Hochreiter. Based in Linz, Austria.',
+      description: 'AI/ML Engineer specializing in computer vision, diffusion models, and out-of-distribution detection. Builder of Sihem and Faultrix. M.Sc. AI from JKU Linz under Prof. Sepp Hochreiter. Based in Linz, Austria.',
       image: 'https://ahmed-3m.github.io/headshot.jpg',
-      email: 'ahmed@faultrix.com',
+      email: 'ahmed.mo.0595@gmail.com',
       sameAs: [
         'https://github.com/ahmed-3m',
         'https://www.linkedin.com/in/ahmed-3m/',
@@ -319,11 +258,11 @@ export function SocialProfileSchema() {
         'https://wandb.ai/ahmed-mu-0593',
         'https://x.com/Ahmed_mo_93',
       ],
-      jobTitle: 'AI/ML Engineer & Entrepreneur',
+      jobTitle: 'AI/ML Engineer',
       worksFor: {
         '@type': 'Organization',
-        name: 'Faultrix',
-        url: 'https://faultrix.com',
+        name: 'Sihem',
+        url: 'https://sihem-pwa.pages.dev/',
       },
       alumniOf: [
         {
@@ -372,12 +311,11 @@ export function ProjectsSchema() {
         position: 1,
         item: {
           '@type': 'SoftwareApplication',
-          name: 'Faultrix — Construction Quality Control AI',
-          description: 'AI-powered construction quality control SaaS. Analyzes building photos and generates ÖNORM B 2110-compliant reports in under 1 minute with SHA-256 evidence chain, DSGVO compliance, and AES-256 encryption. Built solo from zero to production.',
+          name: 'Sihem — AI Mentor Assistant',
+          description: 'Proactive personal-mentor assistant on Telegram that plans your week, sends morning briefings and evening reviews, and fires smart check-in triggers. Built on Supabase edge functions with a generic activity model, a deterministic generators→arbiter→composer decision engine for adaptive nudging, pgvector RAG memory, multi-provider LLM routing with failover, multimodal meal-photo vision, TTS voice reminders, Google Calendar sync, and optional Alexa Echo integration. In beta at @sihem_ai_bot.',
           applicationCategory: 'BusinessApplication',
-          url: 'https://faultrix.com',
+          url: 'https://t.me/sihem_ai_bot',
           author: { '@type': 'Person', name: 'Ahmed Mohammed' },
-          featureList: 'ÖNORM-compliant reports, SHA-256 evidence chain, DSGVO compliant, AES-256 encryption, under 1 minute report generation',
         },
       },
       {
@@ -420,11 +358,12 @@ export function ProjectsSchema() {
         position: 5,
         item: {
           '@type': 'SoftwareApplication',
-          name: 'Sihem — AI Mentor Assistant',
-          description: 'Proactive personal-mentor assistant on Telegram that plans your week, sends morning briefings and evening reviews, and fires smart check-in triggers. Built on Supabase edge functions with a generic activity model, a deterministic generators→arbiter→composer decision engine for adaptive nudging, pgvector RAG memory, multi-provider LLM routing with failover, multimodal meal-photo vision, TTS voice reminders, Google Calendar sync, and optional Alexa Echo integration. In beta at @sihem_ai_bot.',
+          name: 'Faultrix — Construction Quality Control AI',
+          description: 'AI-powered construction quality control SaaS. Analyzes building photos and generates ÖNORM B 2110-compliant reports in under 1 minute with SHA-256 evidence chain, DSGVO compliance, and AES-256 encryption. Built solo from zero to production.',
           applicationCategory: 'BusinessApplication',
-          url: 'https://t.me/sihem_ai_bot',
+          url: 'https://faultrix.com',
           author: { '@type': 'Person', name: 'Ahmed Mohammed' },
+          featureList: 'ÖNORM-compliant reports, SHA-256 evidence chain, DSGVO compliant, AES-256 encryption, under 1 minute report generation',
         },
       },
     ],
@@ -452,7 +391,7 @@ export function ResearchSchema() {
       '@type': 'Person',
       name: 'Ahmed Mohammed',
       url: 'https://ahmed-3m.github.io',
-      email: 'ahmed@faultrix.com',
+      email: 'ahmed.mo.0595@gmail.com',
       affiliation: {
         '@type': 'CollegeOrUniversity',
         name: 'Johannes Kepler University Linz',
@@ -512,7 +451,7 @@ export function WebPageSchema() {
     '@type': 'WebPage',
     '@id': 'https://ahmed-3m.github.io/#webpage',
     url: 'https://ahmed-3m.github.io/',
-    name: 'Ahmed Mohammed — AI/ML Engineer & Entrepreneur',
+    name: 'Ahmed Mohammed — AI/ML Engineer',
     isPartOf: { '@id': 'https://ahmed-3m.github.io/#website' },
     about: { '@id': 'https://ahmed-3m.github.io/#person' },
     speakable: {

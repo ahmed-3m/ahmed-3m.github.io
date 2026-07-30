@@ -7,19 +7,19 @@ import { translateValue } from '@/lib/i18n-config'
 import { getCaseStudy } from '@/lib/case-studies'
 
 const labels = {
-  back: { en: 'Back to portfolio', de: 'Zuruck zum Portfolio', fr: 'Retour au portfolio', es: 'Volver al portfolio', ar: 'العودة إلى البورتفوليو' },
-  problem: { en: 'Problem', de: 'Problem', fr: 'Probleme', es: 'Problema', ar: 'المشكلة' },
-  role: { en: 'Role', de: 'Rolle', fr: 'Role', es: 'Rol', ar: 'الدور' },
+  back: { en: 'Back to portfolio', de: 'Zurück zum Portfolio', fr: 'Retour au portfolio', es: 'Volver al portfolio', ar: 'العودة إلى البورتفوليو' },
+  problem: { en: 'Problem', de: 'Problem', fr: 'Problème', es: 'Problema', ar: 'المشكلة' },
+  role: { en: 'Role', de: 'Rolle', fr: 'Rôle', es: 'Rol', ar: 'الدور' },
   approach: { en: 'Approach', de: 'Ansatz', fr: 'Approche', es: 'Enfoque', ar: 'المنهج' },
-  results: { en: 'Results', de: 'Ergebnisse', fr: 'Resultats', es: 'Resultados', ar: 'النتائج' },
-  lessons: { en: 'Lessons', de: 'Erkenntnisse', fr: 'Lecons', es: 'Lecciones', ar: 'الدروس' },
+  results: { en: 'Results', de: 'Ergebnisse', fr: 'Résultats', es: 'Resultados', ar: 'النتائج' },
+  lessons: { en: 'Lessons', de: 'Erkenntnisse', fr: 'Leçons', es: 'Lecciones', ar: 'الدروس' },
   artifacts: { en: 'Artifacts', de: 'Artefakte', fr: 'Artefacts', es: 'Artefactos', ar: 'الروابط' },
-  preview: { en: 'Product preview', de: 'Produktvorschau', fr: 'Apercu produit', es: 'Vista previa del producto', ar: 'معاينة المنتج' },
+  preview: { en: 'Product preview', de: 'Produktvorschau', fr: 'Aperçu produit', es: 'Vista previa del producto', ar: 'معاينة المنتج' },
   comingSoon: {
     en: 'Screenshot placeholder until public product visuals are ready.',
-    de: 'Screenshot-Platzhalter bis oeffentliche Produktvisuals bereit sind.',
+    de: 'Screenshot-Platzhalter bis öffentliche Produktvisuals bereit sind.',
     fr: 'Visuel temporaire en attendant des captures produit publiques.',
-    es: 'Marcador temporal hasta que haya capturas publicas del producto.',
+    es: 'Marcador temporal hasta que haya capturas públicas del producto.',
     ar: 'عنصر مؤقت إلى أن تصبح صور المنتج العامة جاهزة.',
   },
 } as const

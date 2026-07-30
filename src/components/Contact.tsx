@@ -17,12 +17,12 @@ const copy = {
   eyebrow: { en: '// 08 - Contact', de: '// 08 - Kontakt', fr: '// 08 - Contact', es: '// 08 - Contacto', ar: '// 08 - التواصل' },
   titleA: { en: "Let's build", de: 'Lass uns', fr: 'Construisons', es: 'Construyamos', ar: 'لنبنِ' },
   titleB: { en: 'something', de: 'etwas', fr: 'quelque chose', es: 'algo', ar: 'شيئاً' },
-  titleC: { en: 'extraordinary', de: 'Aussergewohnliches bauen', fr: 'd extraordinaire', es: 'extraordinario', ar: 'استثنائياً' },
+  titleC: { en: 'extraordinary', de: 'Außergewöhnliches bauen', fr: 'd\'extraordinaire', es: 'extraordinario', ar: 'استثنائياً' },
   sub: {
     en: 'Open to AI/ML roles, research collaborations, and product partnerships.',
-    de: 'Offen fur AI/ML-Rollen, Forschungskooperationen und Produktpartnerschaften.',
-    fr: 'Ouvert aux roles IA/ML, collaborations de recherche et partenariats produit.',
-    es: 'Abierto a roles de IA/ML, colaboraciones de investigacion y alianzas de producto.',
+    de: 'Offen für AI/ML-Rollen, Forschungskooperationen und Produktpartnerschaften.',
+    fr: "Ouvert aux rôles IA/ML, collaborations de recherche et partenariats produit.",
+    es: 'Abierto a roles de IA/ML, colaboraciones de investigación y alianzas de producto.',
     ar: 'متاح لأدوار الذكاء الاصطناعي، وتعاونات البحث، وشراكات المنتجات.',
   },
 } satisfies Record<string, TranslationMap>
@@ -54,8 +54,8 @@ export default function Contact() {
           <RequestCvButton variant="link" />
         </div>
 
-        <a href="mailto:ahmed@faultrix.com" className="cd-contact-email reveal">
-          ahmed@faultrix.com
+        <a href="mailto:ahmed.mo.0595@gmail.com" className="cd-contact-email reveal">
+          ahmed.mo.0595@gmail.com
         </a>
       </div>
     </section>

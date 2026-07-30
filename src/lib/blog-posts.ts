@@ -120,57 +120,57 @@ Public artifacts:
         `,
       },
       de: {
-        title: 'Wie ich mit konditionalen Diffusionsmodellen 99.03% AUROC fuer OOD-Erkennung erreicht habe',
+        title: 'Wie ich mit konditionalen Diffusionsmodellen 99.03% AUROC für OOD-Erkennung erreicht habe',
         excerpt:
-          'Meine Masterarbeit an der JKU Linz fuehrte eine class-conditional separation loss in konditionale Diffusionsmodelle als generative Klassifikatoren ein und erreichte 99.03% +/- 0.07% AUROC auf CIFAR-10 sowie einen stabilen Gewinn von +6.5 Prozentpunkten gegenueber der Basis ohne Separation.',
+          'Meine Masterarbeit an der JKU Linz führte eine class-conditional separation loss in konditionale Diffusionsmodelle als generative Klassifikatoren ein und erreichte 99.03% +/- 0.07% AUROC auf CIFAR-10 sowie einen stabilen Gewinn von +6.5 Prozentpunkten gegenüber der Basis ohne Separation.',
         tags: ['Diffusionsmodelle', 'OOD-Erkennung', 'Deep Learning', 'PyTorch', 'CIFAR-10', 'Generative Modelle'],
         readingTime: '14 Min. Lesezeit',
         faq: [
           {
             question: 'Welches Ergebnis wurde auf CIFAR-10 erreicht?',
             answer:
-              'Der beste Mittelwert ueber drei Seeds lag bei 99.03% +/- 0.07% AUROC. Seed-42 erreichte 98.98% innerhalb von CIFAR und generalisierte zero-shot auf fuenf externe OOD-Benchmarks.',
+              'Der beste Mittelwert über drei Seeds lag bei 99.03% +/- 0.07% AUROC. Seed-42 erreichte 98.98% innerhalb von CIFAR und generalisierte zero-shot auf fünf externe OOD-Benchmarks.',
           },
           {
             question: 'Was ist die Separation Loss?',
             answer:
-              'Das ist ein zusaetzlicher Trainingsterm, der die beiden class-conditional noise predictions auseinanderzieht und damit die Rekonstruktionsfehler-Differenz klarer und stabiler macht.',
+              'Das ist ein zusätzlicher Trainingsterm, der die beiden class-conditional noise predictions auseinanderzieht und damit die Rekonstruktionsfehler-Differenz klarer und stabiler macht.',
           },
           {
             question: 'Warum ist das wichtig?',
             answer:
-              'Weil aus einem seed-sensitiven OOD-Detektor ein deutlich verlaesslicherer wird. Genau diese Stabilitaet entscheidet, ob eine Methode spaeter produktionsnah nutzbar ist.',
+              'Weil aus einem seed-sensitiven OOD-Detektor ein deutlich verlässlicherer wird. Genau diese Stabilität entscheidet, ob eine Methode später produktionsnah nutzbar ist.',
           },
         ],
         content: `
 ## Das Problem
 
-OOD-Erkennung ist der Teil eines Systems, der sagt: "Dieses Eingabebeispiel gehoert nicht zu dem, worauf ich trainiert wurde." In sicherheitskritischen Anwendungen ist das genauso wichtig wie die eigentliche Klassifikationsleistung.
+OOD-Erkennung ist der Teil eines Systems, der sagt: "Dieses Eingabebeispiel gehört nicht zu dem, worauf ich trainiert wurde." In sicherheitskritischen Anwendungen ist das genauso wichtig wie die eigentliche Klassifikationsleistung.
 
-In meiner Masterarbeit an der JKU Linz, betreut von Prof. Sepp Hochreiter und Claus Hofmann, habe ich untersucht, ob ein **konditionales Diffusionsmodell** als **generativer Klassifikator** fuer OOD-Erkennung eingesetzt werden kann.
+In meiner Masterarbeit an der JKU Linz, betreut von Prof. Sepp Hochreiter und Claus Hofmann, habe ich untersucht, ob ein **konditionales Diffusionsmodell** als **generativer Klassifikator** für OOD-Erkennung eingesetzt werden kann.
 
 ## Die Grundidee
 
-Das Modell rekonstruiert ein Bild unter zwei konkurrierenden Klassenbedingungen. Wenn das Bild wirklich zur Verteilung gehoert, sollte die passende Bedingung besser rekonstruieren. Ist das Bild ungewoehnlich, werden beide Erklaerungen schlechter und die Luecke im Rekonstruktionsfehler wird zum Anomaliesignal.
+Das Modell rekonstruiert ein Bild unter zwei konkurrierenden Klassenbedingungen. Wenn das Bild wirklich zur Verteilung gehört, sollte die passende Bedingung besser rekonstruieren. Ist das Bild ungewöhnlich, werden beide Erklärungen schlechter und die Lücke im Rekonstruktionsfehler wird zum Anomaliesignal.
 
-Die Basisvariante funktionierte bereits, hatte aber ein ernstes Problem: starke Seed-Abhaengigkeit. Bei $lambda = 0.0$ lag der Mittelwert nur bei **92.52% +/- 11.07% AUROC**. Einige Seeds sahen sehr gut aus, andere brachen deutlich ein.
+Die Basisvariante funktionierte bereits, hatte aber ein ernstes Problem: starke Seed-Abhängigkeit. Bei $lambda = 0.0$ lag der Mittelwert nur bei **92.52% +/- 11.07% AUROC**. Einige Seeds sahen sehr gut aus, andere brachen deutlich ein.
 
 ## Mein Beitrag: Separation Loss
 
-Ich habe eine **class-conditional separation loss** eingefuehrt, die die konditionalen Noise-Vorhersagen waehrend des Trainings auseinanderdrueckt:
+Ich habe eine **class-conditional separation loss** eingeführt, die die konditionalen Noise-Vorhersagen während des Trainings auseinanderdrückt:
 
 \`\`\`python
 loss = L_diffusion + lambda * L_separation
 \`\`\`
 
-Wenn die beiden Erklaerungen klarer getrennt sind, wird auch die Rekonstruktionsfehler-Differenz klarer. Genau dadurch wird der OOD-Score robuster.
+Wenn die beiden Erklärungen klarer getrennt sind, wird auch die Rekonstruktionsfehler-Differenz klarer. Genau dadurch wird der OOD-Score robuster.
 
 ## Ergebnisse
 
-Die beste Einstellung war **lambda = 0.02**. Ueber drei unabhaengige Seeds ergab sich:
+Die beste Einstellung war **lambda = 0.02**. Über drei unabhängige Seeds ergab sich:
 
 - **99.03% +/- 0.07% AUROC** auf CIFAR-10
-- **+6.5 Prozentpunkte** gegenueber der Basis ohne Separation
+- **+6.5 Prozentpunkte** gegenüber der Basis ohne Separation
 - deutlich geringere Varianz
 
 Ein reproduzierbarer Seed-42 Lauf erreichte:
@@ -180,13 +180,13 @@ Ein reproduzierbarer Seed-42 Lauf erreichte:
 
 ## Warum dieses Ergebnis wichtig ist
 
-Entscheidend ist nicht nur der hoehere Score. Entscheidend ist der starke Rueckgang der Varianz. Der Schritt von 92.52% +/- 11.07% zu 99.03% +/- 0.07% trennt eine interessante Idee von einer deutlich glaubwuerdigeren Sicherheitskomponente.
+Entscheidend ist nicht nur der höhere Score. Entscheidend ist der starke Rückgang der Varianz. Der Schritt von 92.52% +/- 11.07% zu 99.03% +/- 0.07% trennt eine interessante Idee von einer deutlich glaubwürdigeren Sicherheitskomponente.
 
 ## Transfer in die Industrie
 
-Ich habe denselben Ansatz auch auf industrielle Druckqualitaetskontrolle mit dem oeffentlichen FTI_Zer0P Benchmark uebertragen. Dort erreichte die crop-basierte YOLO + CDM Basis **0.8673 +/- 0.0230 AUROC** unter strenger 5-facher Kreuzvalidierung, waehrend die Separation Loss nach Holm-Korrektur **keine** signifikante Verbesserung brachte.
+Ich habe denselben Ansatz auch auf industrielle Druckqualitätskontrolle mit dem öffentlichen FTI_Zer0P Benchmark übertragen. Dort erreichte die crop-basierte YOLO + CDM Basis **0.8673 +/- 0.0230 AUROC** unter strenger 5-facher Kreuzvalidierung, während die Separation Loss nach Holm-Korrektur **keine** signifikante Verbesserung brachte.
 
-Auch das war ein wichtiges Ergebnis. Es zeigt, dass der Mechanismus in semantischen Bildraeumen wie CIFAR-10 stark hilft, aber nicht automatisch auf kleine, texturlastige Produktionsdaten uebergeht.
+Auch das war ein wichtiges Ergebnis. Es zeigt, dass der Mechanismus in semantischen Bildräumen wie CIFAR-10 stark hilft, aber nicht automatisch auf kleine, texturlastige Produktionsdaten übergeht.
 
 ## Stack und Artefakte
 
@@ -195,7 +195,7 @@ Auch das war ein wichtiges Ergebnis. Es zeigt, dass der Mechanismus in semantisc
 - Hydra + Weights & Biases
 - JKU GPU-Infrastruktur
 
-Oeffentliche Artefakte:
+Öffentliche Artefakte:
 
 - Thesis PDF: https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf
 - Code: https://github.com/ahmed-3m/DiffusionOOD
@@ -203,73 +203,73 @@ Oeffentliche Artefakte:
         `,
       },
       fr: {
-        title: 'Comment j ai atteint 99.03% AUROC pour la detection OOD avec des modeles de diffusion conditionnels',
+        title: "Comment j'ai atteint 99.03% AUROC pour la détection OOD avec des modèles de diffusion conditionnels",
         excerpt:
-          "Mon memoire de master a JKU Linz a introduit une class-conditional separation loss dans des modeles de diffusion conditionnels utilises comme classificateurs generatifs, atteignant 99.03% +/- 0.07% AUROC sur CIFAR-10 avec un gain stable de +6.5 points face a la baseline sans separation.",
-        tags: ['Modeles de diffusion', 'Detection OOD', 'Deep Learning', 'PyTorch', 'CIFAR-10', 'Modeles generatifs'],
+          "Mon mémoire de master à JKU Linz a introduit une class-conditional separation loss dans des modèles de diffusion conditionnels utilisés comme classificateurs génératifs, atteignant 99.03% +/- 0.07% AUROC sur CIFAR-10 avec un gain stable de +6.5 points face à la baseline sans séparation.",
+        tags: ['Modèles de diffusion', 'Détection OOD', 'Deep Learning', 'PyTorch', 'CIFAR-10', 'Modèles génératifs'],
         readingTime: '14 min de lecture',
         faq: [
           {
-            question: 'Quel resultat a ete obtenu sur CIFAR-10 ?',
+            question: 'Quel résultat a été obtenu sur CIFAR-10 ?',
             answer:
-              'Le meilleur resultat moyen sur trois seeds est de 99.03% +/- 0.07% AUROC. Le seed-42 a atteint 98.98% dans le split CIFAR et a generalise zero-shot a cinq benchmarks externes.',
+              'Le meilleur résultat moyen sur trois seeds est de 99.03% +/- 0.07% AUROC. Le seed-42 a atteint 98.98% dans le split CIFAR et a généralisé zero-shot à cinq benchmarks externes.',
           },
           {
-            question: 'Qu est-ce que la separation loss ?',
+            question: "Qu'est-ce que la separation loss ?",
             answer:
-              'C est un terme d entrainement supplementaire qui eloigne les deux predictions conditionnelles de bruit pour rendre le score base sur l erreur de reconstruction plus discriminant et plus stable.',
+              "C'est un terme d'entraînement supplémentaire qui éloigne les deux prédictions conditionnelles de bruit pour rendre le score basé sur l'erreur de reconstruction plus discriminant et plus stable.",
           },
           {
-            question: 'Pourquoi ce resultat compte-t-il ?',
+            question: 'Pourquoi ce résultat compte-t-il ?',
             answer:
-              'Parce qu il transforme une methode tres sensible au seed en detecteur beaucoup plus fiable, ce qui est crucial si l on veut utiliser la methode comme vraie couche de securite.',
+              "Parce qu'il transforme une méthode très sensible au seed en détecteur beaucoup plus fiable, ce qui est crucial si l'on veut utiliser la méthode comme vraie couche de sécurité.",
           },
         ],
         content: `
-## Le probleme
+## Le problème
 
-La detection out-of-distribution est la capacite d un systeme a dire : "cette entree ne ressemble pas a ce que j ai vu pendant l entrainement". Dans un systeme IA reeel, cette capacite est une propriete de surete, pas un detail annexe.
+La détection out-of-distribution est la capacité d'un système à dire : "cette entrée ne ressemble pas à ce que j'ai vu pendant l'entraînement". Dans un système IA réel, cette capacité est une propriété de sûreté, pas un détail annexe.
 
-Dans mon memoire de master a JKU Linz, sous la supervision du Prof. Sepp Hochreiter et de Claus Hofmann, j ai etudie si un **modele de diffusion conditionnel** pouvait jouer le role d un **classificateur generatif** pour la detection OOD.
+Dans mon mémoire de master à JKU Linz, sous la supervision du Prof. Sepp Hochreiter et de Claus Hofmann, j'ai étudié si un **modèle de diffusion conditionnel** pouvait jouer le rôle d'un **classificateur génératif** pour la détection OOD.
 
-## L idee centrale
+## L'idée centrale
 
-Le modele reconstruit une image sous deux conditions de classe concurrentes. Si l image est normale, la bonne condition doit mieux la reconstruire. Si l image est inhabituelle, les deux explications se degradent et l ecart entre les erreurs de reconstruction devient le signal d anomalie.
+Le modèle reconstruit une image sous deux conditions de classe concurrentes. Si l'image est normale, la bonne condition doit mieux la reconstruire. Si l'image est inhabituelle, les deux explications se dégradent et l'écart entre les erreurs de reconstruction devient le signal d'anomalie.
 
-La baseline fonctionnait deja, mais avec une forte sensibilite au seed. A $lambda = 0.0$, la moyenne n etait que de **92.52% +/- 11.07% AUROC**.
+La baseline fonctionnait déjà, mais avec une forte sensibilité au seed. À $lambda = 0.0$, la moyenne n'était que de **92.52% +/- 11.07% AUROC**.
 
 ## Ma contribution : la separation loss
 
-J ai introduit une **class-conditional separation loss** qui pousse les predictions conditionnelles de bruit a s eloigner :
+J'ai introduit une **class-conditional separation loss** qui pousse les prédictions conditionnelles de bruit à s'éloigner :
 
 \`\`\`python
 loss = L_diffusion + lambda * L_separation
 \`\`\`
 
-Le principe est simple : des explications mieux separees produisent un ecart d erreur de reconstruction plus lisible, donc un score OOD plus robuste.
+Le principe est simple : des explications mieux séparées produisent un écart d'erreur de reconstruction plus lisible, donc un score OOD plus robuste.
 
-## Resultats
+## Résultats
 
-Le meilleur reglage etait **lambda = 0.02**. Sur trois seeds independants :
+Le meilleur réglage était **lambda = 0.02**. Sur trois seeds indépendants :
 
 - **99.03% +/- 0.07% AUROC** sur CIFAR-10
-- **+6.5 points** face a la baseline sans separation
-- une variance tres fortement reduite
+- **+6.5 points** face à la baseline sans séparation
+- une variance très fortement réduite
 
 Le seed-42 a atteint :
 
 - **98.98% AUROC** dans le cadre within-CIFAR
-- **90.50%-96.97%** de generalisation zero-shot sur CIFAR-100, Places365, FashionMNIST, Textures et SVHN
+- **90.50%-96.97%** de généralisation zero-shot sur CIFAR-100, Places365, FashionMNIST, Textures et SVHN
 
-## Pourquoi ce resultat est fort
+## Pourquoi ce résultat est fort
 
-Le point cle n est pas seulement l augmentation du score. C est surtout l effondrement de la variance. Passer de 92.52% +/- 11.07% a 99.03% +/- 0.07% signifie passer d une methode fragile a une approche bien plus credible pour une utilisation reelle.
+Le point clé n'est pas seulement l'augmentation du score. C'est surtout l'effondrement de la variance. Passer de 92.52% +/- 11.07% à 99.03% +/- 0.07% signifie passer d'une méthode fragile à une approche bien plus crédible pour une utilisation réelle.
 
-## Transfert vers l industrie
+## Transfert vers l'industrie
 
-J ai ensuite applique la meme idee a l inspection de qualite industrielle sur le benchmark public FTI_Zer0P. La baseline YOLO + CDM sur crops a obtenu **0.8673 +/- 0.0230 AUROC** en validation croisee stricte a 5 plis, tandis que la separation loss n a pas apporte d amelioration statistiquement significative apres correction de Holm.
+J'ai ensuite appliqué la même idée à l'inspection de qualité industrielle sur le benchmark public FTI_Zer0P. La baseline YOLO + CDM sur crops a obtenu **0.8673 +/- 0.0230 AUROC** en validation croisée stricte à 5 plis, tandis que la separation loss n'a pas apporté d'amélioration statistiquement significative après correction de Holm.
 
-Ce resultat est important lui aussi : l idee transfere tres bien dans un espace semantique comme CIFAR-10, mais pas automatiquement vers des textures industrielles fines et peu abondantes.
+Ce résultat est important lui aussi : l'idée transfère très bien dans un espace sémantique comme CIFAR-10, mais pas automatiquement vers des textures industrielles fines et peu abondantes.
 
 ## Stack et artefacts
 
@@ -280,48 +280,48 @@ Ce resultat est important lui aussi : l idee transfere tres bien dans un espace 
 
 Artefacts publics :
 
-- Memoire PDF : https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf
+- Mémoire PDF : https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf
 - Code : https://github.com/ahmed-3m/DiffusionOOD
 - Transfert industriel : https://github.com/ahmed-3m/InkjetOOD
         `,
       },
       es: {
-        title: 'Como alcance 99.03% AUROC en deteccion OOD con modelos de difusion condicional',
+        title: 'Cómo alcancé 99.03% AUROC en detección OOD con modelos de difusión condicional',
         excerpt:
-          'Mi tesis de master en JKU Linz introdujo una class-conditional separation loss en modelos de difusion condicional usados como clasificadores generativos, alcanzando 99.03% +/- 0.07% AUROC en CIFAR-10 y una mejora estable de +6.5 puntos sobre la base sin separacion.',
-        tags: ['Modelos de difusion', 'Deteccion OOD', 'Deep Learning', 'PyTorch', 'CIFAR-10', 'Modelos generativos'],
+          'Mi tesis de máster en JKU Linz introdujo una class-conditional separation loss en modelos de difusión condicional usados como clasificadores generativos, alcanzando 99.03% +/- 0.07% AUROC en CIFAR-10 y una mejora estable de +6.5 puntos sobre la base sin separación.',
+        tags: ['Modelos de difusión', 'Detección OOD', 'Deep Learning', 'PyTorch', 'CIFAR-10', 'Modelos generativos'],
         readingTime: '14 min de lectura',
         faq: [
           {
-            question: 'Que resultado se logro en CIFAR-10?',
+            question: '¿Qué resultado se logró en CIFAR-10?',
             answer:
-              'El mejor promedio sobre tres semillas fue 99.03% +/- 0.07% AUROC. La seed-42 logro 98.98% dentro de CIFAR y generalizo zero-shot a cinco benchmarks externos.',
+              'El mejor promedio sobre tres semillas fue 99.03% +/- 0.07% AUROC. La seed-42 logró 98.98% dentro de CIFAR y generalizó zero-shot a cinco benchmarks externos.',
           },
           {
-            question: 'Que es la separation loss?',
+            question: '¿Qué es la separation loss?',
             answer:
-              'Es un termino extra de entrenamiento que separa las dos predicciones condicionales de ruido para que la diferencia de error de reconstruccion sea mas clara y estable.',
+              'Es un término extra de entrenamiento que separa las dos predicciones condicionales de ruido para que la diferencia de error de reconstrucción sea más clara y estable.',
           },
           {
-            question: 'Por que importa este resultado?',
+            question: '¿Por qué importa este resultado?',
             answer:
-              'Porque convierte un detector generativo muy sensible a la semilla en uno mucho mas confiable, algo clave si se quiere usar como capa real de seguridad.',
+              'Porque convierte un detector generativo muy sensible a la semilla en uno mucho más confiable, algo clave si se quiere usar como capa real de seguridad.',
           },
         ],
         content: `
 ## El problema
 
-La deteccion out-of-distribution es la capacidad de un sistema para decir: "esta entrada no pertenece a lo que vi durante el entrenamiento". En un sistema de IA real, eso es una propiedad de seguridad.
+La detección out-of-distribution es la capacidad de un sistema para decir: "esta entrada no pertenece a lo que vi durante el entrenamiento". En un sistema de IA real, eso es una propiedad de seguridad.
 
-En mi tesis de master en JKU Linz, bajo la supervision del Prof. Sepp Hochreiter y Claus Hofmann, estudie si un **modelo de difusion condicional** podia usarse como **clasificador generativo** para deteccion OOD.
+En mi tesis de máster en JKU Linz, bajo la supervisión del Prof. Sepp Hochreiter y Claus Hofmann, estudié si un **modelo de difusión condicional** podía usarse como **clasificador generativo** para detección OOD.
 
 ## La idea central
 
-El modelo reconstruye una imagen bajo dos condiciones de clase rivales. Si la imagen es normal, la condicion correcta debe reconstruirla mejor. Si la imagen es rara, ambas explicaciones fallan y la brecha entre errores de reconstruccion se vuelve la senal de anomalia.
+El modelo reconstruye una imagen bajo dos condiciones de clase rivales. Si la imagen es normal, la condición correcta debe reconstruirla mejor. Si la imagen es rara, ambas explicaciones fallan y la brecha entre errores de reconstrucción se vuelve la señal de anomalía.
 
-La version base ya funcionaba, pero tenia un problema serio: mucha sensibilidad a la semilla. Con $lambda = 0.0$, el promedio fue **92.52% +/- 11.07% AUROC**.
+La versión base ya funcionaba, pero tenía un problema serio: mucha sensibilidad a la semilla. Con $lambda = 0.0$, el promedio fue **92.52% +/- 11.07% AUROC**.
 
-## Mi contribucion: separation loss
+## Mi contribución: separation loss
 
 Introduje una **class-conditional separation loss** que empuja a separar las predicciones condicionales de ruido:
 
@@ -329,30 +329,30 @@ Introduje una **class-conditional separation loss** que empuja a separar las pre
 loss = L_diffusion + lambda * L_separation
 \`\`\`
 
-Si las dos explicaciones son mas distintas, la diferencia de error de reconstruccion es mas clara y el puntaje OOD se vuelve mas robusto.
+Si las dos explicaciones son más distintas, la diferencia de error de reconstrucción es más clara y el puntaje OOD se vuelve más robusto.
 
 ## Resultados
 
-La mejor configuracion fue **lambda = 0.02**. En tres semillas independientes:
+La mejor configuración fue **lambda = 0.02**. En tres semillas independientes:
 
 - **99.03% +/- 0.07% AUROC** en CIFAR-10
-- **+6.5 puntos porcentuales** sobre la base sin separacion
+- **+6.5 puntos porcentuales** sobre la base sin separación
 - una varianza mucho menor
 
-La seed-42 logro:
+La seed-42 logró:
 
 - **98.98% AUROC** en el escenario within-CIFAR
-- **90.50%-96.97%** de generalizacion zero-shot en CIFAR-100, Places365, FashionMNIST, Textures y SVHN
+- **90.50%-96.97%** de generalización zero-shot en CIFAR-100, Places365, FashionMNIST, Textures y SVHN
 
-## Por que este resultado es importante
+## Por qué este resultado es importante
 
-Lo importante no es solo subir el puntaje. Lo importante es reducir drasticamente la varianza. Pasar de 92.52% +/- 11.07% a 99.03% +/- 0.07% significa pasar de una heuristica fragil a un componente de seguridad mucho mas creible.
+Lo importante no es solo subir el puntaje. Lo importante es reducir drásticamente la varianza. Pasar de 92.52% +/- 11.07% a 99.03% +/- 0.07% significa pasar de una heurística frágil a un componente de seguridad mucho más creíble.
 
 ## Transferencia industrial
 
-Tambien aplique la misma idea al control de calidad industrial en el benchmark publico FTI_Zer0P. Alli, la base YOLO + CDM por crops obtuvo **0.8673 +/- 0.0230 AUROC** con validacion cruzada estricta de 5 folds, mientras que la separation loss no mejoro de forma significativa tras la correccion de Holm.
+También apliqué la misma idea al control de calidad industrial en el benchmark público FTI_Zer0P. Allí, la base YOLO + CDM por crops obtuvo **0.8673 +/- 0.0230 AUROC** con validación cruzada estricta de 5 folds, mientras que la separation loss no mejoró de forma significativa tras la corrección de Holm.
 
-Ese resultado tambien fue valioso. Mostro que el mecanismo ayuda mucho en espacios semanticos como CIFAR-10, pero no se transfiere automaticamente a texturas industriales pequenas y complejas.
+Ese resultado también fue valioso. Mostró que el mecanismo ayuda mucho en espacios semánticos como CIFAR-10, pero no se transfiere automáticamente a texturas industriales pequeñas y complejas.
 
 ## Stack y artefactos
 
@@ -361,7 +361,7 @@ Ese resultado tambien fue valioso. Mostro que el mecanismo ayuda mucho en espaci
 - Hydra + Weights & Biases
 - Infraestructura GPU de JKU
 
-Artefactos publicos:
+Artefactos públicos:
 
 - PDF de tesis: https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf
 - Codigo: https://github.com/ahmed-3m/DiffusionOOD
@@ -543,44 +543,44 @@ Artifacts:
         `,
       },
       de: {
-        title: 'Diffusionsmodelle fuer industrielle Defekterkennung bei PROFACTOR GmbH',
+        title: 'Diffusionsmodelle für industrielle Defekterkennung bei PROFACTOR GmbH',
         excerpt:
-          'Wie ich eine oeffentliche YOLO + Conditional-Diffusion-Pipeline auf dem FTI_Zer0P Benchmark unter strenger 5-facher Kreuzvalidierung bewertet habe und eine Baseline von 0.8673 +/- 0.0230 AUROC erreicht wurde.',
-        tags: ['Diffusionsmodelle', 'Anomalieerkennung', 'Industrielle KI', 'YOLOv8', 'Qualitaetskontrolle'],
+          'Wie ich eine öffentliche YOLO + Conditional-Diffusion-Pipeline auf dem FTI_Zer0P Benchmark unter strenger 5-facher Kreuzvalidierung bewertet habe und eine Baseline von 0.8673 +/- 0.0230 AUROC erreicht wurde.',
+        tags: ['Diffusionsmodelle', 'Anomalieerkennung', 'Industrielle KI', 'YOLOv8', 'Qualitätskontrolle'],
         readingTime: '11 Min. Lesezeit',
         faq: [
           {
             question: 'Welches Ergebnis erreichte das industrielle System?',
             answer:
-              'Auf dem oeffentlichen Benchmark lag die strenge 5-fold-CV Baseline bei 0.8673 +/- 0.0230 AUROC. Im produktionsnahen Betrieb erreichte das Entscheidungssetup 98.4% Defektklassifikationsgenauigkeit.',
+              'Auf dem öffentlichen Benchmark lag die strenge 5-fold-CV Baseline bei 0.8673 +/- 0.0230 AUROC. Im produktionsnahen Betrieb erreichte das Entscheidungssetup 98.4% Defektklassifikationsgenauigkeit.',
           },
           {
             question: 'Wie sah die Architektur aus?',
             answer:
-              'YOLOv8 wurde als Feature-Backbone genutzt und ein konditionales Diffusionsmodell uebernahm die generative Klassifikation. Multi-Head Conditioning modellierte die verschiedenen Merkmalstypen.',
+              'YOLOv8 wurde als Feature-Backbone genutzt und ein konditionales Diffusionsmodell übernahm die generative Klassifikation. Multi-Head Conditioning modellierte die verschiedenen Merkmalstypen.',
           },
           {
             question: 'Half die Separation Loss auch hier?',
             answer:
-              'Nicht signifikant. Genau das war eine wichtige, ehrliche Erkenntnis: Workflow und Methodik uebertrugen sich, aber nicht jeder Gewinn uebertrug sich auf diesen kleinen industriellen Datensatz.',
+              'Nicht signifikant. Genau das war eine wichtige, ehrliche Erkenntnis: Workflow und Methodik übertrugen sich, aber nicht jeder Gewinn übertrug sich auf diesen kleinen industriellen Datensatz.',
           },
         ],
         content: `
 ## Industrieller Kontext
 
-Bei PROFACTOR GmbH in Oesterreich arbeitete ich an Machine Vision fuer inkjet-bedruckte Bauteile. Das Ziel war klar: Defekte erkennen, bevor fehlerhafte Teile die Linie verlassen.
+Bei PROFACTOR GmbH in Österreich arbeitete ich an Machine Vision für inkjet-bedruckte Bauteile. Das Ziel war klar: Defekte erkennen, bevor fehlerhafte Teile die Linie verlassen.
 
 Schwierig war nicht nur die Modellleistung. Der Datensatz war klein, die Defekte waren heterogen, und die Auswertung musste statistisch sauber sein.
 
 ## Die Pipeline
 
-Die Loesung nutzte eine **YOLO + Conditional-Diffusion-Model** Pipeline:
+Die Lösung nutzte eine **YOLO + Conditional-Diffusion-Model** Pipeline:
 
 1. YOLOv8 extrahierte strukturierte visuelle Features.
-2. Ein konditionales Diffusionsmodell lernte fuer jeden Merkmalstyp, wie normale Feature-Crops aussehen.
+2. Ein konditionales Diffusionsmodell lernte für jeden Merkmalstyp, wie normale Feature-Crops aussehen.
 3. Der rekonstruktionsbasierte Score wurde als Anomaliesignal verwendet.
 
-Damit wurde derselbe generative Klassifikationsgedanke wie in meiner Thesis in eine viel staerker eingeschraenkte industrielle Umgebung uebertragen.
+Damit wurde derselbe generative Klassifikationsgedanke wie in meiner Thesis in eine viel stärker eingeschränkte industrielle Umgebung übertragen.
 
 ## Warum das Setting schwierig war
 
@@ -589,11 +589,11 @@ Damit wurde derselbe generative Klassifikationsgedanke wie in meiner Thesis in e
 - unausgeglichene Defektverteilungen
 - Kreuzvalidierung war Pflicht
 
-Darum waere ein einzelner guter Lauf irrefuehrend gewesen. Ich habe die Pipeline auf dem oeffentlichen **FTI_Zer0P** Benchmark mit strenger **5-facher Kreuzvalidierung** bewertet.
+Darum wäre ein einzelner guter Lauf irreführend gewesen. Ich habe die Pipeline auf dem öffentlichen **FTI_Zer0P** Benchmark mit strenger **5-facher Kreuzvalidierung** bewertet.
 
 ## Ergebnisse
 
-Die oeffentliche crop-basierte Baseline bei $lambda = 0.0$ erreichte:
+Die öffentliche crop-basierte Baseline bei $lambda = 0.0$ erreichte:
 
 - **0.8673 +/- 0.0230 AUROC**
 
@@ -603,20 +603,20 @@ Im produktionsnahen Schwellwertbetrieb erreichte das System:
 
 Diese Werte beschreiben zwei verschiedene Ebenen:
 
-- AUROC misst die threshold-unabhaengige Rangqualitaet
+- AUROC misst die threshold-unabhängige Rangqualität
 - 98.4% beschreibt eine betriebliche Entscheidungsschwelle
 
-## Was ich ueber Transfer gelernt habe
+## Was ich über Transfer gelernt habe
 
-Eine der wichtigsten Erkenntnisse war, wo die Separation Loss aufhoert zu helfen. Auf CIFAR-10 war sie ein grosser Gewinn. Auf diesem industriellen Benchmark blieben die nicht-null Einstellungen innerhalb der Fold-Variation und ueberstanden keine Holm-korrigierte Signifikanzpruefung.
+Eine der wichtigsten Erkenntnisse war, wo die Separation Loss aufhört zu helfen. Auf CIFAR-10 war sie ein großer Gewinn. Auf diesem industriellen Benchmark blieben die nicht-null Einstellungen innerhalb der Fold-Variation und überstanden keine Holm-korrigierte Signifikanzprüfung.
 
-Das ist kein negatives Ergebnis, sondern ein praeziseres Ergebnis: Einige Verbesserungen sind stark domaenenabhaengig.
+Das ist kein negatives Ergebnis, sondern ein präziseres Ergebnis: Einige Verbesserungen sind stark domänenabhängig.
 
 ## Engineering-Erkenntnisse
 
 - industrielle ML-Projekte brauchen Auswertungsdisziplin
-- Heterogenitaet der Merkmalstypen kann wichtiger sein als Architekturdetails
-- oeffentliche Artefakte machen Resultate pruefbar
+- Heterogenität der Merkmalstypen kann wichtiger sein als Architekturdetails
+- öffentliche Artefakte machen Resultate prüfbar
 
 Artefakte:
 
@@ -626,80 +626,80 @@ Artefakte:
         `,
       },
       fr: {
-        title: 'Modeles de diffusion pour la detection de defauts industriels chez PROFACTOR GmbH',
+        title: 'Modèles de diffusion pour la détection de défauts industriels chez PROFACTOR GmbH',
         excerpt:
-          'Comment j ai evalue une pipeline publique YOLO + diffusion conditionnelle sur le benchmark FTI_Zer0P avec validation croisee stricte a 5 plis, obtenant une baseline de 0.8673 +/- 0.0230 AUROC.',
-        tags: ['Modeles de diffusion', 'Detection d anomalie', 'IA industrielle', 'YOLOv8', 'Controle qualite'],
+          "Comment j'ai évalué une pipeline publique YOLO + diffusion conditionnelle sur le benchmark FTI_Zer0P avec validation croisée stricte à 5 plis, obtenant une baseline de 0.8673 +/- 0.0230 AUROC.",
+        tags: ['Modèles de diffusion', "Détection d'anomalie", 'IA industrielle', 'YOLOv8', 'Contrôle qualité'],
         readingTime: '11 min de lecture',
         faq: [
           {
-            question: 'Quel resultat le systeme industriel a-t-il obtenu ?',
+            question: 'Quel résultat le système industriel a-t-il obtenu ?',
             answer:
-              'Sur le benchmark public, la baseline en validation croisee stricte a 5 plis a atteint 0.8673 +/- 0.0230 AUROC. En exploitation, le pipeline de decision a atteint 98.4% de precision de classification des defauts.',
+              'Sur le benchmark public, la baseline en validation croisée stricte à 5 plis a atteint 0.8673 +/- 0.0230 AUROC. En exploitation, le pipeline de décision a atteint 98.4% de précision de classification des défauts.',
           },
           {
-            question: 'Quelle etait l architecture ?',
+            question: "Quelle était l'architecture ?",
             answer:
-              'YOLOv8 servait de backbone de features et un modele de diffusion conditionnel jouait le role de classificateur generatif. Le multi-head conditioning gerait les differents types de motifs inkjet.',
+              'YOLOv8 servait de backbone de features et un modèle de diffusion conditionnel jouait le rôle de classificateur génératif. Le multi-head conditioning gérait les différents types de motifs inkjet.',
           },
           {
-            question: 'La separation loss a-t-elle aide ici aussi ?',
+            question: 'La separation loss a-t-elle aidé ici aussi ?',
             answer:
-              'Pas de facon significative. C est justement une conclusion utile et honnete : la methode se transfere, mais pas tous les gains.',
+              "Pas de façon significative. C'est justement une conclusion utile et honnête : la méthode se transfère, mais pas tous les gains.",
           },
         ],
         content: `
 ## Contexte industriel
 
-Chez PROFACTOR GmbH en Autriche, j ai travaille sur la vision industrielle pour des composants de construction imprimes a jet d encre. L objectif etait clair : detecter les defauts avant qu une piece mauvaise quitte la ligne.
+Chez PROFACTOR GmbH en Autriche, j'ai travaillé sur la vision industrielle pour des composants de construction imprimés à jet d'encre. L'objectif était clair : détecter les défauts avant qu'une pièce mauvaise quitte la ligne.
 
-La difficulte ne venait pas seulement du modele. Le jeu de donnees etait petit, les defauts etaient heterogenes, et l evaluation devait etre rigoureuse.
+La difficulté ne venait pas seulement du modèle. Le jeu de données était petit, les défauts étaient hétérogènes, et l'évaluation devait être rigoureuse.
 
 ## La pipeline
 
-La solution utilisait une pipeline **YOLO + modele de diffusion conditionnel** :
+La solution utilisait une pipeline **YOLO + modèle de diffusion conditionnel** :
 
-1. YOLOv8 extrayait des features visuelles structurees.
-2. Le modele de diffusion apprenait a representer des crops normaux pour chaque type de feature.
-3. Le score base sur la reconstruction devenait le signal d anomalie.
+1. YOLOv8 extrayait des features visuelles structurées.
+2. Le modèle de diffusion apprenait à représenter des crops normaux pour chaque type de feature.
+3. Le score basé sur la reconstruction devenait le signal d'anomalie.
 
-On retrouve ici la meme logique de classification generative que dans mon memoire, mais dans un contexte industriel beaucoup plus contraint.
+On retrouve ici la même logique de classification générative que dans mon mémoire, mais dans un contexte industriel beaucoup plus contraint.
 
-## Pourquoi le probleme etait difficile
+## Pourquoi le problème était difficile
 
-- peu de donnees
-- forte heterogeneite selon les types de feature
-- repartition des defauts desequilibree
-- validation croisee indispensable
+- peu de données
+- forte hétérogénéité selon les types de feature
+- répartition des défauts déséquilibrée
+- validation croisée indispensable
 
-Un resultat unique aurait donc ete trompeur. J ai evalue la pipeline sur le benchmark public **FTI_Zer0P** avec une **validation croisee stricte a 5 plis**.
+Un résultat unique aurait donc été trompeur. J'ai évalué la pipeline sur le benchmark public **FTI_Zer0P** avec une **validation croisée stricte à 5 plis**.
 
-## Resultats
+## Résultats
 
-La baseline publique par crops a $lambda = 0.0$ a atteint :
+La baseline publique par crops à $lambda = 0.0$ a atteint :
 
 - **0.8673 +/- 0.0230 AUROC**
 
-En mode decision en production, le systeme a atteint :
+En mode décision en production, le système a atteint :
 
-- **98.4% de precision de classification des defauts**
+- **98.4% de précision de classification des défauts**
 
-Ces deux nombres decrivent deux choses differentes :
+Ces deux nombres décrivent deux choses différentes :
 
-- AUROC mesure la qualite de classement independamment du seuil
-- 98.4% mesure une decision operationnelle avec seuil
+- AUROC mesure la qualité de classement indépendamment du seuil
+- 98.4% mesure une décision opérationnelle avec seuil
 
-## Ce que j ai appris sur le transfert
+## Ce que j'ai appris sur le transfert
 
-Le point le plus utile a ete de voir ou la separation loss cessait d aider. Sur CIFAR-10, elle etait tres forte. Sur ce benchmark industriel, les reglages non nuls restaient dans la variation des folds et n etaient pas significatifs apres correction de Holm.
+Le point le plus utile a été de voir où la separation loss cessait d'aider. Sur CIFAR-10, elle était très forte. Sur ce benchmark industriel, les réglages non nuls restaient dans la variation des folds et n'étaient pas significatifs après correction de Holm.
 
-Ce n est pas un mauvais resultat. C est un resultat plus precis : certains gains sont dependants du domaine.
+Ce n'est pas un mauvais résultat. C'est un résultat plus précis : certains gains sont dépendants du domaine.
 
-## Lecons d ingenierie
+## Leçons d'ingénierie
 
-- l IA industrielle demande surtout de la rigueur d evaluation
-- l heterogeneite des features peut compter davantage que l architecture
-- les artefacts publics rendent un resultat verifiable
+- l'IA industrielle demande surtout de la rigueur d'évaluation
+- l'hétérogénéité des features peut compter davantage que l'architecture
+- les artefacts publics rendent un résultat vérifiable
 
 Artefacts :
 
@@ -709,80 +709,80 @@ Artefacts :
         `,
       },
       es: {
-        title: 'Modelos de difusion para deteccion de defectos industriales en PROFACTOR GmbH',
+        title: 'Modelos de difusión para detección de defectos industriales en PROFACTOR GmbH',
         excerpt:
-          'Como evalua una pipeline publica YOLO + difusion condicional en el benchmark FTI_Zer0P con validacion cruzada estricta de 5 folds, logrando una base de 0.8673 +/- 0.0230 AUROC.',
-        tags: ['Modelos de difusion', 'Deteccion de anomalias', 'IA industrial', 'YOLOv8', 'Control de calidad'],
+          'Cómo evalué una pipeline pública YOLO + difusión condicional en el benchmark FTI_Zer0P con validación cruzada estricta de 5 folds, logrando una base de 0.8673 +/- 0.0230 AUROC.',
+        tags: ['Modelos de difusión', 'Detección de anomalías', 'IA industrial', 'YOLOv8', 'Control de calidad'],
         readingTime: '11 min de lectura',
         faq: [
           {
-            question: 'Que resultado logro el sistema industrial?',
+            question: '¿Qué resultado logró el sistema industrial?',
             answer:
-              'En el benchmark publico, la base con validacion cruzada estricta de 5 folds alcanzo 0.8673 +/- 0.0230 AUROC. En produccion, el pipeline de decision alcanzo 98.4% de precision de clasificacion de defectos.',
+              'En el benchmark público, la base con validación cruzada estricta de 5 folds alcanzó 0.8673 +/- 0.0230 AUROC. En producción, el pipeline de decisión alcanzó 98.4% de precisión de clasificación de defectos.',
           },
           {
-            question: 'Cual era la arquitectura?',
+            question: '¿Cuál era la arquitectura?',
             answer:
-              'YOLOv8 se uso como backbone de features y un modelo de difusion condicional actuo como clasificador generativo. Multi-head conditioning manejo los distintos tipos de features de inkjet.',
+              'YOLOv8 se usó como backbone de features y un modelo de difusión condicional actuó como clasificador generativo. Multi-head conditioning manejó los distintos tipos de features de inkjet.',
           },
           {
-            question: 'La separation loss tambien ayudo aqui?',
+            question: '¿La separation loss también ayudó aquí?',
             answer:
-              'No de forma significativa. Esa fue una conclusion muy util: el metodo se transfirio, pero no todos los beneficios pasaron a este pequeno dataset industrial.',
+              'No de forma significativa. Esa fue una conclusión muy útil: el método se transfirió, pero no todos los beneficios pasaron a este pequeño dataset industrial.',
           },
         ],
         content: `
 ## Contexto industrial
 
-En PROFACTOR GmbH en Austria trabaje en vision por computador para componentes de construccion impresos por inkjet. El objetivo era detectar defectos antes de que una pieza mala saliera de la linea.
+En PROFACTOR GmbH en Austria trabajé en visión por computador para componentes de construcción impresos por inkjet. El objetivo era detectar defectos antes de que una pieza mala saliera de la línea.
 
-La dificultad no era solo el modelo. El dataset era pequeno, los defectos eran heterogeneos y la evaluacion debia ser rigurosa.
+La dificultad no era solo el modelo. El dataset era pequeño, los defectos eran heterogéneos y la evaluación debía ser rigurosa.
 
 ## La pipeline
 
-La solucion uso una pipeline **YOLO + modelo de difusion condicional**:
+La solución usó una pipeline **YOLO + modelo de difusión condicional**:
 
-1. YOLOv8 extraia features visuales estructuradas.
-2. El modelo de difusion aprendia como debian verse los crops normales de cada tipo de feature.
-3. El score basado en reconstruccion se convertia en la senal de anomalia.
+1. YOLOv8 extraía features visuales estructuradas.
+2. El modelo de difusión aprendía cómo debían verse los crops normales de cada tipo de feature.
+3. El score basado en reconstrucción se convertía en la señal de anomalía.
 
-Es la misma idea de clasificacion generativa de mi tesis, pero dentro de un entorno industrial mucho mas restringido.
+Es la misma idea de clasificación generativa de mi tesis, pero dentro de un entorno industrial mucho más restringido.
 
-## Por que el problema era dificil
+## Por qué el problema era difícil
 
 - pocos datos
 - mucha heterogeneidad entre tipos de feature
-- distribucion de defectos desequilibrada
-- validacion cruzada obligatoria
+- distribución de defectos desequilibrada
+- validación cruzada obligatoria
 
-Por eso un solo run llamativo habria sido enganoso. Evalua la pipeline sobre el benchmark publico **FTI_Zer0P** con **validacion cruzada estricta de 5 folds**.
+Por eso un solo run llamativo habría sido engañoso. Evalué la pipeline sobre el benchmark público **FTI_Zer0P** con **validación cruzada estricta de 5 folds**.
 
 ## Resultados
 
-La base publica por crops con $lambda = 0.0$ alcanzo:
+La base pública por crops con $lambda = 0.0$ alcanzó:
 
 - **0.8673 +/- 0.0230 AUROC**
 
-En el modo de decision de produccion, el sistema alcanzo:
+En el modo de decisión de producción, el sistema alcanzó:
 
-- **98.4% de precision de clasificacion de defectos**
+- **98.4% de precisión de clasificación de defectos**
 
-Estos dos numeros describen dos cosas distintas:
+Estos dos números describen dos cosas distintas:
 
 - AUROC mide calidad de ranking sin depender del umbral
-- 98.4% describe una decision operativa con umbral
+- 98.4% describe una decisión operativa con umbral
 
-## Lo que aprendi sobre transferencia
+## Lo que aprendí sobre transferencia
 
-Lo mas valioso fue ver donde la separation loss dejaba de ayudar. En CIFAR-10 fue una gran mejora. En este benchmark industrial, las configuraciones no nulas quedaron dentro de la variacion entre folds y no fueron significativas tras la correccion de Holm.
+Lo más valioso fue ver dónde la separation loss dejaba de ayudar. En CIFAR-10 fue una gran mejora. En este benchmark industrial, las configuraciones no nulas quedaron dentro de la variación entre folds y no fueron significativas tras la corrección de Holm.
 
-Eso no debilita la idea. La hace mas precisa: algunas mejoras dependen del dominio.
+Eso no debilita la idea. La hace más precisa: algunas mejoras dependen del dominio.
 
-## Lecciones de ingenieria
+## Lecciones de ingeniería
 
-- el ML industrial necesita disciplina de evaluacion
-- la heterogeneidad de los tipos de feature puede importar mas que la arquitectura
-- los artefactos publicos hacen que el resultado sea verificable
+- el ML industrial necesita disciplina de evaluación
+- la heterogeneidad de los tipos de feature puede importar más que la arquitectura
+- los artefactos públicos hacen que el resultado sea verificable
 
 Artefactos:
 
@@ -957,9 +957,9 @@ The final system had to run within edge constraints. Quantization helped latency
         `,
       },
       de: {
-        title: 'YOLOv8 fuer industrielle Qualitaetskontrolle: Entscheidungen, die wirklich etwas veraendert haben',
+        title: 'YOLOv8 für industrielle Qualitätskontrolle: Entscheidungen, die wirklich etwas verändert haben',
         excerpt:
-          'Ein praxisnahes Post-Mortem ueber Architektur, Datenstrategie und Deployment-Entscheidungen in industrieller Inkjet-Qualitaetskontrolle statt eines weiteren allgemeinen YOLO-Tutorials.',
+          'Ein praxisnahes Post-Mortem über Architektur, Datenstrategie und Deployment-Entscheidungen in industrieller Inkjet-Qualitätskontrolle statt eines weiteren allgemeinen YOLO-Tutorials.',
         tags: ['Computer Vision', 'YOLOv8', 'Industrielle KI', 'PyTorch', 'Production ML'],
         readingTime: '10 Min. Lesezeit',
         faq: [
@@ -982,17 +982,17 @@ The final system had to run within edge constraints. Quantization helped latency
         content: `
 ## Kein Tutorial-Projekt
 
-Die meisten YOLO-Beitraege enden bei "auf grossem Datensatz trainieren und mAP berichten". Industrielle Qualitaetskontrolle funktioniert anders: weniger Bilder, schwierigere Defekte, engere Latenzbudgets und echte Kosten fuer Fehlalarme und uebersehene Fehler.
+Die meisten YOLO-Beiträge enden bei "auf großem Datensatz trainieren und mAP berichten". Industrielle Qualitätskontrolle funktioniert anders: weniger Bilder, schwierigere Defekte, engere Latenzbudgets und echte Kosten für Fehlalarme und übersehene Fehler.
 
 ## Die erste wichtige Entscheidung
 
-Ich habe YOLOv8 **nicht** primaer als Detektor verwendet, sondern als **Feature-Extractor**. Das Druckqualitaetsproblem bestand aus Merkmalen wie Punkten, Abstaenden, Kanten und Winkeln. Diese lassen sich nicht immer sinnvoll als klassische Bounding-Box-Objekte behandeln.
+Ich habe YOLOv8 **nicht** primär als Detektor verwendet, sondern als **Feature-Extractor**. Das Druckqualitätsproblem bestand aus Merkmalen wie Punkten, Abständen, Kanten und Winkeln. Diese lassen sich nicht immer sinnvoll als klassische Bounding-Box-Objekte behandeln.
 
 Die Backbone-Features gaben dem nachgelagerten Anomaliedetektor deutlich mehr geometrische Information.
 
 ## Datenarbeit war wichtiger als Hype
 
-Bei einem kleinen Datensatz kamen die groessten Gewinne aus Disziplin:
+Bei einem kleinen Datensatz kamen die größten Gewinne aus Disziplin:
 
 - saubere Fold-Konstruktion
 - keine Leakage zwischen Folds
@@ -1014,68 +1014,68 @@ config = {
 
 Entscheidend waren nicht die Zahlen allein, sondern ihre Passung zu kleinem Industriedatensatz und Produktionsziel. Freeze-then-unfreeze, konservative Optimierung und Analyse pro Merkmal waren wichtiger als Standarddefaults.
 
-## Aussagekraeftige Evaluation
+## Aussagekräftige Evaluation
 
-Das System wurde mit strenger **5-facher Kreuzvalidierung** bewertet. AUROC pro Merkmal erzaehlte eine ehrlichere Geschichte als ein einzelner Gesamtscore. Einige Merkmale waren sehr stabil, andere litten vor allem unter zu wenig Daten.
+Das System wurde mit strenger **5-facher Kreuzvalidierung** bewertet. AUROC pro Merkmal erzählte eine ehrlichere Geschichte als ein einzelner Gesamtscore. Einige Merkmale waren sehr stabil, andere litten vor allem unter zu wenig Daten.
 
-## Deployment-Realitaet
+## Deployment-Realität
 
-Das finale System musste unter Edge-Bedingungen laufen. Quantisierung half bei der Latenz, aber Zuverlaessigkeit blieb wichtiger. Die praktische Lektion: eine etwas langsamere stabile Variante ist besser als eine schnelle instabile.
+Das finale System musste unter Edge-Bedingungen laufen. Quantisierung half bei der Latenz, aber Zuverlässigkeit blieb wichtiger. Die praktische Lektion: eine etwas langsamere stabile Variante ist besser als eine schnelle instabile.
 
 ## Was wirklich den Unterschied gemacht hat
 
 - YOLO-Features statt erzwungener Detektor-Perspektive
 - disziplinierte Evaluation
 - Merkmalstypen als unterschiedliche Teilprobleme behandeln
-- auf zuverlaessige Inferenz optimieren
+- auf zuverlässige Inferenz optimieren
         `,
       },
       fr: {
-        title: 'YOLOv8 pour le controle qualite industriel : les decisions qui ont vraiment compte',
+        title: 'YOLOv8 pour le contrôle qualité industriel : les décisions qui ont vraiment compté',
         excerpt:
-          'Un retour pratique sur les choix d architecture, de donnees et de deploiement qui ont compte en controle qualite inkjet industriel, au lieu d un tutoriel YOLO generique.',
+          "Un retour pratique sur les choix d'architecture, de données et de déploiement qui ont compté en contrôle qualité inkjet industriel, au lieu d'un tutoriel YOLO générique.",
         tags: ['Vision par ordinateur', 'YOLOv8', 'IA industrielle', 'PyTorch', 'Production ML'],
         readingTime: '10 min de lecture',
         faq: [
           {
-            question: 'Pourquoi utiliser YOLO comme extracteur de features et non comme detecteur ?',
+            question: "Pourquoi utiliser YOLO comme extracteur de features et non comme détecteur ?",
             answer:
-              'Parce que la tache n etait pas une detection d objets classique. Les types de feature ressemblaient davantage a des signatures visuelles structurees qu a des objets en bounding box.',
+              "Parce que la tâche n'était pas une détection d'objets classique. Les types de feature ressemblaient davantage à des signatures visuelles structurées qu'à des objets en bounding box.",
           },
           {
-            question: 'Quelle latence a ete atteinte ?',
+            question: 'Quelle latence a été atteinte ?',
             answer:
               'Environ 35 ms par composant dans la configuration finale compatible production edge.',
           },
           {
-            question: 'Qu est-ce qui a le plus compte ?',
+            question: "Qu'est-ce qui a le plus compté ?",
             answer:
-              'La discipline sur les donnees, le design des folds et un chemin de deploiement stable ont compte plus qu une architecture a la mode.',
+              "La discipline sur les données, le design des folds et un chemin de déploiement stable ont compté plus qu'une architecture à la mode.",
           },
         ],
         content: `
-## Ce n etait pas un projet tutoriel
+## Ce n'était pas un projet tutoriel
 
-La plupart des articles YOLO s arretent a "entrainer sur un grand dataset et rapporter le mAP". Le controle qualite industriel est tout autre chose : moins d images, defauts plus subtils, budget de latence plus strict, et vraies consequences operationnelles.
+La plupart des articles YOLO s'arrêtent à "entraîner sur un grand dataset et rapporter le mAP". Le contrôle qualité industriel est tout autre chose : moins d'images, défauts plus subtils, budget de latence plus strict, et vraies conséquences opérationnelles.
 
-## La premiere decision importante
+## La première décision importante
 
-Je n ai pas utilise YOLOv8 principalement comme detecteur, mais comme **extracteur de features**. Le probleme concernait des points, distances, bords et angles. Ce sont des motifs structures, pas toujours des objets detectables de facon classique.
+Je n'ai pas utilisé YOLOv8 principalement comme détecteur, mais comme **extracteur de features**. Le problème concernait des points, distances, bords et angles. Ce sont des motifs structurés, pas toujours des objets détectables de façon classique.
 
-Les features du backbone etaient plus riches pour l etape suivante de detection d anomalie.
+Les features du backbone étaient plus riches pour l'étape suivante de détection d'anomalie.
 
-## L ingenierie des donnees a plus compte que le buzz
+## L'ingénierie des données a plus compté que le buzz
 
 Sur un petit dataset, les plus grands gains sont venus de la discipline :
 
 - construction propre des folds
-- absence de fuite de donnees
-- augmentations realistes seulement
-- prise en compte de l heterogeneite des features
+- absence de fuite de données
+- augmentations réalistes seulement
+- prise en compte de l'hétérogénéité des features
 
-Les astuces synthetiques ont moins aide qu une evaluation honnete du regime de donnees.
+Les astuces synthétiques ont moins aidé qu'une évaluation honnête du régime de données.
 
-## Des choix d entrainement utiles
+## Des choix d'entraînement utiles
 
 \`\`\`python
 config = {
@@ -1086,70 +1086,70 @@ config = {
 }
 \`\`\`
 
-Le plus important n etait pas le chiffre exact, mais l adequation au petit dataset industriel et a la cible de production. Les strategies freeze-then-unfreeze et l analyse par feature ont davantage compte que les reglages par defaut.
+Le plus important n'était pas le chiffre exact, mais l'adéquation au petit dataset industriel et à la cible de production. Les stratégies freeze-then-unfreeze et l'analyse par feature ont davantage compté que les réglages par défaut.
 
-## Une evaluation qui veut dire quelque chose
+## Une évaluation qui veut dire quelque chose
 
-Le systeme a ete evalue avec une **validation croisee stricte a 5 plis**. L AUROC par feature racontait une histoire plus honnete qu un score global unique. Certaines features etaient robustes, d autres etaient surtout limitees par le manque de donnees.
+Le système a été évalué avec une **validation croisée stricte à 5 plis**. L'AUROC par feature racontait une histoire plus honnête qu'un score global unique. Certaines features étaient robustes, d'autres étaient surtout limitées par le manque de données.
 
-## Realite du deploiement
+## Réalité du déploiement
 
-Le systeme final devait tourner en environnement edge. La quantification aidait la latence, mais la stabilite restait prioritaire. Lecon pratique : un deploiement legerement plus lent mais fiable vaut mieux qu une option rapide mais instable.
+Le système final devait tourner en environnement edge. La quantification aidait la latence, mais la stabilité restait prioritaire. Leçon pratique : un déploiement légèrement plus lent mais fiable vaut mieux qu'une option rapide mais instable.
 
-## Ce qui a vraiment fait la difference
+## Ce qui a vraiment fait la différence
 
-- utiliser les features YOLO plutot qu imposer une logique de detection
-- une boucle d evaluation disciplinee
-- traiter les types de feature comme des sous-problemes differents
-- optimiser pour une inference fiable
+- utiliser les features YOLO plutôt qu'imposer une logique de détection
+- une boucle d'évaluation disciplinée
+- traiter les types de feature comme des sous-problèmes différents
+- optimiser pour une inférence fiable
         `,
       },
       es: {
         title: 'YOLOv8 para control de calidad industrial: decisiones que realmente movieron la aguja',
         excerpt:
-          'Un post-mortem practico sobre las decisiones de arquitectura, datos y despliegue que importaron en control de calidad inkjet industrial, en lugar de otro tutorial generico de YOLO.',
-        tags: ['Vision por computador', 'YOLOv8', 'IA industrial', 'PyTorch', 'Production ML'],
+          'Un post-mortem práctico sobre las decisiones de arquitectura, datos y despliegue que importaron en control de calidad inkjet industrial, en lugar de otro tutorial genérico de YOLO.',
+        tags: ['Visión por computador', 'YOLOv8', 'IA industrial', 'PyTorch', 'Production ML'],
         readingTime: '10 min de lectura',
         faq: [
           {
-            question: 'Por que usar YOLO como extractor de features y no como detector?',
+            question: '¿Por qué usar YOLO como extractor de features y no como detector?',
             answer:
-              'Porque la tarea no era deteccion clasica de objetos. Los tipos de feature se comportaban mas como firmas visuales estructuradas que como objetos en bounding boxes.',
+              'Porque la tarea no era detección clásica de objetos. Los tipos de feature se comportaban más como firmas visuales estructuradas que como objetos en bounding boxes.',
           },
           {
-            question: 'Que latencia alcanzo el sistema?',
+            question: '¿Qué latencia alcanzó el sistema?',
             answer:
-              'Alrededor de 35 ms por componente en la configuracion final apta para produccion edge.',
+              'Alrededor de 35 ms por componente en la configuración final apta para producción edge.',
           },
           {
-            question: 'Que fue lo mas importante?',
+            question: '¿Qué fue lo más importante?',
             answer:
-              'La disciplina de datos, el diseno de folds y un camino de despliegue estable importaron mas que perseguir la arquitectura mas llamativa.',
+              'La disciplina de datos, el diseño de folds y un camino de despliegue estable importaron más que perseguir la arquitectura más llamativa.',
           },
         ],
         content: `
 ## Esto no fue un proyecto tutorial
 
-La mayoria de los posts sobre YOLO terminan en "entrena sobre un gran dataset y reporta mAP". El control de calidad industrial es otra cosa: menos imagenes, defectos mas dificiles, presupuestos de latencia mas estrictos y consecuencias reales.
+La mayoría de los posts sobre YOLO terminan en "entrena sobre un gran dataset y reporta mAP". El control de calidad industrial es otra cosa: menos imágenes, defectos más difíciles, presupuestos de latencia más estrictos y consecuencias reales.
 
-## La primera decision importante
+## La primera decisión importante
 
-No use YOLOv8 principalmente como detector, sino como **extractor de features**. El problema incluia puntos, distancias, bordes y angulos. Esos patrones no siempre encajan bien como objetos clasicos con bounding boxes.
+No usé YOLOv8 principalmente como detector, sino como **extractor de features**. El problema incluía puntos, distancias, bordes y ángulos. Esos patrones no siempre encajan bien como objetos clásicos con bounding boxes.
 
-Las features del backbone dieron al detector de anomalias una representacion geometrica mejor.
+Las features del backbone dieron al detector de anomalías una representación geométrica mejor.
 
-## La ingenieria de datos importo mas que el hype
+## La ingeniería de datos importó más que el hype
 
-Con un dataset pequeno, las mayores mejoras vinieron de la disciplina:
+Con un dataset pequeño, las mayores mejoras vinieron de la disciplina:
 
-- construccion cuidadosa de folds
+- construcción cuidadosa de folds
 - evitar leakage
 - augmentations realistas solamente
 - respetar la heterogeneidad de las features
 
-Los trucos sinteticos ayudaron menos que una lectura honesta del regimen de datos.
+Los trucos sintéticos ayudaron menos que una lectura honesta del régimen de datos.
 
-## Ajustes de entrenamiento utiles
+## Ajustes de entrenamiento útiles
 
 \`\`\`python
 config = {
@@ -1160,20 +1160,20 @@ config = {
 }
 \`\`\`
 
-Lo importante no fueron solo los numeros, sino ajustarlos al dataset industrial pequeno y al objetivo de produccion. Freeze-then-unfreeze, optimizacion conservadora y analisis por feature importaron mas que usar defaults.
+Lo importante no fueron solo los números, sino ajustarlos al dataset industrial pequeño y al objetivo de producción. Freeze-then-unfreeze, optimización conservadora y análisis por feature importaron más que usar defaults.
 
-## Una evaluacion que significaba algo
+## Una evaluación que significaba algo
 
-El sistema se evaluo con **validacion cruzada estricta de 5 folds**. El AUROC por feature conto una historia mas honesta que un solo score global. Algunas features eran estables; otras estaban limitadas sobre todo por la falta de datos.
+El sistema se evaluó con **validación cruzada estricta de 5 folds**. El AUROC por feature contó una historia más honesta que un solo score global. Algunas features eran estables; otras estaban limitadas sobre todo por la falta de datos.
 
 ## Realidad del despliegue
 
-El sistema final tenia que funcionar en edge. La cuantizacion mejoro la latencia, pero la fiabilidad siguio siendo lo primero. La leccion practica fue simple: una version un poco mas lenta pero estable es mejor que una rapida e inestable.
+El sistema final tenía que funcionar en edge. La cuantización mejoró la latencia, pero la fiabilidad siguió siendo lo primero. La lección práctica fue simple: una versión un poco más lenta pero estable es mejor que una rápida e inestable.
 
-## Que movio la aguja de verdad
+## Qué movió la aguja de verdad
 
 - usar features de YOLO en vez de forzar una perspectiva de detector
-- una evaluacion disciplinada
+- una evaluación disciplinada
 - tratar los tipos de feature como subproblemas distintos
 - optimizar para inferencia confiable
         `,
@@ -1337,14 +1337,14 @@ If the path to value is too long, the sophistication underneath barely matters.
       de: {
         title: 'Faultrix ausliefern: Was ich beim Bau eines AI-SaaS in 5 Monaten gelernt habe',
         excerpt:
-          'Was sich veraendert hat, als ich von Forschung in Produktbau gewechselt bin: Faultrix, ein AI-SaaS fuer Bauqualitaetskontrolle mit ONORM-orientierten Berichten in unter einer Minute.',
+          'Was sich verändert hat, als ich von Forschung in Produktbau gewechselt bin: Faultrix, ein AI-SaaS für Bauqualitätskontrolle mit ÖNORM-orientierten Berichten in unter einer Minute.',
         tags: ['LLM', 'SaaS', 'Next.js', 'OpenAI', 'Production AI', 'Faultrix'],
         readingTime: '9 Min. Lesezeit',
         faq: [
           {
             question: 'Was ist Faultrix?',
             answer:
-              'Faultrix ist ein KI-basiertes SaaS fuer Bauqualitaetskontrolle. Nutzer laden Baustellenfotos hoch und erhalten einen strukturierten ONORM-orientierten Bericht mit Evidenzkette und sicherheitsbewusster Speicherung.',
+              'Faultrix ist ein KI-basiertes SaaS für Bauqualitätskontrolle. Nutzer laden Baustellenfotos hoch und erhalten einen strukturierten ÖNORM-orientierten Bericht mit Evidenzkette und sicherheitsbewusster Speicherung.',
           },
           {
             question: 'Welcher Stack steckt dahinter?',
@@ -1354,15 +1354,15 @@ If the path to value is too long, the sophistication underneath barely matters.
           {
             question: 'Was war am schwierigsten?',
             answer:
-              'Nicht die KI selbst. Schwieriger war, das Produkt an echte Arbeitsablaeufe, Formatvorgaben und eine reibungsarme UX anzupassen.',
+              'Nicht die KI selbst. Schwieriger war, das Produkt an echte Arbeitsabläufe, Formatvorgaben und eine reibungsarme UX anzupassen.',
           },
         ],
         content: `
 ## Von Forschung zu Produkt
 
-Faultrix ist ein KI-basiertes SaaS fuer Bauqualitaetskontrolle. Nutzer laden Fotos hoch, das System analysiert sie, und in weniger als einer Minute entsteht ein ONORM-orientierter Bericht.
+Faultrix ist ein KI-basiertes SaaS für Bauqualitätskontrolle. Nutzer laden Fotos hoch, das System analysiert sie, und in weniger als einer Minute entsteht ein ÖNORM-orientierter Bericht.
 
-Beim Bauen wurde mir klar: Der Schritt von Forschung zu Produkt besteht nicht primaer aus einem anderen Modell, sondern daraus, das ganze System nuetzlich zu machen.
+Beim Bauen wurde mir klar: Der Schritt von Forschung zu Produkt besteht nicht primär aus einem anderen Modell, sondern daraus, das ganze System nützlich zu machen.
 
 ## Der Produkt-Stack
 
@@ -1376,71 +1376,71 @@ Faultrix wurde gebaut mit:
 - Stripe
 - Docker
 
-Ich habe den Stack so gewaehlt, dass schnelle Iteration moeglich ist und der operative Aufbau klar bleibt.
+Ich habe den Stack so gewählt, dass schnelle Iteration möglich ist und der operative Aufbau klar bleibt.
 
 ## Das Schwierigste war nicht das Modell
 
-Die KI war wichtig, aber nicht der haerteste Teil. Schwieriger waren:
+Die KI war wichtig, aber nicht der härteste Teil. Schwieriger waren:
 
-- Ausgaben so formen, dass sie zu realen Berichtsablaeufen passen
+- Ausgaben so formen, dass sie zu realen Berichtsabläufen passen
 - den Nutzerpfad kurz und klar halten
-- Evidenz und Speicherung vertrauenswuerdig praesentieren
+- Evidenz und Speicherung vertrauenswürdig präsentieren
 
-Genau hier helfen Forschungsinstinkte teilweise und teilweise nicht. Strenge uebertraegt sich gut. Produktintuition muss man sich in der Praxis erarbeiten.
+Genau hier helfen Forschungsinstinkte teilweise und teilweise nicht. Strenge überträgt sich gut. Produktintuition muss man sich in der Praxis erarbeiten.
 
-## Was die Forschung uebertragen hat
+## Was die Forschung übertragen hat
 
 - systematisches Experimentieren
-- Qualitaetstests vor dem Release
-- gutes Gespuer dafuer, wann menschliche Pruefung noetig ist
+- Qualitätstests vor dem Release
+- gutes Gespür dafür, wann menschliche Prüfung nötig ist
 
 ## Was die Forschung nicht automatisch lehrt
 
 - Pricing
 - Reibung beim Onboarding
 - wie schnell Nutzer Geduld verlieren
-- wie oft UX wichtiger ist als reine Modellstaerke
+- wie oft UX wichtiger ist als reine Modellstärke
 
 ## Die wichtigste Lektion
 
-Die erste Version von Faultrix hatte starke KI, aber zu viel Reibung im Ablauf. Daraus entstand die wichtigste Produktlektion: Nutzer erleben Wert ueber den Weg, nicht ueber das Architekturdiagramm.
+Die erste Version von Faultrix hatte starke KI, aber zu viel Reibung im Ablauf. Daraus entstand die wichtigste Produktlektion: Nutzer erleben Wert über den Weg, nicht über das Architekturdiagramm.
 
 Wenn der Weg zum Nutzen zu lang ist, spielt die darunterliegende Raffinesse kaum noch eine Rolle.
         `,
       },
       fr: {
-        title: 'Livrer Faultrix : ce que j ai appris en construisant un SaaS IA en 5 mois',
+        title: "Livrer Faultrix : ce que j'ai appris en construisant un SaaS IA en 5 mois",
         excerpt:
-          'Ce qui a change lorsque je suis passe de la recherche au produit : Faultrix, un SaaS IA pour le controle qualite construction qui genere des rapports alignes ONORM en moins d une minute.',
+          "Ce qui a changé lorsque je suis passé de la recherche au produit : Faultrix, un SaaS IA pour le contrôle qualité construction qui génère des rapports alignés ÖNORM en moins d'une minute.",
         tags: ['LLM', 'SaaS', 'Next.js', 'OpenAI', 'IA en production', 'Faultrix'],
         readingTime: '9 min de lecture',
         faq: [
           {
-            question: 'Qu est-ce que Faultrix ?',
+            question: "Qu'est-ce que Faultrix ?",
             answer:
-              'Faultrix est un SaaS de controle qualite construction pilote par IA. Les utilisateurs chargent des photos de chantier et recoivent un rapport structure aligne ONORM avec gestion des preuves et stockage securise.',
+              "Faultrix est un SaaS de contrôle qualité construction piloté par IA. Les utilisateurs chargent des photos de chantier et reçoivent un rapport structuré aligné ÖNORM avec gestion des preuves et stockage sécurisé.",
           },
           {
             question: 'Quel stack utilise-t-il ?',
             answer:
-              'Next.js, Convex, OpenAI API, Clerk, Cloudflare R2, Stripe, Docker, plus un workflow IA fortement centre sur Python.',
+              'Next.js, Convex, OpenAI API, Clerk, Cloudflare R2, Stripe, Docker, plus un workflow IA fortement centré sur Python.',
           },
           {
-            question: 'Qu est-ce qui a ete le plus difficile ?',
+            question: "Qu'est-ce qui a été le plus difficile ?",
             answer:
-              'Pas l IA en elle-meme. Le plus difficile a ete d adapter le produit aux vrais usages, aux attentes de format et a une UX sans friction.',
+              "Pas l'IA en elle-même. Le plus difficile a été d'adapter le produit aux vrais usages, aux attentes de format et à une UX sans friction.",
           },
         ],
         content: `
 ## De la recherche au produit
 
-Faultrix est un SaaS de controle qualite construction alimente par IA. L utilisateur charge des photos de chantier, le systeme les analyse, puis genere un rapport aligne ONORM en moins d une minute.
+Faultrix est un SaaS de contrôle qualité construction alimenté par IA. L'utilisateur charge des photos de chantier, le système les analyse, puis génère un rapport aligné ÖNORM en moins d'une minute.
 
-Le vrai saut entre recherche et produit n est pas seulement une question de modele. C est la capacite a rendre tout le systeme utile.
+Le vrai saut entre recherche et produit n'est pas seulement une question de modèle. C'est la capacité à rendre tout le système utile.
 
 ## Le stack produit
 
-Faultrix a ete construit avec :
+Faultrix a été construit avec :
 
 - Next.js
 - Convex
@@ -1450,67 +1450,67 @@ Faultrix a ete construit avec :
 - Stripe
 - Docker
 
-Ce stack a ete choisi pour iterer vite et garder un systeme simple a faire evoluer.
+Ce stack a été choisi pour itérer vite et garder un système simple à faire évoluer.
 
-## Le plus dur n etait pas le modele
+## Le plus dur n'était pas le modèle
 
-La partie IA comptait, mais ce n etait pas le plus dur. Le plus dur etait :
+La partie IA comptait, mais ce n'était pas le plus dur. Le plus dur était :
 
-- adapter la sortie aux attentes reelles de reporting
+- adapter la sortie aux attentes réelles de reporting
 - garder le parcours utilisateur court et clair
 - rendre la gestion des preuves et du stockage digne de confiance
 
-La rigueur de recherche aide beaucoup. L intuition produit, elle, se construit au contact du terrain.
+La rigueur de recherche aide beaucoup. L'intuition produit, elle, se construit au contact du terrain.
 
-## Ce que la recherche m a apporte
+## Ce que la recherche m'a apporté
 
-- experimentation structuree
-- tests de qualite avant livraison
-- bonne comprehension des limites du modele
+- expérimentation structurée
+- tests de qualité avant livraison
+- bonne compréhension des limites du modèle
 
-## Ce que la recherche ne m a pas donne automatiquement
+## Ce que la recherche ne m'a pas donné automatiquement
 
 - la logique de pricing
-- la gestion de la friction d onboarding
-- la vitesse a laquelle un utilisateur perd patience
-- le fait que l UX peut compter plus que la sophistication du modele
+- la gestion de la friction d'onboarding
+- la vitesse à laquelle un utilisateur perd patience
+- le fait que l'UX peut compter plus que la sophistication du modèle
 
-## La lecon principale
+## La leçon principale
 
-La premiere version de Faultrix avait une IA solide mais trop de friction. La lecon a ete simple : la valeur est ressentie a travers le parcours utilisateur, pas a travers le schema technique.
+La première version de Faultrix avait une IA solide mais trop de friction. La leçon a été simple : la valeur est ressentie à travers le parcours utilisateur, pas à travers le schéma technique.
 
 Si le chemin vers la valeur est trop long, la sophistication du dessous ne compense pas.
         `,
       },
       es: {
-        title: 'Lanzando Faultrix: lo que aprendi construyendo un SaaS de IA en 5 meses',
+        title: 'Lanzando Faultrix: lo que aprendí construyendo un SaaS de IA en 5 meses',
         excerpt:
-          'Lo que cambio cuando pase de investigacion a producto: Faultrix, un SaaS de IA para control de calidad en construccion que genera informes alineados con ONORM en menos de un minuto.',
-        tags: ['LLM', 'SaaS', 'Next.js', 'OpenAI', 'IA en produccion', 'Faultrix'],
+          'Lo que cambió cuando pasé de investigación a producto: Faultrix, un SaaS de IA para control de calidad en construcción que genera informes alineados con ÖNORM en menos de un minuto.',
+        tags: ['LLM', 'SaaS', 'Next.js', 'OpenAI', 'IA en producción', 'Faultrix'],
         readingTime: '9 min de lectura',
         faq: [
           {
-            question: 'Que es Faultrix?',
+            question: '¿Qué es Faultrix?',
             answer:
-              'Faultrix es un SaaS de control de calidad en construccion impulsado por IA. Los usuarios suben fotos de obra y reciben un informe estructurado alineado con ONORM, con manejo de evidencia y almacenamiento seguro.',
+              'Faultrix es un SaaS de control de calidad en construcción impulsado por IA. Los usuarios suben fotos de obra y reciben un informe estructurado alineado con ÖNORM, con manejo de evidencia y almacenamiento seguro.',
           },
           {
-            question: 'Que stack usa?',
+            question: '¿Qué stack usa?',
             answer:
               'Next.js, Convex, OpenAI API, Clerk, Cloudflare R2, Stripe, Docker y un flujo de IA muy apoyado en Python.',
           },
           {
-            question: 'Que fue lo mas dificil?',
+            question: '¿Qué fue lo más difícil?',
             answer:
-              'No la IA en si. Lo mas dificil fue adaptar el producto a flujos reales, expectativas de formato y una UX con poca friccion.',
+              'No la IA en sí. Lo más difícil fue adaptar el producto a flujos reales, expectativas de formato y una UX con poca fricción.',
           },
         ],
         content: `
-## De investigacion a producto
+## De investigación a producto
 
-Faultrix es un SaaS de control de calidad en construccion impulsado por IA. El usuario sube fotos de obra, el sistema las analiza y genera un informe alineado con ONORM en menos de un minuto.
+Faultrix es un SaaS de control de calidad en construcción impulsado por IA. El usuario sube fotos de obra, el sistema las analiza y genera un informe alineado con ÖNORM en menos de un minuto.
 
-El salto real entre investigacion y producto no es solo elegir otro modelo. Es lograr que todo el sistema sea util.
+El salto real entre investigación y producto no es solo elegir otro modelo. Es lograr que todo el sistema sea útil.
 
 ## El stack del producto
 
@@ -1524,36 +1524,36 @@ Faultrix fue construido con:
 - Stripe
 - Docker
 
-El stack se eligio para iterar rapido y mantener una base operativa clara.
+El stack se eligió para iterar rápido y mantener una base operativa clara.
 
-## Lo mas dificil no fue el modelo
+## Lo más difícil no fue el modelo
 
-La parte de IA importaba, pero no fue lo mas duro. Lo mas dificil fue:
+La parte de IA importaba, pero no fue lo más duro. Lo más difícil fue:
 
 - ajustar la salida a expectativas reales de reporte
 - mantener el flujo del usuario corto y claro
 - presentar evidencia y almacenamiento de forma confiable
 
-La disciplina de investigacion ayuda mucho. La intuicion de producto hay que ganarsela en el campo.
+La disciplina de investigación ayuda mucho. La intuición de producto hay que ganársela en el campo.
 
-## Lo que si me dio la investigacion
+## Lo que sí me dio la investigación
 
-- experimentacion estructurada
+- experimentación estructurada
 - pruebas de calidad antes de lanzar
-- comprension de cuando pedir revision humana
+- comprensión de cuándo pedir revisión humana
 
-## Lo que la investigacion no me dio automaticamente
+## Lo que la investigación no me dio automáticamente
 
 - pricing
-- friccion de onboarding
-- cuan rapido el usuario pierde paciencia
-- cuanto puede importar mas la UX que la potencia del modelo
+- fricción de onboarding
+- cuán rápido el usuario pierde paciencia
+- cuánto puede importar más la UX que la potencia del modelo
 
-## La leccion principal
+## La lección principal
 
-La primera version de Faultrix tenia una IA fuerte pero demasiada friccion. La leccion fue clara: el usuario siente el valor a traves del camino, no del diagrama de arquitectura.
+La primera versión de Faultrix tenía una IA fuerte pero demasiada fricción. La lección fue clara: el usuario siente el valor a través del camino, no del diagrama de arquitectura.
 
-Si el camino hacia el valor es largo, la sofisticacion tecnica deja de importar.
+Si el camino hacia el valor es largo, la sofisticación técnica deja de importar.
         `,
       },
       ar: {

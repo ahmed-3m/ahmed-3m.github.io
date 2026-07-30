@@ -4,13 +4,13 @@ import { getAllNews, newsCategoryLabels } from '@/lib/news-items'
 import { useReveal } from '@/lib/useReveal'
 
 const copy = {
-  eyebrow: { en: '// 07 - News', de: '// 07 - News', fr: '// 07 - Actualites', es: '// 07 - Noticias', ar: '// 07 - الأخبار' },
+  eyebrow: { en: '// 07 - News', de: '// 07 - News', fr: '// 07 - Actualités', es: '// 07 - Noticias', ar: '// 07 - الأخبار' },
   title: { en: 'Tracking the field.', de: 'Das Feld im Blick.', fr: 'Suivre le domaine.', es: 'Siguiendo el campo.', ar: 'متابعة المجال.' },
   intro: {
     en: 'Curated AI news with a short take on each — with a bias toward agentic AI, where I spend most of my attention.',
     de: 'Kuratierte KI-News mit kurzer Einordnung — mit Fokus auf agentische KI.',
-    fr: 'Actualites IA selectionnees avec une courte analyse — avec un accent sur l IA agentique.',
-    es: 'Noticias de IA seleccionadas con un breve analisis — con enfasis en la IA agentica.',
+    fr: "Actualités IA sélectionnées avec une courte analyse — avec un accent sur l'IA agentique.",
+    es: 'Noticias de IA seleccionadas con un breve análisis — con énfasis en la IA agéntica.',
     ar: 'أخبار مختارة عن الذكاء الاصطناعي مع تعليق موجز — مع تركيز على الذكاء الاصطناعي الوكيل.',
   },
   read: { en: 'Read take', de: 'Einordnung', fr: 'Voir l analyse', es: 'Ver analisis', ar: 'اقرأ التعليق' },
