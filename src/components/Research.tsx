@@ -150,7 +150,7 @@ export default function Research() {
                 {t(copy.thesisDesc)} <strong>99.03% +/- 0.07% AUROC</strong>, <strong>+6.5pp gain</strong>, baseline 92.52% +/- 11.07%, external OOD 90.50%-96.97%.
               </div>
               <div className="cd-rf-meta">
-                {t(copy.supervisor)}: Prof. Sepp Hochreiter (LSTM Inventor) - {t(copy.assistant)}: Claus Hofmann, MSc - JKU Linz - 2026
+                {t(copy.supervisor)}: Prof. Sepp Hochreiter - {t(copy.assistant)}: Claus Hofmann, MSc - JKU Linz - 2026
               </div>
             </div>
             <div className="cd-rf-metric">

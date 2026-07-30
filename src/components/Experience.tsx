@@ -17,7 +17,21 @@ const experiences: Array<{
   last?: boolean
 }> = [
   {
-    date: 'Jul 2025\nPresent',
+    date: 'Jul 2026\nPresent',
+    role: { en: 'AI/ML Engineer', de: 'AI/ML-Engineer', fr: 'Ingénieur IA/ML', es: 'Ingeniero de IA/ML', ar: 'مهندس ذكاء اصطناعي وتعلم آلي' },
+    company: 'Sihem · Linz, Austria',
+    desc: {
+      en: 'Building an LLM personal-mentor assistant on Supabase edge functions (Deno/TS) with pgvector RAG memory, multi-provider LLM routing with failover, and a deterministic decision engine for adaptive nudging.',
+      de: 'Baue einen LLM-gestützten persönlichen Mentor-Assistenten auf Supabase Edge Functions (Deno/TS) mit pgvector-RAG-Gedächtnis, Multi-Provider-LLM-Routing mit Failover und einer deterministischen Entscheidungsmaschine für adaptives Nudging.',
+      fr: "Construction d'un assistant-mentor personnel fondé sur les LLM, sur Supabase edge functions (Deno/TS), avec mémoire RAG pgvector, routage LLM multi-fournisseurs avec failover et un moteur de décision déterministe pour le nudging adaptatif.",
+      es: 'Desarrollo de un asistente-mentor personal basado en LLM sobre Supabase edge functions (Deno/TS), con memoria RAG pgvector, enrutamiento LLM multiproveedor con failover y un motor de decisión determinista para nudging adaptativo.',
+      ar: 'أبني مساعداً ومرشداً شخصياً قائماً على نماذج اللغة عبر Supabase edge functions (Deno/TS)، مع ذاكرة pgvector للاسترجاع المعزز، وتوجيه LLM متعدد المزودين مع تبديل تلقائي، ومحرك قرار حتمي للتنبيه التكيّفي.',
+    },
+    badge: { en: 'Live beta - @sihem_ai_bot', de: 'Live-Beta - @sihem_ai_bot', fr: 'Bêta en ligne - @sihem_ai_bot', es: 'Beta en vivo - @sihem_ai_bot', ar: 'نسخة تجريبية - @sihem_ai_bot' },
+    active: true,
+  },
+  {
+    date: 'Jul 2025\nJul 2026',
     role: { en: 'AI/ML & Full-Stack Engineer', de: 'AI/ML- & Full-Stack-Engineer', fr: 'Ingénieur IA/ML & full-stack', es: 'Ingeniero de IA/ML y full-stack', ar: 'مهندس ذكاء اصطناعي وتطوير متكامل' },
     company: 'Faultrix · Linz, Austria',
     desc: {
@@ -27,8 +41,8 @@ const experiences: Array<{
       es: 'Construyo solo una plataforma de análisis de construcción con IA, de cero a producción, usando Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2 y Stripe.',
       ar: 'بنيت منفرداً منصة ذكاء اصطناعي لتحليل البناء من الصفر إلى الإنتاج باستخدام Python وNext.js وConvex وOpenAI API وDocker وStripe.',
     },
-    badge: { en: 'Active - faultrix.com', de: 'Aktiv - faultrix.com', fr: 'Actif - faultrix.com', es: 'Activo - faultrix.com', ar: 'نشط - faultrix.com' },
-    active: true,
+    badge: { en: 'Shipped - faultrix.com', de: 'Ausgeliefert - faultrix.com', fr: 'Livré - faultrix.com', es: 'Entregado - faultrix.com', ar: 'تم إطلاقه - faultrix.com' },
+    active: false,
   },
   {
     date: 'Dec 2024\nJul 2026',

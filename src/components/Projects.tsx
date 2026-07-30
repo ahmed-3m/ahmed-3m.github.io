@@ -5,8 +5,8 @@ import { useReveal } from '@/lib/useReveal'
 const copy = {
   eyebrow: { en: '// 02 - Projects', de: '// 02 - Projekte', fr: '// 02 - Projets', es: '// 02 - Proyectos', ar: '// 02 - المشاريع' },
   title: { en: 'Research that ships.', de: 'Forschung, die produktiv wird.', fr: 'La recherche qui devient produit.', es: 'Investigación que llega a producción.', ar: 'بحث يتحول إلى منتج.' },
-  live: { en: 'Live beta · @sihem_ai_bot', de: 'Live-Beta · @sihem_ai_bot', fr: 'Bêta en ligne · @sihem_ai_bot', es: 'Beta en vivo · @sihem_ai_bot', ar: 'نسخة تجريبية · @sihem_ai_bot' },
-  faultrixEyebrow: { en: 'Project · 2025', de: 'Projekt · 2025', fr: 'Projet · 2025', es: 'Proyecto · 2025', ar: 'مشروع · 2025' },
+  live: { en: 'Current project · Live beta', de: 'Aktuelles Projekt · Live-Beta', fr: 'Projet en cours · bêta en ligne', es: 'Proyecto actual · beta en vivo', ar: 'المشروع الحالي · نسخة تجريبية' },
+  faultrixEyebrow: { en: 'Previous project · 2025', de: 'Vorheriges Projekt · 2025', fr: 'Projet précédent · 2025', es: 'Proyecto anterior · 2025', ar: 'مشروع سابق · 2025' },
   faultrix: {
     en: 'AI-powered construction quality control SaaS. Analyzes building photos and generates ONORM-compliant reports in under 1 minute - SHA-256 evidence chain, DSGVO compliant, AES-256 encryption. Built solo from zero to production.',
     de: 'KI-gestütztes SaaS für Bauqualitätskontrolle. Analysiert Baustellenfotos und erstellt ONORM-konforme Berichte in unter 1 Minute – SHA-256 Beweiskette, DSGVO-konform, AES-256 Verschlüsselung. Solo von null bis Produktion gebaut.',
