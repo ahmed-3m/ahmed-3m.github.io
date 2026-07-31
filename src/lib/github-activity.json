@@ -1,7 +1,15 @@
 {
-  "updatedAt": "2026-07-31T09:27:04.316Z",
+  "updatedAt": "2026-07-31T19:40:33.010Z",
   "source": "https://github.com/ahmed-3m",
   "items": [
+    {
+      "id": "12607847529",
+      "type": "PullRequestEvent",
+      "repo": "ahmed-3m/ahmed-3m.github.io",
+      "message": "Merged PR #40: fix(portfolio): resolve Faultrix/Sihem contradictions across all surfaces",
+      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/40",
+      "createdAt": "2026-07-31T19:39:19Z"
+    },
     {
       "id": "12558684543",
       "type": "PullRequestEvent",
@@ -41,14 +49,6 @@
       "message": "Merged PR #38: fix(news): daily pipeline + resilient link checker",
       "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/38",
       "createdAt": "2026-07-26T15:05:43Z"
-    },
-    {
-      "id": "11964097791",
-      "type": "PullRequestEvent",
-      "repo": "ahmed-3m/ahmed-3m.github.io",
-      "message": "Merged PR #36: docs(specs): thesis ground truth, claims matrix, demo feasibility…",
-      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/36",
-      "createdAt": "2026-07-18T09:57:43Z"
     }
   ]
 }
