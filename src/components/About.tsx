@@ -47,6 +47,7 @@ const copy = {
   current: { en: 'Current work', de: 'Aktuell', fr: 'Travail actuel', es: 'Trabajo actual', ar: 'العمل الحالي' },
   openTo: { en: 'Open to', de: 'Offen für', fr: 'Ouvert à', es: 'Abierto a', ar: 'متاح لـ' },
   roles: { en: 'AI/ML Roles - Research Collaborations', de: 'AI/ML-Rollen - Forschungskooperationen', fr: 'Rôles IA/ML - collaborations recherche', es: 'Roles IA/ML - colaboraciones de investigación', ar: 'أدوار الذكاء الاصطناعي - تعاونات بحثية' },
+  currentWork: { en: 'Sihem — LLM assistant (live beta)', de: 'Sihem — LLM-Assistent (Live-Beta)', fr: 'Sihem — assistant LLM (bêta en ligne)', es: 'Sihem — asistente LLM (beta en vivo)', ar: 'Sihem — مساعد LLM (نسخة تجريبية)' },
   degree1: { en: 'M.Sc. in Artificial Intelligence', de: 'M.Sc. Artificial Intelligence', fr: 'M.Sc. en intelligence artificielle', es: 'M.Sc. en Inteligencia Artificial', ar: 'ماجستير في الذكاء الاصطناعي' },
   degree2: { en: 'B.Sc. in Mechatronics Engineering', de: 'B.Sc. Mechatronik', fr: 'B.Sc. en génie mécatronique', es: 'B.Sc. en Ingeniería Mecatrónica', ar: 'بكالوريوس في هندسة الميكاترونكس' },
   desc1: { en: 'Thesis: conditional diffusion models for OOD detection - 99.03% +/- 0.07% average AUROC (binary airplane-vs-rest, 3-seed mean).', de: 'Thesis: konditionale Diffusionsmodelle für OOD-Erkennung – 99.03% +/- 0.07% AUROC (binär airplane-vs-rest, 3-Seed-Mittel).', fr: 'Mémoire : modèles de diffusion conditionnels pour détection OOD – 99.03% +/- 0.07% AUROC (binaire airplane-vs-rest, moyenne 3 seeds).', es: 'Tesis: modelos de difusión condicional para detección OOD – 99.03% +/- 0.07% AUROC (binaria airplane-vs-rest, media de 3 seeds).', ar: 'الرسالة: نماذج انتشار شرطية لكشف OOD - 99.03% +/- 0.07% AUROC (ثنائي airplane-vs-rest، متوسط 3 بذور).' },
@@ -74,7 +75,7 @@ export default function About() {
   const infoRows = [
     { label: t(copy.location), value: 'Linz, Austria', accent: false },
     { label: t(copy.supervisor), value: 'Prof. Sepp Hochreiter', accent: false },
-    { label: t(copy.current), value: 'Sihem — LLM assistant (live beta)', accent: true },
+    { label: t(copy.current), value: t(copy.currentWork), accent: true },
     { label: t(copy.openTo), value: t(copy.roles), accent: false },
   ]
 

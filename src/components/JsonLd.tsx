@@ -208,14 +208,6 @@ export function FAQSchema() {
       },
       {
         '@type': 'Question',
-        name: 'What was Faultrix?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Faultrix was an AI-powered construction quality control platform built by Ahmed Mohammed. It analyzed building photos and generated ÖNORM B 2110-compliant technical reports in under 1 minute. The platform featured SHA-256 evidence chains for legal defensibility, DSGVO-compliant data handling, and AES-256 encryption.',
-        },
-      },
-      {
-        '@type': 'Question',
         name: 'What types of AI problems does Ahmed Mohammed solve?',
         acceptedAnswer: {
           '@type': 'Answer',

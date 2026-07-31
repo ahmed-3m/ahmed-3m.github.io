@@ -1416,7 +1416,7 @@ Wenn der Weg zum Nutzen zu lang ist, spielt die darunterliegende Raffinesse kaum
         readingTime: '9 min de lecture',
         faq: [
           {
-            question: "Qu'est-ce que Faultrix ?",
+            question: "Qu'était Faultrix ?",
             answer:
               "Faultrix était un SaaS de contrôle qualité construction piloté par IA. Les utilisateurs chargeaient des photos de chantier et recevaient un rapport structuré aligné ÖNORM avec gestion des preuves et stockage sécurisé.",
           },
@@ -1564,7 +1564,7 @@ Si el camino hacia el valor es largo, la sofisticación técnica deja de importa
         readingTime: '9 دقائق قراءة',
         faq: [
           {
-            question: 'ما هو Faultrix؟',
+            question: 'ماذا كان Faultrix؟',
             answer:
               'Faultrix كان SaaS لمراقبة جودة البناء مدعوم بالذكاء الاصطناعي. كان يرفع المستخدم صور الموقع ويحصل على تقرير منظم متوافق مع ONORM مع إدارة للأدلة وتخزين آمن.',
           },
