@@ -44,7 +44,7 @@ const copy = {
   languages: { en: 'Languages', de: 'Sprachen', fr: 'Langues', es: 'Idiomas', ar: 'اللغات' },
   location: { en: 'Location', de: 'Standort', fr: 'Lieu', es: 'Ubicación', ar: 'الموقع' },
   supervisor: { en: 'Supervisor', de: 'Betreuer', fr: 'Superviseur', es: 'Supervisor', ar: 'المشرف' },
-  company: { en: 'Company', de: 'Firma', fr: 'Entreprise', es: 'Empresa', ar: 'الشركة' },
+  current: { en: 'Current work', de: 'Aktuell', fr: 'Travail actuel', es: 'Trabajo actual', ar: 'العمل الحالي' },
   openTo: { en: 'Open to', de: 'Offen für', fr: 'Ouvert à', es: 'Abierto a', ar: 'متاح لـ' },
   roles: { en: 'AI/ML Roles - Research Collaborations', de: 'AI/ML-Rollen - Forschungskooperationen', fr: 'Rôles IA/ML - collaborations recherche', es: 'Roles IA/ML - colaboraciones de investigación', ar: 'أدوار الذكاء الاصطناعي - تعاونات بحثية' },
   degree1: { en: 'M.Sc. in Artificial Intelligence', de: 'M.Sc. Artificial Intelligence', fr: 'M.Sc. en intelligence artificielle', es: 'M.Sc. en Inteligencia Artificial', ar: 'ماجستير في الذكاء الاصطناعي' },
@@ -74,7 +74,7 @@ export default function About() {
   const infoRows = [
     { label: t(copy.location), value: 'Linz, Austria', accent: false },
     { label: t(copy.supervisor), value: 'Prof. Sepp Hochreiter', accent: false },
-    { label: t(copy.company), value: 'faultrix.com — built solo', accent: true },
+    { label: t(copy.current), value: 'Sihem — LLM assistant (live beta)', accent: true },
     { label: t(copy.openTo), value: t(copy.roles), accent: false },
   ]
 

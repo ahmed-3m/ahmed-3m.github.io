@@ -1261,19 +1261,19 @@ config = {
     lastModified: '2026-04-25',
     translations: {
       en: {
-        title: 'Shipping Faultrix: What I Learned Building an AI SaaS in 5 Months',
+        title: 'Shipping Faultrix: What I Learned Building an AI SaaS From Zero',
         excerpt:
-          'What changed when I moved from research into product building: Faultrix, an AI SaaS for construction quality control that generates ONORM-aligned reports in under a minute.',
+          'What changed when I moved from research into product building: Faultrix, an AI SaaS for construction quality control that generated ONORM-aligned reports in under a minute.',
         tags: ['LLM', 'SaaS', 'Next.js', 'OpenAI', 'Production AI', 'Faultrix'],
         readingTime: '9 min read',
         faq: [
           {
-            question: 'What is Faultrix?',
+            question: 'What was Faultrix?',
             answer:
-              'Faultrix is an AI-powered construction quality-control SaaS. Users upload site photos and receive a structured ONORM-aligned report with evidence handling and security-minded storage.',
+              'Faultrix was an AI-powered construction quality-control SaaS. Users uploaded site photos and received a structured ONORM-aligned report with evidence handling and security-minded storage.',
           },
           {
-            question: 'What stack powers it?',
+            question: 'What stack powered it?',
             answer:
               'Next.js, Convex, OpenAI API, Clerk, Cloudflare R2, Stripe, Docker, and a Python-heavy AI workflow behind the scenes.',
           },
@@ -1286,7 +1286,7 @@ config = {
         content: `
 ## From Research to Product
 
-Faultrix is an AI-powered construction quality-control SaaS. A user uploads site photos, the system analyzes them, and the platform generates an ONORM-aligned report in under a minute.
+Faultrix was an AI-powered construction quality-control SaaS. A user uploaded site photos, the system analyzed them, and the platform generated an ONORM-aligned report in under a minute.
 
 Building it taught me that the jump from research to product is not mostly about choosing another model. It is about making the whole system useful.
 
@@ -1335,19 +1335,19 @@ If the path to value is too long, the sophistication underneath barely matters.
         `,
       },
       de: {
-        title: 'Faultrix ausliefern: Was ich beim Bau eines AI-SaaS in 5 Monaten gelernt habe',
+        title: 'Faultrix ausliefern: Was ich beim Bau eines AI-SaaS von null gelernt habe',
         excerpt:
           'Was sich verändert hat, als ich von Forschung in Produktbau gewechselt bin: Faultrix, ein AI-SaaS für Bauqualitätskontrolle mit ÖNORM-orientierten Berichten in unter einer Minute.',
         tags: ['LLM', 'SaaS', 'Next.js', 'OpenAI', 'Production AI', 'Faultrix'],
         readingTime: '9 Min. Lesezeit',
         faq: [
           {
-            question: 'Was ist Faultrix?',
+            question: 'Was war Faultrix?',
             answer:
-              'Faultrix ist ein KI-basiertes SaaS für Bauqualitätskontrolle. Nutzer laden Baustellenfotos hoch und erhalten einen strukturierten ÖNORM-orientierten Bericht mit Evidenzkette und sicherheitsbewusster Speicherung.',
+              'Faultrix war ein KI-basiertes SaaS für Bauqualitätskontrolle. Nutzer luden Baustellenfotos hoch und erhielten einen strukturierten ÖNORM-orientierten Bericht mit Evidenzkette und sicherheitsbewusster Speicherung.',
           },
           {
-            question: 'Welcher Stack steckt dahinter?',
+            question: 'Welcher Stack steckte dahinter?',
             answer:
               'Next.js, Convex, OpenAI API, Clerk, Cloudflare R2, Stripe, Docker und ein Python-lastiger AI-Workflow im Hintergrund.',
           },
@@ -1360,7 +1360,7 @@ If the path to value is too long, the sophistication underneath barely matters.
         content: `
 ## Von Forschung zu Produkt
 
-Faultrix ist ein KI-basiertes SaaS für Bauqualitätskontrolle. Nutzer laden Fotos hoch, das System analysiert sie, und in weniger als einer Minute entsteht ein ÖNORM-orientierter Bericht.
+Faultrix war ein KI-basiertes SaaS für Bauqualitätskontrolle. Nutzer luden Fotos hoch, das System analysierte sie, und in weniger als einer Minute entstand ein ÖNORM-orientierter Bericht.
 
 Beim Bauen wurde mir klar: Der Schritt von Forschung zu Produkt besteht nicht primär aus einem anderen Modell, sondern daraus, das ganze System nützlich zu machen.
 
@@ -1409,19 +1409,19 @@ Wenn der Weg zum Nutzen zu lang ist, spielt die darunterliegende Raffinesse kaum
         `,
       },
       fr: {
-        title: "Livrer Faultrix : ce que j'ai appris en construisant un SaaS IA en 5 mois",
+        title: "Livrer Faultrix : ce que j'ai appris en construisant un SaaS IA de zéro",
         excerpt:
-          "Ce qui a changé lorsque je suis passé de la recherche au produit : Faultrix, un SaaS IA pour le contrôle qualité construction qui génère des rapports alignés ÖNORM en moins d'une minute.",
+          "Ce qui a changé lorsque je suis passé de la recherche au produit : Faultrix, un SaaS IA pour le contrôle qualité construction qui générait des rapports alignés ÖNORM en moins d'une minute.",
         tags: ['LLM', 'SaaS', 'Next.js', 'OpenAI', 'IA en production', 'Faultrix'],
         readingTime: '9 min de lecture',
         faq: [
           {
             question: "Qu'est-ce que Faultrix ?",
             answer:
-              "Faultrix est un SaaS de contrôle qualité construction piloté par IA. Les utilisateurs chargent des photos de chantier et reçoivent un rapport structuré aligné ÖNORM avec gestion des preuves et stockage sécurisé.",
+              "Faultrix était un SaaS de contrôle qualité construction piloté par IA. Les utilisateurs chargeaient des photos de chantier et recevaient un rapport structuré aligné ÖNORM avec gestion des preuves et stockage sécurisé.",
           },
           {
-            question: 'Quel stack utilise-t-il ?',
+            question: 'Quel stack utilisait-il ?',
             answer:
               'Next.js, Convex, OpenAI API, Clerk, Cloudflare R2, Stripe, Docker, plus un workflow IA fortement centré sur Python.',
           },
@@ -1434,7 +1434,7 @@ Wenn der Weg zum Nutzen zu lang ist, spielt die darunterliegende Raffinesse kaum
         content: `
 ## De la recherche au produit
 
-Faultrix est un SaaS de contrôle qualité construction alimenté par IA. L'utilisateur charge des photos de chantier, le système les analyse, puis génère un rapport aligné ÖNORM en moins d'une minute.
+Faultrix était un SaaS de contrôle qualité construction alimenté par IA. L'utilisateur chargeait des photos de chantier, le système les analysait, puis générait un rapport aligné ÖNORM en moins d'une minute.
 
 Le vrai saut entre recherche et produit n'est pas seulement une question de modèle. C'est la capacité à rendre tout le système utile.
 
@@ -1483,19 +1483,19 @@ Si le chemin vers la valeur est trop long, la sophistication du dessous ne compe
         `,
       },
       es: {
-        title: 'Lanzando Faultrix: lo que aprendí construyendo un SaaS de IA en 5 meses',
+        title: 'Lanzando Faultrix: lo que aprendí construyendo un SaaS de IA de cero',
         excerpt:
-          'Lo que cambió cuando pasé de investigación a producto: Faultrix, un SaaS de IA para control de calidad en construcción que genera informes alineados con ÖNORM en menos de un minuto.',
+          'Lo que cambió cuando pasé de investigación a producto: Faultrix, un SaaS de IA para control de calidad en construcción que generaba informes alineados con ÖNORM en menos de un minuto.',
         tags: ['LLM', 'SaaS', 'Next.js', 'OpenAI', 'IA en producción', 'Faultrix'],
         readingTime: '9 min de lectura',
         faq: [
           {
-            question: '¿Qué es Faultrix?',
+            question: '¿Qué era Faultrix?',
             answer:
-              'Faultrix es un SaaS de control de calidad en construcción impulsado por IA. Los usuarios suben fotos de obra y reciben un informe estructurado alineado con ÖNORM, con manejo de evidencia y almacenamiento seguro.',
+              'Faultrix era un SaaS de control de calidad en construcción impulsado por IA. Los usuarios subían fotos de obra y recibían un informe estructurado alineado con ÖNORM, con manejo de evidencia y almacenamiento seguro.',
           },
           {
-            question: '¿Qué stack usa?',
+            question: '¿Qué stack usaba?',
             answer:
               'Next.js, Convex, OpenAI API, Clerk, Cloudflare R2, Stripe, Docker y un flujo de IA muy apoyado en Python.',
           },
@@ -1508,7 +1508,7 @@ Si le chemin vers la valeur est trop long, la sophistication du dessous ne compe
         content: `
 ## De investigación a producto
 
-Faultrix es un SaaS de control de calidad en construcción impulsado por IA. El usuario sube fotos de obra, el sistema las analiza y genera un informe alineado con ÖNORM en menos de un minuto.
+Faultrix era un SaaS de control de calidad en construcción impulsado por IA. El usuario subía fotos de obra, el sistema las analizaba y generaba un informe alineado con ÖNORM en menos de un minuto.
 
 El salto real entre investigación y producto no es solo elegir otro modelo. Es lograr que todo el sistema sea útil.
 
@@ -1557,21 +1557,21 @@ Si el camino hacia el valor es largo, la sofisticación técnica deja de importa
         `,
       },
       ar: {
-        title: 'إطلاق Faultrix: ما الذي تعلمته من بناء SaaS بالذكاء الاصطناعي خلال 5 أشهر',
+        title: 'إطلاق Faultrix: ما الذي تعلمته من بناء SaaS بالذكاء الاصطناعي من الصفر',
         excerpt:
-          'ما الذي تغير عندما انتقلت من البحث إلى المنتج: Faultrix، منصة SaaS للذكاء الاصطناعي في مراقبة جودة البناء، تولد تقارير متوافقة مع ONORM في أقل من دقيقة.',
+          'ما الذي تغير عندما انتقلت من البحث إلى المنتج: Faultrix، منصة SaaS للذكاء الاصطناعي في مراقبة جودة البناء، كانت تولد تقارير متوافقة مع ONORM في أقل من دقيقة.',
         tags: ['LLM', 'SaaS', 'Next.js', 'OpenAI', 'ذكاء اصطناعي في الإنتاج', 'Faultrix'],
         readingTime: '9 دقائق قراءة',
         faq: [
           {
             question: 'ما هو Faultrix؟',
             answer:
-              'Faultrix هو SaaS لمراقبة جودة البناء مدعوم بالذكاء الاصطناعي. يرفع المستخدم صور الموقع ويحصل على تقرير منظم متوافق مع ONORM مع إدارة للأدلة وتخزين آمن.',
+              'Faultrix كان SaaS لمراقبة جودة البناء مدعوم بالذكاء الاصطناعي. كان يرفع المستخدم صور الموقع ويحصل على تقرير منظم متوافق مع ONORM مع إدارة للأدلة وتخزين آمن.',
           },
           {
             question: 'ما هو الـ stack المستخدم؟',
             answer:
-              'Next.js وConvex وOpenAI API وClerk وCloudflare R2 وStripe وDocker، مع workflow يعتمد كثيراً على Python في طبقة الذكاء الاصطناعي.',
+              'Next.js وConvex وOpenAI API وClerk وCloudflare R2 وStripe وDocker، مع workflow كان يعتمد كثيراً على Python في طبقة الذكاء الاصطناعي.',
           },
           {
             question: 'ما أصعب جزء؟',
@@ -1582,7 +1582,7 @@ Si el camino hacia el valor es largo, la sofisticación técnica deja de importa
         content: `
 ## من البحث إلى المنتج
 
-Faultrix هو SaaS لمراقبة جودة البناء بالذكاء الاصطناعي. يرفع المستخدم صور الموقع، ثم يحللها النظام ويولد تقريراً متوافقاً مع ONORM في أقل من دقيقة.
+Faultrix كان SaaS لمراقبة جودة البناء بالذكاء الاصطناعي. كان يرفع المستخدم صور الموقع، ثم يحللها النظام ويولد تقريراً متوافقاً مع ONORM في أقل من دقيقة.
 
 الانتقال الحقيقي من البحث إلى المنتج لا يعني فقط اختيار نموذج آخر، بل يعني جعل النظام كله مفيداً فعلاً.
 

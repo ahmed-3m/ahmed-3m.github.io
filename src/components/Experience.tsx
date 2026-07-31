@@ -55,7 +55,7 @@ const experiences: Array<{
       es: 'Tesis sobre modelos de difusión condicional como clasificadores generativos para detección OOD bajo Prof. Sepp Hochreiter.',
       ar: 'رسالة ماجستير عن نماذج الانتشار الشرطية كمصنفات توليدية لكشف الخارج عن التوزيع بإشراف البروفيسور سيب هوخرايتر.',
     },
-    active: true,
+    active: false,
   },
   {
     date: 'Apr 2024\nNov 2024',
