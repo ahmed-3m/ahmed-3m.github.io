@@ -8,7 +8,7 @@
 - **Location:** Linz, Upper Austria, Austria
 - **Email:** ahmed.mo.0595@gmail.com
 - **Portfolio:** https://ahmed-3m.github.io
-- **Company:** Faultrix (built solo) — https://faultrix.com
+- **Current work:** Sihem — LLM personal-mentor assistant, live beta (https://t.me/sihem_ai_bot)
 - **Open to:** Senior AI/ML roles · Research collaborations · Enterprise partnerships
 
 ## Key Achievements
@@ -21,7 +21,7 @@
 ## Projects
 
 - [Sihem](https://sihem-pwa.pages.dev/): Current project. LLM personal-mentor assistant in live beta — Telegram bot plus PWA. Built on Supabase edge functions (Deno/TS) with pgvector RAG long-term memory, multi-provider LLM routing (GLM/Gemini/Groq) with failover, and a deterministic generators-arbiter-composer decision engine. Try it at @sihem_ai_bot.
-- [Faultrix](https://faultrix.com): Previous project (Jul 2025 – Jul 2026). AI-powered construction quality control SaaS. Analyzes building photos, generates ÖNORM B 2110-compliant technical reports in under 1 minute. SHA-256 evidence chain, DSGVO compliant, AES-256 encryption. Stack: Next.js, Convex, OpenAI API, Cloudflare R2, Stripe, Clerk, Docker.
+- [Faultrix](https://faultrix.com): Previous project (Jul 2025 – Jul 2026). AI-powered construction quality control SaaS. Analyzed building photos, generated ÖNORM B 2110-compliant technical reports in under 1 minute. SHA-256 evidence chain, DSGVO compliant, AES-256 encryption. Stack: Next.js, Convex, OpenAI API, Cloudflare R2, Stripe, Clerk, Docker.
 - [OOD Detection Framework](https://github.com/ahmed-3m/DiffusionOOD): Novel use of conditional diffusion models as generative classifiers for out-of-distribution detection. 99.03% ± 0.07% average AUROC on CIFAR-10 airplane-vs-rest (binary, single ID class, 3-seed mean). Introduced class-conditional separation loss. Applied to industrial quality control with multi-head conditioning on the public FTI_Zer0P benchmark (0.8673 ± 0.0230 AUROC; thesis-documented).
 - [Industrial Anomaly Detection](https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf): Early 2024 YOLO + diffusion model pipeline for industrial defect detection — a negative-result technical report that motivated the later thesis approach. (The FTI_Zer0P 0.8673 ± 0.0230 AUROC baseline is reported in the [Master's thesis](https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf), not this report.)
 - [EEG Signal Classification](https://github.com/ahmed-3m/Motor-Imagery-classification): LSTM, Bi-LSTM, GRU architectures for EEG motor imagery classification in brain-computer interface applications. Hyperparameter optimization across architectures (Karunya University, 2023).

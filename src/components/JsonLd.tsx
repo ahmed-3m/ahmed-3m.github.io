@@ -44,11 +44,6 @@ export function PersonSchema() {
       'Construction Technology',
       'AI-powered SaaS',
     ],
-    worksFor: {
-      '@type': 'Organization',
-      name: 'Sihem',
-      url: 'https://sihem-pwa.pages.dev/',
-    },
     alumniOf: [
       {
         '@type': 'CollegeOrUniversity',
@@ -165,10 +160,10 @@ export function FAQSchema() {
       },
       {
         '@type': 'Question',
-        name: 'What is Faultrix?',
+        name: 'What was Faultrix?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Faultrix is an AI-powered construction quality control SaaS built by Ahmed Mohammed. It analyzes building photos and generates ÖNORM B 2110-compliant technical reports in under 1 minute. The platform features SHA-256 evidence chain, DSGVO compliance, and AES-256 encryption. Visit faultrix.com for more information.',
+          text: 'Faultrix was an AI-powered construction quality control SaaS built by Ahmed Mohammed. It analyzed building photos and generated ÖNORM B 2110-compliant technical reports in under 1 minute. The platform featured SHA-256 evidence chain, DSGVO compliance, and AES-256 encryption.',
         },
       },
       {
@@ -184,7 +179,7 @@ export function FAQSchema() {
         name: 'What industries does Ahmed Mohammed work with?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Ahmed Mohammed works primarily with industrial manufacturing, construction, and quality control sectors. His work at PROFACTOR GmbH focused on industrial anomaly detection for inkjet-printed building components (Zer0P project, funded by Upper Austria government). Faultrix serves the Austrian construction industry with AI-powered building analysis and ÖNORM-compliant reporting.',
+          text: 'Ahmed Mohammed works primarily with industrial manufacturing, construction, and quality control sectors. His work at PROFACTOR GmbH focused on industrial anomaly detection for inkjet-printed building components (Zer0P project, funded by Upper Austria government). Faultrix was an AI construction QC platform built with ÖNORM B 2110-compliant reports, SHA-256 evidence chain, and AES-256 encryption, generating reports in under 1 minute.',
         },
       },
       {
@@ -209,14 +204,6 @@ export function FAQSchema() {
         acceptedAnswer: {
           '@type': 'Answer',
           text: 'Ahmed Mohammed is open to senior AI/ML engineering roles and research collaborations. He specializes in computer vision, diffusion models, and out-of-distribution detection. Based in Linz, Austria, he is available for positions in the DACH region and remote roles. Contact: ahmed.mo.0595@gmail.com or LinkedIn: linkedin.com/in/ahmed-3m',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'What AI services does Faultrix offer for the construction industry?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Faultrix is an AI-powered construction quality control SaaS. It analyzes building site photos and generates ÖNORM B 2110-compliant technical reports in under 1 minute. The platform provides SHA-256 evidence chains for legal defensibility, DSGVO-compliant data handling, and AES-256 encryption. It serves building inspectors, construction companies, and real estate developers primarily in Austria, Germany, and Switzerland. Visit faultrix.com for details.',
         },
       },
       {
@@ -259,11 +246,6 @@ export function SocialProfileSchema() {
         'https://x.com/Ahmed_mo_93',
       ],
       jobTitle: 'AI/ML Engineer',
-      worksFor: {
-        '@type': 'Organization',
-        name: 'Sihem',
-        url: 'https://sihem-pwa.pages.dev/',
-      },
       alumniOf: [
         {
           '@type': 'CollegeOrUniversity',
