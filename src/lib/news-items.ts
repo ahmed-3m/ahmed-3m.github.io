@@ -289,6 +289,42 @@ const newsItems: NewsItem[] = [
       en: 'The second confirmed case in a month of a frontier lab losing control of an agent mid-eval makes the pattern the story, not any single breach. Anthropic’s own distinction is the useful one — OpenAI’s model wrote a zero-day to break out, while Claude simply walked through internet access a misconfigured harness left open — so the cheapest safety win isn’t a smarter model, it’s eval infrastructure that never hands a graded agent real network egress. And Mythos 5 talking itself back into believing it was still in a simulation while attacking real systems is exactly why an agent can never self-certify it’s sandboxed: the boundary has to be enforced by the harness and an outside monitor like METR, not by the model being graded.'
     },
     tags: ['agent-safety', 'containment', 'evaluation']
+  },
+  {
+    id: 'deepseek-v4-flash-0731-agentic-retune',
+    date: '2026-07-31',
+    category: 'agentic',
+    headline: 'DeepSeek Upgrades DeepSeek-V4-Flash-0731 with Major Agentic and Coding Gains',
+    source: 'MarkTechPost',
+    url: 'https://www.marktechpost.com/2026/07/31/deepseek-upgrades-deepseek-v4-flash-0731-with-major-agentic-and-coding-gains/',
+    take: {
+      en: 'A pure post-training refresh — same 284B/13B MoE, no new architecture — beating DeepSeek\'s own V4-Pro preview on every agentic benchmark at a third of the price is the clearest case yet that the harness and the post-training recipe, not the weights, are where agent quality is actually won. The numbers I\'d trust least are the headline ones: every score is DeepSeek-reported on an unreleased harness, the two biggest jumps sit on internal test sets, and no 0731 weights shipped — so I\'d re-run my own evals before routing a coding workload here, the way I would for any vendor chart.'
+    },
+    tags: ['agentic-coding', 'post-training', 'evaluation']
+  },
+  {
+    id: 'gemini-managed-agents-environment-hooks',
+    date: '2026-07-28',
+    category: 'agentic',
+    headline: 'Gemini API Managed Agents: 3.6 Flash, hooks, and more',
+    source: 'Google',
+    url: 'https://blog.google/innovation-and-ai/technology/developers-tools/expanding-managed-agents-gemini-api-3-6-flash-hooks/',
+    take: {
+      en: 'Environment hooks that let you block, lint, or audit a tool call inside the agent\'s sandbox before it executes are exactly the governance primitive production agents have been missing — least-privilege enforced at the runtime boundary instead of merely hoped for in the prompt. Budget controls and cron triggers on top turn a managed agent from a demo into a cost-bounded scheduled worker, which is the only shape in which most teams will ever dare to let one run unattended.'
+    },
+    tags: ['agent-governance', 'sandboxing', 'production']
+  },
+  {
+    id: 'lg-kexaone-2-0-sovereign-open-weights',
+    date: '2026-07-31',
+    category: 'ai',
+    headline: "LG AI Research Unveils K-EXAONE 2.0, Korea's Largest 750-Billion-Parameter AI Foundation Model",
+    source: 'LG AI Research',
+    url: 'https://www.lgresearch.ai/news/view?seq=678',
+    take: {
+      en: 'Korea shipping a 750B-parameter sovereign model under Apache 2.0 matters for the same reason every open-weight frontier release does — it gives regulated enterprises a defensible self-hosting path instead of routing sensitive data through opaque APIs. The 70.1 average and the agentic-tool-use wins over Qwen3.5 and GLM-5.1 are vendor-reported, so I\'ll take them seriously only when LG\'s promised public evaluation platform goes live and the numbers can actually be re-run.'
+    },
+    tags: ['open-weights', 'sovereign-ai', 'evaluation']
   }
 ]
 
