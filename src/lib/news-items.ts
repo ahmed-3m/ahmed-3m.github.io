@@ -325,6 +325,42 @@ const newsItems: NewsItem[] = [
       en: 'Korea shipping a 750B-parameter sovereign model under Apache 2.0 matters for the same reason every open-weight frontier release does — it gives regulated enterprises a defensible self-hosting path instead of routing sensitive data through opaque APIs. The 70.1 average and the agentic-tool-use wins over Qwen3.5 and GLM-5.1 are vendor-reported, so I\'ll take them seriously only when LG\'s promised public evaluation platform goes live and the numbers can actually be re-run.'
     },
     tags: ['open-weights', 'sovereign-ai', 'evaluation']
+  },
+  {
+    id: 'yc-qm-agent-harness-open-source',
+    date: '2026-08-01',
+    category: 'agentic',
+    headline: 'Y Combinator Open-Sources QM, the AI Agent Harness It Uses to Run Itself',
+    source: 'Startup Fortune',
+    url: 'https://startupfortune.com/y-combinator-open-sources-qm-the-ai-agent-harness-it-uses-to-run-itself/',
+    take: {
+      en: 'YC releasing the harness it actually runs its own accounting, legal, and engineering teams on is the strongest signal yet that the hard part of agents is infrastructure — scoped identity and permissions, durable sandboxes, and scheduled crons — not the model. The design choices are the production-correct ones: blast radius scoped per person and per Slack room, a model-agnostic core so you aren’t betting on one provider, and an MIT license that lets you audit the policy instead of trusting a demo.'
+    },
+    tags: ['agent-harness', 'agent-governance', 'open-source']
+  },
+  {
+    id: 'huawei-openpangu-2-pro-ascend-505b',
+    date: '2026-07-31',
+    category: 'ai',
+    headline: 'Huawei releases 505B-parameter openPangu model trained on Ascend chips',
+    source: 'RuntimeWire',
+    url: 'https://runtimewire.com/article/huawei-releases-openpangu-2-0-pro-ascend',
+    take: {
+      en: 'The headline isn’t 505 billion parameters — it’s zero Nvidia GPUs: Huawei trained this frontier-scale MoE end to end on Ascend NPUs and shipped the weights, the first credible proof that a non-Nvidia compute stack can reach this scale. For production the caveats are what matter — a custom license that bars EU deployment and forces a “Powered by openPangu” badge — and “trained on Ascend” is a claim only outside teams reproducing the eval can verify, so I’d treat it as a sovereignty data point, not a drop-in model.'
+    },
+    tags: ['sovereign-ai', 'open-weights', 'hardware']
+  },
+  {
+    id: 'minimax-m21-multilanguage-programming',
+    date: '2026-08-02',
+    category: 'ai',
+    headline: 'MiniMax M2.1: Significantly Enhanced Multi-Language Programming, Built for Real-World Complex Tasks',
+    source: 'MiniMax',
+    url: 'https://www.minimax.io/news/minimax-m21',
+    take: {
+      en: 'A model refresh pitched around real-world complex tasks and multi-language programming — with the weights open-sourced and a MiniMax Agent product shipping on top — is another data point that agent quality is being won in post-training and scaffolding, not new architectures. But “best level” claims measured on internal benchmarks are exactly the vendor-reported numbers I’d re-run on my own evals before routing any production work here, the way I would for any leaderboard chart.'
+    },
+    tags: ['models', 'agentic-coding', 'open-weights']
   }
 ]
 
