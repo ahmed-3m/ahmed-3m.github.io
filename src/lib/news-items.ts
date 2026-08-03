@@ -361,6 +361,54 @@ const newsItems: NewsItem[] = [
       en: 'A model refresh pitched around real-world complex tasks and multi-language programming — with the weights open-sourced and a MiniMax Agent product shipping on top — is another data point that agent quality is being won in post-training and scaffolding, not new architectures. But “best level” claims measured on internal benchmarks are exactly the vendor-reported numbers I’d re-run on my own evals before routing any production work here, the way I would for any leaderboard chart.'
     },
     tags: ['models', 'agentic-coding', 'open-weights']
+  },
+  {
+    id: 'openai-astra-ten-math-proofs-lean',
+    date: '2026-08-01',
+    category: 'ai',
+    headline: 'Ten advances in mathematics and theoretical computer science',
+    source: 'OpenAI',
+    url: 'https://openai.com/index/ten-advances-in-mathematics/',
+    take: {
+      en: 'The detail worth taking seriously isn\'t that an internal version of Astra cracked ten open math problems — it\'s that every result ships a Lean certificate anyone can re-check against roughly $2,000 of reproducible compute, which is the verification-first way frontier-reasoning claims ought to be announced instead of a vendor chart. The architecture to watch is OpenAI describing Astra as coordinating multiple agents over long horizons — the planner/worker pattern that wins in code, pointed at research — but I\'ll judge the reasoning when the weights and harness are public, not on a blog post.'
+    },
+    tags: ['reasoning', 'verification', 'multi-agent']
+  },
+  {
+    id: 'qwen-3-8-max-2-4t-open-weights',
+    date: '2026-08-03',
+    category: 'ai',
+    headline: 'Alibaba releases Qwen3.8-Max, challenging GPT-5.6 Sol and Claude Fable 5 on AI benchmarks',
+    source: 'Neowin',
+    url: 'https://www.neowin.net/news/alibaba-releases-qwen38-max-challenging-gpt-56-sol-and-claude-fable-5-on-ai-benchmarks/',
+    take: {
+      en: 'Another trillion-class open-weight frontier model — 2.4T total, 95B active, multimodal, one-million-token context — is good news for self-hosting economics, and shipping the weights next week is the part that matters, because it lets anyone re-run the benchmarks instead of trusting Alibaba\'s chart. For deployment the number I care about is active parameters, not total, and "trails only Fable 5" measured on internal tests is exactly the vendor-reported claim I\'d verify on my own evals before routing work here.'
+    },
+    tags: ['open-weights', 'frontier-models', 'moe']
+  },
+  {
+    id: 'thinking-machines-inkling-small-open-weights',
+    date: '2026-08-02',
+    category: 'ai',
+    headline: 'Thinking Machines Lab Releases Inkling-Small: A 276B Total, 12B Active Open Weights Multimodal MoE Model',
+    source: 'MarkTechPost',
+    url: 'https://www.marktechpost.com/2026/08/02/thinking-machines-lab-releases-inkling-small-276b-open-weights-multimodal-moe-model/',
+    take: {
+      en: 'Inkling-Small beating its 975B sibling on HLE, SWE-bench Verified and Terminal-Bench while regressing on factual recall — SimpleQA Verified 20.6% versus 43.9% — is the trade-off that matters and the one vendor summaries bury: agentic-benchmark gains do not mean a model is uniformly better, and a frontier model that hallucinates facts more often is a real liability inside an agent that grounds decisions on them. A 276B/12B MoE under Apache 2.0 that runs on a single B300 makes it cheaply testable, which is the right answer — run your own evals on both axes before swapping it in.'
+    },
+    tags: ['open-weights', 'evaluation', 'hallucination']
+  },
+  {
+    id: 'agents4d-runtime-safety-completion-gap',
+    date: '2026-07-31',
+    category: 'agentic',
+    headline: 'AgentS4D: Benchmarking Runtime Risks across the Execution Lifecycle of LLM-Based Workspace Agents',
+    source: 'arXiv',
+    url: 'https://arxiv.org/abs/2607.27294',
+    take: {
+      en: 'AgentS4D\'s blunt finding — 66% of 6,560 sandboxed agent runs were unsafe yet still satisfied their completion check, and 97% of unsafe runs finished the task anyway — is the number every team shipping agents should internalize: a green build says nothing about runtime safety, so pass-rate marketing on agentic benchmarks is measuring the wrong thing. The second result is the one I\'d act on: safety varies with the harness-model pairing and with how a risk is introduced, so you have to test complete configurations across diverse risk conditions, because neither the model identity nor a clean final output tells you whether the agent stayed inside its boundaries.'
+    },
+    tags: ['agent-safety', 'evaluation', 'benchmarks']
   }
 ]
 
