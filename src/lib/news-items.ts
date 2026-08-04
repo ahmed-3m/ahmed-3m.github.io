@@ -409,6 +409,42 @@ const newsItems: NewsItem[] = [
       en: 'AgentS4D\'s blunt finding — 66% of 6,560 sandboxed agent runs were unsafe yet still satisfied their completion check, and 97% of unsafe runs finished the task anyway — is the number every team shipping agents should internalize: a green build says nothing about runtime safety, so pass-rate marketing on agentic benchmarks is measuring the wrong thing. The second result is the one I\'d act on: safety varies with the harness-model pairing and with how a risk is introduced, so you have to test complete configurations across diverse risk conditions, because neither the model identity nor a clean final output tells you whether the agent stayed inside its boundaries.'
     },
     tags: ['agent-safety', 'evaluation', 'benchmarks']
+  },
+  {
+    id: 'microsoft-orchard-scalable-agentic-framework',
+    date: '2026-08-03',
+    category: 'agentic',
+    headline: 'Orchard: An open framework for scalable agentic AI',
+    source: 'Microsoft Research',
+    url: 'https://www.microsoft.com/en-us/research/blog/orchard-an-open-framework-for-scalable-agentic-ai/',
+    take: {
+      en: 'Orchard Env — one reusable Kubernetes environment service that handles data collection, RL rollouts, and evaluation for software-engineering, web, and personal-assistant agents through a single stack — reinforces the pattern I keep seeing: the environment layer, not the model, is the binding constraint on agentic AI. Training inside real deployment harnesses like Codex instead of toy sandboxes is the methodologically honest move, and Orchard-GUI\'s data efficiency hints that web agents may not need the oceans of hand-labeled trajectories everyone assumed.'
+    },
+    tags: ['agentic-rl', 'infrastructure', 'open-source']
+  },
+  {
+    id: 'cogent-vr-1-cyber-reasoning-model',
+    date: '2026-08-03',
+    category: 'agentic',
+    headline: 'Cogent AI Team Releases VR-1: A Frontier Cyber Reasoning Model That Composes and Verifies Enterprise Attack Paths',
+    source: 'MarkTechPost',
+    url: 'https://www.digitado.com.br/cogent-ai-team-releases-vr-1-a-frontier-cyber-reasoning-model-that-composes-and-verifies-enterprise-attack-paths/',
+    take: {
+      en: 'VR-1 is the defender-side answer to the sandbox-escape incidents of the last month: a model post-trained specifically to compose and verify full enterprise attack chains, shipped with IntrusionBench to score agents on completed intrusions and a governed runtime instead of raw weights. What makes it worth taking seriously is the self-honest framing — Cogent calls its 2× claim preliminary and admits the gap nearly closes once baselines run on a matched harness, which is exactly the eval rigor you\'d demand before letting any cyber-capable agent near production.'
+    },
+    tags: ['cybersecurity', 'evaluation', 'agent-governance']
+  },
+  {
+    id: 'minimax-m2-open-weights-agent-coding',
+    date: '2026-08-04',
+    category: 'agentic',
+    headline: 'MiniMax M2 & Agent: Ingenious in Simplicity',
+    source: 'MiniMax',
+    url: 'https://www.minimax.io/news/minimax-m2',
+    take: {
+      en: 'A model pitched as "born for Agents and code" at 8% of Claude Sonnet\'s price and double the speed — with weights on Hugging Face the same day — is more evidence that the price floor for agent-capable open weights is dropping faster than the capability gap. Before routing real work here I\'d want independent long-horizon agentic evals, because a tokens-per-second number and a free-trial window tell you about capacity, not whether the agent stays coherent over a hundred tool calls.'
+    },
+    tags: ['open-weights', 'agentic-coding', 'model-economics']
   }
 ]
 
