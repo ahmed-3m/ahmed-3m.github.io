@@ -445,6 +445,54 @@ const newsItems: NewsItem[] = [
       en: 'A model pitched as "born for Agents and code" at 8% of Claude Sonnet\'s price and double the speed — with weights on Hugging Face the same day — is more evidence that the price floor for agent-capable open weights is dropping faster than the capability gap. Before routing real work here I\'d want independent long-horizon agentic evals, because a tokens-per-second number and a free-trial window tell you about capacity, not whether the agent stays coherent over a hundred tool calls.'
     },
     tags: ['open-weights', 'agentic-coding', 'model-economics']
+  },
+  {
+    id: 'mistral-shieldstral-policy-adaptive-guardrail',
+    date: '2026-08-04',
+    category: 'ai',
+    headline: 'Introducing Shieldstral',
+    source: 'Mistral AI',
+    url: 'https://mistral.ai/news/shieldstral/',
+    take: {
+      en: 'Framing content moderation as policy-adaptive question-answering — hand the guardrail your rules at inference time instead of retraining for every taxonomy — is the right design, and a 3B model matching 7x-larger guards under Apache 2.0 is exactly the kind of specialization production systems should reach for. The part I\'d verify before trusting it is calibration: a safety classifier is only as good as its score thresholds, and a held-out benchmark average tells you nothing about where it false-negatives on the adversarial cases a real product actually sees.'
+    },
+    tags: ['safety', 'evaluation', 'open-weights']
+  },
+  {
+    id: 'nvidia-alpamayo-2-super-av-reasoning-open-weights',
+    date: '2026-08-04',
+    category: 'ai',
+    headline: 'NVIDIA Alpamayo 2 Super, the Frontier Open Model for Robotaxis and Autonomous Vehicles, Now Available for Commercial Use',
+    source: 'NVIDIA',
+    url: 'https://blogs.nvidia.com/blog/alpamayo-2-super-open-model-now-available/',
+    take: {
+      en: 'An open, commercially-licensable driving-reasoning model that ships Chain-of-Causation traces and a closed-loop AlpaSim score next to its open-loop numbers is the evaluation discipline AV has needed — minADE on a fixed dataset never tells you whether the policy causes the collision, only a closed-loop run does, and that is the gap between a leaderboard and a system you\'d put on a road. For production ML the OpenMDW-1.1 license is the real unlock: teams can fine-tune on their own driving policy and audit the decisions instead of trusting a black-box supplier.'
+    },
+    tags: ['autonomous-driving', 'computer-vision', 'evaluation']
+  },
+  {
+    id: 'liquid-lfm2-5-2-6b-on-device-agents',
+    date: '2026-08-04',
+    category: 'agentic',
+    headline: 'LFM2.5-2.6B: Deploy Agents Everywhere',
+    source: 'Liquid AI',
+    url: 'https://www.liquid.ai/blog/lfm2-5-2-6b',
+    take: {
+      en: 'A 2.6B model that plans, calls tools, and runs multi-step agent loops entirely on-device at 220 tokens/s on a laptop — no cloud inference bill, data staying on the phone — is the edge-agents story that finally has the numbers behind it. Liquid\'s own honest caveat is the one to keep: coding is where the larger models still win, so route on-device for high-volume, latency- and privacy-bound agent work and reach for a frontier model when the task is genuinely hard.'
+    },
+    tags: ['edge-agents', 'on-device', 'tool-use']
+  },
+  {
+    id: 'github-copilot-ms-agent-framework-harness',
+    date: '2026-08-04',
+    category: 'agentic',
+    headline: 'Build Production-Ready Agents with the GitHub Copilot Harness and Agent Framework',
+    source: 'Microsoft',
+    url: 'https://devblogs.microsoft.com/agent-framework/build-production-ready-agents-with-the-github-copilot-harness-and-agent-framework/',
+    take: {
+      en: 'Letting GitHub Copilot own the agent loop — model calls, tool invocation, planning, session state — while Agent Framework wraps it with consistent approvals, OpenTelemetry observability, and human-in-the-loop governance is the right separation of concerns: don\'t rebuild a coding harness, reuse one and put your production controls around it. The model-agnostic framing is exactly how an agent should be operated once it touches real systems — the loop is a commodity, the governance around it is not.'
+    },
+    tags: ['agent-harness', 'agent-governance', 'agentic-coding']
   }
 ]
 
