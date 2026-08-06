@@ -493,6 +493,54 @@ const newsItems: NewsItem[] = [
       en: 'Letting GitHub Copilot own the agent loop — model calls, tool invocation, planning, session state — while Agent Framework wraps it with consistent approvals, OpenTelemetry observability, and human-in-the-loop governance is the right separation of concerns: don\'t rebuild a coding harness, reuse one and put your production controls around it. The model-agnostic framing is exactly how an agent should be operated once it touches real systems — the loop is a commodity, the governance around it is not.'
     },
     tags: ['agent-harness', 'agent-governance', 'agentic-coding']
+  },
+  {
+    id: 'glm-5-2-open-weight-safety-gap',
+    date: '2026-08-04',
+    category: 'ai',
+    headline: 'Open-weight AI models are catching up to the frontier. The safety gap remains.',
+    source: 'TechCrunch',
+    url: 'https://techcrunch.com/2026/08/04/open-weight-ai-models-are-catching-up-to-the-frontier-the-safety-gap-remains/',
+    take: {
+      en: 'SaferAI reporting that Z.ai\'s GLM-5.2 refused none of the offensive cyber and biology tasks it was given — while Claude Opus 4.7 refused so consistently that CyberGym could not be completed on it at all — is a calibration story, not a capability one: a frontier-class open-weight model shipped with no safety framework, no pre-deployment eval, and no risk assessment is the asymmetric risk of open weights in exactly the form critics warned about, because the refusal threshold you never measured is the one an adversary probes first. Capability is closing fast; the safety-discipline gap is widening, and that is the variable that decides whether you can deploy it.'
+    },
+    tags: ['open-weights', 'safety', 'evaluation']
+  },
+  {
+    id: 'databricks-unity-ai-gateway-agent-governance',
+    date: '2026-08-04',
+    category: 'agentic',
+    headline: 'Unity AI Gateway is Generally Available',
+    source: 'Databricks',
+    url: 'https://www.databricks.com/blog/unity-ai-gateway-generally-available',
+    take: {
+      en: 'Databricks treating every AI asset — models, agents, MCP servers, coding assistants — as one governed surface with hard spend caps and runtime guardrails in Unity Catalog is the control plane agentic rollouts have been missing: token cost and tool-call blast radius are the two things that blow up in production, and both have to live at a layer the model cannot argue its way past. Smart routing each request to the cheapest model that clears a quality bar is what makes least-privilege affordable instead of a principle nobody enforces — and routing by an eval gate is the only economics that survive once an agent runs for hours.'
+    },
+    tags: ['agent-governance', 'model-routing', 'production']
+  },
+  {
+    id: 'cisco-antares-open-weight-security-slms',
+    date: '2026-08-04',
+    category: 'ai',
+    headline: 'Cisco Antares: helping to make AI secure for all',
+    source: 'Cisco',
+    url: 'https://newsroom.cisco.com/c/r/newsroom/en/us/a/y2026/m08/cisco-antares-helping-to-make-ai-secure-for-all.html',
+    take: {
+      en: 'Antares is the specialization argument aimed at security: three small open-weight models that do nothing but find code flaws, cheap enough to scan continuously on a laptop or a single GPU instead of paying frontier-model rates per pass. The premise to internalize is Cisco\'s own — coding agents ship more code and therefore more vulnerabilities, so scanning has to be an always-on eval inside the loop rather than a quarterly gate, and a pipeline that cannot find its own bugs should not be merging unattended.'
+    },
+    tags: ['code-security', 'open-weights', 'evaluation']
+  },
+  {
+    id: 'jeff-dean-discovery-loop-deepmind-shakeup',
+    date: '2026-08-05',
+    category: 'agentic',
+    headline: 'Google Deepmind loses both its CEO and chief scientist as Demis Hassabis and Jeff Dean step down simultaneously',
+    source: 'The Decoder',
+    url: 'https://the-decoder.com/google-deepmind-loses-both-its-ceo-and-chief-scientist-as-demis-hassabis-and-jeff-dean-step-down-simultaneously/',
+    take: {
+      en: 'Jeff Dean and Sanjay Ghemawat leaving after 27 years to build Discovery Loop — a public-benefit company whose entire premise is automating machine-learning, science, and engineering research — is the clearest signal yet that the frontier is shifting from training bigger models toward building agents that run the research loop itself, with Google staying on as an investor the same way it did with Anthropic. The part that matters in production is the roadmap risk: a delayed Gemini 4 and the departure of the people who built the platform underneath it is a reminder to treat any single frontier provider as replaceable and to keep your evals provider-agnostic.'
+    },
+    tags: ['autonomous-research', 'frontier-labs', 'evaluation']
   }
 ]
 
