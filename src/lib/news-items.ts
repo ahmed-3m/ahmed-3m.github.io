@@ -565,6 +565,42 @@ const newsItems: NewsItem[] = [
       en: 'OpenAI making “fewer mistakes, especially when answers depend on dates, numbers, sources, rules, or assumptions” the headline of a frontier-model update is the right instinct — factual grounding on retrieved sources is exactly the axis a production system is graded on, and it’s the one vendor charts consistently hide. The reasoning slider is a user-facing lever for the compute knob that already existed, not a new capability, and shipping a Chat-tuned Sol separate from the Work/Codex Sol is an honest admission that optimizing for a chatty interface and optimizing for a long-horizon agent are no longer the same model.'
     },
     tags: ['models', 'reliability', 'evaluation']
+  },
+  {
+    id: 'meta-muse-code-terminal-coding-agent',
+    date: '2026-08-05',
+    category: 'agentic',
+    headline: 'Meta launches Muse Code, an AI agent for large code bases',
+    source: 'TechCrunch',
+    url: 'https://techcrunch.com/2026/08/05/meta-launches-muse-code-an-ai-agent-for-large-code-bases/',
+    take: {
+      en: 'Meta shipping its first coding agent — a terminal tool built on the co-trained Muse Spark 1.2 and driven by persistent sub-agents that hold context across long jobs — is a serious late entry into a market Claude Code and Codex already own, but the real weapon is price: a contributor tier roughly ten times cheaper that is subsidized by training on your code. It is a coherent strategy — Meta buys adoption and the data to close the gap in one move — but the Terminal-Bench and DeepSWE scores are Meta\'s own on a closed model whose cheapest path trades your codebase for weights, so I\'d re-run my own evals before routing repo-scale work there.'
+    },
+    tags: ['agentic-coding', 'multi-agent', 'model-economics']
+  },
+  {
+    id: 'browser-use-judge-reliability-agent-benchmark',
+    date: '2026-08-05',
+    category: 'agentic',
+    headline: 'The Benchmark Behind the Benchmark',
+    source: 'Browser Use',
+    url: 'https://browser-use.com/posts/benchmark-behind-the-benchmark',
+    take: {
+      en: 'Browser Use decomposing a benchmark into the two things it actually is — the tasks and the judge that scores them — and then showing that swapping only the grading model moves the score by twenty-one points, with 45% of the benchmark depending on which judge you ask, is the methodological result every agentic leaderboard needs to internalize: if the judge moves the score more than the model does, you cannot tell whether a change helped. Their second finding is the one I\'d act on first — the same model on the same 106 tasks solved a different ~89 each of five runs, so a single run measures how often a model succeeds, not what it can do, which is why pass@k and run-level variance belong on every agent eval alongside the headline number.'
+    },
+    tags: ['evaluation', 'benchmarks', 'web-agents']
+  },
+  {
+    id: 'openai-astra-critical-cyber-preparedness-pause',
+    date: '2026-08-07',
+    category: 'agentic',
+    headline: 'OpenAI says it slowed Astra model development over security concerns',
+    source: 'TechCrunch',
+    url: 'https://techcrunch.com/2026/08/07/openai-says-it-slowed-astra-model-development-over-security-concerns/',
+    take: {
+      en: 'OpenAI publicly pausing an unreleased model because its own Preparedness Framework can no longer rule out the Critical cybersecurity threshold — the first time a frontier lab has halted a model over measured capability rather than after a breach — is the rare good-faith signal in a month of containment failures, and it is exactly the evaluate-before-you-deploy discipline that should gate every agentic rollout. The production-relevant detail is the control built for it: universal chain-of-thought monitoring across every agentic use of Astra that can interrupt a high-risk action mid-run, which is trajectory-level supervision rather than per-action approval — the only monitoring shape that survives a model that persists for hours.'
+    },
+    tags: ['agent-safety', 'evaluation', 'governance']
   }
 ]
 
