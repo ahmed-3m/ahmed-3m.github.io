@@ -75,9 +75,13 @@ contains — no API key.
 - When `NEXT_PUBLIC_CHAT_PROXY_URL` is set, the `zaiProvider` in
   `src/components/ChatBot.tsx` POSTs `{ messages, model, max_tokens, temperature }`
   to the proxy URL **without** an `Authorization` header. The proxy adds the key.
-- When `NEXT_PUBLIC_CHAT_PROXY_URL` is **not** set, the ChatBot falls back to the
-  original direct-call behavior using `NEXT_PUBLIC_BIGMODEL_TOKEN`. This keeps the
-  change fully backward compatible.
+- When `NEXT_PUBLIC_CHAT_PROXY_URL` is **not** set, the ChatBot falls back to
+  direct-call behavior using `NEXT_PUBLIC_BIGMODEL_TOKEN`. **Note:** existing
+  deployments that previously used `NEXT_PUBLIC_ZAI_TOKEN` (for the old Z.ai host)
+  will NOT automatically work with the new BigModel endpoint — operators must
+  configure `NEXT_PUBLIC_BIGMODEL_TOKEN` with a valid `open.bigmodel.cn` API key
+  before deployment, or set up the proxy with the `ZAI_API_KEY` secret to avoid
+  embedding any token in the build.
 - The proxy enforces a hard `MAX_TOKENS` cap (500) and only accepts POST
   requests; all other methods get a `405`. It returns CORS headers for the
   portfolio origin and rejects malformed bodies with `400`.
