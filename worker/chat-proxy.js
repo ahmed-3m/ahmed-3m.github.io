@@ -1,19 +1,23 @@
 /**
  * Cloudflare Worker: ahmed-chat-proxy
  *
- * Proxies chat completion requests from the portfolio's ChatBot to the Z.ai API
- * so the real API key never ships to the browser bundle. The browser POSTs a
- * plain `{ messages, model, max_tokens, temperature }` body; the Worker attaches
- * `Authorization: Bearer ${env.ZAI_API_KEY}` and forwards the request to Z.ai.
+ * Proxies chat completion requests from the portfolio's ChatBot to the Zhipu
+ * BigModel API (GLM Coding Plan) so the real API key never ships to the browser
+ * bundle. The browser POSTs a plain `{ messages, model, max_tokens, temperature }`
+ * body; the Worker attaches `Authorization: Bearer ${env.ZAI_API_KEY}` and
+ * forwards the request to BigModel.
  *
  * Env:
- *   ZAI_API_KEY  (secret)  The real Z.ai API key. Set via `wrangler secret put ZAI_API_KEY`.
+ *   ZAI_API_KEY  (secret)  The real Zhipu BigModel API key. Set via
+ *                         `wrangler secret put ZAI_API_KEY`. (The binding name is
+ *                         kept for backward compatibility with existing deployments;
+ *                         the value it holds is a BigModel key, not a Z.ai one.)
  *   CHAT_RATE_KV (optional KV namespace binding) for simple IP-based rate limiting.
  *
  * See worker/README.md for deployment and usage.
  */
 
-const ZAI_CHAT_URL = 'https://api.z.ai/api/paas/v4/chat/completions'
+const ZAI_CHAT_URL = 'https://open.bigmodel.cn/api/coding/paas/v4/chat/completions'
 const DEFAULT_MODEL = 'glm-4.5-airx'
 const MAX_TOKENS = 500
 const RATE_LIMIT_PER_HOUR = 60
@@ -168,7 +172,7 @@ export default {
       thinking: { type: 'disabled' },
     }
 
-    // Forward to Z.ai with the server-side secret.
+    // Forward to BigModel with the server-side secret.
     try {
       const upstream = await fetch(ZAI_CHAT_URL, {
         method: 'POST',

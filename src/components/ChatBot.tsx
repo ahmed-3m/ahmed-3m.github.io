@@ -53,7 +53,7 @@ type ChatCompletionResponse = {
 }
 
 type ProviderConfig = {
-  name: 'Groq' | 'Z.ai' | 'BigModel'
+  name: 'Groq' | 'BigModel'
   token: string
   url: string
   body: Record<string, unknown>
@@ -740,12 +740,12 @@ export default function ChatBot() {
     if (!content || isLoading) return
 
     const groqToken = process.env.NEXT_PUBLIC_GROQ_TOKEN
-    // Prefer the new BigModel secret; fall back to the legacy Z.ai names so
-    // the rollout doesn't require a perfectly synchronized secret swap.
-    const zaiToken =
-      process.env.NEXT_PUBLIC_BIGMODEL_TOKEN ??
-      process.env.NEXT_PUBLIC_ZAI_TOKEN ??
-      process.env.NEXT_PUBLIC_ZAI_API_KEY
+    // BigModel (open.bigmodel.cn) key. NOTE: a Z.ai (api.z.ai) key will NOT
+    // authenticate against this host — they are separate platforms — so there
+    // is intentionally no fallback to NEXT_PUBLIC_ZAI_TOKEN. If the secret is
+    // unset, the chatbot fails loudly (missing-token UI) rather than silently
+    // sending the wrong key to the wrong host.
+    const zaiToken = process.env.NEXT_PUBLIC_BIGMODEL_TOKEN
     const hasGroqToken = isConfiguredToken(groqToken)
     const hasZaiToken = isConfiguredToken(zaiToken)
     const hasProxy = Boolean(CHAT_PROXY_URL)

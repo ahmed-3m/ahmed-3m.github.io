@@ -88,7 +88,7 @@ jobs:
             echo "Attempt $attempt ($m) failed (exit $code) — likely a transient overload. Trying next tier in 15s..."
             sleep 15
           done
-          echo "Agent failed across all model tiers — Z.ai likely broadly overloaded. The daily run will retry tomorrow."
+          echo "Agent failed across all model tiers — BigModel likely broadly overloaded. The daily run will retry tomorrow."
           exit 1
 
       - name: Validate build

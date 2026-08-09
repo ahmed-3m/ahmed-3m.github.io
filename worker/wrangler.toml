@@ -2,8 +2,10 @@ name = "ahmed-chat-proxy"
 main = "chat-proxy.js"
 compatibility_date = "2024-01-01"
 
-# Set the Z.ai API key as a Cloudflare secret:
+# Set the Zhipu BigModel API key as a Cloudflare secret:
 #   wrangler secret put ZAI_API_KEY
+# (The binding name `ZAI_API_KEY` is retained for backward compatibility with
+# existing deployments; the value it holds is a BigModel open.bigmodel.cn key.)
 # This key is NEVER exposed to the client — it lives only in the Worker's environment.
 
 # Optional: bind a KV namespace to enable simple IP-based rate limiting.
