@@ -174,7 +174,7 @@ const CHAT_COPY = {
   },
   missingToken: {
     en: 'Add NEXT_PUBLIC_GROQ_TOKEN or NEXT_PUBLIC_BIGMODEL_TOKEN to enable the assistant.',
-    de: 'Fuge NEXT_PUBLIC_GROQ_TOKEN oder NEXT_PUBLIC_BIGMODEL_TOKEN hinzu, um den Assistenten zu aktivieren.',
+    de: 'Füge NEXT_PUBLIC_GROQ_TOKEN oder NEXT_PUBLIC_BIGMODEL_TOKEN hinzu, um den Assistenten zu aktivieren.',
     fr: 'Ajoutez NEXT_PUBLIC_GROQ_TOKEN ou NEXT_PUBLIC_BIGMODEL_TOKEN pour activer l assistant.',
     es: 'Agrega NEXT_PUBLIC_GROQ_TOKEN o NEXT_PUBLIC_BIGMODEL_TOKEN para activar el asistente.',
     ar: 'أضف NEXT_PUBLIC_GROQ_TOKEN أو NEXT_PUBLIC_BIGMODEL_TOKEN لتفعيل المساعد.',
