@@ -601,6 +601,54 @@ const newsItems: NewsItem[] = [
       en: 'OpenAI publicly pausing an unreleased model because its own Preparedness Framework can no longer rule out the Critical cybersecurity threshold — the first time a frontier lab has halted a model over measured capability rather than after a breach — is the rare good-faith signal in a month of containment failures, and it is exactly the evaluate-before-you-deploy discipline that should gate every agentic rollout. The production-relevant detail is the control built for it: universal chain-of-thought monitoring across every agentic use of Astra that can interrupt a high-risk action mid-run, which is trajectory-level supervision rather than per-action approval — the only monitoring shape that survives a model that persists for hours.'
     },
     tags: ['agent-safety', 'evaluation', 'governance']
+  },
+  {
+    id: 'aws-dogwood-runtime-verification-agents',
+    date: '2026-08-06',
+    category: 'agentic',
+    headline: 'Introducing Dogwood: runtime verification for AI agents',
+    source: 'AWS Open Source',
+    url: 'https://aws.amazon.com/blogs/opensource/introducing-dogwood-runtime-verification-for-ai-agents/',
+    take: {
+      en: 'Dogwood\'s bet — governing sequences of agent actions rather than each call in isolation — is exactly the gap point-in-time authorization like Cedar leaves open, and grounding it in metric temporal logic turns "don\'t do X after you\'ve done Y" from a prompt into a checkable property. The trade AWS itself names is the one to respect: temporal policies cost stateful event-log evaluation and give up Cedar\'s automated-reasoning guarantees, so this is the right primitive for long agent trajectories, not a replacement for the per-call authz you still need underneath.'
+    },
+    tags: ['agent-safety', 'runtime-verification', 'governance']
+  },
+  {
+    id: 'agent-plugins-open-standard-portable',
+    date: '2026-08-06',
+    category: 'agentic',
+    headline: 'Agent Plugins package your skills, tools, and more',
+    source: 'Google Developers Blog',
+    url: 'https://developers.googleblog.com/agent-plugins-package-your-skills-tools-and-more/',
+    take: {
+      en: 'A vendor-neutral packaging format for agent skills and MCP servers — backed by a TSC from Amazon, Cursor, Microsoft, OpenAI, and Vercel, with Google now joining — is the boring standardization layer that decides whether an extension you write once actually runs across Claude Code, Cursor, and Kiro or has to be re-packaged per client. What makes it worth watching is the layering discipline: Agent Plugins sits cleanly above MCP and Skills without competing with either, and the discovery protocol front-loads "what\'s available for this task?" before any tool fires — the catalog-your-capabilities-then-route discipline that keeps a growing agent stack from collapsing into integration glue.'
+    },
+    tags: ['agent-plugins', 'mcp', 'interoperability']
+  },
+  {
+    id: 'google-weathernext-cyclone-forecasting',
+    date: '2026-08-06',
+    category: 'ai',
+    headline: 'WeatherNext: AI model achieves breakthrough in forecasting cyclones',
+    source: 'Google DeepMind',
+    url: 'https://deepmind.google/blog/weathernext-ai-model-achieves-breakthrough-in-forecasting-cyclones/',
+    take: {
+      en: 'A single model buying forecasters roughly a day of extra cyclone lead time — about a decade of meteorological progress — is the kind of measured, falsifiable claim I\'ll take seriously, especially with a Nature paper behind it instead of a vendor chart. The part that matters for production is the release terms: Apache 2.0 code and CC-BY 4.0 weights with commercial use permitted, which finally lets forecasting vendors, insurers, and energy traders build on the weights instead of the non-commercial license that locked down GraphCast and GenCast.'
+    },
+    tags: ['applied-ai', 'weather', 'open-weights']
+  },
+  {
+    id: 'anthropic-fable-5-biology-safeguards',
+    date: '2026-08-07',
+    category: 'ai',
+    headline: "Improving Fable 5's biology safeguards",
+    source: 'Anthropic',
+    url: 'https://www.anthropic.com/news/improving-fable-5-s-biology-safeguards',
+    take: {
+      en: 'Cutting biology-related false-positive fallbacks by 85% by rewriting the classifier\'s "constitution" — explicitly carving out benign uses instead of a blunt safety margin — is the calibration work that rarely makes a launch chart but is exactly what determines whether a frontier model is usable in production. The honest part is Anthropic still blocking dual-use professional biology and drug-development queries: the improvement is fewer wrong blocks, not a wider allowed surface, which is the right direction for a safety classifier — tighten the false positives without widening the true negatives.'
+    },
+    tags: ['safety', 'calibration', 'reliability']
   }
 ]
 
