@@ -1,7 +1,15 @@
 {
-  "updatedAt": "2026-08-09T07:33:44.943Z",
+  "updatedAt": "2026-08-09T23:13:33.266Z",
   "source": "https://github.com/ahmed-3m",
   "items": [
+    {
+      "id": "13014245357",
+      "type": "PullRequestEvent",
+      "repo": "ahmed-3m/ahmed-3m.github.io",
+      "message": "Merged PR #41: chore(glm): migrate GLM endpoints from Z.ai to Zhipu BigModel",
+      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/41",
+      "createdAt": "2026-08-09T23:12:31Z"
+    },
     {
       "id": "12607847529",
       "type": "PullRequestEvent",
@@ -41,14 +49,6 @@
       "message": "Merged PR #5: Replace vanity stat cards with impact-metrics strip",
       "url": "https://github.com/ahmed-3m/ahmed-3m/pull/5",
       "createdAt": "2026-07-30T17:38:04Z"
-    },
-    {
-      "id": "12314248452",
-      "type": "PullRequestEvent",
-      "repo": "ahmed-3m/ahmed-3m.github.io",
-      "message": "Merged PR #38: fix(news): daily pipeline + resilient link checker",
-      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/38",
-      "createdAt": "2026-07-26T15:05:43Z"
     }
   ]
 }
