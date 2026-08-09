@@ -53,7 +53,7 @@ type ChatCompletionResponse = {
 }
 
 type ProviderConfig = {
-  name: 'Groq' | 'Z.ai'
+  name: 'Groq' | 'BigModel'
   token: string
   url: string
   body: Record<string, unknown>
@@ -67,15 +67,18 @@ type ChatCompletionError = Error & {
 }
 
 const GROQ_MODEL = 'llama-3.1-8b-instant'
+// GLM via Zhipu BigModel GLM Coding Plan (open.bigmodel.cn). The Coding Plan
+// uses the dedicated /api/coding/paas/v4 base — distinct from the generic
+// pay-as-you-go /api/paas/v4 path, and from the international api.z.ai host.
 const ZAI_MODEL = 'glm-4.5-airx'
 const GROQ_CHAT_URL = 'https://api.groq.com/openai/v1/chat/completions'
-const ZAI_CHAT_URL = 'https://api.z.ai/api/paas/v4/chat/completions'
+const ZAI_CHAT_URL = 'https://open.bigmodel.cn/api/coding/paas/v4/chat/completions'
 const CHAT_PROXY_URL = process.env.NEXT_PUBLIC_CHAT_PROXY_URL
 const MAX_REPLY_CHARS = 1600
 const GENIE_NAME = 'Genie\u{1F9DE}\u200D\u2642\uFE0F'
 
 // ── Security model ──────────────────────────────────────────
-// NEXT_PUBLIC_GROQ_TOKEN / NEXT_PUBLIC_ZAI_TOKEN are inlined into
+// NEXT_PUBLIC_GROQ_TOKEN / NEXT_PUBLIC_BIGMODEL_TOKEN are inlined into
 // the static bundle and publicly extractable. Use disposable, rate-
 // limited keys only. For production, set NEXT_PUBLIC_CHAT_PROXY_URL
 // to a Cloudflare Worker proxy (see worker/README.md) — the proxy
@@ -170,11 +173,11 @@ const CHAT_COPY = {
     ar: 'أحمد يكتب الآن',
   },
   missingToken: {
-    en: 'Add NEXT_PUBLIC_GROQ_TOKEN or NEXT_PUBLIC_ZAI_TOKEN to enable the assistant.',
-    de: 'Fuge NEXT_PUBLIC_GROQ_TOKEN oder NEXT_PUBLIC_ZAI_TOKEN hinzu, um den Assistenten zu aktivieren.',
-    fr: 'Ajoutez NEXT_PUBLIC_GROQ_TOKEN ou NEXT_PUBLIC_ZAI_TOKEN pour activer l assistant.',
-    es: 'Agrega NEXT_PUBLIC_GROQ_TOKEN o NEXT_PUBLIC_ZAI_TOKEN para activar el asistente.',
-    ar: 'أضف NEXT_PUBLIC_GROQ_TOKEN أو NEXT_PUBLIC_ZAI_TOKEN لتفعيل المساعد.',
+    en: 'Add NEXT_PUBLIC_GROQ_TOKEN or NEXT_PUBLIC_BIGMODEL_TOKEN to enable the assistant.',
+    de: 'Füge NEXT_PUBLIC_GROQ_TOKEN oder NEXT_PUBLIC_BIGMODEL_TOKEN hinzu, um den Assistenten zu aktivieren.',
+    fr: 'Ajoutez NEXT_PUBLIC_GROQ_TOKEN ou NEXT_PUBLIC_BIGMODEL_TOKEN pour activer l assistant.',
+    es: 'Agrega NEXT_PUBLIC_GROQ_TOKEN o NEXT_PUBLIC_BIGMODEL_TOKEN para activar el asistente.',
+    ar: 'أضف NEXT_PUBLIC_GROQ_TOKEN أو NEXT_PUBLIC_BIGMODEL_TOKEN لتفعيل المساعد.',
   },
   genericError: {
     en: 'Something went wrong while contacting the assistant.',
@@ -737,7 +740,12 @@ export default function ChatBot() {
     if (!content || isLoading) return
 
     const groqToken = process.env.NEXT_PUBLIC_GROQ_TOKEN
-    const zaiToken = process.env.NEXT_PUBLIC_ZAI_TOKEN ?? process.env.NEXT_PUBLIC_ZAI_API_KEY
+    // BigModel (open.bigmodel.cn) key. NOTE: a Z.ai (api.z.ai) key will NOT
+    // authenticate against this host — they are separate platforms — so there
+    // is intentionally no fallback to NEXT_PUBLIC_ZAI_TOKEN. If the secret is
+    // unset, the chatbot fails loudly (missing-token UI) rather than silently
+    // sending the wrong key to the wrong host.
+    const zaiToken = process.env.NEXT_PUBLIC_BIGMODEL_TOKEN
     const hasGroqToken = isConfiguredToken(groqToken)
     const hasZaiToken = isConfiguredToken(zaiToken)
     const hasProxy = Boolean(CHAT_PROXY_URL)
@@ -793,9 +801,9 @@ export default function ChatBot() {
 
       const zaiProvider: ProviderConfig | null = (hasZaiToken || hasProxy)
         ? {
-            name: 'Z.ai',
+            name: 'BigModel',
             // When the proxy URL is set, route through it; the Worker holds the
-            // real API key server-side. Otherwise call Z.ai directly.
+            // real API key server-side. Otherwise call BigModel (GLM Coding Plan) directly.
             token: zaiToken ?? '',
             url: CHAT_PROXY_URL || ZAI_CHAT_URL,
             useProxy: Boolean(CHAT_PROXY_URL),

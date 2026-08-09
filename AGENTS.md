@@ -73,15 +73,16 @@ The `/news` page is designed to be kept current by an agent. All content lives i
 ### Automated daily pipeline
 
 `.github/workflows/news-update.yml` runs this loop automatically **daily** (06:23 UTC,
-and on manual dispatch): GLM-5.2 via the Z.ai endpoint + the Exa research MCP collect recent
-news, dedupe against `news-items.ts`, append items, then the workflow runs `npm run build`
-and `.github/news/check-news-links.mjs` and **auto-merges to `main` only if both pass**. It is
-fully serverless — the Action is the backend and git is the dedup store; no hosting needed.
-On a quiet day with nothing new, the agent writes no items and publish is a no-op.
+and on manual dispatch): GLM-5.2 via Zhipu BigModel (open.bigmodel.cn, Anthropic-format
+endpoint) + the Exa research MCP collect recent news, dedupe against `news-items.ts`,
+append items, then the workflow runs `npm run build` and `.github/news/check-news-links.mjs`
+and **auto-merges to `main` only if both pass**. It is fully serverless — the Action is the
+backend and git is the dedup store; no hosting needed. On a quiet day with nothing new, the
+agent writes no items and publish is a no-op.
 
 Required repository secrets:
-- `ZAI_NEWS_TOKEN` — private Z.ai / GLM key for the news agent. Never prefixed with `NEXT_PUBLIC_` — must NOT appear in the client bundle.
-- `NEXT_PUBLIC_ZAI_TOKEN` — public, rate-limited Z.ai key for the portfolio chatbot. This IS inlined into the static JS bundle and is publicly extractable; use a disposable/capped key. The news agent must NOT reuse this key.
+- `BIGMODEL_NEWS_TOKEN` — private Zhipu BigModel API key for the news agent. Never prefixed with `NEXT_PUBLIC_` — must NOT appear in the client bundle. Note: the news agent uses the `/api/anthropic` endpoint (Claude Code speaks the Anthropic Messages API); the GLM Coding Plan `/api/coding/paas/v4` path does NOT support Claude Code.
+- `NEXT_PUBLIC_BIGMODEL_TOKEN` — public, rate-limited Zhipu BigModel key for the portfolio chatbot (uses the GLM Coding Plan `/api/coding/paas/v4/chat/completions` endpoint). This IS inlined into the static JS bundle and is publicly extractable; use a disposable/capped key. The news agent must NOT reuse this key.
 - `EXA_API_KEY` — Exa API key (https://exa.ai).
 
 The agent's instructions live in `.github/news/task.md`; the Exa MCP config in

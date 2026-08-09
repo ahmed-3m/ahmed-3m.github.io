@@ -1,13 +1,14 @@
 # ahmed-chat-proxy
 
 An optional Cloudflare Worker that proxies the portfolio's ChatBot requests to
-the Z.ai API. It keeps the real Z.ai API key server-side so it is never inlined
-into the static JavaScript bundle that ships to visitors' browsers.
+the Zhipu BigModel API (GLM Coding Plan, `open.bigmodel.cn`). It keeps the real
+BigModel API key server-side so it is never inlined into the static JavaScript
+bundle that ships to visitors' browsers.
 
 ## Why this exists
 
-Before this proxy, the ChatBot called Z.ai (and Groq) **directly from the
-browser** using `NEXT_PUBLIC_ZAI_TOKEN` / `NEXT_PUBLIC_GROQ_TOKEN`. Anything
+Before this proxy, the ChatBot called BigModel (and Groq) **directly from the
+browser** using `NEXT_PUBLIC_BIGMODEL_TOKEN` / `NEXT_PUBLIC_GROQ_TOKEN`. Anything
 prefixed with `NEXT_PUBLIC_` is inlined into the static bundle at build time and
 is therefore publicly extractable by anyone who opens the site's JS. Those keys
 must be treated as disposable and rate-limited — anyone can grab them and burn
@@ -15,7 +16,12 @@ your quota.
 
 This Worker fixes that: the browser POSTs to the Worker with **no** API key, and
 the Worker attaches the real `ZAI_API_KEY` secret (stored only in Cloudflare)
-before forwarding the request to Z.ai. The secret never reaches the client.
+before forwarding the request to BigModel. The secret never reaches the client.
+
+> **Note on the `ZAI_API_KEY` binding name:** this is the Cloudflare secret
+> *binding name* (set via `wrangler secret put ZAI_API_KEY`) and is retained for
+> backward compatibility with existing deployments. The *value* it holds is a
+> Zhipu BigModel (`open.bigmodel.cn`) API key, not a Z.ai one.
 
 ## Deploy
 
@@ -28,7 +34,7 @@ npm i -g wrangler
 # 2. Authenticate with Cloudflare (opens a browser).
 wrangler login
 
-# 3. From this worker/ directory, set the Z.ai API key as a secret.
+# 3. From this worker/ directory, set the Zhipu BigModel API key as a secret.
 #    You will be prompted to paste the key. It is stored encrypted in Cloudflare
 #    and is never written to this repo.
 wrangler secret put ZAI_API_KEY
@@ -69,14 +75,19 @@ contains — no API key.
 - When `NEXT_PUBLIC_CHAT_PROXY_URL` is set, the `zaiProvider` in
   `src/components/ChatBot.tsx` POSTs `{ messages, model, max_tokens, temperature }`
   to the proxy URL **without** an `Authorization` header. The proxy adds the key.
-- When `NEXT_PUBLIC_CHAT_PROXY_URL` is **not** set, the ChatBot falls back to the
-  original direct-call behavior using `NEXT_PUBLIC_ZAI_TOKEN`. This keeps the
-  change fully backward compatible.
+- When `NEXT_PUBLIC_CHAT_PROXY_URL` is **not** set, the ChatBot falls back to
+  direct-call behavior using `NEXT_PUBLIC_BIGMODEL_TOKEN`. **Note:** existing
+  deployments that previously used `NEXT_PUBLIC_ZAI_TOKEN` (for the old Z.ai host)
+  will NOT automatically work with the new BigModel endpoint — operators must
+  configure `NEXT_PUBLIC_BIGMODEL_TOKEN` with a valid `open.bigmodel.cn` API key
+  before deployment, or set up the proxy with the `ZAI_API_KEY` secret to avoid
+  embedding any token in the build.
 - The proxy enforces a hard `MAX_TOKENS` cap (500) and only accepts POST
   requests; all other methods get a `405`. It returns CORS headers for the
   portfolio origin and rejects malformed bodies with `400`.
 - The `ZAI_API_KEY` lives only in Cloudflare and is referenced from the Worker as
-  `env.ZAI_API_KEY`. It is never logged or returned to the client.
+  `env.ZAI_API_KEY`. Its value is a BigModel API key. It is never logged or
+  returned to the client.
 
 ## Future: proxying Groq
 
