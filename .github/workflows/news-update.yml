@@ -66,6 +66,19 @@ jobs:
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
         run: |
           set +e
+          # Preflight the credentials. A missing or empty secret is a
+          # configuration error, not a transient one: no amount of model-tier
+          # fallback can fix it, and the loop below would otherwise report it as
+          # "BigModel likely broadly overloaded" — actively misleading. Name the
+          # secret that is actually missing and stop.
+          if [ -z "$ANTHROPIC_AUTH_TOKEN" ]; then
+            echo "::error::Secret BIGMODEL_NEWS_TOKEN is unset or empty, so the agent cannot authenticate against $ANTHROPIC_BASE_URL (Claude Code reports 'Not logged in'). Set it with: gh secret set BIGMODEL_NEWS_TOKEN"
+            exit 1
+          fi
+          if [ -z "$EXA_API_KEY" ]; then
+            echo "::error::Secret EXA_API_KEY is unset or empty, so the Exa research MCP cannot authenticate. Set it with: gh secret set EXA_API_KEY"
+            exit 1
+          fi
           # Fall back through GLM tiers on transient overload (529): the newest
           # model is the most capacity-constrained, so older tiers often succeed.
           # Short backoff (15s) because the run is daily — failing fast and letting
@@ -77,14 +90,25 @@ jobs:
             echo "::group::Agent attempt $attempt (model: $m)"
             # Reset any partial edits from a failed attempt before retrying.
             git checkout -- src/lib/news-items.ts 2>/dev/null || true
+            log="$RUNNER_TEMP/agent-attempt-$attempt.log"
+            # tee keeps the output in the (collapsed) log group while letting us
+            # classify the failure; PIPESTATUS[0] is claude's code, not tee's.
             ANTHROPIC_MODEL="$m" claude -p "$(cat .github/news/task.md)" \
               --mcp-config .github/news/exa-mcp.json \
               --allowedTools "Read,Edit,Write,Bash(npm run build),mcp__exa" \
               --permission-mode bypassPermissions \
-              --max-turns 60
-            code=$?
+              --max-turns 60 2>&1 | tee "$log"
+            code=${PIPESTATUS[0]}
             echo "::endgroup::"
             [ $code -eq 0 ] && { echo "Succeeded with $m."; exit 0; }
+            # A rejected credential fails identically on every tier, so don't
+            # burn the remaining tiers (or the operator's time) pretending it
+            # might be capacity. A present-but-invalid/expired/wrong-platform key
+            # lands here rather than in the preflight above.
+            if grep -qiE 'not logged in|run /login|invalid api ?key|unauthorized|authentication_error|401' "$log"; then
+              echo "::error::The model API rejected the credentials — this is not an overload. Check that BIGMODEL_NEWS_TOKEN is a current Zhipu BigModel key valid for $ANTHROPIC_BASE_URL (a Z.ai key will NOT work against open.bigmodel.cn)."
+              exit 1
+            fi
             echo "Attempt $attempt ($m) failed (exit $code) — likely a transient overload. Trying next tier in 15s..."
             sleep 15
           done
