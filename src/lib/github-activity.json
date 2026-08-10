@@ -1,7 +1,15 @@
 {
-  "updatedAt": "2026-08-09T23:13:33.266Z",
+  "updatedAt": "2026-08-10T12:10:33.654Z",
   "source": "https://github.com/ahmed-3m",
   "items": [
+    {
+      "id": "13041337991",
+      "type": "PullRequestEvent",
+      "repo": "ahmed-3m/ahmed-3m.github.io",
+      "message": "Merged PR #42: fix(news): fail loud on missing credentials instead of blaming overload",
+      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/42",
+      "createdAt": "2026-08-10T12:09:27Z"
+    },
     {
       "id": "13014245357",
       "type": "PullRequestEvent",
@@ -17,14 +25,6 @@
       "message": "Merged PR #40: fix(portfolio): resolve Faultrix/Sihem contradictions across all surfaces",
       "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/40",
       "createdAt": "2026-07-31T19:39:19Z"
-    },
-    {
-      "id": "12558684543",
-      "type": "PullRequestEvent",
-      "repo": "ahmed-3m/ahmed-3m.github.io",
-      "message": "Merged PR #39: feat(portfolio): re-align to AI/ML Engineer + Sihem flagship",
-      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/39",
-      "createdAt": "2026-07-30T21:24:14Z"
     },
     {
       "id": "12549578208",
