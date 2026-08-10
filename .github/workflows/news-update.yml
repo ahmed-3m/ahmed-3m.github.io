@@ -53,6 +53,15 @@ jobs:
       - name: Install Claude Code CLI
         run: npm i -g @anthropic-ai/claude-code
 
+      - name: Self-test agent-failure classification
+        # Runs BEFORE the agent (unlike the link-check self-test, which gates the
+        # step it belongs to) because the classifier is consumed by the agent step:
+        # pinning it afterwards would skip it on exactly the failing runs where its
+        # verdict decides what the operator is told. Pins the auth-vs-transient and
+        # BigModel-vs-Exa boundaries so a future tweak to the patterns cannot
+        # silently start reading "401(k)" in a fetched article as a rejected key.
+        run: node .github/news/classify-agent-failure.mjs --self-test
+
       - name: Collect & write news (GLM-5.2 via BigModel + Exa MCP)
         env:
           # BigModel (Zhipu) China-platform Anthropic-format endpoint. Claude
@@ -105,10 +114,23 @@ jobs:
             # burn the remaining tiers (or the operator's time) pretending it
             # might be capacity. A present-but-invalid/expired/wrong-platform key
             # lands here rather than in the preflight above.
-            if grep -qiE 'not logged in|run /login|invalid api ?key|unauthorized|authentication_error|401' "$log"; then
-              echo "::error::The model API rejected the credentials — this is not an overload. Check that BIGMODEL_NEWS_TOKEN is a current Zhipu BigModel key valid for $ANTHROPIC_BASE_URL (a Z.ai key will NOT work against open.bigmodel.cn)."
-              exit 1
-            fi
+            #
+            # The log is a single stream carrying both the model's errors and the
+            # Exa MCP's, so the classifier attributes the failure before we name a
+            # secret — telling the operator to rotate BIGMODEL_NEWS_TOKEN when it
+            # was really Exa's key would just relocate the misdiagnosis. If the
+            # classifier itself breaks, it prints nothing and we fall through to
+            # the tier loop, i.e. the old behaviour.
+            case "$(node .github/news/classify-agent-failure.mjs "$log")" in
+              exa-auth)
+                echo "::error::The Exa MCP rejected its API key — this is not an overload. Check that EXA_API_KEY is a current key from https://exa.ai. Set it with: gh secret set EXA_API_KEY"
+                exit 1
+                ;;
+              model-auth)
+                echo "::error::The model API rejected the credentials — this is not an overload. Check that BIGMODEL_NEWS_TOKEN is a current Zhipu BigModel key valid for $ANTHROPIC_BASE_URL (a Z.ai key will NOT work against open.bigmodel.cn)."
+                exit 1
+                ;;
+            esac
             echo "Attempt $attempt ($m) failed (exit $code) — likely a transient overload. Trying next tier in 15s..."
             sleep 15
           done
