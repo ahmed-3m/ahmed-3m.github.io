@@ -1,8 +1,8 @@
 # ahmed-chat-proxy
 
 An optional Cloudflare Worker that proxies the portfolio's ChatBot requests to
-the Zhipu BigModel API (GLM Coding Plan, `open.bigmodel.cn`). It keeps the real
-BigModel API key server-side so it is never inlined into the static JavaScript
+the Z.ai API (GLM Coding Plan, `api.z.ai`). It keeps the real
+API key server-side so it is never inlined into the static JavaScript
 bundle that ships to visitors' browsers.
 
 ## Why this exists
@@ -21,7 +21,7 @@ before forwarding the request to BigModel. The secret never reaches the client.
 > **Note on the `ZAI_API_KEY` binding name:** this is the Cloudflare secret
 > *binding name* (set via `wrangler secret put ZAI_API_KEY`) and is retained for
 > backward compatibility with existing deployments. The *value* it holds is a
-> Zhipu BigModel (`open.bigmodel.cn`) API key, not a Z.ai one.
+> Z.ai (`api.z.ai`) GLM Coding Plan key, not an open.bigmodel.cn one.
 
 ## Deploy
 
@@ -76,11 +76,10 @@ contains — no API key.
   `src/components/ChatBot.tsx` POSTs `{ messages, model, max_tokens, temperature }`
   to the proxy URL **without** an `Authorization` header. The proxy adds the key.
 - When `NEXT_PUBLIC_CHAT_PROXY_URL` is **not** set, the ChatBot falls back to
-  direct-call behavior using `NEXT_PUBLIC_BIGMODEL_TOKEN`. **Note:** existing
-  deployments that previously used `NEXT_PUBLIC_ZAI_TOKEN` (for the old Z.ai host)
-  will NOT automatically work with the new BigModel endpoint — operators must
-  configure `NEXT_PUBLIC_BIGMODEL_TOKEN` with a valid `open.bigmodel.cn` API key
-  before deployment, or set up the proxy with the `ZAI_API_KEY` secret to avoid
+  direct-call behavior using `NEXT_PUBLIC_BIGMODEL_TOKEN`. **Note:** keys are
+  provisioned per host — configure `NEXT_PUBLIC_BIGMODEL_TOKEN` with a valid
+  Z.ai (`api.z.ai`) key; an `open.bigmodel.cn` key will not authenticate.
+  Alternatively, set up the proxy with the `ZAI_API_KEY` secret to avoid
   embedding any token in the build.
 - The proxy enforces a hard `MAX_TOKENS` cap (500) and only accepts POST
   requests; all other methods get a `405`. It returns CORS headers for the

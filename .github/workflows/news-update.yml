@@ -1,6 +1,6 @@
 name: Daily news update
 
-# Collects recent AI / agentic-AI news with GLM-5.2 (via Zhipu BigModel, open.bigmodel.cn)
+# Collects recent AI / agentic-AI news with GLM-5.2 (via Z.ai, api.z.ai — Anthropic-format endpoint)
 # + the Exa research MCP, dedupes against what's already published, validates, and
 # auto-merges to main on green. Fully serverless: this Action IS the backend. Git is the dedup store.
 #
@@ -64,11 +64,11 @@ jobs:
 
       - name: Collect & write news (GLM-5.2 via BigModel + Exa MCP)
         env:
-          # BigModel (Zhipu) China-platform Anthropic-format endpoint. Claude
-          # Code speaks the Anthropic Messages API, NOT OpenAI /chat/completions,
-          # so this must use /api/anthropic — the Coding Plan /api/coding/paas/v4
-          # path does NOT support Claude Code.
-          ANTHROPIC_BASE_URL: https://open.bigmodel.cn/api/anthropic
+          # Z.ai (international) Anthropic-format endpoint. Claude Code speaks
+          # the Anthropic Messages API, NOT OpenAI /chat/completions, so this
+          # must use /api/anthropic — the Coding Plan /api/coding/paas/v4 path
+          # does NOT support Claude Code.
+          ANTHROPIC_BASE_URL: https://api.z.ai/api/anthropic
           ANTHROPIC_AUTH_TOKEN: ${{ secrets.BIGMODEL_NEWS_TOKEN }}
           ANTHROPIC_MODEL: glm-5.2
           ANTHROPIC_SMALL_FAST_MODEL: glm-4.7-flash
@@ -127,7 +127,7 @@ jobs:
                 exit 1
                 ;;
               model-auth)
-                echo "::error::The model API rejected the credentials — this is not an overload. Check that BIGMODEL_NEWS_TOKEN is a current Zhipu BigModel key valid for $ANTHROPIC_BASE_URL (a Z.ai key will NOT work against open.bigmodel.cn)."
+                echo "::error::The model API rejected the credentials — this is not an overload. Check that BIGMODEL_NEWS_TOKEN is a current Z.ai (api.z.ai) key valid for $ANTHROPIC_BASE_URL (an open.bigmodel.cn key will NOT work against api.z.ai)."
                 exit 1
                 ;;
             esac

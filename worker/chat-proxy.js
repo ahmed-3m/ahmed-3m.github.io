@@ -17,7 +17,7 @@
  * See worker/README.md for deployment and usage.
  */
 
-const ZAI_CHAT_URL = 'https://open.bigmodel.cn/api/coding/paas/v4/chat/completions'
+const ZAI_CHAT_URL = 'https://api.z.ai/api/coding/paas/v4/chat/completions'
 // Keep in sync with ZAI_MODEL in src/components/ChatBot.tsx. GLM-5.3 always
 // runs with thinking enabled and rejects `thinking: { type: 'disabled' }`
 // (which GLM-4.5 accepted), so the Worker must not inject that parameter.

@@ -71,16 +71,18 @@ type ChatCompletionError = Error & {
 // openai/gpt-oss-20b as the replacement. Override via NEXT_PUBLIC_GROQ_MODEL.
 // https://console.groq.com/docs/deprecations
 const GROQ_MODEL = process.env.NEXT_PUBLIC_GROQ_MODEL || 'openai/gpt-oss-20b'
-// GLM via Zhipu BigModel GLM Coding Plan (open.bigmodel.cn). The Coding Plan
-// uses the dedicated /api/coding/paas/v4 base — distinct from the generic
-// pay-as-you-go /api/paas/v4 path, and from the international api.z.ai host.
+// GLM via the Z.ai GLM Coding Plan (api.z.ai — the international host).
+// The Coding Plan uses the dedicated /api/coding/paas/v4 base — distinct from
+// the generic pay-as-you-go /api/paas/v4 path and from the open.bigmodel.cn
+// host (keys are provisioned per platform; a bigmodel.cn key will not
+// authenticate here).
 // GLM-5.3 always runs with thinking enabled and rejects
 // `thinking: { type: 'disabled' }` (which GLM-4.5 accepted), so that
 // parameter must never be sent for this model.
 // Override via NEXT_PUBLIC_BIGMODEL_MODEL.
 const ZAI_MODEL = process.env.NEXT_PUBLIC_BIGMODEL_MODEL || 'glm-5.3'
 const GROQ_CHAT_URL = 'https://api.groq.com/openai/v1/chat/completions'
-const ZAI_CHAT_URL = 'https://open.bigmodel.cn/api/coding/paas/v4/chat/completions'
+const ZAI_CHAT_URL = 'https://api.z.ai/api/coding/paas/v4/chat/completions'
 const CHAT_PROXY_URL = process.env.NEXT_PUBLIC_CHAT_PROXY_URL
 const MAX_REPLY_CHARS = 1600
 const GENIE_NAME = 'Genie\u{1F9DE}\u200D\u2642\uFE0F'
@@ -732,9 +734,8 @@ export default function ChatBot() {
     if (!content || isLoading) return
 
     const groqToken = process.env.NEXT_PUBLIC_GROQ_TOKEN
-    // BigModel (open.bigmodel.cn) key. NOTE: a Z.ai (api.z.ai) key will NOT
-    // authenticate against this host — they are separate platforms — so there
-    // is intentionally no fallback to NEXT_PUBLIC_ZAI_TOKEN. If the secret is
+    // Z.ai (api.z.ai) GLM Coding Plan key. Keys are provisioned per host, so
+    // an open.bigmodel.cn key will NOT authenticate here — if the secret is
     // unset, the chatbot fails loudly (missing-token UI) rather than silently
     // sending the wrong key to the wrong host.
     const zaiToken = process.env.NEXT_PUBLIC_BIGMODEL_TOKEN
