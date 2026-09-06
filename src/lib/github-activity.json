@@ -1,7 +1,23 @@
 {
-  "updatedAt": "2026-09-06T18:53:54.082Z",
+  "updatedAt": "2026-09-06T19:03:40.854Z",
   "source": "https://github.com/ahmed-3m",
   "items": [
+    {
+      "id": "14527866272",
+      "type": "PullRequestEvent",
+      "repo": "ahmed-3m/ahmed-3m.github.io",
+      "message": "Merged PR #54: chore(llms): sync AI-knowledge files with the current portfolio",
+      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/54",
+      "createdAt": "2026-09-06T19:00:59Z"
+    },
+    {
+      "id": "14527856396",
+      "type": "PullRequestEvent",
+      "repo": "ahmed-3m/ahmed-3m.github.io",
+      "message": "Merged PR #51: fix(portfolio): finish copy-realign cleanup (FAQ dedupe, dead code, isLanguage)",
+      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/51",
+      "createdAt": "2026-09-06T19:00:35Z"
+    },
     {
       "id": "14527655705",
       "type": "PullRequestEvent",
@@ -9,22 +25,6 @@
       "message": "Merged PR #52: feat(chatbot): stream replies token-by-token (SSE) + bound deep-lane reasoning",
       "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/52",
       "createdAt": "2026-09-06T18:52:55Z"
-    },
-    {
-      "id": "14527378975",
-      "type": "PullRequestEvent",
-      "repo": "ahmed-3m/ahmed-3m.github.io",
-      "message": "Merged PR #50: fix(chatbot): 2048-token budget for the glm-5.3 deep lane (thinking counts…",
-      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/50",
-      "createdAt": "2026-09-06T18:42:37Z"
-    },
-    {
-      "id": "14527231889",
-      "type": "PullRequestEvent",
-      "repo": "ahmed-3m/ahmed-3m.github.io",
-      "message": "Merged PR #49: feat(chatbot): model routing — glm-5-turbo fast lane with glm-5.3-flash…",
-      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/49",
-      "createdAt": "2026-09-06T18:37:00Z"
     },
     {
       "id": "13247858150",
