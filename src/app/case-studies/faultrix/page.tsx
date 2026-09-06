@@ -5,7 +5,7 @@ import CaseStudyPage from '@/components/CaseStudyPage'
 
 export const metadata: Metadata = {
   title: 'Faultrix case study',
-  description: 'How Ahmed Mohammed built Faultrix from zero to a live AI construction quality-control SaaS.',
+  description: 'How Ahmed Mohammed built Faultrix from zero to an AI construction quality-control SaaS.',
   alternates: { canonical: 'https://ahmed-3m.github.io/case-studies/faultrix/' },
 }
 

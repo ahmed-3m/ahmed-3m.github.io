@@ -4,7 +4,7 @@ import type { CSSProperties, FormEvent, ReactNode } from 'react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { ArrowUp, X } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
-import { languageName, translateValue, type Language, type TranslationMap } from '@/lib/i18n-config'
+import { languageName, translateValue, type TranslationMap } from '@/lib/i18n-config'
 
 type ChatRole = 'user' | 'assistant'
 type ApiRole = ChatRole | 'system'
@@ -124,9 +124,9 @@ Facts you can rely on:
 - Seed-42 achieved 98.98% AUROC within-CIFAR and generalized zero-shot to CIFAR-100, Places365, FashionMNIST, Textures, and SVHN.
 - The non-separated baseline was 92.52% +/- 11.07%, so separation loss added about +6.5 percentage points and dramatically reduced variance.
 - Ahmed also worked on industrial defect detection at PROFACTOR GmbH / JKU Linz using a YOLO + conditional diffusion pipeline on the public FTI_Zer0P benchmark, reaching a 0.8673 +/- 0.0230 AUROC baseline under strict 5-fold cross-validation.
-- Ahmed built Faultrix, an AI-powered construction quality-control SaaS that analyzes construction photos and generates ONORM-aligned reports in under 1 minute.
+- Ahmed built Faultrix, an AI-powered construction quality-control SaaS that analyzed construction photos and generated ONORM-aligned reports in under 1 minute.
 - Ahmed also built Sihem, an LLM-driven personal-mentor assistant (Telegram bot + installable PWA) with proactive cron-driven check-ins, pgvector long-term memory, and multi-provider LLM routing. It is in beta at @sihem_ai_bot.
-- Faultrix stack includes Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2, and Stripe.
+- The Faultrix stack included Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2, and Stripe.
 - Contact: ahmed.mo.0595@gmail.com
 - LinkedIn: https://www.linkedin.com/in/ahmed-3m/
 - GitHub: https://github.com/ahmed-3m
@@ -208,18 +208,18 @@ const CHAT_COPY = {
 
 const PROMPTS: Record<PromptId, TranslationMap> = {
   faultrix_intro: {
-    en: 'What is Faultrix?',
-    de: 'Was ist Faultrix?',
-    fr: 'Qu est-ce que Faultrix ?',
-    es: 'Que es Faultrix?',
-    ar: 'ما هو Faultrix؟',
+    en: 'What was Faultrix?',
+    de: 'Was war Faultrix?',
+    fr: 'Qu etait Faultrix ?',
+    es: 'Que era Faultrix?',
+    ar: 'ماذا كان Faultrix؟',
   },
   faultrix_stack: {
-    en: "What's the Faultrix tech stack?",
-    de: 'Wie sieht der Faultrix Tech-Stack aus?',
-    fr: 'Quel est le stack technique de Faultrix ?',
-    es: 'Cual es el stack tecnico de Faultrix?',
-    ar: 'ما هو الـ stack التقني في Faultrix؟',
+    en: 'What was the Faultrix tech stack?',
+    de: 'Wie sah der Faultrix Tech-Stack aus?',
+    fr: 'Quel etait le stack technique de Faultrix ?',
+    es: 'Cual era el stack tecnico de Faultrix?',
+    ar: 'ماذا كان الـ stack التقني في Faultrix؟',
   },
   faultrix_build: {
     en: 'How was Faultrix built?',
@@ -236,18 +236,18 @@ const PROMPTS: Record<PromptId, TranslationMap> = {
     ar: 'هل يمكنني رؤية قصة المنتج؟',
   },
   faultrix_speed: {
-    en: 'How long does a report take?',
-    de: 'Wie lange dauert ein Bericht?',
-    fr: 'Combien de temps prend un rapport ?',
-    es: '¿Cuánto tarda un informe?',
-    ar: 'كم يستغرق التقرير؟',
+    en: 'How long did a report take?',
+    de: 'Wie lange dauerte ein Bericht?',
+    fr: 'Combien de temps prenait un rapport ?',
+    es: '¿Cuánto tardaba un informe?',
+    ar: 'كم كان يستغرق التقرير؟',
   },
   faultrix_compliance: {
-    en: 'Is Faultrix DSGVO compliant?',
-    de: 'Ist Faultrix DSGVO-konform?',
-    fr: 'Faultrix est-il conforme DSGVO ?',
-    es: 'Faultrix cumple con DSGVO?',
-    ar: 'هل Faultrix متوافق مع DSGVO؟',
+    en: 'Was Faultrix DSGVO compliant?',
+    de: 'War Faultrix DSGVO-konform?',
+    fr: 'Faultrix etait-il conforme DSGVO ?',
+    es: 'Faultrix cumplia con DSGVO?',
+    ar: 'هل كان Faultrix متوافق مع DSGVO؟',
   },
   thesis_summary: {
     en: 'Tell me about the thesis',
@@ -546,6 +546,11 @@ function routeLocally(message: string): ChatLane | null {
   return null
 }
 
+/**
+ * Routes a message to either the fast or deep model lane using a lightweight
+ * classifier. Times out after 1.5s and defaults to deep on any failure to
+ * preserve answer quality.
+ */
 async function routeWithClassifier(
   message: string,
   auth: { token: string; url: string; useProxy: boolean }
@@ -601,7 +606,6 @@ function renderInline(text: string, keyPrefix: string): ReactNode[] {
       }
 
       const isEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(raw)
-      const href = isEmail ? `mailto:${raw}` : raw.startsWith('http') ? raw : `https://${raw}`
       const display = raw.replace(/[),.;!?]+$/, '')
       const trailing = raw.slice(display.length)
 

@@ -1,0 +1,25 @@
+Read-only review brief: Portfolio Re-align spec
+
+Target file: docs/superpowers/specs/2026-07-30-portfolio-realign-design.md
+Repository root (cwd): D:\side_hustle\mygithub\ahmed-3m.github.io
+
+Goal: Provide an adversarial, read-only second opinion on the plan. Do NOT modify any files.
+
+Deliverables (concise):
+1) Short summary (3-4 sentences) of the spec's intent and scope.
+2) Agreement/disagreement for each of the "Decisions locked" items (§2). For each disagreement, give a one-line reason and mitigation.
+3) Identify missing risks or blind spots not listed in the spec (bullet list).
+4) For the 7 Open Questions (§6), provide a recommended choice and a 1-2 sentence rationale for each.
+5) A precise list of file-level edits (filename + short edit description) that should be made to implement the spec (no diffs, just targeted edits). Prioritize high-impact edits first.
+6) Additions or changes to the Verification plan (§7) to catch regressions (one-line bullets).
+7) Overall verdict: "Ready to implement" or "Revise spec" with 1-2 sentence justification.
+
+Constraints and style:
+- Keep answers factual and conservative; prefer safety over marketing.
+- Be mindful of i18n: flag any strings that may need special RTL handling.
+- Keep total response under ~350 words if possible.
+- This is read-only: do not attempt to write files. Report what you'd change.
+
+Notes: The spec file above contains per-file edit lines, grep counts, and verification steps. Inspect that file and the repo where necessary. Prioritize findings relevant to SEO/JSON-LD, ChatBot prompts, CV/ATS tradeoffs, and the hero re-rank.
+
+End of brief.

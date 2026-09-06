@@ -2,7 +2,7 @@
 
 **Delegation legend:** `[P]` parallelizable · `→Tnnn` depends on · **Agent** = suggested type.
 
-> ✅ **No blocking decisions** — this spec is fully buildable as-is. Safe to delegate whole.
+> ⛔ **REMOVED 2026-09 (PR #53)** — the activity strip was removed from the site at the owner's request. Retained as design history only; do not delegate or re-implement without owner request.
 
 ### T4.1 [P] — Build-time fetch script
 **Agent:** general-purpose (edit)
