@@ -31,6 +31,10 @@ export function PersonSchema() {
       'https://www.linkedin.com/in/ahmed-3m/',
       'https://huggingface.co/ahmed-3m',
       'https://wandb.ai/ahmed-mu-0593',
+      // Official institutional record of the thesis (JKU university library).
+      'https://epub.jku.at/obvulihs/content/titleinfo/14374221',
+      // TODO(owner): verify this Scholar profile is claimed/kept current (burr-detection paper).
+      'https://scholar.google.com/citations?user=s5Aqlw4AAAAJ',
       // TODO(owner): re-enable with new X account
       // 'https://x.com/Ahmed_mo_93',
     ],
@@ -238,8 +242,10 @@ export function SocialProfileSchema() {
   const socialSchema = {
     '@context': 'https://schema.org',
     '@type': 'ProfilePage',
-    dateCreated: '2024-01-01',
-    dateModified: new Date().toISOString().split('T')[0],
+    // schema.org Date/DateTime validators (incl. Google's ProfilePage report)
+    // require a full ISO datetime, not a bare YYYY-MM-DD date.
+    dateCreated: '2024-01-01T00:00:00Z',
+    dateModified: new Date().toISOString(),
     mainEntity: {
       '@type': 'Person',
       name: 'Ahmed Mohammed',
@@ -252,6 +258,8 @@ export function SocialProfileSchema() {
         'https://www.linkedin.com/in/ahmed-3m/',
         'https://huggingface.co/ahmed-3m',
         'https://wandb.ai/ahmed-mu-0593',
+        'https://epub.jku.at/obvulihs/content/titleinfo/14374221',
+        'https://scholar.google.com/citations?user=s5Aqlw4AAAAJ',
         // TODO(owner): re-enable with new X account
         // 'https://x.com/Ahmed_mo_93',
       ],
@@ -372,11 +380,15 @@ export function ProjectsSchema() {
 export function ResearchSchema() {
   const researchSchema = {
     '@context': 'https://schema.org',
-    '@type': 'Thesis',
+    // 'Thesis' is a schema.org hosted-extension type; core crawlers only
+    // understand ScholarlyArticle, so the node is double-typed.
+    '@type': ['Thesis', 'ScholarlyArticle'],
     headline: 'Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control',
     name: 'Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control',
     abstract: 'This thesis treats conditional diffusion models as generative classifiers where class-conditional reconstruction error serves as the OOD signal. We develop a binary conditional diffusion model for CIFAR-10 OOD detection (within-CIFAR airplane-vs-rest split, single ID class; not comparable to multi-class CIFAR-10 OOD benchmarks) and introduce a class-conditional separation loss that improves both performance and stability. The separation loss achieves a 99.03% ± 0.07% average AUROC, showing a +6.5pp gain and dramatically lower seed variance over the baseline. We further evaluate the public InkjetOOD pipeline on the public FTI_Zer0P dataset under strict 5-fold cross-validation, reaching 0.8673 ± 0.0230 AUROC and characterizing its boundary conditions.',
     url: 'https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf',
+    // The JKU university library record is the authoritative bibliographic entry.
+    sameAs: ['https://epub.jku.at/obvulihs/content/titleinfo/14374221'],
     datePublished: '2026-07',
     inSupportOf: "Master's Degree in Artificial Intelligence",
     author: {

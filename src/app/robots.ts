@@ -31,6 +31,18 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
       },
       {
+        userAgent: 'Claude-SearchBot',
+        allow: '/',
+      },
+      {
+        userAgent: 'Claude-User',
+        allow: '/',
+      },
+      {
+        userAgent: 'Claude-Agent',
+        allow: '/',
+      },
+      {
         userAgent: 'GoogleOther',
         allow: '/',
       },

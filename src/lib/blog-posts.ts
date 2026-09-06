@@ -5,6 +5,16 @@ export interface BlogFaqItem {
   answer: string
 }
 
+/**
+ * Optional Highwire Press citation tags (citation_*) for Google Scholar
+ * inclusion — set on posts that describe a formal publication/thesis.
+ */
+export interface BlogCitation {
+  title: string
+  date: string
+  pdfUrl: string
+}
+
 export interface BlogPostTranslation {
   title: string
   excerpt: string
@@ -19,6 +29,7 @@ export interface BlogPost {
   date: string
   ogImage?: string
   lastModified?: string
+  citation?: BlogCitation
   translations: Partial<Record<Language, BlogPostTranslation>> & { en: BlogPostTranslation }
 }
 
@@ -27,6 +38,7 @@ export interface LocalizedBlogPost extends BlogPostTranslation {
   date: string
   ogImage?: string
   lastModified?: string
+  citation?: BlogCitation
 }
 
 const blogPosts: BlogPost[] = [
@@ -35,6 +47,12 @@ const blogPosts: BlogPost[] = [
     date: '2026-07-12',
     ogImage: '/og-diffusion-models-anomaly-detection.png',
     lastModified: '2026-04-25',
+    citation: {
+      title:
+        'Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control',
+      date: '2026-07-12',
+      pdfUrl: 'https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf',
+    },
     translations: {
       en: {
         title: 'How I Reached 99.03% AUROC on OOD Detection with Conditional Diffusion Models',
@@ -1641,6 +1659,7 @@ function localizePost(post: BlogPost, lang: Language = 'en'): LocalizedBlogPost 
     date: post.date,
     ogImage: post.ogImage,
     lastModified: post.lastModified,
+    citation: post.citation,
     title: translation.title,
     excerpt: translation.excerpt,
     tags: translation.tags,
