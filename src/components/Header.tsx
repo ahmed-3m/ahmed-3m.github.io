@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Check, ChevronDown, Globe2, Moon, Sun } from 'lucide-react'
 import { useTheme } from '@/lib/ThemeContext'
-import { languageOptions, useI18n, type TranslationMap, type Language } from '@/lib/i18n'
+import { languageOptions, useI18n, type TranslationMap, isLanguage } from '@/lib/i18n'
 
 const links = [
   { href: '/#about', label: { en: 'About', de: 'Profil', fr: 'Profil', es: 'Perfil', ar: 'نبذة' } },
@@ -22,20 +22,6 @@ const ctaLabel: TranslationMap = {
   fr: 'Contact',
   es: 'Contacto',
   ar: 'تواصل',
-}
-
-const languageNames: Record<Language, string> = {
-  en: 'English',
-  de: 'Deutsch',
-  fr: 'Français',
-  es: 'Español',
-  ar: 'Arabic',
-}
-
-const languageCodes = languageOptions.map(({ code }) => code)
-
-function isLanguage(value: string): value is Language {
-  return languageCodes.includes(value as Language)
 }
 
 function LanguageSelector() {

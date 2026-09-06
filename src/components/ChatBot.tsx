@@ -4,7 +4,7 @@ import type { CSSProperties, FormEvent, ReactNode } from 'react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { ArrowUp, X } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
-import { languageName, translateValue, type Language, type TranslationMap } from '@/lib/i18n-config'
+import { languageName, translateValue, type TranslationMap } from '@/lib/i18n-config'
 
 type ChatRole = 'user' | 'assistant'
 type ApiRole = ChatRole | 'system'
@@ -601,7 +601,6 @@ function renderInline(text: string, keyPrefix: string): ReactNode[] {
       }
 
       const isEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(raw)
-      const href = isEmail ? `mailto:${raw}` : raw.startsWith('http') ? raw : `https://${raw}`
       const display = raw.replace(/[),.;!?]+$/, '')
       const trailing = raw.slice(display.length)
 
