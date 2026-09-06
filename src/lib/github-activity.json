@@ -1,54 +1,54 @@
 {
-  "updatedAt": "2026-08-10T12:10:33.654Z",
+  "updatedAt": "2026-09-06T17:50:20.772Z",
   "source": "https://github.com/ahmed-3m",
   "items": [
     {
-      "id": "13041337991",
+      "id": "14525934553",
       "type": "PullRequestEvent",
       "repo": "ahmed-3m/ahmed-3m.github.io",
-      "message": "Merged PR #42: fix(news): fail loud on missing credentials instead of blaming overload",
-      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/42",
-      "createdAt": "2026-08-10T12:09:27Z"
+      "message": "Merged PR #43: feat(automation): weekly keep-alive deploy + daily site-health checks",
+      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/43",
+      "createdAt": "2026-09-06T17:49:00Z"
     },
     {
-      "id": "13014245357",
+      "id": "14525906469",
       "type": "PullRequestEvent",
       "repo": "ahmed-3m/ahmed-3m.github.io",
-      "message": "Merged PR #41: chore(glm): migrate GLM endpoints from Z.ai to Zhipu BigModel",
-      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/41",
-      "createdAt": "2026-08-09T23:12:31Z"
+      "message": "Merged PR #45: fix(site): hide X links, dedicated 404 title, JSON-LD rendered once",
+      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/45",
+      "createdAt": "2026-09-06T17:47:53Z"
     },
     {
-      "id": "12607847529",
+      "id": "14525896819",
       "type": "PullRequestEvent",
       "repo": "ahmed-3m/ahmed-3m.github.io",
-      "message": "Merged PR #40: fix(portfolio): resolve Faultrix/Sihem contradictions across all surfaces",
-      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/40",
-      "createdAt": "2026-07-31T19:39:19Z"
+      "message": "Merged PR #44: fix(chatbot): glm-5.3 primary, live Groq fallback, no raw errors to visitors",
+      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/44",
+      "createdAt": "2026-09-06T17:47:31Z"
     },
     {
-      "id": "12549578208",
+      "id": "13247858150",
       "type": "PullRequestEvent",
-      "repo": "ahmed-3m/ahmed-3m",
-      "message": "Merged PR #7: Fix impact-metrics: drop unverified / mis-attributed numbers",
-      "url": "https://github.com/ahmed-3m/ahmed-3m/pull/7",
-      "createdAt": "2026-07-30T17:57:03Z"
+      "repo": "ahmed-3m/Elbostan-Pazar-bot",
+      "message": "Merged PR #2: Fix duplicate Messenger replies from Meta redelivery",
+      "url": "https://github.com/ahmed-3m/Elbostan-Pazar-bot/pull/2",
+      "createdAt": "2026-08-13T18:51:00Z"
     },
     {
-      "id": "12548880121",
+      "id": "13246939947",
       "type": "PullRequestEvent",
-      "repo": "ahmed-3m/ahmed-3m",
-      "message": "Merged PR #6: Remove embedded headshot (GitHub avatar already shows it)",
-      "url": "https://github.com/ahmed-3m/ahmed-3m/pull/6",
-      "createdAt": "2026-07-30T17:42:00Z"
+      "repo": "ahmed-3m/Elbostan-Pazar-bot",
+      "message": "Opened PR #2: Fix duplicate Messenger replies from Meta redelivery",
+      "url": "https://github.com/ahmed-3m/Elbostan-Pazar-bot/pull/2",
+      "createdAt": "2026-08-13T18:32:23Z"
     },
     {
-      "id": "12548703777",
+      "id": "13242545927",
       "type": "PullRequestEvent",
-      "repo": "ahmed-3m/ahmed-3m",
-      "message": "Merged PR #5: Replace vanity stat cards with impact-metrics strip",
-      "url": "https://github.com/ahmed-3m/ahmed-3m/pull/5",
-      "createdAt": "2026-07-30T17:38:04Z"
+      "repo": "ahmed-3m/Elbostan-Pazar-bot",
+      "message": "Merged PR #1: Switch LLM provider from OpenRouter to Zhipu/GLM",
+      "url": "https://github.com/ahmed-3m/Elbostan-Pazar-bot/pull/1",
+      "createdAt": "2026-08-13T17:04:48Z"
     }
   ]
 }
