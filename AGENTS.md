@@ -81,14 +81,15 @@ backend and git is the dedup store; no hosting needed. On a quiet day with nothi
 agent writes no items and publish is a no-op.
 
 Required repository secrets:
-- `BIGMODEL_NEWS_TOKEN` — private Z.ai (api.z.ai) API key for the news agent. Never prefixed with `NEXT_PUBLIC_` — must NOT appear in the client bundle. Note: the news agent uses the `/api/anthropic` endpoint (Claude Code speaks the Anthropic Messages API); the GLM Coding Plan `/api/coding/paas/v4` path does NOT support Claude Code. Keys are per-host: an open.bigmodel.cn key will not authenticate against api.z.ai.
-- `NEXT_PUBLIC_BIGMODEL_TOKEN` — public, rate-limited Z.ai (api.z.ai) key for the portfolio chatbot (uses the GLM Coding Plan `/api/coding/paas/v4/chat/completions` endpoint). This IS inlined into the static JS bundle and is publicly extractable; use a disposable/capped key. The news agent must NOT reuse this key.
+- `BIGMODEL_NEWS_TOKEN` — private Z.ai (api.z.ai) API key for the news agent. Never prefixed with `NEXT_PUBLIC_` — must NOT appear in the client bundle. The workflow falls back to the pre-migration `ZAI_NEWS_TOKEN` secret if this is unset. Note: the news agent uses the `/api/anthropic` endpoint (Claude Code speaks the Anthropic Messages API); the GLM Coding Plan `/api/coding/paas/v4` path does NOT support Claude Code. Keys are per-host: an open.bigmodel.cn key will not authenticate against api.z.ai.
+- `NEXT_PUBLIC_BIGMODEL_TOKEN` — public, rate-limited Z.ai (api.z.ai) key for the portfolio chatbot (uses the GLM Coding Plan `/api/coding/paas/v4/chat/completions` endpoint, model `glm-5.3` — which always runs with thinking enabled). This IS inlined into the static JS bundle and is publicly extractable; use a disposable/capped key. The news agent must NOT reuse this key.
 - `NEXT_PUBLIC_GROQ_TOKEN` — public, rate-limited Groq key for the portfolio chatbot's fallback model. Also inlined into the static JS bundle and publicly extractable; use a disposable/capped key.
+- Chatbot model overrides (optional, GitHub *repository variables*, not secrets): `NEXT_PUBLIC_BIGMODEL_MODEL` (default `glm-5.3`) and `NEXT_PUBLIC_GROQ_MODEL` (default `openai/gpt-oss-20b`; Groq decommissioned `llama-3.1-8b-instant` on 2026-08-16).
 - `EXA_API_KEY` — Exa API key (https://exa.ai).
 
-The pre-migration secret names (`ZAI_NEWS_TOKEN`, `NEXT_PUBLIC_ZAI_TOKEN`) are retired —
-set the `BIGMODEL_*` names above instead. All GLM endpoints live on api.z.ai (the
-international Z.ai host); open.bigmodel.cn-era keys will not authenticate there.
+`NEXT_PUBLIC_ZAI_TOKEN` is retired and unused. `ZAI_NEWS_TOKEN` survives only as the
+news workflow's fallback when `BIGMODEL_NEWS_TOKEN` is unset. All GLM endpoints live on
+api.z.ai (the international Z.ai host); open.bigmodel.cn-era keys will not authenticate there.
 
 The agent's instructions live in `.github/news/task.md`; the Exa MCP config in
 `.github/news/exa-mcp.json`. The news bot is the one sanctioned exception to the

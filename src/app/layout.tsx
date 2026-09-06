@@ -63,7 +63,8 @@ export const metadata: Metadata = {
     title: 'Ahmed Mohammed | AI/ML Engineer',
     description: 'AI/ML engineer with public thesis artifacts, industrial AI evaluation, and product case studies.',
     images: ['/og-image.png'],
-    creator: '@Ahmed_mo_93',
+    // TODO(owner): re-enable with new X account
+    // creator: '@Ahmed_mo_93',
   },
   robots: {
     index: true, follow: true,

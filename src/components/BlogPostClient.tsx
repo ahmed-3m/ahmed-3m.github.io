@@ -84,8 +84,65 @@ export default function BlogPostClient({ slug }: { slug: string }) {
 
   if (!post) return null
 
+  // JSON-LD is built client-side (the post data already ships in this chunk)
+  // so the schema is not duplicated into the RSC flight payload. English is
+  // the canonical crawl language.
+  const schemaPost = getBlogPost(slug, 'en')
+  const jsonLd = schemaPost && {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: schemaPost.title,
+    description: schemaPost.excerpt,
+    image: `https://ahmed-3m.github.io${schemaPost.ogImage ?? '/og-image.png'}`,
+    author: {
+      '@type': 'Person',
+      name: 'Ahmed Mohammed',
+      url: 'https://ahmed-3m.github.io',
+      image: 'https://ahmed-3m.github.io/headshot.jpg',
+    },
+    datePublished: schemaPost.date,
+    dateModified: schemaPost.lastModified ?? schemaPost.date,
+    publisher: {
+      '@type': 'Person',
+      name: 'Ahmed Mohammed',
+      image: 'https://ahmed-3m.github.io/headshot.jpg',
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://ahmed-3m.github.io/blog/${schemaPost.slug}/`,
+    },
+    keywords: schemaPost.tags.join(', '),
+    wordCount: schemaPost.content ? schemaPost.content.split(/\s+/).length : 0,
+  }
+  const faqJsonLd =
+    schemaPost &&
+    schemaPost.faq.length > 0 && {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: schemaPost.faq.map((item) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: item.answer,
+        },
+      })),
+    }
+
   return (
     <main className="min-h-screen pb-20 pt-24">
+      {jsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      )}
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      )}
       <article className="mx-auto max-w-3xl px-5">
         <nav aria-label="Breadcrumb" className="mb-6">
           <ol className="flex flex-wrap items-center gap-2 text-sm text-[var(--cd-fg3)]">

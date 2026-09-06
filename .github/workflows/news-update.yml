@@ -1,6 +1,6 @@
 name: Daily news update
 
-# Collects recent AI / agentic-AI news with GLM-5.2 (via Zhipu BigModel, open.bigmodel.cn)
+# Collects recent AI / agentic-AI news with GLM-5.2 (via Z.ai, api.z.ai — Anthropic-format endpoint)
 # + the Exa research MCP, dedupes against what's already published, validates, and
 # auto-merges to main on green. Fully serverless: this Action IS the backend. Git is the dedup store.
 #
@@ -9,7 +9,8 @@ name: Daily news update
 # keeps the page noticeably fresher.
 #
 # Required repository secrets:
-#   BIGMODEL_NEWS_TOKEN         - private Zhipu BigModel API key for the news agent (NOT exposed in the client bundle).
+#   BIGMODEL_NEWS_TOKEN         - private Z.ai (api.z.ai) API key for the news agent (NOT exposed in the client bundle).
+#                                 Falls back to the pre-migration ZAI_NEWS_TOKEN secret if unset.
 #   NEXT_PUBLIC_BIGMODEL_TOKEN  - public, rate-limited BigModel key for the portfolio chatbot (inlined in the static bundle).
 #   EXA_API_KEY                 - Exa API key for the research MCP (https://exa.ai).
 
@@ -64,12 +65,12 @@ jobs:
 
       - name: Collect & write news (GLM-5.2 via BigModel + Exa MCP)
         env:
-          # BigModel (Zhipu) China-platform Anthropic-format endpoint. Claude
-          # Code speaks the Anthropic Messages API, NOT OpenAI /chat/completions,
-          # so this must use /api/anthropic — the Coding Plan /api/coding/paas/v4
-          # path does NOT support Claude Code.
-          ANTHROPIC_BASE_URL: https://open.bigmodel.cn/api/anthropic
-          ANTHROPIC_AUTH_TOKEN: ${{ secrets.BIGMODEL_NEWS_TOKEN }}
+          # Z.ai (international) Anthropic-format endpoint. Claude Code speaks
+          # the Anthropic Messages API, NOT OpenAI /chat/completions, so this
+          # must use /api/anthropic — the Coding Plan /api/coding/paas/v4 path
+          # does NOT support Claude Code.
+          ANTHROPIC_BASE_URL: https://api.z.ai/api/anthropic
+          ANTHROPIC_AUTH_TOKEN: ${{ secrets.BIGMODEL_NEWS_TOKEN || secrets.ZAI_NEWS_TOKEN }}
           ANTHROPIC_MODEL: glm-5.2
           ANTHROPIC_SMALL_FAST_MODEL: glm-4.7-flash
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
@@ -81,7 +82,7 @@ jobs:
           # "BigModel likely broadly overloaded" — actively misleading. Name the
           # secret that is actually missing and stop.
           if [ -z "$ANTHROPIC_AUTH_TOKEN" ]; then
-            echo "::error::Secret BIGMODEL_NEWS_TOKEN is unset or empty, so the agent cannot authenticate against $ANTHROPIC_BASE_URL (Claude Code reports 'Not logged in'). Set it with: gh secret set BIGMODEL_NEWS_TOKEN"
+            echo "::error::Secrets BIGMODEL_NEWS_TOKEN (and fallback ZAI_NEWS_TOKEN) are unset or empty, so the agent cannot authenticate against $ANTHROPIC_BASE_URL (Claude Code reports 'Not logged in'). Set one with: gh secret set BIGMODEL_NEWS_TOKEN"
             exit 1
           fi
           if [ -z "$EXA_API_KEY" ]; then
@@ -127,7 +128,7 @@ jobs:
                 exit 1
                 ;;
               model-auth)
-                echo "::error::The model API rejected the credentials — this is not an overload. Check that BIGMODEL_NEWS_TOKEN is a current Zhipu BigModel key valid for $ANTHROPIC_BASE_URL (a Z.ai key will NOT work against open.bigmodel.cn)."
+                echo "::error::The model API rejected the credentials — this is not an overload. Check that BIGMODEL_NEWS_TOKEN is a current Z.ai (api.z.ai) key valid for $ANTHROPIC_BASE_URL (an open.bigmodel.cn key will NOT work against api.z.ai)."
                 exit 1
                 ;;
             esac

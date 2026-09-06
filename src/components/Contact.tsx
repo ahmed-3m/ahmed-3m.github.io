@@ -10,7 +10,8 @@ const socials = [
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/ahmed-3m/' },
   { label: 'Hugging Face', href: 'https://huggingface.co/ahmed-3m' },
   { label: 'W&B', href: 'https://wandb.ai/ahmed-mu-0593' },
-  { label: 'X / Twitter', href: 'https://x.com/Ahmed_mo_93' },
+  // TODO(owner): re-enable with new X account
+  // { label: 'X / Twitter', href: 'https://x.com/Ahmed_mo_93' },
 ]
 
 const copy = {

@@ -1,3 +1,11 @@
+'use client'
+
+// Server-rendered <script> elements are serialized twice into the delivered
+// HTML (once as real DOM, once inside the RSC flight payload for hydration).
+// Marking this module 'use client' keeps the schema markup out of the flight
+// payload so every page emits each JSON-LD block exactly once. The components
+// are still server-side rendered into the static HTML; crawlers see one copy.
+
 export function PersonSchema() {
   const personSchema = {
     '@context': 'https://schema.org',
@@ -23,7 +31,8 @@ export function PersonSchema() {
       'https://www.linkedin.com/in/ahmed-3m/',
       'https://huggingface.co/ahmed-3m',
       'https://wandb.ai/ahmed-mu-0593',
-      'https://x.com/Ahmed_mo_93',
+      // TODO(owner): re-enable with new X account
+      // 'https://x.com/Ahmed_mo_93',
     ],
     knowsAbout: [
       'Artificial Intelligence',
@@ -243,7 +252,8 @@ export function SocialProfileSchema() {
         'https://www.linkedin.com/in/ahmed-3m/',
         'https://huggingface.co/ahmed-3m',
         'https://wandb.ai/ahmed-mu-0593',
-        'https://x.com/Ahmed_mo_93',
+        // TODO(owner): re-enable with new X account
+        // 'https://x.com/Ahmed_mo_93',
       ],
       jobTitle: 'AI/ML Engineer',
       alumniOf: [
