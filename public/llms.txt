@@ -61,7 +61,8 @@
 - LinkedIn: https://www.linkedin.com/in/ahmed-3m/
 - HuggingFace: https://huggingface.co/ahmed-3m
 - Weights & Biases: https://wandb.ai/ahmed-mu-0593
-- X / Twitter: https://x.com/Ahmed_mo_93
+<!-- TODO(owner): re-enable with new X account -->
+<!-- - X / Twitter: https://x.com/Ahmed_mo_93 -->
 
 ## Selected Evidence
 

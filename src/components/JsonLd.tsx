@@ -23,7 +23,8 @@ export function PersonSchema() {
       'https://www.linkedin.com/in/ahmed-3m/',
       'https://huggingface.co/ahmed-3m',
       'https://wandb.ai/ahmed-mu-0593',
-      'https://x.com/Ahmed_mo_93',
+      // TODO(owner): re-enable with new X account
+      // 'https://x.com/Ahmed_mo_93',
     ],
     knowsAbout: [
       'Artificial Intelligence',
@@ -243,7 +244,8 @@ export function SocialProfileSchema() {
         'https://www.linkedin.com/in/ahmed-3m/',
         'https://huggingface.co/ahmed-3m',
         'https://wandb.ai/ahmed-mu-0593',
-        'https://x.com/Ahmed_mo_93',
+        // TODO(owner): re-enable with new X account
+        // 'https://x.com/Ahmed_mo_93',
       ],
       jobTitle: 'AI/ML Engineer',
       alumniOf: [
