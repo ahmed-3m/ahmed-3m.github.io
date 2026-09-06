@@ -81,6 +81,13 @@ const GROQ_MODEL = process.env.NEXT_PUBLIC_GROQ_MODEL || 'openai/gpt-oss-20b'
 // parameter must never be sent for this model.
 // Override via NEXT_PUBLIC_BIGMODEL_MODEL.
 const ZAI_MODEL = process.env.NEXT_PUBLIC_BIGMODEL_MODEL || 'glm-5.3'
+// Fast lane for simple prompts — non-thinking, enabled for all Coding Plan
+// tiers. Cuts simple-question latency from ~4.5s (thinking model) to ~1-2s.
+// Override via NEXT_PUBLIC_ZAI_FAST_MODEL.
+const ZAI_FAST_MODEL = process.env.NEXT_PUBLIC_ZAI_FAST_MODEL || 'glm-5-turbo'
+// Tiny classifier that decides fast vs deep for non-obvious prompts.
+// Override via NEXT_PUBLIC_ZAI_ROUTER_MODEL.
+const ZAI_ROUTER_MODEL = process.env.NEXT_PUBLIC_ZAI_ROUTER_MODEL || 'glm-5.3-flash'
 const GROQ_CHAT_URL = 'https://api.groq.com/openai/v1/chat/completions'
 const ZAI_CHAT_URL = 'https://api.z.ai/api/coding/paas/v4/chat/completions'
 const CHAT_PROXY_URL = process.env.NEXT_PUBLIC_CHAT_PROXY_URL
@@ -440,6 +447,65 @@ async function requestChatCompletion(provider: ProviderConfig): Promise<string> 
   return reply
 }
 
+// ── Model routing ───────────────────────────────────────────
+// glm-5.3 always thinks (slow but thorough); glm-5-turbo is fast for
+// simple prompts. A tiny flash-model classifier picks the lane for
+// non-obvious prompts, with zero-latency local shortcuts for the
+// clearest cases and a 'deep' default whenever routing is uncertain.
+
+type ChatLane = 'fast' | 'deep'
+
+const ROUTER_TIMEOUT_MS = 1500
+
+// Pure social messages: never worth a router call.
+const SOCIAL_PATTERN = /^(hi|hey|hello|yo|good (morning|afternoon|evening)|thanks|thank you|thx|ok|okay|great|nice|cool|bye|goodbye)[\s!.?]*$/i
+// Unmistakably analytical asks: go straight to the deep model.
+const DEEP_PATTERN = /\b(explain|compare|why|how (does|do|did|would|to think)|walk me|deep dive|detailed|difference between|pros and cons|evaluate|critique)\b/i
+
+function routeLocally(message: string): ChatLane | null {
+  if (SOCIAL_PATTERN.test(message.trim())) return 'fast'
+  if (DEEP_PATTERN.test(message)) return 'deep'
+  return null
+}
+
+async function routeWithClassifier(
+  message: string,
+  auth: { token: string; url: string; useProxy: boolean }
+): Promise<ChatLane> {
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), ROUTER_TIMEOUT_MS)
+  try {
+    const headers: Record<string, string> = { 'Content-Type': 'application/json' }
+    if (auth.token && !auth.useProxy) headers.Authorization = `Bearer ${auth.token}`
+    const response = await fetch(auth.url, {
+      method: 'POST',
+      headers,
+      signal: controller.signal,
+      body: JSON.stringify({
+        model: ZAI_ROUTER_MODEL,
+        messages: [
+          {
+            role: 'user',
+            content: `You classify chat messages sent to a personal-assistant chatbot about its owner. FAST = greetings, thanks, simple factual lookups, short definitions, yes/no questions, single-fact asks (contact info, links, "what is X"). DEEP = explanations, comparisons, multi-part questions, nuanced or open-ended asks. Respond with exactly one word: FAST or DEEP.\n\nMessage: ${message}`,
+          },
+        ],
+        max_tokens: 4,
+        temperature: 0,
+        stream: false,
+      }),
+    })
+    if (!response.ok) return 'deep'
+    const data = (await response.json()) as ChatCompletionResponse
+    const verdict = data.choices?.[0]?.message?.content?.trim().toLowerCase() ?? ''
+    return verdict.includes('fast') ? 'fast' : 'deep'
+  } catch {
+    // Router unavailable, timed out, or unparsable — keep quality.
+    return 'deep'
+  } finally {
+    clearTimeout(timeout)
+  }
+}
+
 function renderInline(text: string, keyPrefix: string): ReactNode[] {
   const renderLinkedText = (value: string, segmentKey: string): ReactNode[] => {
     const linkPattern = /((?:https?:\/\/|www\.)[^\s]+|(?:[a-z0-9-]+\.)+[a-z]{2,}(?:\/[^\s]*)?|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/gi
@@ -793,16 +859,32 @@ export default function ChatBot() {
           }
         : null
 
-      const zaiProvider: ProviderConfig | null = (hasZaiToken || hasProxy)
+      const zaiAuth = (hasZaiToken || hasProxy)
+        ? {
+            token: zaiToken ?? '',
+            url: CHAT_PROXY_URL || ZAI_CHAT_URL,
+            useProxy: Boolean(CHAT_PROXY_URL),
+          }
+        : null
+
+      // Pick the BigModel lane first: obvious cases are decided locally at
+      // zero latency; everything else goes through the flash classifier.
+      let lane: ChatLane = 'deep'
+      if (zaiAuth) {
+        lane = routeLocally(content) ?? (await routeWithClassifier(content, zaiAuth))
+      }
+      const zaiModel = lane === 'fast' ? ZAI_FAST_MODEL : ZAI_MODEL
+
+      const zaiProvider: ProviderConfig | null = zaiAuth
         ? {
             name: 'BigModel',
             // When the proxy URL is set, route through it; the Worker holds the
             // real API key server-side. Otherwise call BigModel (GLM Coding Plan) directly.
-            token: zaiToken ?? '',
-            url: CHAT_PROXY_URL || ZAI_CHAT_URL,
-            useProxy: Boolean(CHAT_PROXY_URL),
+            token: zaiAuth.token,
+            url: zaiAuth.url,
+            useProxy: zaiAuth.useProxy,
             body: {
-              model: ZAI_MODEL,
+              model: zaiModel,
               messages: payloadMessages,
               max_tokens: 380,
               temperature: 0.5,
