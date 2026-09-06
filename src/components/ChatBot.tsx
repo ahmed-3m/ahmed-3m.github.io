@@ -412,7 +412,29 @@ function createChatError(
   return error
 }
 
-async function requestChatCompletion(provider: ProviderConfig): Promise<string> {
+type StreamDelta = (fullContent: string) => void
+
+type StreamChunk = ChatCompletionResponse & {
+  choices?: Array<{
+    delta?: { content?: string }
+    message?: { content?: string }
+  }>
+}
+
+/**
+ * Requests a chat completion. When `onDelta` is provided the request streams
+ * (OpenAI-compatible SSE) and invokes `onDelta` with the full accumulated
+ * content on every token — the caller renders progressively. Without it, the
+ * call is a plain JSON completion (used by the model router).
+ *
+ * A stream that dies mid-flight after content has arrived returns the partial
+ * text rather than throwing, so a transient blip can't blank a reply the user
+ * is already reading.
+ */
+async function requestChatCompletion(
+  provider: ProviderConfig,
+  onDelta?: StreamDelta
+): Promise<string> {
   const headers: Record<string, string> = { 'Content-Type': 'application/json' }
   // When using the Cloudflare Worker proxy, the Authorization header is added
   // server-side from a secret — the browser must NOT send the public token.
@@ -420,15 +442,15 @@ async function requestChatCompletion(provider: ProviderConfig): Promise<string> 
     headers.Authorization = `Bearer ${provider.token}`
   }
 
+  const streaming = Boolean(onDelta)
   const response = await fetch(provider.url, {
     method: 'POST',
     headers,
-    body: JSON.stringify(provider.body),
+    body: JSON.stringify({ ...provider.body, stream: streaming }),
   })
 
-  const data = (await response.json()) as ChatCompletionResponse
-
   if (!response.ok) {
+    const data = (await response.json().catch(() => ({}))) as ChatCompletionResponse
     const errorDetail = typeof data.error === 'string' ? undefined : data.error
     const message =
       typeof data.error === 'string'
@@ -442,9 +464,65 @@ async function requestChatCompletion(provider: ProviderConfig): Promise<string> 
     throw createChatError(message, provider.name, response.status, errorDetail?.code)
   }
 
-  const reply = data.choices?.[0]?.message?.content?.trim()
-  if (!reply) throw createChatError(`${provider.name} returned an empty response.`, provider.name)
-  return reply
+  if (!streaming || !response.body) {
+    const data = (await response.json()) as ChatCompletionResponse
+    const reply = data.choices?.[0]?.message?.content?.trim()
+    if (!reply) throw createChatError(`${provider.name} returned an empty response.`, provider.name)
+    return reply
+  }
+
+  const reader = response.body.getReader()
+  const decoder = new TextDecoder()
+  let buffer = ''
+  let content = ''
+
+  const consumeLine = (line: string) => {
+    const trimmed = line.trim()
+    if (!trimmed.startsWith('data:')) return
+    const payload = trimmed.slice(5).trim()
+    if (!payload || payload === '[DONE]') return
+    let chunk: StreamChunk
+    try {
+      chunk = JSON.parse(payload) as StreamChunk
+    } catch {
+      return // partial or keepalive line
+    }
+    if (chunk.error) {
+      const message =
+        typeof chunk.error === 'string'
+          ? chunk.error
+          : chunk.error.message ?? `${provider.name} stream failed.`
+      throw createChatError(message, provider.name)
+    }
+    const delta = chunk.choices?.[0]?.delta?.content
+    if (delta) {
+      content += delta
+      onDelta?.(content)
+    }
+  }
+
+  try {
+    for (;;) {
+      const { done, value } = await reader.read()
+      if (done) break
+      buffer += decoder.decode(value, { stream: true })
+      const lines = buffer.split('\n')
+      buffer = lines.pop() ?? ''
+      for (const line of lines) consumeLine(line)
+    }
+    if (buffer) consumeLine(buffer)
+  } catch (streamError) {
+    if (content.trim()) {
+      console.warn(`Chat stream from ${provider.name} ended early — keeping partial reply.`, streamError)
+      return content.trim()
+    }
+    throw streamError
+  }
+
+  if (!content.trim()) {
+    throw createChatError(`${provider.name} returned an empty response.`, provider.name)
+  }
+  return content.trim()
 }
 
 // ── Model routing ───────────────────────────────────────────
@@ -780,6 +858,9 @@ export default function ChatBot() {
   const [input, setInput] = useState('')
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  // True once streamed tokens have started arriving — the typing dots then
+  // give way to the growing reply bubble.
+  const [isStreaming, setIsStreaming] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const currentSection = useCurrentSection()
   const messagesRef = useRef<HTMLDivElement>(null)
@@ -823,6 +904,7 @@ export default function ChatBot() {
     setInput('')
     setError(null)
     setIsLoading(true)
+    setIsStreaming(false)
     trackChatEvent(content)
 
     try {
@@ -894,7 +976,11 @@ export default function ChatBot() {
               messages: payloadMessages,
               max_tokens: zaiMaxTokens,
               temperature: 0.5,
-              stream: false,
+              // Deep lane: bound the reasoning so thinking can't run away
+              // with the whole token budget before any answer text is
+              // produced. GLM-5.x supports reasoning_effort; older GLM-4.x
+              // ignored unknown fields, and the fast lane doesn't think.
+              ...(lane === 'deep' ? { reasoning_effort: 'low' as const } : {}),
               // No `thinking` parameter: GLM-5.3 always thinks and rejects
               // `thinking: { type: 'disabled' }` (accepted by GLM-4.5).
             },
@@ -911,11 +997,32 @@ export default function ChatBot() {
       // Resilient failover: ANY primary failure (non-OK HTTP status such as a
       // decommissioned model, network error, or empty response) falls through
       // to the next configured provider — not just rate-limit errors.
+      // Replies stream token-by-token into a growing assistant bubble; the
+      // bubble is created lazily on the first delta so a provider that fails
+      // before producing text doesn't leave an empty message behind.
+      let streamStarted = false
+      const emitDelta = (fullContent: string) => {
+        if (!streamStarted) {
+          streamStarted = true
+          setIsStreaming(true)
+          setMessages((prev) => [...prev, { role: 'assistant', content: fullContent }])
+          return
+        }
+        setMessages((prev) =>
+          prev.map((message, index) =>
+            index === prev.length - 1 && message.role === 'assistant'
+              ? { ...message, content: fullContent }
+              : message
+          )
+        )
+      }
+
       let rawReply: string | null = null
       let lastProviderError: unknown = null
       for (const provider of providers) {
         try {
-          rawReply = await requestChatCompletion(provider)
+          streamStarted = false // fresh bubble per provider attempt
+          rawReply = await requestChatCompletion(provider, emitDelta)
           break
         } catch (providerError) {
           lastProviderError = providerError
@@ -929,14 +1036,31 @@ export default function ChatBot() {
 
       const reply = shortenReply(rawReply)
 
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: 'assistant',
-          content: reply,
-          followUps: generateFollowUps(reply, content, currentSection),
-        },
-      ])
+      // With streaming the assistant bubble already exists (created on the
+      // first delta) — finalize it in place with the clamped reply and the
+      // follow-up chips instead of appending a second copy.
+      setMessages((prev) => {
+        const lastIndex = prev.length - 1
+        if (lastIndex >= 0 && prev[lastIndex].role === 'assistant') {
+          return prev.map((message, index) =>
+            index === lastIndex
+              ? {
+                  ...message,
+                  content: reply,
+                  followUps: generateFollowUps(reply, content, currentSection),
+                }
+              : message
+          )
+        }
+        return [
+          ...prev,
+          {
+            role: 'assistant',
+            content: reply,
+            followUps: generateFollowUps(reply, content, currentSection),
+          },
+        ]
+      })
     } catch (caughtError) {
       // Raw provider/API error text must never reach visitors — show only the
       // localized generic message; the details are logged to the console for
@@ -945,6 +1069,7 @@ export default function ChatBot() {
       setError(t(CHAT_COPY.genericError))
     } finally {
       setIsLoading(false)
+      setIsStreaming(false)
     }
   }
 
@@ -1058,7 +1183,7 @@ export default function ChatBot() {
               })
             )}
 
-            {isLoading && (
+            {isLoading && !isStreaming && (
               <div className="flex justify-start">
                 <LoadingDots label={t(CHAT_COPY.typing)} />
               </div>
