@@ -546,6 +546,11 @@ function routeLocally(message: string): ChatLane | null {
   return null
 }
 
+/**
+ * Routes a message to either the fast or deep model lane using a lightweight
+ * classifier. Times out after 1.5s and defaults to deep on any failure to
+ * preserve answer quality.
+ */
 async function routeWithClassifier(
   message: string,
   auth: { token: string; url: string; useProxy: boolean }
