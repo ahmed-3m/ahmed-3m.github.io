@@ -1,7 +1,15 @@
 {
-  "updatedAt": "2026-09-06T18:37:55.566Z",
+  "updatedAt": "2026-09-06T18:43:49.385Z",
   "source": "https://github.com/ahmed-3m",
   "items": [
+    {
+      "id": "14527378975",
+      "type": "PullRequestEvent",
+      "repo": "ahmed-3m/ahmed-3m.github.io",
+      "message": "Merged PR #50: fix(chatbot): 2048-token budget for the glm-5.3 deep lane (thinking counts…",
+      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/50",
+      "createdAt": "2026-09-06T18:42:37Z"
+    },
     {
       "id": "14527231889",
       "type": "PullRequestEvent",
@@ -17,14 +25,6 @@
       "message": "Merged PR #48: fix(chatbot): make Genie honor explicit length and format constraints",
       "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/48",
       "createdAt": "2026-09-06T18:20:48Z"
-    },
-    {
-      "id": "14526490742",
-      "type": "PullRequestEvent",
-      "repo": "ahmed-3m/ahmed-3m.github.io",
-      "message": "Merged PR #47: fix(theme): read stored theme via useSyncExternalStore (fix-forward for #46)",
-      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/47",
-      "createdAt": "2026-09-06T18:09:02Z"
     },
     {
       "id": "13247858150",
