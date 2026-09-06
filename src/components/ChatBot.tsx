@@ -874,6 +874,12 @@ export default function ChatBot() {
         lane = routeLocally(content) ?? (await routeWithClassifier(content, zaiAuth))
       }
       const zaiModel = lane === 'fast' ? ZAI_FAST_MODEL : ZAI_MODEL
+      // glm-5.3 spends its token budget on thinking BEFORE the visible
+      // answer, so the deep lane needs a much larger ceiling — with 380 it
+      // sometimes exhausted the budget mid-thought and returned an empty
+      // reply, silently failing over to Groq (verified live). The fast lane
+      // doesn't think, so 380 stays ample there.
+      const zaiMaxTokens = lane === 'fast' ? 380 : 2048
 
       const zaiProvider: ProviderConfig | null = zaiAuth
         ? {
@@ -886,7 +892,7 @@ export default function ChatBot() {
             body: {
               model: zaiModel,
               messages: payloadMessages,
-              max_tokens: 380,
+              max_tokens: zaiMaxTokens,
               temperature: 0.5,
               stream: false,
               // No `thinking` parameter: GLM-5.3 always thinks and rejects
