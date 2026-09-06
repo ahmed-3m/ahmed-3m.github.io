@@ -194,6 +194,20 @@ export default {
         body: JSON.stringify(upstreamPayload),
       })
 
+      // Streaming requests (SSE): pass the upstream body through unbuffered
+      // so tokens reach the browser as they are produced. Buffering here
+      // (`.text()`) would silently undo the client's streaming.
+      if (upstreamPayload.stream && upstream.body) {
+        return new Response(upstream.body, {
+          status: upstream.status,
+          headers: {
+            'Content-Type': upstream.headers.get('Content-Type') || 'text/event-stream',
+            'Cache-Control': 'no-cache',
+            ...corsHeaders(request),
+          },
+        })
+      }
+
       const upstreamText = await upstream.text()
       const contentType = upstream.headers.get('Content-Type') || 'application/json'
 
