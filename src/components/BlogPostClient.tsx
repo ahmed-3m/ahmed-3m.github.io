@@ -128,6 +128,32 @@ export default function BlogPostClient({ slug }: { slug: string }) {
         },
       })),
     }
+  // Mirrors the visible breadcrumb nav (Home / Blog / post); English names
+  // only, matching the canonical crawl language.
+  const breadcrumbJsonLd = schemaPost && {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://ahmed-3m.github.io/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Blog',
+        item: 'https://ahmed-3m.github.io/blog/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: schemaPost.title,
+        item: `https://ahmed-3m.github.io/blog/${schemaPost.slug}/`,
+      },
+    ],
+  }
 
   return (
     <main className="min-h-screen pb-20 pt-24">
@@ -141,6 +167,12 @@ export default function BlogPostClient({ slug }: { slug: string }) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      )}
+      {breadcrumbJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
         />
       )}
       <article className="mx-auto max-w-3xl px-5">

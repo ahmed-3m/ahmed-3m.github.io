@@ -50,6 +50,18 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       description: post.excerpt,
       images: [post.ogImage ?? '/og-image.png'],
     },
+    // Highwire Press tags — Google Scholar's documented inclusion path for
+    // site-hosted papers. Only present on posts that carry formal citations.
+    ...(post.citation && {
+      other: {
+        citation_title: post.citation.title,
+        citation_author: 'Mohammed, Ahmed',
+        citation_date: post.citation.date,
+        citation_pdf_url: post.citation.pdfUrl,
+        citation_language: 'en',
+        citation_keywords: post.tags.join('; '),
+      },
+    }),
   }
 }
 

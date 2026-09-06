@@ -63,6 +63,8 @@ Last updated: 2026-09-06
 - LinkedIn: https://www.linkedin.com/in/ahmed-3m/
 - HuggingFace: https://huggingface.co/ahmed-3m
 - Weights & Biases: https://wandb.ai/ahmed-mu-0593
+- Thesis (official JKU library record): https://epub.jku.at/obvulihs/content/titleinfo/14374221
+- Google Scholar: https://scholar.google.com/citations?user=s5Aqlw4AAAAJ
 <!-- TODO(owner): re-enable with new X account -->
 <!-- - X / Twitter: https://x.com/Ahmed_mo_93 -->
 
