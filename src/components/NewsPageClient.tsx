@@ -38,8 +38,30 @@ export default function NewsPageClient() {
     { key: 'agentic', label: newsCategoryLabels.agentic, count: all.filter((i) => i.category === 'agentic').length },
   ]
 
+  // JSON-LD is built client-side (the news data already ships in this chunk)
+  // so the schema is not duplicated into the RSC flight payload. English is
+  // the canonical crawl language.
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'AI & Agentic AI News',
+    description: 'Curated AI and agentic AI news with editorial commentary.',
+    url: 'https://ahmed-3m.github.io/news/',
+    hasPart: getAllNews('en').map((item) => ({
+      '@type': 'NewsArticle',
+      headline: item.headline,
+      datePublished: item.date,
+      url: item.url,
+      abstract: item.take,
+    })),
+  }
+
   return (
     <main className="min-h-screen pb-20 pt-24">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="mx-auto max-w-4xl px-5">
         <Link href="/" className="mb-8 inline-flex items-center gap-2 text-[var(--cd-accent)]">
           <ArrowLeft size={18} />
