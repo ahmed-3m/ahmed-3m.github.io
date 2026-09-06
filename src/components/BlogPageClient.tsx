@@ -36,8 +36,34 @@ export default function BlogPageClient() {
   const posts = getAllBlogPosts(lang)
   const locale = languageLocale[lang]
 
+  // JSON-LD is built client-side (the post data already ships in this chunk)
+  // so the schema is not duplicated into the RSC flight payload. English is
+  // the canonical crawl language.
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    name: 'Ahmed Mohammed AI/ML Blog',
+    description: 'Articles on AI, machine learning, computer vision, and product engineering',
+    url: 'https://ahmed-3m.github.io/blog/',
+    author: {
+      '@type': 'Person',
+      name: 'Ahmed Mohammed',
+    },
+    blogPost: getAllBlogPosts('en').map((post) => ({
+      '@type': 'BlogPosting',
+      headline: post.title,
+      description: post.excerpt,
+      datePublished: post.date,
+      url: `https://ahmed-3m.github.io/blog/${post.slug}/`,
+    })),
+  }
+
   return (
     <main className="min-h-screen pb-20 pt-24">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="mx-auto max-w-4xl px-5">
         <Link href="/" className="mb-8 inline-flex items-center gap-2 text-[var(--cd-accent)]">
           <ArrowLeft size={18} />
