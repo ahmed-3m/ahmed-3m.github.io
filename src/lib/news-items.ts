@@ -428,7 +428,7 @@ const newsItems: NewsItem[] = [
     category: 'agentic',
     headline: 'Cogent AI Team Releases VR-1: A Frontier Cyber Reasoning Model That Composes and Verifies Enterprise Attack Paths',
     source: 'MarkTechPost',
-    url: 'https://www.digitado.com.br/cogent-ai-team-releases-vr-1-a-frontier-cyber-reasoning-model-that-composes-and-verifies-enterprise-attack-paths/',
+    url: 'https://www.marktechpost.com/2026/08/03/ogent-ai-team-releases-vr-1/',
     take: {
       en: 'VR-1 is the defender-side answer to the sandbox-escape incidents of the last month: a model post-trained specifically to compose and verify full enterprise attack chains, shipped with IntrusionBench to score agents on completed intrusions and a governed runtime instead of raw weights. What makes it worth taking seriously is the self-honest framing — Cogent calls its 2× claim preliminary and admits the gap nearly closes once baselines run on a matched harness, which is exactly the eval rigor you\'d demand before letting any cyber-capable agent near production.'
     },
