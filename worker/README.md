@@ -81,9 +81,11 @@ contains — no API key.
   Z.ai (`api.z.ai`) key; an `open.bigmodel.cn` key will not authenticate.
   Alternatively, set up the proxy with the `ZAI_API_KEY` secret to avoid
   embedding any token in the build.
-- The proxy enforces a hard `MAX_TOKENS` cap (500) and only accepts POST
+- The proxy enforces a hard `MAX_TOKENS` cap (2048 — glm-5.3 needs the room:
+  its thinking tokens count against `max_tokens`) and only accepts POST
   requests; all other methods get a `405`. It returns CORS headers for the
-  portfolio origin and rejects malformed bodies with `400`.
+  portfolio origin, rejects malformed bodies with `400`, and passes SSE
+  streaming responses through unbuffered.
 - The `ZAI_API_KEY` lives only in Cloudflare and is referenced from the Worker as
   `env.ZAI_API_KEY`. Its value is a BigModel API key. It is never logged or
   returned to the client.
