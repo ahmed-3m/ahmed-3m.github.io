@@ -12,11 +12,11 @@ const copy = {
     ar: 'مهندس ذكاء اصطناعي - بحث يتحول إلى منتج.',
   },
   p1: {
-    en: 'I am an AI/ML engineer who submitted an M.Sc. thesis in Artificial Intelligence at JKU Linz (degree expected 2026), working under Prof. Sepp Hochreiter.',
-    de: 'Ich bin AI/ML Engineer und habe meine M.Sc.-Arbeit in Artificial Intelligence an der JKU Linz eingereicht (Abschluss erwartet 2026), betreut von Prof. Sepp Hochreiter.',
-    fr: "Je suis ingénieur IA/ML et j'ai soumis un mémoire de M.Sc. en intelligence artificielle à JKU Linz (diplôme attendu en 2026), sous la supervision du Prof. Sepp Hochreiter.",
-    es: 'Soy ingeniero de IA/ML y presenté una tesis de M.Sc. en Inteligencia Artificial en JKU Linz (titulación esperada en 2026), bajo la supervisión del Prof. Sepp Hochreiter.',
-    ar: 'أنا مهندس ذكاء اصطناعي وتعلم آلي، قدّمت رسالة ماجستير في الذكاء الاصطناعي في JKU Linz (الدرجة متوقعة 2026) تحت إشراف البروفيسور سيب هوخرايتر.',
+    en: 'I am an AI/ML engineer who completed an M.Sc. in Artificial Intelligence at JKU Linz (graduated Sep 2026), working under Prof. Sepp Hochreiter.',
+    de: 'Ich bin AI/ML Engineer und habe mein M.Sc.-Studium in Artificial Intelligence an der JKU Linz abgeschlossen (Abschluss Sep 2026), betreut von Prof. Sepp Hochreiter.',
+    fr: "Je suis ingénieur IA/ML et j'ai obtenu un M.Sc. en intelligence artificielle à JKU Linz (diplôme obtenu en sep. 2026), sous la supervision du Prof. Sepp Hochreiter.",
+    es: 'Soy ingeniero de IA/ML y completé un M.Sc. en Inteligencia Artificial en JKU Linz (titulación obtenida en sep. 2026), bajo la supervisión del Prof. Sepp Hochreiter.',
+    ar: 'أنا مهندس ذكاء اصطناعي وتعلم آلي، أكملت درجة الماجستير في الذكاء الاصطناعي في JKU Linz (سبتمبر 2026) تحت إشراف البروفيسور سيب هوخرايتر.',
   },
   p2: {
     en: 'My work spans the full stack: from class-conditional separation loss for diffusion-based OOD detection to industrial computer vision pipelines evaluated under rigorous cross-validation.',
