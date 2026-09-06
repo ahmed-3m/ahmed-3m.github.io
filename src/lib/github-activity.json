@@ -1,7 +1,15 @@
 {
-  "updatedAt": "2026-09-06T18:10:18.364Z",
+  "updatedAt": "2026-09-06T18:21:41.189Z",
   "source": "https://github.com/ahmed-3m",
   "items": [
+    {
+      "id": "14526804178",
+      "type": "PullRequestEvent",
+      "repo": "ahmed-3m/ahmed-3m.github.io",
+      "message": "Merged PR #48: fix(chatbot): make Genie honor explicit length and format constraints",
+      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/48",
+      "createdAt": "2026-09-06T18:20:48Z"
+    },
     {
       "id": "14526490742",
       "type": "PullRequestEvent",
@@ -17,14 +25,6 @@
       "message": "Merged PR #46: fix(theme): hydration failure duplicated JSON-LD for returning light-theme…",
       "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/46",
       "createdAt": "2026-09-06T18:03:57Z"
-    },
-    {
-      "id": "14525934553",
-      "type": "PullRequestEvent",
-      "repo": "ahmed-3m/ahmed-3m.github.io",
-      "message": "Merged PR #43: feat(automation): weekly keep-alive deploy + daily site-health checks",
-      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/43",
-      "createdAt": "2026-09-06T17:49:00Z"
     },
     {
       "id": "13247858150",
