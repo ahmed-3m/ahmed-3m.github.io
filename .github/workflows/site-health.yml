@@ -1,0 +1,94 @@
+name: Daily site health check
+
+# Dependency-light production canary: no npm ci, no build — just curl + node
+# one-liners against the live Pages site and the repo. Each check is its own
+# named step so a failure email names exactly what rotted.
+#
+# 06:45 UTC on purpose: 22 minutes after the 06:23 news run it supervises,
+# so a failed news pipeline shows up here the same morning.
+
+on:
+  schedule:
+    - cron: "45 6 * * *" # Daily 06:45 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read # only for the shallow checkout used by the news-freshness check
+
+concurrency:
+  group: site-health
+  cancel-in-progress: false
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Site up + key assets return HTTP 200
+        shell: bash
+        run: |
+          set -u
+          base="https://ahmed-3m.github.io"
+          paths=(
+            "/"
+            "/news/"
+            "/blog/"
+            "/cv.pdf"
+            "/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf"
+            "/sitemap.xml"
+          )
+          fail=0
+          for p in "${paths[@]}"; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' -L --max-time 30 "$base$p") || code="000"
+            if [ "$code" = "200" ]; then
+              echo "OK   $base$p -> 200"
+            else
+              echo "::error::$base$p returned HTTP $code (expected 200)"
+              fail=1
+            fi
+          done
+          if [ "$fail" -ne 0 ]; then
+            echo "Site/assets check failed — the Pages site or a key asset is broken, or the last deploy failed."
+          fi
+          exit $fail
+
+      - name: Checkout (shallow, for news freshness)
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - name: News freshness (newest item within 4 days)
+        shell: bash
+        run: |
+          node <<'EOF'
+          const { readFileSync } = require('node:fs')
+          const src = readFileSync('src/lib/news-items.ts', 'utf8')
+          // Match both quote styles; only the date fields carry ISO YYYY-MM-DD literals.
+          const dates = [...src.matchAll(/\bdate:\s*['"](\d{4}-\d{2}-\d{2})['"]/g)].map((m) => m[1])
+          if (dates.length === 0) {
+            console.error('::error::No date entries parsed from src/lib/news-items.ts — the file is empty or the parser is broken.')
+            process.exit(1)
+          }
+          const newest = dates.sort().at(-1)
+          const ageDays = (Date.now() - Date.parse(newest + 'T00:00:00Z')) / 86400000
+          console.log(`Newest news item: ${newest} (${ageDays.toFixed(1)} days old; threshold 4)`)
+          if (ageDays > 4) {
+            console.error(`::error::News page is stale — newest item is ${newest} (${Math.floor(ageDays)} days old, threshold 4). Likely root causes: (1) the BIGMODEL_NEWS_TOKEN secret is missing/unset, or (2) the daily news run (.github/workflows/news-update.yml) is failing — check its recent runs.`)
+            process.exit(1)
+          }
+          console.log('News is fresh.')
+          EOF
+
+      - name: Chat widget present on homepage
+        shell: bash
+        run: |
+          html="$(curl -s -L --max-time 30 https://ahmed-3m.github.io/)"
+          if [ -z "$html" ]; then
+            echo "::error::Homepage fetch returned an empty body — the site may be down (the assets step should also fail)."
+            exit 1
+          fi
+          if printf '%s' "$html" | grep -q 'ahmed-chatbot-panel' || printf '%s' "$html" | grep -q 'Ask Genie'; then
+            echo "OK: chat widget mount found in homepage HTML."
+          else
+            echo "::error::Chat widget mount missing from homepage HTML (neither 'ahmed-chatbot-panel' nor 'Ask Genie' found). The ChatBot component may have stopped rendering, or the deployed bundle is stale."
+            exit 1
+          fi
