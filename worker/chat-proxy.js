@@ -22,7 +22,9 @@ const ZAI_CHAT_URL = 'https://api.z.ai/api/coding/paas/v4/chat/completions'
 // runs with thinking enabled and rejects `thinking: { type: 'disabled' }`
 // (which GLM-4.5 accepted), so the Worker must not inject that parameter.
 const DEFAULT_MODEL = 'glm-5.3'
-const MAX_TOKENS = 500
+// glm-5.3 thinks before answering and thinking tokens count against
+// max_tokens, so deep-lane requests legitimately need a large ceiling.
+const MAX_TOKENS = 2048
 const RATE_LIMIT_PER_HOUR = 60
 
 // Allow the portfolio origin (and localhost for dev). Use '*' as a fallback so
