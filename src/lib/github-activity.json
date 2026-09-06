@@ -1,7 +1,15 @@
 {
-  "updatedAt": "2026-09-06T18:43:49.385Z",
+  "updatedAt": "2026-09-06T18:53:54.082Z",
   "source": "https://github.com/ahmed-3m",
   "items": [
+    {
+      "id": "14527655705",
+      "type": "PullRequestEvent",
+      "repo": "ahmed-3m/ahmed-3m.github.io",
+      "message": "Merged PR #52: feat(chatbot): stream replies token-by-token (SSE) + bound deep-lane reasoning",
+      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/52",
+      "createdAt": "2026-09-06T18:52:55Z"
+    },
     {
       "id": "14527378975",
       "type": "PullRequestEvent",
@@ -17,14 +25,6 @@
       "message": "Merged PR #49: feat(chatbot): model routing — glm-5-turbo fast lane with glm-5.3-flash…",
       "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/49",
       "createdAt": "2026-09-06T18:37:00Z"
-    },
-    {
-      "id": "14526804178",
-      "type": "PullRequestEvent",
-      "repo": "ahmed-3m/ahmed-3m.github.io",
-      "message": "Merged PR #48: fix(chatbot): make Genie honor explicit length and format constraints",
-      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/48",
-      "createdAt": "2026-09-06T18:20:48Z"
     },
     {
       "id": "13247858150",
