@@ -14,20 +14,29 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window === 'undefined') return 'dark';
-    const saved = localStorage.getItem('theme') as Theme | null;
-    return saved || 'dark';
-  });
+  // Always start from the SSR default ('dark'). The persisted preference is
+  // applied after mount (below) and pre-paint by the inline script in
+  // layout.tsx. Reading localStorage during initial render made the first
+  // client render disagree with the server HTML, which failed hydration and
+  // forced React to re-render the entire tree — duplicating every JSON-LD
+  // script tag on the page for returning visitors.
+  const [theme, setTheme] = useState<Theme>('dark');
+  const [reduceTransparency, setReduceTransparency] = useState<boolean>(false);
 
-  const [reduceTransparency, setReduceTransparency] = useState<boolean>(() => {
-    if (typeof window === 'undefined') return false;
+  useEffect(() => {
+    const saved = localStorage.getItem('theme');
+    if (saved === 'light' || saved === 'dark') setTheme(saved);
+
     const savedTransparency = localStorage.getItem('reduceTransparency');
-    const systemPrefersReducedTransparency =
+    if (savedTransparency === 'true' || savedTransparency === 'false') {
+      setReduceTransparency(savedTransparency === 'true');
+    } else if (
       typeof window.matchMedia === 'function' &&
-      window.matchMedia('(prefers-reduced-transparency: reduce)').matches;
-    return savedTransparency ? savedTransparency === 'true' : systemPrefersReducedTransparency;
-  });
+      window.matchMedia('(prefers-reduced-transparency: reduce)').matches
+    ) {
+      setReduceTransparency(true);
+    }
+  }, []);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);

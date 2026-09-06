@@ -78,6 +78,14 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" data-theme="dark" suppressHydrationWarning>
       <head>
+        {/* Pre-paint theme restore. Must stay inline and blocking so returning
+            visitors never flash the default dark theme. Keep the attribute
+            names and fallbacks in sync with src/lib/ThemeContext.tsx. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}var r=localStorage.getItem('reduceTransparency');if(r==='true'||r==='false'){document.documentElement.setAttribute('data-reduce-transparency',r);}else if(window.matchMedia&&window.matchMedia('(prefers-reduced-transparency: reduce)').matches){document.documentElement.setAttribute('data-reduce-transparency','true');}}catch(e){}})();`,
+          }}
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#08090d" />
