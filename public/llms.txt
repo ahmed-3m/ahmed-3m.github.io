@@ -2,6 +2,8 @@
 
 > AI/ML Engineer based in Linz, Austria. M.Sc. Artificial Intelligence thesis submitted Jul 2026 (degree expected 2026) at Johannes Kepler University Linz (supervised by Prof. Sepp Hochreiter). Builder of Sihem (LLM assistant) and Faultrix (AI QC platform). Specializing in computer vision, diffusion models, out-of-distribution detection, and industrial defect detection.
 
+Last updated: 2026-09-06
+
 ## Identity
 
 - **Full name:** Ahmed Mohammed
@@ -64,8 +66,22 @@
 <!-- TODO(owner): re-enable with new X account -->
 <!-- - X / Twitter: https://x.com/Ahmed_mo_93 -->
 
+## Blog
+
+Deep-dives on research decisions, production lessons, and the gap between papers and products. RSS feed: https://ahmed-3m.github.io/feed.xml
+
+- [How I Reached 99.03% AUROC on OOD Detection with Conditional Diffusion Models](https://ahmed-3m.github.io/blog/ood-diffusion-thesis/) (2026-07-12)
+- [Shipping Faultrix: What I Learned Building an AI SaaS From Zero](https://ahmed-3m.github.io/blog/5-month-llm-adventure/) (2025-11-15)
+- [Diffusion Models for Industrial Defect Detection at PROFACTOR GmbH](https://ahmed-3m.github.io/blog/diffusion-models-anomaly-detection/) (2024-11-20)
+- [YOLOv8 for Industrial Quality Control: Decisions That Actually Moved the Needle](https://ahmed-3m.github.io/blog/computer-vision-yolo-mastery/) (2024-10-20)
+
+## News
+
+[AI & Agentic AI News](https://ahmed-3m.github.io/news/): curated AI news, each item with a short personal take — updated daily by an automated agent pipeline, with a bias toward agentic AI.
+
 ## Selected Evidence
 
+- CV (PDF): https://ahmed-3m.github.io/cv.pdf
 - Thesis PDF: https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf
 - Industrial report PDF: https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf
 - Research poster PDF: https://ahmed-3m.github.io/research-poster.pdf

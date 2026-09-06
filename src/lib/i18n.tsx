@@ -13,7 +13,7 @@ import {
 } from '@/lib/i18n-config'
 
 export type { Language, TranslationMap } from '@/lib/i18n-config'
-export { languageOptions } from '@/lib/i18n-config'
+export { languageOptions, isLanguage } from '@/lib/i18n-config'
 
 interface I18nContextType {
   lang: Language
