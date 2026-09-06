@@ -53,3 +53,9 @@ next-env.d.ts
 # cloudflare worker — local secrets and cache (source files ARE tracked)
 worker/.dev.vars
 worker/.wrangler/
+
+# local-only backup snapshots (e.g. frozen copies of external deploys). Not source.
+backup/
+
+# agent git worktrees
+.worktrees/

@@ -351,7 +351,7 @@ export function ProjectsSchema() {
         item: {
           '@type': 'SoftwareApplication',
           name: 'Faultrix — Construction Quality Control AI',
-          description: 'AI-powered construction quality control SaaS. Analyzes building photos and generates ÖNORM B 2110-compliant reports in under 1 minute with SHA-256 evidence chain, DSGVO compliance, and AES-256 encryption. Built solo from zero to production.',
+          description: 'AI-powered construction quality control SaaS. Analyzed building photos and generated ÖNORM B 2110-compliant reports in under 1 minute with SHA-256 evidence chain, DSGVO compliance, and AES-256 encryption. Built solo from zero to production.',
           applicationCategory: 'BusinessApplication',
           url: 'https://faultrix.com',
           author: { '@type': 'Person', name: 'Ahmed Mohammed' },
