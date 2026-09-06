@@ -66,13 +66,23 @@ type ChatCompletionError = Error & {
   provider?: ProviderConfig['name']
 }
 
-const GROQ_MODEL = 'llama-3.1-8b-instant'
-// GLM via Zhipu BigModel GLM Coding Plan (open.bigmodel.cn). The Coding Plan
-// uses the dedicated /api/coding/paas/v4 base — distinct from the generic
-// pay-as-you-go /api/paas/v4 path, and from the international api.z.ai host.
-const ZAI_MODEL = 'glm-4.5-airx'
+// Groq decommissioned llama-3.1-8b-instant (and llama-3.3-70b-versatile) for
+// free/developer tiers on 2026-08-16; their deprecation guide recommends
+// openai/gpt-oss-20b as the replacement. Override via NEXT_PUBLIC_GROQ_MODEL.
+// https://console.groq.com/docs/deprecations
+const GROQ_MODEL = process.env.NEXT_PUBLIC_GROQ_MODEL || 'openai/gpt-oss-20b'
+// GLM via the Z.ai GLM Coding Plan (api.z.ai — the international host).
+// The Coding Plan uses the dedicated /api/coding/paas/v4 base — distinct from
+// the generic pay-as-you-go /api/paas/v4 path and from the open.bigmodel.cn
+// host (keys are provisioned per platform; a bigmodel.cn key will not
+// authenticate here).
+// GLM-5.3 always runs with thinking enabled and rejects
+// `thinking: { type: 'disabled' }` (which GLM-4.5 accepted), so that
+// parameter must never be sent for this model.
+// Override via NEXT_PUBLIC_BIGMODEL_MODEL.
+const ZAI_MODEL = process.env.NEXT_PUBLIC_BIGMODEL_MODEL || 'glm-5.3'
 const GROQ_CHAT_URL = 'https://api.groq.com/openai/v1/chat/completions'
-const ZAI_CHAT_URL = 'https://open.bigmodel.cn/api/coding/paas/v4/chat/completions'
+const ZAI_CHAT_URL = 'https://api.z.ai/api/coding/paas/v4/chat/completions'
 const CHAT_PROXY_URL = process.env.NEXT_PUBLIC_CHAT_PROXY_URL
 const MAX_REPLY_CHARS = 1600
 const GENIE_NAME = 'Genie\u{1F9DE}\u200D\u2642\uFE0F'
@@ -392,22 +402,6 @@ function createChatError(
   error.status = status
   error.code = code
   return error
-}
-
-function isGroqLimitError(error: unknown): error is ChatCompletionError {
-  if (!(error instanceof Error)) return false
-
-  const err = error as ChatCompletionError
-  const message = err.message.toLowerCase()
-  return (
-    err.provider === 'Groq' &&
-    (err.status === 429 ||
-      err.code === 'rate_limit_exceeded' ||
-      err.code === 'quota_exceeded' ||
-      message.includes('rate limit') ||
-      message.includes('quota') ||
-      message.includes('limit reached'))
-  )
 }
 
 async function requestChatCompletion(provider: ProviderConfig): Promise<string> {
@@ -740,9 +734,8 @@ export default function ChatBot() {
     if (!content || isLoading) return
 
     const groqToken = process.env.NEXT_PUBLIC_GROQ_TOKEN
-    // BigModel (open.bigmodel.cn) key. NOTE: a Z.ai (api.z.ai) key will NOT
-    // authenticate against this host — they are separate platforms — so there
-    // is intentionally no fallback to NEXT_PUBLIC_ZAI_TOKEN. If the secret is
+    // Z.ai (api.z.ai) GLM Coding Plan key. Keys are provisioned per host, so
+    // an open.bigmodel.cn key will NOT authenticate here — if the secret is
     // unset, the chatbot fails loudly (missing-token UI) rather than silently
     // sending the wrong key to the wrong host.
     const zaiToken = process.env.NEXT_PUBLIC_BIGMODEL_TOKEN
@@ -813,19 +806,36 @@ export default function ChatBot() {
               max_tokens: 380,
               temperature: 0.5,
               stream: false,
-              thinking: { type: 'disabled' },
+              // No `thinking` parameter: GLM-5.3 always thinks and rejects
+              // `thinking: { type: 'disabled' }` (accepted by GLM-4.5).
             },
           }
         : null
 
-      let rawReply: string
-      try {
-        rawReply = groqProvider
-          ? await requestChatCompletion(groqProvider)
-          : await requestChatCompletion(zaiProvider!)
-      } catch (providerError) {
-        if (!isGroqLimitError(providerError) || !zaiProvider) throw providerError
-        rawReply = await requestChatCompletion(zaiProvider)
+      // Provider order: BigModel (GLM Coding Plan / proxy) is PRIMARY whenever
+      // it is configured; Groq is the fallback. When only Groq is configured,
+      // it serves directly.
+      const providers = [zaiProvider, groqProvider].filter(
+        (provider): provider is ProviderConfig => provider !== null
+      )
+
+      // Resilient failover: ANY primary failure (non-OK HTTP status such as a
+      // decommissioned model, network error, or empty response) falls through
+      // to the next configured provider — not just rate-limit errors.
+      let rawReply: string | null = null
+      let lastProviderError: unknown = null
+      for (const provider of providers) {
+        try {
+          rawReply = await requestChatCompletion(provider)
+          break
+        } catch (providerError) {
+          lastProviderError = providerError
+          console.error(`Chat provider ${provider.name} failed:`, providerError)
+        }
+      }
+
+      if (rawReply === null) {
+        throw lastProviderError ?? new Error('No chat provider succeeded.')
       }
 
       const reply = shortenReply(rawReply)
@@ -839,7 +849,11 @@ export default function ChatBot() {
         },
       ])
     } catch (caughtError) {
-      setError(caughtError instanceof Error ? caughtError.message : t(CHAT_COPY.genericError))
+      // Raw provider/API error text must never reach visitors — show only the
+      // localized generic message; the details are logged to the console for
+      // debugging (see the per-provider logs in the loop above).
+      console.error('Chat failed across all configured providers:', caughtError)
+      setError(t(CHAT_COPY.genericError))
     } finally {
       setIsLoading(false)
     }

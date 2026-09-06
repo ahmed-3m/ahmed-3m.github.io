@@ -82,7 +82,8 @@ agent writes no items and publish is a no-op.
 
 Required repository secrets:
 - `BIGMODEL_NEWS_TOKEN` — private Zhipu BigModel API key for the news agent. Never prefixed with `NEXT_PUBLIC_` — must NOT appear in the client bundle. Note: the news agent uses the `/api/anthropic` endpoint (Claude Code speaks the Anthropic Messages API); the GLM Coding Plan `/api/coding/paas/v4` path does NOT support Claude Code.
-- `NEXT_PUBLIC_BIGMODEL_TOKEN` — public, rate-limited Zhipu BigModel key for the portfolio chatbot (uses the GLM Coding Plan `/api/coding/paas/v4/chat/completions` endpoint). This IS inlined into the static JS bundle and is publicly extractable; use a disposable/capped key. The news agent must NOT reuse this key.
+- `NEXT_PUBLIC_BIGMODEL_TOKEN` — public, rate-limited Zhipu BigModel key for the portfolio chatbot (uses the GLM Coding Plan `/api/coding/paas/v4/chat/completions` endpoint, model `glm-5.3` — which always runs with thinking enabled). This IS inlined into the static JS bundle and is publicly extractable; use a disposable/capped key. The news agent must NOT reuse this key.
+- Chatbot model overrides (optional, GitHub *repository variables*, not secrets): `NEXT_PUBLIC_BIGMODEL_MODEL` (default `glm-5.3`) and `NEXT_PUBLIC_GROQ_MODEL` (default `openai/gpt-oss-20b`; Groq decommissioned `llama-3.1-8b-instant` on 2026-08-16).
 - `EXA_API_KEY` — Exa API key (https://exa.ai).
 
 The agent's instructions live in `.github/news/task.md`; the Exa MCP config in
