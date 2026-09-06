@@ -93,6 +93,10 @@ jobs:
           # The news agent uses a separate private key (BIGMODEL_NEWS_TOKEN) — see news-update.yml.
           NEXT_PUBLIC_GROQ_TOKEN: ${{ secrets.NEXT_PUBLIC_GROQ_TOKEN }}
           NEXT_PUBLIC_BIGMODEL_TOKEN: ${{ secrets.NEXT_PUBLIC_BIGMODEL_TOKEN }}
+          # Optional model overrides via GitHub repository variables. Unset or
+          # empty vars fall back to the defaults compiled into ChatBot.tsx.
+          NEXT_PUBLIC_GROQ_MODEL: ${{ vars.NEXT_PUBLIC_GROQ_MODEL }}
+          NEXT_PUBLIC_BIGMODEL_MODEL: ${{ vars.NEXT_PUBLIC_BIGMODEL_MODEL }}
 
       - name: Package Pages artifact
         shell: sh

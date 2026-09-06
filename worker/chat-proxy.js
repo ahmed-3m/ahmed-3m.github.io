@@ -18,7 +18,10 @@
  */
 
 const ZAI_CHAT_URL = 'https://open.bigmodel.cn/api/coding/paas/v4/chat/completions'
-const DEFAULT_MODEL = 'glm-4.5-airx'
+// Keep in sync with ZAI_MODEL in src/components/ChatBot.tsx. GLM-5.3 always
+// runs with thinking enabled and rejects `thinking: { type: 'disabled' }`
+// (which GLM-4.5 accepted), so the Worker must not inject that parameter.
+const DEFAULT_MODEL = 'glm-5.3'
 const MAX_TOKENS = 500
 const RATE_LIMIT_PER_HOUR = 60
 
@@ -169,7 +172,13 @@ export default {
       max_tokens: maxTokens,
       temperature,
       stream: false,
-      thinking: { type: 'disabled' },
+    }
+
+    // Pass through optional thinking control only when the client sends it.
+    // GLM-5.3 always thinks and rejects `thinking: { type: 'disabled' }`, so
+    // this must stay a pass-through — never a hardcoded value.
+    if (body.thinking && typeof body.thinking === 'object') {
+      upstreamPayload.thinking = body.thinking
     }
 
     // Forward to BigModel with the server-side secret.
