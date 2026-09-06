@@ -152,7 +152,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     results: [
       'Report generation in under 1 minute.',
-      'A solo-built AI SaaS moved from idea to production in five months.',
+      'A solo-built AI SaaS moved from idea to production.',
       'The product became a concrete bridge between research discipline and commercial execution.',
     ],
     lessons: [
@@ -161,7 +161,7 @@ export const caseStudies: CaseStudy[] = [
       'Shipping product means optimizing the path to value, not just the model output.',
     ],
     artifacts: [
-      { label: 'Live product', href: 'https://faultrix.com' },
+      { label: 'Product site', href: 'https://faultrix.com' },
       { label: 'Blog post', href: '/blog/5-month-llm-adventure' },
     ],
   },
