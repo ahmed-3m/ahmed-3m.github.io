@@ -1,7 +1,7 @@
 # Spec 004 — Build-Time GitHub Activity Strip
 
-**Status:** Ready for next session
-**Priority:** P1 (proof-of-activity — fully buildable, no decisions blocking)
+**Status:** Removed 2026-09 (PR #53) — retained as design history only. Do not re-implement without owner request.
+**Priority:** ~~P1~~ superseded — the feature shipped, then was removed at the owner's request.
 **Origin:** "Proof of activity" discussion, 2026-07-18.
 
 ## Problem
