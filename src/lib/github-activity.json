@@ -1,7 +1,23 @@
 {
-  "updatedAt": "2026-09-06T17:56:46.963Z",
+  "updatedAt": "2026-09-06T18:10:18.364Z",
   "source": "https://github.com/ahmed-3m",
   "items": [
+    {
+      "id": "14526490742",
+      "type": "PullRequestEvent",
+      "repo": "ahmed-3m/ahmed-3m.github.io",
+      "message": "Merged PR #47: fix(theme): read stored theme via useSyncExternalStore (fix-forward for #46)",
+      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/47",
+      "createdAt": "2026-09-06T18:09:02Z"
+    },
+    {
+      "id": "14526346597",
+      "type": "PullRequestEvent",
+      "repo": "ahmed-3m/ahmed-3m.github.io",
+      "message": "Merged PR #46: fix(theme): hydration failure duplicated JSON-LD for returning light-theme…",
+      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/46",
+      "createdAt": "2026-09-06T18:03:57Z"
+    },
     {
       "id": "14525934553",
       "type": "PullRequestEvent",
@@ -9,22 +25,6 @@
       "message": "Merged PR #43: feat(automation): weekly keep-alive deploy + daily site-health checks",
       "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/43",
       "createdAt": "2026-09-06T17:49:00Z"
-    },
-    {
-      "id": "14525906469",
-      "type": "PullRequestEvent",
-      "repo": "ahmed-3m/ahmed-3m.github.io",
-      "message": "Merged PR #45: fix(site): hide X links, dedicated 404 title, JSON-LD rendered once",
-      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/45",
-      "createdAt": "2026-09-06T17:47:53Z"
-    },
-    {
-      "id": "14525896819",
-      "type": "PullRequestEvent",
-      "repo": "ahmed-3m/ahmed-3m.github.io",
-      "message": "Merged PR #44: fix(chatbot): glm-5.3 primary, live Groq fallback, no raw errors to visitors",
-      "url": "https://github.com/ahmed-3m/ahmed-3m.github.io/pull/44",
-      "createdAt": "2026-09-06T17:47:31Z"
     },
     {
       "id": "13247858150",
