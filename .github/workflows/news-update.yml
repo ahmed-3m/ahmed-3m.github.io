@@ -147,7 +147,16 @@ jobs:
             fi
             if [ "$code" -eq 0 ]; then
               # Missing or non-JSON stdout is a hard fail — never invent {items:[]}.
-              node .github/news/parse-agent-stdout.mjs "$log" > "$RUNNER_TEMP/news-delta.json"
+              # On parse failure, surface the envelope's tail so the Actions log
+              # shows WHAT the agent actually said (prose wrapper, error text,
+              # empty result) instead of an opaque exit 1.
+              if ! node .github/news/parse-agent-stdout.mjs "$log" > "$RUNNER_TEMP/news-delta.json"; then
+                echo "::group::Parse failure — envelope tail (last 800 bytes)"
+                tail -c 800 "$log" || true
+                echo
+                echo "::endgroup::"
+                exit 1
+              fi
               echo "Succeeded with $m."
               exit 0
             fi
