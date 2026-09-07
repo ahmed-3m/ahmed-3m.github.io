@@ -45,6 +45,10 @@ Rules:
 - Branch off `main` for each change — this applies to every agent (Claude, Codex, Gemini,
   Cursor…). Name it for the work (e.g. `fix/…`, `chore/…`); it is short-lived.
 - Never commit feature work directly to `main` — always go through a PR.
+- Agents never merge their own PRs. Open the PR, report, and stop — the owner
+  reviews and merges. This applies to every agent (Claude, Codex, Gemini,
+  Cursor…). The news bot's path-scoped direct commits are the only sanctioned
+  exception.
 - On merge, GitHub deletes the branch automatically ("Automatically delete head branches"
   is enabled). Prune locally with `git fetch --prune`, then `git branch -d <branch>`.
 - Never touch `gh-pages`; the deploy workflow owns it.

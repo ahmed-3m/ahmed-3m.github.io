@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
+    branches: [main]
   workflow_dispatch:
 
 env:
@@ -14,9 +15,11 @@ permissions:
   id-token: write
 
 concurrency:
-  # One deploy lane for push, PR, and manual runs.
-  group: "pages"
-  cancel-in-progress: false
+  # Separate lanes: production deploys (push/manual) never queue behind PR
+  # builds, and a superseded PR run (new push to the same PR) is cancelled
+  # instead of burning CI minutes on now-outdated commits.
+  group: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.number) || 'deploy' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   quality:
