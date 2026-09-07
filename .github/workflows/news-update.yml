@@ -1,6 +1,7 @@
 name: Daily news update
 
-# Collects recent AI / agentic-AI news with GLM-5.2 (via Z.ai, api.z.ai — Anthropic-format endpoint)
+# Collects recent AI / agentic-AI news with GLM-5.3 (via Z.ai, api.z.ai — the
+# Anthropic-format endpoint that serves Claude Code)
 # + the Exa research MCP. The research job prints a NewsDelta on stdout (no Write tool).
 # Validate sanitizes that delta against current main. Publish applies it to *current* main
 # (no rebase, no agents-work push). Fully serverless: this Action IS the backend. Git is the
@@ -9,7 +10,11 @@ name: Daily news update
 # Runs daily. On a quiet day the agent prints { "items": [] } and publish is a no-op.
 #
 # Pinned 2026-09-07:
-#   npm view @anthropic-ai/claude-code version --tag=stable → 2.1.236
+#   claude-code@2.1.263 (the npm "latest" of 2026-09-06, the version the last
+#   green run installed). DO NOT re-pin from --tag=stable: for this package
+#   stable (2.1.236) is OLDER than latest, and 2.1.236 rejects non-Anthropic
+#   model IDs (unrecognized_model for glm-5.2) → agent emits no JSON → the
+#   2026-09-07 news outage, see issue #67.
 #   npm view exa-mcp-server version → 3.4.1
 #
 # Required repository secrets:
@@ -55,7 +60,7 @@ jobs:
           node-version: "24"
 
       - name: Install Claude Code CLI
-        run: npm i -g @anthropic-ai/claude-code@2.1.236
+        run: npm i -g @anthropic-ai/claude-code@2.1.263 # 2.1.236 (npm "stable") breaks GLM model IDs — see header
 
       - name: Self-test agent-failure classification
         # Runs BEFORE the agent (unlike the link-check self-test, which gates the
@@ -71,14 +76,25 @@ jobs:
 
       - name: Collect news delta on stdout
         env:
-          # Z.ai (international) Anthropic-format endpoint. Claude Code speaks
-          # the Anthropic Messages API, NOT OpenAI /chat/completions, so this
-          # must use /api/anthropic — the Coding Plan /api/coding/paas/v4 path
-          # does NOT support Claude Code.
+          # Z.ai (international) Anthropic Messages endpoint. Claude Code
+          # appends /v1/messages and can ONLY run here: the coding-plan base
+          # the chatbot uses (…/api/coding/paas/v4) serves OpenAI-format
+          # /chat/completions only — /v1/messages 404s there (probe-verified
+          # 2026-09-07, issue #67).
+          #
+          # Models are wired via ANTHROPIC_DEFAULT_* alias remapping — Z.ai's
+          # documented Claude Code recipe (docs.z.ai/devpack/latest-model).
+          # Do NOT set ANTHROPIC_MODEL to a glm-* id: Claude Code (≥2.1.200,
+          # flag-enforced since 2026-09-07) registry-validates SDK model
+          # switches and rejects non-Claude ids as unrecognized_model even
+          # though the endpoint serves them (probe: glm-5.3 → HTTP 200).
+          # ANTHROPIC_SMALL_FAST_MODEL is deprecated in favor of
+          # ANTHROPIC_DEFAULT_HAIKU_MODEL.
           ANTHROPIC_BASE_URL: https://api.z.ai/api/anthropic
           ANTHROPIC_AUTH_TOKEN: ${{ secrets.BIGMODEL_NEWS_TOKEN || secrets.ZAI_NEWS_TOKEN }}
-          ANTHROPIC_MODEL: glm-5.2
-          ANTHROPIC_SMALL_FAST_MODEL: glm-4.7-flash
+          ANTHROPIC_DEFAULT_OPUS_MODEL: glm-5.3
+          ANTHROPIC_DEFAULT_SONNET_MODEL: glm-5.3
+          ANTHROPIC_DEFAULT_HAIKU_MODEL: glm-5.3-flash
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
         run: |
           set -euo pipefail
@@ -95,11 +111,16 @@ jobs:
             echo "::error::Secret EXA_API_KEY is unset or empty, so the Exa research MCP cannot authenticate. Set it with: gh secret set EXA_API_KEY"
             exit 1
           fi
-          # Fall back through GLM tiers on transient overload (529): the newest
-          # model is the most capacity-constrained, so older tiers often succeed.
-          # Short backoff (15s) because the run is daily — failing fast and letting
-          # tomorrow's run pick it up beats sitting idle for minutes on overload.
-          models="glm-5.2 glm-5 glm-4.7"
+          # Fall back through GLM tiers on transient overload (529): the flagship
+          # model is the most capacity-constrained, so the lighter flash tier
+          # often succeeds. Short backoff (15s) because the run is daily —
+          # failing fast and letting tomorrow's run pick it up beats sitting
+          # idle for minutes on overload. Tiers swap the DEFAULT_* alias
+          # mappings (never ANTHROPIC_MODEL — registry-checked, see above).
+          # glm-5.2/glm-5/glm-4.7 were dropped: glm-5.2 is server-side
+          # remapped to glm-5.3 (probe-verified 2026-09-07) and glm-4.7/glm-5
+          # are legacy tiers of it (issue #67).
+          models="glm-5.3 glm-5.3-flash"
           attempt=0
           for m in $models; do
             attempt=$((attempt + 1))
@@ -107,7 +128,8 @@ jobs:
             log="$RUNNER_TEMP/agent-attempt-$attempt.log"
             err="$RUNNER_TEMP/agent-attempt-$attempt.err"
             set +e
-            ANTHROPIC_MODEL="$m" claude -p "$(cat .github/news/task.md)" \
+            ANTHROPIC_DEFAULT_SONNET_MODEL="$m" ANTHROPIC_DEFAULT_OPUS_MODEL="$m" \
+              claude -p "$(cat .github/news/task.md)" \
               --mcp-config .github/news/exa-mcp.json \
               --allowedTools "Read,mcp__exa" \
               --permission-mode bypassPermissions \
@@ -125,7 +147,16 @@ jobs:
             fi
             if [ "$code" -eq 0 ]; then
               # Missing or non-JSON stdout is a hard fail — never invent {items:[]}.
-              node .github/news/parse-agent-stdout.mjs "$log" > "$RUNNER_TEMP/news-delta.json"
+              # On parse failure, surface the envelope's tail so the Actions log
+              # shows WHAT the agent actually said (prose wrapper, error text,
+              # empty result) instead of an opaque exit 1.
+              if ! node .github/news/parse-agent-stdout.mjs "$log" > "$RUNNER_TEMP/news-delta.json"; then
+                echo "::group::Parse failure — envelope tail (last 800 bytes)"
+                tail -c 800 "$log" || true
+                echo
+                echo "::endgroup::"
+                exit 1
+              fi
               echo "Succeeded with $m."
               exit 0
             fi
