@@ -5,6 +5,12 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+    # Beyond the defaults (opened/synchronize/reopened): `edited` covers PRs
+    # retargeted to main — without it the required checks would never report
+    # and the PR could never merge. `ready_for_review` refreshes checks on
+    # draft→ready. `closed` exists only so concurrency cancels an in-flight
+    # PR run at merge time (its jobs skip instantly).
+    types: [opened, synchronize, reopened, edited, ready_for_review, closed]
   workflow_dispatch:
 
 env:
@@ -23,6 +29,10 @@ concurrency:
 
 jobs:
   quality:
+    # Skips the work for runs that exist only to keep check reporting correct
+    # or to cancel superseded runs: title/body edits (edited without a base
+    # change) and PR closes. Skipped jobs still report to branch protection.
+    if: github.event.action != 'closed' && (github.event.action != 'edited' || github.event.changes.base != null)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -45,6 +55,7 @@ jobs:
 
   build:
     needs: quality
+    if: github.event.action != 'closed' && (github.event.action != 'edited' || github.event.changes.base != null)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
