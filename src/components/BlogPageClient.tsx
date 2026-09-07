@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight, Calendar, Clock } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
 import { languageLocale } from '@/lib/i18n-config'
 import { getAllBlogPosts } from '@/lib/blog-posts'
+import { serializeJsonLd } from '@/lib/serialize-json-ld'
 
 const copy = {
   title: { en: 'Blog', de: 'Blog', fr: 'Blog', es: 'Blog', ar: 'المدونة' },
@@ -62,7 +63,7 @@ export default function BlogPageClient() {
     <main className="min-h-screen pb-20 pt-24">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
       />
       <div className="mx-auto max-w-4xl px-5">
         <Link href="/" className="mb-8 inline-flex items-center gap-2 text-[var(--cd-accent)]">

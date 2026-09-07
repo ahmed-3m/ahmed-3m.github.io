@@ -1,5 +1,7 @@
 'use client'
 
+import { serializeJsonLd } from '@/lib/serialize-json-ld'
+
 // Server-rendered <script> elements are serialized twice into the delivered
 // HTML (once as real DOM, once inside the RSC flight payload for hydration).
 // Marking this module 'use client' keeps the schema markup out of the flight
@@ -129,7 +131,7 @@ export function PersonSchema() {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(personSchema) }}
     />
   );
 }
@@ -153,7 +155,7 @@ export function WebsiteSchema() {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(websiteSchema) }}
     />
   );
 }
@@ -233,7 +235,7 @@ export function FAQSchema() {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqSchema) }}
     />
   );
 }
@@ -293,7 +295,7 @@ export function SocialProfileSchema() {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(socialSchema) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(socialSchema) }}
     />
   );
 }
@@ -372,7 +374,7 @@ export function ProjectsSchema() {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(projectsSchema) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(projectsSchema) }}
     />
   );
 }
@@ -444,7 +446,7 @@ export function ResearchSchema() {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(researchSchema) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(researchSchema) }}
     />
   );
 }
@@ -478,7 +480,7 @@ export function WebPageSchema() {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(schema) }}
     />
   );
 }

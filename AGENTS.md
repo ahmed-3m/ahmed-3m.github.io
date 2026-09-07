@@ -62,22 +62,31 @@ held unmerged commits, preserved as tags (recover with `git checkout <tag>`):
 The `/news` page is designed to be kept current by an agent. All content lives in
 **`src/lib/news-items.ts`** — a typed, self-validating data module. To add news:
 
-1. **Append** one `NewsItem` object to the `newsItems` array (don't reorder — sorting
-   by date is done at read time, newest first).
+1. **Append** one `NewsItem` object to the `newsItemsArray` array (don't reorder — sorting
+   by date is done at read time, newest first). `parseNewsItems` is the only way to
+   obtain `NewsItem[]` — do not validate-then-cast.
 2. **Fields:**
    - `id` — unique, stable, kebab-case. **Never reuse an id.**
-   - `date` — ISO `YYYY-MM-DD`, not in the future.
+   - `date` — ISO `YYYY-MM-DD`, a real calendar day (e.g. `2026-02-31` is rejected), not
+     in the future (UTC).
    - `category` — exactly `'ai'` or `'agentic'`. Use `'agentic'` for autonomous agents,
      tool use, multi-agent systems, agent frameworks/protocols; `'ai'` for everything else.
    - `headline` — the source's headline (usually English).
    - `source` — outlet name (e.g. `'Anthropic'`, `'arXiv'`, `'The Verge'`).
-   - `url` — canonical absolute `http(s)` link to the source.
+   - `url` — canonical absolute `http(s)` link to the source. Must be unique after
+     canonicalization (lowercase host, no hash, no default ports, no trailing slash).
    - `take.en` — required, a 1–2 sentence editorial take in Ahmed's voice. Other
      languages optional (`de`/`fr`/`es`/`ar`) and fall back to English.
-   - `tags` — optional short chips.
-3. **Dedupe:** skip items whose URL or substance already exists. Never duplicate `id`.
-4. **Verify:** run `npm run build` — `news-items.ts` self-validates at build time and
-   the build fails on malformed entries (bad id/date/category/url or empty `take.en`).
+   - `tags` — optional short chips (`/^[a-z0-9-]+$/`, 1–6 tags, each 1–40 chars).
+   Unknown fields are rejected. Allowed item keys: `id`, `date`, `category`,
+   `headline`, `source`, `url`, `take`, `tags`. Allowed `take` keys: `en` (required),
+   `de`, `fr`, `es`, `ar`.
+3. **Dedupe:** skip items whose URL (after canonicalization) or substance already exists.
+   Never duplicate `id`.
+4. **Verify:** run `npm run build` — `parseNewsItems` self-validates the catalog at
+   build time and the build fails on malformed entries (bad id/date/category/url,
+   empty `take.en`, unknown fields, duplicate canonical URLs). Also run
+   `node .github/news/news-selftest.mjs`.
 5. Commit on a short-lived branch and open a PR into `main` (see branch rules above).
 
 ### Automated daily pipeline
