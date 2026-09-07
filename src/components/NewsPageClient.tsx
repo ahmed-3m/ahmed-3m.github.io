@@ -6,6 +6,7 @@ import { ArrowLeft, ArrowUpRight, Calendar } from 'lucide-react'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { languageLocale } from '@/lib/i18n-config'
 import { getAllNews, newsCategoryLabels, type NewsCategory } from '@/lib/news-items'
+import { serializeJsonLd } from '@/lib/serialize-json-ld'
 
 type Filter = 'all' | NewsCategory
 
@@ -60,7 +61,7 @@ export default function NewsPageClient() {
     <main className="min-h-screen pb-20 pt-24">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
       />
       <div className="mx-auto max-w-4xl px-5">
         <Link href="/" className="mb-8 inline-flex items-center gap-2 text-[var(--cd-accent)]">

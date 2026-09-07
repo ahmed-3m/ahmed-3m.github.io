@@ -5,6 +5,7 @@ import { ArrowLeft, Calendar, Clock, Tag } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
 import { languageLocale } from '@/lib/i18n-config'
 import { getBlogPost } from '@/lib/blog-posts'
+import { serializeJsonLd } from '@/lib/serialize-json-ld'
 
 function formatContent(content: string | undefined) {
   if (!content) return ''
@@ -160,19 +161,19 @@ export default function BlogPostClient({ slug }: { slug: string }) {
       {jsonLd && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
         />
       )}
       {faqJsonLd && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqJsonLd) }}
         />
       )}
       {breadcrumbJsonLd && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbJsonLd) }}
         />
       )}
       <article className="mx-auto max-w-3xl px-5">

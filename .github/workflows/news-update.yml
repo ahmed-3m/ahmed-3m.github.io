@@ -145,6 +145,9 @@ jobs:
         # auto-merge pivots on. Belt-and-suspenders by design.
         run: npm run build
 
+      - name: Self-test news parser and JSON-LD serializer
+        run: node .github/news/news-selftest.mjs
+
       - name: Self-test link-check policy
         # Pins HARD_FAIL classification so a future refactor cannot silently
         # re-introduce 5xx-as-hard-fail (or drop 404/410) without failing CI.
