@@ -1,12 +1,16 @@
 name: Daily news update
 
 # Collects recent AI / agentic-AI news with GLM-5.2 (via Z.ai, api.z.ai — Anthropic-format endpoint)
-# + the Exa research MCP, dedupes against what's already published, validates, and
-# auto-merges to main on green. Fully serverless: this Action IS the backend. Git is the dedup store.
+# + the Exa research MCP. The research job prints a NewsDelta on stdout (no Write tool).
+# Validate sanitizes that delta against current main. Publish applies it to *current* main
+# (no rebase, no agents-work push). Fully serverless: this Action IS the backend. Git is the
+# dedup store.
 #
-# Runs daily. On a quiet day with nothing new, the agent writes no items and the
-# publish step is a no-op — so a daily cadence costs little more than weekly but
-# keeps the page noticeably fresher.
+# Runs daily. On a quiet day the agent prints { "items": [] } and publish is a no-op.
+#
+# Pinned 2026-09-07:
+#   npm view @anthropic-ai/claude-code version --tag=stable → 2.1.236
+#   npm view exa-mcp-server version → 3.4.1
 #
 # Required repository secrets:
 #   BIGMODEL_NEWS_TOKEN         - private Z.ai (api.z.ai) API key for the news agent (NOT exposed in the client bundle).
@@ -25,34 +29,33 @@ on:
         default: true
 
 permissions:
-  contents: write
-  actions: write # to dispatch the deploy workflow after a successful merge
+  contents: read
 
 concurrency:
   group: news-update
   cancel-in-progress: false
 
 jobs:
-  update-news:
+  research:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout main
         uses: actions/checkout@v5
         with:
           ref: main
-          fetch-depth: 0
+          fetch-depth: 1
+          persist-credentials: false
 
+      # NO npm ci — research must not install the app or give the agent a writable tree to "validate".
       - name: Setup Node.js
         uses: actions/setup-node@v5
         with:
           node-version: "24"
-          cache: "npm"
-
-      - name: Install dependencies
-        run: npm ci
 
       - name: Install Claude Code CLI
-        run: npm i -g @anthropic-ai/claude-code
+        run: npm i -g @anthropic-ai/claude-code@2.1.236
 
       - name: Self-test agent-failure classification
         # Runs BEFORE the agent (unlike the link-check self-test, which gates the
@@ -63,7 +66,10 @@ jobs:
         # silently start reading "401(k)" in a fetched article as a rejected key.
         run: node .github/news/classify-agent-failure.mjs --self-test
 
-      - name: Collect & write news (GLM-5.2 via BigModel + Exa MCP)
+      - name: Self-test agent-stdout extractor
+        run: node .github/news/parse-agent-stdout.mjs --self-test
+
+      - name: Collect news delta on stdout
         env:
           # Z.ai (international) Anthropic-format endpoint. Claude Code speaks
           # the Anthropic Messages API, NOT OpenAI /chat/completions, so this
@@ -75,7 +81,7 @@ jobs:
           ANTHROPIC_SMALL_FAST_MODEL: glm-4.7-flash
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
         run: |
-          set +e
+          set -euo pipefail
           # Preflight the credentials. A missing or empty secret is a
           # configuration error, not a transient one: no amount of model-tier
           # fallback can fix it, and the loop below would otherwise report it as
@@ -98,31 +104,34 @@ jobs:
           for m in $models; do
             attempt=$((attempt + 1))
             echo "::group::Agent attempt $attempt (model: $m)"
-            # Reset any partial edits from a failed attempt before retrying.
-            git checkout -- src/lib/news-items.ts 2>/dev/null || true
             log="$RUNNER_TEMP/agent-attempt-$attempt.log"
-            # tee keeps the output in the (collapsed) log group while letting us
-            # classify the failure; PIPESTATUS[0] is claude's code, not tee's.
+            err="$RUNNER_TEMP/agent-attempt-$attempt.err"
+            set +e
             ANTHROPIC_MODEL="$m" claude -p "$(cat .github/news/task.md)" \
               --mcp-config .github/news/exa-mcp.json \
-              --allowedTools "Read,Edit,Write,Bash(npm run build),mcp__exa" \
+              --allowedTools "Read,mcp__exa" \
               --permission-mode bypassPermissions \
-              --max-turns 60 2>&1 | tee "$log"
-            code=${PIPESTATUS[0]}
+              --output-format json \
+              --max-turns 60 \
+              > "$log" 2>"$err"
+            code=$?
+            set -e
+            cat "$err" >&2 || true
             echo "::endgroup::"
-            [ $code -eq 0 ] && { echo "Succeeded with $m."; exit 0; }
-            # A rejected credential fails identically on every tier, so don't
-            # burn the remaining tiers (or the operator's time) pretending it
-            # might be capacity. A present-but-invalid/expired/wrong-platform key
-            # lands here rather than in the preflight above.
-            #
-            # The log is a single stream carrying both the model's errors and the
-            # Exa MCP's, so the classifier attributes the failure before we name a
-            # secret — telling the operator to rotate BIGMODEL_NEWS_TOKEN when it
-            # was really Exa's key would just relocate the misdiagnosis. If the
-            # classifier itself breaks, it prints nothing and we fall through to
-            # the tier loop, i.e. the old behaviour.
-            case "$(node .github/news/classify-agent-failure.mjs "$log")" in
+            if [ -n "$(git status --porcelain)" ]; then
+              echo "::error::Research agent dirtied the worktree; refusing to continue."
+              git status --porcelain
+              exit 1
+            fi
+            if [ "$code" -eq 0 ]; then
+              # Missing or non-JSON stdout is a hard fail — never invent {items:[]}.
+              node .github/news/parse-agent-stdout.mjs "$log" > "$RUNNER_TEMP/news-delta.json"
+              echo "Succeeded with $m."
+              exit 0
+            fi
+            combined="$RUNNER_TEMP/agent-attempt-$attempt.combined.log"
+            cat "$log" "$err" > "$combined"
+            case "$(node .github/news/classify-agent-failure.mjs "$combined")" in
               exa-auth)
                 echo "::error::The Exa MCP rejected its API key — this is not an overload. Check that EXA_API_KEY is a current key from https://exa.ai. Set it with: gh secret set EXA_API_KEY"
                 exit 1
@@ -138,51 +147,130 @@ jobs:
           echo "Agent failed across all model tiers — BigModel likely broadly overloaded. The daily run will retry tomorrow."
           exit 1
 
-      - name: Validate build
-        # Intentionally a second build: the agent already ran `npm run build` in
-        # its sandbox for self-validation, but that was on the agent's in-flight
-        # tree. This re-verifies the final committed state as the gate the
-        # auto-merge pivots on. Belt-and-suspenders by design.
-        run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: news-delta
+          path: ${{ runner.temp }}/news-delta.json
+          if-no-files-found: error
 
-      - name: Self-test news parser and JSON-LD serializer
-        run: node .github/news/news-selftest.mjs
+  validate:
+    needs: research
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      ANTHROPIC_AUTH_TOKEN: ""
+      EXA_API_KEY: ""
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 1
+          persist-credentials: false
 
-      - name: Self-test link-check policy
-        # Pins HARD_FAIL classification so a future refactor cannot silently
-        # re-introduce 5xx-as-hard-fail (or drop 404/410) without failing CI.
-        run: node .github/news/check-news-links.mjs --self-test
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "24"
+          cache: "npm"
 
-      - name: Check news links
-        run: node .github/news/check-news-links.mjs
+      - run: npm ci
 
-      - name: Commit, push, and trigger deploy (auto-merge on green)
-        if: github.event_name == 'schedule' || github.event.inputs.dry_run == 'false'
+      - uses: actions/download-artifact@v4
+        with:
+          name: news-delta
+          path: ${{ runner.temp }}
+
+      - name: Sanitize delta against current main
+        run: |
+          node --input-type=module <<'EOF'
+          import { readFile, writeFile, lstat } from 'node:fs/promises'
+          import { applyNewsDelta, parseNewsItems } from './src/lib/news.ts'
+          const path = process.env.RUNNER_TEMP + '/news-delta.json'
+          const st = await lstat(path)
+          if (!st.isFile() || st.isSymbolicLink() || st.size > 64_000) {
+            throw new Error('delta must be a regular file ≤ 64KB')
+          }
+          const delta = JSON.parse(await readFile(path, 'utf8'))
+          const existing = parseNewsItems(JSON.parse(await readFile('src/lib/news-items.json', 'utf8')))
+          const next = applyNewsDelta(existing, delta)
+          // Write sanitized delta (parsed items only), NOT the full catalog.
+          const sanitized = { items: next.slice(existing.length) }
+          await writeFile(path, JSON.stringify(sanitized) + '\n')
+          EOF
+
+      - name: Build with delta applied (local copy only)
+        run: |
+          node --input-type=module <<'EOF'
+          import { readFile, writeFile } from 'node:fs/promises'
+          import { applyNewsDelta, parseNewsItems } from './src/lib/news.ts'
+          const delta = JSON.parse(await readFile(process.env.RUNNER_TEMP + '/news-delta.json', 'utf8'))
+          const existing = parseNewsItems(JSON.parse(await readFile('src/lib/news-items.json', 'utf8')))
+          const next = applyNewsDelta(existing, delta)
+          await writeFile('src/lib/news-items.json', JSON.stringify(next, null, 2) + '\n')
+          EOF
+          npm run build
+          node .github/news/news-selftest.mjs
+          node .github/news/check-news-links.mjs --self-test
+          node .github/news/check-news-links.mjs
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: news-delta-sanitized
+          path: ${{ runner.temp }}/news-delta.json
+          if-no-files-found: error
+
+  publish:
+    needs: validate
+    if: github.event_name == 'schedule' || github.event.inputs.dry_run == 'false'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: write
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "24"
+          cache: "npm"
+
+      - run: npm ci
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: news-delta-sanitized
+          path: ${{ runner.temp }}
+
+      - name: Apply sanitized delta to current main
+        run: |
+          node --input-type=module <<'EOF'
+          import { readFile, writeFile } from 'node:fs/promises'
+          import { applyNewsDelta, parseNewsItems } from './src/lib/news.ts'
+          const delta = JSON.parse(await readFile(process.env.RUNNER_TEMP + '/news-delta.json', 'utf8'))
+          const existing = parseNewsItems(JSON.parse(await readFile('src/lib/news-items.json', 'utf8')))
+          const next = applyNewsDelta(existing, delta)
+          await writeFile('src/lib/news-items.json', JSON.stringify(next, null, 2) + '\n')
+          EOF
+          npm run build
+          node .github/news/check-news-links.mjs
+
+      - name: Fast-forward commit of JSON only
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if git diff --quiet -- src/lib/news-items.ts; then
+          if git diff --quiet -- src/lib/news-items.json; then
             echo "No new news items today — nothing to publish."
             exit 0
           fi
           git config user.name "news-bot"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          # Path-scoped commit: ONLY the news data file is committed, even if the
-          # agent incidentally touched other files. Constrains the blast radius.
-          git commit -m "chore(news): daily automated update" -- src/lib/news-items.ts
-          # Path-scoped commit leaves any incidental agent edits to other tracked
-          # files unstaged. `git rebase` refuses a dirty tree, so drop that dirt
-          # (only news-items.ts was committed — everything else is out of scope).
-          git reset --hard HEAD
-          # `main` may have moved (a PR merge, or the deploy workflow's own
-          # commits) during the ~5-15 min this run took. Rebase our single-file
-          # news commit on top before pushing so the push is fast-forward and
-          # isn't silently rejected. The commit only ever touches news-items.ts,
-          # so conflicts are effectively impossible unless main also edited it.
+          git add src/lib/news-items.json
+          git commit -m "chore(news): daily automated update"
           git fetch origin main
-          git rebase origin/main
           git push origin HEAD:main
-          # Keep the agents-work lane in sync with main (best-effort).
-          git push origin HEAD:agents-work || echo "agents-work not fast-forwardable; skipping sync."
-          # GITHUB_TOKEN pushes don't trigger other workflows, so kick deploy manually.
+          # No rebase. A non-fast-forward push fails the job and alerts.
+          # No agents-work push.
           gh workflow run deploy.yml --ref main

@@ -63,11 +63,13 @@ held unmerged commits, preserved as tags (recover with `git checkout <tag>`):
 ## News update protocol (for automated agents)
 
 The `/news` page is designed to be kept current by an agent. All content lives in
-**`src/lib/news-items.ts`** — a typed, self-validating data module. To add news:
+**`src/lib/news-items.json`** — a JSON array parsed by `parseNewsItems`. Agents emit
+JSON; they do not edit TypeScript.
 
-1. **Append** one `NewsItem` object to the `newsItemsArray` array (don't reorder — sorting
-   by date is done at read time, newest first). `parseNewsItems` is the only way to
-   obtain `NewsItem[]` — do not validate-then-cast.
+1. **Append** one `NewsItem` object to `src/lib/news-items.json` (don't reorder — sorting
+   by date is done at read time, newest first). The daily research agent does **not**
+   edit this file: it prints a `{ "items": [ ... ] }` delta on stdout (0–4 items).
+   `parseNewsItems` is the only way to obtain `NewsItem[]` — do not validate-then-cast.
 2. **Fields:**
    - `id` — unique, stable, kebab-case. **Never reuse an id.**
    - `date` — ISO `YYYY-MM-DD`, a real calendar day (e.g. `2026-02-31` is rejected), not
@@ -91,16 +93,21 @@ The `/news` page is designed to be kept current by an agent. All content lives i
    empty `take.en`, unknown fields, duplicate canonical URLs). Also run
    `node .github/news/news-selftest.mjs`.
 5. Commit on a short-lived branch and open a PR into `main` (see branch rules above).
+   The daily news bot is the one sanctioned exception: it applies a sanitized delta
+   to current `main` without a PR.
 
 ### Automated daily pipeline
 
 `.github/workflows/news-update.yml` runs this loop automatically **daily** (06:23 UTC,
 and on manual dispatch): GLM-5.2 via Z.ai (api.z.ai, Anthropic-format
-endpoint) + the Exa research MCP collect recent news, dedupe against `news-items.ts`,
-append items, then the workflow runs `npm run build` and `.github/news/check-news-links.mjs`
-and **auto-merges to `main` only if both pass**. It is fully serverless — the Action is the
-backend and git is the dedup store; no hosting needed. On a quiet day with nothing new, the
-agent writes no items and publish is a no-op.
+endpoint) + the Exa research MCP collect recent news. The research job has **no Write
+tool** and **no npm ci**; it prints a JSON `{ "items": [...] }` delta on stdout. A
+validate job sanitizes that delta against current `main`, then publish applies it to
+*current* `main` (fast-forward only — no rebase, no `agents-work` push) after
+`npm run build` and `.github/news/check-news-links.mjs` pass. It is fully serverless —
+the Action is the backend and git is the dedup store; no hosting needed. On a quiet day
+the agent prints `{ "items": [] }` and publish is a no-op. A missing or non-JSON
+stdout is a hard failure — never invent an empty delta.
 
 Required repository secrets:
 - `BIGMODEL_NEWS_TOKEN` — private Z.ai (api.z.ai) API key for the news agent. Never prefixed with `NEXT_PUBLIC_` — must NOT appear in the client bundle. The workflow falls back to the pre-migration `ZAI_NEWS_TOKEN` secret if this is unset. Note: the news agent uses the `/api/anthropic` endpoint (Claude Code speaks the Anthropic Messages API); the GLM Coding Plan `/api/coding/paas/v4` path does NOT support Claude Code. Keys are per-host: an open.bigmodel.cn key will not authenticate against api.z.ai.
