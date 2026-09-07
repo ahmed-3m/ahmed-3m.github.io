@@ -9,7 +9,11 @@ name: Daily news update
 # Runs daily. On a quiet day the agent prints { "items": [] } and publish is a no-op.
 #
 # Pinned 2026-09-07:
-#   npm view @anthropic-ai/claude-code version --tag=stable → 2.1.236
+#   claude-code@2.1.263 (the npm "latest" of 2026-09-06, the version the last
+#   green run installed). DO NOT re-pin from --tag=stable: for this package
+#   stable (2.1.236) is OLDER than latest, and 2.1.236 rejects non-Anthropic
+#   model IDs (unrecognized_model for glm-5.2) → agent emits no JSON → the
+#   2026-09-07 news outage, see issue #67.
 #   npm view exa-mcp-server version → 3.4.1
 #
 # Required repository secrets:
@@ -55,7 +59,7 @@ jobs:
           node-version: "24"
 
       - name: Install Claude Code CLI
-        run: npm i -g @anthropic-ai/claude-code@2.1.236
+        run: npm i -g @anthropic-ai/claude-code@2.1.263 # 2.1.236 (npm "stable") breaks GLM model IDs — see header
 
       - name: Self-test agent-failure classification
         # Runs BEFORE the agent (unlike the link-check self-test, which gates the
