@@ -11,6 +11,7 @@ import { pathToFileURL } from 'node:url'
 import { fileURLToPath } from 'node:url'
 import { parseNewsItems, canonicalNewsUrl, applyNewsDelta } from '../../src/lib/news.ts'
 import { serializeJsonLd } from '../../src/lib/serialize-json-ld.ts'
+import { isBlockedHostname, isBlockedIp } from './check-news-links.mjs'
 
 const valid = {
   id: 'valid',
@@ -102,6 +103,25 @@ assertThrows('delta maxDelta', () => {
 assertThrows('delta unknown field', () => {
   applyNewsDelta([valid], { items: [], leftover: true })
 })
+
+function ssrfUrlBlocked(url) {
+  const parsed = new URL(url)
+  if (parsed.protocol !== 'https:') return true
+  const host = parsed.hostname.replace(/^\[|\]$/g, '')
+  return isBlockedHostname(host) || isBlockedIp(host)
+}
+
+assert('ssrf hostname localhost', isBlockedHostname('localhost') && isBlockedHostname('foo.localhost') && !isBlockedHostname('example.com'))
+assert('ssrf ip loopback v4', isBlockedIp('127.0.0.1') && !isBlockedIp('93.184.216.34'))
+assert('ssrf ip private + link-local', isBlockedIp('10.1.2.3') && isBlockedIp('172.16.0.1') && isBlockedIp('192.168.1.9') && isBlockedIp('169.254.1.1'))
+assert('ssrf ip v6 loopback ula link-local', isBlockedIp('::1') && isBlockedIp('fc00::1') && isBlockedIp('fe80::1'))
+assert('ssrf ip v4-mapped private', isBlockedIp('::ffff:192.168.1.9') && isBlockedIp('::ffff:127.0.0.1'))
+assert('ssrf http blocked', ssrfUrlBlocked('http://example.com/x'))
+assert('ssrf 127.0.0.1 blocked', ssrfUrlBlocked('https://127.0.0.1/'))
+assert('ssrf localhost blocked', ssrfUrlBlocked('https://localhost/news'))
+assert('ssrf 192.168.1.9 blocked', ssrfUrlBlocked('https://192.168.1.9/'))
+assert('ssrf [::1] blocked', ssrfUrlBlocked('https://[::1]/'))
+assert('ssrf example.com allowed', ssrfUrlBlocked('https://example.com/') === false)
 
 {
   const serialized = serializeJsonLd({ headline: '</script><script>alert(1)' })
