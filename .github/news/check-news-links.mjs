@@ -88,7 +88,14 @@ function isBlockedTarget(urlString) {
   return isBlockedHostname(host) || isBlockedIp(host)
 }
 
-async function probe(url, hops = 0) {
+const defaultProbeAdapters = {
+  lookup: (host, options) => dns.promises.lookup(host, options),
+  fetch: (url, options) => fetch(url, options),
+  setTimeout: (callback, delay) => setTimeout(callback, delay),
+  clearTimeout: (timer) => clearTimeout(timer),
+}
+
+export async function probe(url, hops = 0, adapters = defaultProbeAdapters) {
   if (isBlockedTarget(url)) {
     return { url, status: 0, error: 'SSRF_BLOCKED', blocked: true }
   }
@@ -101,7 +108,7 @@ async function probe(url, hops = 0) {
   }
 
   try {
-    const addrs = await dns.promises.lookup(host, { all: true })
+    const addrs = await adapters.lookup(host, { all: true })
     if (addrs.some((row) => isBlockedIp(row.address))) {
       return { url, status: 0, error: 'SSRF_BLOCKED', blocked: true }
     }
@@ -110,9 +117,9 @@ async function probe(url, hops = 0) {
   }
 
   const ctrl = new AbortController()
-  const timer = setTimeout(() => ctrl.abort(), TIMEOUT_MS)
+  const timer = adapters.setTimeout(() => ctrl.abort(), TIMEOUT_MS)
   try {
-    const res = await fetch(url, {
+    const res = await adapters.fetch(url, {
       method: 'GET',
       redirect: 'manual',
       signal: ctrl.signal,
@@ -120,17 +127,25 @@ async function probe(url, hops = 0) {
     })
     if (res.status >= 300 && res.status < 400) {
       if (hops >= MAX_REDIRECTS) {
-        return { url, status: 0, error: 'TOO_MANY_REDIRECTS', blocked: true }
+        return { url, status: 0, error: 'TOO_MANY_REDIRECTS', hardFailure: true }
       }
-      const loc = res.headers.get('location')
-      if (!loc) return { url, status: res.status }
-      return probe(new URL(loc, url).toString(), hops + 1)
+      const location = res.headers.get('location')
+      if (!location) {
+        return { url, status: 0, error: 'REDIRECT_MISSING_LOCATION', hardFailure: true }
+      }
+      let nextUrl
+      try {
+        nextUrl = new URL(location, url).toString()
+      } catch {
+        return { url, status: 0, error: 'REDIRECT_INVALID_LOCATION', hardFailure: true }
+      }
+      return probe(nextUrl, hops + 1, adapters)
     }
     return { url, status: res.status }
   } catch (err) {
     return { url, status: 0, error: err?.cause?.code || err?.name || String(err) }
   } finally {
-    clearTimeout(timer)
+    adapters.clearTimeout(timer)
   }
 }
 
@@ -138,11 +153,18 @@ const HARD_FAIL_STATUSES = new Set([404, 410])
 
 const isHardFail = (r) =>
   r.blocked === true ||
+  r.hardFailure === true ||
   HARD_FAIL_STATUSES.has(r.status) ||
   (r.status === 0 && typeof r.error === 'string' && /ENOTFOUND|EAI_AGAIN|ENODATA/.test(r.error))
 
 async function selfTest() {
   let failed = false
+  const expectEqual = (label, got, expected) => {
+    const ok = JSON.stringify(got) === JSON.stringify(expected)
+    console.log(`self-test: ${label} -> ${ok ? '✓' : `✗ got ${JSON.stringify(got)}`}`)
+    if (!ok) failed = true
+  }
+  const expectTrue = (label, condition) => expectEqual(label, Boolean(condition), true)
   const expectHard = (label, r, expected) => {
     const got = isHardFail(r)
     const ok = got === expected
@@ -158,6 +180,50 @@ async function selfTest() {
       `self-test: ${label} -> blocked=${got} (expected ${expected}) ${ok ? '✓' : '✗'}`,
     )
     if (!ok) failed = true
+  }
+  const expectProbe = async (label, url, adapters, expected) => {
+    const result = await probe(url, 0, adapters)
+    expectHard(`${label} classification`, result, expected.hard)
+    if (Object.prototype.hasOwnProperty.call(expected, 'error')) {
+      expectEqual(`${label} error`, result.error, expected.error)
+    }
+    if (Object.prototype.hasOwnProperty.call(expected, 'hardFailure')) {
+      expectEqual(`${label} hardFailure`, result.hardFailure, expected.hardFailure)
+    }
+    return result
+  }
+  const publicAddresses = [{ address: '93.184.216.34', family: 4 }]
+  const response = (status, location = null) => ({
+    status,
+    headers: { get: (name) => (name.toLowerCase() === 'location' ? location : null) },
+  })
+  const adaptersFor = (responses, lookup = async () => publicAddresses) => {
+    let index = 0
+    const lookups = []
+    const fetches = []
+    const activeTimers = new Set()
+    return {
+      lookups,
+      fetches,
+      activeTimers,
+      lookup: async (host, options) => {
+        lookups.push(host)
+        return lookup(host, options)
+      },
+      fetch: async (url, options) => {
+        fetches.push({ url, signal: options.signal })
+        return responses[Math.min(index++, responses.length - 1)]
+      },
+      setTimeout: (callback, delay) => {
+        const timer = setTimeout(callback, delay)
+        activeTimers.add(timer)
+        return timer
+      },
+      clearTimeout: (timer) => {
+        activeTimers.delete(timer)
+        clearTimeout(timer)
+      },
+    }
   }
 
   const url = 'https://github.com/ahmed-3m/nonexistent-self-test-xyz'
@@ -187,9 +253,131 @@ async function selfTest() {
   expectBlocked('https://[::1]/', 'https://[::1]/', true)
   expectBlocked('https://example.com/', 'https://example.com/', false)
 
+  const start = 'https://example.com/start'
+  await expectProbe('redirect missing location', start, adaptersFor([response(302)]), {
+    hard: true,
+    error: 'REDIRECT_MISSING_LOCATION',
+    hardFailure: true,
+  })
+  await expectProbe(
+    'redirect invalid location',
+    start,
+    adaptersFor([response(302, 'https://[')]),
+    { hard: true, error: 'REDIRECT_INVALID_LOCATION', hardFailure: true },
+  )
+  await expectProbe(
+    'redirect to http',
+    start,
+    adaptersFor([response(302, 'http://example.com/story')]),
+    { hard: true, error: 'SSRF_BLOCKED' },
+  )
+  await expectProbe(
+    'redirect to private ip',
+    start,
+    adaptersFor([response(302, 'https://127.0.0.1/story')]),
+    { hard: true, error: 'SSRF_BLOCKED' },
+  )
+
+  const privateDns = adaptersFor(
+    [response(302, 'https://private.example/story'), response(200)],
+    async (host) =>
+      host === 'private.example' ? [{ address: '127.0.0.1', family: 4 }] : publicAddresses,
+  )
+  await expectProbe('redirect DNS resolves private', start, privateDns, {
+    hard: true,
+    error: 'SSRF_BLOCKED',
+  })
+  expectEqual('redirect DNS checks every hostname', privateDns.lookups, [
+    'example.com',
+    'private.example',
+  ])
+  expectEqual('redirect DNS blocks before second fetch', privateDns.fetches.length, 1)
+
+  const fiveRedirects = adaptersFor([
+    response(302, '/1'),
+    response(302, '/2'),
+    response(302, '/3'),
+    response(302, '/4'),
+    response(302, '/5'),
+    response(200),
+  ])
+  await expectProbe('five redirects then success', start, fiveRedirects, { hard: false })
+  expectEqual('five redirects fetch count', fiveRedirects.fetches.length, 6)
+  expectEqual('five redirects lookup count', fiveRedirects.lookups.length, 6)
+  expectTrue(
+    'five redirects pass AbortSignal on every fetch',
+    fiveRedirects.fetches.every(({ signal }) => signal instanceof AbortSignal),
+  )
+  expectEqual('five redirects clear every timer', fiveRedirects.activeTimers.size, 0)
+
+  const sixRedirects = adaptersFor([
+    response(302, '/1'),
+    response(302, '/2'),
+    response(302, '/3'),
+    response(302, '/4'),
+    response(302, '/5'),
+    response(302, '/6'),
+    response(200),
+  ])
+  await expectProbe('sixth redirect rejected', start, sixRedirects, {
+    hard: true,
+    error: 'TOO_MANY_REDIRECTS',
+    hardFailure: true,
+  })
+  expectEqual('sixth redirect stops after six fetches', sixRedirects.fetches.length, 6)
+
+  const loop = adaptersFor([response(302, start)])
+  await expectProbe('redirect loop exceeds five hops', start, loop, {
+    hard: true,
+    error: 'TOO_MANY_REDIRECTS',
+    hardFailure: true,
+  })
+  expectEqual('redirect loop stops after six fetches', loop.fetches.length, 6)
+
+  let timeoutCallback
+  let timeoutCleared = false
+  let timeoutSignal
+  const timeoutAdapters = {
+    lookup: async () => publicAddresses,
+    fetch: async (_url, options) => {
+      timeoutSignal = options.signal
+      return new Promise((_, reject) => {
+        options.signal.addEventListener(
+          'abort',
+          () => {
+            const error = new Error('timed out')
+            error.name = 'AbortError'
+            reject(error)
+          },
+          { once: true },
+        )
+      })
+    },
+    setTimeout: (callback) => {
+      timeoutCallback = callback
+      return 'fake-timer'
+    },
+    clearTimeout: (timer) => {
+      if (timer === 'fake-timer') timeoutCleared = true
+    },
+  }
+  const pendingTimeout = probe(start, 0, timeoutAdapters)
+  await new Promise((resolve) => setImmediate(resolve))
+  if (typeof timeoutCallback !== 'function') {
+    throw new Error('self-test: timeout callback was not scheduled')
+  }
+  timeoutCallback()
+  const timeoutResult = await pendingTimeout
+  expectHard('timeout abort classification', timeoutResult, false)
+  expectEqual('timeout abort error', timeoutResult.error, 'AbortError')
+  expectTrue('timeout passes AbortSignal', timeoutSignal instanceof AbortSignal)
+  expectTrue('timeout aborts signal', timeoutSignal?.aborted)
+  expectTrue('timeout clears timer', timeoutCleared)
+
   if (failed) {
     console.error('self-test FAILED: link classification drifted from the documented policy.')
-    process.exit(1)
+    process.exitCode = 1
+    return
   }
   console.log('self-test OK: link classification matches the documented policy.')
 }
