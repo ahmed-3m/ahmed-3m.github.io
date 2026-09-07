@@ -20,7 +20,9 @@ TypeScript + Tailwind v4, statically exported to GitHub Pages.
 
 - Routes: `src/app/`  ·  UI components: `src/components/`
 - Static assets, CV, thesis PDF, research figures: `public/`
-- Deploy: `.github/workflows/deploy.yml` builds and publishes to the `gh-pages` branch.
+- Deploy: `.github/workflows/deploy.yml` builds and deploys to GitHub Pages via the
+  Actions artifact (`actions/deploy-pages`) — there is no deploy branch; the repo is
+  single-branch (`main` only).
 
 ## Commands
 
@@ -36,10 +38,9 @@ npm run lint    # eslint
 **`main` is the only long-lived branch.** Every change goes through a short-lived branch
 that is merged into `main` via a PR and then deleted automatically.
 
-| Branch     | Purpose                                                   |
-| ---------- | --------------------------------------------------------- |
-| `main`     | Source of truth. Stable, deployable. Change only via PR.  |
-| `gh-pages` | Auto-generated deploy output. **Never edit by hand.**     |
+| Branch | Purpose                                                  |
+| ------ | -------------------------------------------------------- |
+| `main` | Source of truth. Stable, deployable. Change only via PR. |
 
 Rules:
 - Branch off `main` for each change — this applies to every agent (Claude, Codex, Gemini,
@@ -50,15 +51,23 @@ Rules:
   sanctioned exception.
 - On merge, GitHub deletes the branch automatically ("Automatically delete head branches"
   is enabled). Prune locally with `git fetch --prune`, then `git branch -d <branch>`.
-- Never touch `gh-pages`; the deploy workflow owns it.
+- GitHub Pages deploys via the workflow artifact (`build_type: workflow` in repo
+  settings, set 2026-09-07). The legacy `gh-pages` branch was a stale pre-Next.js
+  relic and was deleted; don't recreate it.
 
 ## History
 
-Many scattered per-PR branches were consolidated into the structure above. Two branches
-held unmerged commits, preserved as tags (recover with `git checkout <tag>`):
+Many scattered per-PR branches were consolidated into the structure above. Branches that
+held unmerged commits were preserved as tags (recover with `git checkout <tag>`):
 
 - `archive/glass-polish-fallback` — chatbot local `getLocalReply()` fallback + cursor fix
 - `archive/cv-button-direct-download` — early `cv.pdf` for a direct-download button
+- `archive/a3m-brand-icons` — A3M mark icon set + `tools/generate-icons.mjs` (2026-09-07)
+- `archive/news-link-redirect-validation` — fail-closed malformed-redirect handling in
+  `.github/news/check-news-links.mjs` (2026-09-07)
+
+On 2026-09-07 the repo was reduced to a single branch (`main`): `agents-work` (fully
+merged), the two branches above, and the stale `gh-pages` relic were deleted.
 
 ## News update protocol (for automated agents)
 
