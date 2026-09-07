@@ -274,3 +274,29 @@ jobs:
           # No rebase. A non-fast-forward push fails the job and alerts.
           # No agents-work push.
           gh workflow run deploy.yml --ref main
+
+  # publish is skipped on dry-run; needs.*.result for a skipped job is
+  # skipped, which is not failure. A dry-run research/validate failure still
+  # alerts. First-failure (open or comment), not a two-run counter.
+  alert:
+    needs: [research, validate, publish]
+    if: ${{ always() && contains(needs.*.result, 'failure') }}
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Open or update durable first-failure issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          title="[ops] news-update failed"
+          body="Workflow \`news-update\` failed: $RUN_URL"
+          existing=$(gh issue list --state open --search "$title in:title" --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body "$body"
+          else
+            gh issue create --title "$title" --body "$body"
+          fi
