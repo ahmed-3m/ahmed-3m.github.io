@@ -25,8 +25,13 @@ function stripFences(text) {
 
 // glm-5.3 (unlike glm-5.2) sometimes frames its JSON in prose — a preamble
 // line before a ```json fence, or bare JSON after "Here is the delta:".
-// Recover the last complete JSON object deterministically; undefined when the
-// text holds none.
+// Deterministic priority: (1) the LAST ```/```json fence whose content parses
+// to a plain object — fences outrank bare objects regardless of position,
+// because the delta lives in the fence; (2) the first-{ … last-} span if it
+// parses to a plain object. Undefined when neither holds. Limitation: a
+// non-json language tag (e.g. ```js) before the real fence can pair fence
+// markers across blocks and defeat (1) — acceptable, because off-spec output
+// then hard-fails loudly instead of recovering the wrong object.
 function recoverJsonObject(text) {
   const fences = [...text.matchAll(/```(?:json)?\s*\r?\n([\s\S]*?)\r?\n?```/gi)]
   for (let i = fences.length - 1; i >= 0; i--) {
@@ -48,7 +53,9 @@ function recoverJsonObject(text) {
 
 /**
  * Parse the Claude JSON envelope, reject `is_error`, take `result`,
- * strip optional ```json fences, JSON.parse, and return the value.
+ * strip optional ```json fences, JSON.parse, and return the value — falling
+ * back to deterministic recovery of the last fenced/plain JSON object when
+ * the strict parse fails (glm-5.3 frames its JSON in prose).
  * Also accepts a raw `{ items }` object (model printed JSON without the wrapper).
  * Does not write files.
  *
@@ -157,6 +164,50 @@ function selfTest() {
   assertThrows('prose with broken json', () => {
     extractDelta(JSON.stringify({ is_error: false, result: 'Here: {"items": [broken}' }))
   })
+
+  assertEqual(
+    'stray prose object loses to fenced delta',
+    extractDelta(
+      JSON.stringify({
+        is_error: false,
+        result: 'Saw {"notes":"draft"} earlier.\n```json\n{"items":[{"id":"z"}]}\n```',
+      }),
+    ),
+    { items: [{ id: 'z' }] },
+  )
+
+  assertEqual(
+    'last object fence wins',
+    extractDelta(
+      JSON.stringify({
+        is_error: false,
+        result: '```json\n{"items":[{"id":"a"}]}\n```\nFinal:\n```json\n{"items":[{"id":"b"}]}\n```',
+      }),
+    ),
+    { items: [{ id: 'b' }] },
+  )
+
+  assertEqual(
+    'non-object last fence skipped, earlier object fence wins',
+    extractDelta(
+      JSON.stringify({
+        is_error: false,
+        result: '```json\n{"items":[{"id":"a"}]}\n```\nAlso:\n```\n[1,2]\n```',
+      }),
+    ),
+    { items: [{ id: 'a' }] },
+  )
+
+  assertEqual(
+    'fence outranks later bare object',
+    extractDelta(
+      JSON.stringify({
+        is_error: false,
+        result: '```json\n{"items":[{"id":"f"}]}\n```\nFinal: {"items":[{"id":"g"}]}',
+      }),
+    ),
+    { items: [{ id: 'f' }] },
+  )
 
   assertThrows('envelope is_error', () => {
     extractDelta(JSON.stringify({ is_error: true, result: '{"items":[]}' }))
