@@ -23,6 +23,29 @@ function stripFences(text) {
   return match ? match[1] : trimmed
 }
 
+// glm-5.3 (unlike glm-5.2) sometimes frames its JSON in prose — a preamble
+// line before a ```json fence, or bare JSON after "Here is the delta:".
+// Recover the last complete JSON object deterministically; undefined when the
+// text holds none.
+function recoverJsonObject(text) {
+  const fences = [...text.matchAll(/```(?:json)?\s*\r?\n([\s\S]*?)\r?\n?```/gi)]
+  for (let i = fences.length - 1; i >= 0; i--) {
+    try {
+      const value = JSON.parse(fences[i][1])
+      if (isPlainObject(value)) return value
+    } catch {}
+  }
+  const start = text.indexOf('{')
+  const end = text.lastIndexOf('}')
+  if (start !== -1 && end > start) {
+    try {
+      const value = JSON.parse(text.slice(start, end + 1))
+      if (isPlainObject(value)) return value
+    } catch {}
+  }
+  return undefined
+}
+
 /**
  * Parse the Claude JSON envelope, reject `is_error`, take `result`,
  * strip optional ```json fences, JSON.parse, and return the value.
@@ -64,7 +87,9 @@ export function extractDelta(claudeStdout) {
     try {
       return JSON.parse(stripped)
     } catch {
-      throw new Error('agent result is not JSON')
+      const recovered = recoverJsonObject(result)
+      if (recovered === undefined) throw new Error('agent result is not JSON')
+      return recovered
     }
   }
 
@@ -115,6 +140,23 @@ function selfTest() {
     extractDelta(JSON.stringify({ is_error: false, result: fenced })),
     { items: [{ id: 'x' }] },
   )
+
+  const proseFenced = 'Here is the delta for today:\n```json\n{"items":[{"id":"y"}]}\n```\nHope this helps.'
+  assertEqual(
+    'envelope prose + fenced result',
+    extractDelta(JSON.stringify({ is_error: false, result: proseFenced })),
+    { items: [{ id: 'y' }] },
+  )
+
+  assertEqual(
+    'envelope prose + bare result',
+    extractDelta(JSON.stringify({ is_error: false, result: 'Delta: {"items":[]}' })),
+    { items: [] },
+  )
+
+  assertThrows('prose with broken json', () => {
+    extractDelta(JSON.stringify({ is_error: false, result: 'Here: {"items": [broken}' }))
+  })
 
   assertThrows('envelope is_error', () => {
     extractDelta(JSON.stringify({ is_error: true, result: '{"items":[]}' }))
