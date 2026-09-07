@@ -99,8 +99,8 @@ JSON; they do not edit TypeScript.
 ### Automated daily pipeline
 
 `.github/workflows/news-update.yml` runs this loop automatically **daily** (06:23 UTC,
-and on manual dispatch): GLM-5.2 via Z.ai (api.z.ai, Anthropic-format
-endpoint) + the Exa research MCP collect recent news. The research job has **no Write
+and on manual dispatch): GLM-5.3 via Z.ai (api.z.ai, coding-plan base URL in
+Anthropic-format mode — the same base the chatbot uses) + the Exa research MCP collect recent news. The research job has **no Write
 tool** and **no npm ci**; it prints a JSON `{ "items": [...] }` delta on stdout. A
 validate job sanitizes that delta against current `main`, then publish applies it to
 *current* `main` (fast-forward only — no rebase, no `agents-work` push) after
@@ -110,7 +110,7 @@ the agent prints `{ "items": [] }` and publish is a no-op. A missing or non-JSON
 stdout is a hard failure — never invent an empty delta.
 
 Required repository secrets:
-- `BIGMODEL_NEWS_TOKEN` — private Z.ai (api.z.ai) API key for the news agent. Never prefixed with `NEXT_PUBLIC_` — must NOT appear in the client bundle. The workflow falls back to the pre-migration `ZAI_NEWS_TOKEN` secret if this is unset. Note: the news agent uses the `/api/anthropic` endpoint (Claude Code speaks the Anthropic Messages API); the GLM Coding Plan `/api/coding/paas/v4` path does NOT support Claude Code. Keys are per-host: an open.bigmodel.cn key will not authenticate against api.z.ai.
+- `BIGMODEL_NEWS_TOKEN` — private Z.ai (api.z.ai) API key for the news agent. Never prefixed with `NEXT_PUBLIC_` — must NOT appear in the client bundle. The workflow falls back to the pre-migration `ZAI_NEWS_TOKEN` secret if this is unset. Note: since 2026-09-07 the news agent runs against the coding-plan base `https://api.z.ai/api/coding/paas/v4` (Claude Code speaks the Anthropic Messages API and appends `/v1/messages` to that base — the same base URL the chatbot uses); it was moved off `/api/anthropic`, which stopped recognizing GLM model IDs (`unrecognized_model` for glm-5.2/glm-4.7-flash — issue #67). Keys are per-host: an open.bigmodel.cn key will not authenticate against api.z.ai.
 - `NEXT_PUBLIC_BIGMODEL_TOKEN` — public, rate-limited Z.ai (api.z.ai) key for the portfolio chatbot (uses the GLM Coding Plan `/api/coding/paas/v4/chat/completions` endpoint, model `glm-5.3` — which always runs with thinking enabled). This IS inlined into the static JS bundle and is publicly extractable; use a disposable/capped key. The news agent must NOT reuse this key.
 - `NEXT_PUBLIC_GROQ_TOKEN` — public, rate-limited Groq key for the portfolio chatbot's fallback model. Also inlined into the static JS bundle and publicly extractable; use a disposable/capped key.
 - Chatbot model routing + overrides (optional, GitHub *repository variables*, not secrets): `NEXT_PUBLIC_BIGMODEL_MODEL` (deep lane, default `glm-5.3`), `NEXT_PUBLIC_ZAI_FAST_MODEL` (fast lane for simple prompts, default `glm-5-turbo`), `NEXT_PUBLIC_ZAI_ROUTER_MODEL` (classifier that picks the lane for non-obvious prompts, default `glm-5.3-flash`), and `NEXT_PUBLIC_GROQ_MODEL` (cross-provider fallback, default `openai/gpt-oss-20b`; Groq decommissioned `llama-3.1-8b-instant` on 2026-08-16). glm-5.3 always runs thinking (slow, thorough); the fast lane exists because simple questions don't need it.

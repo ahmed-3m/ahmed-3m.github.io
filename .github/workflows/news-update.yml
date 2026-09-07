@@ -1,6 +1,7 @@
 name: Daily news update
 
-# Collects recent AI / agentic-AI news with GLM-5.2 (via Z.ai, api.z.ai — Anthropic-format endpoint)
+# Collects recent AI / agentic-AI news with GLM-5.3 (via Z.ai, api.z.ai — coding-plan
+# base URL, Anthropic-format mode; the same base the portfolio chatbot uses)
 # + the Exa research MCP. The research job prints a NewsDelta on stdout (no Write tool).
 # Validate sanitizes that delta against current main. Publish applies it to *current* main
 # (no rebase, no agents-work push). Fully serverless: this Action IS the backend. Git is the
@@ -75,14 +76,16 @@ jobs:
 
       - name: Collect news delta on stdout
         env:
-          # Z.ai (international) Anthropic-format endpoint. Claude Code speaks
-          # the Anthropic Messages API, NOT OpenAI /chat/completions, so this
-          # must use /api/anthropic — the Coding Plan /api/coding/paas/v4 path
-          # does NOT support Claude Code.
-          ANTHROPIC_BASE_URL: https://api.z.ai/api/anthropic
+          # Same Z.ai coding-plan base URL as the portfolio chatbot (glm-5.3 is
+          # proven live there). Claude Code speaks the Anthropic Messages API
+          # and appends /v1/messages to this base. Moved here 2026-09-07 after
+          # /api/anthropic stopped recognizing GLM model IDs (unrecognized_model
+          # for glm-5.2 and glm-4.7-flash on both claude-code 2.1.236 and
+          # 2.1.263 — issue #67).
+          ANTHROPIC_BASE_URL: https://api.z.ai/api/coding/paas/v4
           ANTHROPIC_AUTH_TOKEN: ${{ secrets.BIGMODEL_NEWS_TOKEN || secrets.ZAI_NEWS_TOKEN }}
-          ANTHROPIC_MODEL: glm-5.2
-          ANTHROPIC_SMALL_FAST_MODEL: glm-4.7-flash
+          ANTHROPIC_MODEL: glm-5.3
+          ANTHROPIC_SMALL_FAST_MODEL: glm-5.3-flash
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
         run: |
           set -euo pipefail
@@ -99,11 +102,13 @@ jobs:
             echo "::error::Secret EXA_API_KEY is unset or empty, so the Exa research MCP cannot authenticate. Set it with: gh secret set EXA_API_KEY"
             exit 1
           fi
-          # Fall back through GLM tiers on transient overload (529): the newest
-          # model is the most capacity-constrained, so older tiers often succeed.
-          # Short backoff (15s) because the run is daily — failing fast and letting
-          # tomorrow's run pick it up beats sitting idle for minutes on overload.
-          models="glm-5.2 glm-5 glm-4.7"
+          # Fall back through GLM tiers on transient overload (529): the flagship
+          # model is the most capacity-constrained, so the lighter flash tier
+          # often succeeds. Short backoff (15s) because the run is daily —
+          # failing fast and letting tomorrow's run pick it up beats sitting
+          # idle for minutes on overload. glm-5.2/glm-5/glm-4.7 were dropped:
+          # /api/anthropic no longer recognizes them (issue #67).
+          models="glm-5.3 glm-5.3-flash"
           attempt=0
           for m in $models; do
             attempt=$((attempt + 1))
