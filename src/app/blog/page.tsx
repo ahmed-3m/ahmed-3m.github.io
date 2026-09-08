@@ -12,6 +12,9 @@ export const metadata: Metadata = {
     description: 'Articles on diffusion models, industrial AI, product engineering, and real-world ML work.',
     type: 'website',
     url: 'https://ahmed-3m.github.io/blog/',
+    // Page-level openGraph replaces the layout's object wholesale — without
+    // this images array the route ships no og:image.
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Ahmed Mohammed - AI/ML Engineer' }],
   },
 }
 
