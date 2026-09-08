@@ -10,6 +10,17 @@ import { serializeJsonLd } from '@/lib/serialize-json-ld'
 function formatContent(content: string | undefined) {
   if (!content) return ''
 
+  // Inline transform shared by paragraphs and list items: bold markup plus
+  // bare-URL linkification. Long URLs are tamed by the [overflow-wrap:anywhere]
+  // on the p/li templates so they wrap instead of overflowing phones.
+  const inline = (text: string) =>
+    text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(
+        /(https?:\/\/[^\s<>"]+)/g,
+        '<a href="$1" class="text-[var(--cd-accent)] underline underline-offset-2" target="_blank" rel="noopener noreferrer">$1</a>'
+      )
+
   return content
     .trim()
     .split('\n\n')
@@ -22,25 +33,26 @@ function formatContent(content: string | undefined) {
       }
       if (block.startsWith('```')) {
         const code = block.replace(/```[\w]*\n?/g, '').replace(/```/g, '')
-        return `<pre class="mb-4 overflow-x-auto rounded-lg border border-[var(--cd-b0)] bg-[var(--cd-elev)] p-4"><code>${code}</code></pre>`
+        // Code is always LTR: without dir="ltr" an RTL (Arabic) page
+        // bidi-reorders the punctuation and garbles the snippet.
+        return `<pre dir="ltr" class="mb-4 overflow-x-auto rounded-lg border border-[var(--cd-b0)] bg-[var(--cd-elev)] p-4"><code>${code}</code></pre>`
       }
       if (block.startsWith('- ')) {
         const items = block
           .split('\n')
-          .map((item) => `<li>${item.replace(/^- /, '')}</li>`)
+          .map((item) => `<li class="[overflow-wrap:anywhere]">${inline(item.replace(/^- /, ''))}</li>`)
           .join('')
         return `<ul class="mb-4 list-disc space-y-2 pl-6 text-[var(--cd-fg2)]">${items}</ul>`
       }
       if (/^\d+\./.test(block)) {
         const items = block
           .split('\n')
-          .map((item) => `<li>${item.replace(/^\d+\.\s*/, '')}</li>`)
+          .map((item) => `<li class="[overflow-wrap:anywhere]">${inline(item.replace(/^\d+\.\s*/, ''))}</li>`)
           .join('')
         return `<ol class="mb-4 list-decimal space-y-2 pl-6 text-[var(--cd-fg2)]">${items}</ol>`
       }
 
-      const paragraph = block.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      return `<p class="mb-4 leading-relaxed text-[var(--cd-fg2)]">${paragraph}</p>`
+      return `<p class="mb-4 leading-relaxed text-[var(--cd-fg2)] [overflow-wrap:anywhere]">${inline(block)}</p>`
     })
     .join('')
 }
@@ -70,7 +82,7 @@ const copy = {
   writtenBy: {
     en: 'Written by Ahmed Mohammed',
     de: 'Geschrieben von Ahmed Mohammed',
-    fr: 'Ecrit par Ahmed Mohammed',
+    fr: 'Écrit par Ahmed Mohammed',
     es: 'Escrito por Ahmed Mohammed',
     ar: 'بقلم أحمد محمد',
   },
