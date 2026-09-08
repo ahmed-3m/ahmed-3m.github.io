@@ -117,6 +117,7 @@ const themeLabels = {
 
 export default function Header() {
   const [open, setOpen] = useState(false)
+  const menuToggleRef = useRef<HTMLButtonElement>(null)
   const { theme, toggleTheme } = useTheme()
   const { t } = useI18n()
   const isDark = theme === 'dark'
@@ -126,7 +127,10 @@ export default function Header() {
   useEffect(() => {
     if (!open) return
     const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setOpen(false)
+      if (event.key === 'Escape') {
+        setOpen(false)
+        menuToggleRef.current?.focus()
+      }
     }
     document.addEventListener('keydown', closeOnEscape)
     return () => document.removeEventListener('keydown', closeOnEscape)
@@ -160,6 +164,7 @@ export default function Header() {
         </div>
 
         <button
+          ref={menuToggleRef}
           className="cd-nav-mobile-btn"
           onClick={() => setOpen(o => !o)}
           aria-label={open ? t(menuLabels.close) : t(menuLabels.open)}
@@ -175,18 +180,17 @@ export default function Header() {
         </button>
       </div>
 
-      {open && (
-        <div
-          id="cd-mobile-menu"
-          className="cd-nav-mobile-panel"
-          style={{ borderTop: '1px solid var(--cd-b0)', background: 'var(--cd-bg)', padding: '8px 20px 16px', display: 'flex', flexDirection: 'column', gap: '8px' }}
-        >
-          {links.map(l => (
-            <NavLink key={l.href} href={l.href} label={l.label} onClick={() => setOpen(false)} />
-          ))}
-          <NavCta onClick={() => setOpen(false)} />
-        </div>
-      )}
+      <div
+        id="cd-mobile-menu"
+        className="cd-nav-mobile-panel"
+        hidden={!open}
+        style={{ borderTop: '1px solid var(--cd-b0)', background: 'var(--cd-bg)', padding: '8px 20px 16px', display: 'flex', flexDirection: 'column', gap: '8px' }}
+      >
+        {links.map(l => (
+          <NavLink key={l.href} href={l.href} label={l.label} onClick={() => setOpen(false)} />
+        ))}
+        <NavCta onClick={() => setOpen(false)} />
+      </div>
     </nav>
   )
 }

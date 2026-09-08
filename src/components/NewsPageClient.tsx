@@ -72,14 +72,15 @@ export default function NewsPageClient() {
         <h1 className="mb-2 text-4xl font-bold">{t(copy.title)}</h1>
         <p className="mb-6 text-[var(--cd-fg2)]">{t(copy.subtitle)}</p>
 
-        <div className="mb-8 flex flex-wrap gap-2" role="group" aria-label="News filter">
+        <div className="mb-8 flex flex-wrap gap-2" role="radiogroup" aria-label="News filter">
           {filters.map(({ key, label, count }) => {
             const active = filter === key
             return (
               <button
                 key={key}
                 type="button"
-                aria-pressed={active}
+                role="radio"
+                aria-checked={active}
                 onClick={() => setFilter(key)}
                 className="rounded-full border px-4 py-1.5 text-sm transition-colors"
                 style={{

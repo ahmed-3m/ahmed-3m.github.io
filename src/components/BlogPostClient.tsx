@@ -10,6 +10,25 @@ import { serializeJsonLd } from '@/lib/serialize-json-ld'
 function formatContent(content: string | undefined) {
   if (!content) return ''
 
+  const cleanUrl = (rawUrl: string) => {
+    let url = rawUrl
+    let previousUrl = ''
+
+    while (url !== previousUrl) {
+      previousUrl = url
+      url = url.replace(/[.,;:!?]+$/, '')
+      const openParentheses = (url.match(/\(/g) ?? []).length
+      let closeParentheses = (url.match(/\)/g) ?? []).length
+
+      while (url.endsWith(')') && closeParentheses > openParentheses) {
+        url = url.slice(0, -1)
+        closeParentheses -= 1
+      }
+    }
+
+    return url
+  }
+
   // Inline transform shared by paragraphs and list items: bold markup plus
   // bare-URL linkification. (Long-URL wrapping and LTR code blocks are handled
   // by the .prose container rules in globals.css.)
@@ -18,7 +37,11 @@ function formatContent(content: string | undefined) {
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       .replace(
         /(https?:\/\/[^\s<>"]+)/g,
-        '<a href="$1" class="text-[var(--cd-accent)] underline underline-offset-2" target="_blank" rel="noopener noreferrer">$1</a>'
+        (rawUrl) => {
+          const url = cleanUrl(rawUrl)
+          const trailing = rawUrl.slice(url.length)
+          return `<a href="${url}" class="text-[var(--cd-accent)] underline underline-offset-2" target="_blank" rel="noopener noreferrer">${url}</a>${trailing}`
+        }
       )
 
   return content
