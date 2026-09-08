@@ -15,6 +15,7 @@ import { Analytics } from "@/components/Analytics";
 import CustomCursor from "@/components/CustomCursor";
 import ChatBot from "@/components/ChatBot";
 import { ThemeProvider } from "@/lib/ThemeContext";
+import { ogImage } from "@/lib/seo";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-display",
@@ -63,7 +64,7 @@ export const metadata: Metadata = {
     description: "AI/ML Engineer in Linz, Austria. Thesis, industrial evaluation, Faultrix product work, and public proof artifacts including PDFs, repositories, and case studies.",
     url: 'https://ahmed-3m.github.io/',
     siteName: 'Ahmed Mohammed Portfolio',
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Ahmed Mohammed - AI/ML Engineer' }],
+    images: ogImage('Ahmed Mohammed - AI/ML Engineer'),
     locale: 'en_US',
     type: 'website',
   },

@@ -93,6 +93,13 @@ const ZAI_CHAT_URL = 'https://api.z.ai/api/coding/paas/v4/chat/completions'
 const CHAT_PROXY_URL = process.env.NEXT_PUBLIC_CHAT_PROXY_URL
 const MAX_REPLY_CHARS = 1600
 const GENIE_NAME = 'Genie\u{1F9DE}\u200D\u2642\uFE0F'
+// Router lane decision must be near-instant next to the answer it precedes.
+const ROUTER_TIMEOUT_MS = 1500
+// Ceiling on time-to-first-byte for a completion call. Covers the failover
+// path: a provider that hangs (browser-side CORS/network break, black-holed
+// request) must not hold the typing indicator and the provider chain hostage.
+// The clock stops when headers arrive — streaming itself stays unbounded.
+const TTFB_TIMEOUT_MS = 20000
 
 // ── Security model ──────────────────────────────────────────
 // NEXT_PUBLIC_GROQ_TOKEN / NEXT_PUBLIC_BIGMODEL_TOKEN are inlined into
@@ -423,6 +430,32 @@ type StreamChunk = ChatCompletionResponse & {
 }
 
 /**
+ * fetch with a time-to-first-byte ceiling: if no response headers arrive
+ * within `timeoutMs`, the request is aborted and rethrown as a provider-tagged
+ * error so the failover chain can move on. Once headers arrive the clock is
+ * cleared — reading (or streaming) the body is not bounded.
+ */
+async function fetchWithTimeout(
+  url: string,
+  init: RequestInit,
+  timeoutMs: number,
+  providerName: ProviderConfig['name']
+): Promise<Response> {
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), timeoutMs)
+  try {
+    return await fetch(url, { ...init, signal: controller.signal })
+  } catch (networkError) {
+    if (networkError instanceof DOMException && networkError.name === 'AbortError') {
+      throw createChatError(`${providerName} did not respond in time.`, providerName)
+    }
+    throw networkError
+  } finally {
+    clearTimeout(timeout)
+  }
+}
+
+/**
  * Requests a chat completion. When `onDelta` is provided the request streams
  * (OpenAI-compatible SSE) and invokes `onDelta` with the full accumulated
  * content on every token — the caller renders progressively. Without it, the
@@ -444,24 +477,16 @@ async function requestChatCompletion(
   }
 
   const streaming = Boolean(onDelta)
-  const controller = new AbortController()
-  const timeout = setTimeout(() => controller.abort(), TTFB_TIMEOUT_MS)
-  let response: Response
-  try {
-    response = await fetch(provider.url, {
+  const response = await fetchWithTimeout(
+    provider.url,
+    {
       method: 'POST',
       headers,
       body: JSON.stringify({ ...provider.body, stream: streaming }),
-      signal: controller.signal,
-    })
-  } catch (networkError) {
-    if (networkError instanceof DOMException && networkError.name === 'AbortError') {
-      throw createChatError(`${provider.name} did not respond in time.`, provider.name)
-    }
-    throw networkError
-  } finally {
-    clearTimeout(timeout)
-  }
+    },
+    TTFB_TIMEOUT_MS,
+    provider.name
+  )
 
   if (!response.ok) {
     const data = (await response.json().catch(() => ({}))) as ChatCompletionResponse
@@ -547,14 +572,6 @@ async function requestChatCompletion(
 
 type ChatLane = 'fast' | 'deep'
 
-const ROUTER_TIMEOUT_MS = 1500
-// Ceiling on time-to-first-byte for the main completion call. Covers the
-// failover path: a provider that hangs (browser-side CORS/network break,
-// black-holed request) used to hold the typing indicator and the whole
-// provider chain hostage with no timeout at all. Streaming itself is NOT
-// bounded once the first byte arrives.
-const TTFB_TIMEOUT_MS = 20000
-
 // Pure social messages: never worth a router call.
 const SOCIAL_PATTERN = /^(hi|hey|hello|yo|good (morning|afternoon|evening)|thanks|thank you|thx|ok|okay|great|nice|cool|bye|goodbye)[\s!.?]*$/i
 // Unmistakably analytical asks: go straight to the deep model.
@@ -575,28 +592,30 @@ async function routeWithClassifier(
   message: string,
   auth: { token: string; url: string; useProxy: boolean }
 ): Promise<ChatLane> {
-  const controller = new AbortController()
-  const timeout = setTimeout(() => controller.abort(), ROUTER_TIMEOUT_MS)
   try {
     const headers: Record<string, string> = { 'Content-Type': 'application/json' }
     if (auth.token && !auth.useProxy) headers.Authorization = `Bearer ${auth.token}`
-    const response = await fetch(auth.url, {
-      method: 'POST',
-      headers,
-      signal: controller.signal,
-      body: JSON.stringify({
-        model: ZAI_ROUTER_MODEL,
-        messages: [
-          {
-            role: 'user',
-            content: `You classify chat messages sent to a personal-assistant chatbot about its owner. FAST = greetings, thanks, simple factual lookups, short definitions, yes/no questions, single-fact asks (contact info, links, "what is X"). DEEP = explanations, comparisons, multi-part questions, nuanced or open-ended asks. Respond with exactly one word: FAST or DEEP.\n\nMessage: ${message}`,
-          },
-        ],
-        max_tokens: 4,
-        temperature: 0,
-        stream: false,
-      }),
-    })
+    const response = await fetchWithTimeout(
+      auth.url,
+      {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          model: ZAI_ROUTER_MODEL,
+          messages: [
+            {
+              role: 'user',
+              content: `You classify chat messages sent to a personal-assistant chatbot about its owner. FAST = greetings, thanks, simple factual lookups, short definitions, yes/no questions, single-fact asks (contact info, links, "what is X"). DEEP = explanations, comparisons, multi-part questions, nuanced or open-ended asks. Respond with exactly one word: FAST or DEEP.\n\nMessage: ${message}`,
+            },
+          ],
+          max_tokens: 4,
+          temperature: 0,
+          stream: false,
+        }),
+      },
+      ROUTER_TIMEOUT_MS,
+      'BigModel'
+    )
     if (!response.ok) return 'deep'
     const data = (await response.json()) as ChatCompletionResponse
     const verdict = data.choices?.[0]?.message?.content?.trim().toLowerCase() ?? ''
@@ -604,8 +623,6 @@ async function routeWithClassifier(
   } catch {
     // Router unavailable, timed out, or unparsable — keep quality.
     return 'deep'
-  } finally {
-    clearTimeout(timeout)
   }
 }
 
@@ -936,7 +953,7 @@ export default function ChatBot() {
         { role: 'system', content: SYSTEM_PROMPT },
         {
           role: 'system',
-          content: `Reply in the language of the user's latest message; when ambiguous or mixed, use ${languageName[lang]} (the selected UI language). Keep names, product names, repository names, equations, metrics, and links unchanged.`,
+          content: `The selected UI language is ${languageName[lang]}. Keep names, product names, repository names, equations, metrics, and links unchanged.`,
         },
         {
           role: 'system',

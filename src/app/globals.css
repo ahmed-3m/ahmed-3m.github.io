@@ -205,15 +205,22 @@ a, button, [role="button"] { cursor: pointer; }
 
 /* ── Keyboard focus (a11y) ── */
 /* One visible focus treatment for every interactive element; components with
-   their own focus styling (glass cards, chart zoom buttons) opt out below. */
+   their own focus styling opt out below (.cd-rfc-visual-button already
+   carries its own outline:none rule next to its zoom treatment). */
 :focus-visible {
   outline: 2px solid var(--cd-accent);
   outline-offset: 2px;
 }
-.cd-evidence-card:focus-visible,
-.cd-rfc-visual-button:focus-visible {
+.cd-evidence-card:focus-visible {
   outline: none;
 }
+
+/* ── Post body (.prose, fed by formatContent's raw HTML) ── */
+/* Applied at the container so every present and future block is covered:
+   code is always LTR (an RTL/Arabic page would bidi-reorder punctuation),
+   and long URLs in prose must wrap on phones instead of overflowing. */
+.prose pre { direction: ltr; }
+.prose p, .prose li { overflow-wrap: anywhere; }
 
 /* ── Ambient background ── */
 .cd-ambient {

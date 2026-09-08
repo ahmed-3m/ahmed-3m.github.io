@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import CaseStudyPage from '@/components/CaseStudyPage'
+import { ogImage } from '@/lib/seo'
 
 export const metadata: Metadata = {
   title: 'Inkjet Defect Detection on FTI_Zer0P (Case Study)',
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
       'YOLO + conditional diffusion pipeline for industrial print QC on FTI_Zer0P under strict 5-fold cross-validation: 0.8673 ± 0.0230 AUROC.',
     type: 'article',
     url: 'https://ahmed-3m.github.io/case-studies/inkjet-ood/',
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Inkjet OOD case study' }],
+    images: ogImage('Inkjet OOD case study'),
   },
 }
 

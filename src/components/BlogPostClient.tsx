@@ -11,8 +11,8 @@ function formatContent(content: string | undefined) {
   if (!content) return ''
 
   // Inline transform shared by paragraphs and list items: bold markup plus
-  // bare-URL linkification. Long URLs are tamed by the [overflow-wrap:anywhere]
-  // on the p/li templates so they wrap instead of overflowing phones.
+  // bare-URL linkification. (Long-URL wrapping and LTR code blocks are handled
+  // by the .prose container rules in globals.css.)
   const inline = (text: string) =>
     text
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
@@ -33,26 +33,24 @@ function formatContent(content: string | undefined) {
       }
       if (block.startsWith('```')) {
         const code = block.replace(/```[\w]*\n?/g, '').replace(/```/g, '')
-        // Code is always LTR: without dir="ltr" an RTL (Arabic) page
-        // bidi-reorders the punctuation and garbles the snippet.
-        return `<pre dir="ltr" class="mb-4 overflow-x-auto rounded-lg border border-[var(--cd-b0)] bg-[var(--cd-elev)] p-4"><code>${code}</code></pre>`
+        return `<pre class="mb-4 overflow-x-auto rounded-lg border border-[var(--cd-b0)] bg-[var(--cd-elev)] p-4"><code>${code}</code></pre>`
       }
       if (block.startsWith('- ')) {
         const items = block
           .split('\n')
-          .map((item) => `<li class="[overflow-wrap:anywhere]">${inline(item.replace(/^- /, ''))}</li>`)
+          .map((item) => `<li>${inline(item.replace(/^- /, ''))}</li>`)
           .join('')
         return `<ul class="mb-4 list-disc space-y-2 pl-6 text-[var(--cd-fg2)]">${items}</ul>`
       }
       if (/^\d+\./.test(block)) {
         const items = block
           .split('\n')
-          .map((item) => `<li class="[overflow-wrap:anywhere]">${inline(item.replace(/^\d+\.\s*/, ''))}</li>`)
+          .map((item) => `<li>${inline(item.replace(/^\d+\.\s*/, ''))}</li>`)
           .join('')
         return `<ol class="mb-4 list-decimal space-y-2 pl-6 text-[var(--cd-fg2)]">${items}</ol>`
       }
 
-      return `<p class="mb-4 leading-relaxed text-[var(--cd-fg2)] [overflow-wrap:anywhere]">${inline(block)}</p>`
+      return `<p class="mb-4 leading-relaxed text-[var(--cd-fg2)]">${inline(block)}</p>`
     })
     .join('')
 }
