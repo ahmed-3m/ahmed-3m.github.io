@@ -19,7 +19,7 @@ const copy = {
   backHome: {
     en: 'Back to home',
     de: 'Zur Startseite',
-    fr: 'Retour a l accueil',
+    fr: 'Retour à l’accueil',
     es: 'Volver al inicio',
     ar: 'العودة إلى الرئيسية',
   },
@@ -27,7 +27,7 @@ const copy = {
     en: 'Read more',
     de: 'Weiterlesen',
     fr: 'Lire la suite',
-    es: 'Leer mas',
+    es: 'Leer más',
     ar: 'اقرأ المزيد',
   },
 } as const

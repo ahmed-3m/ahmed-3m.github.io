@@ -23,7 +23,7 @@ const formulaVisuals = [
 const copy = {
   eyebrow: { en: '// 05 - Research', de: '// 05 - Forschung', fr: '// 05 - Recherche', es: '// 05 - Investigación', ar: '// 05 - الأبحاث' },
   title: { en: 'Reports & Thesis', de: 'Berichte & Thesis', fr: 'Rapports & mémoire', es: 'Informes y tesis', ar: 'التقارير والرسالة' },
-  summaryProblemLabel: { en: 'Problem', de: 'Problem', fr: 'Probleme', es: 'Problema', ar: 'المشكلة' },
+  summaryProblemLabel: { en: 'Problem', de: 'Problem', fr: 'Problème', es: 'Problema', ar: 'المشكلة' },
   summaryProblemText: {
     en: 'How can a model recognize when an image does not belong, instead of acting overconfident?',
     de: 'Wie kann ein Modell erkennen, dass ein Bild nicht zur Verteilung gehört, statt übertrieben sicher zu reagieren?',

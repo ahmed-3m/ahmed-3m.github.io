@@ -3,7 +3,7 @@ import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { useReveal } from '@/lib/useReveal'
 
 const copy = {
-  eyebrow: { en: '// 04 - Experience', de: '// 04 - Erfahrung', fr: '// 04 - Experience', es: '// 04 - Experiencia', ar: '// 04 - الخبرة' },
+  eyebrow: { en: '// 04 - Experience', de: '// 04 - Erfahrung', fr: '// 04 - Expérience', es: '// 04 - Experiencia', ar: '// 04 - الخبرة' },
   title: { en: "Where I've worked.", de: 'Wo ich gearbeitet habe.', fr: "Où j'ai travaillé.", es: 'Donde he trabajado.', ar: 'أماكن عملي.' },
 } satisfies Record<string, TranslationMap>
 
@@ -78,7 +78,7 @@ const experiences: Array<{
     desc: {
       en: 'RNN/CNN architectures for EEG motor imagery classification with hyperparameter optimization.',
       de: 'RNN/CNN-Architekturen für EEG-Motor-Imagery-Klassifikation mit Hyperparameteroptimierung.',
-      fr: 'Architectures RNN/CNN pour classification EEG d imagerie motrice avec optimisation des hyperparamètres.',
+      fr: 'Architectures RNN/CNN pour classification EEG d’imagerie motrice avec optimisation des hyperparamètres.',
       es: 'Arquitecturas RNN/CNN para clasificación EEG de imaginación motora con optimización de hiperparámetros.',
       ar: 'معماريات RNN/CNN لتصنيف EEG للتخيل الحركي مع تحسين المعاملات.',
     },
