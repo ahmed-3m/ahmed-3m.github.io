@@ -13,8 +13,8 @@ const copy = {
     es: 'Noticias de IA seleccionadas con un breve análisis — con énfasis en la IA agéntica.',
     ar: 'أخبار مختارة عن الذكاء الاصطناعي مع تعليق موجز — مع تركيز على الذكاء الاصطناعي الوكيل.',
   },
-  read: { en: 'Read take', de: 'Einordnung', fr: 'Voir l analyse', es: 'Ver analisis', ar: 'اقرأ التعليق' },
-  all: { en: 'View all news', de: 'Alle News ansehen', fr: 'Voir toutes les actualites', es: 'Ver todas las noticias', ar: 'عرض كل الأخبار' },
+  read: { en: 'Read take', de: 'Einordnung', fr: 'Voir l’analyse', es: 'Ver análisis', ar: 'اقرأ التعليق' },
+  all: { en: 'View all news', de: 'Alle News ansehen', fr: 'Voir toutes les actualités', es: 'Ver todas las noticias', ar: 'عرض كل الأخبار' },
 } satisfies Record<string, TranslationMap>
 
 export default function News() {

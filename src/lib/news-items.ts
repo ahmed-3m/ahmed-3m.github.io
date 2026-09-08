@@ -21,7 +21,7 @@ const newsItems = parseNewsItems(raw)
 
 export const newsCategoryLabels: Record<NewsCategory, { en: string; de: string; fr: string; es: string; ar: string }> = {
   ai: { en: 'AI', de: 'KI', fr: 'IA', es: 'IA', ar: 'الذكاء الاصطناعي' },
-  agentic: { en: 'Agentic AI', de: 'Agentische KI', fr: 'IA agentique', es: 'IA agentica', ar: 'الذكاء الاصطناعي الوكيل' },
+  agentic: { en: 'Agentic AI', de: 'Agentische KI', fr: 'IA agentique', es: 'IA agéntica', ar: 'الذكاء الاصطناعي الوكيل' },
 }
 
 function localizeNewsItem(item: NewsItem, lang: Language): LocalizedNewsItem {

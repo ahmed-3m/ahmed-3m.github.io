@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { I18nProvider } from "@/lib/i18n";
@@ -15,6 +15,7 @@ import { Analytics } from "@/components/Analytics";
 import CustomCursor from "@/components/CustomCursor";
 import ChatBot from "@/components/ChatBot";
 import { ThemeProvider } from "@/lib/ThemeContext";
+import { ogImage } from "@/lib/seo";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-display",
@@ -37,6 +38,15 @@ const jetbrainsMono = JetBrains_Mono({
   preload: false,
 });
 
+// Next injects a default viewport meta; declaring it here as well produced a
+// duplicate <meta name="viewport"> in the exported HTML. The Viewport export
+// is the single source — maximumScale 5 keeps pinch-zoom available.
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL('https://ahmed-3m.github.io'),
   title: {
@@ -54,7 +64,7 @@ export const metadata: Metadata = {
     description: "AI/ML Engineer in Linz, Austria. Thesis, industrial evaluation, Faultrix product work, and public proof artifacts including PDFs, repositories, and case studies.",
     url: 'https://ahmed-3m.github.io/',
     siteName: 'Ahmed Mohammed Portfolio',
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Ahmed Mohammed - AI/ML Engineer' }],
+    images: ogImage('Ahmed Mohammed - AI/ML Engineer'),
     locale: 'en_US',
     type: 'website',
   },
@@ -86,7 +96,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}var r=localStorage.getItem('reduceTransparency');if(r==='true'||r==='false'){document.documentElement.setAttribute('data-reduce-transparency',r);}else if(window.matchMedia&&window.matchMedia('(prefers-reduced-transparency: reduce)').matches){document.documentElement.setAttribute('data-reduce-transparency','true');}}catch(e){}})();`,
           }}
         />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#08090d" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />

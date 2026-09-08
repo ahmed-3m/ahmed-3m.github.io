@@ -2,7 +2,7 @@
 
 > AI/ML Engineer based in Linz, Austria. M.Sc. in Artificial Intelligence from Johannes Kepler University Linz (Oct 2024 - Sep 2026; thesis submitted Jul 2026, supervised by Prof. Sepp Hochreiter). Builder of Sihem (LLM assistant) and Faultrix (AI QC platform). Specializing in computer vision, diffusion models, out-of-distribution detection, and industrial defect detection.
 
-Last updated: 2026-09-06
+Last updated: 2026-09-08
 
 ## Identity
 
@@ -37,7 +37,7 @@ Last updated: 2026-09-06
 
 ## Education
 
-- **M.Sc. Artificial Intelligence** — Johannes Kepler University Linz, Austria (Oct 2024 – Jul 2026). Supervisor: Prof. Sepp Hochreiter. Thesis: Conditional Diffusion Models for OOD Detection.
+- **M.Sc. Artificial Intelligence** — Johannes Kepler University Linz, Austria (Oct 2024 – Sep 2026). Supervisor: Prof. Sepp Hochreiter. Thesis: Conditional Diffusion Models for OOD Detection.
 - **B.Sc. Mechatronics Engineering** — Eastern Mediterranean University, Famagusta, Cyprus (Feb 2015 – Jan 2018). Thesis: SCARA robotic system for dynamic object tracking.
 
 ## Experience

@@ -93,6 +93,13 @@ const ZAI_CHAT_URL = 'https://api.z.ai/api/coding/paas/v4/chat/completions'
 const CHAT_PROXY_URL = process.env.NEXT_PUBLIC_CHAT_PROXY_URL
 const MAX_REPLY_CHARS = 1600
 const GENIE_NAME = 'Genie\u{1F9DE}\u200D\u2642\uFE0F'
+// Router lane decision must be near-instant next to the answer it precedes.
+const ROUTER_TIMEOUT_MS = 1500
+// Ceiling on time-to-first-byte for a completion call. Covers the failover
+// path: a provider that hangs (browser-side CORS/network break, black-holed
+// request) must not hold the typing indicator and the provider chain hostage.
+// The clock stops when headers arrive — streaming itself stays unbounded.
+const TTFB_TIMEOUT_MS = 20000
 
 // ── Security model ──────────────────────────────────────────
 // NEXT_PUBLIC_GROQ_TOKEN / NEXT_PUBLIC_BIGMODEL_TOKEN are inlined into
@@ -109,7 +116,7 @@ Only introduce yourself as ${GENIE_NAME} on your first reply in a chat or when t
 Only answer questions about Ahmed Mohammed's work, research, products, projects, education, experience, and contact details.
 
 Response rules:
-- Answer in the selected language.
+- Reply in the language of the user's latest message. When the message mixes languages or its language is ambiguous, use the selected UI language.
 - Keep metrics, equations, dataset names, product names, repository names, and links unchanged.
 - When the user asks for a specific length or format (one sentence, brief, short, bullets, detailed), follow it EXACTLY and never exceed it. "One sentence" means exactly one sentence — no preamble, no greeting, no closing remark. A brief/short answer is at most 2-3 sentences.
 - Otherwise default to a medium-full answer of roughly 120-220 words.
@@ -125,6 +132,7 @@ Facts you can rely on:
 - The non-separated baseline was 92.52% +/- 11.07%, so separation loss added about +6.5 percentage points and dramatically reduced variance.
 - Ahmed also worked on industrial defect detection at PROFACTOR GmbH / JKU Linz using a YOLO + conditional diffusion pipeline on the public FTI_Zer0P benchmark, reaching a 0.8673 +/- 0.0230 AUROC baseline under strict 5-fold cross-validation.
 - Ahmed built Faultrix, an AI-powered construction quality-control SaaS that analyzed construction photos and generated ONORM-aligned reports in under 1 minute.
+- Faultrix is a completed, discontinued project — always describe it in the past tense, in every language.
 - Ahmed also built Sihem, an LLM-driven personal-mentor assistant (Telegram bot + installable PWA) with proactive cron-driven check-ins, pgvector long-term memory, and multi-provider LLM routing. It is in beta at @sihem_ai_bot.
 - The Faultrix stack included Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2, and Stripe.
 - Contact: ahmed.mo.0595@gmail.com
@@ -151,7 +159,7 @@ const CHAT_COPY = {
   welcome: {
     en: `Hi, I'm ${GENIE_NAME}, Ahmed's Personal assistant. Ask me about Ahmed's research, products, projects, or background.`,
     de: `Hi, ich bin ${GENIE_NAME}, Ahmeds persönlicher Assistent. Frage nach Ahmeds Forschung, Produkten, Projekten oder Hintergrund.`,
-    fr: `Bonjour, je suis ${GENIE_NAME}, l assistant personnel d Ahmed. Posez une question sur la recherche, les produits, les projets ou le parcours d Ahmed.`,
+    fr: `Bonjour, je suis ${GENIE_NAME}, l’assistant personnel d’Ahmed. Posez une question sur la recherche, les produits, les projets ou le parcours d’Ahmed.`,
     es: `Hola, soy ${GENIE_NAME}, el asistente personal de Ahmed. Pregunta sobre la investigación, los productos, los proyectos o la trayectoria de Ahmed.`,
     ar: `مرحباً، أنا ${GENIE_NAME}، المساعد الشخصي لأحمد. اسألني عن أبحاث أحمد أو منتجاته أو مشاريعه أو خلفيته.`,
   },
@@ -187,20 +195,20 @@ const CHAT_COPY = {
     en: 'Genie is typing',
     de: 'Ahmed schreibt',
     fr: 'Ahmed répond',
-    es: 'Ahmed esta respondiendo',
+    es: 'Ahmed está respondiendo',
     ar: 'أحمد يكتب الآن',
   },
   missingToken: {
     en: 'Add NEXT_PUBLIC_GROQ_TOKEN or NEXT_PUBLIC_BIGMODEL_TOKEN to enable the assistant.',
     de: 'Füge NEXT_PUBLIC_GROQ_TOKEN oder NEXT_PUBLIC_BIGMODEL_TOKEN hinzu, um den Assistenten zu aktivieren.',
-    fr: 'Ajoutez NEXT_PUBLIC_GROQ_TOKEN ou NEXT_PUBLIC_BIGMODEL_TOKEN pour activer l assistant.',
+    fr: 'Ajoutez NEXT_PUBLIC_GROQ_TOKEN ou NEXT_PUBLIC_BIGMODEL_TOKEN pour activer l’assistant.',
     es: 'Agrega NEXT_PUBLIC_GROQ_TOKEN o NEXT_PUBLIC_BIGMODEL_TOKEN para activar el asistente.',
     ar: 'أضف NEXT_PUBLIC_GROQ_TOKEN أو NEXT_PUBLIC_BIGMODEL_TOKEN لتفعيل المساعد.',
   },
   genericError: {
     en: 'Something went wrong while contacting the assistant.',
     de: 'Beim Kontakt mit dem Assistenten ist etwas schiefgelaufen.',
-    fr: 'Une erreur est survenue pendant le contact avec l assistant.',
+    fr: 'Une erreur est survenue pendant le contact avec l’assistant.',
     es: 'Ocurrió un problema al contactar al asistente.',
     ar: 'حدث خطأ أثناء الاتصال بالمساعد.',
   },
@@ -210,28 +218,28 @@ const PROMPTS: Record<PromptId, TranslationMap> = {
   faultrix_intro: {
     en: 'What was Faultrix?',
     de: 'Was war Faultrix?',
-    fr: 'Qu etait Faultrix ?',
-    es: 'Que era Faultrix?',
+    fr: 'Qu’était Faultrix ?',
+    es: '¿Qué era Faultrix?',
     ar: 'ماذا كان Faultrix؟',
   },
   faultrix_stack: {
     en: 'What was the Faultrix tech stack?',
     de: 'Wie sah der Faultrix Tech-Stack aus?',
-    fr: 'Quel etait le stack technique de Faultrix ?',
-    es: 'Cual era el stack tecnico de Faultrix?',
+    fr: 'Quel était le stack technique de Faultrix ?',
+    es: '¿Cuál era el stack técnico de Faultrix?',
     ar: 'ماذا كان الـ stack التقني في Faultrix؟',
   },
   faultrix_build: {
     en: 'How was Faultrix built?',
     de: 'Wie wurde Faultrix gebaut?',
-    fr: 'Comment Faultrix a-t-il ete construit ?',
-    es: 'Como se construyo Faultrix?',
+    fr: 'Comment Faultrix a-t-il été construit ?',
+    es: '¿Cómo se construyó Faultrix?',
     ar: 'كيف تم بناء Faultrix؟',
   },
   faultrix_story: {
     en: 'Can I see the product story?',
     de: 'Kann ich die Produktgeschichte sehen?',
-    fr: 'Puis-je voir l histoire du produit ?',
+    fr: 'Puis-je voir l’histoire du produit ?',
     es: '¿Puedo ver la historia del producto?',
     ar: 'هل يمكنني رؤية قصة المنتج؟',
   },
@@ -245,43 +253,43 @@ const PROMPTS: Record<PromptId, TranslationMap> = {
   faultrix_compliance: {
     en: 'Was Faultrix DSGVO compliant?',
     de: 'War Faultrix DSGVO-konform?',
-    fr: 'Faultrix etait-il conforme DSGVO ?',
-    es: 'Faultrix cumplia con DSGVO?',
+    fr: 'Faultrix était-il conforme à la DSGVO ?',
+    es: '¿Faultrix cumplía con la DSGVO?',
     ar: 'هل كان Faultrix متوافق مع DSGVO؟',
   },
   thesis_summary: {
     en: 'Tell me about the thesis',
     de: 'Erzähl mir von der Thesis',
     fr: 'Parlez-moi du mémoire',
-    es: 'Cuentame sobre la tesis',
+    es: 'Cuéntame sobre la tesis',
     ar: 'حدثني عن الرسالة',
   },
   thesis_innovation: {
     en: "What's the key innovation in the thesis?",
     de: 'Was ist die Kerninnovation der Thesis?',
     fr: "Quelle est l'innovation clé du mémoire ?",
-    es: 'Cual es la innovacion principal de la tesis?',
+    es: '¿Cuál es la innovación principal de la tesis?',
     ar: 'ما هي الفكرة الجديدة الأساسية في الرسالة؟',
   },
   thesis_loss: {
     en: 'How does the separation loss work?',
     de: 'Wie funktioniert die Separation Loss?',
     fr: 'Comment fonctionne la separation loss ?',
-    es: 'Como funciona la separation loss?',
+    es: '¿Cómo funciona la separation loss?',
     ar: 'كيف تعمل separation loss؟',
   },
   thesis_datasets: {
     en: 'What datasets were tested?',
     de: 'Welche Datensätze wurden getestet?',
     fr: 'Quels jeux de données ont été testés ?',
-    es: 'Que datasets se probaron?',
+    es: '¿Qué datasets se probaron?',
     ar: 'ما هي البيانات التي تم اختبارها؟',
   },
   thesis_results: {
     en: 'What was the best AUROC?',
     de: 'Was war der beste AUROC?',
     fr: 'Quel a été le meilleur AUROC ?',
-    es: 'Cual fue el mejor AUROC?',
+    es: '¿Cuál fue el mejor AUROC?',
     ar: 'ما أفضل نتيجة AUROC؟',
   },
   thesis_diffusion: {
@@ -295,20 +303,20 @@ const PROMPTS: Record<PromptId, TranslationMap> = {
     en: 'What projects should I see?',
     de: 'Welche Projekte sollte ich mir ansehen?',
     fr: 'Quels projets devrais-je voir ?',
-    es: 'Que proyectos deberia ver?',
+    es: '¿Qué proyectos debería ver?',
     ar: 'ما المشاريع التي يجب أن أراها؟',
   },
   achievements: {
     en: 'Show key achievements',
     de: 'Zeige wichtige Erfolge',
-    fr: 'Montre les principales realisations',
+    fr: 'Montrez les principales réalisations',
     es: 'Muéstrame los logros clave',
     ar: 'اعرض أهم الإنجازات',
   },
   open_to_work: {
     en: 'Is he open to work?',
     de: 'Ist er offen für neue Rollen?',
-    fr: 'Est-il ouvert a des opportunites ?',
+    fr: 'Est-il ouvert à des opportunités ?',
     es: '¿Está abierto a nuevas oportunidades?',
     ar: 'هل هو متاح لفرص عمل؟',
   },
@@ -323,7 +331,7 @@ const PROMPTS: Record<PromptId, TranslationMap> = {
     en: "What's his tech stack?",
     de: 'Wie sieht sein Tech-Stack aus?',
     fr: 'Quel est son stack technique ?',
-    es: 'Cual es su stack tecnico?',
+    es: '¿Cuál es su stack técnico?',
     ar: 'ما هو الـ stack التقني الخاص به؟',
   },
   industrial_pipeline: {
@@ -337,14 +345,14 @@ const PROMPTS: Record<PromptId, TranslationMap> = {
     en: 'What result did the industrial system achieve?',
     de: 'Welches Ergebnis erreichte das Industriesystem?',
     fr: 'Quel résultat le système industriel a-t-il atteint ?',
-    es: 'Que resultado logro el sistema industrial?',
+    es: '¿Qué resultado logró el sistema industrial?',
     ar: 'ما النتيجة التي حققها النظام الصناعي؟',
   },
   product_story: {
     en: 'What did he learn from building Faultrix?',
     de: 'Was hat er beim Bau von Faultrix gelernt?',
-    fr: 'Qu a-t-il appris en construisant Faultrix ?',
-    es: 'Que aprendio construyendo Faultrix?',
+    fr: 'Qu’a-t-il appris en construisant Faultrix ?',
+    es: '¿Qué aprendió construyendo Faultrix?',
     ar: 'ماذا تعلم من بناء Faultrix؟',
   },
 }
@@ -422,6 +430,32 @@ type StreamChunk = ChatCompletionResponse & {
 }
 
 /**
+ * fetch with a time-to-first-byte ceiling: if no response headers arrive
+ * within `timeoutMs`, the request is aborted and rethrown as a provider-tagged
+ * error so the failover chain can move on. Once headers arrive the clock is
+ * cleared — reading (or streaming) the body is not bounded.
+ */
+async function fetchWithTimeout(
+  url: string,
+  init: RequestInit,
+  timeoutMs: number,
+  providerName: ProviderConfig['name']
+): Promise<Response> {
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), timeoutMs)
+  try {
+    return await fetch(url, { ...init, signal: controller.signal })
+  } catch (networkError) {
+    if (networkError instanceof DOMException && networkError.name === 'AbortError') {
+      throw createChatError(`${providerName} did not respond in time.`, providerName)
+    }
+    throw networkError
+  } finally {
+    clearTimeout(timeout)
+  }
+}
+
+/**
  * Requests a chat completion. When `onDelta` is provided the request streams
  * (OpenAI-compatible SSE) and invokes `onDelta` with the full accumulated
  * content on every token — the caller renders progressively. Without it, the
@@ -443,11 +477,16 @@ async function requestChatCompletion(
   }
 
   const streaming = Boolean(onDelta)
-  const response = await fetch(provider.url, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify({ ...provider.body, stream: streaming }),
-  })
+  const response = await fetchWithTimeout(
+    provider.url,
+    {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ ...provider.body, stream: streaming }),
+    },
+    TTFB_TIMEOUT_MS,
+    provider.name
+  )
 
   if (!response.ok) {
     const data = (await response.json().catch(() => ({}))) as ChatCompletionResponse
@@ -533,8 +572,6 @@ async function requestChatCompletion(
 
 type ChatLane = 'fast' | 'deep'
 
-const ROUTER_TIMEOUT_MS = 1500
-
 // Pure social messages: never worth a router call.
 const SOCIAL_PATTERN = /^(hi|hey|hello|yo|good (morning|afternoon|evening)|thanks|thank you|thx|ok|okay|great|nice|cool|bye|goodbye)[\s!.?]*$/i
 // Unmistakably analytical asks: go straight to the deep model.
@@ -555,28 +592,30 @@ async function routeWithClassifier(
   message: string,
   auth: { token: string; url: string; useProxy: boolean }
 ): Promise<ChatLane> {
-  const controller = new AbortController()
-  const timeout = setTimeout(() => controller.abort(), ROUTER_TIMEOUT_MS)
   try {
     const headers: Record<string, string> = { 'Content-Type': 'application/json' }
     if (auth.token && !auth.useProxy) headers.Authorization = `Bearer ${auth.token}`
-    const response = await fetch(auth.url, {
-      method: 'POST',
-      headers,
-      signal: controller.signal,
-      body: JSON.stringify({
-        model: ZAI_ROUTER_MODEL,
-        messages: [
-          {
-            role: 'user',
-            content: `You classify chat messages sent to a personal-assistant chatbot about its owner. FAST = greetings, thanks, simple factual lookups, short definitions, yes/no questions, single-fact asks (contact info, links, "what is X"). DEEP = explanations, comparisons, multi-part questions, nuanced or open-ended asks. Respond with exactly one word: FAST or DEEP.\n\nMessage: ${message}`,
-          },
-        ],
-        max_tokens: 4,
-        temperature: 0,
-        stream: false,
-      }),
-    })
+    const response = await fetchWithTimeout(
+      auth.url,
+      {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          model: ZAI_ROUTER_MODEL,
+          messages: [
+            {
+              role: 'user',
+              content: `You classify chat messages sent to a personal-assistant chatbot about its owner. FAST = greetings, thanks, simple factual lookups, short definitions, yes/no questions, single-fact asks (contact info, links, "what is X"). DEEP = explanations, comparisons, multi-part questions, nuanced or open-ended asks. Respond with exactly one word: FAST or DEEP.\n\nMessage: ${message}`,
+            },
+          ],
+          max_tokens: 4,
+          temperature: 0,
+          stream: false,
+        }),
+      },
+      ROUTER_TIMEOUT_MS,
+      'BigModel'
+    )
     if (!response.ok) return 'deep'
     const data = (await response.json()) as ChatCompletionResponse
     const verdict = data.choices?.[0]?.message?.content?.trim().toLowerCase() ?? ''
@@ -584,8 +623,6 @@ async function routeWithClassifier(
   } catch {
     // Router unavailable, timed out, or unparsable — keep quality.
     return 'deep'
-  } finally {
-    clearTimeout(timeout)
   }
 }
 
@@ -916,7 +953,7 @@ export default function ChatBot() {
         { role: 'system', content: SYSTEM_PROMPT },
         {
           role: 'system',
-          content: `Answer in ${languageName[lang]}. Keep names, product names, repository names, equations, metrics, and links unchanged.`,
+          content: `The selected UI language is ${languageName[lang]}. Keep names, product names, repository names, equations, metrics, and links unchanged.`,
         },
         {
           role: 'system',

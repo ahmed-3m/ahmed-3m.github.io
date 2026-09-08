@@ -10,6 +10,40 @@ import { serializeJsonLd } from '@/lib/serialize-json-ld'
 function formatContent(content: string | undefined) {
   if (!content) return ''
 
+  const cleanUrl = (rawUrl: string) => {
+    let url = rawUrl
+    let previousUrl = ''
+
+    while (url !== previousUrl) {
+      previousUrl = url
+      url = url.replace(/[.,;:!?]+$/, '')
+      const openParentheses = (url.match(/\(/g) ?? []).length
+      let closeParentheses = (url.match(/\)/g) ?? []).length
+
+      while (url.endsWith(')') && closeParentheses > openParentheses) {
+        url = url.slice(0, -1)
+        closeParentheses -= 1
+      }
+    }
+
+    return url
+  }
+
+  // Inline transform shared by paragraphs and list items: bold markup plus
+  // bare-URL linkification. (Long-URL wrapping and LTR code blocks are handled
+  // by the .prose container rules in globals.css.)
+  const inline = (text: string) =>
+    text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(
+        /(https?:\/\/[^\s<>"]+)/g,
+        (rawUrl) => {
+          const url = cleanUrl(rawUrl)
+          const trailing = rawUrl.slice(url.length)
+          return `<a href="${url}" class="text-[var(--cd-accent)] underline underline-offset-2" target="_blank" rel="noopener noreferrer">${url}</a>${trailing}`
+        }
+      )
+
   return content
     .trim()
     .split('\n\n')
@@ -27,20 +61,19 @@ function formatContent(content: string | undefined) {
       if (block.startsWith('- ')) {
         const items = block
           .split('\n')
-          .map((item) => `<li>${item.replace(/^- /, '')}</li>`)
+          .map((item) => `<li>${inline(item.replace(/^- /, ''))}</li>`)
           .join('')
         return `<ul class="mb-4 list-disc space-y-2 pl-6 text-[var(--cd-fg2)]">${items}</ul>`
       }
       if (/^\d+\./.test(block)) {
         const items = block
           .split('\n')
-          .map((item) => `<li>${item.replace(/^\d+\.\s*/, '')}</li>`)
+          .map((item) => `<li>${inline(item.replace(/^\d+\.\s*/, ''))}</li>`)
           .join('')
         return `<ol class="mb-4 list-decimal space-y-2 pl-6 text-[var(--cd-fg2)]">${items}</ol>`
       }
 
-      const paragraph = block.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      return `<p class="mb-4 leading-relaxed text-[var(--cd-fg2)]">${paragraph}</p>`
+      return `<p class="mb-4 leading-relaxed text-[var(--cd-fg2)]">${inline(block)}</p>`
     })
     .join('')
 }
@@ -70,7 +103,7 @@ const copy = {
   writtenBy: {
     en: 'Written by Ahmed Mohammed',
     de: 'Geschrieben von Ahmed Mohammed',
-    fr: 'Ecrit par Ahmed Mohammed',
+    fr: 'Écrit par Ahmed Mohammed',
     es: 'Escrito por Ahmed Mohammed',
     ar: 'بقلم أحمد محمد',
   },

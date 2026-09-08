@@ -22,7 +22,7 @@ const copy = {
   backHome: { en: 'Back to home', de: 'Zur Startseite', fr: "Retour à l'accueil", es: 'Volver al inicio', ar: 'العودة إلى الرئيسية' },
   all: { en: 'All', de: 'Alle', fr: 'Tout', es: 'Todo', ar: 'الكل' },
   readSource: { en: 'Read source', de: 'Quelle lesen', fr: 'Lire la source', es: 'Leer la fuente', ar: 'اقرأ المصدر' },
-  empty: { en: 'No items in this category yet.', de: 'Noch keine Eintrage in dieser Kategorie.', fr: 'Aucun element dans cette categorie pour l instant.', es: 'Aun no hay elementos en esta categoria.', ar: 'لا توجد عناصر في هذه الفئة بعد.' },
+  empty: { en: 'No items in this category yet.', de: 'Noch keine Einträge in dieser Kategorie.', fr: 'Aucun élément dans cette catégorie pour l’instant.', es: 'Aún no hay elementos en esta categoría.', ar: 'لا توجد عناصر في هذه الفئة بعد.' },
 } satisfies Record<string, TranslationMap>
 
 export default function NewsPageClient() {
@@ -72,15 +72,15 @@ export default function NewsPageClient() {
         <h1 className="mb-2 text-4xl font-bold">{t(copy.title)}</h1>
         <p className="mb-6 text-[var(--cd-fg2)]">{t(copy.subtitle)}</p>
 
-        <div className="mb-8 flex flex-wrap gap-2" role="tablist" aria-label="News filter">
+        <div className="mb-8 flex flex-wrap gap-2" role="radiogroup" aria-label="News filter">
           {filters.map(({ key, label, count }) => {
             const active = filter === key
             return (
               <button
                 key={key}
                 type="button"
-                role="tab"
-                aria-selected={active}
+                role="radio"
+                aria-checked={active}
                 onClick={() => setFilter(key)}
                 className="rounded-full border px-4 py-1.5 text-sm transition-colors"
                 style={{

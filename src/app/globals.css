@@ -3,6 +3,9 @@
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /* ── Skip-to-content link (a11y) ── */
+/* In RTL the hidden position must extend to the right: rightward overflow is
+   unreachable in RTL pages, while left:-9999px would create ~10,000px of
+   scrollable area to the left (scrollWidth includes it). */
 .cd-skip-link {
   position: absolute;
   left: -9999px;
@@ -15,10 +18,17 @@
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;
-  transition: left 0.2s ease;
+  transition: left 0.2s ease, right 0.2s ease;
 }
 .cd-skip-link:focus {
   left: 0;
+}
+[dir="rtl"] .cd-skip-link {
+  left: auto;
+  right: -9999px;
+}
+[dir="rtl"] .cd-skip-link:focus {
+  right: 0;
 }
 
 /* ── Animations ── */
@@ -193,6 +203,25 @@ body {
 
 a, button, [role="button"] { cursor: pointer; }
 
+/* ── Keyboard focus (a11y) ── */
+/* One visible focus treatment for every interactive element; components with
+   their own focus styling opt out below (.cd-rfc-visual-button already
+   carries its own outline:none rule next to its zoom treatment). */
+:focus-visible {
+  outline: 2px solid var(--cd-accent);
+  outline-offset: 2px;
+}
+.cd-evidence-card:focus-visible {
+  outline: none;
+}
+
+/* ── Post body (.prose, fed by formatContent's raw HTML) ── */
+/* Applied at the container so every present and future block is covered:
+   code is always LTR (an RTL/Arabic page would bidi-reorder punctuation),
+   and long URLs in prose must wrap on phones instead of overflowing. */
+.prose pre { direction: ltr; }
+.prose p, .prose li { overflow-wrap: anywhere; }
+
 /* ── Ambient background ── */
 .cd-ambient {
   position: fixed; top: -200px; left: 50%; transform: translateX(-50%);
@@ -301,7 +330,7 @@ body::before {
   font-size: 13px;
 }
 .cd-theme-toggle {
-  width: 34px; height: 34px; border-radius: 8px;
+  width: 44px; height: 44px; border-radius: 8px;
   display: inline-flex; align-items: center; justify-content: center;
   color: var(--cd-fg2); background: var(--cd-surf);
   border: 1px solid var(--cd-b0);
@@ -321,7 +350,15 @@ body::before {
 .cd-nav-cta:hover { background: var(--cd-accent-h); box-shadow: 0 0 16px var(--cd-accent-dim); }
 .cd-nav-mobile-btn {
   display: none; background: none; border: none; padding: 4px;
+  min-width: 44px; min-height: 44px; align-items: center; justify-content: center;
   color: var(--cd-fg2); cursor: pointer;
+}
+/* Mobile menu panel — links get touch-friendly 44px+ hit areas */
+.cd-nav-mobile-panel .cd-nav-link {
+  display: block; padding: 12px 4px; font-size: 15px;
+}
+.cd-nav-mobile-panel .cd-nav-cta {
+  display: inline-block; padding: 12px 16px;
 }
 
 [data-theme="light"] .cd-nav {
@@ -1190,7 +1227,7 @@ body::before {
 
   /* Nav */
   .cd-nav-links { display: none; }
-  .cd-nav-mobile-btn { display: block; }
+  .cd-nav-mobile-btn { display: inline-flex; }
   .cd-nav-cta { display: none; }
 
   /* Sections — reduce vertical breathing room */

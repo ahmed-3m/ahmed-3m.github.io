@@ -173,7 +173,7 @@ export default {
       messages: body.messages,
       max_tokens: maxTokens,
       temperature,
-      stream: false,
+      stream: body.stream === true,
     }
 
     // Pass through optional thinking control only when the client sends it.
@@ -194,28 +194,15 @@ export default {
         body: JSON.stringify(upstreamPayload),
       })
 
-      // Streaming requests (SSE): pass the upstream body through unbuffered
-      // so tokens reach the browser as they are produced. Buffering here
-      // (`.text()`) would silently undo the client's streaming.
-      if (upstreamPayload.stream && upstream.body) {
-        return new Response(upstream.body, {
-          status: upstream.status,
-          headers: {
-            'Content-Type': upstream.headers.get('Content-Type') || 'text/event-stream',
-            'Cache-Control': 'no-cache',
-            ...corsHeaders(request),
-          },
-        })
-      }
-
-      const upstreamText = await upstream.text()
-      const contentType = upstream.headers.get('Content-Type') || 'application/json'
-
-      // Pass the upstream status and body straight through, with our CORS headers.
-      return new Response(upstreamText, {
+      // Pass the upstream body through unbuffered so streamed tokens reach the
+      // browser as they are produced and non-streaming JSON is not needlessly
+      // buffered by the Worker.
+      return new Response(upstream.body, {
         status: upstream.status,
         headers: {
-          'Content-Type': contentType,
+          'Content-Type': upstream.headers.get('Content-Type') ||
+            (upstreamPayload.stream ? 'text/event-stream' : 'application/json'),
+          ...(upstreamPayload.stream ? { 'Cache-Control': 'no-cache' } : {}),
           ...corsHeaders(request),
         },
       })
