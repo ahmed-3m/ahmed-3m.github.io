@@ -9,7 +9,7 @@ import { languageOptions, useI18n, type TranslationMap, isLanguage } from '@/lib
 const links = [
   { href: '/#about', label: { en: 'About', de: 'Profil', fr: 'Profil', es: 'Perfil', ar: 'نبذة' } },
   { href: '/#projects', label: { en: 'Projects', de: 'Projekte', fr: 'Projets', es: 'Proyectos', ar: 'المشاريع' } },
-  { href: '/#experience', label: { en: 'Experience', de: 'Erfahrung', fr: 'Experience', es: 'Experiencia', ar: 'الخبرة' } },
+  { href: '/#experience', label: { en: 'Experience', de: 'Erfahrung', fr: 'Expérience', es: 'Experiencia', ar: 'الخبرة' } },
   { href: '/#research', label: { en: 'Research', de: 'Forschung', fr: 'Recherche', es: 'Investigación', ar: 'الأبحاث' } },
   { href: '/#writing', label: { en: 'Blog', de: 'Blog', fr: 'Blog', es: 'Blog', ar: 'المدونة' } },
   { href: '/news', label: { en: 'News', de: 'News', fr: 'Actualités', es: 'Noticias', ar: 'الأخبار' } },
@@ -123,6 +123,15 @@ export default function Header() {
   // On the homepage the logo scrolls to the hero; everywhere else it returns home.
   const isHome = usePathname() === '/'
 
+  useEffect(() => {
+    if (!open) return
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false)
+    }
+    document.addEventListener('keydown', closeOnEscape)
+    return () => document.removeEventListener('keydown', closeOnEscape)
+  }, [open])
+
   return (
     <nav className="cd-nav">
       <div className="cd-nav-inner">
@@ -154,6 +163,8 @@ export default function Header() {
           className="cd-nav-mobile-btn"
           onClick={() => setOpen(o => !o)}
           aria-label={open ? t(menuLabels.close) : t(menuLabels.open)}
+          aria-expanded={open}
+          aria-controls="cd-mobile-menu"
         >
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             {open
@@ -165,7 +176,11 @@ export default function Header() {
       </div>
 
       {open && (
-        <div style={{ borderTop: '1px solid var(--cd-b0)', background: 'var(--cd-bg)', padding: '16px 20px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <div
+          id="cd-mobile-menu"
+          className="cd-nav-mobile-panel"
+          style={{ borderTop: '1px solid var(--cd-b0)', background: 'var(--cd-bg)', padding: '8px 20px 16px', display: 'flex', flexDirection: 'column', gap: '8px' }}
+        >
           {links.map(l => (
             <NavLink key={l.href} href={l.href} label={l.label} onClick={() => setOpen(false)} />
           ))}
