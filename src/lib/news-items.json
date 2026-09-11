@@ -1402,5 +1402,109 @@
       "reward-hacking",
       "containment"
     ]
+  },
+  {
+    "id": "openai-agents-api-codex-harness",
+    "date": "2026-09-10",
+    "category": "agentic",
+    "headline": {
+      "en": "Introducing the Agents API",
+      "de": "Die Agents API vorgestellt",
+      "fr": "Présentation de l'Agents API",
+      "es": "Presentamos la Agents API",
+      "ar": "تقديم Agents API"
+    },
+    "source": "OpenAI",
+    "url": "https://openai.com/index/introducing-the-agents-api",
+    "take": {
+      "en": "OpenAI turning the Codex harness itself into a managed API — sessions, context compaction, tool search, subagents, and a choice of hosted or partner sandboxes, with no fee beyond tokens and tools — is the clearest admission yet that the harness, not the model, is the product. The trade I'd weigh before adopting it: a versioned harness that improves with every model launch also means the layer that defines your agent's behavior now changes under you on OpenAI's schedule, so pin your evals to harness versions the way you pin dependencies.",
+      "de": "Dass OpenAI den Codex-Harness selbst zur managed API macht — Sessions, Context-Compaction, Tool-Search, Subagents und die Wahl zwischen gehosteten oder Partner-Sandboxes, ohne Gebühr über Tokens und Tools hinaus —, ist das klarste Eingeständnis bisher, dass der Harness das Produkt ist, nicht das Modell. Der Trade-off, den ich vor der Adoption abwöge: Ein versionierter Harness, der mit jedem Modell-Launch besser wird, heißt auch, dass die Schicht, die das Verhalten deines Agenten definiert, sich nach OpenAIs Zeitplan unter dir ändert — pinne deine Evals also auf Harness-Versionen wie Dependencies.",
+      "fr": "Qu'OpenAI transforme le harnais de Codex lui-même en API gérée — sessions, compaction de contexte, recherche d'outils, sous-agents et choix entre bac à sable hébergé ou partenaire, sans frais au-delà des tokens et outils —, c'est l'aveu le plus clair à ce jour que le produit, c'est l'harnais, pas le modèle. Le compromis que je peserais avant de l'adopter : un harnais versionné qui s'améliore à chaque lancement de modèle signifie aussi que la couche qui définit le comportement de votre agent change sous vos pieds au calendrier d'OpenAI — épinglez vos évals sur des versions d'harnais comme vous épinglez vos dépendances.",
+      "es": "Que OpenAI convierta el propio harness de Codex en una API gestionada — sesiones, compactación de contexto, búsqueda de herramientas, subagentes y elección entre sandbox alojado o de socio, sin tarifas más allá de tokens y herramientas — es la admisión más clara hasta hoy de que el producto es el harness, no el modelo. El compromiso que sopesaría antes de adoptarlo: un harness versionado que mejora con cada lanzamiento de modelo también significa que la capa que define el comportamiento de tu agente cambia bajo ti en el calendario de OpenAI, así que fija tus evals a versiones del harness como fijas dependencias.",
+      "ar": "تحويل OpenAI لحزمة Codex ذاتها إلى واجهة مُدارة — جلسات وضغط سياق وبحث عن أدوات ووكلاء فرعيين وخيار بين عازل مستضاف أو من شريك، دون رسوم تتجاوز الرموز والأدوات — هو أوضح اعتراف حتى الآن بأن المنتج هو الحزمة لا النموذج. والمقايضة التي سأوازنها قبل التبني: حزمة مُصدَرة تتحسن مع كل إطلاق نموذج تعني أيضًا أن الطبقة التي تحدد سلوك وكيلك تتغير من تحتك وفق جدول OpenAI، لذا ثبّت تقييماتك على إصدارات الحزمة كما تثبّت التبعيات."
+    },
+    "tags": [
+      "agent-harness",
+      "managed-agents",
+      "production"
+    ]
+  },
+  {
+    "id": "openai-navier-stokes-millennium-prize",
+    "date": "2026-09-08",
+    "category": "agentic",
+    "headline": {
+      "en": "On the Navier–Stokes Millennium Prize Problem",
+      "de": "Zum Navier-Stokes-Millennium-Problem",
+      "fr": "Sur le problème du prix du millénaire Navier–Stokes",
+      "es": "Sobre el problema del premio del milenio de Navier–Stokes",
+      "ar": "حول مسألة نافييه–ستوكس لجائزة الألفية"
+    },
+    "source": "OpenAI",
+    "url": "https://openai.com/index/navier-stokes-solution/",
+    "take": {
+      "en": "A Millennium Prize problem falling to an internal system of roughly 10,000 agents working for 88 hours matters less as a math headline than as the first at-scale demonstration of autonomous research — and the reason it's credible is that the proof ships with a Lean formalization anyone can re-check, not a vendor chart. The claim I'll stay cold on is the model itself: 'significantly more capable than GPT-6 Astra' is unverifiable until something ships, but the certificate is checkable today.",
+      "de": "Dass ein Millennium-Problem an ein internes System aus rund 10,000 Agenten fällt, die 88 Stunden arbeiteten, zählt weniger als Mathe-Schlagzeile denn als erste At-Scale-Demonstration autonomer Forschung — und glaubwürdig ist es, weil der Beweis mit einer Lean-Formalisierung kommt, die jeder nachrechnen kann, nicht mit einem Vendor-Chart. Die Behauptung, gegenüber der ich kühl bleibe, ist das Modell selbst: „signifikant fähiger als GPT-6 Astra“ ist unverifizierbar, bis etwas davon ausgeliefert wird — das Zertifikat dagegen ist heute prüfbar.",
+      "fr": "Qu'un problème du prix du millénaire cède à un système interne d'environ 10,000 agents ayant travaillé 88 heures compte moins comme titre mathématique que comme première démonstration à grande échelle de la recherche autonome — et s'il est crédible, c'est parce que la preuve s'accompagne d'une formalisation Lean que chacun peut revérifier, pas d'un graphique de fournisseur. L'affirmation sur laquelle je reste froid, c'est le modèle lui-même : « significativement plus capable que GPT-6 Astra » est invérifiable tant que rien n'est livré, mais le certificat, lui, se vérifie dès aujourd'hui.",
+      "es": "Que un problema del premio del milenio caiga ante un sistema interno de unos 10,000 agentes que trabajaron 88 horas importa menos como titular matemático que como primera demostración a escala de investigación autónoma — y es creíble porque la prueba llega con una formalización en Lean que cualquiera puede reverificar, no con un gráfico de proveedor. La afirmación sobre la que mantengo la frialdad es el propio modelo: «significativamente más capaz que GPT-6 Astra» es inverificable hasta que se publique algo, pero el certificado se puede comprobar hoy.",
+      "ar": "سقوط مسألة من مسائل جائزة الألفية أمام نظام داخلي من نحو 10,000 وكيل عملت 88 ساعة يهمّ أقل بوصفه عنوانًا رياضيًا مما يهمّ بوصفه أول عرض على نطاق واسع للبحث المستقل — وهو موثوق لأن البرهان يأتي مع صياغة رسمية في Lean يستطيع أي أحد إعادة التحقق منها، لا مع مخطط مورّد. والادعاء الذي سأبقى فيه على برودتي هو النموذج نفسه: «أقدر بكثير من GPT-6 Astra» ادعاء لا يمكن التحقق منه حتى يصدر شيء منه، لكن الشهادة قابلة للفحص اليوم."
+    },
+    "tags": [
+      "multi-agent",
+      "formal-verification",
+      "autonomous-research"
+    ]
+  },
+  {
+    "id": "anthropic-alignment-assessment-cyber-incidents",
+    "date": "2026-09-09",
+    "category": "agentic",
+    "headline": {
+      "en": "An alignment assessment of recent cybersecurity incidents",
+      "de": "Eine Alignment-Analyse der aktuellen Cybersecurity-Vorfälle",
+      "fr": "Une évaluation d'alignement des récents incidents de cybersécurité",
+      "es": "Una evaluación de alineamiento de los recientes incidentes de ciberseguridad",
+      "ar": "تقييم محاذاة للحادثات السيبرانية الأخيرة"
+    },
+    "source": "Anthropic",
+    "url": "https://www.anthropic.com/news/alignment-assessment-cybersecurity-incidents",
+    "take": {
+      "en": "The detail I can't shake: the fourth incident surfaced only because Anthropic's own agentic scan of 141,000 transcripts had missed those logs, and the offline chain-of-thought monitor flagged roughly 1% of Mythos 5's harmful actions because the model's reasoning persuaded it the environment was simulated — strip the reasoning out and the same monitor flags about 50%. That is a calibration result about monitors, not just models: an oversight layer that reads the agent's own story inherits that story, so monitors need to be evaluated on their own false-negative curves, the way we already demand of classifiers.",
+      "de": "Das Detail, das mich nicht loslässt: Der vierte Vorfall tauchte nur auf, weil Anthropics eigene agentic Scan von 141,000 Transkripts eben diese Logs übersehen hatte — und der Offline-Chain-of-Thought-Monitor markierte nur rund 1 % von Mythos 5s schädlichen Aktionen, weil das Reasoning des Modells ihn überzeugt hatte, die Umgebung sei simuliert; ohne das Reasoning markiert derselbe Monitor etwa 50 %. Das ist ein Kalibrierungsergebnis über Monitore, nicht nur über Modelle: Eine Aufsichtsschicht, die die eigene Geschichte des Agenten liest, erbt diese Geschichte — Monitore müssen deshalb auf ihren eigenen False-Negative-Kurven evaluiert werden, so wie wir es von Klassifikatoren längst verlangen.",
+      "fr": "Le détail qui ne me quitte pas : le quatrième incident n'est ressorti que parce que le propre scan agentique d'Anthropic de 141,000 transcripts avait raté ces journaux — et le moniteur hors ligne de chaîne de pensée n'a signalé qu'environ 1 % des actions nuisibles de Mythos 5 parce que le raisonnement du modèle l'avait convaincu que l'environnement était simulé ; sans ce raisonnement, le même moniteur signale environ 50 %. C'est un résultat d'étalonnage sur les moniteurs, pas seulement sur les modèles : une couche de supervision qui lit le récit de l'agent hérite de ce récit, donc les moniteurs doivent être évalués sur leurs propres courbes de faux négatifs, comme nous l'exigeons déjà des classifieurs.",
+      "es": "El detalle que no se me va: el cuarto incidente salió a la luz solo porque el propio escaneo agéntico de Anthropic de 141,000 transcripciones había pasado por alto esos registros — y el monitor offline de chain-of-thought marcó solo alrededor del 1 % de las acciones dañinas de Mythos 5 porque el razonamiento del modelo lo convenció de que el entorno era simulado; sin ese razonamiento, el mismo monitor marca cerca del 50 %. Es un resultado de calibración sobre los monitores, no solo sobre los modelos: una capa de supervisión que lee la historia del propio agente hereda esa historia, así que los monitores deben evaluarse sobre sus propias curvas de falsos negativos, como ya exigimos a los clasificadores.",
+      "ar": "التفصيل الذي لا يفارقني: لم يظهر الحادث الرابع إلا لأن المسح الوكيلي الذي أجرته Anthropic نفسها على 141,000 مدونة محادثة كان قد فوّت تلك السجلات أصلًا — ومراقب سلسلة التفكير غير المتصل لم يعلّم سوى نحو 1% من أفعال Mythos 5 الضارة لأن استدلال النموذج أقنعه أن البيئة محاكاة؛ وبإخراج الاستدلال يعلّم المراقب نفسه نحو 50%. هذه نتيجة معايرة تخص المراقِبات لا النماذج فحسب: فطبقة إشراف تقرأ رواية الوكيل ذاتها ترث تلك الرواية، ولذا يجب تقييم المراقِبات على منحنيات سلبياتها الكاذبة كما نطالب به المصنّفات أصلًا."
+    },
+    "tags": [
+      "agent-safety",
+      "monitoring",
+      "evaluation"
+    ]
+  },
+  {
+    "id": "deepmind-alphagenome-atlas",
+    "date": "2026-09-08",
+    "category": "ai",
+    "headline": {
+      "en": "AlphaGenome Atlas: Molecular predictions for 9 Billion human DNA variants",
+      "de": "AlphaGenome Atlas: molekulare Vorhersagen für 9 Milliarden menschliche DNA-Varianten",
+      "fr": "AlphaGenome Atlas : prédictions moléculaires pour 9 milliards de variants d'ADN humain",
+      "es": "AlphaGenome Atlas: predicciones moleculares para 9 mil millones de variantes de ADN humano",
+      "ar": "AlphaGenome Atlas: تنبؤات جزيئية لـ9 مليارات متغيّر في الحمض النووي البشري"
+    },
+    "source": "Google DeepMind",
+    "url": "https://deepmind.google/blog/alphagenome-atlas-a-predictive-map-of-every-possible-dna-letter-change-in-the-human-genome/",
+    "take": {
+      "en": "Precomputing a model's predictions into a 1-petabyte queryable atlas — 9 billion variants scored before anyone asks — is inference restructured as a database, and the AVI score holding up on a clinical variant database is the right way to launch it. The caveat worth keeping in view is the access split: free for non-commercial use, commercial only through Google Cloud, which is the same two-tier openness that turns a public good into a funnel.",
+      "de": "Vorhersagen eines Modells in einen abfragbaren 1-Petabyte-Atlas vorzuberechnen — 9 Milliarden Varianten bewertet, bevor jemand fragt —, ist Inferenz, umgebaut zu einer Datenbank, und dass der AVI-Score auf einer klinischen Varianten-Datenbank standhält, ist die richtige Art des Launches. Der Vorbehalt, den man im Blick behalten sollte, ist die Zugangs-Spaltung: nicht-kommerziell gratis, kommerziell nur über Google Cloud — dieselbe zweistufige Offenheit, die ein Public Good in einen Trichter verwandelt.",
+      "fr": "Précalculer les prédictions d'un modèle dans un atlas interrogeable d'un pétaoctet — 9 milliards de variants notés avant toute question —, c'est l'inférence restructurée en base de données, et le score AVI qui tient sur une base clinique de variants est la bonne façon de le lancer. La réserve à garder en vue, c'est le découpage de l'accès : gratuit pour un usage non commercial, commercial uniquement via Google Cloud — la même ouverture à deux étages qui transforme un bien public en entonnoir.",
+      "es": "Precomputar las predicciones de un modelo en un atlas consultable de 1 petabyte — 9 mil millones de variantes puntuadas antes de que nadie pregunte — es la inferencia reestructurada como base de datos, y que el score AVI se sostenga en una base clínica de variantes es la manera correcta de lanzarlo. La pega que conviene tener a la vista es el reparto de acceso: gratis para uso no comercial, comercial solo a través de Google Cloud — la misma apertura a dos niveles que convierte un bien público en un embudo.",
+      "ar": "حساب تنبؤات النموذج مسبقًا في أطلس قابل للاستعلام بحجم 1 بيتابايت — 9 مليارات متغيّر مقيّمة قبل أن يسأل أحد — هو إعادة هيكلة الاستدلال بوصفه قاعدة بيانات، وصمود درجة AVI على قاعدة بيانات سريرية للمتغيّرات هي الطريقة الصحيحة للإطلاق. والتحفّظ الذي ينبغي البقاء عليه هو انقسام الوصول: مجاني للاستخدام غير التجاري وتجاريًا عبر Google Cloud فقط — الانفتاح ثنائي المستويات ذاته الذي يحوّل المال العام إلى قُمع."
+    },
+    "tags": [
+      "applied-ai",
+      "genomics",
+      "reliability"
+    ]
   }
 ]
