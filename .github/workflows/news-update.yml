@@ -257,6 +257,7 @@ jobs:
     permissions:
       contents: write
       actions: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v5
         with:
@@ -288,7 +289,7 @@ jobs:
           npm run build
           node .github/news/check-news-links.mjs
 
-      - name: Fast-forward commit of JSON only
+      - name: Publish JSON-only delta via PR merge
         id: publish
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -303,21 +304,24 @@ jobs:
           git commit -m "chore(news): daily automated update"
           git fetch origin main
 
-          # Branch protection requires the quality+build check runs on ANY
-          # commit pushed to main — this bot's included. A bare push of a
-          # check-less commit is rejected with GH006 (2026-09-08 outage, so
-          # the 09-06 "no PR requirement ⇒ direct pushes work" assumption was
-          # wrong: required checks gate direct pushes too). Satisfy them
-          # honestly instead of weakening protection: run the required checks
-          # on a throwaway branch, then fast-forward main with the proven sha.
+          # Branch protection (required checks quality+build since 2026-09-08)
+          # rejects every direct push to main, even when the API shows green
+          # workflow_dispatch check runs on the exact SHA — the 2026-09-08..11
+          # GH006 streak proved the temp-branch-dispatch design cannot satisfy
+          # the push-time check matcher. The one path protection always
+          # accepts is a PR merge: deploy.yml's quality+build lanes run on
+          # every pull_request to main. So: open a JSON-only PR for the delta,
+          # wait for those lanes, and merge via the PR API.
           SHA="$(git rev-parse HEAD)"
           BRANCH="news-delta/$GITHUB_RUN_ID"
           echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
           git push origin HEAD:refs/heads/"$BRANCH"
-          # workflow_dispatch (not push) because GITHUB_TOKEN pushes raise no
-          # push events; the same GH_TOKEN-dispatch pattern as deploy.yml
-          # below is proven (run 34050102038).
-          gh workflow run news-checks.yml --ref "$BRANCH"
+
+          PR_URL="$(gh pr create --base main --head "$BRANCH" \
+            --title "chore(news): daily automated update ($(date -u +%F))" \
+            --body "Automated JSON-only news delta from run ${GITHUB_RUN_ID}. Merges only after the required quality+build lanes pass on the PR.")"
+          PR_NUMBER="${PR_URL##*/}"
+          echo "pr=$PR_NUMBER" >> "$GITHUB_OUTPUT"
 
           echo "Waiting up to 15 min for quality+build on $SHA…"
           deadline=$((SECONDS + 900))
@@ -332,7 +336,7 @@ jobs:
             fi
             case "$quality $build" in
               *failure*|*timed_out*|*cancelled*|*action_required*)
-                echo "::error::news-checks did not pass (quality=$quality build=$build) — not publishing."
+                echo "::error::PR lanes did not pass (quality=$quality build=$build) — not publishing."
                 exit 1
                 ;;
             esac
@@ -343,19 +347,28 @@ jobs:
             sleep 15
           done
 
-          git push origin HEAD:main
-          # No rebase. A non-fast-forward push fails the job and alerts.
-          # No agents-work push.
-          git push origin --delete "refs/heads/$BRANCH"
+          # PR merges are evaluated against the PR's pull_request check runs —
+          # the canonical path required protection accepts.
+          gh pr merge "$PR_NUMBER" --merge \
+            --subject "chore(news): daily automated update (#$PR_NUMBER)"
+          # GITHUB_TOKEN merges fire no push events, so deploy explicitly
+          # (same dispatch pattern as the pre-2026-09-12 direct-push flow).
           gh workflow run deploy.yml --ref main
 
-      - name: Delete temp news-delta branch
-        # Runs on every exit path (checks failed, timeout, non-FF) so the
-        # repo stays single-branch outside run windows.
+      - name: Clean up delta PR and temp branch
+        # On success the merge auto-deletes the head branch ("Automatically
+        # delete head branches" is on). On any failure, close the PR and drop
+        # the throwaway branch so the repo stays single-branch outside run
+        # windows while the alert issue keeps the run link.
         if: always() && steps.publish.outputs.branch != ''
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: git push origin --delete "refs/heads/${{ steps.publish.outputs.branch }}" || true
+        run: |
+          if [ "${{ steps.publish.outcome }}" != "success" ] && [ -n "${{ steps.publish.outputs.pr }}" ]; then
+            gh pr close "${{ steps.publish.outputs.pr }}" --delete-branch || true
+          else
+            git push origin --delete "refs/heads/${{ steps.publish.outputs.branch }}" || true
+          fi
 
   # publish is skipped on dry-run; needs.*.result for a skipped job is
   # skipped, which is not failure. A dry-run research/validate failure still

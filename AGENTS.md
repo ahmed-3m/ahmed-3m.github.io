@@ -47,8 +47,8 @@ Rules:
   Cursor…). Name it for the work (e.g. `fix/…`, `chore/…`); it is short-lived.
 - Never commit feature work directly to `main` — always go through a PR.
 - Agents never merge their own PRs. Open the PR, report, and stop — the owner
-  reviews and merges. The news bot's path-scoped direct commits are the only
-  sanctioned exception.
+  reviews and merges. The news bot's JSON-only PR (which it merges itself once
+  the required quality+build lanes pass) is the only sanctioned exception.
 - On merge, GitHub deletes the branch automatically ("Automatically delete head branches"
   is enabled). Prune locally with `git fetch --prune`, then `git branch -d <branch>`.
 - GitHub Pages deploys via the workflow artifact (`build_type: workflow` in repo
@@ -105,8 +105,8 @@ JSON; they do not edit TypeScript.
    empty `take.en`, unknown fields, duplicate canonical URLs). Also run
    `node .github/news/news-selftest.mjs`.
 5. Commit on a short-lived branch and open a PR into `main` (see branch rules above).
-   The daily news bot is the one sanctioned exception: it applies a sanitized delta
-   to current `main` without a PR.
+   The daily news bot is the one sanctioned exception: it opens a JSON-only PR from its
+   `news-delta/<run-id>` branch and merges it itself once the required checks pass.
 
 ### Automated daily pipeline
 
@@ -114,9 +114,14 @@ JSON; they do not edit TypeScript.
 and on manual dispatch): GLM-5.3 via Z.ai (api.z.ai, `/api/anthropic` — the only Z.ai
 surface that serves the Anthropic Messages API Claude Code speaks) + the Exa research MCP collect recent news. The research job has **no Write
 tool** and **no npm ci**; it prints a JSON `{ "items": [...] }` delta on stdout. A
-validate job sanitizes that delta against current `main`, then publish applies it to
-*current* `main` (fast-forward only — no rebase, no `agents-work` push) after
-`npm run build` and `.github/news/check-news-links.mjs` pass. It is fully serverless —
+validate job sanitizes that delta against current `main`, then publish lands it on
+*current* `main` via a JSON-only PR (`news-delta/<run-id>` branch) that merges only
+after the required `quality`+`build` lanes pass on the PR — direct pushes are
+impossible under branch protection, and `workflow_dispatch` check runs do not
+satisfy the push-time check matcher (the 2026-09-08..11 GH006 streak), so the PR
+path is the only mechanism that works. `npm run build` and
+`.github/news/check-news-links.mjs` gate the delta before the PR is opened, and the
+merge dispatches `deploy.yml` explicitly (GITHUB_TOKEN merges fire no push events). It is fully serverless —
 the Action is the backend and git is the dedup store; no hosting needed. On a quiet day
 the agent prints `{ "items": [] }` and publish is a no-op. A missing or non-JSON
 stdout is a hard failure — never invent an empty delta.
@@ -133,8 +138,8 @@ news workflow's fallback when `BIGMODEL_NEWS_TOKEN` is unset. All GLM endpoints 
 api.z.ai (the international Z.ai host); open.bigmodel.cn-era keys will not authenticate there.
 
 The agent's instructions live in `.github/news/task.md`; the Exa MCP config in
-`.github/news/exa-mcp.json`. The news bot is the one sanctioned exception to the
-"no direct commits to `main`" rule.
+`.github/news/exa-mcp.json`. The news bot's self-merged JSON-only PR is the one
+sanctioned exception to the "agents never merge their own PRs" rule.
 
 ## Conventions
 
