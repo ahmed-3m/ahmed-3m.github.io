@@ -35,8 +35,11 @@ export function PersonSchema() {
       'https://wandb.ai/ahmed-mu-0593',
       // Official institutional record of the thesis (JKU university library).
       'https://epub.jku.at/obvulihs/content/titleinfo/14374221',
-      // TODO(owner): verify this Scholar profile is claimed/kept current (burr-detection paper).
-      'https://scholar.google.com/citations?user=s5Aqlw4AAAAJ',
+      // Own ORCID (JKU affiliation, verified 2026-09-11). The previously linked
+      // Scholar profile (s5Aqlw4AAAAJ) is a different Ahmed Mohammed (SINTEF
+      // Digital, Norway) — removed after live verification.
+      'https://orcid.org/0009-0004-8934-1270',
+      // TODO(owner): link own Google Scholar profile here once created.
       // TODO(owner): re-enable with new X account
       // 'https://x.com/Ahmed_mo_93',
     ],
@@ -261,7 +264,7 @@ export function SocialProfileSchema() {
         'https://huggingface.co/ahmed-3m',
         'https://wandb.ai/ahmed-mu-0593',
         'https://epub.jku.at/obvulihs/content/titleinfo/14374221',
-        'https://scholar.google.com/citations?user=s5Aqlw4AAAAJ',
+        'https://orcid.org/0009-0004-8934-1270',
         // TODO(owner): re-enable with new X account
         // 'https://x.com/Ahmed_mo_93',
       ],
