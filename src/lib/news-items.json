@@ -1506,5 +1506,109 @@
       "genomics",
       "reliability"
     ]
+  },
+  {
+    "id": "anthropic-threat-report-september-2026",
+    "date": "2026-09-10",
+    "category": "ai",
+    "headline": {
+      "en": "Detecting and countering misuse of AI: September 2026",
+      "de": "Erkennen und Abwehren von KI-Missbrauch: September 2026",
+      "fr": "Détecter et contrer les usages malveillants de l'IA : septembre 2026",
+      "es": "Detectar y contrarrestar el uso indebido de la IA: septiembre de 2026",
+      "ar": "رصد إساءة استخدام الذكاء الاصطناعي ومواجهتها: سبتمبر 2026"
+    },
+    "source": "Anthropic",
+    "url": "https://www.anthropic.com/threat-intelligence-report-september-2026",
+    "take": {
+      "en": "The sentence that matters is Anthropic admitting it can no longer assume its models fall safely below the threshold for meaningful bioweapons assistance — the capability-gap defense is officially over, and safety now has to be enforced by measured safeguards rather than assumed incompetence. The DronDoc case is the same lesson in agentic form: a commercially available coding agent built an autonomous drone swarm that selects its own targets and issues detonation commands with no human in the loop, so the blast radius of agentic coding tools is now a proliferation variable, not a productivity statistic.",
+      "de": "Der Satz, der zählt, ist Anthropics Eingeständnis, nicht mehr davon ausgehen zu können, dass seine Modelle sicher unter der Schwelle für bedeutende Biowaffen-Unterstützung liegen — die Verteidigung über den Capability-Gap ist offiziell beendet, und Safety muss jetzt durch gemessene Safeguards erzwungen werden, nicht durch unterstellte Unfähigkeit. Der DronDoc-Fall ist dieselbe Lektion in agentischer Form: Ein kommerziell verfügbarer Coding-Agent baute eine autonome Drohnenschwarm-Software, die eigene Ziele wählt und Detonationsbefehle ohne Mensch in der Schleife erteilt — der Blast Radius agentischer Coding-Tools ist damit jetzt eine Proliferations-Variable, keine Produktivitätsstatistik.",
+      "fr": "La phrase qui compte, c'est Anthropic admettant ne plus pouvoir supposer que ses modèles restent sans risque sous le seuil d'une assistance significative aux armes biologiques — la défense par l'écart de capacité est officiellement terminée, et la sécurité doit désormais être imposée par des garde-fous mesurés plutôt que par une incompétence présumée. Le cas DronDoc est la même leçon sous forme agentique : un agent de code disponible dans le commerce a construit un essaim de drones autonome qui choisit ses propres cibles et donne des ordres de détonation sans humain dans la boucle — le rayon d'impact des outils de codage agentiques est désormais une variable de prolifération, pas une statistique de productivité.",
+      "es": "La frase que importa es Anthropic admitiendo que ya no puede suponer que sus modelos quedan de forma segura por debajo del umbral de asistencia significativa a armas biológicas — la defensa por brecha de capacidad se acabó oficialmente, y la seguridad tiene que imponerse con salvaguardas medidas, no con incompetencia supuesta. El caso DronDoc es la misma lección en forma agéntica: un agente de código disponible comercialmente construyó un enjambre de drones autónomo que selecciona sus propios objetivos y emite órdenes de detonación sin humano en el bucle — el radio de impacto de las herramientas de código agénticas es ya una variable de proliferación, no una estadística de productividad.",
+      "ar": "الجملة التي تهم هي اعتراف Anthropic بأنها لم تعد تستطيع افتراض أن نماذجها تقف بأمان تحت عتبة تقديم عون جوهري لأسلحة بيولوجية — فالدفاع بفجوة القدرات انتهى رسميًا، وعلى الأمان الآن أن يُفرض عبر حواجز مقيسة لا عبر افتراض قصور النماذج. وحالة DronDoc هي الدرس نفسه في صيغة وكيلية: وكيل برمجة متاح تجاريًا بنى سرب طائرات مسيّرة مستقلًا يختار أهدافه بنفسه ويصدر أوامر التفجير دون إنسان في الحلقة — فنطاق انفجار أدوات البرمجة الوكيلة صار اليوم متغيّر انتشارٍ لا إحصائية إنتاجية."
+    },
+    "tags": [
+      "agent-safety",
+      "biosecurity",
+      "governance"
+    ]
+  },
+  {
+    "id": "cursor-projects-agent-fleet-coordinator",
+    "date": "2026-09-10",
+    "category": "agentic",
+    "headline": {
+      "en": "Introducing Projects",
+      "de": "Projects vorgestellt",
+      "fr": "Présentation de Projects",
+      "es": "Presentamos Projects",
+      "ar": "تقديم Projects"
+    },
+    "source": "Cursor",
+    "url": "https://cursor.com/blog/projects",
+    "take": {
+      "en": "A coordinator that only delegates — never blocked, steering thousands of subagents against shared context that compounds over months — is the first mainstream product built around work that outlives a chat session, and subscriptions that watch Slack, follow PRs, or run on a schedule make the agent initiate work from operational signals instead of waiting for a prompt. The number I'd audit before trusting it is review bandwidth: \"users who primarily use Projects merge six times as many PRs\" is Cursor-reported, and a coordinator touching 20 to 100 PRs a day is only safe if your review and eval gates scale with it.",
+      "de": "Ein Koordinator, der ausschließlich delegiert — nie blockiert ist und tausende Subagenten gegen gemeinsamen Kontext steuert, der über Monate wächst —, ist das erste Mainstream-Produkt, das um Arbeit herum gebaut ist, welche eine Chat-Session überdauert; und Subscriptions, die Slack beobachten, PRs verfolgen oder nach Zeitplan laufen, lassen den Agenten Arbeit aus Betriebssignalen selbst anstoßen, statt auf einen Prompt zu warten. Die Zahl, die ich prüfen würde, bevor ich ihm vertraue, ist die Review-Kapazität: „Nutzer, die hauptsächlich Projects nutzen, mergen sechsmal so viele PRs“ ist von Cursor selbst berichtet, und ein Koordinator, der 20 bis 100 PRs am Tag berührt, ist nur dann sicher, wenn Ihre Review- und Eval-Gates mitskalieren.",
+      "fr": "Un coordinateur qui ne fait que déléguer — jamais bloqué, pilotant des milliers de sous-agents sur un contexte partagé qui se cumule pendant des mois —, c'est le premier produit grand public conçu pour du travail qui survit à une session de chat, et les abonnements qui surveillent Slack, suivent les PR ou s'exécutent selon un calendrier font démarrer le travail par les signaux opérationnels au lieu d'attendre un prompt. Le chiffre que j'auditerais avant de lui faire confiance, c'est la capacité de revue : « les utilisateurs qui utilisent principalement Projects fusionnent six fois plus de PR » est déclaré par Cursor lui-même, et un coordinateur qui touche 20 à 100 PR par jour n'est sûr que si vos portes de revue et d'éval passent à l'échelle avec lui.",
+      "es": "Un coordinador que solo delega — nunca bloqueado, dirigiendo a miles de subagentes sobre un contexto compartido que se acumula durante meses — es el primer producto mainstream construido alrededor de trabajo que sobrevive a una sesión de chat, y las suscripciones que vigilan Slack, siguen los PR o se ejecutan por calendario hacen que el agente inicie trabajo a partir de señales operativas en lugar de esperar un prompt. La cifra que auditaría antes de confiar en él es el ancho de banda de revisión: «los usuarios que usan principalmente Projects fusionan seis veces más PR» la declara el propio Cursor, y un coordinador que toca de 20 a 100 PR al día solo es seguro si tus puertas de revisión y de eval escalan con él.",
+      "ar": "منسّق لا يفعل شيئًا سوى التفويض — لا يتعطل أبدًا ويوجّه آلاف الوكلاء الفرعيين اعتمادًا على سياق مشترك يتراكم عبر أشهر — هو أول منتج واسع الانتشار مبني حول عمل يبقى بعد انتهاء جلسة المحادثة، والاشتراكات التي تراقب Slack أو تتابع طلبات الدمج أو تعمل وفق جدول تجعل الوكيل يبدأ العمل من إشارات التشغيل بدلًا من انتظار توجيه. والرقم الذي سأدقّقه قبل الوثوق به هو طاقة المراجعة: عبارة «المستخدمون الذين يعتمدون على Projects بشكل أساسي يدمجون ستة أضعاف من طلبات الدمج» من تقرير Cursor نفسه، والمنسّق الذي يلمس من 20 إلى 100 طلب دمج يوميًا لا يكون آمنًا إلا إذا توسّعت بوابات المراجعة والتقييم لديك معه."
+    },
+    "tags": [
+      "multi-agent",
+      "agentic-coding",
+      "orchestration"
+    ]
+  },
+  {
+    "id": "openai-gpt-live-1-voice-agents-api",
+    "date": "2026-09-10",
+    "category": "agentic",
+    "headline": {
+      "en": "Build more natural voice experiences with GPT-Live-1 in the API",
+      "de": "Natürlichere Spracherlebnisse mit GPT-Live-1 in der API entwickeln",
+      "fr": "Créer des expériences vocales plus naturelles avec GPT-Live-1 dans l'API",
+      "es": "Crea experiencias de voz más naturales con GPT-Live-1 en la API",
+      "ar": "ابنِ تجارب صوتية أكثر طبيعية مع GPT-Live-1 في الـ API"
+    },
+    "source": "OpenAI",
+    "url": "https://openai.com/index/introducing-gpt-live-1-in-the-api/",
+    "take": {
+      "en": "Collapsing the STT–LLM–TTS chain into a single model that reasons over incoming and outgoing audio together removes the handoffs where voice agents actually broke, and delegating reasoning and tool calls to a backend model like GPT-6 Astra is the planner/worker split applied to speech — the voice layer becomes just another harness component. What I'd measure before putting a full-duplex agent on a phone line is behavior under adversarial callers, because a voice agent that acts in real time has no review gate between its decision and its action.",
+      "de": "Die STT-LLM-TTS-Kette in ein einziges Modell zu überführen, das über ein- und ausgehendes Audio gemeinsam reasoned, beseitigt genau die Übergänge, an denen Voice-Agenten real brachen — und Reasoning und Tool-Calls an ein Backend-Modell wie GPT-6 Astra zu delegieren ist der Planer/Worker-Split, angewandt auf Sprache: Die Voice-Schicht wird zur reinen Harness-Komponente. Messen würde ich vor dem Einsatz eines Full-Duplex-Agenten auf einer Telefonlinie das Verhalten gegenüber adversarialen Anrufern, denn ein Voice-Agent, der in Echtzeit handelt, hat keine Review-Gate zwischen seiner Entscheidung und seiner Aktion.",
+      "fr": "Fusionner la chaîne STT–LLM–TTS en un seul modèle qui raisonne conjointement sur l'audio entrant et sortant élimine les points de passage où les agents vocaux cassaient vraiment, et déléguer le raisonnement et les appels d'outils à un modèle dorsal comme GPT-6 Astra, c'est le partage planificateur/exécutant appliqué à la parole — la couche vocale devient une simple composante de l'harnais. Ce que je mesurerais avant de mettre un agent full-duplex sur une ligne téléphonique, c'est le comportement face à des appelants adverses, car un agent vocal qui agit en temps réel n'a aucune porte de revue entre sa décision et son action.",
+      "es": "Colapsar la cadena STT–LLM–TTS en un único modelo que razona sobre el audio entrante y saliente a la vez elimina las transiciones donde los agentes de voz de verdad se rompían, y delegar el razonamiento y las llamadas a herramientas a un modelo backend como GPT-6 Astra es la división planificador/trabajadores aplicada al habla — la capa de voz pasa a ser solo otro componente del harness. Lo que mediría antes de poner un agente full-duplex en una línea telefónica es el comportamiento ante llamantes adversariales, porque un agente de voz que actúa en tiempo real no tiene compuerta de revisión entre su decisión y su acción.",
+      "ar": "دمج سلسلة STT–LLM–TTS في نموذج واحد يستدل على الصوت الوارد والصادر معًا يزيل نقاط التسليم التي كانت تكسر عندها وكلاء الصوت فعلًا، وتفويض الاستدلال واستدعاءات الأدوات إلى نموذج خلفي مثل GPT-6 Astra هو انقسام المنسّق/العمّال مطبقًا على الكلام — فطبقة الصوت تصبح مجرد مكوّن آخر في الحزمة. وما سأقيسه قبل وضع وكيل مزدوج الاتجاه على خط هاتفي هو سلوكه أمام متصلين خصوميين، لأن وكيل الصوت الذي يتصرف في الزمن الحقيقي لا يملك بوابة مراجعة بين قراره وفعله."
+    },
+    "tags": [
+      "voice-agents",
+      "speech-to-speech",
+      "reliability"
+    ]
+  },
+  {
+    "id": "t1-terminal-agent-rl-long-horizon",
+    "date": "2026-09-10",
+    "category": "agentic",
+    "headline": {
+      "en": "T1: Terminal Agent Reinforcement Learning for Long-Horizon Tasks",
+      "de": "T1: Reinforcement Learning für Terminal-Agenten bei Aufgaben mit langem Horizont",
+      "fr": "T1 : apprentissage par renforcement pour agents de terminal sur les tâches à long horizon",
+      "es": "T1: aprendizaje por refuerzo para agentes de terminal en tareas de horizonte largo",
+      "ar": "T1: تعلّم معزّز لوكلاء الطرفية في المهام طويلة الأفق"
+    },
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.11042",
+    "take": {
+      "en": "A 122B MoE pushed from 43.8% to 64.0% on Terminal-Bench 2.1 by RL against each task's own verifier, running a real shell for 300+ tool-call turns, is more evidence that verifier-based reward — not bigger pretraining — is where long-horizon agent capability is won. The detail worth copying is corpus discipline: training tasks kept strictly disjoint from the benchmark, so the gains measure capability transfer rather than the benchmark overfitting most agent-training papers never test for.",
+      "de": "Ein 122B-MoE, das per RL gegen den eigenen Verifier jeder Aufgabe von 43.8 % auf 64.0 % auf Terminal-Bench 2.1 gehoben wurde — in einer echten Shell über 300+ Tool-Call-Turns —, ist ein weiterer Beleg, dass verifier-basierter Reward, nicht größeres Pretraining, der Ort ist, an dem Long-Horizon-Agentenfähigkeit gewonnen wird. Kopierenswert ist die Korpus-Disziplin: Trainingsaufgaben strikt disjunkt vom Benchmark zu halten, damit die Gewinne Fähigkeitstransfer messen statt des Benchmark-Overfittings, das die meisten Agenten-Trainings-Papers nie testen.",
+      "fr": "Un MoE de 122B porté de 43.8 % à 64.0 % sur Terminal-Bench 2.1 par de la RL contre le vérificateur propre à chaque tâche, en pilotant un vrai shell sur 300+ tours d'appels d'outils, c'est une preuve de plus que la récompense fondée sur vérificateurs — pas un préentraînement plus gros — est là où se gagne la capacité des agents à long horizon. Le détail à copier est la discipline de corpus : des tâches d'entraînement maintenues strictement disjointes du benchmark, pour que les gains mesurent le transfert de capacité et non le surajustement au benchmark que la plupart des articles d'entraînement d'agents ne testent jamais.",
+      "es": "Un MoE de 122B subido del 43.8 % al 64.0 % en Terminal-Bench 2.1 mediante RL contra el verificador propio de cada tarea, operando una shell real durante 300+ turnos de llamadas a herramientas, es una prueba más de que la recompensa basada en verificadores —no un preentrenamiento más grande— es donde se gana la capacidad de los agentes de horizonte largo. El detalle que vale la pena copiar es la disciplina de corpus: mantener las tareas de entrenamiento estrictamente disjuntas del benchmark, para que las ganancias midan transferencia de capacidad y no el sobreajuste al benchmark que la mayoría de los artículos de entrenamiento de agentes nunca ponen a prueba.",
+      "ar": "رفع نموذج MoE بمعاملات 122B من 43.8% إلى 64.0% في Terminal-Bench 2.1 عبر التعلّم المعزز ضد مُتحقِّق كل مهمة ذاته، مع تشغيل طرفية حقيقية لأكثر من 300 دورة استدعاء أدوات، دليلٌ إضافي على أن المكافأة القائمة على المتحقِّقات — لا التدريب المسبق الأكبر — هي حيث تُكسب قدرة الوكلاء طويلي الأفق. والتفصيل الجدير بالاستنساخ هو انضباط المجموعة: إبقاء مهام التدريب منفصلة تمامًا عن المعيار بحيث تقيس المكاسب انتقال القدرة لا فرط التخصيص على المعيار الذي لا تختبره أغلب أوراق تدريب الوكلاء أصلًا."
+    },
+    "tags": [
+      "agentic-rl",
+      "agent-training",
+      "benchmarks"
+    ]
   }
 ]
