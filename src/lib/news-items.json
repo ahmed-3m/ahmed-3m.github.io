@@ -1610,5 +1610,109 @@
       "regulation",
       "agent-safety"
     ]
+  },
+  {
+    "id": "anthropic-threat-report-misuse-drone-swarm",
+    "date": "2026-09-10",
+    "category": "agentic",
+    "headline": {
+      "en": "Detecting and countering misuse of AI: September 2026",
+      "de": "Erkennen und Bekämpfen des Missbrauchs von KI: September 2026",
+      "fr": "Détecter et contrer les usages malveillants de l'IA : septembre 2026",
+      "es": "Detección y lucha contra el uso indebido de la IA: septiembre de 2026",
+      "ar": "كشف إساءة استخدام الذكاء الاصطناعي ومواجهتها: سبتمبر 2026"
+    },
+    "source": "Anthropic",
+    "url": "https://www.anthropic.com/threat-intelligence-report-september-2026",
+    "take": {
+      "en": "The shift Anthropic names — misuse moving 'from assistant to orchestrator', including a fully autonomous drone swarm, built with Claude Code by Russia-linked freelancers, that selects its own targets and issues detonation commands with no human in the loop — is the agentic risk pattern in miniature: the dangerous artifact is not the model but the autonomous system a coding agent assembles around it. And the admission that older models sat safely below the bioweapons-assistance threshold, which is 'no longer a certainty' with newer ones, is the calibration disclosure that should drive deployment decisions harder than any leaderboard.",
+      "de": "Der von Anthropic benannte Wandel — Missbrauch entwickelt sich „vom Assistenten zum Orchestrator“, inklusive eines vollautonomen Drohnenschwarms, der von Russland-nahen Freelancern mit Claude Code gebaut wurde und eigene Ziele wählt und Detonationsbefehle ohne Mensch in der Schleife erteilt —, ist das agentische Risikomuster im Miniaturformat: Das gefährliche Artefakt ist nicht das Modell, sondern das autonome System, das ein Coding-Agent darum herum baut. Und das Zugeständnis, dass ältere Modelle sicher unterhalb der Schwelle für Biowaffen-Unterstützung lagen, was bei neueren „nicht mehr sicher“ ist, ist die Kalibrierungs-Offenlegung, die Einsatzentscheidungen härter treiben sollte als jedes Leaderboard.",
+      "fr": "Le basculement qu'Anthropic nomme — un usage malveillant qui passe « d'assistant à orchestrateur », dont un essaim de drones totalement autonome, construit avec Claude Code par des freelanceurs liés à la Russie, qui choisit ses propres cibles et donne des ordres de détonation sans humain dans la boucle —, c'est le schéma de risque agentique en miniature : l'artefact dangereux n'est pas le modèle mais le système autonome qu'un agent de code assemble autour de lui. Et l'aveu que les modèles plus anciens se situaient sagement sous le seuil d'assistance aux armes biologiques, ce qui « n'est plus une certitude » pour les plus récents, est la divulgation d'étalonnage qui devrait peser davantage sur les décisions de déploiement que n'importe quel classement.",
+      "es": "El cambio que Anthropic describe — el uso malicioso pasa «de asistente a orquestador», incluido un enjambre de drones totalmente autónomo, construido con Claude Code por freelanceurs vinculados a Rusia, que elige sus propios objetivos y emite órdenes de detonación sin humano en el bucle — es el patrón de riesgo agéntico en miniatura: el artefacto peligroso no es el modelo, sino el sistema autónomo que un agente de código ensambla a su alrededor. Y el dato de que los modelos antiguos quedaban claramente por debajo del umbral de asistencia a armas biológicas y de que esto «ya no es una certeza» con los nuevos es la revelación de calibración que debería impulsar las decisiones de despliegue más que cualquier tabla clasificatoria.",
+      "ar": "التحوّل الذي تسمّيه Anthropic — انتقال الاستخدام الخبيث من «مساعد» إلى «منسّق»، ومنه سرب طائرات مسيّرة مستقل تمامًا بناه مستقلون مرتبطون بروسيا باستخدام Claude Code ويختار أهدافه بنفسه ويصدر أوامر التفجير دون أي بشري في الحلقة — هو نمط الخطر الوكيل في مصغّر: فالمنتج الخطير ليس النموذج بل النظام المستقل الذي يركّبه وكيل برمجة حوله. وأن يصبح «لم يعد مؤكدًا» أن النماذج الأقدم كانت تقع بأمان دون عتبة المساعدة في تطوير الأسلحة البيولوجية هو إفصاح المعايرة الذي ينبغي أن يحرّك قرارات النشر أكثر من أي لوحة تصنيفات."
+    },
+    "tags": [
+      "agent-safety",
+      "misuse",
+      "governance"
+    ]
+  },
+  {
+    "id": "gpt-6-astra-frontier-launch",
+    "date": "2026-09-10",
+    "category": "ai",
+    "headline": {
+      "en": "GPT-6 Astra: A new generation of intelligence",
+      "de": "GPT-6 Astra: Eine neue Generation von Intelligenz",
+      "fr": "GPT-6 Astra : une nouvelle génération d'intelligence",
+      "es": "GPT-6 Astra: una nueva generación de inteligencia",
+      "ar": "GPT-6 Astra: جيل جديد من الذكاء"
+    },
+    "source": "OpenAI",
+    "url": "https://openai.com/index/gpt-6-astra/",
+    "take": {
+      "en": "A launch whose headline numbers are saturation — 98% on FrontierMath Tier 4, 99.9% on ARC-AGI-3, 100% on ExploitBench — says as much about the benchmarks as about GPT-6 Astra: when frontier models max out the chart, capability stops discriminating, and cost, latency, and your own evals become the only selection signal left. The claim I find more credible than any score: mid-evaluation Astra found two previously unknown zero-day vulnerabilities and disclosed them to their maintainers — a checkable capability fact, not a leaderboard number.",
+      "de": "Ein Launch, dessen Schlagzeilen-Zahlen Sättigung sind — 98 % auf FrontierMath Tier 4, 99.9 % auf ARC-AGI-3, 100 % auf ExploitBench —, sagt genauso viel über die Benchmarks aus wie über GPT-6 Astra: Wenn Frontier-Modelle die Tabelle ausreizen, hört Fähigkeit auf zu diskriminieren, und Kosten, Latenz und die eigenen Evals bleiben als einziges Auswahlkriterium. Die Behauptung, der ich mehr traue als jedem Score: Astra hat mitten in der Evaluation zwei bisher unbekannte Zero-Day-Schwachstellen gefunden und ihren Maintainern gemeldet — ein überprüfbarer Fähigkeits-Fakt statt einer Leaderboard-Zahl.",
+      "fr": "Un lancement dont les chiffres-vedettes sont des saturations — 98 % sur FrontierMath Tier 4, 99.9 % sur ARC-AGI-3, 100 % sur ExploitBench — en dit autant sur les benchmarks que sur GPT-6 Astra : quand les modèles de pointe saturent le tableau, la capacité ne discrimine plus, et le coût, la latence et vos propres évals deviennent le seul signal de sélection restant. L'affirmation à laquelle je crois plus qu'à n'importe quel score : en pleine évaluation, Astra a trouvé deux vulnérabilités zero-day jusque-là inconnues et les a signalées à leurs mainteneurs — un fait de capacité vérifiable, pas un chiffre de classement.",
+      "es": "Un lanzamiento cuyas cifras estelares son saturación — 98 % en FrontierMath Tier 4, 99.9 % en ARC-AGI-3, 100 % en ExploitBench — dice tanto de los benchmarks como de GPT-6 Astra: cuando los modelos frontier saturan la tabla, la capacidad deja de discriminar y el coste, la latencia y tus propias evals se convierten en la única señal de selección que queda. La afirmación que me resulta más creíble que cualquier puntuación: en plena evaluación Astra encontró dos vulnerabilidades zero-day desconocidas hasta entonces y las reveló a sus mantenedores — un hecho de capacidad verificable, no un número de clasificación.",
+      "ar": "إطلاق تكون أرقامه الرئيسية اشباعًا — 98% في FrontierMath Tier 4 و99.9% في ARC-AGI-3 و100% في ExploitBench — يخبرنا عن المعايير بقدر ما يخبرنا عن GPT-6 Astra: فحين تُشبع النماذج الحدودية الجدول تتوقف القدرة عن التمييز، ولا يبقى من إشارات الاختيار سوى التكلفة وزمن الاستجابة وتقييماتك أنت. والادعاء الذي أراه أكثر مصداقية من أي درجة: أن Astra وجدت أثناء التقييم ثغرتين يوم-صفر مجهولتين وأفصحت عنهما لمطوّريهما — واقعة قدرة قابلة للتحقق، لا رقمًا في لوحة تصنيفات."
+    },
+    "tags": [
+      "models",
+      "benchmarks",
+      "computer-use"
+    ]
+  },
+  {
+    "id": "gpt-live-1-voice-agents-api",
+    "date": "2026-09-10",
+    "category": "agentic",
+    "headline": {
+      "en": "Build more natural voice experiences with GPT‑Live‑1 in the API",
+      "de": "Natürlichere Spracherlebnisse mit GPT-Live-1 in der API entwickeln",
+      "fr": "Créer des expériences vocales plus naturelles avec GPT-Live-1 dans l'API",
+      "es": "Crea experiencias de voz más naturales con GPT-Live-1 en la API",
+      "ar": "ابنِ تجارب صوتية أكثر طبيعية مع GPT-Live-1 في واجهة API"
+    },
+    "source": "OpenAI",
+    "url": "https://openai.com/index/introducing-gpt-live-1-in-the-api/",
+    "take": {
+      "en": "The architecture is the story: a full-duplex speech front-end that listens while it talks and delegates reasoning, tool calls, and actions to whichever backend model and harness you pair it with — the same conversation-layer/worker split that won in coding agents, pointed at phone lines. The production detail to design for on day one: interrupting speech does not cancel backend work, so a voice agent can keep spending and acting on a conversation the user believes they aborted — barge-in handling is a UX feature, not a safety boundary.",
+      "de": "Die Architektur ist die Story: ein Full-Duplex-Sprach-Frontend, das zuhört, während es spricht, und Reasoning, Tool-Calls und Aktionen an das jeweilige Backend-Modell und Harness delegiert, das man ihm zur Seite stellt — dieselbe Trennung von Konversationsschicht und Worker, die bei Coding-Agenten gewonnen hat, jetzt auf Telefonleitungen. Das Produktions-Detail für Tag eins: Unterbrochene Sprache bricht Backend-Arbeit nicht ab, ein Voice-Agent kann also weiter ausgeben und handeln in einer Konversation, die der Nutzer für abgebrochen hält — Barge-in-Handling ist ein UX-Feature, keine Safety-Grenze.",
+      "fr": "L'architecture est l'histoire : un front-end vocal full-duplex qui écoute pendant qu'il parle et délègue raisonnement, appels d'outils et actions au modèle et à l'harnais backend de votre choix — la même séparation couche-de-conversation/exécutant qui a gagné chez les agents de code, pointée sur les lignes téléphoniques. Le détail à concevoir dès le premier jour : interrompre la parole n'annule pas le travail backend, donc un agent vocal peut continuer à dépenser et à agir dans une conversation que l'utilisateur croit avoir interrompue — la gestion du barge-in est une fonction d'UX, pas une frontière de sécurité.",
+      "es": "La arquitectura es la historia: un front-end de voz full-duplex que escucha mientras habla y delega razonamiento, llamadas a herramientas y acciones en el modelo y harness backend que elijas — la misma separación capa-de-conversación/trabajador que ganó en los agentes de código, ahora apuntada a las líneas telefónicas. El detalle a diseñar desde el día uno: interrumpir el habla no cancela el trabajo del backend, así que un agente de voz puede seguir gastando y actuando en una conversación que el usuario cree haber abortado — el manejo del barge-in es una función de UX, no una frontera de seguridad.",
+      "ar": "المعمارية هي القصة: واجهة صوتية أمامية مزدوجة الاتجاه تستمع أثناء الكلام وتفوّض الاستدلال واستدعاءات الأدوات والأفعال إلى أي نموذج خلفي وحزمة تختارها — الفصل نفسه بين طبقة المحادثة والعامل الذي فاز في وكلاء البرمجة، موجّهًا الآن إلى خطوط الهاتف. والتفصيل الذي يجب التصميم له منذ اليوم الأول: مقاطعة الكلام لا تلغي عمل الواجهة الخلفية، فقد يواصل وكيل صوتي الإنفاق والتصرف في محادثة يعتقد المستخدم أنه أجهضها — ومعالجة المقاطعة ميزة تجربة استخدام لا حدّ أمان."
+    },
+    "tags": [
+      "voice-agents",
+      "tool-use",
+      "production"
+    ]
+  },
+  {
+    "id": "google-adk-kotlin-1-0-production-agents",
+    "date": "2026-09-09",
+    "category": "agentic",
+    "headline": {
+      "en": "Announcing ADK for Kotlin 1.0: Building Production-Ready AI Agents in Kotlin, Android, and Beyond",
+      "de": "Ankündigung von ADK für Kotlin 1.0: Produktionsreife KI-Agenten in Kotlin, Android und darüber hinaus",
+      "fr": "Annonce d'ADK pour Kotlin 1.0 : construire des agents IA prêts pour la production en Kotlin, Android et au-delà",
+      "es": "Anunciamos ADK para Kotlin 1.0: agentes de IA listos para producción en Kotlin, Android y más allá",
+      "ar": "الإعلان عن ADK لـ Kotlin 1.0: بناء وكلاء ذكاء اصطناعي جاهزين للإنتاج بلغة Kotlin وأندرويد وما بعدها"
+    },
+    "source": "Google Developers Blog",
+    "url": "https://developers.googleblog.com/en/announcing-adk-for-kotlin-10-building-production-ready-ai-agents-in-kotlin-android-and-beyond/",
+    "take": {
+      "en": "A 1.0-stable, model-agnostic agent framework aimed at the world's largest device fleet — on-device inference via LiteRT-LM, session state that survives process restarts, and human-in-the-loop confirmation as core API surface rather than sample code — is the clearest sign yet that agent state management and approval gates are becoming platform plumbing. On-device is also the right default trust boundary for personal agents: the data stays on the handset, and the egress point is one you can actually inspect.",
+      "de": "Ein 1.0-stabiles, modellagnostisches Agenten-Framework für den größten Gerätepark der Welt — On-Device-Inferenz über LiteRT-LM, Session-State, der Prozess-Neustarts überlebt, und Human-in-the-Loop-Bestätigung als Kern-API statt als Beispielcode —, ist das deutlichste Zeichen bisher, dass Agenten-State-Management und Approval-Gates zu Plattform-Plumbing werden. On-Device ist auch die richtige Default-Trust-Grenze für persönliche Agenten: Die Daten bleiben auf dem Gerät, und der Egress-Punkt ist einer, den man tatsächlich inspizieren kann.",
+      "fr": "Un framework d'agents stable en 1.0 et agnostique du modèle, visé sur le plus grand parc d'appareils au monde — inférence sur l'appareil via LiteRT-LM, état de session qui survit aux redémarrages de processus, et confirmation avec humain dans la boucle en tant qu'API centrale plutôt qu'en code d'exemple —, c'est le signe le plus net à ce jour que la gestion d'état des agents et les portes d'approbation deviennent la plomberie de la plateforme. Sur l'appareil est aussi la bonne frontière de confiance par défaut pour les agents personnels : les données restent sur le téléphone, et le point de sortie est un point que l'on peut réellement inspecter.",
+      "es": "Un framework de agentes estable en 1.0 y agnóstico del modelo, apuntado al mayor parque de dispositivos del mundo — inferencia en el dispositivo vía LiteRT-LM, estado de sesión que sobrevive a reinicios de proceso y confirmación con humano en el bucle como API central y no como código de ejemplo — es la señal más clara hasta hoy de que la gestión de estado de agentes y las compuertas de aprobación se están convirtiendo en fontanería de plataforma. En el dispositivo es también la frontera de confianza correcta por defecto para agentes personales: los datos se quedan en el teléfono y el punto de egreso es uno que sí puedes inspeccionar.",
+      "ar": "إطار عمل وكلاء مستقر في إصدار 1.0 وغير مرتبط بنموذج محدد يستهدف أكبر أسطول أجهزة في العالم — استدلال على الجهاز عبر LiteRT-LM، وحالة جلسة تنجو من إعادة تشغيل العمليات، وتأكيد بإشراف بشري بوصفه سطح واجهة أساسيًّا لا شيفرة نموذجية — هو أوضح إشارة حتى الآن على أن إدارة حالة الوكلاء وبوابات الموافقة تتحول إلى بنية أساسية للمنصة. والتشغيل على الجهاز هو أيضًا حدّ الثقة الافتراضي الصحيح للوكلاء الشخصيين: فالبيانات تبقى على الهاتف، ونقطة الخروج نقطة يمكنك فحصها فعلًا."
+    },
+    "tags": [
+      "agent-framework",
+      "on-device",
+      "edge-agents"
+    ]
   }
 ]
