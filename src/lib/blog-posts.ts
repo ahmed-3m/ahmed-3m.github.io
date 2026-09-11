@@ -88,7 +88,7 @@ In my master's thesis at JKU Linz, supervised by Prof. Sepp Hochreiter and Claus
 
 The model reconstructs an image under two competing class conditions. If the image is truly in-distribution, the matching condition should reconstruct it better. If the image is unusual, both explanations should struggle and the reconstruction gap becomes the anomaly signal.
 
-The baseline already worked, but it had a frustrating weakness: it was highly seed-sensitive. At $lambda = 0.0$, the average AUROC was **92.52% +/- 11.07%**, which means some seeds looked excellent and some collapsed badly.
+The baseline already worked, but it had a frustrating weakness: it was highly seed-sensitive. At λ = 0.0, the average AUROC was **92.52% +/- 11.07%**, which means some seeds looked excellent and some collapsed badly.
 
 ## My Contribution: Separation Loss
 
@@ -102,7 +102,7 @@ The point is simple: if the two explanations become more distinct, the reconstru
 
 ## Results
 
-The best setting was **lambda = 0.02**. Averaged across three independent seeds, it reached:
+The best setting was **λ = 0.02**. Averaged across three independent seeds, it reached:
 
 - **99.03% +/- 0.07% AUROC** on CIFAR-10
 - **+6.5 percentage points** over the non-separated baseline
@@ -171,7 +171,7 @@ In meiner Masterarbeit an der JKU Linz, betreut von Prof. Sepp Hochreiter und Cl
 
 Das Modell rekonstruiert ein Bild unter zwei konkurrierenden Klassenbedingungen. Wenn das Bild wirklich zur Verteilung gehört, sollte die passende Bedingung besser rekonstruieren. Ist das Bild ungewöhnlich, werden beide Erklärungen schlechter und die Lücke im Rekonstruktionsfehler wird zum Anomaliesignal.
 
-Die Basisvariante funktionierte bereits, hatte aber ein ernstes Problem: starke Seed-Abhängigkeit. Bei $lambda = 0.0$ lag der Mittelwert nur bei **92.52% +/- 11.07% AUROC**. Einige Seeds sahen sehr gut aus, andere brachen deutlich ein.
+Die Basisvariante funktionierte bereits, hatte aber ein ernstes Problem: starke Seed-Abhängigkeit. Bei λ = 0.0 lag der Mittelwert nur bei **92.52% +/- 11.07% AUROC**. Einige Seeds sahen sehr gut aus, andere brachen deutlich ein.
 
 ## Mein Beitrag: Separation Loss
 
@@ -185,7 +185,7 @@ Wenn die beiden Erklärungen klarer getrennt sind, wird auch die Rekonstruktions
 
 ## Ergebnisse
 
-Die beste Einstellung war **lambda = 0.02**. Über drei unabhängige Seeds ergab sich:
+Die beste Einstellung war **λ = 0.02**. Über drei unabhängige Seeds ergab sich:
 
 - **99.03% +/- 0.07% AUROC** auf CIFAR-10
 - **+6.5 Prozentpunkte** gegenüber der Basis ohne Separation
@@ -254,7 +254,7 @@ Dans mon mémoire de master à JKU Linz, sous la supervision du Prof. Sepp Hochr
 
 Le modèle reconstruit une image sous deux conditions de classe concurrentes. Si l'image est normale, la bonne condition doit mieux la reconstruire. Si l'image est inhabituelle, les deux explications se dégradent et l'écart entre les erreurs de reconstruction devient le signal d'anomalie.
 
-La baseline fonctionnait déjà, mais avec une forte sensibilité au seed. À $lambda = 0.0$, la moyenne n'était que de **92.52% +/- 11.07% AUROC**.
+La baseline fonctionnait déjà, mais avec une forte sensibilité au seed. À λ = 0.0, la moyenne n'était que de **92.52% +/- 11.07% AUROC**.
 
 ## Ma contribution : la separation loss
 
@@ -268,7 +268,7 @@ Le principe est simple : des explications mieux séparées produisent un écart 
 
 ## Résultats
 
-Le meilleur réglage était **lambda = 0.02**. Sur trois seeds indépendants :
+Le meilleur réglage était **λ = 0.02**. Sur trois seeds indépendants :
 
 - **99.03% +/- 0.07% AUROC** sur CIFAR-10
 - **+6.5 points** face à la baseline sans séparation
@@ -337,7 +337,7 @@ En mi tesis de máster en JKU Linz, bajo la supervisión del Prof. Sepp Hochreit
 
 El modelo reconstruye una imagen bajo dos condiciones de clase rivales. Si la imagen es normal, la condición correcta debe reconstruirla mejor. Si la imagen es rara, ambas explicaciones fallan y la brecha entre errores de reconstrucción se vuelve la señal de anomalía.
 
-La versión base ya funcionaba, pero tenía un problema serio: mucha sensibilidad a la semilla. Con $lambda = 0.0$, el promedio fue **92.52% +/- 11.07% AUROC**.
+La versión base ya funcionaba, pero tenía un problema serio: mucha sensibilidad a la semilla. Con λ = 0.0, el promedio fue **92.52% +/- 11.07% AUROC**.
 
 ## Mi contribución: separation loss
 
@@ -351,7 +351,7 @@ Si las dos explicaciones son más distintas, la diferencia de error de reconstru
 
 ## Resultados
 
-La mejor configuración fue **lambda = 0.02**. En tres semillas independientes:
+La mejor configuración fue **λ = 0.02**. En tres semillas independientes:
 
 - **99.03% +/- 0.07% AUROC** en CIFAR-10
 - **+6.5 puntos porcentuales** sobre la base sin separación
@@ -420,7 +420,7 @@ Artefactos públicos:
 
 يقوم النموذج بإعادة بناء الصورة تحت شرطين مختلفين للفئة. إذا كانت الصورة طبيعية، فيجب أن ينجح الشرط الصحيح أكثر. وإذا كانت غير مألوفة، فإن التفسيرين يضعفان وتصبح فجوة خطأ إعادة البناء هي إشارة الشذوذ.
 
-النسخة الأساسية كانت جيدة، لكنها عانت من مشكلة واضحة: حساسية كبيرة للبذرة. عند $lambda = 0.0$ كان المتوسط **92.52% +/- 11.07% AUROC**.
+النسخة الأساسية كانت جيدة، لكنها عانت من مشكلة واضحة: حساسية كبيرة للبذرة. عند λ = 0.0 كان المتوسط **92.52% +/- 11.07% AUROC**.
 
 ## مساهمتي: separation loss
 
@@ -434,7 +434,7 @@ loss = L_diffusion + lambda * L_separation
 
 ## النتائج
 
-أفضل إعداد كان **lambda = 0.02**. عبر ثلاث بذور مستقلة وصلنا إلى:
+أفضل إعداد كان **λ = 0.02**. عبر ثلاث بذور مستقلة وصلنا إلى:
 
 - **99.03% +/- 0.07% AUROC** على CIFAR-10
 - **+6.5 نقطة مئوية** فوق الخط الأساسي بدون فصل
@@ -528,7 +528,7 @@ That means a flashy one-run result would have been misleading. I evaluated the p
 
 ## Results
 
-The public crop-based baseline at $lambda = 0.0$ reached:
+The public crop-based baseline at λ = 0.0 reached:
 
 - **0.8673 +/- 0.0230 AUROC**
 
@@ -611,7 +611,7 @@ Darum wäre ein einzelner guter Lauf irreführend gewesen. Ich habe die Pipeline
 
 ## Ergebnisse
 
-Die öffentliche crop-basierte Baseline bei $lambda = 0.0$ erreichte:
+Die öffentliche crop-basierte Baseline bei λ = 0.0 erreichte:
 
 - **0.8673 +/- 0.0230 AUROC**
 
@@ -694,7 +694,7 @@ Un résultat unique aurait donc été trompeur. J'ai évalué la pipeline sur le
 
 ## Résultats
 
-La baseline publique par crops à $lambda = 0.0$ a atteint :
+La baseline publique par crops à λ = 0.0 a atteint :
 
 - **0.8673 +/- 0.0230 AUROC**
 
@@ -777,7 +777,7 @@ Por eso un solo run llamativo habría sido engañoso. Evalué la pipeline sobre 
 
 ## Resultados
 
-La base pública por crops con $lambda = 0.0$ alcanzó:
+La base pública por crops con λ = 0.0 alcanzó:
 
 - **0.8673 +/- 0.0230 AUROC**
 
@@ -860,7 +860,7 @@ Artefactos:
 
 ## النتائج
 
-وصلت baseline العامة المعتمدة على crops عند $lambda = 0.0$ إلى:
+وصلت baseline العامة المعتمدة على crops عند λ = 0.0 إلى:
 
 - **0.8673 +/- 0.0230 AUROC**
 
