@@ -292,7 +292,15 @@ jobs:
       - name: Publish JSON-only delta via PR merge
         id: publish
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # The PR author's identity decides whether the lanes ever start:
+          # PRs authored by github-actions[bot] get their pull_request
+          # workflows gated behind manual approval (2026-09-11: PRs #83/#84
+          # sat in action_required until a human approved). With NEWS_PAT
+          # set, the PR and merge happen as the owner and the lanes start
+          # instantly; without it we fall back to GITHUB_TOKEN plus the
+          # best-effort self-approve in the poll loop below.
+          GH_TOKEN: ${{ secrets.NEWS_PAT || github.token }}
+          PAT_TOKEN: ${{ secrets.NEWS_PAT }}
         run: |
           if git diff --quiet -- src/lib/news-items.json; then
             echo "No new news items today — nothing to publish."
@@ -345,7 +353,9 @@ jobs:
             # way; PR #81 only ran because the owner happened to approve it
             # live, triggering_actor=ahmed-3m). Approve our own gated run so
             # the unattended 06:23 UTC publish doesn't need a human click.
-            gated_run_id="$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/deploy.yml/runs?head_sha=${SHA}" --jq '[.workflow_runs[] | select(.status == "action_required")][0].id // empty' 2>/dev/null || true)"
+            # A run awaiting approval reports conclusion=action_required
+            # (status stays completed) — select on either shape.
+            gated_run_id="$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/deploy.yml/runs?head_sha=${SHA}" --jq '[.workflow_runs[] | select(.status == "action_required" or .conclusion == "action_required")][0].id // empty' 2>/dev/null || true)"
             if [ -n "$gated_run_id" ] && [ "$gated_run_id" != "$ATTEMPTED_APPROVAL_ID" ]; then
               echo "deploy.yml run $gated_run_id is waiting for approval — approving…"
               if gh api -X POST "repos/${GITHUB_REPOSITORY}/actions/runs/${gated_run_id}/approve" >/dev/null 2>&1; then
@@ -384,14 +394,16 @@ jobs:
           done
 
           # PR merges are evaluated against the PR's pull_request check runs —
-          # the canonical path required protection accepts. Dispatch the
-          # deploy ONLY for the bot's own GITHUB_TOKEN merge (which fires no
-          # push events); a human merge means main's push event is deploying
-          # already and an extra dispatch would just queue a duplicate run.
+          # the canonical path required protection accepts. GITHUB_TOKEN
+          # merges fire no push events, so deploy explicitly; a NEWS_PAT merge
+          # runs as the owner and its push event already triggers deploy.yml,
+          # where an extra dispatch would just queue a duplicate run.
           if [ "$(gh pr view "$PR_NUMBER" --json state --jq .state 2>/dev/null)" != "MERGED" ]; then
             gh pr merge "$PR_NUMBER" --merge \
               --subject "chore(news): daily automated update (#$PR_NUMBER)"
-            gh workflow run deploy.yml --ref main
+            if [ -z "$PAT_TOKEN" ]; then
+              gh workflow run deploy.yml --ref main
+            fi
           fi
 
       - name: Clean up delta PR and temp branch
@@ -401,7 +413,9 @@ jobs:
         # windows while the alert issue keeps the run link.
         if: always() && steps.publish.outputs.branch != ''
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Same identity as the publish step so the PR's author (and any
+          # approval gate implications) stays consistent.
+          GH_TOKEN: ${{ secrets.NEWS_PAT || github.token }}
         run: |
           if [ "${{ steps.publish.outcome }}" != "success" ] && [ -n "${{ steps.publish.outputs.pr }}" ]; then
             gh pr close "${{ steps.publish.outputs.pr }}" --delete-branch || true
