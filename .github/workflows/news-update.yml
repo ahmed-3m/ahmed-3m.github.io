@@ -326,6 +326,16 @@ jobs:
           echo "Waiting up to 15 min for quality+build on $SHA…"
           deadline=$((SECONDS + 900))
           while :; do
+            # A human merging the PR mid-poll is a SUCCESS: the delta is on
+            # main, and GitHub cancels the in-flight PR check runs at merge
+            # time (observed 2026-09-11: owner merged #81 while build ran;
+            # the loop misread the merge-cancelled build as a lane failure).
+            PR_STATE="$(gh pr view "$PR_NUMBER" --json state --jq .state 2>/dev/null || echo OPEN)"
+            if [ "$PR_STATE" = "MERGED" ]; then
+              echo "PR #$PR_NUMBER was merged (by a human) while checks were in flight — publishing succeeded."
+              gh workflow run deploy.yml --ref main
+              exit 0
+            fi
             verdicts="$(gh api "repos/${GITHUB_REPOSITORY}/commits/${SHA}/check-runs" \
               --jq '[.check_runs[] | select(.name == "quality" or .name == "build")] | map({(.name): (.conclusion // "pending")}) | add // {} | [(.quality // "pending"), (.build // "pending")] | @tsv')"
             quality="$(printf '%s' "$verdicts" | cut -f1)"
@@ -336,6 +346,13 @@ jobs:
             fi
             case "$quality $build" in
               *failure*|*timed_out*|*cancelled*|*action_required*)
+                # cancelled can also be the tail of a just-merged PR; re-check
+                # state once before declaring failure.
+                if [ "$(gh pr view "$PR_NUMBER" --json state --jq .state 2>/dev/null)" = "MERGED" ]; then
+                  echo "PR #$PR_NUMBER merged while a lane was cancelled — publishing succeeded."
+                  gh workflow run deploy.yml --ref main
+                  exit 0
+                fi
                 echo "::error::PR lanes did not pass (quality=$quality build=$build) — not publishing."
                 exit 1
                 ;;
@@ -348,9 +365,12 @@ jobs:
           done
 
           # PR merges are evaluated against the PR's pull_request check runs —
-          # the canonical path required protection accepts.
-          gh pr merge "$PR_NUMBER" --merge \
-            --subject "chore(news): daily automated update (#$PR_NUMBER)"
+          # the canonical path required protection accepts. A merged PR here
+          # means a human landed it first; dispatch the deploy either way.
+          if [ "$(gh pr view "$PR_NUMBER" --json state --jq .state 2>/dev/null)" != "MERGED" ]; then
+            gh pr merge "$PR_NUMBER" --merge \
+              --subject "chore(news): daily automated update (#$PR_NUMBER)"
+          fi
           # GITHUB_TOKEN merges fire no push events, so deploy explicitly
           # (same dispatch pattern as the pre-2026-09-12 direct-push flow).
           gh workflow run deploy.yml --ref main
