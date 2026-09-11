@@ -2,7 +2,7 @@
 
 > AI/ML Engineer based in Linz, Austria. M.Sc. in Artificial Intelligence from Johannes Kepler University Linz (Oct 2024 - Sep 2026; thesis submitted Jul 2026, supervised by Prof. Sepp Hochreiter). Builder of Sihem (LLM assistant) and Faultrix (AI QC platform). Specializing in computer vision, diffusion models, out-of-distribution detection, and industrial defect detection.
 
-Last updated: 2026-09-08
+Last updated: 2026-09-12
 
 ## Identity
 
@@ -64,7 +64,8 @@ Last updated: 2026-09-08
 - HuggingFace: https://huggingface.co/ahmed-3m
 - Weights & Biases: https://wandb.ai/ahmed-mu-0593
 - Thesis (official JKU library record): https://epub.jku.at/obvulihs/content/titleinfo/14374221
-- Google Scholar: https://scholar.google.com/citations?user=s5Aqlw4AAAAJ
+- ORCID: https://orcid.org/0009-0004-8934-1270
+<!-- TODO(owner): add own Google Scholar profile once created (the previously listed s5Aqlw4AAAAJ profile belongs to a different Ahmed Mohammed — SINTEF Digital, Norway; removed 2026-09-12, same fix as PR #77) -->
 <!-- TODO(owner): re-enable with new X account -->
 <!-- - X / Twitter: https://x.com/Ahmed_mo_93 -->
 
