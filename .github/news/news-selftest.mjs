@@ -75,6 +75,26 @@ assertThrows('unknown take locale', () => {
   parseNewsItems([{ ...valid, take: { en: 'x', xx: 'y' } }])
 })
 
+assertThrows('unknown headline locale', () => {
+  parseNewsItems([{ ...valid, headline: { en: 'x', xx: 'y' } }])
+})
+
+assertThrows('headline object missing en', () => {
+  parseNewsItems([{ ...valid, headline: { de: 'Nur Deutsch' } }])
+})
+
+{
+  const [item] = parseNewsItems([
+    { ...valid, headline: { en: 'A valid headline', de: 'Ein gültiger Titel' } },
+  ])
+  assert('localized headline parses', item.headline.en === 'A valid headline' && item.headline.de === 'Ein gültiger Titel')
+}
+
+{
+  const [item] = parseNewsItems([valid])
+  assert('string headline shorthand', item.headline.en === 'A valid headline' && item.headline.de === undefined)
+}
+
 assertThrows('tag case', () => {
   parseNewsItems([{ ...valid, tags: ['OK'] }])
 })

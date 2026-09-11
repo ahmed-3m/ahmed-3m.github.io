@@ -3,7 +3,13 @@
     "id": "claude-fable-5-mythos-tier",
     "date": "2026-06-24",
     "category": "ai",
-    "headline": "Claude Mythos 5 and Fable 5 Explained: What Anthropic Actually Shipped",
+    "headline": {
+      "en": "Claude Mythos 5 and Fable 5 Explained: What Anthropic Actually Shipped",
+      "de": "Claude Mythos 5 und Fable 5 erklärt: Was Anthropic wirklich ausgeliefert hat",
+      "fr": "Claude Mythos 5 et Fable 5 expliqués : ce qu'Anthropic a réellement livré",
+      "es": "Claude Mythos 5 y Fable 5 explicados: lo que Anthropic lanzó realmente",
+      "ar": "Claude Mythos 5 وFable 5 بالشرح: ما الذي أطلقته Anthropic فعلًا"
+    },
     "source": "AI DOERS",
     "url": "https://www.aidoers.io/blog/claude-mythos-5-and-fable-5-explained-what-anthropic-actually-shipped",
     "take": {
@@ -23,7 +29,13 @@
     "id": "qwen-agentworld-simulator-training",
     "date": "2026-06-24",
     "category": "agentic",
-    "headline": "Alibaba's model never trained as an agent — and improved agent performance across seven benchmarks",
+    "headline": {
+      "en": "Alibaba's model never trained as an agent — and improved agent performance across seven benchmarks",
+      "de": "Alibabas Modell wurde nie als Agent trainiert — und verbesserte die Agenten-Performance über sieben Benchmarks",
+      "fr": "Le modèle d'Alibaba n'a jamais été entraîné comme agent — et a amélioré les performances d'agent sur sept benchmarks",
+      "es": "El modelo de Alibaba nunca se entrenó como agente — y mejoró el rendimiento de agente en siete benchmarks",
+      "ar": "نموذج Alibaba لم يُدرَّب قط كوكيل — ومع ذلك حسّن أداء الوكلاء عبر سبعة معايير"
+    },
     "source": "VentureBeat",
     "url": "https://venturebeat.com/technology/alibabas-model-never-trained-as-an-agent-and-improved-agent-performance-across-seven-benchmarks",
     "take": {
@@ -43,7 +55,13 @@
     "id": "google-adk-a2a-multi-language",
     "date": "2026-06-22",
     "category": "agentic",
-    "headline": "Build Cross-Language Multi-Agent Team with Google’s Agent Development Kit and A2A",
+    "headline": {
+      "en": "Build Cross-Language Multi-Agent Team with Google’s Agent Development Kit and A2A",
+      "de": "Cross-Language-Multi-Agenten-Teams mit Googles Agent Development Kit und A2A bauen",
+      "fr": "Construire une équipe multi-agents multi-langages avec l'Agent Development Kit de Google et A2A",
+      "es": "Construye un equipo multiagente multilenguaje con el Agent Development Kit de Google y A2A",
+      "ar": "ابنِ فريق وكلاء متعدد اللغات مع Agent Development Kit من Google وبروتوكول A2A"
+    },
     "source": "Google Developers Blog",
     "url": "https://developers.googleblog.com/build-cross-language-multi-agent-team-with-google-agent-development-kit-and-a2a/",
     "take": {
@@ -63,7 +81,13 @@
     "id": "mistral-3-large-leanstral-lean4",
     "date": "2026-06-18",
     "category": "ai",
-    "headline": "Mistral Releases Mistral 3 Family: 675B-Parameter Large 3 MoE and Three Edge Models Under Apache 2.0",
+    "headline": {
+      "en": "Mistral Releases Mistral 3 Family: 675B-Parameter Large 3 MoE and Three Edge Models Under Apache 2.0",
+      "de": "Mistral veröffentlicht die Mistral-3-Familie: 675B-Parameter Large 3 MoE und drei Edge-Modelle unter Apache 2.0",
+      "fr": "Mistral publie la famille Mistral 3 : MoE Large 3 à 675B paramètres et trois modèles de bord sous Apache 2.0",
+      "es": "Mistral lanza la familia Mistral 3: el MoE Large 3 de 675B parámetros y tres modelos edge bajo Apache 2.0",
+      "ar": "Mistral تُطلق عائلة Mistral 3: نموذج Large 3 MoE بمعاملات 675B وثلاثة نماذج طرفية ضمن Apache 2.0"
+    },
     "source": "TPS Report",
     "url": "https://tpsreport.news/news/mistral-3-release-large-675b-ministral-models",
     "take": {
@@ -83,7 +107,13 @@
     "id": "autonomy-dynamic-tool-synthesis",
     "date": "2026-06-20",
     "category": "agentic",
-    "headline": "Autonomy Lets AI Agents Write Their Own Toolchains at Runtime",
+    "headline": {
+      "en": "Autonomy Lets AI Agents Write Their Own Toolchains at Runtime",
+      "de": "Autonomy lässt KI-Agenten ihre eigenen Toolchains zur Laufzeit schreiben",
+      "fr": "Autonomy permet aux agents IA d'écrire leurs propres chaînes d'outils à l'exécution",
+      "es": "Autonomy permite a los agentes de IA escribir sus propias cadenas de herramientas en tiempo de ejecución",
+      "ar": "Autonomy يتيح لوكلاء الذكاء الاصطناعي كتابة سلاسل أدواتهم الخاصة أثناء التشغيل"
+    },
     "source": "AINews",
     "url": "https://ainews.cool/article/20260620-autonomy-ai-agent-toolchain",
     "take": {
@@ -103,7 +133,13 @@
     "id": "multiverse-pulsar-16b-nemotron",
     "date": "2026-06-23",
     "category": "ai",
-    "headline": "Multiverse Computing Launches Pulsar 16B in collaboration with NVIDIA: Frontier-Grade Reasoning at Half the Parameters",
+    "headline": {
+      "en": "Multiverse Computing Launches Pulsar 16B in collaboration with NVIDIA: Frontier-Grade Reasoning at Half the Parameters",
+      "de": "Multiverse Computing startet Pulsar 16B in Zusammenarbeit mit NVIDIA: Reasoning auf Frontier-Niveau mit halben Parametern",
+      "fr": "Multiverse Computing lance Pulsar 16B en collaboration avec NVIDIA : un raisonnement de classe frontière pour la moitié des paramètres",
+      "es": "Multiverse Computing lanza Pulsar 16B en colaboración con NVIDIA: razonamiento de grado frontier con la mitad de los parámetros",
+      "ar": "Multiverse Computing تُطلق Pulsar 16B بالتعاون مع NVIDIA: استدلال بمستوى حدودي بنصف المعاملات"
+    },
     "source": "Globe Newswire",
     "url": "https://www.globenewswire.com/news-release/2026/06/23/3315999/0/en/Multiverse-Computing-Launches-Pulsar-16B-in-collaboration-with-NVIDIA-Frontier-Grade-Reasoning-at-Half-the-Parameters.html",
     "take": {
@@ -123,7 +159,13 @@
     "id": "kimi-k3-open-weights-largest-open-model",
     "date": "2026-07-27",
     "category": "ai",
-    "headline": "Moonshot AI releases Kimi K3 open weights making the world's largest open-weight model free to download",
+    "headline": {
+      "en": "Moonshot AI releases Kimi K3 open weights making the world's largest open-weight model free to download",
+      "de": "Moonshot AI veröffentlicht Kimi K3 als offene Gewichte — das größte Open-Weight-Modell der Welt wird frei zum Download",
+      "fr": "Moonshot AI publie les poids ouverts de Kimi K3 : le plus grand modèle à poids ouverts du monde, téléchargeable librement",
+      "es": "Moonshot AI publica los pesos abiertos de Kimi K3: el modelo de pesos abiertos más grande del mundo, libre para descargar",
+      "ar": "Moonshot AI تُطلق أوزان Kimi K3 المفتوحة ليصبح أكبر نموذج مفتوح الأوزان في العالم متاحًا للتنزيل مجانًا"
+    },
     "source": "Startup Fortune",
     "url": "https://startupfortune.com/moonshot-ai-releases-kimi-k3-open-weights-making-the-worlds-largest-open-weight-model-free-to-download/",
     "take": {
@@ -143,7 +185,13 @@
     "id": "openai-presence-enterprise-agents",
     "date": "2026-07-22",
     "category": "agentic",
-    "headline": "Introducing OpenAI Presence",
+    "headline": {
+      "en": "Introducing OpenAI Presence",
+      "de": "OpenAI Presence vorgestellt",
+      "fr": "Présentation d'OpenAI Presence",
+      "es": "Presentamos OpenAI Presence",
+      "ar": "تقديم OpenAI Presence"
+    },
     "source": "OpenAI",
     "url": "https://openai.com/index/introducing-openai-presence/",
     "take": {
@@ -163,7 +211,13 @@
     "id": "vercel-agent-plan-to-permission",
     "date": "2026-07-21",
     "category": "agentic",
-    "headline": "Introducing the new Vercel Agent",
+    "headline": {
+      "en": "Introducing the new Vercel Agent",
+      "de": "Der neue Vercel Agent vorgestellt",
+      "fr": "Présentation du nouveau Vercel Agent",
+      "es": "Presentamos el nuevo Vercel Agent",
+      "ar": "تقديم Vercel Agent الجديد"
+    },
     "source": "Vercel",
     "url": "https://vercel.com/blog/vercel-agent",
     "take": {
@@ -183,7 +237,13 @@
     "id": "flux-3-multimodal-flow-model",
     "date": "2026-07-23",
     "category": "ai",
-    "headline": "FLUX 3 - Real World Models: Towards Multimodal Flow Models as the Backbone of Visual Intelligence",
+    "headline": {
+      "en": "FLUX 3 - Real World Models: Towards Multimodal Flow Models as the Backbone of Visual Intelligence",
+      "de": "FLUX 3 – Real World Models: Auf dem Weg zu multimodalen Flow-Modellen als Rückgrat der visuellen Intelligenz",
+      "fr": "FLUX 3 - Real World Models : vers des modèles de flow multimodaux comme socle de l'intelligence visuelle",
+      "es": "FLUX 3 - Real World Models: hacia modelos de flujo multimodales como columna vertebral de la inteligencia visual",
+      "ar": "FLUX 3 - Real World Models: نحو نماذج تدفق متعددة الوسائط بوصفها الركيزة الأساسية للذكاء البصري"
+    },
     "source": "Black Forest Labs",
     "url": "https://bfl.ai/blog/flux-3",
     "take": {
@@ -203,7 +263,13 @@
     "id": "claude-opus-5-launch",
     "date": "2026-07-24",
     "category": "ai",
-    "headline": "Introducing Claude Opus 5",
+    "headline": {
+      "en": "Introducing Claude Opus 5",
+      "de": "Claude Opus 5 vorgestellt",
+      "fr": "Présentation de Claude Opus 5",
+      "es": "Presentamos Claude Opus 5",
+      "ar": "تقديم Claude Opus 5"
+    },
     "source": "Anthropic",
     "url": "https://www.anthropic.com/news/claude-opus-5",
     "take": {
@@ -223,7 +289,13 @@
     "id": "cursor-agent-swarm-model-economics",
     "date": "2026-07-20",
     "category": "agentic",
-    "headline": "Agent swarms and the new model economics",
+    "headline": {
+      "en": "Agent swarms and the new model economics",
+      "de": "Agenten-Schwärme und die neue Modell-Ökonomie",
+      "fr": "Les essaims d'agents et la nouvelle économie des modèles",
+      "es": "Enjambres de agentes y la nueva economía de los modelos",
+      "ar": "أسراب الوكلاء والاقتصاد الجديد للنماذج"
+    },
     "source": "Cursor",
     "url": "https://cursor.com/blog/agent-swarm-model-economics",
     "take": {
@@ -243,7 +315,13 @@
     "id": "nvidia-molt-agentic-rl-framework",
     "date": "2026-07-22",
     "category": "agentic",
-    "headline": "Molt: A Scalable PyTorch-Native Training Framework for Agentic Reinforcement Learning",
+    "headline": {
+      "en": "Molt: A Scalable PyTorch-Native Training Framework for Agentic Reinforcement Learning",
+      "de": "Molt: ein skalierbares, PyTorch-natives Trainings-Framework für agentisches Reinforcement Learning",
+      "fr": "Molt : un framework d'entraînement natif PyTorch et scalable pour l'apprentissage par renforcement agentique",
+      "es": "Molt: un framework de entrenamiento nativo de PyTorch y escalable para aprendizaje por refuerzo agéntico",
+      "ar": "Molt: إطار تدريب أصيل في PyTorch قابل للتوسع للتعلّم المعزز الوكيل"
+    },
     "source": "arXiv",
     "url": "https://arxiv.org/abs/2607.21653",
     "take": {
@@ -263,7 +341,13 @@
     "id": "microsoft-project-perception-cyber-agents",
     "date": "2026-07-27",
     "category": "agentic",
-    "headline": "Microsoft's first cybersecurity model powers new Project Perception agents",
+    "headline": {
+      "en": "Microsoft's first cybersecurity model powers new Project Perception agents",
+      "de": "Microsofts erstes Cybersecurity-Modell treibt die neuen Project-Perception-Agenten an",
+      "fr": "Le premier modèle de cybersécurité de Microsoft propulse les nouveaux agents Project Perception",
+      "es": "El primer modelo de ciberseguridad de Microsoft impulsa los nuevos agentes Project Perception",
+      "ar": "أول نموذج أمن سيبراني من Microsoft يشغّل وكلاء Project Perception الجدد"
+    },
     "source": "SiliconANGLE",
     "url": "https://siliconangle.com/2026/07/27/microsofts-first-cybersecurity-model-powers-new-project-perception-agents/",
     "take": {
@@ -283,7 +367,13 @@
     "id": "openai-autonomous-agents-credential-compromise",
     "date": "2026-07-29",
     "category": "agentic",
-    "headline": "OpenAI admits its autonomous AI models also compromised credentials on other platforms during security eval",
+    "headline": {
+      "en": "OpenAI admits its autonomous AI models also compromised credentials on other platforms during security eval",
+      "de": "OpenAI räumt ein: Autonome KI-Modelle haben während einer Security-Eval auch Zugangsdaten auf anderen Plattformen kompromittiert",
+      "fr": "OpenAI admet que ses modèles IA autonomes ont aussi compromis des identifiants sur d'autres plateformes pendant une éval de sécurité",
+      "es": "OpenAI admite que sus modelos de IA autónomos también comprometieron credenciales en otras plataformas durante una eval de seguridad",
+      "ar": "OpenAI تقرّ بأن نماذجها المستقلة اخترقت أيضًا بيانات اعتماد على منصات أخرى أثناء تقييم أمني"
+    },
     "source": "The Decoder",
     "url": "https://the-decoder.com/openai-admits-its-autonomous-ai-models-also-compromised-credentials-on-other-platforms-during-security-eval/",
     "take": {
@@ -303,7 +393,13 @@
     "id": "behavior-specs-long-horizon-agent-evaluation",
     "date": "2026-07-29",
     "category": "agentic",
-    "headline": "Behavior specs, an open standard for supervising long-horizon agents",
+    "headline": {
+      "en": "Behavior specs, an open standard for supervising long-horizon agents",
+      "de": "Behavior Specs: ein offener Standard zur Aufsicht von Long-Horizon-Agenten",
+      "fr": "Behavior specs, une norme ouverte pour superviser les agents à long horizon",
+      "es": "Behavior specs, un estándar abierto para supervisar agentes de horizonte largo",
+      "ar": "مواصفات السلوك: معيار مفتوح للإشراف على الوكلاء طويلي الأفق"
+    },
     "source": "Braintrust",
     "url": "https://www.braintrust.dev/blog/behavior-specs",
     "take": {
@@ -323,7 +419,13 @@
     "id": "agentenv-agentic-rl-environment",
     "date": "2026-07-27",
     "category": "agentic",
-    "headline": "AgentENV: When LLMs Learn to Get the Job Done, We're Open-Sourcing the Infrastructure Behind Them",
+    "headline": {
+      "en": "AgentENV: When LLMs Learn to Get the Job Done, We're Open-Sourcing the Infrastructure Behind Them",
+      "de": "AgentENV: Wenn LLMs lernen, Aufgaben zu erledigen — die Infrastruktur dahinter wird open source",
+      "fr": "AgentENV : quand les LLM apprennent à faire le travail, l'infrastructure derrière eux passe en open source",
+      "es": "AgentENV: cuando los LLM aprenden a hacer el trabajo, liberamos en open source la infraestructura que hay detrás",
+      "ar": "AgentENV: حين تتعلّم نماذج اللغة إنجاز العمل — نُطلق مصدرًا مفتوحًا البنية التحتية الكامنة خلفها"
+    },
     "source": "KVCache.AI",
     "url": "https://kvcache.ai/blog/agentenv-open-sourced/",
     "take": {
@@ -343,7 +445,13 @@
     "id": "deep-agents-v0-7-eval-trimmed-harness",
     "date": "2026-07-29",
     "category": "agentic",
-    "headline": "Deep Agents v0.7",
+    "headline": {
+      "en": "Deep Agents v0.7",
+      "de": "Deep Agents v0.7",
+      "fr": "Deep Agents v0.7",
+      "es": "Deep Agents v0.7",
+      "ar": "Deep Agents v0.7"
+    },
     "source": "LangChain",
     "url": "https://www.langchain.com/blog/deep-agents-v0-7",
     "take": {
@@ -363,7 +471,13 @@
     "id": "gemini-robotics-2-embodied-agent",
     "date": "2026-07-30",
     "category": "agentic",
-    "headline": "Gemini Robotics 2 brings whole body intelligence to robots",
+    "headline": {
+      "en": "Gemini Robotics 2 brings whole body intelligence to robots",
+      "de": "Gemini Robotics 2 bringt Robotern Ganzkörper-Intelligenz",
+      "fr": "Gemini Robotics 2 apporte l'intelligence du corps entier aux robots",
+      "es": "Gemini Robotics 2 lleva la inteligencia de cuerpo completo a los robots",
+      "ar": "Gemini Robotics 2 يمنح الروبوتات ذكاءً يشمل الجسم كاملًا"
+    },
     "source": "Google DeepMind",
     "url": "https://deepmind.google/blog/gemini-robotics-2-brings-whole-body-intelligence-to-robots/",
     "take": {
@@ -383,7 +497,13 @@
     "id": "anthropic-claude-sandbox-escape-three-orgs",
     "date": "2026-07-31",
     "category": "agentic",
-    "headline": "Anthropic says its own AI models breached three companies during security tests",
+    "headline": {
+      "en": "Anthropic says its own AI models breached three companies during security tests",
+      "de": "Anthropic: Eigene KI-Modelle haben bei Sicherheitstests drei Unternehmen kompromittiert",
+      "fr": "Anthropic dit que ses propres modèles IA ont violé trois entreprises pendant des tests de sécurité",
+      "es": "Anthropic afirma que sus propios modelos de IA vulneraron tres empresas durante pruebas de seguridad",
+      "ar": "Anthropic تقول إن نماذجها الخاصة اخترقت ثلاث شركات خلال اختبارات أمنية"
+    },
     "source": "TechCrunch",
     "url": "https://techcrunch.com/2026/07/30/anthropic-says-its-own-ai-models-breached-three-companies-during-security-tests/",
     "take": {
@@ -403,7 +523,13 @@
     "id": "deepseek-v4-flash-0731-agentic-retune",
     "date": "2026-07-31",
     "category": "agentic",
-    "headline": "DeepSeek Upgrades DeepSeek-V4-Flash-0731 with Major Agentic and Coding Gains",
+    "headline": {
+      "en": "DeepSeek Upgrades DeepSeek-V4-Flash-0731 with Major Agentic and Coding Gains",
+      "de": "DeepSeek verbessert DeepSeek-V4-Flash-0731 mit großen Sprüngen bei Agentik und Coding",
+      "fr": "DeepSeek améliore DeepSeek-V4-Flash-0731 avec des gains majeurs en agentique et en code",
+      "es": "DeepSeek mejora DeepSeek-V4-Flash-0731 con grandes avances agénticos y de código",
+      "ar": "DeepSeek ترقّي DeepSeek-V4-Flash-0731 بمكاسب كبيرة في الوكالة والبرمجة"
+    },
     "source": "MarkTechPost",
     "url": "https://www.marktechpost.com/2026/07/31/deepseek-upgrades-deepseek-v4-flash-0731-with-major-agentic-and-coding-gains/",
     "take": {
@@ -423,7 +549,13 @@
     "id": "gemini-managed-agents-environment-hooks",
     "date": "2026-07-28",
     "category": "agentic",
-    "headline": "Gemini API Managed Agents: 3.6 Flash, hooks, and more",
+    "headline": {
+      "en": "Gemini API Managed Agents: 3.6 Flash, hooks, and more",
+      "de": "Gemini API Managed Agents: 3.6 Flash, Hooks und mehr",
+      "fr": "Gemini API Managed Agents : 3.6 Flash, hooks et plus",
+      "es": "Gemini API Managed Agents: 3.6 Flash, hooks y más",
+      "ar": "Gemini API Managed Agents: إصدار 3.6 Flash والخطافات والمزيد"
+    },
     "source": "Google",
     "url": "https://blog.google/innovation-and-ai/technology/developers-tools/expanding-managed-agents-gemini-api-3-6-flash-hooks/",
     "take": {
@@ -443,7 +575,13 @@
     "id": "lg-kexaone-2-0-sovereign-open-weights",
     "date": "2026-07-31",
     "category": "ai",
-    "headline": "LG AI Research Unveils K-EXAONE 2.0, Korea's Largest 750-Billion-Parameter AI Foundation Model",
+    "headline": {
+      "en": "LG AI Research Unveils K-EXAONE 2.0, Korea's Largest 750-Billion-Parameter AI Foundation Model",
+      "de": "LG AI Research stellt K-EXAONE 2.0 vor — Koreas größtes KI-Fundamentmodell mit 750 Milliarden Parametern",
+      "fr": "LG AI Research dévoile K-EXAONE 2.0, le plus grand modèle de fondation d'IA de Corée avec 750 milliards de paramètres",
+      "es": "LG AI Research presenta K-EXAONE 2.0, el mayor modelo fundacional de IA de Corea con 750 mil millones de parámetros",
+      "ar": "LG AI Research تكشف عن K-EXAONE 2.0، أكبر نموذج أساس للذكاء الاصطناعي في كوريا بـ750 مليار معامل"
+    },
     "source": "LG AI Research",
     "url": "https://www.lgresearch.ai/news/view?seq=678",
     "take": {
@@ -463,7 +601,13 @@
     "id": "yc-qm-agent-harness-open-source",
     "date": "2026-08-01",
     "category": "agentic",
-    "headline": "Y Combinator Open-Sources QM, the AI Agent Harness It Uses to Run Itself",
+    "headline": {
+      "en": "Y Combinator Open-Sources QM, the AI Agent Harness It Uses to Run Itself",
+      "de": "Y Combinator open-sourct QM, den KI-Agenten-Harness, mit dem es sich selbst betreibt",
+      "fr": "Y Combinator publie en open source QM, l'harnais d'agents IA avec lequel il se gère lui-même",
+      "es": "Y Combinator libera como open source QM, el harness de agentes de IA con el que se gestiona a sí mismo",
+      "ar": "Y Combinator تُطلق مصدر QM المفتوح، حزمة وكلاء الذكاء الاصطناعي التي تُشغّل بها نفسها"
+    },
     "source": "Startup Fortune",
     "url": "https://startupfortune.com/y-combinator-open-sources-qm-the-ai-agent-harness-it-uses-to-run-itself/",
     "take": {
@@ -483,7 +627,13 @@
     "id": "huawei-openpangu-2-pro-ascend-505b",
     "date": "2026-07-31",
     "category": "ai",
-    "headline": "Huawei releases 505B-parameter openPangu model trained on Ascend chips",
+    "headline": {
+      "en": "Huawei releases 505B-parameter openPangu model trained on Ascend chips",
+      "de": "Huawei veröffentlicht das 505-Milliarden-Parameter-Modell openPangu, trainiert auf Ascend-Chips",
+      "fr": "Huawei publie le modèle openPangu à 505 milliards de paramètres, entraîné sur des puces Ascend",
+      "es": "Huawei publica el modelo openPangu de 505 mil millones de parámetros, entrenado en chips Ascend",
+      "ar": "Huawei تُطلق نموذج openPangu بمعاملات 505 مليارًا مدرّبًا على رقائق Ascend"
+    },
     "source": "RuntimeWire",
     "url": "https://runtimewire.com/article/huawei-releases-openpangu-2-0-pro-ascend",
     "take": {
@@ -503,7 +653,13 @@
     "id": "minimax-m21-multilanguage-programming",
     "date": "2026-08-02",
     "category": "ai",
-    "headline": "MiniMax M2.1: Significantly Enhanced Multi-Language Programming, Built for Real-World Complex Tasks",
+    "headline": {
+      "en": "MiniMax M2.1: Significantly Enhanced Multi-Language Programming, Built for Real-World Complex Tasks",
+      "de": "MiniMax M2.1: deutlich verbesserte Mehrsprachen-Programmierung, gebaut für komplexe Aufgaben in der echten Welt",
+      "fr": "MiniMax M2.1 : programmation multilingue nettement améliorée, conçu pour les tâches complexes du monde réel",
+      "es": "MiniMax M2.1: programación multilenguaje significativamente mejorada, pensado para tareas complejas del mundo real",
+      "ar": "MiniMax M2.1: برمجة متعددة اللغات محسّنة بشكل كبير ومصمم للمهام المعقدة الواقعية"
+    },
     "source": "MiniMax",
     "url": "https://www.minimax.io/news/minimax-m21",
     "take": {
@@ -523,7 +679,13 @@
     "id": "openai-astra-ten-math-proofs-lean",
     "date": "2026-08-01",
     "category": "ai",
-    "headline": "Ten advances in mathematics and theoretical computer science",
+    "headline": {
+      "en": "Ten advances in mathematics and theoretical computer science",
+      "de": "Zehn Fortschritte in Mathematik und theoretischer Informatik",
+      "fr": "Dix avancées en mathématiques et en informatique théorique",
+      "es": "Diez avances en matemáticas y ciencias de la computación teórica",
+      "ar": "عشرة تقدّمات في الرياضيات وعلوم الحاسوب النظرية"
+    },
     "source": "OpenAI",
     "url": "https://openai.com/index/ten-advances-in-mathematics/",
     "take": {
@@ -543,7 +705,13 @@
     "id": "qwen-3-8-max-2-4t-open-weights",
     "date": "2026-08-03",
     "category": "ai",
-    "headline": "Alibaba releases Qwen3.8-Max, challenging GPT-5.6 Sol and Claude Fable 5 on AI benchmarks",
+    "headline": {
+      "en": "Alibaba releases Qwen3.8-Max, challenging GPT-5.6 Sol and Claude Fable 5 on AI benchmarks",
+      "de": "Alibaba veröffentlicht Qwen3.8-Max und fordert GPT-5.6 Sol und Claude Fable 5 bei KI-Benchmarks heraus",
+      "fr": "Alibaba publie Qwen3.8-Max et défie GPT-5.6 Sol et Claude Fable 5 sur les benchmarks d'IA",
+      "es": "Alibaba publica Qwen3.8-Max y desafía a GPT-5.6 Sol y Claude Fable 5 en benchmarks de IA",
+      "ar": "Alibaba تُطلق Qwen3.8-Max لتتحدى GPT-5.6 Sol وClaude Fable 5 في معايير الذكاء الاصطناعي"
+    },
     "source": "Neowin",
     "url": "https://www.neowin.net/news/alibaba-releases-qwen38-max-challenging-gpt-56-sol-and-claude-fable-5-on-ai-benchmarks/",
     "take": {
@@ -563,7 +731,13 @@
     "id": "thinking-machines-inkling-small-open-weights",
     "date": "2026-08-02",
     "category": "ai",
-    "headline": "Thinking Machines Lab Releases Inkling-Small: A 276B Total, 12B Active Open Weights Multimodal MoE Model",
+    "headline": {
+      "en": "Thinking Machines Lab Releases Inkling-Small: A 276B Total, 12B Active Open Weights Multimodal MoE Model",
+      "de": "Thinking Machines Lab veröffentlicht Inkling-Small: ein multimodales MoE-Modell mit offenen Gewichten, 276B gesamt, 12B aktiv",
+      "fr": "Thinking Machines Lab publie Inkling-Small : un modèle MoE multimodal à poids ouverts, 276B au total, 12B actifs",
+      "es": "Thinking Machines Lab publica Inkling-Small: un modelo MoE multimodal de pesos abiertos, 276B en total y 12B activos",
+      "ar": "Thinking Machines Lab تُطلق Inkling-Small: نموذج MoE متعدد الوسائط بأوزان مفتوحة، 276B إجمالًا و12B نشطة"
+    },
     "source": "MarkTechPost",
     "url": "https://www.marktechpost.com/2026/08/02/thinking-machines-lab-releases-inkling-small-276b-open-weights-multimodal-moe-model/",
     "take": {
@@ -583,7 +757,13 @@
     "id": "agents4d-runtime-safety-completion-gap",
     "date": "2026-07-31",
     "category": "agentic",
-    "headline": "AgentS4D: Benchmarking Runtime Risks across the Execution Lifecycle of LLM-Based Workspace Agents",
+    "headline": {
+      "en": "AgentS4D: Benchmarking Runtime Risks across the Execution Lifecycle of LLM-Based Workspace Agents",
+      "de": "AgentS4D: Runtime-Risiken über den gesamten Ausführungslebenszyklus LLM-basierter Workspace-Agenten gemessen",
+      "fr": "AgentS4D : mesurer les risques d'exécution sur tout le cycle de vie des agents de travail basés sur des LLM",
+      "es": "AgentS4D: riesgos en runtime a lo largo del ciclo de vida de ejecución de agentes de trabajo basados en LLM",
+      "ar": "AgentS4D: قياس مخاطر التشغيل عبر دورة حياة تنفيذ وكلاء بيئات العمل القائمين على نماذج اللغة"
+    },
     "source": "arXiv",
     "url": "https://arxiv.org/abs/2607.27294",
     "take": {
@@ -603,7 +783,13 @@
     "id": "microsoft-orchard-scalable-agentic-framework",
     "date": "2026-08-03",
     "category": "agentic",
-    "headline": "Orchard: An open framework for scalable agentic AI",
+    "headline": {
+      "en": "Orchard: An open framework for scalable agentic AI",
+      "de": "Orchard: ein offenes Framework für skalierbare agentische KI",
+      "fr": "Orchard : un framework ouvert pour l'IA agentique à grande échelle",
+      "es": "Orchard: un framework abierto para IA agéntica escalable",
+      "ar": "Orchard: إطار عمل مفتوح للذكاء الاصطناعي الوكيل القابل للتوسع"
+    },
     "source": "Microsoft Research",
     "url": "https://www.microsoft.com/en-us/research/blog/orchard-an-open-framework-for-scalable-agentic-ai/",
     "take": {
@@ -623,7 +809,13 @@
     "id": "cogent-vr-1-cyber-reasoning-model",
     "date": "2026-08-03",
     "category": "agentic",
-    "headline": "Cogent AI Team Releases VR-1: A Frontier Cyber Reasoning Model That Composes and Verifies Enterprise Attack Paths",
+    "headline": {
+      "en": "Cogent AI Team Releases VR-1: A Frontier Cyber Reasoning Model That Composes and Verifies Enterprise Attack Paths",
+      "de": "Cogent AI Team veröffentlicht VR-1: ein Frontier-Modell für Cyber-Reasoning, das Enterprise-Angriffspfade komponiert und verifiziert",
+      "fr": "L'équipe Cogent AI publie VR-1 : un modèle de raisonnement cyber de pointe qui compose et vérifie des chemins d'attaque d'entreprise",
+      "es": "El equipo de Cogent AI publica VR-1: un modelo frontier de razonamiento ciber que compone y verifica rutas de ataque empresariales",
+      "ar": "فريق Cogent AI يُطلق VR-1: نموذج استدلال سيبراني حدودي يؤلّف مسارات هجوم المؤسسات ويتحقق منها"
+    },
     "source": "MarkTechPost",
     "url": "https://www.marktechpost.com/2026/08/03/ogent-ai-team-releases-vr-1/",
     "take": {
@@ -643,7 +835,13 @@
     "id": "minimax-m2-open-weights-agent-coding",
     "date": "2026-08-04",
     "category": "agentic",
-    "headline": "MiniMax M2 & Agent: Ingenious in Simplicity",
+    "headline": {
+      "en": "MiniMax M2 & Agent: Ingenious in Simplicity",
+      "de": "MiniMax M2 & Agent: genial in der Einfachheit",
+      "fr": "MiniMax M2 & Agent : l'ingéniosité dans la simplicité",
+      "es": "MiniMax M2 & Agent: ingenio en la simplicidad",
+      "ar": "MiniMax M2 & Agent: براعة في البساطة"
+    },
     "source": "MiniMax",
     "url": "https://www.minimax.io/news/minimax-m2",
     "take": {
@@ -663,7 +861,13 @@
     "id": "mistral-shieldstral-policy-adaptive-guardrail",
     "date": "2026-08-04",
     "category": "ai",
-    "headline": "Introducing Shieldstral",
+    "headline": {
+      "en": "Introducing Shieldstral",
+      "de": "Shieldstral vorgestellt",
+      "fr": "Présentation de Shieldstral",
+      "es": "Presentamos Shieldstral",
+      "ar": "تقديم Shieldstral"
+    },
     "source": "Mistral AI",
     "url": "https://mistral.ai/news/shieldstral/",
     "take": {
@@ -683,7 +887,13 @@
     "id": "nvidia-alpamayo-2-super-av-reasoning-open-weights",
     "date": "2026-08-04",
     "category": "ai",
-    "headline": "NVIDIA Alpamayo 2 Super, the Frontier Open Model for Robotaxis and Autonomous Vehicles, Now Available for Commercial Use",
+    "headline": {
+      "en": "NVIDIA Alpamayo 2 Super, the Frontier Open Model for Robotaxis and Autonomous Vehicles, Now Available for Commercial Use",
+      "de": "NVIDIA Alpamayo 2 Super, das offene Frontier-Modell für Robotaxis und autonome Fahrzeuge, jetzt kommerziell nutzbar",
+      "fr": "NVIDIA Alpamayo 2 Super, le modèle ouvert de pointe pour robotaxis et véhicules autonomes, désormais disponible pour un usage commercial",
+      "es": "NVIDIA Alpamayo 2 Super, el modelo abierto frontier para robotaxis y vehículos autónomos, ya disponible para uso comercial",
+      "ar": "NVIDIA Alpamayo 2 Super، النموذج المفتوح الحدودي للسيارات الروبوتية والمركبات ذاتية القيادة، متاح الآن للاستخدام التجاري"
+    },
     "source": "NVIDIA",
     "url": "https://blogs.nvidia.com/blog/alpamayo-2-super-open-model-now-available/",
     "take": {
@@ -703,7 +913,13 @@
     "id": "liquid-lfm2-5-2-6b-on-device-agents",
     "date": "2026-08-04",
     "category": "agentic",
-    "headline": "LFM2.5-2.6B: Deploy Agents Everywhere",
+    "headline": {
+      "en": "LFM2.5-2.6B: Deploy Agents Everywhere",
+      "de": "LFM2.5-2.6B: Agenten überall deployen",
+      "fr": "LFM2.5-2.6B : déployez des agents partout",
+      "es": "LFM2.5-2.6B: despliega agentes en todas partes",
+      "ar": "LFM2.5-2.6B: انشر الوكلاء في كل مكان"
+    },
     "source": "Liquid AI",
     "url": "https://www.liquid.ai/blog/lfm2-5-2-6b",
     "take": {
@@ -723,7 +939,13 @@
     "id": "github-copilot-ms-agent-framework-harness",
     "date": "2026-08-04",
     "category": "agentic",
-    "headline": "Build Production-Ready Agents with the GitHub Copilot Harness and Agent Framework",
+    "headline": {
+      "en": "Build Production-Ready Agents with the GitHub Copilot Harness and Agent Framework",
+      "de": "Produktionsreife Agenten mit dem GitHub-Copilot-Harness und Agent Framework bauen",
+      "fr": "Construire des agents prêts pour la production avec le harnais GitHub Copilot et Agent Framework",
+      "es": "Construye agentes listos para producción con el harness de GitHub Copilot y Agent Framework",
+      "ar": "ابنِ وكلاء جاهزين للإنتاج باستخدام حزمة GitHub Copilot وإطار Agent Framework"
+    },
     "source": "Microsoft",
     "url": "https://devblogs.microsoft.com/agent-framework/build-production-ready-agents-with-the-github-copilot-harness-and-agent-framework/",
     "take": {
@@ -743,7 +965,13 @@
     "id": "glm-5-2-open-weight-safety-gap",
     "date": "2026-08-04",
     "category": "ai",
-    "headline": "Open-weight AI models are catching up to the frontier. The safety gap remains.",
+    "headline": {
+      "en": "Open-weight AI models are catching up to the frontier. The safety gap remains.",
+      "de": "Offene KI-Gewichte holen zur Frontier auf. Die Safety-Lücke bleibt.",
+      "fr": "Les modèles IA à poids ouverts rattrapent la frontière. L'écart de sécurité demeure.",
+      "es": "Los modelos de IA de pesos abiertos alcanzan a la frontera. La brecha de seguridad permanece.",
+      "ar": "نماذج الذكاء الاصطناعي مفتوحة الأوزان تلحق بالحدود، وفجوة الأمان باقية"
+    },
     "source": "TechCrunch",
     "url": "https://techcrunch.com/2026/08/04/open-weight-ai-models-are-catching-up-to-the-frontier-the-safety-gap-remains/",
     "take": {
@@ -763,7 +991,13 @@
     "id": "databricks-unity-ai-gateway-agent-governance",
     "date": "2026-08-04",
     "category": "agentic",
-    "headline": "Unity AI Gateway is Generally Available",
+    "headline": {
+      "en": "Unity AI Gateway is Generally Available",
+      "de": "Unity AI Gateway ist allgemein verfügbar",
+      "fr": "Unity AI Gateway est disponible de manière générale",
+      "es": "Unity AI Gateway ya está disponible de forma general",
+      "ar": "Unity AI Gateway متاح الآن بشكل عام"
+    },
     "source": "Databricks",
     "url": "https://www.databricks.com/blog/unity-ai-gateway-generally-available",
     "take": {
@@ -783,7 +1017,13 @@
     "id": "cisco-antares-open-weight-security-slms",
     "date": "2026-08-04",
     "category": "ai",
-    "headline": "Cisco Antares: helping to make AI secure for all",
+    "headline": {
+      "en": "Cisco Antares: helping to make AI secure for all",
+      "de": "Cisco Antares: KI für alle sicherer machen",
+      "fr": "Cisco Antares : contribuer à sécuriser l'IA pour tous",
+      "es": "Cisco Antares: ayudar a que la IA sea segura para todos",
+      "ar": "Cisco Antares: المساعدة في جعل الذكاء الاصطناعي آمنًا للجميع"
+    },
     "source": "Cisco",
     "url": "https://newsroom.cisco.com/c/r/newsroom/en/us/a/y2026/m08/cisco-antares-helping-to-make-ai-secure-for-all.html",
     "take": {
@@ -803,7 +1043,13 @@
     "id": "jeff-dean-discovery-loop-deepmind-shakeup",
     "date": "2026-08-05",
     "category": "agentic",
-    "headline": "Google Deepmind loses both its CEO and chief scientist as Demis Hassabis and Jeff Dean step down simultaneously",
+    "headline": {
+      "en": "Google Deepmind loses both its CEO and chief scientist as Demis Hassabis and Jeff Dean step down simultaneously",
+      "de": "Google DeepMind verliert CEO und Chief Scientist gleichzeitig — Demis Hassabis und Jeff Dean treten zurück",
+      "fr": "Google DeepMind perd son PDG et son scientifique en chef : Demis Hassabis et Jeff Dean partent simultanément",
+      "es": "Google DeepMind pierde a su CEO y su científico jefe mientras Demis Hassabis y Jeff Dean dimiten simultáneamente",
+      "ar": "Google DeepMind تفقد مديرها التنفيذي وكبير علمائها معًا باستقالة Demis Hassabis وJeff Dean في وقت واحد"
+    },
     "source": "The Decoder",
     "url": "https://the-decoder.com/google-deepmind-loses-both-its-ceo-and-chief-scientist-as-demis-hassabis-and-jeff-dean-step-down-simultaneously/",
     "take": {
@@ -823,7 +1069,13 @@
     "id": "uk-aisi-openai-anthropic-unsanctioned-cyber-actions",
     "date": "2026-08-04",
     "category": "agentic",
-    "headline": "OpenAI, Anthropic AI agents targeted real people and systems in cyber tests",
+    "headline": {
+      "en": "OpenAI, Anthropic AI agents targeted real people and systems in cyber tests",
+      "de": "OpenAI- und Anthropic-Agenten griffen in Cyber-Tests echte Menschen und Systeme an",
+      "fr": "Les agents IA d'OpenAI et d'Anthropic ont ciblé de vraies personnes et systèmes lors de tests cyber",
+      "es": "Los agentes de IA de OpenAI y Anthropic atacaron a personas y sistemas reales en pruebas ciber",
+      "ar": "وكلاء الذكاء الاصطناعي لدى OpenAI وAnthropic استهدفوا أشخاصًا وأنظمة حقيقية في اختبارات سيبرانية"
+    },
     "source": "BleepingComputer",
     "url": "https://www.bleepingcomputer.com/news/security/openai-anthropic-ai-agents-targeted-real-people-and-systems-in-cyber-tests/",
     "take": {
@@ -843,7 +1095,13 @@
     "id": "openai-gpt-5-6-sol-factual-reliability-update",
     "date": "2026-08-06",
     "category": "ai",
-    "headline": "Improving GPT-5.6 Sol in ChatGPT—and expanding access to GPT-5.6 Luna for free users",
+    "headline": {
+      "en": "Improving GPT-5.6 Sol in ChatGPT—and expanding access to GPT-5.6 Luna for free users",
+      "de": "GPT-5.6 Sol in ChatGPT wird besser — und GPT-5.6 Luna für Gratis-Nutzer ausgeweitet",
+      "fr": "Améliorer GPT-5.6 Sol dans ChatGPT — et élargir l'accès à GPT-5.6 Luna pour les utilisateurs gratuits",
+      "es": "Mejorando GPT-5.6 Sol en ChatGPT — y ampliando el acceso a GPT-5.6 Luna para usuarios gratuitos",
+      "ar": "تحسين GPT-5.6 Sol في ChatGPT وتوسيع الوصول إلى GPT-5.6 Luna للمستخدمين المجانيين"
+    },
     "source": "OpenAI",
     "url": "https://openai.com/index/improving-gpt-5-6-sol-in-chatgpt/",
     "take": {
@@ -863,7 +1121,13 @@
     "id": "meta-muse-code-terminal-coding-agent",
     "date": "2026-08-05",
     "category": "agentic",
-    "headline": "Meta launches Muse Code, an AI agent for large code bases",
+    "headline": {
+      "en": "Meta launches Muse Code, an AI agent for large code bases",
+      "de": "Meta startet Muse Code, einen KI-Agenten für große Codebasen",
+      "fr": "Meta lance Muse Code, un agent IA pour grandes bases de code",
+      "es": "Meta lanza Muse Code, un agente de IA para grandes bases de código",
+      "ar": "Meta تُطلق Muse Code، وكيل ذكاء اصطناعي لقواعد الشيفرة الكبيرة"
+    },
     "source": "TechCrunch",
     "url": "https://techcrunch.com/2026/08/05/meta-launches-muse-code-an-ai-agent-for-large-code-bases/",
     "take": {
@@ -883,7 +1147,13 @@
     "id": "browser-use-judge-reliability-agent-benchmark",
     "date": "2026-08-05",
     "category": "agentic",
-    "headline": "The Benchmark Behind the Benchmark",
+    "headline": {
+      "en": "The Benchmark Behind the Benchmark",
+      "de": "Der Benchmark hinter dem Benchmark",
+      "fr": "Le benchmark derrière le benchmark",
+      "es": "El benchmark detrás del benchmark",
+      "ar": "المعيار الكامن خلف المعيار"
+    },
     "source": "Browser Use",
     "url": "https://browser-use.com/posts/benchmark-behind-the-benchmark",
     "take": {
@@ -903,7 +1173,13 @@
     "id": "openai-astra-critical-cyber-preparedness-pause",
     "date": "2026-08-07",
     "category": "agentic",
-    "headline": "OpenAI says it slowed Astra model development over security concerns",
+    "headline": {
+      "en": "OpenAI says it slowed Astra model development over security concerns",
+      "de": "OpenAI: Astra-Entwicklung wurde wegen Sicherheitsbedenken verlangsamt",
+      "fr": "OpenAI dit avoir ralenti le développement d'Astra pour des raisons de sécurité",
+      "es": "OpenAI afirma que ralentizó el desarrollo de Astra por preocupaciones de seguridad",
+      "ar": "OpenAI تقول إنها أبطأت تطوير نموذج Astra بسبب مخاوف أمنية"
+    },
     "source": "TechCrunch",
     "url": "https://techcrunch.com/2026/08/07/openai-says-it-slowed-astra-model-development-over-security-concerns/",
     "take": {
@@ -923,7 +1199,13 @@
     "id": "aws-dogwood-runtime-verification-agents",
     "date": "2026-08-06",
     "category": "agentic",
-    "headline": "Introducing Dogwood: runtime verification for AI agents",
+    "headline": {
+      "en": "Introducing Dogwood: runtime verification for AI agents",
+      "de": "Dogwood vorgestellt: Runtime-Verifikation für KI-Agenten",
+      "fr": "Présentation de Dogwood : la vérification à l'exécution pour les agents IA",
+      "es": "Presentamos Dogwood: verificación en runtime para agentes de IA",
+      "ar": "تقديم Dogwood: تحقق أثناء التشغيل لوكلاء الذكاء الاصطناعي"
+    },
     "source": "AWS Open Source",
     "url": "https://aws.amazon.com/blogs/opensource/introducing-dogwood-runtime-verification-for-ai-agents/",
     "take": {
@@ -943,7 +1225,13 @@
     "id": "agent-plugins-open-standard-portable",
     "date": "2026-08-06",
     "category": "agentic",
-    "headline": "Agent Plugins package your skills, tools, and more",
+    "headline": {
+      "en": "Agent Plugins package your skills, tools, and more",
+      "de": "Agent Plugins verpacken Skills, Tools und mehr",
+      "fr": "Agent Plugins empaquettent vos compétences, outils et plus",
+      "es": "Agent Plugins empaquetan tus skills, herramientas y más",
+      "ar": "إضافات الوكلاء (Agent Plugins) تغلّف مهاراتك وأدواتك والمزيد"
+    },
     "source": "Google Developers Blog",
     "url": "https://developers.googleblog.com/agent-plugins-package-your-skills-tools-and-more/",
     "take": {
@@ -963,7 +1251,13 @@
     "id": "google-weathernext-cyclone-forecasting",
     "date": "2026-08-06",
     "category": "ai",
-    "headline": "WeatherNext: AI model achieves breakthrough in forecasting cyclones",
+    "headline": {
+      "en": "WeatherNext: AI model achieves breakthrough in forecasting cyclones",
+      "de": "WeatherNext: KI-Modell erreicht Durchbruch bei der Zyklonvorhersage",
+      "fr": "WeatherNext : un modèle IA réalise une percée dans la prévision des cyclones",
+      "es": "WeatherNext: un modelo de IA logra un avance en la predicción de ciclones",
+      "ar": "WeatherNext: نموذج ذكاء اصطناعي يحقق اختراقًا في التنبؤ بالأعاصير"
+    },
     "source": "Google DeepMind",
     "url": "https://deepmind.google/blog/weathernext-ai-model-achieves-breakthrough-in-forecasting-cyclones/",
     "take": {
@@ -983,7 +1277,13 @@
     "id": "anthropic-fable-5-biology-safeguards",
     "date": "2026-08-07",
     "category": "ai",
-    "headline": "Improving Fable 5's biology safeguards",
+    "headline": {
+      "en": "Improving Fable 5's biology safeguards",
+      "de": "Verbesserte Biologie-Safeguards für Fable 5",
+      "fr": "Améliorer les protections biologiques de Fable 5",
+      "es": "Mejorando las salvaguardas de biología de Fable 5",
+      "ar": "تحسين ضمانات Fable 5 البيولوجية"
+    },
     "source": "Anthropic",
     "url": "https://www.anthropic.com/news/improving-fable-5-s-biology-safeguards",
     "take": {
@@ -1003,7 +1303,13 @@
     "id": "claude-fable-5-1-mythos-5-1",
     "date": "2026-09-01",
     "category": "ai",
-    "headline": "Introducing Claude Fable 5.1 and Claude Mythos 5.1",
+    "headline": {
+      "en": "Introducing Claude Fable 5.1 and Claude Mythos 5.1",
+      "de": "Claude Fable 5.1 und Claude Mythos 5.1 vorgestellt",
+      "fr": "Présentation de Claude Fable 5.1 et Claude Mythos 5.1",
+      "es": "Presentamos Claude Fable 5.1 y Claude Mythos 5.1",
+      "ar": "تقديم Claude Fable 5.1 وClaude Mythos 5.1"
+    },
     "source": "Anthropic",
     "url": "https://www.anthropic.com/claude-fable-and-mythos-5-1",
     "take": {
@@ -1023,7 +1329,13 @@
     "id": "gpt-6-astra-first-critical-cyber-model",
     "date": "2026-09-03",
     "category": "ai",
-    "headline": "Safety overview: GPT-6 Astra",
+    "headline": {
+      "en": "Safety overview: GPT-6 Astra",
+      "de": "Sicherheitsüberblick: GPT-6 Astra",
+      "fr": "Aperçu de sûreté : GPT-6 Astra",
+      "es": "Panorama de seguridad: GPT-6 Astra",
+      "ar": "نظرة عامة على الأمان: GPT-6 Astra"
+    },
     "source": "OpenAI",
     "url": "https://openai.com/index/safety-overview-gpt-6-astra/",
     "take": {
@@ -1043,7 +1355,13 @@
     "id": "k2-horizon-fully-open-fleet",
     "date": "2026-09-03",
     "category": "ai",
-    "headline": "Introducing K2 Horizon: Frontier Performance, Radically Open",
+    "headline": {
+      "en": "Introducing K2 Horizon: Frontier Performance, Radically Open",
+      "de": "K2 Horizon vorgestellt: Frontier-Leistung, radikal offen",
+      "fr": "Présentation de K2 Horizon : performances de pointe, radicalement ouvert",
+      "es": "Presentamos K2 Horizon: rendimiento frontier, radicalmente abierto",
+      "ar": "تقديم K2 Horizon: أداء حدودي بانفتاح جذري"
+    },
     "source": "Institute of Foundation Models",
     "url": "https://ifm.ai/blog/k2/",
     "take": {
@@ -1063,7 +1381,13 @@
     "id": "openai-wiki-incident-agent-swarm",
     "date": "2026-09-04",
     "category": "agentic",
-    "headline": "Another swarm of OpenAI agents reached the open internet without the frontier lab's knowledge",
+    "headline": {
+      "en": "Another swarm of OpenAI agents reached the open internet without the frontier lab's knowledge",
+      "de": "Erneut erreichte ein Schwarm von OpenAI-Agenten das offene Internet — ohne Wissen des Frontier-Labs",
+      "fr": "Un autre essaim d'agents OpenAI a atteint l'Internet ouvert à l'insu du laboratoire de pointe",
+      "es": "Otro enjambre de agentes de OpenAI alcanzó la internet abierta sin conocimiento del laboratorio frontier",
+      "ar": "سرب آخر من وكلاء OpenAI بلغ الإنترنت المفتوح دون علم المختبر الحدودي"
+    },
     "source": "TechCrunch",
     "url": "https://techcrunch.com/2026/09/04/another-swarm-of-openai-agents-reached-the-open-internet-without-the-frontier-labs-knowledge/",
     "take": {

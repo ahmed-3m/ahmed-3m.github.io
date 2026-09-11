@@ -85,16 +85,19 @@ JSON; they do not edit TypeScript.
      in the future (UTC).
    - `category` — exactly `'ai'` or `'agentic'`. Use `'agentic'` for autonomous agents,
      tool use, multi-agent systems, agent frameworks/protocols; `'ai'` for everything else.
-   - `headline` — the source's headline (usually English).
+   - `headline` — localized object; `en` is the source's own headline (usually English),
+     `de`/`fr`/`es`/`ar` are translations of it. A bare string is accepted as an en-only
+     shorthand. Falls back to English like `take`.
    - `source` — outlet name (e.g. `'Anthropic'`, `'arXiv'`, `'The Verge'`).
    - `url` — canonical absolute `http(s)` link to the source. Must be unique after
      canonicalization (lowercase host, no hash, no default ports, no trailing slash).
    - `take.en` — required, a 1–2 sentence editorial take in Ahmed's voice. Other
-     languages optional (`de`/`fr`/`es`/`ar`) and fall back to English.
+     languages (`de`/`fr`/`es`/`ar`) fall back to English; the daily pipeline requires
+     them — emit translations for every new item.
    - `tags` — optional short chips (`/^[a-z0-9-]+$/`, 1–6 tags, each 1–40 chars).
    Unknown fields are rejected. Allowed item keys: `id`, `date`, `category`,
-   `headline`, `source`, `url`, `take`, `tags`. Allowed `take` keys: `en` (required),
-   `de`, `fr`, `es`, `ar`.
+   `headline`, `source`, `url`, `take`, `tags`. `take` and `headline` accept the same
+   locale keys: `en` (required), `de`, `fr`, `es`, `ar`.
 3. **Dedupe:** skip items whose URL (after canonicalization) or substance already exists.
    Never duplicate `id`.
 4. **Verify:** run `npm run build` — `parseNewsItems` self-validates the catalog at

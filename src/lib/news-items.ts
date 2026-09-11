@@ -12,9 +12,11 @@ export type { NewsItem, NewsCategory }
  * on stdout; they do not edit this TypeScript module. See AGENTS.md.
  */
 
-export interface LocalizedNewsItem extends Omit<NewsItem, 'take'> {
+export interface LocalizedNewsItem extends Omit<NewsItem, 'take' | 'headline'> {
   /** Take resolved for the requested language (falls back to English). */
   take: string
+  /** Headline resolved for the requested language (falls back to English). */
+  headline: string
 }
 
 const newsItems = parseNewsItems(raw)
@@ -25,8 +27,8 @@ export const newsCategoryLabels: Record<NewsCategory, { en: string; de: string; 
 }
 
 function localizeNewsItem(item: NewsItem, lang: Language): LocalizedNewsItem {
-  const { take, ...rest } = item
-  return { ...rest, take: take[lang] ?? take.en }
+  const { take, headline, ...rest } = item
+  return { ...rest, take: take[lang] ?? take.en, headline: headline[lang] ?? headline.en }
 }
 
 /** All items, newest first. */

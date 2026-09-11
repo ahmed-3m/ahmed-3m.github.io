@@ -40,7 +40,11 @@ Read the JSON (and AGENTS.md if needed) before researching. Do not edit TypeScri
    - `id`: unique, stable, kebab-case, derived from the headline. Must not collide with
      any existing id.
    - `category`: `'agentic'` or `'ai'` per the rules in AGENTS.md.
-   - `headline`: the source's headline.
+   - `headline`: an object — `headline.en` is the source's own headline, verbatim.
+     Include `de`/`fr`/`es`/`ar` translations of it: idiomatic headline style, keep
+     numbers and proper nouns (model names, companies, benchmarks) unchanged. A bare
+     string is accepted as an en-only shorthand but must not be used — four of the five
+     site languages would see English.
    - `source`: the outlet name.
    - `url`: the exact canonical URL from Exa (absolute `https:`).
    - `date`: the article's publication date, ISO `YYYY-MM-DD`, a real calendar day,
