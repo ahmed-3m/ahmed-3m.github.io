@@ -332,8 +332,9 @@ jobs:
             # the loop misread the merge-cancelled build as a lane failure).
             PR_STATE="$(gh pr view "$PR_NUMBER" --json state --jq .state 2>/dev/null || echo OPEN)"
             if [ "$PR_STATE" = "MERGED" ]; then
+              # A human merge fires main's push event, which already triggers
+              # deploy.yml — dispatching here would queue a duplicate deploy.
               echo "PR #$PR_NUMBER was merged (by a human) while checks were in flight — publishing succeeded."
-              gh workflow run deploy.yml --ref main
               exit 0
             fi
             verdicts="$(gh api "repos/${GITHUB_REPOSITORY}/commits/${SHA}/check-runs" \
@@ -349,8 +350,8 @@ jobs:
                 # cancelled can also be the tail of a just-merged PR; re-check
                 # state once before declaring failure.
                 if [ "$(gh pr view "$PR_NUMBER" --json state --jq .state 2>/dev/null)" = "MERGED" ]; then
+                  # Same as above: the human merge's push event deploys already.
                   echo "PR #$PR_NUMBER merged while a lane was cancelled — publishing succeeded."
-                  gh workflow run deploy.yml --ref main
                   exit 0
                 fi
                 echo "::error::PR lanes did not pass (quality=$quality build=$build) — not publishing."
@@ -365,15 +366,15 @@ jobs:
           done
 
           # PR merges are evaluated against the PR's pull_request check runs —
-          # the canonical path required protection accepts. A merged PR here
-          # means a human landed it first; dispatch the deploy either way.
+          # the canonical path required protection accepts. Dispatch the
+          # deploy ONLY for the bot's own GITHUB_TOKEN merge (which fires no
+          # push events); a human merge means main's push event is deploying
+          # already and an extra dispatch would just queue a duplicate run.
           if [ "$(gh pr view "$PR_NUMBER" --json state --jq .state 2>/dev/null)" != "MERGED" ]; then
             gh pr merge "$PR_NUMBER" --merge \
               --subject "chore(news): daily automated update (#$PR_NUMBER)"
+            gh workflow run deploy.yml --ref main
           fi
-          # GITHUB_TOKEN merges fire no push events, so deploy explicitly
-          # (same dispatch pattern as the pre-2026-09-12 direct-push flow).
-          gh workflow run deploy.yml --ref main
 
       - name: Clean up delta PR and temp branch
         # On success the merge auto-deletes the head branch ("Automatically
