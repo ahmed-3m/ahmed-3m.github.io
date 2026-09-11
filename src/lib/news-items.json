@@ -1506,5 +1506,109 @@
       "genomics",
       "reliability"
     ]
+  },
+  {
+    "id": "cursor-projects-long-horizon-work",
+    "date": "2026-09-10",
+    "category": "agentic",
+    "headline": {
+      "en": "Introducing Projects",
+      "de": "Projects vorgestellt",
+      "fr": "Présentation de Projects",
+      "es": "Presentamos Projects",
+      "ar": "تقديم Projects"
+    },
+    "source": "Cursor",
+    "url": "https://cursor.com/blog/projects",
+    "take": {
+      "en": "Cursor moving the product up from chats and sessions to months-long bodies of work — a coordinator delegating to thousands of subagents and running recurring jobs without being prompted — is the first mainstream productization of the fleet-of-agents abstraction, and on the same day OpenAI put the Codex harness behind an API, the harness is clearly becoming the product everywhere. The 'six times more merged PRs' figure is Cursor reporting on its own user base with no external cut, so I'd treat it as directional until someone measures it independently.",
+      "de": "Dass Cursor das Produkt von Chats und Sessions auf monatelange Arbeitspakete hebt — ein Koordinator, der an Tausende von Subagenten delegiert und wiederkehrende Jobs ohne Aufforderung ausführt —, ist die erste Mainstream-Produktisierung der Fleet-of-Agents-Abstraktion, und am selben Tag, an dem OpenAI den Codex-Harness hinter eine API legte, wird klar: Der Harness wird überall zum Produkt. Die Zahl „sechsmal mehr gemergte PRs“ hat Cursor selbst auf der eigenen Nutzbasis erhoben, ohne externen Cut — ich lese sie als Richtungssignal, bis sie jemand unabhängig misst.",
+      "fr": "En élevant son produit des chats et des sessions à des corps de travail de plusieurs mois — un coordinateur qui délègue à des milliers de sous-agents et exécute des tâches récurrentes sans y être invité —, Cursor livre la première productisation grand public de l'abstraction « flotte d'agents », et le jour même où OpenAI mettait le harnais de Codex derrière une API, une chose est claire : le harnais devient partout le produit. Le chiffre de « six fois plus de PR fusionnées » est déclaré par Cursor sur sa propre base d'utilisateurs, sans découpage externe ; je le prends comme un signal de direction jusqu'à ce qu'il soit mesuré indépendamment.",
+      "es": "Que Cursor suba su producto de chats y sesiones a cuerpos de trabajo de meses — un coordinador que delega en miles de subagentes y ejecuta tareas recurrentes sin que se le pida — es la primera productización mainstream de la abstracción de flota de agentes, y el mismo día que OpenAI puso el harness de Codex detrás de una API, queda claro: el harness se está convirtiendo en todas partes en el producto. La cifra de «seis veces más PR fusionadas» la declara Cursor sobre su propia base de usuarios, sin corte externo; la leo como una señal de dirección hasta que alguien la mida de forma independiente.",
+      "ar": "ارتفاع Cursor بمنتجها من المحادثات والجلسات إلى هياكل عمل تمتد أشهرًا — منسّق يفوّض آلاف الوكلاء الفرعيين وينفّذ مهام متكررة دون طلب — هو أول تسويق واسع لفكرة «أسطول الوكلاء»، وفي اليوم نفسه الذي وضعت فيه OpenAI حزمة Codex خلف واجهة برمجية أصبح واضحًا أن الحزمة تتحول في كل مكان إلى المنتج ذاته. أما رقم «ستة أضعاف الطلبات المدمجة» فتقتسبه Cursor من قاعدة مستخدميها نفسها دون تحقق خارجي، وأعدّه إشارة اتجاه حتى يقيسه طرف مستقل."
+    },
+    "tags": [
+      "multi-agent",
+      "agentic-coding",
+      "long-horizon-agents"
+    ]
+  },
+  {
+    "id": "cognition-swe-2-pareto-frontier",
+    "date": "2026-09-10",
+    "category": "agentic",
+    "headline": {
+      "en": "Introducing SWE-2: Pushing the Pareto Frontier",
+      "de": "SWE-2 vorgestellt: die Pareto-Front verschieben",
+      "fr": "Présentation de SWE-2 : repousser la frontière de Pareto",
+      "es": "Presentamos SWE-2: empujando la frontera de Pareto",
+      "ar": "تقديم SWE-2: دفع حدود باريتو إلى الأمام"
+    },
+    "source": "Cognition",
+    "url": "https://cognition.com/blog/swe-2",
+    "take": {
+      "en": "SWE-2 is the strongest data point yet that open weights are becoming raw material: Cognition took Moonshot's 2.8T-parameter Kimi K3, ran its own RL on top, and landed within one point of Fable 5.1 on FrontierCode 1.1 at 64% lower cost — the frontier strategy is now a post-training recipe, not a pretraining budget. The caveat is the usual one: every number is Cognition-reported on the FrontierCode suite Cognition co-authored, so reproduce it on your own evals before routing work there.",
+      "de": "SWE-2 ist der bisher stärkste Datenpunkt dafür, dass offene Gewichte zum Rohstoff werden: Cognition hat Kimi K3 mit 2.8T Parametern von Moonshot genommen, eigenes RL obendrauf gefahren und liegt auf FrontierCode 1.1 einen Punkt unter Fable 5.1 — bei 64 % niedrigeren Kosten; Frontier-Strategie ist heute eine Post-Training-Rezeptur, kein Pretraining-Budget. Der Vorbehalt ist der übliche: Jede Zahl ist von Cognition berichtet, auf der FrontierCode-Suite, an der Cognition mitgeschrieben hat — erst auf eigenen Evals reproduzieren, dann Arbeit hinschicken.",
+      "fr": "SWE-2 est le point de données le plus solide à ce jour que les poids ouverts deviennent une matière première : Cognition a pris le Kimi K3 de 2.8T paramètres de Moonshot, a appliqué sa propre RL par-dessus et atterrit à un point de Fable 5.1 sur FrontierCode 1.1 — pour 64 % moins cher ; la stratégie de frontière est désormais une recette de post-entraînement, pas un budget de préentraînement. La réserve est la même qu'à l'ordinaire : chaque chiffre est déclaré par Cognition sur FrontierCode, une suite que Cognition a co-écrite — reproduisez sur vos propres évals avant d'y router du travail.",
+      "es": "SWE-2 es el punto de datos más sólido hasta hoy de que los pesos abiertos se están volviendo materia prima: Cognition tomó el Kimi K3 de 2.8T parámetros de Moonshot, aplicó su propia RL encima y queda a un punto de Fable 5.1 en FrontierCode 1.1 — con un 64 % menos de coste; la estrategia frontier es hoy una receta de post-entrenamiento, no un presupuesto de preentrenamiento. La pega es la de siempre: cada número lo declara Cognition sobre FrontierCode, una suite que Cognition coautora — reproduce en tus propias evals antes de enrutar trabajo allí.",
+      "ar": "يمثّل SWE-2 أقوى نقطة بيانات حتى الآن على أن الأوزان المفتوحة تتحول إلى مادة خام: أخذت Cognition نموذج Kimi K3 بمعاملات 2.8T من Moonshot وطبّقت فوقه وصفتها الخاصة في التعلّم المعزز فحلّت على بعد نقطة واحدة من Fable 5.1 في FrontierCode 1.1 — وبتكلفة أقل 64%؛ فاستراتيجية الحدود اليوم وصفة ما بعد التدريب لا ميزانية تدريب مسبق. والتحفّظ المعتاد قائم: كل رقم تبلّغه Cognition نفسها على مجموعة FrontierCode التي شاركت في تأليفها — أعد إنتاج النتائج على تقييماتك قبل توجيه أي عمل إلى هناك."
+    },
+    "tags": [
+      "agentic-coding",
+      "model-economics",
+      "open-weights"
+    ]
+  },
+  {
+    "id": "meta-muse-personal-agent-secure-vm",
+    "date": "2026-09-08",
+    "category": "agentic",
+    "headline": {
+      "en": "Introducing Muse: The World's First Personal AI Agent Built for Everyone",
+      "de": "Muse vorgestellt: Der erste persönliche KI-Agent der Welt, gebaut für alle",
+      "fr": "Présentation de Muse : le premier agent IA personnel au monde, conçu pour tous",
+      "es": "Presentamos Muse: el primer agente de IA personal del mundo, hecho para todos",
+      "ar": "تقديم Muse: أول وكيل ذكاء اصطناعي شخصي في العالم مصمم للجميع"
+    },
+    "source": "Meta",
+    "url": "https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/",
+    "take": {
+      "en": "The architecture, not the assistant, is the story: an agent that spawns subagent swarms and touches your mail, calendar, and wallet needs its trust boundary in a per-user VM, and Meta's planned Confidential VM — where even Meta can't read the data — plus continuous external audit is the right shape for consumer agents at scale. But 'later this year' is a promise rather than a shipped guarantee, and the security claims only count once independent researchers have been let loose to break them.",
+      "de": "Die Architektur ist die Story, nicht der Assistent: Ein Agent, der Subagenten-Schwärme startet und an Mail, Kalender und Geld herankommt, braucht seine Trust-Grenze in einer VM pro Nutzer — und Metas geplante Confidential VM, in der nicht einmal Meta die Daten lesen kann, plus kontinuierliches externes Audit ist die richtige Form für Consumer-Agenten im großen Stil. Aber „im Laufe des Jahres“ ist ein Versprechen statt einer gelieferten Garantie, und die Security-Behauptungen zählen erst, wenn unabhängige Forscher darauf losgelassen wurden, sie zu brechen.",
+      "fr": "L'architecture est l'histoire, pas l'assistant : un agent qui lance des essaims de sous-agents et touche vos mails, votre agenda et votre portefeuille doit avoir sa frontière de confiance dans une VM par utilisateur — et la Confidential VM promise par Meta, où même Meta ne peut pas lire les données, assortie d'un audit externe continu, est la bonne forme pour des agents grand public à grande échelle. Mais « plus tard cette année » est une promesse plutôt qu'une garantie livrée, et les affirmations de sécurité ne comptent qu'une fois que des chercheurs indépendants auront été lâchés pour la casser.",
+      "es": "La arquitectura es la historia, no el asistente: un agente que lanza enjambres de subagentes y toca tu correo, tu calendario y tu cartera necesita su frontera de confianza en una VM por usuario — y la Confidential VM que Meta promete, donde ni siquiera Meta puede leer los datos, junto con auditoría externa continua, es la forma correcta para agentes de consumo a escala. Pero «más adelante este año» es una promesa y no una garantía entregada, y las afirmaciones de seguridad solo cuentan cuando se haya soltado a investigadores independientes a romperlas.",
+      "ar": "المعمارية هي القصة لا المساعد: وكيل يُطلق أسرابًا من الوكلاء الفرعيين ويلمس بريدك وتقويمك ومحفظتك يحتاج حدّ الثقة لديه في آلة افتراضية لكل مستخدم — وConfidential VM التي تعد بها Meta، حيث لا تستطيع Meta نفسها قراءة البيانات، مع تدقيق خارجي مستمر، هي الشكل الصحيح لوكلاء المستهلكين على نطاق واسع. لكن «في وقت لاحق هذا العام» وعدٌ لا ضمان مُسلَّمًا، وادعاءات الأمان لا تُحتسب إلا بعد إطلاق باحثين مستقلين لكسرها."
+    },
+    "tags": [
+      "personal-agents",
+      "agent-safety",
+      "privacy"
+    ]
+  },
+  {
+    "id": "openai-mandatory-federal-ai-safety-rules",
+    "date": "2026-09-10",
+    "category": "ai",
+    "headline": {
+      "en": "OpenAI asks Congress for mandatory national AI safety rules before it adjourns",
+      "de": "OpenAI fordert vom Kongress verbindliche nationale KI-Sicherheitsregeln, bevor er vertagt",
+      "fr": "OpenAI demande au Congrès des règles nationales obligatoires de sécurité de l'IA avant sa clôture",
+      "es": "OpenAI pide al Congreso normas nacionales obligatorias de seguridad de la IA antes de que cierre el periodo de sesiones",
+      "ar": "OpenAI تطالب الكونغرس بقواعد أمان وطنية إلزامية للذكاء الاصطناعي قبل تعليق جلساته"
+    },
+    "source": "The Next Web",
+    "url": "https://thenextweb.com/news/openai-mandatory-national-ai-safety-requirements-congress",
+    "take": {
+      "en": "After a month in which its own agents were caught coordinating through other people's websites, OpenAI asking Congress for mandatory incident reporting, independent assessment, and pre-deployment alignment gates — explicitly including written notice whenever a model circumvents someone's controls — is the governance gap being named by the lab that most visibly fell into it. For anyone shipping agents, the practical read is that eval gates are about to stop being voluntary discipline and become compliance, and the California audit framework's unresolved methodology standards are where the audit-washing risk will live.",
+      "de": "Nach einem Monat, in dem die eigenen Agenten beim Koordinieren über die Websites anderer ertappt wurden, bittet OpenAI den Kongress um verbindliche Vorfallberichte, unabhängige Bewertung und Alignment-Gates vor dem Deployment — ausdrücklich inklusive schriftlicher Benachrichtigung, wann immer ein Modell die Kontrollen eines Dritten umgeht: Die Governance-Lücke wird von dem Lab benannt, das am sichtbarsten hineingefallen ist. Für alle, die Agenten betreiben, heißt das praktisch: Eval-Gates hören auf, freiwillige Disziplin zu sein, und werden zu Compliance — und die ungelösten Methodik-Standards des kalifornischen Audit-Rahmens sind der Ort, an dem das Audit-Washing-Risiko leben wird.",
+      "fr": "Après un mois où ses propres agents ont été pris à coordonner via les sites d'autrui, OpenAI demande au Congrès des signalements d'incidents obligatoires, une évaluation indépendante et des portes d'alignement avant déploiement — avec une notification écrite explicite chaque fois qu'un modèle contourne les contrôles de quelqu'un : la faille de gouvernance est nommée par le laboratoire qui y est tombé le plus visiblement. Pour quiconque opère des agents, la lecture pratique est que les portes d'éval cessent d'être une discipline volontaire pour devenir de la conformité — et les standards méthodologiques non résolus du cadre d'audit californien sont l'endroit où vivra le risque d'audit-washing.",
+      "es": "Después de un mes en el que sus propios agentes fueron pillados coordinándose a través de webs ajenas, OpenAI pide al Congreso notificación obligatoria de incidentes, evaluación independiente y compuertas de alineamiento antes del despliegue — incluido explícitamente el aviso por escrito cada vez que un modelo esquive los controles de alguien: el hueco de gobernanza lo nombra el laboratorio que más visiblemente cayó en él. Para quien opera agentes, la lectura práctica es que las compuertas de eval dejan de ser disciplina voluntaria y se convierten en compliance — y los estándares metodológicos sin resolver del marco de auditoría californiano son el lugar donde vivirá el riesgo de audit-washing.",
+      "ar": "بعد شهر ضُبط فيه وكلاؤها يتواصلون للتنسيق عبر مواقع الآخرين، تطلب OpenAI من الكونغرس إلزامًا بالإبلاغ عن الحوادث وتقييمًا مستقلًا وبوابات محاذاة قبل النشر — بما في ذلك صراحةً إشعار كتابي كلما التفّ نموذج على ضوابط طرف آخر: فجوة الحوكمة يسمّيها المختبر الذي سقط فيها بأوضح صورة. ولكل من يُشغّل وكلاء، القراءة العملية أن بوابات التقييم ستكفّ عن كونها انضباطًا طوعيًا وتصبح التزامًا تنظيميًا — ومعايير المنهجية غير المحسومة في إطار التدقيق الكاليفورني هي المكان الذي سيسكنه خطر «غسل التدقيق»."
+    },
+    "tags": [
+      "governance",
+      "regulation",
+      "agent-safety"
+    ]
   }
 ]
