@@ -1,12 +1,17 @@
+import type { Language } from '@/lib/i18n-config'
+
 export type NewsCategory = 'ai' | 'agentic'
 
-export type NewsTake = { en: string } & Partial<Record<'de' | 'fr' | 'es' | 'ar', string>>
+/** Shape shared by every localized text field (take, headline). */
+type LocalizedText = { en: string } & Partial<Record<Exclude<Language, 'en'>, string>>
+export type NewsTake = LocalizedText
+export type NewsHeadline = LocalizedText
 
 export type NewsItem = {
   id: string
   date: string
   category: NewsCategory
-  headline: string
+  headline: NewsHeadline
   source: string
   url: string
   take: NewsTake
@@ -26,8 +31,8 @@ export const NEWS_LIMITS = {
 } as const
 
 const ITEM_KEYS = new Set(['id', 'date', 'category', 'headline', 'source', 'url', 'take', 'tags'])
-const TAKE_KEYS = new Set(['en', 'de', 'fr', 'es', 'ar'])
-const TAKE_LOCALES = ['de', 'fr', 'es', 'ar'] as const
+const LOCALIZED_KEYS = new Set(['en', 'de', 'fr', 'es', 'ar'])
+const LOCALIZED_LOCALES = ['de', 'fr', 'es', 'ar'] as const
 const ID_RE = /^[a-z0-9-]+$/
 const TAG_RE = /^[a-z0-9-]+$/
 const ISO_DATE_RE = /^(\d{4})-(\d{2})-(\d{2})$/
@@ -139,7 +144,7 @@ function parseNewsItem(value: unknown, today: string, index: number): NewsItem {
   }
 
   const category = parseCategory(value.category, where)
-  const headline = requiredString(value.headline, 'headline', NEWS_LIMITS.maxHeadline, where)
+  const headline = parseHeadline(value.headline, where)
   const source = requiredString(value.source, 'source', NEWS_LIMITS.maxSource, where)
   const url = parseHttpUrl(value.url, where)
   const take = parseTake(value.take, where)
@@ -169,22 +174,36 @@ function parseHttpUrl(value: unknown, where: string): string {
   return url
 }
 
+function parseHeadline(value: unknown, where: string): NewsHeadline {
+  // A bare string is accepted as the English headline — the daily delta must send the
+  // localized object, but a string must not fail the pipeline.
+  if (typeof value === 'string') {
+    return { en: requiredString(value, 'headline', NEWS_LIMITS.maxHeadline, where) }
+  }
+  return parseLocalizedText(value, 'headline', NEWS_LIMITS.maxHeadline, where)
+}
+
 function parseTake(value: unknown, where: string): NewsTake {
+  return parseLocalizedText(value, 'take', NEWS_LIMITS.maxTake, where)
+}
+
+function parseLocalizedText(value: unknown, field: string, max: number, where: string): LocalizedText {
   if (!isPlainObject(value)) {
-    throw new Error(`${where}: take must be a plain object`)
+    throw new Error(`${where}: ${field} must be a plain object`)
   }
   for (const key of Object.keys(value)) {
-    if (!TAKE_KEYS.has(key)) {
-      throw new Error(`${where}: unknown take field "${key}"`)
+    if (!LOCALIZED_KEYS.has(key)) {
+      throw new Error(`${where}: unknown ${field} locale "${key}"`)
     }
   }
-  const en = requiredString(value.en, 'take.en', NEWS_LIMITS.maxTake, where)
-  const take: NewsTake = { en }
-  for (const locale of TAKE_LOCALES) {
-    if (!Object.prototype.hasOwnProperty.call(value, locale)) continue
-    take[locale] = requiredString(value[locale], `take.${locale}`, NEWS_LIMITS.maxTake, where)
+  const result: LocalizedText = {
+    en: requiredString(value.en, `${field}.en`, max, where),
   }
-  return take
+  for (const locale of LOCALIZED_LOCALES) {
+    if (!Object.prototype.hasOwnProperty.call(value, locale)) continue
+    result[locale] = requiredString(value[locale], `${field}.${locale}`, max, where)
+  }
+  return result
 }
 
 function parseTags(value: unknown, where: string): readonly string[] {

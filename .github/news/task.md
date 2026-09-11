@@ -40,16 +40,27 @@ Read the JSON (and AGENTS.md if needed) before researching. Do not edit TypeScri
    - `id`: unique, stable, kebab-case, derived from the headline. Must not collide with
      any existing id.
    - `category`: `'agentic'` or `'ai'` per the rules in AGENTS.md.
-   - `headline`: the source's headline.
+   - `headline`: an object — `headline.en` is the source's own headline, verbatim.
+     Include `de`/`fr`/`es`/`ar` translations of it: idiomatic headline style, keep
+     numbers and proper nouns (model names, companies, benchmarks) unchanged. A bare
+     string is accepted as an en-only shorthand but must not be used — four of the five
+     site languages would see English.
    - `source`: the outlet name.
    - `url`: the exact canonical URL from Exa (absolute `https:`).
    - `date`: the article's publication date, ISO `YYYY-MM-DD`, a real calendar day,
      never in the future (UTC).
    - `take.en`: 1-2 sentences in Ahmed's voice — a real opinion, not a summary. Tie to
      reliability/evaluation/production where it fits naturally.
-   - `tags`: 2-3 short chips matching `/^[a-z0-9-]+$/`.
+   - `take.de`, `take.fr`, `take.es`, `take.ar`: required translations of `take.en` into
+     German, French, Spanish, and Arabic (Modern Standard Arabic). Idiomatic and
+     professional, not word-for-word; keep every number, model name, benchmark name,
+     and company name exactly as in the English take; keep tags untranslated. The site
+     displays the take in the visitor's language with fallback to English, so an
+     en-only take ships an untranslated page for four of the five languages.
+   - `tags`: 2-3 short chips matching `/^[a-z0-9-]+$/` (lowercase ASCII, never translated).
    Allowed item keys: `id`, `date`, `category`, `headline`, `source`, `url`, `take`,
-   `tags`. Allowed `take` keys: `en` (required), `de`, `fr`, `es`, `ar`. Unknown
+   `tags`. Allowed `take` and `headline` locale keys: `en` (required), `de`, `fr`,
+   `es`, `ar`. Unknown
    fields are rejected. Do not delete, edit, or reorder existing catalog items —
    you are emitting a delta, not rewriting the catalog.
 5. Do not edit files. Do not run npm. Do not commit. Stop after printing the JSON.
