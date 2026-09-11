@@ -1,8 +1,11 @@
+import type { Language } from '@/lib/i18n-config'
+
 export type NewsCategory = 'ai' | 'agentic'
 
-export type NewsTake = { en: string } & Partial<Record<'de' | 'fr' | 'es' | 'ar', string>>
-
-export type NewsHeadline = { en: string } & Partial<Record<'de' | 'fr' | 'es' | 'ar', string>>
+/** Shape shared by every localized text field (take, headline). */
+type LocalizedText = { en: string } & Partial<Record<Exclude<Language, 'en'>, string>>
+export type NewsTake = LocalizedText
+export type NewsHeadline = LocalizedText
 
 export type NewsItem = {
   id: string
@@ -184,7 +187,7 @@ function parseTake(value: unknown, where: string): NewsTake {
   return parseLocalizedText(value, 'take', NEWS_LIMITS.maxTake, where)
 }
 
-function parseLocalizedText(value: unknown, field: string, max: number, where: string): NewsTake & NewsHeadline {
+function parseLocalizedText(value: unknown, field: string, max: number, where: string): LocalizedText {
   if (!isPlainObject(value)) {
     throw new Error(`${where}: ${field} must be a plain object`)
   }
@@ -193,7 +196,7 @@ function parseLocalizedText(value: unknown, field: string, max: number, where: s
       throw new Error(`${where}: unknown ${field} locale "${key}"`)
     }
   }
-  const result: { en: string } & Partial<Record<'de' | 'fr' | 'es' | 'ar', string>> = {
+  const result: LocalizedText = {
     en: requiredString(value.en, `${field}.en`, max, where),
   }
   for (const locale of LOCALIZED_LOCALES) {

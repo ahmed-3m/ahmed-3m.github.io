@@ -59,7 +59,8 @@ Read the JSON (and AGENTS.md if needed) before researching. Do not edit TypeScri
      en-only take ships an untranslated page for four of the five languages.
    - `tags`: 2-3 short chips matching `/^[a-z0-9-]+$/` (lowercase ASCII, never translated).
    Allowed item keys: `id`, `date`, `category`, `headline`, `source`, `url`, `take`,
-   `tags`. Allowed `take` keys: `en` (required), `de`, `fr`, `es`, `ar`. Unknown
+   `tags`. Allowed `take` and `headline` locale keys: `en` (required), `de`, `fr`,
+   `es`, `ar`. Unknown
    fields are rejected. Do not delete, edit, or reorder existing catalog items —
    you are emitting a delta, not rewriting the catalog.
 5. Do not edit files. Do not run npm. Do not commit. Stop after printing the JSON.
