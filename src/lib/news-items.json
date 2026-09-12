@@ -1714,5 +1714,109 @@
       "on-device",
       "edge-agents"
     ]
+  },
+  {
+    "id": "sierra-hyper-t-bench-agents-building-agents",
+    "date": "2026-09-08",
+    "category": "agentic",
+    "headline": {
+      "en": "Hyper-𝜏-bench: Evaluating agents that build agents",
+      "de": "Hyper-𝜏-bench: Die Bewertung von Agenten, die Agenten bauen",
+      "fr": "Hyper-𝜏-bench : évaluer des agents qui construisent des agents",
+      "es": "Hyper-𝜏-bench: evaluando agentes que construyen agentes",
+      "ar": "Hyper-𝜏-bench: تقييم وكلاء يبنون وكلاء"
+    },
+    "source": "Sierra",
+    "url": "https://sierra.ai/blog/hyper-t-bench-evaluating-agents-that-build-agents",
+    "take": {
+      "en": "τ-bench asked whether a model could be a reliable agent; the sequel asks whether it can build one, then scores the built agent on held-out traffic the builder never saw — exactly the evaluation design I trust, because held-out verification is the only signal that survives contact with production.",
+      "de": "τ-bench fragte, ob ein Modell ein zuverlässiger Agent sein kann; die Fortsetzung fragt, ob es einen bauen kann — und bewertet den gebauten Agenten anschließend auf zurückgehaltenem Traffic, den der Erbauer nie gesehen hat. Genau diesem Eval-Design vertraue ich, denn Verifikation auf zurückgehaltenen Daten ist das einzige Signal, das den Kontakt mit der Produktion übersteht.",
+      "fr": "τ-bench demandait si un modèle pouvait être un agent fiable ; la suite demande s'il peut en construire un, puis évalue l'agent créé sur du trafic mis de côté que le constructeur n'a jamais vu — exactement le design d'évaluation auquel je fais confiance, car la vérification sur données réservées est le seul signal qui survit au contact de la production.",
+      "es": "τ-bench preguntaba si un modelo podía ser un agente fiable; la secuela pregunta si puede construir uno, y luego evalúa al agente construido sobre tráfico reservado que el constructor nunca vio — exactamente el diseño de evaluación en el que confío, porque la verificación con datos reservados es la única señal que sobrevive al contacto con producción.",
+      "ar": "سأل ‏τ-bench عمّا إذا كان بإمكان نموذج أن يكون وكيلًا موثوقًا؛ أمّا الإصدار الجديد فيسأل عمّا إذا كان بإمكانه بناء وكيل، ثم يقيّم الوكيل المُبنى على حركة مرور محجوزة لم يرَها المُنشئ قط — وهذا بالضبط تصميم التقييم الذي أثق به، لأن التحقق على بيانات محجوزة هو الإشارة الوحيدة التي تصمد أمام دخول بيئة الإنتاج."
+    },
+    "tags": [
+      "evaluation",
+      "benchmark",
+      "agents"
+    ]
+  },
+  {
+    "id": "nvidia-sol-pi-efficient-agent-harness",
+    "date": "2026-09-10",
+    "category": "agentic",
+    "headline": {
+      "en": "SoL-Pi: Scaling Auto-Research Loops for Efficient Agent Harnesses",
+      "de": "SoL-Pi: Auto-Forschungsschleifen im Maßstab für effiziente Agent-Harnesses",
+      "fr": "SoL-Pi : passer à l'échelle les boucles d'auto-recherche pour des harnesses d'agents efficaces",
+      "es": "SoL-Pi: escalando bucles de autoinvestigación para harnesses de agentes eficientes",
+      "ar": "SoL-Pi: توسيع حلقات البحث الآلي لأطر تشغيل وكلاء أكثر كفاءة"
+    },
+    "source": "NVIDIA Research",
+    "url": "https://nvlabs.github.io/SoL-Pi/",
+    "take": {
+      "en": "The 45–49% token cut is nice, but the method is the real story: 152 candidate optimizations went in and only the four that survived held-out evaluation shipped — the same regression-gated discipline I demand for any production model change. The biggest cost lever in agents right now is the harness, not the model, and NVIDIA just made that lever machine-searchable.",
+      "de": "Die 45–49 % Token-Ersparnis ist schön, aber die Methode ist die eigentliche Story: 152 Kandidaten gingen hinein, und nur die vier Mechanismen, die die Evaluierung auf zurückgehaltenen Aufgaben überlebten, wurden ausgeliefert — dieselbe regressionsgeprüfte Disziplin, die ich bei jeder Änderung an Produktionsmodellen verlange. Der größte Kostenhebel bei Agents ist heute das Harness, nicht das Modell, und NVIDIA hat diesen Hebel gerade maschinell durchsuchbar gemacht.",
+      "fr": "La réduction de 45–49 % des tokens est agréable, mais la méthode est la vraie histoire : 152 optimisations candidates sont entrées, et seules les quatre ayant survécu à l'évaluation sur données réservées ont été livrées — la même discipline validée par régression que j'exige pour tout changement de modèle en production. Le plus grand levier de coût des agents aujourd'hui, c'est le harness, pas le modèle, et NVIDIA vient de rendre ce levier explorable par des machines.",
+      "es": "El recorte de tokens del 45–49 % está bien, pero el método es la verdadera historia: entraron 152 optimizaciones candidatas y solo se enviaron las cuatro que sobrevivieron a la evaluación con tareas reservadas — la misma disciplina con validación de regresión que exijo para cualquier cambio de un modelo en producción. La mayor palanca de costo en los agentes hoy es el harness, no el modelo, y NVIDIA acaba de hacer que las máquinas puedan explorar esa palanca.",
+      "ar": "خفض الرموز بنسبة 45–49 % أمر جيد، لكن المنهجية هي الخبر الحقيقي: دخلت 152 تحسينًا مرشحًا، ولم يُطلَق سوى الآليات الأربع التي صمدت أمام التقييم على مهام محجوزة — وهو الانضباط ذاته المُتحقَّق منه باختبارات الانحدار الذي أطلبه لأي تغيير في نموذج إنتاجي. أكبر رافعة للتكلفة في الوكلاء اليوم هي الـ harness وليس النموذج، وقد جعلت NVIDIA هذه الرافعة قابلة للاستكشاف آليًا."
+    },
+    "tags": [
+      "harness",
+      "efficiency",
+      "self-improvement"
+    ]
+  },
+  {
+    "id": "fields-medalists-open-letter-ai-math",
+    "date": "2026-09-11",
+    "category": "ai",
+    "headline": {
+      "en": "OpenAI's feud with mathematicians is only escalating",
+      "de": "OpenAIs Zwist mit den Mathematikern eskaliert weiter",
+      "fr": "La dispute d'OpenAI avec les mathématiciens ne fait que s'intensifier",
+      "es": "La disputa de OpenAI con los matemáticos no hace más que escalar",
+      "ar": "الخلاف بين OpenAI والرياضيين يتصاعد أكثر فأكثر"
+    },
+    "source": "TechCrunch",
+    "url": "https://techcrunch.com/2026/09/11/openais-feud-with-mathematicians-is-only-escalating/",
+    "take": {
+      "en": "Twenty-five Fields Medalists accusing labs of steamrolling mathematical credit is what happens when proofs become race assets: priority gets claimed by press release while actual verification still runs on months of human review. The Lean formalization is what made the Navier–Stokes claim checkable — strip that discipline out and all that's left to trust is marketing.",
+      "de": "Wenn fünfundzwanzig Fields-Medaillengewinner den Labors vorwerfen, mathematische Urheberschaft niederzuwalzen, zeigt sich, was passiert, wenn Beweise zu Wettkampf-Assets werden: Die Priorität wird per Pressemitteilung beansprucht, während die eigentliche Verifikation weiter Monate menschlicher Begutachtung braucht. Die Lean-Formalisierung war es, die den Navier–Stokes-Anspruch überprüfbar machte — ohne diese Disziplin bleibt als Vertrauensgrundlage nur Marketing.",
+      "fr": "Vingt-cinq médaillés Fields accusant les labos de piétiner la paternité mathématique : voilà ce qui arrive quand les preuves deviennent des actifs de course — la priorité s'annonce par communiqué de presse pendant que la vérification réelle exige encore des mois de revue humaine. C'est la formalisation Lean qui rendait la revendication Navier–Stokes vérifiable ; retirez cette discipline et il ne reste que du marketing à croire.",
+      "es": "Que veinticinco medallistas Fields acuse a los laboratorios de atropellar el crédito matemático es lo que pasa cuando las demostraciones se convierten en activos de carrera: la prioridad se reclama por nota de prensa mientras la verificación real sigue dependiendo de meses de revisión humana. La formalización en Lean es lo que hacía verificable la afirmación de Navier–Stokes — quita esa disciplina y lo único que queda para confiar es marketing.",
+      "ar": "اتهام خمسة وعشرين من الحاصلين على ميدالية فيلدز للمختبرات بتجاوز حقوق الريادة الرياضية هو ما يحدث عندما تتحول البراهين إلى أصول سباق: تُعلَن الأولوية عبر بيان صحفي بينما لا يزال التحقق الفعلي يعتمد على شهور من المراجعة البشرية. صياغة البرهان في Lean هي ما جعل ادعاء Navier–Stokes قابلًا للتحقق — وبدون هذا الانضباط لا يبقى للثقة سوى التسويق."
+    },
+    "tags": [
+      "mathematics",
+      "governance",
+      "verification"
+    ]
+  },
+  {
+    "id": "google-tunix-autofinetune-tpus",
+    "date": "2026-09-11",
+    "category": "agentic",
+    "headline": {
+      "en": "Autonomous LLM post-training with Tunix on TPUs",
+      "de": "Autonomes LLM-Post-Training mit Tunix auf TPUs",
+      "fr": "Post-entraînement autonome des LLM avec Tunix sur TPUs",
+      "es": "Post-entrenamiento autónomo de LLM con Tunix en TPUs",
+      "ar": "ما بعد التدريب الذاتي لنماذج LLM باستخدام Tunix على وحدات TPUs"
+    },
+    "source": "Google Developers Blog",
+    "url": "https://developers.googleblog.com/autonomous-llm-post-training-with-tunix-on-tpus/",
+    "take": {
+      "en": "An agent that sweeps LoRA ranks and learning rates overnight and commits only improvements that pass a human-defined eval is just MLOps with the loop closed, and the auditable Git history is the part I'd actually trust. The open question is who owns that eval when the agent, not the engineer, is the one optimizing against it.",
+      "de": "Ein Agent, der über Nacht LoRA-Ränge und Lernraten durchsucht und nur Verbesserungen committet, die eine menschlich definierte Eval bestehen, ist schlicht MLOps mit geschlossener Schleife — und die auditierbare Git-Historie ist der Teil, dem ich wirklich vertrauen würde. Die offene Frage ist, wem diese Eval gehört, wenn der Agent und nicht der Mensch dagegen optimiert.",
+      "fr": "Un agent qui explore les rangs LoRA et les taux d'apprentissage pendant la nuit et ne commite que les améliorations qui passent une évaluation définie par des humains, c'est simplement du MLOps avec la boucle fermée — et l'historique Git auditable est la partie à laquelle je ferais vraiment confiance. La question ouverte : à qui appartient cette évaluation quand c'est l'agent, et non l'humain, qui optimise contre elle.",
+      "es": "Un agente que barre rangos de LoRA y tasas de aprendizaje durante la noche y solo confirma en Git las mejoras que pasan una evaluación definida por humanos es simplemente MLOps con el ciclo cerrado — y el historial de Git auditable es la parte en la que de verdad confiaría. La pregunta abierta es de quién es esa evaluación cuando quien optimiza contra ella es el agente, no el humano.",
+      "ar": "وكيل يجتاح رتب LoRA ومعدلات التعلم طوال الليل ولا يُدرج في Git إلا التحسينات التي تجتاز تقييمًا حدده البشر هو ببساطة MLOps بحلقة مغلقة — وسجل Git القابل للتدقيق هو الجزء الذي سأثق به فعلًا. والسؤال المفتوح: لمن تكون معايير التقييم هذه حين يصبح المُحسِّن ضدّها هو الوكيل وليس الإنسان."
+    },
+    "tags": [
+      "mlops",
+      "fine-tuning",
+      "autonomous-agents"
+    ]
   }
 ]
