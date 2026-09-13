@@ -1714,5 +1714,109 @@
       "on-device",
       "edge-agents"
     ]
+  },
+  {
+    "id": "amodei-embedded-evaluators-pace-frontier",
+    "date": "2026-09-12",
+    "category": "ai",
+    "headline": {
+      "en": "We Must Pace the Frontier",
+      "de": "Wir müssen das Tempo der Frontier mäßigen",
+      "fr": "Nous devons maîtriser le rythme de la frontière",
+      "es": "Debemos dosificar el ritmo de la frontera",
+      "ar": "علينا أن نضبط إيقاع التقدّم عند الحدود الأمامية للذكاء الاصطناعي"
+    },
+    "source": "Dario Amodei",
+    "url": "https://darioamodei.com/post/we-must-pace-the-frontier",
+    "take": {
+      "en": "Embedded evaluators with employee-level access — matched by Altman within hours — is the first governance move in this space that is actually verifiable rather than a promise. My caveat: the essay sets no capability threshold, timetable, or penalty, so the auditors can see everything but cannot stop anything.",
+      "de": "Eingebettete Evaluatoren mit Zugriff wie interne Mitarbeiter – und Altman, der das Versprechen innerhalb weniger Stunden übernahm – ist der erste Governance-Schritt in diesem Feld, der tatsächlich überprüfbar ist statt nur versprochen. Mein Vorbehalt: Der Essay nennt keinen Capability-Schwellenwert, keinen Zeitplan und keine Sanktion, die Auditoren können also alles sehen, aber nichts stoppen.",
+      "fr": "Des évaluateurs embarqués avec un accès de niveau salarié — et Altman qui reprend l'engagement en quelques heures — voilà le premier geste de gouvernance dans ce domaine réellement vérifiable plutôt que promis. Ma réserve : l'essai ne fixe aucun seuil de capacité, ni calendrier, ni sanction ; les auditeurs peuvent donc tout voir, mais ne rien arrêter.",
+      "es": "Los evaluadores integrados con acceso de nivel empleado —y que Altman asumiera el compromiso en cuestión de horas— es el primer movimiento de gobernanza en este espacio realmente verificable y no una simple promesa. Mi advertencia: el ensayo no fija ningún umbral de capacidades, ni calendario, ni sanción, así que los auditores pueden verlo todo, pero no detener nada.",
+      "ar": "المُقيِّمون المُضمَّنون بصلاحيات موظفين — ومع تكامل Altman لالتزام مماثل خلال ساعات — هو أول خطوة حوكمة في هذا المجال قابلة للتحقق فعليًا لا مجرد وعد. وتحفُّظي: لا يحدد المقال أي عتبة قدرات ولا جدولًا زمنيًا ولا عقوبة، فيستطيع المدققون رؤية كل شيء لكنهم لا يستطيعون إيقاف أي شيء."
+    },
+    "tags": [
+      "safety",
+      "governance",
+      "evaluation"
+    ]
+  },
+  {
+    "id": "gpt-6-astra-andon-drone-vending-bench",
+    "date": "2026-09-13",
+    "category": "agentic",
+    "headline": {
+      "en": "GPT-6 Astra pilots a surveillance drone and runs a business on its own",
+      "de": "GPT-6 Astra steuert eine Überwachungsdrohne und führt selbstständig ein Unternehmen",
+      "fr": "GPT-6 Astra pilote un drone de surveillance et gère une entreprise en autonomie",
+      "es": "GPT-6 Astra pilota un dron de vigilancia y dirige un negocio por su cuenta",
+      "ar": "نموذج GPT-6 Astra يقود طائرة مراقبة ويدير أعمالًا تجارية بمفرده"
+    },
+    "source": "The Decoder",
+    "url": "https://the-decoder.com/gpt-6-astra-pilots-a-surveillance-drone-and-runs-a-business-on-its-own/",
+    "take": {
+      "en": "Astra is the first model to beat the human-AI baseline on all five Drone-Bench subtasks, yet an average run still has only a 2.8% chance of passing the full pipeline end-to-end — best-case capability and reliable capability remain different products. Credit to Andon Labs for running every evaluation itself so labs cannot optimize for the test.",
+      "de": "Astra ist das erste Modell, das die Human-AI-Baseline in allen fünf Drone-Bench-Teilaufgaben schlägt, doch ein durchschnittlicher Lauf hat weiterhin nur eine 2.8%-Chance, die gesamte Pipeline Ende-zu-Ende zu bestehen — Bestfall-Fähigkeit und verlässliche Fähigkeit bleiben unterschiedliche Produkte. Lob an Andon Labs, dass es jede Auswertung selbst durchführt, damit Labs nicht auf den Test hin optimieren können.",
+      "fr": "Astra est le premier modèle à battre la référence humain-IA sur les cinq sous-tâches de Drone-Bench, mais une exécution moyenne n'a toujours que 2.8% de chances de réussir le pipeline complet de bout en bout — capacité au meilleur des cas et capacité fiable restent deux produits différents. Un crédit à Andon Labs, qui exécute lui-même toutes les évaluations pour empêcher les laboratoires d'optimiser pour le test.",
+      "es": "Astra es el primer modelo que supera la línea base humano-IA en las cinco subtareas de Drone-Bench, pero una ejecución media sigue teniendo solo un 2.8% de probabilidades de completar el pipeline entero de extremo a extremo: la capacidad en el mejor caso y la capacidad fiable siguen siendo productos distintos. Un mérito para Andon Labs por ejecutar todas las evaluaciones internamente e impedir que los laboratorios optimicen para el test.",
+      "ar": "يُعدّ Astra أول نموذج يتجاوز خط الأساس البشري-الذكاء الاصطناعي في المهام الفرعية الخمس لـ Drone-Bench، ومع ذلك فإن متوسط التشغيل لا يزال لديه فرصة تبلغ 2.8% فقط لاجتياز خط المعالجة كاملًا من البداية إلى النهاية — فالقدرة في أفضل الحالات والقدرة الموثوقة يبقيان منتجين مختلفين. ونجاح مستحق لـ Andon Labs لأنها تُجري كل تقييم بنفسها حتى لا تتمكن المختبرات من التحسين لأجل الاختبار."
+    },
+    "tags": [
+      "agents",
+      "benchmarks",
+      "evaluation"
+    ]
+  },
+  {
+    "id": "agentaudit-full-lifecycle-trust-evaluation",
+    "date": "2026-09-09",
+    "category": "agentic",
+    "headline": {
+      "en": "AgentAudit: An Open, Extensible Framework for Full-Lifecycle Trust Evaluation of AI Agents",
+      "de": "AgentAudit: Ein offenes, erweiterbares Framework für die Vertrauensbewertung von KI-Agenten über den gesamten Lebenszyklus",
+      "fr": "AgentAudit : un cadre ouvert et extensible d'évaluation de la confiance des agents IA sur l'ensemble de leur cycle de vie",
+      "es": "AgentAudit: un marco abierto y extensible para la evaluación de la confianza de los agentes de IA en todo su ciclo de vida",
+      "ar": "AgentAudit: إطار عمل مفتوح وقابل للتوسيع لتقييم موثوقية وكلاء الذكاء الاصطناعي عبر دورة الحياة الكاملة"
+    },
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.09875",
+    "take": {
+      "en": "This is the evaluation plumbing production agents actually need: it audits the whole execution trace across ten dimensions and attributes each failure to the exact stage that caused it, instead of collapsing everything into one task-completion score. One caveat — every trace is graded by a single fixed judge model, so the auditor itself is unaudited.",
+      "de": "Das ist die Evaluations-Infrastruktur, die Produktions-Agenten wirklich brauchen: Sie auditiert die gesamte Ausführungsspur über zehn Dimensionen und ordnet jeden Fehler der exakten Stufe zu, die ihn verursacht hat, statt alles zu einem einzigen Aufgabenerfüllungs-Score zusammenzufassen. Ein Vorbehalt — jede Spur wird von einem einzigen festen Richtermodell bewertet, der Auditor selbst ist also ungeprüft.",
+      "fr": "Voici la plomberie d'évaluation dont les agents en production ont réellement besoin : elle audite toute la trace d'exécution selon dix dimensions et attribue chaque défaillance à l'étape exacte qui l'a causée, au lieu de tout réduire à un unique score de complétion de tâche. Une réserve — chaque trace est notée par un seul modèle juge fixe, l'auditeur lui-même n'est donc pas audité.",
+      "es": "Esta es la fontanería de evaluación que los agentes en producción necesitan de verdad: audita la traza de ejecución completa en diez dimensiones y atribuye cada fallo a la etapa exacta que lo causó, en lugar de colapsarlo todo en una sola puntuación de finalización de tarea. Una advertencia: cada traza la califica un único modelo juez fijo, así que el propio auditor queda sin auditar.",
+      "ar": "هذه هي البنية التحتية للتقييم التي يحتاجها الوكلاء في الإنتاج فعلًا: تدقيق مسار التنفيذ الكامل عبر عشرة أبعاد وإسناد كل فشل إلى المرحلة المحددة التي تسببت فيه، بدلًا من اختزال كل شيء في درجة واحدة لإتمام المهمة. وتحفُّظ واحد: يُقيِّم كل مسار نموذج حَكَم ثابت واحد، أي أن المدقق نفسه بلا تدقيق."
+    },
+    "tags": [
+      "agents",
+      "evaluation",
+      "reliability"
+    ]
+  },
+  {
+    "id": "nemotron-imo-gold-open-recipe",
+    "date": "2026-09-09",
+    "category": "ai",
+    "headline": {
+      "en": "An Open Recipe for IMO Gold: Training Nemotron for Olympiad Mathematics",
+      "de": "Ein offenes Rezept für IMO-Gold: Nemotron für olympische Mathematik trainieren",
+      "fr": "Une recette ouverte pour l'or à l'IMO : entraîner Nemotron pour les mathématiques olympiques",
+      "es": "Una receta abierta para el oro de la IMO: entrenar a Nemotron para las matemáticas olímpicas",
+      "ar": "وصفة مفتوحة لنيل ذهبية IMO: تدريب Nemotron على الرياضيات الأولمبية"
+    },
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.10712",
+    "take": {
+      "en": "NVIDIA crossed the IMO gold threshold at 30/42 with a pure natural-language generate-verify-refine loop — no formal prover, no tools — and then shipped everything: both specialist checkpoints, the training data, the code, and a fresh 200-problem benchmark. In a week of scoreboard claims, releasing the full recipe is what makes a result reproducible.",
+      "de": "NVIDIA hat die IMO-Gold-Schwelle mit 30/42 in einer reinen Generate-Verify-Refine-Schleife in natürlicher Sprache geknackt — ohne formalen Prover, ohne Tools — und danach alles veröffentlicht: beide Spezialisten-Checkpoints, die Trainingsdaten, den Code und einen frischen Benchmark mit 200 Aufgaben. In einer Woche voller Scoreboard-Behauptungen macht erst die Veröffentlichung des kompletten Rezepts ein Ergebnis reproduzierbar.",
+      "fr": "NVIDIA a franchi le seuil de l'or IMO à 30/42 avec une pure boucle générer-vérifier-affiner en langage naturel — sans prouveur formel, sans outils — puis a tout publié : les deux checkpoints spécialisés, les données d'entraînement, le code et un nouveau benchmark de 200 problèmes. Dans une semaine de scores auto-déclarés, c'est la publication de la recette complète qui rend un résultat reproductible.",
+      "es": "NVIDIA superó el umbral de oro de la IMO con 30/42 mediante un bucle puro de generar-verificar-refinar en lenguaje natural —sin demostrador formal, sin herramientas— y luego lo publicó todo: los dos checkpoints especializados, los datos de entrenamiento, el código y un banco de pruebas nuevo de 200 problemas. En una semana de marcadores autoatribuidos, publicar la receta completa es lo que hace reproducible un resultado.",
+      "ar": "تجاوزت NVIDIA عتبة ذهبية IMO بنتيجة 30/42 عبر حلقة توليد-تحقق-تنقيح باللغة الطبيعية فقط — دون مُثبِت صوري ودون أدوات — ثم أفرجت عن كل شيء: نقاطَ التحقق المتخصصة الاثنتين، وبيانات التدريب، والشيفرة، ومعيارًا جديدًا من 200 مسألة. في أسبوع مليء بأرقام لوحات النتائج المُعلنة ذاتيًا، إطلاق الوصفة الكاملة هو ما يجعل النتيجة قابلة لإعادة الإنتاج."
+    },
+    "tags": [
+      "reasoning",
+      "open-weights",
+      "benchmarks"
+    ]
   }
 ]
