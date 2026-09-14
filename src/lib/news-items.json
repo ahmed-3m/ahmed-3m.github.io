@@ -1714,5 +1714,83 @@
       "on-device",
       "edge-agents"
     ]
+  },
+  {
+    "id": "anthropic-pace-the-frontier-plan",
+    "date": "2026-09-12",
+    "category": "ai",
+    "headline": {
+      "en": "Anthropic CEO outlines plan to 'pace the frontier'",
+      "de": "Anthropic-CEO skizziert Plan, die „Frontier“ zu entschleunigen",
+      "fr": "Le PDG d'Anthropic esquisse un plan pour ralentir la course à la frontière de l'IA",
+      "es": "El CEO de Anthropic esboza un plan para frenar el ritmo de la frontera de la IA",
+      "ar": "الرئيس التنفيذي لشركة Anthropic يعرض خطة لإبطاء وتيرة السباق نحو حدود الذكاء الاصطناعي"
+    },
+    "source": "TechCrunch",
+    "url": "https://techcrunch.com/2026/09/12/anthropic-ceo-outlines-plan-to-pace-the-frontier/",
+    "take": {
+      "en": "It took a summer of rogue-agent incidents, but 'pace the frontier' with actual mechanisms — embedded third-party evaluators with employee-level access — is the first slowdown proposal I can take seriously, and Altman matching it within hours matters more than the essay itself. The real test is whether METR-style access survives the next competitive release cycle; an evaluator you only invite in after the incident isn't a control, it's an autopsy.",
+      "de": "Es brauchte einen Sommer voller Rogue-Agent-Vorfälle, aber „pace the frontier“ mit echten Mechanismen — eingebettete Drittbewerter mit Zugriff auf Mitarbeiterebene — ist der erste Verlangsamungsvorschlag, den ich ernst nehmen kann, und dass Altman ihn innerhalb von Stunden übernimmt, wiegt schwerer als der Essay selbst. Die eigentliche Prüfung ist, ob METR-ähnlicher Zugang den nächsten konkurrierenden Release-Zyklus übersteht; ein Evaluator, der erst nach dem Vorfall eingeladen wird, ist keine Kontrolle, sondern eine Autopsie.",
+      "fr": "Il a fallu un été d'incidents d'agents incontrôlés, mais ce « pace the frontier » assorti de mécanismes concrets — des évaluateurs tiers intégrés avec un accès de niveau employé — est la première proposition de ralentissement que je prends au sérieux, et le fait qu'Altman l'adopte en quelques heures compte plus que l'essai lui-même. Le vrai test, c'est de savoir si un accès à la METR survivra au prochain cycle de sortie compétitif ; un évaluateur qu'on n'invite qu'après l'incident n'est pas un contrôle, c'est une autopsie.",
+      "es": "Hizo falta un verano de incidentes con agentes descontrolados, pero este «pace the frontier» con mecanismos reales —evaluadores externos integrados con acceso a nivel de empleado— es la primera propuesta de ralentización que me tomo en serio, y que Altman la adopte en cuestión de horas pesa más que el ensayo en sí. La prueba real es si un acceso tipo METR sobrevive al próximo ciclo de lanzamientos competitivos; un evaluador que solo invitas después del incidente no es un control, es una autopsia.",
+      "ar": "احتاج الأمر إلى صيف كامل من حوادث الوكلاء الجامحة، لكن مقترح «pace the frontier» بآليات فعلية — مقيّمون خارجيون مدمجون بصلاحيات موظفين — هو أول مقترح لإبطاء الوتيرة آخذه على محمل الجد، ومجاراة Altman له خلال ساعات أهم من المقال نفسه. الاختبار الحقيقي هو ما إذا كان وصولٌ على غرار METR سيصمد أمام دورة الإصدارات التنافسية القادمة؛ فالمُقيِّم الذي لا يُدعى إلا بعد وقوع الحادث ليس رقابةً، بل تشريحٌ لما وقع."
+    },
+    "tags": [
+      "safety",
+      "governance",
+      "frontier-models"
+    ]
+  },
+  {
+    "id": "google-toolgrad-tool-use-data",
+    "date": "2026-09-10",
+    "category": "agentic",
+    "headline": {
+      "en": "ToolGrad: Efficient tool-use dataset generation with textual \"gradients\"",
+      "de": "ToolGrad: Effiziente Erstellung von Tool-Use-Datensätzen mit textuellen „Gradients“",
+      "fr": "ToolGrad : génération efficace de jeux de données d'usage d'outils par « gradients » textuels",
+      "es": "ToolGrad: generación eficiente de datasets de uso de herramientas con «gradientes» textuales",
+      "ar": "ToolGrad: توليد فعّال لمجموعات بيانات استخدام الأدوات عبر «تدرّجات» نصية"
+    },
+    "source": "Google Research",
+    "url": "https://research.google/blog/toolgrad-efficient-tool-use-dataset-generation-with-textual-gradients/",
+    "take": {
+      "en": "ToolGrad's answer-first inversion — build the verified tool chain first, synthesize the query second — is the lesson I keep relearning in data work: your training data's pass rate is an evaluation problem before it's a scale problem. A 99.8% pass rate at lower cost, with small fine-tuned models matching proprietary LLMs on unseen tools, is exactly the kind of boring, verifiable pipeline that actually ships.",
+      "de": "ToolGrads Answer-first-Umkehrung — erst die verifizierte Tool-Kette bauen, dann die Anfrage synthetisieren — ist die Lektion, die ich in der Datenarbeit ständig neu lerne: Die Pass-Rate Ihrer Trainingsdaten ist ein Evaluationsproblem, bevor sie ein Skalierungsproblem ist. Eine Pass-Rate von 99.8% bei geringeren Kosten, bei der kleine feinabgestimmte Modelle proprietäre LLMs bei unbekannten Tools einholen, ist genau die Art von langweiliger, verifizierbarer Pipeline, die tatsächlich in Produktion geht.",
+      "fr": "L'inversion answer-first de ToolGrad — construire d'abord la chaîne d'outils vérifiée, synthétiser la requête ensuite — illustre une leçon que je redis sans cesse en travail de données : le taux de réussite de vos données d'entraînement est d'abord un problème d'évaluation avant d'être un problème d'échelle. Un taux de réussite de 99.8% à coût réduit, où de petits modèles affinés rattrapent les LLM propriétaires sur des outils jamais vus, c'est exactement le genre de pipeline ennuyeux et vérifiable qui part réellement en production.",
+      "es": "La inversión answer-first de ToolGrad — construir primero la cadena de herramientas verificada y sintetizar después la consulta — refleja la lección que no dejo de reaprender en el trabajo con datos: la tasa de acierto de tus datos de entrenamiento es un problema de evaluación antes de ser un problema de escala. Una tasa de acierto del 99.8% a menor coste, con modelos pequeños ajustados igualando a los LLM propietarios con herramientas nunca vistas, es justo el tipo de pipeline aburrido y verificable que de verdad llega a producción.",
+      "ar": "قلبُ ToolGrad للمعادلة — بناء سلسلة الأدوات المُتحقَّق منها أولًا ثم توليد الاستعلام لاحقًا — هو الدرس الذي لا أكفّ عن إعادة تعلّمه في العمل على البيانات: معدل نجاح بيانات التدريب مشكلة تقييم قبل أن يكون مشكلة حجم. معدل نجاح بنسبة 99.8% بتكلفة أقل، مع لحاق النماذج الصغيرة المُضبَّطة بالنماذج اللغوية المملوكة على أدوات لم تُرَ من قبل، هو بالضبط نوع خطوط المعالجة الرتيبة والقابلة للتحقق الذي يصل فعلًا إلى الإنتاج."
+    },
+    "tags": [
+      "tool-use",
+      "synthetic-data",
+      "agents"
+    ]
+  },
+  {
+    "id": "internlm-atria-dawn-744b-open-weights",
+    "date": "2026-09-14",
+    "category": "agentic",
+    "headline": {
+      "en": "Atria Dawn Preview: InternLM's 744B Agentic MoE Ships Quietly",
+      "de": "Atria Dawn Preview: InternLMs 744B Agentic-MoE erscheint still und leise",
+      "fr": "Atria Dawn Preview : le MoE agentique 744B d'InternLM arrive discrètement",
+      "es": "Atria Dawn Preview: el MoE agéntico de 744B de InternLM se lanza sin ruido",
+      "ar": "Atria Dawn Preview: نموذج InternLM الوكيلي MoE بحجم 744B يُطرح بهدوء"
+    },
+    "source": "OrcaRouter",
+    "url": "https://www.orcarouter.ai/blog/atria-dawn-preview-quiet-release",
+    "take": {
+      "en": "1.5TB of MIT-licensed weights for a 744B agentic MoE, dropped with no blog post, no paper, and no independent evals — at this point the release itself is the announcement. Before this goes anywhere near production, run it through your own harness; a benchmark table on a model card is marketing until a neutral evaluator reproduces it.",
+      "de": "1.5TB MIT-lizenzierte Gewichte für ein 744B Agentic-MoE, veröffentlicht ohne Blogpost, ohne Paper und ohne unabhängige Evals — inzwischen ist das Release selbst die Ankündigung. Bevor das in die Nähe von Produktion kommt: durch den eigenen Harness jagen; eine Benchmark-Tabelle auf einer Model Card ist Marketing, bis ein neutraler Evaluator sie reproduziert.",
+      "fr": "1.5TB de poids sous licence MIT pour un MoE agentique de 744B, publiés sans article de blog, sans paper et sans évaluations indépendantes — à ce stade, la sortie elle-même tient lieu d'annonce. Avant d'approcher ça de la production, faites-le passer par votre propre harness ; un tableau de benchmarks sur une model card, c'est du marketing tant qu'un évaluateur neutre ne l'a pas reproduit.",
+      "es": "1.5TB de pesos con licencia MIT para un MoE agéntico de 744B, publicados sin post de blog, sin paper y sin evaluaciones independientes — a estas alturas, el lanzamiento en sí es el anuncio. Antes de acercar esto a producción, pásalo por tu propio harness; una tabla de benchmarks en una model card es marketing hasta que un evaluador neutral la reproduzca.",
+      "ar": "1.5TB من الأوزان بترخيص MIT لنموذج MoE وكيلي بحجم 744B، أُطلقت دون تدوينة أو ورقة بحثية أو تقييمات مستقلة — وصلنا إلى نقطةٍ يكون فيها الإصدار نفسه هو الإعلان. قبل أن يقترب هذا من الإنتاج بأي حال، ليُجرَّب عبر منصّة تقييم خاصة بكم؛ فجدول المعايير على بطاقة النموذج تسويقٌ إلى أن يُعيد مُقيِّم محايد إنتاج نتائجه."
+    },
+    "tags": [
+      "open-weights",
+      "agents",
+      "moe"
+    ]
   }
 ]
