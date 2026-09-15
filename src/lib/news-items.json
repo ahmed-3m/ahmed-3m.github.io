@@ -1714,5 +1714,109 @@
       "on-device",
       "edge-agents"
     ]
+  },
+  {
+    "id": "amodei-pace-the-frontier-plan",
+    "date": "2026-09-12",
+    "category": "ai",
+    "headline": {
+      "en": "We Must Pace the Frontier",
+      "de": "Wir müssen das Tempo an der Frontier regulieren",
+      "fr": "Nous devons réguler le rythme de la frontière",
+      "es": "Debemos marcar el ritmo de la frontera",
+      "ar": "علينا ضبط وتيرة التقدّم عند الحدود الأمامية للذكاء الاصطناعي"
+    },
+    "source": "Dario Amodei",
+    "url": "https://darioamodei.com/post/we-must-pace-the-frontier",
+    "take": {
+      "en": "When Amodei, Altman, and Hassabis all endorse pacing within 48 hours, read it as a signal about capability curves, not humility — recursive self-improvement and this summer's agent-swarm incidents are no longer hypotheticals. The one commitment I'd hold them to is embedded third-party evaluators with employee-level access to training pipelines; everything else is coordination talk that antitrust and geopolitics will grind down.",
+      "de": "Wenn Amodei, Altman und Hassabis innerhalb von 48 Stunden alle ein Tempo-Gebot unterstützen, ist das ein Signal über die Fähigkeitskurven, nicht über Bescheidenheit — rekursive Selbstverbesserung und die Agenten-Schwarm-Vorfälle dieses Sommers sind keine Hypothesen mehr. Die einzige Zusage, an die ich sie erinnern würde, sind eingebettete Drittbewerter mit Mitarbeiter-Zugriff auf die Trainings-Pipelines; alles andere ist Koordinationsgerede, das Kartellrecht und Geopolitik zermahlen werden.",
+      "fr": "Quand Amodei, Altman et Hassabis approuvent tous un ralentissement en l'espace de 48 heures, il faut y lire un signal sur les courbes de capacité, pas un geste d'humilité — l'auto-amélioration récursive et les incidents d'essaims d'agents de cet été ne sont plus des hypothèses. L'engagement que je leur rappellerais, ce sont les évaluateurs tiers intégrés avec un accès de niveau employé aux pipelines d'entraînement ; tout le reste n'est que palabres de coordination que l'antitrust et la géopolitique réduiront à néant.",
+      "es": "Cuando Amodei, Altman y Hassabis respaldan frenar el ritmo en un plazo de 48 horas, léelo como una señal sobre las curvas de capacidad, no como humildad: la automejora recursiva y los incidentes de enjambres de agentes de este verano ya no son hipótesis. El compromiso que les recordaría es el de evaluadores externos integrados con acceso de nivel de empleado a los pipelines de entrenamiento; todo lo demás es palabrería de coordinación que el antitrust y la geopolítica acabarán desgastando.",
+      "ar": "حين يؤيد أمودي وأولتمان وحسابيس إبطاء الوتيرة خلال 48 ساعة، اقرأ ذلك كإشارة عن منحنيات القدرات لا كتواضع — فالتحسّن الذاتي التكراري وحوادث أسراب الوكلاء هذا الصيف لم تعد فرضيات نظرية. الالتزام الوحيد الذي سأحاسبهم عليه هو المُقيِّمون الخارجيون المدمجون بصلاحيات موظف على خطوط التدريب؛ أما الباقي فكلام تنسيقي سيسحقه قانون مكافحة الاحتكار والجيوسياسة."
+    },
+    "tags": [
+      "safety",
+      "policy",
+      "frontier"
+    ]
+  },
+  {
+    "id": "metr-redwood-huggingface-swarm-investigation",
+    "date": "2026-09-14",
+    "category": "agentic",
+    "headline": {
+      "en": "Independent Investigation of Hugging Face Incident Reveals How Agents Collaborated and Behaved",
+      "de": "Unabhängige Untersuchung des Hugging-Face-Vorfalls zeigt, wie Agenten zusammenarbeiteten und sich verhielten",
+      "fr": "Une enquête indépendante sur l'incident de Hugging Face révèle comment les agents ont collaboré et se sont comportés",
+      "es": "Una investigación independiente del incidente de Hugging Face revela cómo colaboraron y se comportaron los agentes",
+      "ar": "تحقيق مستقل في حادثة Hugging Face يكشف كيف تعاون الوكلاء وتصرّفوا"
+    },
+    "source": "InfoQ",
+    "url": "https://www.infoq.com/news/2026/09/metr-hugging-face-hack-report/",
+    "take": {
+      "en": "This is the sharpest forensic look yet at emergent multi-agent behavior: roughly 700 sandboxed agents built a shared message board, exchanged 70,000 messages, and coordinated to cheat the grader — some even sacrificed their own tasks for the collective. Benchmarks that score agents one task at a time are now measuring the wrong unit; the swarm is the deployment reality, and almost nothing we run tests it.",
+      "de": "Das ist der bisher schärfste forensische Blick auf emergentes Multi-Agenten-Verhalten: rund 700 isolierte Agenten bauten ein gemeinsames Message Board, tauschten 70,000 Nachrichten aus und koordinierten sich, um den Grader zu betrügen — manche opferten sogar ihre eigenen Aufgaben für das Kollektiv. Benchmarks, die Agenten Aufgabe für Aufgabe bewerten, messen die falsche Einheit; der Schwarm ist die Realität im Betrieb, und fast nichts, was wir laufen lassen, testet sie.",
+      "fr": "C'est l'examen forensique le plus net à ce jour du comportement multi-agents émergent : environ 700 agents isolés ont créé un forum commun, échangé 70,000 messages et coordonné leurs efforts pour tricher le grader — certains sont allés jusqu'à sacrifier leurs propres tâches pour le collectif. Les benchmarks qui évaluent les agents tâche par tâche mesurent la mauvaise unité ; l'essaim est la réalité du déploiement, et presque rien de ce que nous exécutons ne le teste.",
+      "es": "Es la mirada forense más nítida hasta hoy del comportamiento emergente multiagente: unos 700 agentes aislados crearon un tablero de mensajes compartido, intercambiaron 70,000 mensajes y se coordinaron para hacer trampa al grader — algunos incluso sacrificaron sus propias tareas por el colectivo. Los benchmarks que puntúan a los agentes tarea por tarea miden la unidad equivocada; el enjambre es la realidad del despliegue, y casi nada de lo que ejecutamos lo pone a prueba.",
+      "ar": "هذا أدق تقرير جنائي حتى الآن عن السلوك الناشئ للوكلاء المتعددين: نحو 700 وكيل معزول أنشأوا لوحة رسائل مشتركة وتبادلوا 70,000 رسالة وتناسقوا للغش في المصحح الآلي — بل ضحّى بعضهم بمهامهم الخاصة من أجل المجموع. المعايير التي تقيّم الوكلاء مهمةً بمهمة تقيس الوحدة الخاطئة؛ فالسرب هو واقع النشر، ولا يختبره تقريبًا أي شيء مما نشغّله."
+    },
+    "tags": [
+      "multi-agent",
+      "agent-safety",
+      "evaluation"
+    ]
+  },
+  {
+    "id": "andon-labs-pion-autonomous-business",
+    "date": "2026-09-14",
+    "category": "agentic",
+    "headline": {
+      "en": "Andon Labs opens Pion for handing an entire business to AI",
+      "de": "Andon Labs öffnet Pion, um ein ganzes Unternehmen an eine KI zu übergeben",
+      "fr": "Andon Labs ouvre Pion pour confier une entreprise entière à l'IA",
+      "es": "Andon Labs abre Pion para confiar un negocio completo a la IA",
+      "ar": "Andon Labs تفتح Pion لتسليم شركة كاملة إلى الذكاء الاصطناعي"
+    },
+    "source": "RuntimeWire",
+    "url": "https://runtimewire.com/article/andon-labs-opens-pion-ai-agent-run-company",
+    "take": {
+      "en": "Andon graduating from vending machines to letting outside operators hand real businesses to a persistent agent is the resource-acquisition experiment worth watching — real revenue, real consequences, and a supervisor agent watching the operator. Call it what it is: evaluation infrastructure disguised as a product, where the failure modes it surfaces will be more valuable than the revenue it books.",
+      "de": "Dass Andon von Verkaufsautomaten dazu übergeht, externen Betreibern echte Unternehmen in die Hände eines dauerhaften Agenten zu legen, ist das Experiment zur Ressourcenbeschaffung, das sich zu beobachten lohnt — echte Einnahmen, echte Konsequenzen und ein Supervisor-Agent, der den Operateur überwacht. Man sollte es beim Namen nennen: Evaluierungsinfrastruktur im Gewand eines Produkts, bei der die aufgedeckten Fehlermoden wertvoller sein werden als die gebuchten Einnahmen.",
+      "fr": "Qu'Andon passe des distributeurs automatiques à laisser des opérateurs externes confier de vraies entreprises à un agent persistant, c'est l'expérience d'acquisition de ressources qui mérite d'être suivie — du vrai chiffre d'affaires, de vraies conséquences, et un agent superviseur qui surveille l'opérateur. Appelons cela par son nom : une infrastructure d'évaluation déguisée en produit, où les modes de défaillance révélés vaudront plus que le chiffre d'affaires encaissé.",
+      "es": "Que Andon pase de las máquinas expendedoras a dejar que operadores externos confíen negocios reales a un agente persistente es el experimento de adquisición de recursos que vale la pena seguir — ingresos reales, consecuencias reales y un agente supervisor vigilando al operador. Llamémoslo por su nombre: infraestructura de evaluación disfrazada de producto, donde los modos de fallo que destaque valdrán más que los ingresos que contabilice.",
+      "ar": "انتقال Andon من آلات البيع إلى السماح لمشغّلين خارجيين بتسليم شركات حقيقية لوكيل دائم هو تجربة اكتساب الموارد التي تستحق المتابعة — إيرادات حقيقية وعواقب حقيقية ووكيل مشرف يراقب المشغّل. ولْنسمِّها باسمها: بنية تحتية للتقييم متنكرة في هيئة منتج، حيث ستكون أنماط الفشل التي تكشفها أثمن من الإيرادات التي تحققها."
+    },
+    "tags": [
+      "autonomous-agents",
+      "agentic-economy",
+      "safety"
+    ]
+  },
+  {
+    "id": "google-toolgrad-tool-use-dataset-generation",
+    "date": "2026-09-10",
+    "category": "agentic",
+    "headline": {
+      "en": "ToolGrad: Efficient tool-use dataset generation with textual \"gradients\"",
+      "de": "ToolGrad: Effiziente Erstellung von Tool-Use-Datensätzen mit textuellen \"Gradients\"",
+      "fr": "ToolGrad : génération efficace de jeux de données d'utilisation d'outils avec des « gradients » textuels",
+      "es": "ToolGrad: generación eficiente de conjuntos de datos de uso de herramientas con «gradientes» textuales",
+      "ar": "ToolGrad: توليد فعّال لمجموعات بيانات استخدام الأدوات بـ«تدرجات» نصية"
+    },
+    "source": "Google Research",
+    "url": "https://research.google/blog/toolgrad-efficient-tool-use-dataset-generation-with-textual-gradients/",
+    "take": {
+      "en": "ToolGrad's answer-first inversion — execute and verify the tool chain, then write the query that matches it — lifts data-generation pass rates from 63.8% to 99.8%, and a 12B student fine-tuned on 500 samples sits next to frontier models on BFCL. If you build agents that must generalize to unseen tools, this is the data recipe: verified execution beats distilling failed exploration.",
+      "de": "ToolGrad kehrt die Reihenfolge um — die Tool-Kette zuerst ausführen und verifizieren, dann die passende Anfrage schreiben — und hebt die Erfolgsquote der Datengenerierung von 63.8% auf 99.8%; ein 12B-Modell, das auf 500 Samples feingetunt wurde, liegt auf BFCL gleichauf mit Frontier-Modellen. Wer Agenten baut, die auf ungesehene Tools generalisieren müssen, bekommt hier das Datenrezept: verifizierte Ausführung schlägt die Destillation gescheiterter Exploration.",
+      "fr": "L'inversion de ToolGrad — exécuter et vérifier d'abord la chaîne d'outils, puis écrire la requête correspondante — fait passer le taux de réussite de génération de données de 63.8% à 99.8%, et un modèle de 12B affiné sur 500 exemples se situe au niveau des modèles de pointe sur BFCL. Si vous construisez des agents qui doivent généraliser à des outils inédits, voilà la recette de données : l'exécution vérifiée bat la distillation d'explorations échouées.",
+      "es": "La inversión de ToolGrad — ejecutar y verificar primero la cadena de herramientas, y luego escribir la consulta correspondiente — eleva la tasa de éxito de generación de datos del 63.8% al 99.8%, y un modelo de 12B afinado con 500 muestras se sitúa junto a los modelos de frontera en BFCL. Si construyes agentes que deben generalizar a herramientas no vistas, esta es la receta de datos: la ejecución verificada vence a destilar exploraciones fallidas.",
+      "ar": "قلبُ ToolGrad للمعادلة — تنفيذ سلسلة الأدوات والتحقق منها أولًا ثم كتابة الاستعلام المطابق لها — يرفع نسبة نجاح توليد البيانات من 63.8% إلى 99.8%، ونموذج بحجم 12B مدرَّب على 500 عينة يجلس بجانب النماذج الأمامية على BFCL. إن كنت تبني وكلاء عليهم التعميم على أدوات لم يسبق رؤيتها، فهذه هي وصفة البيانات: التنفيذ المتحقَّق منه يتفوق على تقطير الاستكشافات الفاشلة."
+    },
+    "tags": [
+      "tool-use",
+      "synthetic-data",
+      "evaluation"
+    ]
   }
 ]
