@@ -1714,5 +1714,109 @@
       "on-device",
       "edge-agents"
     ]
+  },
+  {
+    "id": "salesforce-koa-crm-reasoning-model",
+    "date": "2026-09-15",
+    "category": "agentic",
+    "headline": {
+      "en": "Announcing Koa: Salesforce's First CRM Reasoning Model, Built on NVIDIA Nemotron",
+      "de": "Ankündigung von Koa: Salesforces erstes CRM-Reasoning-Modell, gebaut auf NVIDIA Nemotron",
+      "fr": "Annonce de Koa : le premier modèle de raisonnement CRM de Salesforce, construit sur NVIDIA Nemotron",
+      "es": "Presentamos Koa: el primer modelo de razonamiento CRM de Salesforce, construido sobre NVIDIA Nemotron",
+      "ar": "الإعلان عن Koa: أول نموذج استدلال CRM من Salesforce، مبني على NVIDIA Nemotron"
+    },
+    "source": "Salesforce",
+    "url": "https://www.salesforce.com/news/press-releases/2026/09/15/koa-reasoning-model/",
+    "take": {
+      "en": "Post-training Nemotron 3 Super with specification-driven RL instead of just calling a frontier API is exactly how I'd build an enterprise agent — and having the same Agent Script specs configure the agent and generate its training tasks is an elegant unification. The '3x fewer errors' claim lives on Salesforce's own CRM bench, though, so I'd want independent replication before trusting it in production.",
+      "de": "Nemotron 3 Super mit spezifikationsgesteuertem RL nachzutrainieren, statt einfach eine Frontier-API aufzurufen, ist genau so, wie ich einen Enterprise-Agenten bauen würde — und dasselbe Agent Script konfiguriert den Agenten und erzeugt zugleich seine Trainingsaufgaben, eine elegante Vereinheitlichung. Die „3x fewer errors“-Aussage beruht allerdings auf Salesforces eigenem CRM-Bench, daher würde ich vor dem Produktiveinsatz eine unabhängige Replikation sehen wollen.",
+      "fr": "Post-entraîner Nemotron 3 Super avec du RL piloté par spécifications plutôt que d'appeler simplement une API frontière, c'est exactement comme cela que je construirais un agent d'entreprise — et que les mêmes spécifications Agent Script configurent l'agent et génèrent ses tâtes d'entraînement est une unification élégante. Mais la promesse de « 3x fewer errors » repose sur le propre CRM bench de Salesforce : je voudrais une réplication indépendante avant de m'y fier en production.",
+      "es": "Posentrenar Nemotron 3 Super con RL guiado por especificaciones en lugar de llamar simplemente a una API frontera es exactamente cómo construiría yo un agente empresarial — y que las mismas especificaciones de Agent Script configuren el agente y generen sus tareas de entrenamiento es una unificación elegante. Eso sí, la promesa de «3x fewer errors» se mide en el CRM bench propio de Salesforce, así que querría una replicación independiente antes de confiar en él en producción.",
+      "ar": "إعادة تدريب Nemotron 3 Super بتعلم معزز موجّه بالمواصفات بدلًا من الاكتفاء بمناداة واجهة frontier هي بالضبط الطريقة التي سأبني بها وكيلًا مؤسسيًا — وحقيقة أن مواصفات Agent Script نفسها تُعرّف الوكيل وتولّد مهام تدريبه في آنٍ واحد توحيدٌ أنيق. لكن وعد «3x fewer errors» يقاس على مرجع CRM الخاص بـ Salesforce نفسها، لذا أريد تكرارًا مستقلًا للنتائج قبل الوثوق به في الإنتاج."
+    },
+    "tags": [
+      "enterprise-agents",
+      "agentic-rl",
+      "tool-use"
+    ]
+  },
+  {
+    "id": "atria-dawn-preview-agentic-open-weights",
+    "date": "2026-09-14",
+    "category": "agentic",
+    "headline": {
+      "en": "Atria Dawn: The Dawn of Agentic Superintelligence",
+      "de": "Atria Dawn: Die Morgenröte der agentischen Superintelligenz",
+      "fr": "Atria Dawn : l'aube de la superintelligence agentique",
+      "es": "Atria Dawn: el amanecer de la superinteligencia agéntica",
+      "ar": "Atria Dawn: فجر الذكاء الفائق الوكيلي"
+    },
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.15818",
+    "take": {
+      "en": "A 744B open-weight agentic model whose training loop is grounded in executable, externally verified outcomes is the right bet — verifiable results beat reward models you have to take on faith. The self-reported benchmark sweep is the usual caveat, but the Verifiable Experience Pipeline is the part worth copying.",
+      "de": "Ein offenes 744B-Agentenmodell, dessen Trainingsschleife auf ausführbaren, extern verifizierten Ergebnissen beruht, ist die richtige Wette — verifizierbare Ergebnisse schlagen Reward-Modelle, denen man blind vertrauen muss. Der selbstberichtete Benchmark-Durchlauf ist der übliche Vorbehalt, aber die Verifiable Experience Pipeline ist der Teil, den man übernehmen sollte.",
+      "fr": "Un modèle agentique open-weights de 744B dont la boucle d'entraînement est ancrée dans des résultats exécutables et vérifiés externement, c'est le pari qu'il fallait faire — des résultats vérifiables battent des reward models qu'il faut croire sur parole. Le balayage auto-rapporté de benchmarks reste la réserve habituelle, mais la Verifiable Experience Pipeline est la partie à copier.",
+      "es": "Un modelo agéntico de pesos abiertos de 744B cuyo bucle de entrenamiento se ancla en resultados ejecutables y verificados externamente es la apuesta correcta — los resultados verificables vencen a los reward models que hay que aceptar a ciegas. El barrido autoinformado de benchmarks es la reserva habitual, pero la Verifiable Experience Pipeline es la parte que vale la pena copiar.",
+      "ar": "نموذج وكيلي مفتوح الأوزان بحجم 744B تدور حلقة تدريبه حول نتائج قابلة للتنفيذ ومُتحقَّق منها خارجيًا هو الرهان الصحيح — النتائج القابلة للتحقق تتغلب على نماذج المكافأة التي يلزم تصديقها دون دليل. جدول المعايير المُبلَّغ ذاتيًا هو التحفظ المعتاد، لكن Verifiable Experience Pipeline هي الجزء الجدير بالاقتباس."
+    },
+    "tags": [
+      "open-weights",
+      "agentic",
+      "verification"
+    ]
+  },
+  {
+    "id": "gemini-3-8-live-voice-agents",
+    "date": "2026-09-15",
+    "category": "agentic",
+    "headline": {
+      "en": "Introducing Gemini 3.8 Live and 3.8 Live Extended Thinking",
+      "de": "Einführung von Gemini 3.8 Live und 3.8 Live Extended Thinking",
+      "fr": "Présentation de Gemini 3.8 Live et 3.8 Live Extended Thinking",
+      "es": "Presentamos Gemini 3.8 Live y 3.8 Live Extended Thinking",
+      "ar": "نقدم Gemini 3.8 Live و3.8 Live Extended Thinking"
+    },
+    "source": "Google",
+    "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-live-gemini-3-8-live-extended-thinking/",
+    "take": {
+      "en": "Voice agents that keep talking while they run tools in the background finally attack the latency budget that used to kill spoken agent UX. The number I care about is 68.6% agentic task completion on τ-Voice, not the speech-quality leaderboard — natural conversation is table stakes, completed tasks are the product.",
+      "de": "Sprach-Agenten, die weiterreden, während sie im Hintergrund Tools ausführen, greifen endlich das Latenzbudget an, das früher jede gesprochene Agenten-Erfahrung getötet hat. Die Zahl, die mich interessiert, sind 68.6% bei der agentischen Aufgabenerledigung auf τ-Voice, nicht die Sprachqualitäts-Rangliste — natürliche Konversation ist Grundausrüstung, erledigte Aufgaben sind das Produkt.",
+      "fr": "Des agents vocaux qui continuent de parler pendant qu'ils exécutent des outils en arrière-plan s'attaquent enfin au budget de latence qui tuait l'expérience des agents vocaux. Le chiffre qui m'importe, c'est 68.6% d'achèvement de tâches agentiques sur τ-Voice, pas le classement de qualité vocale — la conversation naturelle est le minimum requis, les tâches accomplies sont le produit.",
+      "es": "Los agentes de voz que siguen hablando mientras ejecutan herramientas en segundo plano por fin atacan el presupuesto de latencia que antes mataba la experiencia de los agentes hablados. La cifra que me importa es 68.6% de finalización agéntica de tareas en τ-Voice, no la tabla de calidad de voz — la conversación natural es el requisito mínimo; las tareas completadas son el producto.",
+      "ar": "وكلاء صوتيون يواصلون الحديث أثناء تشغيل الأدوات في الخلفية يهاجمون أخيرًا حدود زمن الاستجابة التي كانت تقتل تجربة الوكلاء الصوتيين. الرقم الذي يهمني هو 68.6% لإكمال المهام الوكيلية على τ-Voice، لا لوحة صدارة جودة الكلام — المحادثة الطبيعية حدّ أدنى، والمهام المكتملة هي المنتج."
+    },
+    "tags": [
+      "voice-agents",
+      "tool-use",
+      "production"
+    ]
+  },
+  {
+    "id": "odyssey-3-general-purpose-world-model",
+    "date": "2026-09-15",
+    "category": "ai",
+    "headline": {
+      "en": "Introducing Odyssey-3: A General-Purpose Physical Intelligence",
+      "de": "Vorstellung von Odyssey-3: Eine allgemein einsetzbare physische Intelligenz",
+      "fr": "Présentation d'Odyssey-3 : une intelligence physique généraliste",
+      "es": "Presentamos Odyssey-3: una inteligencia física de propósito general",
+      "ar": "نقدم Odyssey-3: ذكاء مادي متعدد الأغراض"
+    },
+    "source": "Odyssey",
+    "url": "https://odyssey.systems/introducing-odyssey-3",
+    "take": {
+      "en": "An autoregressive diffusion world model driving robots, cars and drones from a single pretrained backbone is the kind of generality I got into diffusion research for. Their claim that policies survive lighting changes that break VLA baselines is an out-of-distribution robustness result — exactly the evaluation axis most robot demos quietly avoid.",
+      "de": "Ein autoregressives Diffusion-World-Model, das Roboter, Autos und Drohnen von einem einzigen vortrainierten Backbone aus steuert, ist genau die Art von Generalität, deretwegen ich in die Diffusion-Forschung gegangen bin. Die Aussage, dass die Policies Lichtveränderungen überstehen, an denen VLA-Baselines scheitern, ist ein Out-of-Distribution-Robustheitsergebnis — genau die Evaluationsachse, die die meisten Roboter-Demos geflissentlich umgehen.",
+      "fr": "Un world model de diffusion autorégressif qui pilote robots, voitures et drones depuis un seul backbone pré-entraîné, c'est le genre de généralité qui m'a mené à la recherche sur les diffusion models. Leur affirmation que les politiques survivent à des changements d'éclairage qui font échouer les baselines VLA est un résultat de robustesse hors distribution — précisément l'axe d'évaluation que la plupart des démos robotiques évitent soigneusement.",
+      "es": "Un world model de difusión autorregresivo que controla robots, coches y drones desde un único backbone preentrenado es el tipo de generalidad por el que entré en la investigación de difusión. Su afirmación de que las políticas sobreviven a cambios de iluminación que rompen las líneas base VLA es un resultado de robustez fuera de distribución — exactamente el eje de evaluación que la mayoría de las demos de robótica evitan con discreción.",
+      "ar": "نموذج عالم انسيابي ذاتي الانحدار يقود الروبوتات والسيارات والمسيّرات من عمود فقري واحد مُدرَّب مسبقًا هو نوع التعميم الذي دخلت من أجله إلى أبحاث الانتشار. ادّعاؤهم بأن السياسات تصمد أمام تغيّرات الإضاءة التي تُسقط خطوط الأساس VLA هو نتيجة متانة خارج التوزيع — وهو بالضبط محور التقييم الذي تتفاداه معظم عروض الروبوتات ببراعة."
+    },
+    "tags": [
+      "world-models",
+      "diffusion",
+      "embodied-agents"
+    ]
   }
 ]
