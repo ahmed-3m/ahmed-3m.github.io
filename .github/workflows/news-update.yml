@@ -292,7 +292,15 @@ jobs:
       - name: Publish JSON-only delta via PR merge
         id: publish
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # The PR author's identity decides whether the lanes ever start:
+          # PRs authored by github-actions[bot] get their pull_request
+          # workflows gated behind manual approval (2026-09-11: PRs #83/#84
+          # sat in action_required until a human approved). With NEWS_PAT
+          # set, the PR and merge happen as the owner and the lanes start
+          # instantly; without it we fall back to GITHUB_TOKEN plus the
+          # best-effort self-approve in the poll loop below.
+          GH_TOKEN: ${{ secrets.NEWS_PAT || github.token }}
+          PAT_TOKEN: ${{ secrets.NEWS_PAT }}
         run: |
           if git diff --quiet -- src/lib/news-items.json; then
             echo "No new news items today — nothing to publish."
@@ -325,7 +333,38 @@ jobs:
 
           echo "Waiting up to 15 min for quality+build on $SHA…"
           deadline=$((SECONDS + 900))
+          ATTEMPTED_APPROVAL_ID=""
           while :; do
+            # A human merging the PR mid-poll is a SUCCESS: the delta is on
+            # main, and GitHub cancels the in-flight PR check runs at merge
+            # time (observed 2026-09-11: owner merged #81 while build ran;
+            # the loop misread the merge-cancelled build as a lane failure).
+            PR_STATE="$(gh pr view "$PR_NUMBER" --json state --jq .state 2>/dev/null || echo OPEN)"
+            if [ "$PR_STATE" = "MERGED" ]; then
+              # A human merge fires main's push event, which already triggers
+              # deploy.yml — dispatching here would queue a duplicate deploy.
+              echo "PR #$PR_NUMBER was merged (by a human) while checks were in flight — publishing succeeded."
+              exit 0
+            fi
+            # PRs authored by github-actions[bot] get their pull_request
+            # workflows gated behind manual approval — the run sits in
+            # action_required and "was not approved before it expired"
+            # (2026-09-11: deploy.yml run 34655744535 on PR #83 died this
+            # way; PR #81 only ran because the owner happened to approve it
+            # live, triggering_actor=ahmed-3m). Approve our own gated run so
+            # the unattended 06:23 UTC publish doesn't need a human click.
+            # A run awaiting approval reports conclusion=action_required
+            # (status stays completed) — select on either shape.
+            gated_run_id="$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/deploy.yml/runs?head_sha=${SHA}" --jq '[.workflow_runs[] | select(.status == "action_required" or .conclusion == "action_required")][0].id // empty' 2>/dev/null || true)"
+            if [ -n "$gated_run_id" ] && [ "$gated_run_id" != "$ATTEMPTED_APPROVAL_ID" ]; then
+              echo "deploy.yml run $gated_run_id is waiting for approval — approving…"
+              if gh api -X POST "repos/${GITHUB_REPOSITORY}/actions/runs/${gated_run_id}/approve" >/dev/null 2>&1; then
+                echo "Approved run $gated_run_id — lanes should start now."
+              else
+                echo "::warning::Self-approval of run $gated_run_id was rejected — a human must approve deploy.yml's run on PR #$PR_NUMBER or the lanes will never start."
+              fi
+              ATTEMPTED_APPROVAL_ID="$gated_run_id"
+            fi
             verdicts="$(gh api "repos/${GITHUB_REPOSITORY}/commits/${SHA}/check-runs" \
               --jq '[.check_runs[] | select(.name == "quality" or .name == "build")] | map({(.name): (.conclusion // "pending")}) | add // {} | [(.quality // "pending"), (.build // "pending")] | @tsv')"
             quality="$(printf '%s' "$verdicts" | cut -f1)"
@@ -336,6 +375,13 @@ jobs:
             fi
             case "$quality $build" in
               *failure*|*timed_out*|*cancelled*|*action_required*)
+                # cancelled can also be the tail of a just-merged PR; re-check
+                # state once before declaring failure.
+                if [ "$(gh pr view "$PR_NUMBER" --json state --jq .state 2>/dev/null)" = "MERGED" ]; then
+                  # Same as above: the human merge's push event deploys already.
+                  echo "PR #$PR_NUMBER merged while a lane was cancelled — publishing succeeded."
+                  exit 0
+                fi
                 echo "::error::PR lanes did not pass (quality=$quality build=$build) — not publishing."
                 exit 1
                 ;;
@@ -348,12 +394,17 @@ jobs:
           done
 
           # PR merges are evaluated against the PR's pull_request check runs —
-          # the canonical path required protection accepts.
-          gh pr merge "$PR_NUMBER" --merge \
-            --subject "chore(news): daily automated update (#$PR_NUMBER)"
-          # GITHUB_TOKEN merges fire no push events, so deploy explicitly
-          # (same dispatch pattern as the pre-2026-09-12 direct-push flow).
-          gh workflow run deploy.yml --ref main
+          # the canonical path required protection accepts. GITHUB_TOKEN
+          # merges fire no push events, so deploy explicitly; a NEWS_PAT merge
+          # runs as the owner and its push event already triggers deploy.yml,
+          # where an extra dispatch would just queue a duplicate run.
+          if [ "$(gh pr view "$PR_NUMBER" --json state --jq .state 2>/dev/null)" != "MERGED" ]; then
+            gh pr merge "$PR_NUMBER" --merge \
+              --subject "chore(news): daily automated update (#$PR_NUMBER)"
+            if [ -z "$PAT_TOKEN" ]; then
+              gh workflow run deploy.yml --ref main
+            fi
+          fi
 
       - name: Clean up delta PR and temp branch
         # On success the merge auto-deletes the head branch ("Automatically
@@ -362,7 +413,9 @@ jobs:
         # windows while the alert issue keeps the run link.
         if: always() && steps.publish.outputs.branch != ''
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Same identity as the publish step so the PR's author (and any
+          # approval gate implications) stays consistent.
+          GH_TOKEN: ${{ secrets.NEWS_PAT || github.token }}
         run: |
           if [ "${{ steps.publish.outcome }}" != "success" ] && [ -n "${{ steps.publish.outputs.pr }}" ]; then
             gh pr close "${{ steps.publish.outputs.pr }}" --delete-branch || true
