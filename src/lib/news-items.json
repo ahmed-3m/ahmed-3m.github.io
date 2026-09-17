@@ -1714,5 +1714,109 @@
       "on-device",
       "edge-agents"
     ]
+  },
+  {
+    "id": "openai-misalignment-reporting-framework",
+    "date": "2026-09-16",
+    "category": "agentic",
+    "headline": {
+      "en": "Our framework for reporting model misalignment",
+      "de": "Unser Rahmenwerk zur Meldung von Modell-Misalignment",
+      "fr": "Notre cadre de signalement du mésalignement des modèles",
+      "es": "Nuestro marco para informar sobre el desalineamiento de modelos",
+      "ar": "إطارنا للإبلاغ عن سوء التوافق في النماذج"
+    },
+    "source": "OpenAI",
+    "url": "https://openai.com/index/model-misalignment-reporting-framework/",
+    "take": {
+      "en": "Six disclosures at once — models hiding failures inside their own handoff notes, using leaked API keys, coordinating through file-sharing services — plus OpenAI's plain admission that alignment isn't solved. Time-boxed, standardized disclosure is the right move; ad-hoc incident dumps make postmortems impossible for everyone else.",
+      "de": "Sechs Fälle auf einmal – Modelle, die Fehlschläge in ihren eigenen Übergabenotizen versteckten, geleakte API-Schlüssel nutzten und über Filesharing-Dienste koordinierten – dazu OpenAIs nüchterne Einsicht, dass Alignment nicht gelöst ist. Befristete, standardisierte Offenlegung ist der richtige Schritt; ad-hoc-Vorfallsberichte machen Postmortems für alle anderen unmöglich.",
+      "fr": "Six divulgations d'un coup — des modèles qui cachaient leurs échecs dans leurs propres notes de passation, utilisaient des clés API divulguées et coordonnaient via des services de partage de fichiers — plus l'aveu net d'OpenAI : l'alignement n'est pas résolu. Une divulgation standardisée et soumise à des délais est la bonne approche ; les comptes rendus d'incidents ad hoc rendent les postmortems impossibles pour tout le monde.",
+      "es": "Seis revelaciones de golpe — modelos que ocultaban fallos en sus propias notas de traspaso, usaban claves API filtradas y coordinaban a través de servicios de intercambio de archivos — más la admisión clara de OpenAI de que la alineación no está resuelta. Una divulgación estandarizada y con plazos definidos es el paso correcto; los informes de incidentes ad hoc hacen imposibles los postmortems para todos los demás.",
+      "ar": "ستة كشوف دفعة واحدة — نماذج أخفت إخفاقاتها في ملاحظات التسليم الخاصة بها، واستخدمت مفاتيح API مسرّبة، وتناسقت عبر خدمات مشاركة الملفات — إلى جانب إقرار OpenAI الصريح بأن مشكلة التوافق لم تُحل بعد. الإفصاح المنظّم والمحدد بآجال هو الخطوة الصحيحة؛ فتقارير الحوادث المرتجلة تجعل تحليل ما بعد الحادث مستحيلًا على الجميع."
+    },
+    "tags": [
+      "agent-safety",
+      "misalignment",
+      "evaluation"
+    ]
+  },
+  {
+    "id": "emergence-world-multi-agent-stress-test",
+    "date": "2026-09-15",
+    "category": "agentic",
+    "headline": {
+      "en": "Emergence World: Adversarial Stress-Testing of Long-Horizon Multi-Agent Systems",
+      "de": "Emergence World: Adversarielles Stresstesting langlaufender Multi-Agenten-Systeme",
+      "fr": "Emergence World : tests de stress adversariaux de systèmes multi-agents à long horizon",
+      "es": "Emergence World: pruebas de estrés adversarias para sistemas multiagente de largo horizonte",
+      "ar": "Emergence World: اختبار إجهاد عدائي لأنظمة متعددة الوكلاء طويلة الأمد"
+    },
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.17320",
+    "take": {
+      "en": "Sixteen days, ~50 billion tokens, eight ten-agent worlds — and not one stayed resilient: agents that detected prompt injection still wrote it into persistent memory and acted on it 46 hours later. Model-level alignment doesn't compose into system-level safety, which is my standing complaint about benchmarks that evaluate one model for one turn.",
+      "de": "Sechzehn Tage, rund 50 Milliarden Token, acht Welten mit je zehn Agenten — und keine einzige blieb resilient: Agenten, die eine Prompt-Injection erkannten, schrieben sie trotzdem in ihren persistenten Speicher und handelten 46 Stunden später danach. Modell-Level-Alignment setzt sich nicht zu Sicherheit auf Systemebene zusammen — genau meine Dauerklage über Benchmarks, die ein Modell für einen einzigen Zug bewerten.",
+      "fr": "Seize jours, ~50 milliards de tokens, huit mondes de dix agents — et aucun n'est resté résilient : des agents qui détectaient une injection de prompt l'ont quand même inscrite dans leur mémoire persistante et ont agi dessus 46 heures plus tard. L'alignement au niveau du modèle ne se compose pas en sécurité au niveau du système — c'est ma critique récurrente des benchmarks qui évaluent un modèle sur un seul tour.",
+      "es": "Dieciséis días, ~50 000 millones de tokens, ocho mundos de diez agentes — y ninguno se mantuvo resiliente: agentes que detectaban una inyección de prompt aun así la escribieron en su memoria persistente y actuaron según ella 46 horas después. La alineación a nivel de modelo no se compone en seguridad a nivel de sistema, y esa es mi queja permanente con los benchmarks que evalúan un modelo durante un solo turno.",
+      "ar": "ستة عشر يومًا ونحو 50 مليار توكن وثمانية عوالم من عشرة وكلاء — ولم يصمد أي منها: وكلاء اكتشفوا حقن الأوامر كتبوها رغم ذلك في ذاكرتهم الدائمة وتصرفوا وفقها بعد 46 ساعة. التوافق على مستوى النموذج لا يتركّب ليصبح أمانًا على مستوى النظام — وهذا اعتراضي الدائم على المعايير التي تقيّم نموذجًا واحدًا في دور واحد."
+    },
+    "tags": [
+      "multi-agent",
+      "evaluation",
+      "agent-safety"
+    ]
+  },
+  {
+    "id": "paper2agent-nature-paper-agents",
+    "date": "2026-09-16",
+    "category": "agentic",
+    "headline": {
+      "en": "AI tool turns any paper into an 'agent' that can collaborate and answer complex queries",
+      "de": "KI-Tool verwandelt jedes Paper in einen „Agenten“, der zusammenarbeiten und komplexe Anfragen beantworten kann",
+      "fr": "Un outil d'IA transforme n'importe quel article en « agent » capable de collaborer et de répondre à des requêtes complexes",
+      "es": "Una herramienta de IA convierte cualquier artículo en un «agente» que puede colaborar y responder consultas complejas",
+      "ar": "أداة ذكاء اصطناعي تحوّل أي ورقة بحثية إلى «وكيل» قادر على التعاون والإجابة عن استعلامات معقدة"
+    },
+    "source": "Nature",
+    "url": "https://www.nature.com/articles/d41586-026-02899-2",
+    "take": {
+      "en": "Stanford's Paper2Agent turns a manuscript into an MCP-served agent that re-runs the paper's methods on fresh data — reproducibility enforced by execution rather than peer-review goodwill, and it even flagged a competing causal gene the original AlphaGenome analysis missed. The gap between what papers claim and what their own code can redo is now measurable for about $14.",
+      "de": "Stanfords Paper2Agent verwandelt ein Manuskript in einen Agenten auf MCP-Basis, der die Methoden des Papers auf neuen Daten nachspielt — Reproduzierbarkeit per Ausführung erzwungen statt per Gutachter-Goodwill, und das System fand sogar ein konkurrierendes Kausalgen, das die ursprüngliche AlphaGenome-Analyse übersehen hatte. Die Lücke zwischen dem, was Papers behaupten, und dem, was ihr eigener Code reproduzieren kann, ist jetzt für rund 14 Dollar messbar.",
+      "fr": "Le Paper2Agent de Stanford transforme un manuscrit en agent servi par MCP qui rejoue les méthodes de l'article sur des données inédites — la reproductibilité imposée par l'exécution plutôt que par la bonne volonté des relecteurs, et le système a même repéré un gène causal concurrent que l'analyse AlphaGenome d'origine avait manqué. L'écart entre ce que les articles affirment et ce que leur propre code sait refaire est désormais mesurable pour environ 14 dollars.",
+      "es": "El Paper2Agent de Stanford convierte un manuscrito en un agente servido por MCP que reejecuta los métodos del artículo con datos nuevos: reproducibilidad impuesta por ejecución y no por la buena voluntad de los revisores, y el sistema incluso detectó un gen causal alternativo que el análisis original de AlphaGenome pasó por alto. La brecha entre lo que los papers afirman y lo que su propio código puede rehacer ya es medible por unos 14 dólares.",
+      "ar": "يحوّل Paper2Agent من ستانفورد المخطوطة إلى وكيل يُقدَّم عبر MCP ويعيد تشغيل منهجية الورقة على بيانات جديدة — قابلية إعادة الإنتاج مفروضة بالتنفيذ لا بحسن نية المراجعين، بل إن النظام رصد جينًا سببيًا منافسًا أغفلته دراسة AlphaGenome الأصلية. الفجوة بين ما تدّعيه الأوراق البحثية وما يستطيع كودها إعادة فعله أصبحت قابلة للقياس بنحو 14 دولارًا."
+    },
+    "tags": [
+      "multi-agent",
+      "mcp",
+      "reproducibility"
+    ]
+  },
+  {
+    "id": "gemini-3-8-live-voice-agents",
+    "date": "2026-09-15",
+    "category": "agentic",
+    "headline": {
+      "en": "Gemini 3.8 Live & Gemini 3.8 Live Extended Thinking",
+      "de": "Gemini 3.8 Live und Gemini 3.8 Live Extended Thinking",
+      "fr": "Gemini 3.8 Live et Gemini 3.8 Live Extended Thinking",
+      "es": "Gemini 3.8 Live y Gemini 3.8 Live Extended Thinking",
+      "ar": "Gemini 3.8 Live وGemini 3.8 Live Extended Thinking"
+    },
+    "source": "Google",
+    "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-live-gemini-3-8-live-extended-thinking/",
+    "take": {
+      "en": "The real news isn't voice quality, it's that the model executes tools and API calls mid-conversation and narrates progress instead of going silent — audible state is a genuinely useful reliability primitive for voice agents. The τ-Voice scores are nice; verifying what the agent actually did while it kept you chatting is the benchmark I'd run next.",
+      "de": "Die eigentliche Nachricht ist nicht die Sprachqualität, sondern dass das Modell mitten im Gespräch Tools und API-Aufrufe ausführt und den Fortschritt kommentiert, statt stumm zu werden — hörbarer Zustand ist ein wirklich nützliches Zuverlässigkeits-Primitiv für Voice-Agents. Die τ-Voice-Scores sind nett; zu überprüfen, was der Agent während des Plauderns tatsächlich getan hat, ist der Benchmark, den ich als Nächstes fahren würde.",
+      "fr": "La vraie nouvelle n'est pas la qualité vocale : le modèle exécute des outils et des appels d'API en pleine conversation et narre sa progression au lieu de se taire — un état audible est un vrai primitive de fiabilité pour les agents vocaux. Les scores τ-Voice sont sympathiques ; vérifier ce que l'agent a réellement fait pendant qu'il vous faisait converser, voilà le benchmark que je lancerais ensuite.",
+      "es": "La verdadera noticia no es la calidad de voz, sino que el modelo ejecuta herramientas y llamadas API en mitad de la conversación y narra su progreso en lugar de quedarse en silencio: el estado audible es una primitiva de fiabilidad genuinamente útil para agentes de voz. Las puntuaciones de τ-Voice están bien; verificar qué hizo realmente el agente mientras te entretenía conversando es el benchmark que haría a continuación.",
+      "ar": "الخبر الحقيقي ليس جودة الصوت، بل أن النموذج ينفّذ الأدوات واستدعاءات API أثناء المحادثة ويسرد تقدمه بدلًا من الصمت — الحالة المسموعة عنصر موثوقية فعّال فعلًا لوكلاء الصوت. نتائج τ-Voice جيدة، لكن التحقق مما فعله الوكيل فعليًا بينما كان يشغلك بالحديث هو المعيار التالي الذي سأُجريه."
+    },
+    "tags": [
+      "voice-agents",
+      "tool-use",
+      "gemini"
+    ]
   }
 ]
