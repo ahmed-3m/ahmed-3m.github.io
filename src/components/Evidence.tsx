@@ -25,66 +25,82 @@ const copy = {
 
 const evidenceItems = [
   {
+    id: 'thesis-pdf',
     title: { en: 'Master thesis PDF', de: 'Masterarbeit PDF', fr: 'PDF du mémoire', es: 'PDF de la tesis', ar: 'PDF الرسالة' },
     meta: { en: '99.03% +/- 0.07% AUROC', de: '99.03% +/- 0.07% AUROC', fr: '99.03% +/- 0.07% AUROC', es: '99.03% +/- 0.07% AUROC', ar: '99.03% +/- 0.07% AUROC' },
     href: '/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf',
     label: 'Proof',
   },
   {
+    id: 'industrial-ood-baseline',
+    // Shares an href with 'thesis-pdf' on purpose: the thesis is the only public artifact
+    // that reports this figure (abstract: "0.8673 +/- 0.0230 AUROC at lambda = 0" under
+    // 5-fold CV on FTI_Zer0P). The 2024 industrial report contains no AUROC numbers at
+    // all, which is why spec 001 repointed this card here. Keep the two cards keyed by
+    // `id`, not `href`.
     title: { en: 'Industrial OOD baseline (thesis)', de: 'Industrielle OOD-Baseline (Thesis)', fr: 'Baseline OOD industrielle (mémoire)', es: 'Baseline OOD industrial (tesis)', ar: 'خط الأساس OOD الصناعي (الرسالة)' },
     meta: { en: '0.8673 +/- 0.0230 AUROC · FTI_Zer0P 5-fold', de: '0.8673 +/- 0.0230 AUROC · FTI_Zer0P 5-fach', fr: '0.8673 +/- 0.0230 AUROC · FTI_Zer0P 5-plis', es: '0.8673 +/- 0.0230 AUROC · FTI_Zer0P 5-folds', ar: '0.8673 +/- 0.0230 AUROC · FTI_Zer0P 5 طيات' },
     href: '/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf',
     label: 'Proof',
   },
   {
+    id: 'early-technical-report-2024',
     title: { en: 'Early technical report (2024)', de: 'Frühzeitiger Technischer Bericht (2024)', fr: 'Rapport technique précoce (2024)', es: 'Informe técnico temprano (2024)', ar: 'تقرير تقني مبكر (2024)' },
     meta: { en: 'Negative result — motivated the thesis approach', de: 'Negatives Ergebnis — motivierte den Thesis-Ansatz', fr: "Résultat négatif — a motivé l'approche de la thèse", es: 'Resultado negativo — motivó el enfoque de la tesis', ar: 'نتيجة سلبية — حفّزت نهج الرسالة' },
     href: '/Diffusion-Based Multi-class Defect Detection.pdf',
     label: 'Case study',
   },
   {
+    id: 'diffusion-ood-repo',
     title: { en: 'DiffusionOOD repository', de: 'DiffusionOOD Repository', fr: 'Dépôt DiffusionOOD', es: 'Repositorio DiffusionOOD', ar: 'مستودع DiffusionOOD' },
     meta: { en: 'CIFAR-10 OOD implementation', de: 'CIFAR-10 OOD Implementierung', fr: 'Implémentation OOD sur CIFAR-10', es: 'Implementación OOD sobre CIFAR-10', ar: 'تنفيذ OOD على CIFAR-10' },
     href: 'https://github.com/ahmed-3m/DiffusionOOD',
     label: 'Proof',
   },
   {
+    id: 'inkjet-ood-repo',
     title: { en: 'InkjetOOD repository', de: 'InkjetOOD Repository', fr: 'Dépôt InkjetOOD', es: 'Repositorio InkjetOOD', ar: 'مستودع InkjetOOD' },
     meta: { en: 'Industrial transfer codebase', de: 'Codebasis für den Industrietransfer', fr: 'Base de code pour le transfert industriel', es: 'Base de código para transferencia industrial', ar: 'قاعدة كود للنقل الصناعي' },
     href: 'https://github.com/ahmed-3m/InkjetOOD',
     label: 'Proof',
   },
   {
+    id: 'huggingface-weights',
     title: { en: 'Hugging Face model weights', de: 'Hugging Face Modellgewichte', fr: 'Poids de modèle Hugging Face', es: 'Pesos del modelo en Hugging Face', ar: 'أوزان النموذج على Hugging Face' },
     meta: { en: 'Public checkpoints and artifacts', de: 'Öffentliche Checkpoints und Artefakte', fr: 'Checkpoints et artefacts publics', es: 'Checkpoints y artefactos públicos', ar: 'نماذج وartefacts عامة' },
     href: 'https://huggingface.co/ahmed-3m/InkjetOOD',
     label: 'Proof',
   },
   {
+    id: 'research-poster',
     title: { en: 'Research poster', de: 'Forschungsposter', fr: 'Poster de recherche', es: 'Poster de investigación', ar: 'الملصق البحثي' },
     meta: { en: 'Visual summary of the thesis', de: 'Visuelle Zusammenfassung der Thesis', fr: 'Résumé visuel du mémoire', es: 'Resumen visual de la tesis', ar: 'ملخص بصري للرسالة' },
     href: '/research-poster.pdf',
     label: 'Proof',
   },
   {
+    id: 'diffusion-ood-case-study',
     title: { en: 'DiffusionOOD case study', de: 'DiffusionOOD Case Study', fr: 'Étude de cas DiffusionOOD', es: 'Caso de estudio DiffusionOOD', ar: 'دراسة حالة DiffusionOOD' },
     meta: { en: 'Problem, method, results, lessons', de: 'Problem, Methode, Ergebnisse, Erkenntnisse', fr: 'Problème, méthode, résultats, leçons', es: 'Problema, método, resultados, lecciones', ar: 'المشكلة والمنهج والنتائج والدروس' },
     href: '/case-studies/diffusion-ood/',
     label: 'Case study',
   },
   {
+    id: 'inkjet-ood-case-study',
     title: { en: 'InkjetOOD case study', de: 'InkjetOOD Case Study', fr: 'Étude de cas InkjetOOD', es: 'Caso de estudio InkjetOOD', ar: 'دراسة حالة InkjetOOD' },
     meta: { en: 'Industrial transfer, results, and lessons', de: 'Industrieller Transfer, Ergebnisse und Erkenntnisse', fr: 'Transfert industriel, résultats et leçons', es: 'Transferencia industrial, resultados y lecciones', ar: 'النقل الصناعي والنتائج والدروس' },
     href: '/case-studies/inkjet-ood/',
     label: 'Case study',
   },
   {
+    id: 'sihem-live-beta',
     title: { en: 'Sihem — live beta', de: 'Sihem — Live-Beta', fr: 'Sihem — bêta en ligne', es: 'Sihem — beta en vivo', ar: 'Sihem — نسخة تجريبية مباشرة' },
     meta: { en: 'Running system — Telegram bot and PWA, open to try', de: 'Laufendes System — Telegram-Bot und PWA, frei testbar', fr: 'Système en production — bot Telegram et PWA, libre à essayer', es: 'Sistema en marcha — bot de Telegram y PWA, libre para probar', ar: 'نظام يعمل — بوت تيليجرام وتطبيق PWA، متاح للتجربة' },
     href: 'https://t.me/sihem_ai_bot',
     label: 'Proof',
   },
   {
+    id: 'faultrix-case-study',
     title: { en: 'Faultrix case study', de: 'Faultrix Case Study', fr: 'Étude de cas Faultrix', es: 'Caso de estudio Faultrix', ar: 'دراسة حالة Faultrix' },
     meta: { en: 'Research-to-product build story', de: 'Geschichte vom Research zum Produkt', fr: 'Histoire du passage recherche-produit', es: 'Historia del paso de investigación a producto', ar: 'قصة الانتقال من البحث إلى المنتج' },
     href: '/case-studies/faultrix/',
@@ -110,7 +126,7 @@ export default function Evidence() {
         <div className="cd-evidence-grid">
           {evidenceItems.map((item) => (
             <a
-              key={item.href}
+              key={item.id}
               href={item.href}
               target={item.href.startsWith('http') ? '_blank' : undefined}
               rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
