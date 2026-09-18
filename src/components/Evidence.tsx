@@ -69,13 +69,13 @@ const evidenceItems = [
   {
     title: { en: 'DiffusionOOD case study', de: 'DiffusionOOD Case Study', fr: 'Étude de cas DiffusionOOD', es: 'Caso de estudio DiffusionOOD', ar: 'دراسة حالة DiffusionOOD' },
     meta: { en: 'Problem, method, results, lessons', de: 'Problem, Methode, Ergebnisse, Erkenntnisse', fr: 'Problème, méthode, résultats, leçons', es: 'Problema, método, resultados, lecciones', ar: 'المشكلة والمنهج والنتائج والدروس' },
-    href: '/case-studies/diffusion-ood',
+    href: '/case-studies/diffusion-ood/',
     label: 'Case study',
   },
   {
     title: { en: 'InkjetOOD case study', de: 'InkjetOOD Case Study', fr: 'Étude de cas InkjetOOD', es: 'Caso de estudio InkjetOOD', ar: 'دراسة حالة InkjetOOD' },
     meta: { en: 'Industrial transfer, results, and lessons', de: 'Industrieller Transfer, Ergebnisse und Erkenntnisse', fr: 'Transfert industriel, résultats et leçons', es: 'Transferencia industrial, resultados y lecciones', ar: 'النقل الصناعي والنتائج والدروس' },
-    href: '/case-studies/inkjet-ood',
+    href: '/case-studies/inkjet-ood/',
     label: 'Case study',
   },
   {
@@ -87,7 +87,7 @@ const evidenceItems = [
   {
     title: { en: 'Faultrix case study', de: 'Faultrix Case Study', fr: 'Étude de cas Faultrix', es: 'Caso de estudio Faultrix', ar: 'دراسة حالة Faultrix' },
     meta: { en: 'Research-to-product build story', de: 'Geschichte vom Research zum Produkt', fr: 'Histoire du passage recherche-produit', es: 'Historia del paso de investigación a producto', ar: 'قصة الانتقال من البحث إلى المنتج' },
-    href: '/case-studies/faultrix',
+    href: '/case-studies/faultrix/',
     label: 'Case study',
   },
 ]

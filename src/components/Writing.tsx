@@ -34,9 +34,9 @@ export default function Writing() {
 
         <div className="cd-writing-grid">
           {posts.map((post, i) => (
-            <a
+            <Link
               key={post.slug}
-              href={`/blog/${post.slug}`}
+              href={`/blog/${post.slug}/`}
               className="cd-writing-card reveal"
               style={{ animationDelay: `${i * 60}ms` }}
             >
@@ -53,12 +53,12 @@ export default function Writing() {
                 <span className="cd-wc-time">{post.readingTime}</span>
                 <span className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.read)} &rarr;</span>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
 
         <div style={{ textAlign: 'center', marginTop: 32 }}>
-          <Link href="/blog" className="cd-btn-ghost" style={{ fontSize: 13 }}>
+          <Link href="/blog/" className="cd-btn-ghost" style={{ fontSize: 13 }}>
             {t(copy.all)} &rarr;
           </Link>
         </div>

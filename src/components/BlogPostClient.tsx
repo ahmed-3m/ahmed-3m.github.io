@@ -219,7 +219,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
             </li>
             <li>/</li>
             <li>
-              <Link href="/blog" className="text-[var(--cd-accent)]">
+              <Link href="/blog/" className="text-[var(--cd-accent)]">
                 {t(copy.blog)}
               </Link>
             </li>
@@ -228,7 +228,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
           </ol>
         </nav>
 
-        <Link href="/blog" className="mb-8 inline-flex items-center gap-2 text-[var(--cd-accent)]">
+        <Link href="/blog/" className="mb-8 inline-flex items-center gap-2 text-[var(--cd-accent)]">
           <ArrowLeft size={18} />
           {t(copy.backBlog)}
         </Link>
@@ -294,7 +294,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
         )}
 
         <footer className="mt-12 flex items-center justify-between gap-4 border-t border-[var(--cd-b0)] pt-8 max-sm:flex-col max-sm:items-start">
-          <Link href="/blog" className="font-medium text-[var(--cd-accent)]">
+          <Link href="/blog/" className="font-medium text-[var(--cd-accent)]">
             {t(copy.viewAll)}
           </Link>
           <div className="text-sm text-[var(--cd-fg3)]">{t(copy.writtenBy)}</div>

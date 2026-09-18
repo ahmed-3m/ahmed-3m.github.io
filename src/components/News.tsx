@@ -1,4 +1,5 @@
 'use client'
+import Link from 'next/link'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { getAllNews, newsCategoryLabels } from '@/lib/news-items'
 import { useReveal } from '@/lib/useReveal'
@@ -58,9 +59,9 @@ export default function News() {
         </div>
 
         <div style={{ textAlign: 'center', marginTop: 32 }}>
-          <a href="/news" className="cd-btn-ghost" style={{ fontSize: 13 }}>
+          <Link href="/news/" className="cd-btn-ghost" style={{ fontSize: 13 }}>
             {t(copy.all)} &rarr;
-          </a>
+          </Link>
         </div>
       </div>
     </section>

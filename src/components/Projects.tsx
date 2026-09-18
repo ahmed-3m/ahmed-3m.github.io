@@ -1,4 +1,5 @@
 'use client'
+import Link from 'next/link'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { useReveal } from '@/lib/useReveal'
 
@@ -92,7 +93,7 @@ export default function Projects() {
             <div className="cd-pc-metric">99.03%<span> +/- 0.07% Avg AUROC</span></div>
             <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
               <a href="https://github.com/ahmed-3m/DiffusionOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.code)} &rarr;</a>
-              <a href="/case-studies/diffusion-ood" className="cd-proj-link" style={{ fontSize: 12, opacity: 0.65 }}>{t(copy.caseStudy)} &rarr;</a>
+              <Link href="/case-studies/diffusion-ood/" className="cd-proj-link" style={{ fontSize: 12, opacity: 0.65 }}>{t(copy.caseStudy)} &rarr;</Link>
             </div>
           </article>
 
@@ -103,7 +104,7 @@ export default function Projects() {
             <div className="cd-pc-metric">0.8673<span> AUROC (5-Fold CV)</span></div>
             <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
               <a href="https://github.com/ahmed-3m/InkjetOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.code)} &rarr;</a>
-              <a href="/case-studies/inkjet-ood" className="cd-proj-link" style={{ fontSize: 12, opacity: 0.65 }}>{t(copy.caseStudy)} &rarr;</a>
+              <Link href="/case-studies/inkjet-ood/" className="cd-proj-link" style={{ fontSize: 12, opacity: 0.65 }}>{t(copy.caseStudy)} &rarr;</Link>
             </div>
           </article>
 
@@ -119,7 +120,7 @@ export default function Projects() {
             </div>
             <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
               <a href="https://faultrix.com" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>faultrix.com &rarr;</a>
-              <a href="/case-studies/faultrix" className="cd-proj-link" style={{ fontSize: 12, opacity: 0.65 }}>{t(copy.caseStudy)} &rarr;</a>
+              <Link href="/case-studies/faultrix/" className="cd-proj-link" style={{ fontSize: 12, opacity: 0.65 }}>{t(copy.caseStudy)} &rarr;</Link>
             </div>
           </article>
 

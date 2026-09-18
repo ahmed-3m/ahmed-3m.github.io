@@ -12,7 +12,7 @@ const links = [
   { href: '/#experience', label: { en: 'Experience', de: 'Erfahrung', fr: 'Expérience', es: 'Experiencia', ar: 'الخبرة' } },
   { href: '/#research', label: { en: 'Research', de: 'Forschung', fr: 'Recherche', es: 'Investigación', ar: 'الأبحاث' } },
   { href: '/#writing', label: { en: 'Blog', de: 'Blog', fr: 'Blog', es: 'Blog', ar: 'المدونة' } },
-  { href: '/news', label: { en: 'News', de: 'News', fr: 'Actualités', es: 'Noticias', ar: 'الأخبار' } },
+  { href: '/news/', label: { en: 'News', de: 'News', fr: 'Actualités', es: 'Noticias', ar: 'الأخبار' } },
   { href: '/#contact', label: { en: 'Contact', de: 'Kontakt', fr: 'Contact', es: 'Contacto', ar: 'تواصل' } },
 ] satisfies Array<{ href: string; label: TranslationMap }>
 
