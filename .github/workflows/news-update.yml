@@ -333,7 +333,9 @@ jobs:
 
           echo "Waiting up to 15 min for quality+build on $SHA…"
           deadline=$((SECONDS + 900))
-          ATTEMPTED_APPROVAL_ID=""
+          APPROVED_IDS=" "
+          WARNED_ID=""
+          LAST_REPORT=""
           while :; do
             # A human merging the PR mid-poll is a SUCCESS: the delta is on
             # main, and GitHub cancels the in-flight PR check runs at merge
@@ -347,23 +349,59 @@ jobs:
               exit 0
             fi
             # PRs authored by github-actions[bot] get their pull_request
-            # workflows gated behind manual approval — the run sits in
-            # action_required and "was not approved before it expired"
-            # (2026-09-11: deploy.yml run 34655744535 on PR #83 died this
-            # way; PR #81 only ran because the owner happened to approve it
-            # live, triggering_actor=ahmed-3m). Approve our own gated run so
-            # the unattended 06:23 UTC publish doesn't need a human click.
-            # A run awaiting approval reports conclusion=action_required
-            # (status stays completed) — select on either shape.
-            gated_run_id="$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/deploy.yml/runs?head_sha=${SHA}" --jq '[.workflow_runs[] | select(.status == "action_required" or .conclusion == "action_required")][0].id // empty' 2>/dev/null || true)"
-            if [ -n "$gated_run_id" ] && [ "$gated_run_id" != "$ATTEMPTED_APPROVAL_ID" ]; then
-              echo "deploy.yml run $gated_run_id is waiting for approval — approving…"
-              if gh api -X POST "repos/${GITHUB_REPOSITORY}/actions/runs/${gated_run_id}/approve" >/dev/null 2>&1; then
-                echo "Approved run $gated_run_id — lanes should start now."
-              else
-                echo "::warning::Self-approval of run $gated_run_id was rejected — a human must approve deploy.yml's run on PR #$PR_NUMBER or the lanes will never start."
+            # workflows gated behind manual approval, so approve our own run
+            # and the unattended publish needs no human click (2026-09-11:
+            # deploy.yml run 34655744535 on PR #83 expired unapproved; PR #81
+            # only ran because the owner happened to approve it live).
+            #
+            # Do NOT select on a single status string. A run held before any
+            # job is scheduled reports action_required, waiting, requested,
+            # queued or pending depending on which gate holds it, and the old
+            # `.status == "action_required"` selector saw none of the others:
+            # 2026-09-12..16, five consecutive publishes timed out against a
+            # zero-job deploy.yml run (34690135073, 34756538644, 34847778407,
+            # 34966490684, 35092949135) that this loop could have approved and
+            # never looked at, while quality/build were never created at all.
+            #
+            # So: take any deploy.yml run on this SHA that has not concluded,
+            # and treat "has scheduled zero jobs" as the held signal — that is
+            # the thing we actually care about and it holds whatever GitHub
+            # calls the state today. Approving a run that is not gated is a
+            # harmless 4xx, so a wrong guess costs nothing.
+            run_info="$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/deploy.yml/runs?head_sha=${SHA}" \
+              --jq '[.workflow_runs[] | select(.conclusion == null or .conclusion == "action_required")][0] // {} | [(.id // ""), (.status // ""), (.conclusion // "none")] | @tsv' 2>/dev/null || true)"
+            run_id="$(printf '%s' "$run_info" | cut -f1)"
+            run_status="$(printf '%s' "$run_info" | cut -f2)"
+            run_conclusion="$(printf '%s' "$run_info" | cut -f3)"
+            job_count=0
+            if [ -n "$run_id" ]; then
+              job_count="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${run_id}/jobs" --jq '.total_count // 0' 2>/dev/null || echo 0)"
+              # Report every state change. The 2026-09 outage was undiagnosable
+              # from these logs: the only output was "quality=pending
+              # build=pending", which says nothing about WHY nothing started.
+              report="run=$run_id status=$run_status conclusion=$run_conclusion jobs=$job_count"
+              if [ "$report" != "$LAST_REPORT" ]; then
+                echo "deploy.yml $report"
+                LAST_REPORT="$report"
               fi
-              ATTEMPTED_APPROVAL_ID="$gated_run_id"
+            fi
+            if [ -n "$run_id" ] && [ "$job_count" = "0" ]; then
+              case "$APPROVED_IDS" in
+                *" $run_id "*) : ;; # already approved successfully — leave it alone
+                *)
+                  # Retry silently until the deadline: an approval attempted
+                  # before GitHub has parked the run is simply rejected, and
+                  # giving up after one try is how a recoverable hold turns
+                  # into a 15-minute timeout.
+                  if gh api -X POST "repos/${GITHUB_REPOSITORY}/actions/runs/${run_id}/approve" >/dev/null 2>&1; then
+                    echo "Approved held deploy.yml run $run_id (status=$run_status) — lanes should start now."
+                    APPROVED_IDS="$APPROVED_IDS$run_id "
+                  elif [ "$WARNED_ID" != "$run_id" ]; then
+                    echo "::warning::deploy.yml run $run_id has scheduled no jobs (status=$run_status) and self-approval was rejected — retrying until the deadline. If the lanes never start, a human must approve that run on PR #$PR_NUMBER."
+                    WARNED_ID="$run_id"
+                  fi
+                  ;;
+              esac
             fi
             verdicts="$(gh api "repos/${GITHUB_REPOSITORY}/commits/${SHA}/check-runs" \
               --jq '[.check_runs[] | select(.name == "quality" or .name == "build")] | map({(.name): (.conclusion // "pending")}) | add // {} | [(.quality // "pending"), (.build // "pending")] | @tsv')"
@@ -387,7 +425,7 @@ jobs:
                 ;;
             esac
             if [ "$SECONDS" -ge "$deadline" ]; then
-              echo "::error::Timed out waiting for required checks (quality=$quality build=$build)."
+              echo "::error::Timed out waiting for required checks (quality=$quality build=$build; deploy.yml ${LAST_REPORT:-no run found for $SHA})."
               exit 1
             fi
             sleep 15
