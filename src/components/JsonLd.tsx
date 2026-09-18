@@ -1,5 +1,6 @@
 'use client'
 
+import { latestContentDateIso } from '@/lib/content-dates'
 import { serializeJsonLd } from '@/lib/serialize-json-ld'
 
 // Server-rendered <script> elements are serialized twice into the delivered
@@ -250,7 +251,10 @@ export function SocialProfileSchema() {
     // schema.org Date/DateTime validators (incl. Google's ProfilePage report)
     // require a full ISO datetime, not a bare YYYY-MM-DD date.
     dateCreated: '2024-01-01T00:00:00Z',
-    dateModified: new Date().toISOString(),
+    // Must stay deterministic: this module is statically exported, so a
+    // `new Date()` here is baked into the HTML at build time and re-evaluated
+    // at hydration, which React flags as a hydration mismatch.
+    dateModified: latestContentDateIso(),
     mainEntity: {
       '@type': 'Person',
       name: 'Ahmed Mohammed',
