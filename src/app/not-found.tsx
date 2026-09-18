@@ -70,7 +70,7 @@ export default function NotFound() {
                         {t(copy.backHome)}
                     </Link>
                     <Link
-                        href="/blog"
+                        href="/blog/"
                         className="px-6 py-3 border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 rounded-xl font-semibold hover:border-blue-500 dark:hover:border-blue-400 transition-all duration-300"
                     >
                         {t(copy.readBlog)}

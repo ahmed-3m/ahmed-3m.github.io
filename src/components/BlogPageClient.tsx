@@ -95,7 +95,7 @@ export default function BlogPageClient() {
                 </span>
               </div>
 
-              <Link href={`/blog/${post.slug}`} className="group">
+              <Link href={`/blog/${post.slug}/`} className="group">
                 <h2 className="mb-3 text-xl font-semibold transition-colors group-hover:text-[var(--cd-accent)]">
                   {post.title}
                 </h2>
@@ -117,7 +117,7 @@ export default function BlogPageClient() {
                 </div>
 
                 <Link
-                  href={`/blog/${post.slug}`}
+                  href={`/blog/${post.slug}/`}
                   className="inline-flex items-center gap-1 font-medium text-[var(--cd-accent)]"
                 >
                   {t(copy.readMore)}

@@ -162,7 +162,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     artifacts: [
       { label: 'Product site', href: 'https://faultrix.com' },
-      { label: 'Blog post', href: '/blog/5-month-llm-adventure' },
+      { label: 'Blog post', href: '/blog/5-month-llm-adventure/' },
     ],
   },
 ]
