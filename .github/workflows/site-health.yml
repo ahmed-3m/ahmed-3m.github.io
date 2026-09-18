@@ -40,6 +40,7 @@ jobs:
             "/cv.pdf"
             "/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf"
             "/sitemap.xml"
+            "/sitemap-pages.xml"
           )
           fail=0
           for p in "${paths[@]}"; do
