@@ -1818,5 +1818,109 @@
       "tool-use",
       "gemini"
     ]
+  },
+  {
+    "id": "claude-code-projects-multi-agent",
+    "date": "2026-09-17",
+    "category": "agentic",
+    "headline": {
+      "en": "Claude Code relaunches Projects to manage multiple AI agents in the cloud",
+      "de": "Claude Code führt Projects neu ein – zur Verwaltung mehrerer KI-Agenten in der Cloud",
+      "fr": "Claude Code relance Projects pour piloter plusieurs agents IA dans le cloud",
+      "es": "Claude Code relanza Projects para gestionar múltiples agentes de IA en la nube",
+      "ar": "‏Claude Code يعيد إطلاق Projects لإدارة عدة وكلاء ذكاء اصطناعي في السحابة"
+    },
+    "source": "The Verge",
+    "url": "https://www.theverge.com/ai-artificial-intelligence/997134/anthropic-claude-code-projects",
+    "take": {
+      "en": "Mapping multi-agent coordination onto branches and merge conflicts is the most production-aware design decision here — resolving overlap is what actually breaks agent fleets, and treating that as git's problem instead of a magic 'orchestration' layer is refreshing. Cloud-only at launch is the caveat that will keep it out of most real codebases for now.",
+      "de": "Multi-Agent-Koordination auf Branches und Merge-Konflikte abzubilden ist hier die produktionsnächste Designentscheidung – die Auflösung von Überschneidungen ist das, was Agenten-Flotten tatsächlich bricht, und das als Git-Problem statt als magische „Orchestrierungs“-Schicht zu behandeln ist erfrischend. Dass es zum Start nur in der Cloud läuft, ist der Vorbehalt, der es vorerst von den meisten echten Codebasen fernhält.",
+      "fr": "Faire reposer la coordination multi-agents sur des branches et des conflits de fusion est la décision de design la plus tournée vers la production ici — résoudre les chevauchements est bien ce qui casse les flottes d'agents, et traiter ça comme un problème de git plutôt que comme une couche « d'orchestration » magique est rafraîchissant. Le lancement limité au cloud est la réserve qui tiendra cet outil à l'écart de la plupart des vraies bases de code pour l'instant.",
+      "es": "Mapear la coordinación multiagente en ramas y conflictos de fusión es la decisión de diseño más orientada a producción de este lanzamiento: resolver solapamientos es lo que de verdad rompe las flotas de agentes, y tratarlo como un problema de git y no como una capa mágica de «orquestación» es refrescante. Que solo funcione en la nube al lanzarse es la pega que lo mantendrá alejado de la mayoría de las bases de código reales por ahora.",
+      "ar": "ربط تنسيق الوكلاء المتعددين بالفروع وتضاربات الدمج هو هنا القرار التصميمي الأقرب إلى بيئة الإنتاج — فحل التعارضات هو ما يكسر أساطيل الوكلاء فعليًا، ومعاملته كمشكلة خاصة بـ git لا كطبقة «تنسيق» سحرية أمر منعش. اقتصار الإطلاق على السحابة هو التحفظ الذي سيُبقيه بعيدًا عن معظم قواعد الشيفرة الحقيقية في الوقت الحالي."
+    },
+    "tags": [
+      "multi-agent",
+      "claude-code",
+      "coding-agents"
+    ]
+  },
+  {
+    "id": "stanford-virtual-biotech-agents",
+    "date": "2026-09-17",
+    "category": "agentic",
+    "headline": {
+      "en": "Virtual biotech company puts thousands of AI scientist agents to work on drug discovery",
+      "de": "Virtuelles Biotech-Unternehmen setzt Tausende KI-Forschungsagenten auf die Wirkstoffsuche an",
+      "fr": "Une biotech virtuelle met des milliers d'agents scientifiques IA au travail sur la découverte de médicaments",
+      "es": "Una biotecnológica virtual pone a miles de agentes científicos de IA a trabajar en el descubrimiento de fármacos",
+      "ar": "شركة تقنية حيوية افتراضية تُسنِد إلى آلاف وكلاء الذكاء الاصطناعي العلماء مهمة اكتشاف الأدوية"
+    },
+    "source": "Stanford Medicine",
+    "url": "https://med.stanford.edu/news/all-news/2026/09/virtual-biotech-company.html",
+    "take": {
+      "en": "A 37,000-agent org chart designing a therapy that a pharma company later independently recreated — down to the FDA breakthrough designation — is the kind of external validation agent research almost never gets; that's evidence, not a leaderboard score. The authors' own caveat is the right one: conclusions are bounded by data quality, and everything still has to survive a wet lab.",
+      "de": "Ein Organigramm aus 37.000 Agenten, das eine Therapie entwirft, die ein Pharmaunternehmen später unabhängig nachentwickelt hat – inklusive FDA-Breakthrough-Designation –, ist die Art externer Validierung, die die Agentenforschung fast nie bekommt; das ist ein Beleg, kein Leaderboard-Score. Der eigene Vorbehalt der Autoren ist der richtige: Die Schlussfolgerungen werden durch die Datenqualität begrenzt, und alles muss am Ende ein Wet Lab überstehen.",
+      "fr": "Un organigramme de 37 000 agents qui conçoit une thérapie qu'un laboratoire pharmaceutique a ensuite recréée indépendamment — jusqu'à la désignation de thérapie innovante de la FDA —, c'est le genre de validation externe que la recherche sur les agents n'obtient presque jamais ; c'est une preuve, pas un score de classement. La réserve des auteurs est la bonne : les conclusions sont bornées par la qualité des données, et tout doit encore survivre à une validation en laboratoire réel.",
+      "es": "Un organigrama de 37 000 agentes que diseña una terapia que una farmacéutica recreó después de forma independiente —hasta la designación de terapia innovadora de la FDA— es el tipo de validación externa que la investigación de agentes casi nunca consigue; eso es evidencia, no una puntuación en una tabla clasificatoria. La advertencia de los propios autores es la correcta: las conclusiones están limitadas por la calidad de los datos, y todo aún tiene que sobrevivir a la validación en un laboratorio real.",
+      "ar": "هيكل مؤسسي من 37,000 وكيل يصمّم علاجًا أعادت شركة دوائية إنتاجه لاحقًا بشكل مستقل — وصولًا إلى تصنيف العلاج الاختراقي من إدارة الغذاء والدواء (FDA) — هو نوع التحقق الخارجي الذي لا تحصل عليه أبحاث الوكلاء تقريبًا أبدًا؛ هذا دليل وليس نتيجة على لوحة تصنيف. وتحفظ المؤلفين نفسه هو الصحيح: الاستنتاجات محدودة بجودة البيانات، وكل شيء لا يزال عليه أن يصمد أمام الاختبار في المختبر الفعلي."
+    },
+    "tags": [
+      "multi-agent",
+      "drug-discovery",
+      "agents"
+    ]
+  },
+  {
+    "id": "atria-dawn-agentic-superintelligence",
+    "date": "2026-09-14",
+    "category": "agentic",
+    "headline": {
+      "en": "Atria Dawn: The Dawn of Agentic Superintelligence",
+      "de": "Atria Dawn: Die Dämmerung der agentischen Superintelligenz",
+      "fr": "Atria Dawn : L'aube de la superintelligence agentique",
+      "es": "Atria Dawn: el amanecer de la superinteligencia agéntica",
+      "ar": "Atria Dawn: فجر الذكاء الفائق الوكيلي"
+    },
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.15818",
+    "take": {
+      "en": "The interesting part isn't the 744B parameters, it's the Verifiable Experience Pipeline — training tool use against externally checked outcomes instead of self-graded reasoning is exactly the verifiability most agentic training still lacks. Every benchmark on the card is vendor-reported, though, so until someone independent reproduces the BrowseComp and CyberGym numbers, read this as a well-licensed hypothesis, not a leaderboard result.",
+      "de": "Der spannende Teil sind nicht die 744B Parameter, sondern die Verifiable Experience Pipeline – Tool-Nutzung gegen extern überprüfte Ergebnisse zu trainieren statt gegen selbstbewertetes Reasoning ist genau die Verifizierbarkeit, die dem meisten Agenten-Training noch fehlt. Allerdings ist jeder Benchmark auf der Modellkarte herstellerseitig berichtet; bis jemand die BrowseComp- und CyberGym-Zahlen unabhängig reproduziert, sollte man das als gut lizenzierte Hypothese lesen, nicht als Leaderboard-Ergebnis.",
+      "fr": "Ce qui est intéressant, ce n'est pas les 744B de paramètres, c'est la Verifiable Experience Pipeline — entraîner l'usage d'outils sur des résultats vérifiés externalement plutôt que sur du raisonnement auto-évalué, c'est exactement la vérifiabilité qui manque encore à la plupart des entraînements d'agents. Mais chaque benchmark de la fiche est rapporté par le fournisseur : tant que personne ne reproduit indépendamment les scores BrowseComp et CyberGym, lisez cela comme une hypothèse bien licenciée, pas comme un résultat de classement.",
+      "es": "Lo interesante no son los 744B de parámetros, sino la Verifiable Experience Pipeline: entrenar el uso de herramientas contra resultados verificados externamente en lugar de razonamiento autoevaluado es precisamente la verificabilidad que aún le falta a la mayoría del entrenamiento de agentes. Eso sí, cada benchmark de la ficha lo reporta el propio proveedor; hasta que alguien reproduzca de forma independiente las cifras de BrowseComp y CyberGym, hay que leerlo como una hipótesis con buena licencia, no como un resultado de clasificación.",
+      "ar": "الجزء المثير ليس حجم 744B من المعاملات، بل Verifiable Experience Pipeline — فتدريب استخدام الأدوات على نتائج مدققة خارجيًا بدلًا من استدلال يقيّم نفسه هو بالضبط قابلية التحقق التي تفتقدها معظم تدريبات الوكلاء حتى الآن. لكن كل معيار على بطاقة النموذج مُبلَّغ من مقدم النموذج نفسه، وحتى يعيد طرف مستقل إنتاج أرقام BrowseComp وCyberGym، اقرأ هذا كفرضية جيدة الترخيص لا كنتيجة على لوحة تصنيف."
+    },
+    "tags": [
+      "open-weights",
+      "agents",
+      "benchmarks"
+    ]
+  },
+  {
+    "id": "anthropic-openai-embedded-safety-evaluators",
+    "date": "2026-09-16",
+    "category": "ai",
+    "headline": {
+      "en": "Anthropic and OpenAI want to embed safety evaluators. Will they really be independent?",
+      "de": "Anthropic und OpenAI wollen Sicherheitsevaluatoren einbetten. Wie unabhängig sind sie wirklich?",
+      "fr": "Anthropic et OpenAI veulent intégrer des évaluateurs de sécurité. Seront-ils vraiment indépendants ?",
+      "es": "Anthropic y OpenAI quieren integrar evaluadores de seguridad. ¿Serán realmente independientes?",
+      "ar": "شركتا Anthropic وOpenAI تريدان تضمين مقيّمي السلامة. لكن هل سيكونون مستقلين فعلًا؟"
+    },
+    "source": "TechCrunch",
+    "url": "https://techcrunch.com/2026/09/16/anthropic-and-openai-want-to-embed-safety-evaluators-will-they-really-be-independent/",
+    "take": {
+      "en": "Evaluators with desks and badges but no authority to stop a deployment are an internal compliance department with better PR, and the Dieselgate comparison is the sharpest point in the piece — a model trained to pass a shutdown-resistance benchmark tells you nothing about its safety. Access to training checkpoints and logs is the part worth demanding; without statutory backing, nothing stops a lab from shrinking it after the first bad report.",
+      "de": "Evaluatoren mit Schreibtisch und Badge, aber ohne Befugnis, ein Deployment zu stoppen, sind eine interne Compliance-Abteilung mit besserem PR – und der Dieselgate-Vergleich ist der schärfste Punkt des Textes: Ein Modell, das darauf trainiert wurde, einen Shutdown-Resistance-Benchmark zu bestehen, sagt nichts über seine Sicherheit aus. Zugriff auf Trainings-Checkpoints und Logs ist das, worauf man bestehen sollte; ohne gesetzliche Absicherung hindert nichts ein Lab daran, den nach dem ersten schlechten Bericht wieder zu beschneiden.",
+      "fr": "Des évaluateurs avec un bureau et un badge mais sans pouvoir d'arrêter un déploiement, c'est un service de conformité interne avec un meilleur communiqué — et la comparaison avec le Dieselgate est le point le plus percutant de l'article : un modèle entraîné à réussir un benchmark de résistance à l'arrêt ne dit rien de sa sécurité. L'accès aux checkpoints d'entraînement et aux journaux, c'est ce qu'il faut exiger ; sans base légale, rien n'empêche un labo de le restreindre après le premier mauvais rapport.",
+      "es": "Evaluadores con escritorio y acreditación pero sin autoridad para detener un despliegue son un departamento de cumplimiento interno con mejores relaciones públicas, y la comparación con el Dieselgate es el punto más afilado del artículo: un modelo entrenado para superar un benchmark de resistencia al apagado no dice nada sobre su seguridad. El acceso a los checkpoints de entrenamiento y a los registros es lo que vale la pena exigir; sin respaldo legal, nada impide que un laboratorio lo recorte tras el primer informe desfavorable.",
+      "ar": "مقيّمون يملكون مكاتب وشارات لكن دون سلطة إيقاف نشر أي نموذج ليسوا سوى قسم امتثال داخلي بعلاقات عامة أفضل، ومقارنة «ديزلغيت» هي ألمع نقطة في المقال: نموذج مُدرَّب على اجتياز معيار مقاومة الإيقاف لا يخبرك شيئًا عن سلامته. الوصول إلى نسخ التدريب الوسيطة والسجلات هو ما يستحق المطالبة به؛ فمن دون سند تشريعي لا شيء يمنع مختبرًا من تقليصه بعد أول تقرير سيئ."
+    },
+    "tags": [
+      "safety",
+      "evaluation",
+      "governance"
+    ]
   }
 ]
