@@ -1,5 +1,6 @@
 'use client'
 
+import { getLatestContentDate } from '@/lib/content-dates'
 import { serializeJsonLd } from '@/lib/serialize-json-ld'
 
 // Server-rendered <script> elements are serialized twice into the delivered
@@ -250,7 +251,11 @@ export function SocialProfileSchema() {
     // schema.org Date/DateTime validators (incl. Google's ProfilePage report)
     // require a full ISO datetime, not a bare YYYY-MM-DD date.
     dateCreated: '2024-01-01T00:00:00Z',
-    dateModified: new Date().toISOString(),
+    // Must not be render-time: this module is 'use client', so a Date.now()
+    // here is evaluated once during the static export and again at hydration,
+    // producing two different strings and a hydration mismatch. The newest
+    // content date is stable across both and is what dateModified should mean.
+    dateModified: getLatestContentDate().toISOString(),
     mainEntity: {
       '@type': 'Person',
       name: 'Ahmed Mohammed',
