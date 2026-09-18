@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "node tools/emit-sitemap-alias.mjs",
     "start": "next start",
     "lint": "eslint src",
     "typecheck": "tsc --noEmit"
