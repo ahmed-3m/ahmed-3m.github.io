@@ -333,9 +333,13 @@ jobs:
 
           echo "Waiting up to 15 min for quality+build on $SHA…"
           deadline=$((SECONDS + 900))
-          APPROVED_IDS=" "
+          ANNOUNCED_IDS=" "
           WARNED_ID=""
           LAST_REPORT=""
+          # Empty, not 0: SECONDS can legitimately be 0 on the first iteration,
+          # so 0 cannot double as "not yet held" without re-arming every pass
+          # and suppressing the warning forever.
+          HELD_SINCE=""
           while :; do
             # A human merging the PR mid-poll is a SUCCESS: the delta is on
             # main, and GitHub cancels the in-flight PR check runs at merge
@@ -367,9 +371,15 @@ jobs:
             # and treat "has scheduled zero jobs" as the held signal — that is
             # the thing we actually care about and it holds whatever GitHub
             # calls the state today. Approving a run that is not gated is a
-            # harmless 4xx, so a wrong guess costs nothing.
-            run_info="$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/deploy.yml/runs?head_sha=${SHA}" \
-              --jq '[.workflow_runs[] | select(.conclusion == null or .conclusion == "action_required")][0] // {} | [(.id // ""), (.status // ""), (.conclusion // "none")] | @tsv' 2>/dev/null || true)"
+            # harmless 4xx, so a wrong guess costs nothing. Keep the explicit
+            # held shapes too, so this cannot regress the old selector if
+            # GitHub ever schedules a placeholder job on a parked run.
+            #
+            # event=pull_request + max_by(.id): only the PR run carries the
+            # required lanes, and pinning the newest stops a stray
+            # workflow_dispatch run on the same SHA from winning the pick.
+            run_info="$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/deploy.yml/runs?head_sha=${SHA}&event=pull_request" \
+              --jq '[.workflow_runs[] | select(.conclusion == null or .conclusion == "action_required")] | max_by(.id) // {} | [(.id // ""), (.status // ""), (.conclusion // "none")] | @tsv' 2>/dev/null || true)"
             run_id="$(printf '%s' "$run_info" | cut -f1)"
             run_status="$(printf '%s' "$run_info" | cut -f2)"
             run_conclusion="$(printf '%s' "$run_info" | cut -f3)"
@@ -385,23 +395,45 @@ jobs:
                 LAST_REPORT="$report"
               fi
             fi
-            if [ -n "$run_id" ] && [ "$job_count" = "0" ]; then
-              case "$APPROVED_IDS" in
-                *" $run_id "*) : ;; # already approved successfully — leave it alone
-                *)
-                  # Retry silently until the deadline: an approval attempted
-                  # before GitHub has parked the run is simply rejected, and
-                  # giving up after one try is how a recoverable hold turns
-                  # into a 15-minute timeout.
-                  if gh api -X POST "repos/${GITHUB_REPOSITORY}/actions/runs/${run_id}/approve" >/dev/null 2>&1; then
-                    echo "Approved held deploy.yml run $run_id (status=$run_status) — lanes should start now."
-                    APPROVED_IDS="$APPROVED_IDS$run_id "
-                  elif [ "$WARNED_ID" != "$run_id" ]; then
-                    echo "::warning::deploy.yml run $run_id has scheduled no jobs (status=$run_status) and self-approval was rejected — retrying until the deadline. If the lanes never start, a human must approve that run on PR #$PR_NUMBER."
-                    WARNED_ID="$run_id"
-                  fi
-                  ;;
-              esac
+            held=0
+            if [ -n "$run_id" ]; then
+              if [ "$job_count" = "0" ] \
+                || [ "$run_conclusion" = "action_required" ] \
+                || [ "$run_status" = "waiting" ] \
+                || [ "$run_status" = "requested" ] \
+                || [ "$run_status" = "pending" ]; then
+                held=1
+              fi
+            fi
+            if [ "$held" = "1" ]; then
+              if [ -z "$HELD_SINCE" ]; then HELD_SINCE=$SECONDS; fi
+              # Retry every iteration for as long as the run stays held, and do
+              # NOT latch on the first accepted approval: if GitHub ever accepts
+              # one for a run it has not actually parked yet, latching would
+              # skip the real hold that follows — exactly the give-up-after-one-
+              # try behaviour this change exists to remove. Repeat rejections
+              # are a cheap 4xx. Announce a success only once.
+              approve_err="$(gh api -X POST "repos/${GITHUB_REPOSITORY}/actions/runs/${run_id}/approve" 2>&1 >/dev/null)" && approve_rc=0 || approve_rc=$?
+              if [ "$approve_rc" = "0" ]; then
+                case "$ANNOUNCED_IDS" in
+                  *" $run_id "*) : ;;
+                  *)
+                    echo "Approved held deploy.yml run $run_id (status=$run_status conclusion=$run_conclusion) — lanes should start now."
+                    ANNOUNCED_IDS="$ANNOUNCED_IDS$run_id "
+                    ;;
+                esac
+              elif [ "$WARNED_ID" != "$run_id" ] && [ "$((SECONDS - HELD_SINCE))" -ge 60 ]; then
+                # Wait out a grace period before annotating: a run that is
+                # merely starting also reports zero jobs for a few seconds, and
+                # warning on that would put a ::warning:: on every healthy
+                # publish. Carry the rejection text — 403 (not gated) and 404
+                # (wrong id) and a permissions error are different problems and
+                # the old `>/dev/null 2>&1` threw that away.
+                echo "::warning::deploy.yml run $run_id still has no jobs after 60s (status=$run_status conclusion=$run_conclusion) and self-approval was rejected: $(printf '%s' "$approve_err" | head -1). Retrying until the deadline; a human may need to approve that run on PR #$PR_NUMBER."
+                WARNED_ID="$run_id"
+              fi
+            else
+              HELD_SINCE=""
             fi
             verdicts="$(gh api "repos/${GITHUB_REPOSITORY}/commits/${SHA}/check-runs" \
               --jq '[.check_runs[] | select(.name == "quality" or .name == "build")] | map({(.name): (.conclusion // "pending")}) | add // {} | [(.quality // "pending"), (.build // "pending")] | @tsv')"
