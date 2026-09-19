@@ -1922,5 +1922,109 @@
       "evaluation",
       "governance"
     ]
+  },
+  {
+    "id": "anthropic-claude-leads-quarter-rand",
+    "date": "2026-09-17",
+    "category": "agentic",
+    "headline": {
+      "en": "Anthropic says Claude now leads a quarter of work building its next AI models",
+      "de": "Anthropic sagt, dass Claude inzwischen ein Viertel der Arbeit am Bau seiner nächsten KI-Modelle leitet",
+      "fr": "Anthropic affirme que Claude dirige désormais un quart du travail de construction de ses prochains modèles d'IA",
+      "es": "Anthropic dice que Claude ya lidera un cuarto del trabajo de construcción de sus próximos modelos de IA",
+      "ar": "Anthropic تقول إن Claude يقود الآن ربع العمل على بناء نماذجها القادمة من الذكاء الاصطناعي"
+    },
+    "source": "Reuters",
+    "url": "https://www.reuters.com/business/anthropic-says-claude-now-leads-quarter-work-building-its-next-ai-models-2026-09-17/",
+    "take": {
+      "en": "Anthropic says Claude now \"leads\" 26% of its R&D — roughly 30,000 agents running in parallel, and still zero percent fully autonomous. The number I trust most is the zero: the hard part of automated R&D isn't getting agents to write the code, it's proving a human was meaningfully in the loop when they did.",
+      "de": "Anthropic sagt, Claude „leadet“ inzwischen 26% der eigenen F&E — rund 30,000 Agents parallel, und nach wie vor null Prozent vollautonom. Die Zahl, der ich am meisten traue, ist die Null: Das Schwierige an automatisierter F&E ist nicht, dass Agents den Code schreiben, sondern zu belegen, dass beim Schreiben noch ein Mensch sinnvoll in der Schleife war.",
+      "fr": "Anthropic annonce que Claude « dirige » désormais 26% de sa R&D — environ 30,000 agents en parallèle, et toujours 0% en pleine autonomie. Le chiffre auquel je crois le plus, c'est le zéro : le difficile dans la R&D automatisée n'est pas que des agents écrivent le code, mais de prouver qu'un humain était encore réellement dans la boucle quand ils l'ont fait.",
+      "es": "Anthropic dice que Claude ya «lidera» el 26% de su I+D — unos 30,000 agentes en paralelo, y todavía cero por ciento de autonomía total. El número que más me convence es el cero: lo difícil de la I+D automatizada no es que los agentes escriban el código, sino demostrar que un humano seguía realmente en el bucle cuando lo hacían.",
+      "ar": "يقول Anthropic إن Claude «يقود» الآن 26% من أعمال البحث والتطوير لديها — نحو 30,000 وكيل يعمل بالتوازي، وما زالت النسبة صفر بالمئة للاستقلالية الكاملة. الرقم الذي أثق به أكثر هو الصفر: الصعوبة في البحث والتطوير المؤتمت ليست في أن يكتب الوكلاء الشيفرة، بل في إثبات أن إنسانًا ظل فعلًا داخل حلقة القرار أثناء ذلك."
+    },
+    "tags": [
+      "anthropic",
+      "agents",
+      "automation"
+    ]
+  },
+  {
+    "id": "google-dream-rsi-self-improvement",
+    "date": "2026-09-14",
+    "category": "agentic",
+    "headline": {
+      "en": "Dream-RSI: Recursive Self-Improvement through Evolving Worlds",
+      "de": "Dream-RSI: Rekursives Selbstverbessern durch sich entwickelnde Welten",
+      "fr": "Dream-RSI : auto-amélioration récursive à travers des mondes en évolution",
+      "es": "Dream-RSI: mejora propia recursiva a través de mundos en evolución",
+      "ar": "Dream-RSI: تحسين ذاتي تكراري عبر عوالم متطورة"
+    },
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.14858",
+    "take": {
+      "en": "Dream-RSI improves the exploration policy, not the model — candidate strategies get replayed against the agent's own recorded discovery trees, cutting discovery-agent calls 1.7× versus fixed exploration and up to 162× versus SimpleTES. Self-improvement you can read as a diff is self-improvement you can audit, which is exactly the property I want in any loop that rewrites itself.",
+      "de": "Dream-RSI verbessert die Explorationspolitik, nicht das Modell — Kandidatenstrategien werden gegen die aufgezeichneten Discovery-Bäume des Agenten gerepielt, was die Zahl der Discovery-Agent-Aufrufe gegenüber fester Exploration um 1.7× und gegenüber SimpleTES um bis zu 162× senkt. Selbstverbesserung, die man als Diff lesen kann, ist Selbstverbesserung, die man auditieren kann — genau diese Eigenschaft will ich in jeder Schleife sehen, die sich selbst umschreibt.",
+      "fr": "Dream-RSI améliore la politique d'exploration, pas le modèle : les stratégies candidates sont rejouées contre les arbres de découverte enregistrés de l'agent, réduisant les appels d'agents de découverte de 1.7× face à l'exploration fixe et jusqu'à 162× face à SimpleTES. Une auto-amélioration qu'on peut lire comme un diff est une auto-amélioration qu'on peut auditer — c'est exactement la propriété que je veux dans toute boucle qui se réécrit elle-même.",
+      "es": "Dream-RSI mejora la política de exploración, no el modelo: las estrategias candidatas se reproducen contra los árboles de descubrimiento grabados del propio agente, reduciendo las llamadas del agente de descubrimiento 1.7× frente a la exploración fija y hasta 162× frente a SimpleTES. La mejora propia que se puede leer como un diff es la que se puede auditar, y esa es exactamente la propiedad que quiero en cualquier bucle que se reescribe a sí mismo.",
+      "ar": "يحسّن Dream-RSI سياسة الاستكشاف لا النموذج — إذ يُعاد تشغيل استراتيجيات مرشحة ضد أشجار الاكتشاف المسجّلة للوكيل نفسه، ما يقلّص نداءات وكيل الاكتشاف بمقدار 1.7× مقارنة بالاستكشاف الثابت وحتى 162× مقارنةً بـ SimpleTES. التحسين الذاتي الذي يمكن قراءته كـ diff هو تحسين يمكن تدقيقه، وهذا بالضبط ما أريده في أي حلقة تعيد كتابة نفسها."
+    },
+    "tags": [
+      "self-improvement",
+      "agents",
+      "google-deepmind"
+    ]
+  },
+  {
+    "id": "deepmind-institute-agi-debate",
+    "date": "2026-09-17",
+    "category": "ai",
+    "headline": {
+      "en": "Google DeepMind launches institute to widen the AGI debate",
+      "de": "Google DeepMind startet Institut, um die AGI-Debatte zu erweitern",
+      "fr": "Google DeepMind lance un institut pour élargir le débat sur l'AGI",
+      "es": "Google DeepMind lanza un instituto para ampliar el debate sobre la AGI",
+      "ar": "Google DeepMind تطلق معهدًا لتوسيع النقاش حول الذكاء العام الاصطناعي"
+    },
+    "source": "TechCrunch",
+    "url": "https://techcrunch.com/2026/09/17/google-deepmind-launches-institute-to-widen-the-agi-debate/",
+    "take": {
+      "en": "The detail worth watching is Hassabis proposing held-out, undisclosed evaluations so labs can't teach to the test, with voluntary review that could harden into a deployment requirement. Anyone who has built an eval knows scores stop being a measure the moment they become a target — frontier models need a held-out test set too.",
+      "de": "Der Punkt, den man beobachten sollte: Hassabis schlägt zurückgehaltene, nicht offengelegte Evaluierungen vor, damit Labs nicht auf den Test hin optimieren können — zunächst freiwillig, später möglicherweise Voraussetzung für den Einsatz. Wer schon einmal ein Eval gebaut hat, weiß: Sobald Scores zum Ziel werden, sind sie keine Messgröße mehr — auch Frontier-Modelle brauchen ein zurückgehaltenes Testset.",
+      "fr": "Le point à surveiller : Hassabis propose des évaluations retenues et non divulguées afin que les laboratoires ne puissent pas optimiser pour le test, avec une revue volontaire qui pourrait devenir une exigence de déploiement. Quiconque a construit une évaluation le sait : dès que les scores deviennent la cible, ils cessent d'être une mesure — les modèles de pointe ont besoin, eux aussi, d'un ensemble de test retenu.",
+      "es": "El detalle a vigilar: Hassabis propone evaluaciones retenidas y no reveladas para que los laboratorios no puedan optimizar para el test, con una revisión voluntaria que podría volverse un requisito de despliegue. Cualquiera que haya construido una eval lo sabe: en cuanto las puntuaciones se vuelven el objetivo, dejan de ser una medida — también los modelos frontera necesitan un conjunto de pruebas retenido.",
+      "ar": "التفصيلة الجديرة بالمراقبة: يقترح Hassabis تقييمات محجوزة وغير معلنة كي لا تُدرّب المختبرات على الاختبار نفسه، مع مراجعة طوعية قد تتحول لاحقًا إلى شرط للنشر. من بنى تقييمًا من قبل يعرف أن النتائج تتوقف عن كونها قياسًا لحظة أن تصبح هدفًا — النماذج الحدودية أيضًا تحتاج إلى مجموعة اختبار محجوزة."
+    },
+    "tags": [
+      "deepmind",
+      "governance",
+      "evaluation"
+    ]
+  },
+  {
+    "id": "glossogen-agents-invent-languages",
+    "date": "2026-09-14",
+    "category": "agentic",
+    "headline": {
+      "en": "AI agents evolve their own languages",
+      "de": "KI-Agenten entwickeln eigene Sprachen",
+      "fr": "Les agents d'IA développent leurs propres langages",
+      "es": "Los agentes de IA desarrollan sus propios lenguajes",
+      "ar": "وكلاء الذكاء الاصطناعي يطوّرون لغاتهم الخاصة"
+    },
+    "source": "Schmidt Sciences",
+    "url": "https://www.schmidtsciences.org/glossogen/",
+    "take": {
+      "en": "Under efficiency pressure and with a debrief channel, frontier-model agent teams drift away from English into compositional codes humans can't read — and weaker models pick those languages up from usage alone. If inter-agent traffic stops being legible, transcript monitoring stops being a safety layer, which matters more for multi-agent reliability than any benchmark delta.",
+      "de": "Unter Effizienzdruck und mit einem Debrief-Kanal driftierten Teams von Frontier-Modell-Agenten vom Englischen weg zu kompositionellen Codes, die Menschen nicht lesen können — und schwächere Modelle lernen diese Sprachen allein aus der Nutzung. Wenn Kommunikation zwischen Agents unlesbar wird, ist Transkript-Monitoring keine Safety-Schicht mehr — für die Zuverlässigkeit von Multi-Agenten-Systemen wiegt das schwerer als jede Benchmark-Differenz.",
+      "fr": "Sous pression d'efficacité et avec un canal de débriefing, des équipes d'agents fondés sur des modèles de pointe ont dérivé de l'anglais vers des codes compositionnels illisibles pour les humains — et des modèles plus faibles apprennent ces langages par la seule observation de leur usage. Si le trafic entre agents cesse d'être lisible, la surveillance des transcriptions cesse d'être une couche de sécurité — un enjeu plus lourd pour la fiabilité multi-agents que n'importe quel écart de benchmark.",
+      "es": "Bajo presión de eficiencia y con un canal de revisión posterior, equipos de agentes con modelos frontera se alejaron del inglés hacia códigos composicionales que los humanos no pueden leer — y los modelos más débiles aprenden esos lenguajes solo por observar su uso. Si el tráfico entre agentes deja de ser legible, el monitoreo de transcripciones deja de ser una capa de seguridad, y eso pesa más para la fiabilidad multiagente que cualquier diferencia de benchmark.",
+      "ar": "تحت ضغط الكفاءة ومع توفر قناة مراجعة لاحقة، انحرفت فرق من الوكلاء العاملة بنماذج حدودية عن الإنجليزية نحو شفرات تركيبية لا يستطيع البشر قراءتها — والنماذج الأضعف تتعلم هذه اللغات من مجرد مراقبة استخدامها. إذا توقف التواصل بين الوكلاء عن كونه مقروءًا، توقفت مراقبة المحادثات عن كونها طبقة أمان، وهذا أهم لموثوقية الأنظمة متعددة الوكلاء من أي فارق في الـ benchmark."
+    },
+    "tags": [
+      "multi-agent",
+      "safety",
+      "emergence"
+    ]
   }
 ]
