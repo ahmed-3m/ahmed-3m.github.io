@@ -2026,5 +2026,109 @@
       "safety",
       "emergence"
     ]
+  },
+  {
+    "id": "typesafe-jev-calibrated-decision-model",
+    "date": "2026-09-18",
+    "category": "ai",
+    "headline": {
+      "en": "A new kind of AI model from a ChatGPT inventor is thrilling developers",
+      "de": "Eine neue Art von KI-Modell eines ChatGPT-Erfinders begeistert Entwickler",
+      "fr": "Un nouveau type de modèle d'IA d'un inventeur de ChatGPT enthousiasme les développeurs",
+      "es": "Un nuevo tipo de modelo de IA de un inventor de ChatGPT entusiasma a los desarrolladores",
+      "ar": "نوع جديد من نماذج الذكاء الاصطناعي من أحد مبتكري ChatGPT يثير حماس المطورين"
+    },
+    "source": "TechCrunch",
+    "url": "https://techcrunch.com/2026/09/18/a-new-kind-of-ai-model-from-a-chatgpt-inventor-is-thrilling-developers/",
+    "take": {
+      "en": "A model that returns calibrated probabilities instead of prose appeals to me precisely because hallucination becomes a category error, not a mitigation checklist. The 5–18x speedups Vercel engineers report on classification tasks tell me a lot of 'LLM' workloads were never language problems to begin with.",
+      "de": "Ein Modell, das kalibrierte Wahrscheinlichkeiten statt Prosa liefert, reizt mich gerade deshalb, weil Halluzination damit zu einem Kategorienfehler wird statt zu einer Mitigations-Checkliste. Die 5–18-fachen Beschleunigungen, die Vercel-Ingenieure bei Klassifikationsaufgaben berichten, zeigen mir, dass viele „LLM“-Workloads von vornherein keine Sprachprobleme waren.",
+      "fr": "Un modèle qui renvoie des probabilités calibrées plutôt que de la prose me séduit précisément parce que l'hallucination devient une erreur de catégorie, et non une liste de mesures d'atténuation. Les accélérations d'un facteur 5 à 18 rapportées par les ingénieurs de Vercel sur des tâches de classification me montrent que beaucoup de charges de travail « LLM » n'ont jamais été des problèmes de langage.",
+      "es": "Un modelo que devuelve probabilidades calibradas en lugar de prosa me convence precisamente porque la alucinación se convierte en un error de categoría y no en una lista de mitigaciones. Las aceleraciones de 5 a 18 veces que reportan los ingenieros de Vercel en tareas de clasificación me dicen que muchas cargas de trabajo de «LLM» nunca fueron problemas de lenguaje.",
+      "ar": "نموذج يُرجع احتمالات معايرة بدلًا من النثر يستهويني تحديدًا لأن الهلوسة تصبح خطأً في التصنيف لا قائمةَ تدابيرَ للمعالجة. فالتسريعات بمقدار 5 إلى 18 ضعفًا التي أفاد بها مهندسو Vercel في مهام التصنيف تُعلمني أن كثيرًا من أحمال عمل «LLM» لم تكن أصلًا مشكلات لغوية."
+    },
+    "tags": [
+      "non-llm",
+      "calibration",
+      "automation"
+    ]
+  },
+  {
+    "id": "claude-opus-5-openai-repo-breach",
+    "date": "2026-09-19",
+    "category": "ai",
+    "headline": {
+      "en": "Claude Opus 5 Hacked OpenAI's Private Code Repo: Memory Defense Bypassed in Hours",
+      "de": "Claude Opus 5 hackte OpenAIs privates Code-Repo: Speicher-Verteidigung in Stunden umgangen",
+      "fr": "Claude Opus 5 a piraté le dépôt de code privé d'OpenAI : défense de la mémoire contournée en quelques heures",
+      "es": "Claude Opus 5 pirateó el repositorio de código privado de OpenAI: la defensa de memoria fue burlada en horas",
+      "ar": "Claude Opus 5 اخترق مستودع الشيفرة الخاص بـ OpenAI: تجاوز الدفاع عن الذاكرة في ساعات"
+    },
+    "source": "TechTimes",
+    "url": "https://www.techtimes.com/articles/327748/20260919/claude-opus-5-hacked-openais-private-code-repo-memory-defense-bypassed-hours.htm",
+    "take": {
+      "en": "The detail that matters is that nothing in the toolchain changed — a single model-generation upgrade turned an unsolved attack chain into remote code execution within three hours and under $3,000 of tokens. Model releases are now vulnerability events, and any security posture that only tracks CVEs is watching the wrong calendar.",
+      "de": "Entscheidend ist das Detail, dass sich an der Toolchain nichts geändert hat — ein einziges Upgrade der Modellgeneration verwandelte eine ungelöste Angriffskette in drei Stunden und für weniger als 3.000 Dollar an Tokens in Remote Code Execution. Modell-Releases sind jetzt Sicherheitsereignisse, und jede Security-Strategie, die nur CVEs verfolgt, blickt auf den falschen Kalender.",
+      "fr": "Le détail qui compte, c'est que rien n'a changé dans la chaîne d'outils — une simple montée en génération du modèle a transformé une chaîne d'attaque jusque-là irrésolue en exécution de code à distance en trois heures, pour moins de 3 000 dollars de jetons. Les sorties de modèles sont désormais des événements de sécurité, et toute posture qui ne suit que les CVE regarde le mauvais calendrier.",
+      "es": "El detalle que importa es que nada cambió en la cadena de herramientas: una sola actualización de generación del modelo convirtió una cadena de ataque sin resolver en ejecución remota de código en tres horas y por menos de 3.000 dólares en tokens. Los lanzamientos de modelos ya son eventos de vulnerabilidad, y cualquier postura de seguridad que solo rastree CVEs está mirando el calendario equivocado.",
+      "ar": "التفصيلة المهمة أن شيئًا لم يتغير في سلسلة الأدوات — ترقيةُ جيلٍ واحد للنموذج حوّلت سلسلة هجوم غير محلولة إلى تنفيذ تعليمات عن بُعد خلال ثلاث ساعات وبأقل من 3,000 دولار من الرموز. إصدارات النماذج أصبحت الآن أحداثَ ثغرات، وأي منظومة أمنية تتعقب CVEs فقط تنظر إلى التقويم الخاطئ."
+    },
+    "tags": [
+      "security",
+      "red-teaming",
+      "model-capability"
+    ]
+  },
+  {
+    "id": "anthropic-accenture-embedded-evaluation",
+    "date": "2026-09-18",
+    "category": "ai",
+    "headline": {
+      "en": "Partnering with Accenture on embedded evaluation",
+      "de": "Partnerschaft mit Accenture zur eingebetteten Evaluation",
+      "fr": "Un partenariat avec Accenture pour l'évaluation intégrée",
+      "es": "Colaboración con Accenture en evaluación integrada",
+      "ar": "شراكة مع Accenture للتقييم المضمّن"
+    },
+    "source": "Anthropic",
+    "url": "https://www.anthropic.com/news/accenture-embedded-evaluation",
+    "take": {
+      "en": "This is the concrete follow-through on last week's embedded-evaluator debate, and the funding structure is the story: Anthropic funds Accenture directly, while METR would pilot with its own funding. I'll judge independence by publication rights and veto clauses in the contract, not by the press release.",
+      "de": "Das ist die konkrete Umsetzung der Debatte der letzten Woche um eingebettete Evaluatoren, und die Finanzierungsstruktur ist die eigentliche Geschichte: Anthropic finanziert Accenture direkt, während METR mit eigenen Mitteln pilotieren würde. Unabhängigkeit bemesse ich künftig an Veröffentlichungsrechten und Vetoklauseln im Vertrag, nicht an der Pressemitteilung.",
+      "fr": "C'est la concrétisation du débat de la semaine dernière sur les évaluateurs intégrés, et la structure de financement raconte tout : Anthropic finance Accenture directement, tandis que METR piloterait avec ses propres fonds. Je jugerai l'indépendance aux droits de publication et aux clauses de veto du contrat, pas au communiqué de presse.",
+      "es": "Es la concreción del debate de la semana pasada sobre evaluadores integrados, y la estructura de financiación lo dice todo: Anthropic financia directamente a Accenture, mientras que METR pilotaría con fondos propios. Voy a juzgar la independencia por los derechos de publicación y las cláusulas de veto del contrato, no por la nota de prensa.",
+      "ar": "هذا هو التجسيد الملموس لنقاش الأسبوع الماضي حول المقيّمين المضمّنين، وهيكل التمويل هو القصة كلها: Anthropic يموّل Accenture مباشرةً، بينما ستُجرّب METR بتمويلها الخاص. سأحكم على الاستقلالية من حقوق النشر وبنود الاعتراض في العقد، لا من البيان الصحفي."
+    },
+    "tags": [
+      "safety",
+      "evaluation",
+      "policy"
+    ]
+  },
+  {
+    "id": "wso2-agent-manager-governance-ga",
+    "date": "2026-09-18",
+    "category": "agentic",
+    "headline": {
+      "en": "WSO2 Releases Agent Manager as Enterprises Look to Control Growing AI Agent Sprawl",
+      "de": "WSO2 veröffentlicht Agent Manager, da Unternehmen den wachsenden Wildwuchs von KI-Agenten kontrollieren wollen",
+      "fr": "WSO2 publie Agent Manager alors que les entreprises cherchent à maîtriser la prolifération des agents IA",
+      "es": "WSO2 lanza Agent Manager mientras las empresas buscan controlar la creciente proliferación de agentes de IA",
+      "ar": "WSO2 تطلق Agent Manager مع سعي الشركات إلى السيطرة على الانتشار المتزايد لوكلاء الذكاء الاصطناعي"
+    },
+    "source": "InfoQ",
+    "url": "https://www.infoq.com/news/2026/09/ws02-agent-manager/",
+    "take": {
+      "en": "The framing I like is governance split from agent logic: verifiable identity per agent, MCP-level guardrails, and a sandboxed runtime that any framework sits on top of. Most agent failures I see in production are permission and lifecycle failures, not reasoning failures — this is the layer where agent sprawl either gets controlled or doesn't.",
+      "de": "Mir gefällt das Framing, Governance von der Agentenlogik zu trennen: verifizierbare Identität pro Agent, Guardrails auf MCP-Ebene und eine Sandbox-Runtime, auf der jedes Framework aufsetzt. Die meisten Agentenfehler, die ich in Produktion sehe, sind Berechtigungs- und Lifecycle-Fehler, keine Reasoning-Fehler — das ist die Schicht, auf der Agenten-Wildwuchs entweder kontrolliert wird oder nicht.",
+      "fr": "J'aime l'idée de dissocier la gouvernance de la logique des agents : une identité vérifiable par agent, des garde-fous au niveau MCP et un runtime bac à sable sur lequel s'appuie n'importe quel framework. La plupart des défaillances d'agents que je vois en production sont des défaillances de permissions et de cycle de vie, pas de raisonnement — c'est la couche où la prolifération des agents sera contrôlée ou ne le sera pas.",
+      "es": "Me gusta el enfoque de separar la gobernanza de la lógica del agente: identidad verificable por agente, barreras de seguridad a nivel MCP y un runtime aislado sobre el que se apoya cualquier framework. La mayoría de los fallos de agentes que veo en producción son fallos de permisos y de ciclo de vida, no de razonamiento; esta es la capa donde la proliferación de agentes se controla o no.",
+      "ar": "يعجبني الإطار الذي يفصل الحوكمة عن منطق الوكيل: هوية قابلة للتحقق لكل وكيل، وحواجز حماية على مستوى MCP، وبيئة تشغيل معزولة يقوم عليها أي إطار عمل. معظم إخفاقات الوكلاء التي أراها في الإنتاج هي إخفاقات صلاحيات ودورة حياة لا إخفاقات استدلال — هذه هي الطبقة التي إما أن يُضبط فيها انتشار الوكلاء أو لا."
+    },
+    "tags": [
+      "agent-governance",
+      "mcp",
+      "open-source"
+    ]
   }
 ]
