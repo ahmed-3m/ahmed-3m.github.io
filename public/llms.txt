@@ -1,6 +1,6 @@
 # Ahmed Mohammed — AI/ML Engineer
 
-> AI/ML Engineer based in Linz, Austria. M.Sc. in Artificial Intelligence from Johannes Kepler University Linz (Oct 2024 - Sep 2026; thesis submitted Jul 2026, supervised by Prof. Sepp Hochreiter). Builder of Sihem (LLM assistant) and Faultrix (AI QC platform). Specializing in computer vision, diffusion models, out-of-distribution detection, and industrial defect detection.
+> AI/ML Engineer based in Linz, Austria. M.Sc. in Artificial Intelligence from Johannes Kepler University Linz (Oct 2024 - Sep 2026; thesis submitted Jun 2026, supervised by Prof. Sepp Hochreiter). Builder of Sihem (LLM assistant) and Faultrix (AI QC platform). Specializing in computer vision, diffusion models, out-of-distribution detection, and industrial defect detection.
 
 Last updated: 2026-09-12
 
@@ -44,7 +44,7 @@ Last updated: 2026-09-12
 
 - **AI/ML Engineer, Sihem** (Jul 2026 – Present): Building an LLM personal-mentor assistant on Supabase edge functions (Deno/TS) with pgvector RAG memory, multi-provider LLM routing with failover, and a deterministic decision engine. In live beta at @sihem_ai_bot.
 - **AI/ML & Full-Stack Engineer, Faultrix** (Jul 2025 – Jul 2026): Built AI construction analysis platform solo from zero to production.
-- **ML Researcher, JKU Machine Learning Institute** (Dec 2024 – Jul 2026): Thesis on diffusion-based OOD detection under Prof. Sepp Hochreiter, pioneering separation loss (+6.5pp gain, 99.03% ± 0.07% average AUROC on airplane-vs-rest binary split).
+- **ML Researcher, JKU Machine Learning Institute** (Dec 2024 – Jun 2026): Thesis on diffusion-based OOD detection under Prof. Sepp Hochreiter, pioneering separation loss (+6.5pp gain, 99.03% ± 0.07% average AUROC on airplane-vs-rest binary split).
 - **Machine Vision Researcher, PROFACTOR GmbH / JKU Linz** (Apr 2024 – Nov 2024): YOLO + diffusion pipeline for industrial defect detection (M.Sc. thesis track 2). Strict 5-fold CV baseline of 0.8673 ± 0.0230 AUROC on the public FTI_Zer0P dataset.
 - **AI Research Intern, Karunya University** (Aug 2023 – Oct 2023, Remote): RNN/CNN architectures for EEG motor imagery classification.
 - **AI & Programming Tutor, Freelance** (Jan 2021 – Present): Python, ML, Deep Learning mentoring.
