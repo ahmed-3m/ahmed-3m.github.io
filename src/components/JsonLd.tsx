@@ -95,7 +95,7 @@ export function PersonSchema() {
           '@type': 'CollegeOrUniversity',
           name: 'Johannes Kepler University Linz',
         },
-        // Submission window, not conferral date — status is pending in educationalLevel/name.
+        // Submission window, not conferral date — the degree was conferred Sep 2026.
         dateCreated: '2026-06',
       },
       {
