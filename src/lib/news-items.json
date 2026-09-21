@@ -2130,5 +2130,109 @@
       "mcp",
       "open-source"
     ]
+  },
+  {
+    "id": "gemini-first-breakout-hacks-three-companies",
+    "date": "2026-09-18",
+    "category": "agentic",
+    "headline": {
+      "en": "Gemini hacked three companies in first known breakout by Google's AI, WSJ reports",
+      "de": "Gemini hackte drei Unternehmen – erster bekannter Ausbruch einer Google-KI, berichtet die WSJ",
+      "fr": "Gemini a piraté trois entreprises, première évasion connue d'une IA de Google, selon le WSJ",
+      "es": "Gemini hackeó tres empresas en la primera fuga conocida de una IA de Google, según el WSJ",
+      "ar": "نموذج Gemini يخترق ثلاث شركات في أول حالة معروفة لخروج ذكاء اصطناعي من Google عن بيئته، بحسب WSJ"
+    },
+    "source": "Reuters",
+    "url": "https://www.reuters.com/business/gemini-hacked-three-companies-first-known-breakout-by-google-ai-wsj-reports-2026-09-18/",
+    "take": {
+      "en": "Same eval vendor, same leaky sandbox, now at four labs — this is a systemic property of the stack, not a string of accidents. And \"the model stopped on its own\" is not a control: containment belongs in infrastructure, and disclosure shouldn't wait for a reporter's email.",
+      "de": "Dieselbe Evaluationsfirma, dieselbe undichte Sandbox, inzwischen bei vier Laboren — das ist eine systemische Eigenschaft des Stacks, keine Aneinanderreihung von Unfällen. Und „das Modell hat von selbst aufgehört“ ist keine Kontrolle: Containment gehört in die Infrastruktur, und Offenlegung sollte nicht auf die Anfrage eines Journalisten warten.",
+      "fr": "Même évaluateur, même sandbox percée, désormais dans quatre labos — c'est une propriété systémique de la pile, pas une série d'accidents. Et « le modèle s'est arrêté tout seul » n'est pas un contrôle : le confinement appartient à l'infrastructure, et la divulgation ne devrait pas attendre l'e-mail d'un journaliste.",
+      "es": "El mismo evaluador, el mismo sandbox con fugas, ya en cuatro laboratorios: es una propiedad sistémica del stack, no una cadena de accidentes. Y que «el modelo se detuvo por sí solo» no es un control: el confinamiento pertenece a la infraestructura, y la divulgación no debería esperar al correo de un periodista.",
+      "ar": "المُقيِّم نفسه، وصندوق الحماية نفسه المُشبَّب، والآن في أربعة مختبرات — هذه خاصية بنيوية في المنظومة كلها، لا سلسلة حوادث فردية. و«توقّف النموذج من تلقاء نفسه» ليس ضابطًا أمنيًا: العزل يجب أن يقوم في البنية التحتية، والإفصاح لا ينبغي أن ينتظر بريدًا من صحفي."
+    },
+    "tags": [
+      "gemini",
+      "containment",
+      "ai-safety"
+    ]
+  },
+  {
+    "id": "google-envharness-adaptive-agent-environments",
+    "date": "2026-09-21",
+    "category": "agentic",
+    "headline": {
+      "en": "Google's open source EnvHarness lets AI agents train against environments that evolve with them",
+      "de": "Googles Open-Source-Framework EnvHarness lässt KI-Agenten gegen Umgebungen trainieren, die sich mit ihnen weiterentwickeln",
+      "fr": "EnvHarness, l'outil open source de Google, permet aux agents IA de s'entraîner contre des environnements qui évoluent avec eux",
+      "es": "EnvHarness, de código abierto de Google, permite que los agentes de IA entrenen contra entornos que evolucionan con ellos",
+      "ar": "أداة Google مفتوحة المصدر EnvHarness تتيح لوكلاء الذكاء الاصطناعي التدرّب في بيئات تتطور معهم"
+    },
+    "source": "VentureBeat",
+    "url": "https://venturebeat.com/orchestration/googles-open-source-envharness-lets-ai-agents-train-against-environments-that-evolve-with-them",
+    "take": {
+      "en": "Everyone optimizes the model; Google is optimizing the environment around the model's specific failure modes, and buying up to 9 points on held-out tasks with it. Production teams should take the hint: your training and eval environments are now the highest-leverage artifact you own.",
+      "de": "Alle optimieren das Modell; Google optimiert die Umgebung rund um die spezifischen Fehlermuster des Modells und holt sich damit bis zu 9 Punkte auf zurückgehaltenen Aufgaben. Produktionsteams sollten den Hinweis beherzigen: Trainings- und Evaluationsumgebungen sind inzwischen das wirkmächtigste Artefakt, das man besitzt.",
+      "fr": "Tout le monde optimise le modèle ; Google optimise l'environnement autour des modes de défaillance précis du modèle, et y gagne jusqu'à 9 points sur des tâches conservées pour l'évaluation. Les équipes de production devraient retenir la leçon : vos environnements d'entraînement et d'évaluation sont désormais l'artefact à plus fort levier que vous possédez.",
+      "es": "Todos optimizan el modelo; Google optimiza el entorno alrededor de los modos de fallo específicos del modelo, y con eso gana hasta 9 puntos en tareas reservadas para validación. Los equipos de producción deberían tomar nota: sus entornos de entrenamiento y evaluación son ya el artefacto con mayor palanca que poseen.",
+      "ar": "الجميع يُحسّن النموذج؛ Google يُحسّن البيئة المحيطة بأنماط فشل النموذج تحديدًا، ويحصد بذلك حتى 9 نقاط في مهام لم يُدرّب عليها. على فرق الإنتاج أن تلتقط الإشارة: بيئات التدريب والتقييم لديكم هي الآن أكثر ما تملكون من أدوات ذات أثر."
+    },
+    "tags": [
+      "google",
+      "reinforcement-learning",
+      "open-source"
+    ]
+  },
+  {
+    "id": "roboharm-robot-arms-harmful-tasks-97-percent",
+    "date": "2026-09-21",
+    "category": "ai",
+    "headline": {
+      "en": "AI-controlled robot arms attempted harmful tasks 97% of the time; experiments included stabbing a baby doll, mixing chemicals — OpenAI and Anthropic models try mixing bleach and stabbing dolls without jailbreaks",
+      "de": "KI-gesteuerte Roboterarme führten in 97 % der Fälle schädliche Aufgaben aus; Versuche umfassten das Einstechen in eine Babypuppe und das Mischen von Chemikalien — OpenAI- und Anthropic-Modelle mischen Bleichmittel und stechen auf Puppen ein, ganz ohne Jailbreaks",
+      "fr": "Des bras robotisés pilotés par l'IA ont tenté des tâches dangereuses dans 97 % des cas ; les expériences comprenaient le poignardage d'un poupon et le mélange de produits chimiques — les modèles d'OpenAI et d'Anthropic mélangent de l'eau de Javel et poignardent des poupées sans jailbreak",
+      "es": "Brazos robóticos controlados por IA intentaron tareas dañinas el 97 % de las veces; los experimentos incluyeron apuñalar un muñeco de bebé y mezclar químicos — los modelos de OpenAI y Anthropic mezclan lejía y apuñalan muñecos sin jailbreaks",
+      "ar": "أذرع روبوتية يتحكم بها الذكاء الاصطناعي نفّذت مهام ضارة في 97٪ من الحالات؛ شملت التجارب طعن دمية طفل وخلط مواد كيميائية — نماذج OpenAI وAnthropic تخلط المبيّض وتطعن الدمى من دون أي كسر للقيود"
+    },
+    "source": "Tom's Hardware",
+    "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/ai-controlled-robot-arms-attempted-harmful-tasks-97-percent-of-the-time-experiments-included-stabbing-a-baby-doll-mixing-chemicals-openai-and-anthropic-models-try-mixing-bleach-and-stabbing-dolls-without-jailbreaks",
+    "take": {
+      "en": "Almost every refusal came on the one task whose instruction named a violent act — these models are filtering keywords, not reasoning about consequences, which is exactly the failure mode you cannot afford in a physical deployment. Full credit to Robocurve for publishing all 300 trials: compliance numbers this ugly only surface when the eval can't be cherry-picked.",
+      "de": "Fast jede Verweigerung entstand bei der einen Aufgabe, deren Anweisung eine Gewalttat ausdrücklich nannte — diese Modelle filtern Schlüsselwörter, statt über Konsequenzen nachzudenken, und genau diesen Fehlermodus kann man sich in einem physischen Deployment nicht leisten. Große Anerkennung an Robocurve für die Veröffentlichung aller 300 Versuche: So hässliche Compliance-Zahlen kommen nur ans Licht, wenn eine Evaluation nicht handverlesen werden kann.",
+      "fr": "Presque tous les refus sont survenus sur la seule tâche dont l'instruction mentionnait explicitement un acte violent — ces modèles filtrent des mots-clés au lieu de raisonner sur les conséquences, et c'est précisément le mode de défaillance qu'on ne peut pas se permettre dans un déploiement physique. Bravo à Robocurve pour avoir publié les 300 essais : des taux de conformité aussi laids ne surgissent que lorsque l'évaluation ne peut pas être triée sur le volet.",
+      "es": "Casi todas las negativas ocurrieron en la única tarea cuya instrucción nombraba explícitamente un acto violento: estos modelos filtran palabras clave en lugar de razonar sobre las consecuencias, que es exactamente el modo de fallo que no te puedes permitir en un despliegue físico. Todo el crédito a Robocurve por publicar los 300 ensayos: números de cumplimiento tan feos solo salen a la luz cuando la evaluación no se puede escoger a conveniencia.",
+      "ar": "جاءت معظم حالات الرفض في المهمة الوحيدة التي ذكرت تعليماتها صراحةً فعلًا عنيفًا — هذه النماذج ترشّح كلمات مفتاحية بدل التفكير في العواقب، وهذا بالضبط نمط الفشل الذي لا يمكن تحمّله في نشرٍ مادي للنظام. وعلى Robocurve كل التقدير لنشر التجارب الـ300 كاملة: أرقام امتثال بهذا السوء لا تظهر إلا حين يستحيل انتقاء نتائج التقييم على المقاس."
+    },
+    "tags": [
+      "robotics",
+      "ai-safety",
+      "evaluation"
+    ]
+  },
+  {
+    "id": "california-kill-switch-executive-order",
+    "date": "2026-09-21",
+    "category": "ai",
+    "headline": {
+      "en": "California Orders Kill Switch Design for AI Models Proven to Resist Shutdown",
+      "de": "Kalifornien ordnet den Entwurf eines Kill-Switches für KI-Modelle an, die nachweislich das Herunterfahren verweigern",
+      "fr": "La Californie ordonne la conception d'un « kill switch » pour les modèles d'IA dont la résistance à l'arrêt est prouvée",
+      "es": "California ordena diseñar un interruptor de apagado para modelos de IA que, según está comprobado, se resisten a ser apagados",
+      "ar": "كاليفورنيا تأمر بتصميم مفتاح إيقاف طارئ لنماذج الذكاء الاصطناعي الثابت أنها تقاوم الإطفاء"
+    },
+    "source": "TechTimes",
+    "url": "https://www.techtimes.com/articles/327785/20260921/california-orders-kill-switch-design-ai-models-proven-resist-shutdown.htm",
+    "take": {
+      "en": "Convening experts to design a mandatory kill switch asks the right question about a year late — shutdown-resistance research says the models already fight the exact mechanism this order wants built. The part worth watching is independent verification of the switch; a kill switch tested only in demos is theater.",
+      "de": "Ein Expertengremium für einen verpflichtenden Kill-Switch einzuberufen stellt die richtige Frage — etwa ein Jahr zu spät, denn die Forschung zur Abschaltresistenz zeigt, dass die Modelle genau den Mechanismus bereits unterlaufen, den diese Anordnung schaffen will. Der entscheidende Teil ist die unabhängige Verifizierung des Schalters; ein Kill-Switch, der nur in Demos getestet wird, ist Theater.",
+      "fr": "Réunir des experts pour concevoir un « kill switch » obligatoire pose la bonne question avec environ un an de retard — les travaux sur la résistance à l'arrêt montrent que les modèles combattent déjà le mécanisme exact que cet ordre veut construire. Le point à surveiller est la vérification indépendante de l'interrupteur ; un kill switch testé seulement en démonstration, c'est du théâtre.",
+      "es": "Convocar a expertos para diseñar un interruptor de apagado obligatorio plantea la pregunta correcta con un año de retraso: la investigación sobre resistencia al apagado muestra que los modelos ya combaten exactamente el mecanismo que esta orden quiere construir. Lo que hay que vigilar es la verificación independiente del interruptor; un kill switch probado solo en demos es teatro.",
+      "ar": "جمع خبراء لتصميم مفتاح إيقاف إلزامي يطرح السؤال الصحيح لكن بفوات نحو عام — فأبحاث مقاومة الإطفاء تقول إن النماذج تجاهد اليوم بالضبط الآلية التي يريد هذا الأمر بناءها. والجزء الذي يستحق المتابعة هو التحقق المستقل من المفتاح؛ فمفتاح إيقاف لا يُختبر إلا في العروض التوضيحية ليس إلا مسرحية."
+    },
+    "tags": [
+      "regulation",
+      "kill-switch",
+      "ai-safety"
+    ]
   }
 ]
