@@ -2234,5 +2234,109 @@
       "kill-switch",
       "ai-safety"
     ]
+  },
+  {
+    "id": "claude-opus-5-5-launch",
+    "date": "2026-09-22",
+    "category": "ai",
+    "headline": {
+      "en": "Introducing Claude Opus 5.5",
+      "de": "Claude Opus 5.5 vorgestellt",
+      "fr": "Présentation de Claude Opus 5.5",
+      "es": "Presentación de Claude Opus 5.5",
+      "ar": "تقديم Claude Opus 5.5"
+    },
+    "source": "Anthropic",
+    "url": "https://www.anthropic.com/claude-opus-5-5",
+    "take": {
+      "en": "Fable 5.1-level performance at 40% below Opus 5 pricing tells me the frontier is now being fought on cost per task, and rerouting flagged cyber queries to weaker models is a safeguard pattern I'd like to see more of. The number that matters for production: comparable task resolution with significantly fewer steps and tokens.",
+      "de": "Leistung auf Fable-5.1-Niveau bei 40 % niedrigeren Kosten als Opus 5 zeigt mir, dass an der Frontier jetzt die Kosten pro Task entschieden werden — und das Umleiten markierter Cyber-Anfragen an schwächere Modelle ist ein Safeguard-Muster, von dem ich mehr sehen möchte. Die Zahl, die für Production zählt: vergleichbare Task-Auflösung mit deutlich weniger Schritten und Tokens.",
+      "fr": "Des performances de niveau Fable 5.1 à un prix inférieur de 40 % à celui d'Opus 5 me montre que la frontière se joue désormais sur le coût par tâche, et rediriger les requêtes cyber signalées vers des modèles plus faibles est un schéma de protection dont j'aimerais voir davantage. Le chiffre qui compte en production : une résolution de tâches comparable avec nettement moins d'étapes et de jetons.",
+      "es": "Rendimiento de nivel Fable 5.1 a un precio 40 % inferior al de Opus 5 me dice que la frontera ahora se disputa en coste por tarea, y reenviar las consultas de ciberseguridad marcadas a modelos más débiles es un patrón de protección del que quiero ver más. La cifra que importa en producción: resolución de tareas comparable con significativamente menos pasos y tokens.",
+      "ar": "أداء بمستوى Fable 5.1 بسعر أقل بـ40٪ من Opus 5 يخبرني أن المنافسة على الحدود الآن تدور حول التكلفة لكل مهمة، وإعادة توجيه استعلامات الأمن السيبراني المُعلَّمة إلى نماذج أضعف نمطُ حماية أودّ رؤية المزيد منه. الرقم الذي يهم في الإنتاج: حلّ المهام بمستوى مقارن مع خطوات ورموز (tokens) أقل بكثير."
+    },
+    "tags": [
+      "models",
+      "cost-efficiency",
+      "safeguards"
+    ]
+  },
+  {
+    "id": "openai-gpt-6-sol-luna-price-cut",
+    "date": "2026-09-22",
+    "category": "ai",
+    "headline": {
+      "en": "OpenAI launches GPT-6 Sol and Luna, boasting lower cost and fewer mistakes",
+      "de": "OpenAI startet GPT-6 Sol und Luna mit niedrigeren Kosten und weniger Fehlern",
+      "fr": "OpenAI lance GPT-6 Sol et Luna, moins chers et moins sujets aux erreurs",
+      "es": "OpenAI lanza GPT-6 Sol y Luna, con menor coste y menos errores",
+      "ar": "OpenAI تطلق GPT-6 Sol وLuna بتكلفة أقل وأخطاء أقل"
+    },
+    "source": "TechCrunch",
+    "url": "https://techcrunch.com/2026/09/22/openai-launches-gpt-6-sol-and-luna/",
+    "take": {
+      "en": "Cutting token prices in half while claiming half as many user-flagged mistakes is exactly the trade production teams want — reliability per dollar, not leaderboard peak. I just wish the \"internal factuality evaluation\" came with a public harness, because that's the number I'd actually reroute traffic on.",
+      "de": "Die Token-Preise zu halbieren und zugleich die Hälfte der von Nutzern gemeldeten Fehler zu beanspruchen ist genau der Trade, den Production-Teams wollen — Zuverlässigkeit pro Dollar, nicht der Bestwert im Leaderboard. Ich wünschte nur, die „interne Faktizitäts-Evaluation“ käme mit einem öffentlichen Harness, denn auf diese Zahl würde ich meinen Traffic tatsächlich umleiten.",
+      "fr": "Diviser les prix des jetons par deux tout en annonçant deux fois moins d'erreurs signalées par les utilisateurs, c'est exactement l'échange que veulent les équipes de production — la fiabilité par dollar, pas le pic des classements. J'aimerais juste que « l'évaluation interne de factualité » s'accompagne d'un harnais public, car c'est sur ce chiffre que je redirigerais réellement mon trafic.",
+      "es": "Reducir a la mitad el precio de los tokens mientras se anuncia la mitad de errores señalados por usuarios es exactamente el intercambio que quieren los equipos de producción — fiabilidad por dólar, no el pico de las clasificaciones. Solo desearía que la «evaluación interna de factualidad» viniera con un arnés público, porque en ese número sí redirigiría mi tráfico.",
+      "ar": "خفض أسعار الرموز (tokens) إلى النصف مع الادعاء بنصف عدد الأخطاء التي أبلغ عنها المستخدمون هو بالضبط المقايضة التي تريدها فرق الإنتاج — موثوقية لكل دولار، لا قمة لوحات الصدارة. أتمنى فقط أن تأتي «أداة تقييم الصحة الداخلي» مع إطار اختبار عام، لأن هذا هو الرقم الذي سأعيد توجيه حركة البيانات بناءً عليه فعلًا."
+    },
+    "tags": [
+      "models",
+      "reliability",
+      "cost-efficiency"
+    ]
+  },
+  {
+    "id": "xiaomi-mimo-v2-6-open-agent-stack",
+    "date": "2026-09-22",
+    "category": "agentic",
+    "headline": {
+      "en": "'Better than DeepSeek': Xiaomi's MiMo-V2.6-Pro debuts as the top open weights model in the world alongside cheaper V2.6-Flash",
+      "de": "„Besser als DeepSeek“: Xiaomis MiMo-V2.6-Pro debütiert als bestes Open-Weights-Modell der Welt, begleitet vom günstigeren V2.6-Flash",
+      "fr": "« Mieux que DeepSeek » : le MiMo-V2.6-Pro de Xiaomi arrive comme le meilleur modèle à poids ouverts au monde, aux côtés du V2.6-Flash moins cher",
+      "es": "«Mejor que DeepSeek»: el MiMo-V2.6-Pro de Xiaomi debuta como el mejor modelo de pesos abiertos del mundo junto al más económico V2.6-Flash",
+      "ar": "«أفضل من DeepSeek»: MiMo-V2.6-Pro من Xiaomi يظهر كأفضل نموذج بأوزان مفتوحة في العالم إلى جانب V2.6-Flash الأرخص"
+    },
+    "source": "VentureBeat",
+    "url": "https://venturebeat.com/technology/better-than-deepseek-xiaomis-mimo-v2-6-pro-debuts-as-the-top-open-weights-model-in-the-world-alongside-cheaper-v2-6-flash",
+    "take": {
+      "en": "Top open-weight model is a nice headline, but the part I'd actually use is the 7,000+ RL environments and training stack shipped alongside the weights — environments and graders are the real bottleneck in agent training, not checkpoints. Reward-hacking defenses documented in the open is exactly the evaluation infrastructure this field needs more of.",
+      "de": "Das beste Open-Weight-Modell ist eine schöne Schlagzeile, aber der Teil, den ich wirklich nutzen würde, sind die über 7.000 RL-Umgebungen und der Trainings-Stack, die zusammen mit den Gewichten ausgeliefert wurden — Umgebungen und Grader sind der eigentliche Flaschenhals beim Agenten-Training, nicht die Checkpoints. Offen dokumentierte Reward-Hacking-Abwehr ist genau die Evaluations-Infrastruktur, die dieses Feld braucht.",
+      "fr": "Meilleur modèle à poids ouverts, c'est un joli titre, mais ce que j'utiliserais vraiment, ce sont les plus de 7 000 environnements de RL et la pile d'entraînement livrés avec les poids — les environnements et les graders sont le vrai goulot d'étranglement de l'entraînement d'agents, pas les checkpoints. Des défenses contre le reward hacking documentées à ciel ouvert, c'est exactement l'infrastructure d'évaluation dont le domaine a besoin.",
+      "es": "Mejor modelo de pesos abiertos es un buen titular, pero lo que de verdad usaría son los más de 7.000 entornos de RL y la pila de entrenamiento publicados junto con los pesos — los entornos y los graders son el verdadero cuello de botella del entrenamiento de agentes, no los checkpoints. Defensas contra el reward hacking documentadas a la vista de todos es exactamente la infraestructura de evaluación que a este campo le hace falta.",
+      "ar": "أفضل نموذج بأوزان مفتوحة عنوان جميل، لكن الجزء الذي سأستخدمه فعلًا هو أكثر من 7000 بيئة تعلّم معزّز ومكدّس التدريب اللذان صدرا مع الأوزان — البيئات والمقيِّمات (graders) هي عنق الزجاجة الحقيقي في تدريب الوكلاء، لا نقاط التحقق. دفاعات موثَّقة ومكشوفة ضد اختراق المكافآت (reward hacking) هي بالضبط بنية التقييم التي يحتاجها هذا المجال."
+    },
+    "tags": [
+      "open-weights",
+      "agent-training",
+      "reinforcement-learning"
+    ]
+  },
+  {
+    "id": "vals-ai-agents-lean-proof-shortest-path",
+    "date": "2026-09-20",
+    "category": "agentic",
+    "headline": {
+      "en": "A Faster Shortest Path Algorithm",
+      "de": "Ein schnellerer Algorithmus für kürzeste Pfade",
+      "fr": "Un algorithme plus rapide pour les plus courts chemins",
+      "es": "Un algoritmo más rápido para los caminos más cortos",
+      "ar": "خوارزمية أسرع لأقصر المسارات"
+    },
+    "source": "Vals AI",
+    "url": "https://www.vals.ai/blogs/faster-shortest-path-algorithm",
+    "take": {
+      "en": "Ten Claude Opus 5.5 agents, a shared message board, and a Lean-checked proof — this is how agent research claims should arrive: as verifiable artifacts, not benchmark numbers I have to take on faith. The asymptotic win over Dijkstra is narrow and the constants are huge, but machine-checked correctness is the right bar for \"an agent did real research.\"",
+      "de": "Zehn Claude-Opus-5.5-Agenten, ein gemeinsames Message Board und ein Lean-geprüfter Beweis — so sollten Forschungsbehauptungen von Agenten ankommen: als überprüfbare Artefakte, nicht als Benchmark-Zahlen, die ich glauben muss. Der asymptotische Gewinn über Dijkstra ist schmal und die Konstanten sind gewaltig, aber maschinell geprüfte Korrektheit ist der richtige Maßstab für „ein Agent hat echte Forschung geleistet“.",
+      "fr": "Dix agents Claude Opus 5.5, un tableau de messages partagé et une preuve vérifiée en Lean — voilà comment les affirmations de recherche des agents devraient arriver : sous forme d'artefacts vérifiables, pas de scores de benchmark à prendre sur parole. Le gain asymptotique sur Dijkstra est étroit et les constantes sont énormes, mais une correction vérifiée par machine est la bonne exigence pour « un agent a fait de la vraie recherche ».",
+      "es": "Diez agentes de Claude Opus 5.5, un tablero de mensajes compartido y una prueba verificada en Lean — así es como deberían llegar las afirmaciones de investigación de los agentes: como artefactos verificables, no como números de benchmark que debo aceptar por fe. La mejora asintótica sobre Dijkstra es estrecha y las constantes son enormes, pero la corrección verificada por máquina es el listón adecuado para «un agente hizo investigación real».",
+      "ar": "عشرة وكلاء من Claude Opus 5.5 ولوحة رسائل مشتركة وبرهان تم التحقق منه عبر Lean — هكذا ينبغي أن تصل ادعاءات البحث من الوكلاء: كقطع عمل قابلة للتحقق، لا كأرقام معايير عليّ تصديقها. المكسب المقارب على خوارزمية Dijkstra ضيّق والثوابت هائلة، لكن الصحة المُتحقَّق منها آليًا هي المعيار الصحيح لعبارة «قام وكيل ببحث حقيقي»."
+    },
+    "tags": [
+      "multi-agent",
+      "formal-verification",
+      "evaluation"
+    ]
   }
 ]
