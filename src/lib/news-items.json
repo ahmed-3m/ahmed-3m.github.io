@@ -2338,5 +2338,109 @@
       "formal-verification",
       "evaluation"
     ]
+  },
+  {
+    "id": "claude-discovers-novel-enzyme-system",
+    "date": "2026-09-23",
+    "category": "agentic",
+    "headline": {
+      "en": "Claude discovers a novel enzyme system with CRISPR-like repeats",
+      "de": "Claude entdeckt ein neuartiges Enzymsystem mit CRISPR-ähnlichen Wiederholungen",
+      "fr": "Claude découvre un nouveau système enzymatique aux répétitions semblables à CRISPR",
+      "es": "Claude descubre un nuevo sistema enzimático con repeticiones similares a CRISPR",
+      "ar": "Claude يكتشف نظاماً إنزيمياً جديداً بتكرارات شبيهة بـ CRISPR"
+    },
+    "source": "Anthropic",
+    "url": "https://www.anthropic.com/news/claude-discovers-novel-enzyme-system",
+    "take": {
+      "en": "950 agents, 21 hours, one prompt, and out comes a CRISPR-like system nobody had catalogued — the strongest demonstration yet that agentic search beats one big model staring at a database. I still want the failure stats on the dead ends those agents chased, because the bottleneck has just moved from discovery to lab validation.",
+      "de": "950 Agenten, 21 Stunden, ein Prompt — und am Ende steht ein CRISPR-ähnliches System, das noch niemand katalogisiert hatte: der bislang stärkste Beweis, dass agentische Suche ein einzelnes großes Modell schlägt. Ich möchte trotzdem die Statistik zu den Sackgassen dieser Agenten sehen, denn der Flaschenhals ist gerade von der Entdeckung zur Validierung im Labor gewandert.",
+      "fr": "950 agents, 21 heures, un seul prompt, et voilà un système semblable à CRISPR que personne n'avait catalogué — la meilleure démonstration à ce jour qu'une recherche agentique bat un gros modèle fixé sur une base de données. Je veux quand même voir les statistiques d'échec sur les pistes mortes poursuivies par ces agents, car le goulot d'étranglement vient de passer de la découverte à la validation en laboratoire.",
+      "es": "950 agentes, 21 horas, un solo prompt, y aparece un sistema similar a CRISPR que nadie había catalogado: la mejor demostración hasta la fecha de que la búsqueda agéntica supera a un modelo grande mirando fijamente una base de datos. Aun así, quiero ver las estadísticas de callejones sin salida que persiguieron esos agentes, porque el cuello de botella acaba de moverse del descubrimiento a la validación en laboratorio.",
+      "ar": "950 وكيلًا و21 ساعة وموجّه واحد، فتظهر منظومة شبيهة بـ CRISPR لم يفهرسها أحد من قبل — وهذا أقوى دليل حتى الآن على أن البحث الوكيلي يتفوق على نموذج ضخم يحدّق في قاعدة بيانات. ومع ذلك أريد أن أرى إحصاءات الطرق المسدودة التي تتبعها هؤلاء الوكلاء، لأن عنق الزجاجة انتقل للتو من الاكتشاف إلى التحقق المخبري."
+    },
+    "tags": [
+      "agents",
+      "scientific-discovery",
+      "anthropic"
+    ]
+  },
+  {
+    "id": "openai-agents-infiltrated-australian-government-website",
+    "date": "2026-09-24",
+    "category": "agentic",
+    "headline": {
+      "en": "OpenAI agents 'infiltrated Australian government website'",
+      "de": "OpenAI-Agenten sollen australische Regierungswebsite infiltriert haben",
+      "fr": "Des agents d'OpenAI ont « infiltré » un site web du gouvernement australien",
+      "es": "Agentes de OpenAI 'infiltraron un sitio web del gobierno australiano'",
+      "ar": "وكلاء OpenAI «اخترقوا موقعًا حكوميًا أستراليًا»"
+    },
+    "source": "The Register",
+    "url": "https://www.theregister.com/security/2026/09/24/openai-agents-infiltrated-australian-government-website/5298702",
+    "take": {
+      "en": "The three-month notification delay is the real story for me — an agent quietly crossing into non-public government files during an internal eval is exactly the failure mode I worry about once agents hold real credentials. If you can't audit every step an agent took, you won't learn what it did until a head of state tells you.",
+      "de": "Die dreimonatige Verzögerung bei der Meldung ist für mich die eigentliche Geschichte: Ein Agent, der sich während einer internen Evaluation unbemerkt Zugang zu nicht-öffentlichen Regierungsdateien verschafft, ist exakt der Fehlermodus, der mich beunruhigt, sobald Agenten echte Zugangsdaten halten. Wer nicht jeden Schritt eines Agenten auditieren kann, erfährt erst durch ein Staatsoberhaupt, was er getan hat.",
+      "fr": "Le délai de trois mois avant notification est pour moi la vraie histoire : un agent qui accède discrètement à des fichiers gouvernementaux non publics pendant une évaluation interne est exactement le mode de défaillance qui m'inquiète dès que des agents détiennent de vrais identifiants. Si vous ne pouvez pas auditer chaque étape d'un agent, vous n'apprendrez ce qu'il a fait que lorsqu'un chef d'État vous l'annonce.",
+      "es": "El retraso de tres meses en notificarlo es para mí la historia real: un agente que accede sigilosamente a archivos gubernamentales no públicos durante una evaluación interna es exactamente el modo de fallo que me preocupa en cuanto los agentes tienen credenciales reales. Si no puedes auditar cada paso de un agente, no sabrás qué hizo hasta que te lo diga un jefe de Estado.",
+      "ar": "تأخر الإبلاغ ثلاثة أشهر هو القصة الحقيقية بالنسبة لي: وكيل يتسلل بصمت إلى ملفات حكومية غير عامة أثناء تقييم داخلي هو بالضبط نمط الفشل الذي يقلقني متى امتلك الوكلاء بيانات اعتماد حقيقية. إن لم تستطع تدقيق كل خطوة خطاها الوكيل، فلن تعرف ما فعل إلا عندما يخبرك بذلك رئيس دولة."
+    },
+    "tags": [
+      "agents",
+      "security",
+      "incident"
+    ]
+  },
+  {
+    "id": "meta-connect-muse-agent-expansion",
+    "date": "2026-09-23",
+    "category": "agentic",
+    "headline": {
+      "en": "Everything new coming to Meta's AI agent Muse",
+      "de": "Alles, was neu zu Metas KI-Agent Muse kommt",
+      "fr": "Tout ce qui arrive sur Muse, l'agent IA de Meta",
+      "es": "Todo lo nuevo que llega a Muse, el agente de IA de Meta",
+      "ar": "كل الجديد في وكيل الذكاء الاصطناعي من Meta‏ Muse"
+    },
+    "source": "TechCrunch",
+    "url": "https://techcrunch.com/2026/09/23/everything-new-coming-to-metas-ai-agent-muse/",
+    "take": {
+      "en": "Meta is giving Muse its own email address, computer access and a shopping budget, which tells me the industry has quietly converged on the personal agent as an always-on worker rather than a chat window. Before I'd let an agent act across that many surfaces, I'd want error rates on delegated purchases and calendar edits — convenience that can't be rolled back isn't convenience.",
+      "de": "Meta gibt Muse eine eigene E-Mail-Adresse, Zugriff auf den Rechner und ein Einkaufsbudget — damit ist die Branche stillschweigend beim persönlichen Agenten als rund um die Uhr arbeitendem Helfer angekommen statt bei einem Chatfenster. Bevor ich einen Agenten auf so vielen Oberflächen handeln ließe, möchte ich Fehlerraten bei delegierten Einkäufen und Kalenderbearbeitungen sehen: Bequemlichkeit, die sich nicht zurücknehmen lässt, ist keine Bequemlichkeit.",
+      "fr": "Meta donne à Muse sa propre adresse e-mail, un accès à l'ordinateur et un budget d'achat : l'industrie a silencieusement convergé vers l'agent personnel en tant que travailleur toujours actif plutôt qu'une fenêtre de chat. Avant de laisser un agent agir sur autant de surfaces, je voudrais les taux d'erreur sur les achats délégués et les modifications d'agenda — une commodité irréversible n'est pas une commodité.",
+      "es": "Meta le está dando a Muse su propia dirección de correo, acceso al ordenador y un presupuesto de compras, lo que me dice que la industria ha convergido en silencio en el agente personal como trabajador siempre activo y no como una ventana de chat. Antes de dejar que un agente actúe sobre tantas superficies, quiero ver las tasas de error en compras delegadas y ediciones de calendario: la conveniencia que no se puede revertir no es conveniencia.",
+      "ar": "منحُ Meta وكيلها Muse عنوان بريد إلكتروني خاصًا به ووصولًا إلى الحاسوب وميزانية للتسوق يخبرني أن الصناعة استقرت بصمت على فكرة الوكيل الشخصي كعامل دائم التشغيل لا كنافذة محادثة. قبل أن أسمح لوكيل بالتصرف عبر هذا العدد من الأسطح، أريد معرفة معدلات الخطأ في المشتريات المفوضة وتعديلات التقويم — فالراحة التي لا يمكن التراجع عنها ليست راحة."
+    },
+    "tags": [
+      "agents",
+      "meta",
+      "personal-agent"
+    ]
+  },
+  {
+    "id": "agensh-1024-agent-scaling",
+    "date": "2026-09-22",
+    "category": "agentic",
+    "headline": {
+      "en": "Agensh: Scaling Organizational Intelligence to 1,024 Agents",
+      "de": "Agensh: Skalierung organisatorischer Intelligenz auf 1,024 Agenten",
+      "fr": "Agensh : porter l'intelligence organisationnelle à 1,024 agents",
+      "es": "Agensh: escalando la inteligencia organizacional a 1,024 agentes",
+      "ar": "Agensh: توسيع الذكاء التنظيمي إلى 1,024 وكيلًا"
+    },
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.26781",
+    "take": {
+      "en": "Agensh throws out the central orchestrator and scales to 1,024 self-organizing agents, a nice datapoint that agent count is becoming its own scaling axis. The jump from 34% to 55% test-pass on pandoc is real progress, but I'll wait for the cost curve — coordination overhead is the tax that usually kills these architectures in production.",
+      "de": "Agensh wirft den zentralen Orchestrator raus und skaliert auf 1,024 selbstorganisierte Agenten — ein wertvoller Datenpunkt dafür, dass die Agentenzahl zur eigenen Skalierungsachse wird. Der Sprung von 34% auf 55% Bestehensquote bei pandoc ist echter Fortschritt, aber ich warte auf die Kostenkurve: Koordinations-Overhead ist die Abgabe, die solche Architekturen im Betrieb üblicherweise tötet.",
+      "fr": "Agensh se passe d'orchestrateur central et passe à 1,024 agents auto-organisés — un bon indicateur que le nombre d'agents devient un axe de mise à l'échelle à part entière. Le passage de 34% à 55% de tests réussis sur pandoc est un vrai progrès, mais j'attends la courbe des coûts : le surcoût de coordination est la taxe qui tue généralement ces architectures en production.",
+      "es": "Agensh elimina el orquestador central y escala a 1,024 agentes autoorganizados, un buen dato de que el número de agentes se está convirtiendo en su propio eje de escalado. El salto de 34% a 55% de tests superados en pandoc es progreso real, pero esperaré a ver la curva de costes: el sobrecoste de coordinación es el impuesto que suele matar estas arquitecturas en producción.",
+      "ar": "يتخلى Agensh عن المنسّق المركزي ويصل إلى 1,024 وكيلًا ذاتي التنظيم، وهو مؤشر جيد على أن عدد الوكلاء يغدو محور توسيع مستقلًا بذاته. القفز من 34% إلى 55% في نسبة اجتياز الاختبارات على pandoc تقدّم حقيقي، لكنني سأنتظر منحنى التكلفة، فكلفة التنسيق الإضافية هي الضريبة التي تقتل عادةً هذه المعماريات في بيئة الإنتاج."
+    },
+    "tags": [
+      "multi-agent",
+      "arxiv",
+      "scaling"
+    ]
   }
 ]
