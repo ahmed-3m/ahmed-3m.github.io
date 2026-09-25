@@ -2442,5 +2442,108 @@
       "arxiv",
       "scaling"
     ]
+  },
+  {
+    "id": "darktrace-conversation-history-poisoning",
+    "date": "2026-09-24",
+    "category": "agentic",
+    "headline": {
+      "en": "Agent Hijacks: Hijacking Agentic Harnesses to Attack an Organization",
+      "de": "Agent Hijacks: Wie gekaperte Agent-Harnesses Organisationen angreifen",
+      "fr": "Agent Hijacks : détourner les harnais d'agents pour attaquer une organisation",
+      "es": "Agent Hijacks: secuestrar arneses de agentes para atacar a una organización",
+      "ar": "اختطاف الوكلاء: استغلال أطر الوكلاء لمهاجمة المؤسسات"
+    },
+    "source": "Darktrace",
+    "url": "https://www.darktrace.com/blog/hijacking-agentic-harnesses-to-attack-an-organization",
+    "take": {
+      "en": "Darktrace showed that Claude Code, Codex, Kiro-CLI, and Pi all trust locally stored conversation history with zero integrity checks — one planted package can rewrite an agent's past and turn it into the attacker. The proposed fix, providers cryptographically signing every model response, is server-side, which means until it ships an agent's own memory is its weakest trust boundary.",
+      "de": "Darktrace hat gezeigt, dass Claude Code, Codex, Kiro-CLI und Pi ihrer lokal gespeicherten Konversationshistorie ohne jede Integritätsprüfung vertrauen — ein einziges platziertes Paket kann die Vergangenheit eines Agenten umschreiben und ihn zum Angreifer machen. Der vorgeschlagene Fix, dass Anbieter jede Modellantwort kryptografisch signieren, liegt serverseitig — bis dahin ist das eigene Gedächtnis des Agenten seine schwächste Vertrauensgrenze.",
+      "fr": "Darktrace vient de montrer que Claude Code, Codex, Kiro-CLI et Pi font tous confiance à leur historique de conversation stocké localement, sans aucune vérification d'intégrité — un seul paquet piégé peut réécrire le passé d'un agent et le transformer en attaquant. Le correctif proposé, une signature cryptographique de chaque réponse par les fournisseurs, est côté serveur : en attendant, la mémoire propre de l'agent reste sa frontière de confiance la plus fragile.",
+      "es": "Darktrace ha demostrado que Claude Code, Codex, Kiro-CLI y Pi confían en su historial de conversación almacenado localmente sin ninguna comprobación de integridad: un solo paquet malicioso puede reescribir el pasado de un agente y convertirlo en el atacante. La solución propuesta, que los proveedores firmen criptográficamente cada respuesta del modelo, está del lado del servidor; hasta que llegue, la propia memoria del agente es su frontera de confianza más débil.",
+      "ar": "أظهرت داركتريس أن Claude Code وCodex وKiro-CLI وPi تثق جميعها بسجل المحادثة المخزَّن محليًا دون أي تحقق من السلامة — حزمة واحدة خبيثة تكفي لإعادة كتابة ماضي الوكيل وتحويله إلى المهاجم. الحل المقترح، وهو أن يوقّع مزوّدو النماذج كل استجابة تشفيريًا، يقع على جانب الخادم، وحتى ذلك الحين تبقى ذاكرة الوكيل نفسها أضعف حدود الثقة فيه."
+    },
+    "tags": [
+      "agent-security",
+      "memory-poisoning"
+    ]
+  },
+  {
+    "id": "docker-cloud-sandboxes-agents",
+    "date": "2026-09-24",
+    "category": "agentic",
+    "headline": {
+      "en": "Introducing Cloud Sandboxes: Start on Your Laptop, Finish in the Cloud",
+      "de": "Einführung von Cloud Sandboxes: Auf dem Laptop starten, in der Cloud fertigstellen",
+      "fr": "Présentation des Cloud Sandboxes : commencez sur votre laptop, finissez dans le cloud",
+      "es": "Presentamos Cloud Sandboxes: empieza en tu laptop, termina en la nube",
+      "ar": "نقدّم Cloud Sandboxes: ابدأ على حاسوبك المحمول وأنجز في السحابة"
+    },
+    "source": "Docker",
+    "url": "https://www.docker.com/blog/introducing-cloud-sandboxes-start-on-your-laptop-finish-in-the-cloud/",
+    "take": {
+      "en": "Long-horizon agents that run unattended for 21 hours need isolation that survives a closed laptop lid, and microVM sandboxes with central network policies, proxied secrets, and an MCP gateway are exactly the production primitive I'd want. The quiet win is Kits as standard OCI images — a full agent environment becomes a versioned, shareable artifact instead of a wiki page.",
+      "de": "Langlaufende Agenten, die 21 Stunden unbeaufsichtigt arbeiten, brauchen Isolation, die auch ein zugeklappter Laptop überlebt — microVM-Sandboxes mit zentralen Netzwerkrichtlinien, per Proxy injizierten Secrets und einem MCP-Gateway sind genau das Produktionsprimitivum, das ich mir wünsche. Der stille Gewinn sind Kits als OCI-Standardimages: Eine komplette Agent-Umgebung wird zum versionierbaren, teilbaren Artefakt statt zu einer Wiki-Seite.",
+      "fr": "Les agents de longue haleine qui tournent 21 heures sans supervision ont besoin d'une isolation qui survit à un laptop rabattu — des sandboxes microVM avec politiques réseau centrales, secrets injectés via proxy et passerelle MCP, c'est exactement la primitive de production que je veux. La victoire silencieuse, ce sont les Kits en images OCI standard : un environnement d'agent complet devient un artefact versionné et partageable au lieu d'une page de wiki.",
+      "es": "Los agentes de largo horizonte que trabajan 21 horas sin supervisión necesitan un aislamiento que sobreviva a un portátil cerrado, y las sandboxes microVM con políticas de red centrales, secretos inyectados vía proxy y una pasarela MCP son justo la primitiva de producción que quiero. La victoria silenciosa son los Kits como imágenes OCI estándar: un entorno de agente completo se convierte en un artefacto versionado y compartible en vez de una página de wiki.",
+      "ar": "الوكلاء العاملون على المدى الطويل الذين يعملون 21 ساعة دون إشراف يحتاجون عزلًا يصمد أمام غلق حاسوب محمول، وبيئات العزل من نوع microVM مع سياسات شبكة مركزية وأسرار تُدار عبر وسيط وبوابة MCP هي بالضبط المكوّن الإنتاجي الذي أريده. المكسب الهادئ هو تحويل Kits إلى صور OCI قياسية: بيئة وكيل كاملة تصبح قطعة إصدارية قابلة للمشاركة بدلًا من صفحة ويكي."
+    },
+    "tags": [
+      "agent-infrastructure",
+      "sandboxing",
+      "mcp"
+    ]
+  },
+  {
+    "id": "langsmith-engine-v2-agent-eval-loop",
+    "date": "2026-09-25",
+    "category": "agentic",
+    "headline": {
+      "en": "New in LangSmith: Engine v2, Managed Deep Agents, Fine-Tuning, and more",
+      "de": "Neu in LangSmith: Engine v2, Managed Deep Agents, Fine-Tuning und mehr",
+      "fr": "Nouveau dans LangSmith : Engine v2, Managed Deep Agents, Fine-Tuning et plus encore",
+      "es": "Novedades en LangSmith: Engine v2, Managed Deep Agents, Fine-Tuning y más",
+      "ar": "جديد في LangSmith: محرك v2 وManaged Deep Agents والضبط الدقيق والمزيد"
+    },
+    "source": "LangChain",
+    "url": "https://www.langchain.com/blog/langsmith-engine-agents-fine-tuning-trajectories",
+    "take": {
+      "en": "The feature list matters less than the loop it enables: production traces feed red teaming, proposed fixes get automatically validated before a human ever sees them, and trajectories become fine-tuning data. An agent that reproduces the failure before proposing the fix is the only kind of automated debugging I'd actually trust.",
+      "de": "Wichtiger als die Feature-Liste ist die Schleife, die sie ermöglicht: Produktions-Traces speisen das Red Teaming, vorgeschlagene Fixes werden automatisch validiert, bevor ein Mensch sie sieht, und Trajectories werden zu Fine-Tuning-Daten. Ein Agent, der den Fehler zuerst reproduziert, bevor er den Fix vorschlägt, ist die einzige Form automatisierten Debuggings, der ich wirklich vertraue.",
+      "fr": "La liste de fonctionnalités compte moins que la boucle qu'elle rend possible : les traces de production alimentent le red teaming, les correctifs proposés sont validés automatiquement avant qu'un humain ne les voie, et les trajectoires deviennent des données de fine-tuning. Un agent qui reproduit la panne avant de proposer le correctif est la seule forme de débogage automatisé à laquelle je fais réellement confiance.",
+      "es": "La lista de funciones importa menos que el bucle que permite: las trazas de producción alimentan el red teaming, las correcciones propuestas se validan automáticamente antes de que un humano las vea, y las trayectorias se convierten en datos de fine-tuning. Un agente que reproduce el fallo antes de proponer la corrección es el único tipo de depuración automatizada en el que confiaría de verdad.",
+      "ar": "قائمة الميزات أقل أهمية من الحلقة التي تتيحها: آثار الإنتاج تغذّي اختبارات الفريق الأحمر، والإصلاحات المقترحة يُتحقق منها تلقائيًا قبل أن يراها أي إنسان، والمسارات تتحول إلى بيانات للضبط الدقيق. الوكيل الذي يعيد إنتاج الفشل قبل اقتراح الإصلاح هو النوع الوحيد من التصحيح الآلي الذي أثق به فعلًا."
+    },
+    "tags": [
+      "evaluation",
+      "red-teaming",
+      "fine-tuning"
+    ]
+  },
+  {
+    "id": "frontier-labs-safa-safety-standards",
+    "date": "2026-09-25",
+    "category": "ai",
+    "headline": {
+      "en": "Google, OpenAI and Anthropic may launch AI safety standard by early 2027",
+      "de": "Google, OpenAI und Anthropic könnten schon Anfang 2027 einen KI-Sicherheitsstandard vorlegen",
+      "fr": "Google, OpenAI et Anthropic pourraient lancer un standard de sécurité IA début 2027",
+      "es": "Google, OpenAI y Anthropic podrían lanzar un estándar de seguridad de IA a principios de 2027",
+      "ar": "Google وOpenAI وAnthropic قد تطلق معيارًا لسلامة الذكاء الاصطناعي بحلول أوائل 2027"
+    },
+    "source": "The Times of India",
+    "url": "https://timesofindia.indiatimes.com/technology/tech-news/google-openai-and-anthropic-may-launch-ai-safety-standard-by-early-2027/articleshow/134473046.cms",
+    "take": {
+      "en": "Three direct competitors reportedly building a joint Standards Authority for Frontier AI is the strongest signal yet that safety evaluation is becoming infrastructure rather than a launch-day formality. The whole question is independence — a body funded by the labs it is supposed to grade will only matter if its benchmarks and methods stay public.",
+      "de": "Dass drei direkte Konkurrenten angeblich eine gemeinsame Standards Authority for Frontier AI aufbauen, ist das bislang stärkste Signal, dass Sicherheitsbewertung zur Infrastruktur wird statt zur Formalität am Launch-Tag. Die ganze Frage ist die Unabhängigkeit — eine Instanz, die von den Labs finanziert wird, die sie benoten soll, zählt nur, wenn ihre Benchmarks und Methoden öffentlich bleiben.",
+      "fr": "Trois concurrents directs construisant apparemment une autorité commune, la Standards Authority for Frontier AI : c'est le signal le plus fort à ce jour que l'évaluation de sécurité devient une infrastructure et non une formalité de jour de lancement. Toute la question est l'indépendance — un organisme financé par les labos qu'il est censé noter ne comptera que si ses benchmarks et ses méthodes restent publics.",
+      "es": "Que tres competidores directos estén construyendo, según los informes, una autoridad conjunta, la Standards Authority for Frontier AI, es la señal más clara hasta ahora de que la evaluación de seguridad se está convirtiendo en infraestructura y no en un trámite del día de lanzamiento. Toda la cuestión es la independencia: un organismo financiado por los laboratorios que debe calificar solo importará si sus benchmarks y métodos permanecen públicos.",
+      "ar": "بناء ثلاثة منافسين مباشرين — بحسب التقارير — هيئة معايير مشتركة باسم Standards Authority for Frontier AI هو أقوى إشارة حتى الآن على أن تقييم السلامة يتحول إلى بنية تحتية لا إلى إجراء شكلي يوم الإطلاق. المسألة كلها في الاستقلالية — هيئة تموّلها المختبرات التي من المفترض أن تقيّمها لن تهم إلا إذا بقيت معاييرها ومنهجياتها علنية."
+    },
+    "tags": [
+      "safety",
+      "standards",
+      "evaluation"
+    ]
   }
 ]
