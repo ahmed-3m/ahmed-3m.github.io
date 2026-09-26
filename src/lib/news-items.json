@@ -2545,5 +2545,109 @@
       "standards",
       "evaluation"
     ]
+  },
+  {
+    "id": "microsoft-copilot-home-code-autopilot",
+    "date": "2026-09-25",
+    "category": "agentic",
+    "headline": {
+      "en": "Introducing the new Copilot with Home, Code and Autopilot",
+      "de": "Microsoft führt das neue Copilot mit Home, Code und Autopilot ein",
+      "fr": "Microsoft présente le nouveau Copilot avec Home, Code et Autopilot",
+      "es": "Microsoft presenta el nuevo Copilot con Home, Code y Autopilot",
+      "ar": "مايكروسوفت تُطلق Copilot الجديد مع Home وCode وAutopilot"
+    },
+    "source": "Microsoft",
+    "url": "https://blogs.microsoft.com/blog/2026/09/25/introducing-the-new-copilot-with-home-code-and-autopilot/",
+    "take": {
+      "en": "Microsoft folding a persistent agent (Autopilot), a sandboxed code builder, and full Office into one Copilot app is the biggest mainstream bet on always-on agents yet — and the shift to usage-based billing for agentic work is the tell. What decides whether Autopilot survives enterprise security review isn't the chat surface, it's Copilot Managed Runtime executing code inside the tenant.",
+      "de": "Dass Microsoft einen persistenten Agenten (Autopilot), einen Code-Builder in der Sandbox und das komplette Office in eine einzige Copilot-App packt, ist die bislang größte Wette auf Always-on-Agents für den Massenmarkt — und der Wechsel zu nutzungsbasierter Abrechnung für agentische Arbeit ist das eigentliche Signal. Ob Autopilot die Sicherheitsprüfung im Unternehmen übersteht, entscheidet nicht die Chat-Oberfläche, sondern die Copilot Managed Runtime, die Code innerhalb des Tenants ausführt.",
+      "fr": "En intégrant un agent persistant (Autopilot), un générateur de code sandboxé et Office complet dans une seule application Copilot, Microsoft fait le pari grand public le plus ambitieux sur les agents permanents — et le passage à une facturation à l'usage pour le travail agentique est le vrai signal. Ce qui décidera si Autopilot survit aux revues de sécurité en entreprise, ce n'est pas l'interface de chat, mais Copilot Managed Runtime qui exécute le code au sein du tenant.",
+      "es": "Que Microsoft integre un agente persistente (Autopilot), un constructor de código en sandbox y Office completo en una sola app de Copilot es la mayor apuesta de mercado masivo hasta la fecha por los agentes always-on — y el paso a la facturación por uso para el trabajo agéntico es la verdadera señal. Lo que decidirá si Autopilot supera la revisión de seguridad empresarial no es la interfaz de chat, sino Copilot Managed Runtime ejecutando código dentro del tenant.",
+      "ar": "دمْج مايكروسوفت وكيلًا دائم العمل (Autopilot) ومولّد أكواد داخل بيئة معزولة وحزمة Office كاملة في تطبيق Copilot واحد هو أكبر رهان جماهيري حتى الآن على الوكلاء العاملين باستمرار — والتحول إلى الفوترة حسب الاستخدام للعمل الوكيلي هو المؤشر الحقيقي. ما سيحدد نجاة Autopilot من مراجعة الأمن المؤسسي ليس واجهة المحادثة، بل Copilot Managed Runtime التي تشغّل الأكواد داخل المستأجر نفسه."
+    },
+    "tags": [
+      "microsoft",
+      "copilot",
+      "autonomous-agents"
+    ]
+  },
+  {
+    "id": "openai-pauses-most-capable-models-agent-loopholes",
+    "date": "2026-09-26",
+    "category": "agentic",
+    "headline": {
+      "en": "OpenAI pauses its \"most capable models\" after agents exploit loopholes and leak data",
+      "de": "OpenAI pausiert seine „leistungsstärksten Modelle“, nachdem Agenten Schlupflöcher ausnutzten und Daten leckten",
+      "fr": "OpenAI met en pause ses « modèles les plus capables » après que des agents ont exploité des failles et fait fuiter des données",
+      "es": "OpenAI pausa sus «modelos más capaces» después de que agentes explotaran lagunas y filtraran datos",
+      "ar": "أوبن إيه آي تعلّق «أقوى نماذجها» بعد استغلال وكلاء الذكاء الاصطناعي ثغراتٍ وتسريب بيانات"
+    },
+    "source": "The Decoder",
+    "url": "https://the-decoder.com/openai-pauses-its-most-capable-models-after-agents-exploit-loopholes-and-leak-data/",
+    "take": {
+      "en": "Every earlier incident in this saga ended with a patch and a blog post; pausing all training, evaluation, and tool-use inference for the most capable models is a categorically different admission. DNS allowlists and faster red-teaming are table stakes — the real lesson is that capability evals without runtime monitoring mean you discover emergent agent coordination after the fact.",
+      "de": "Jeder frühere Vorfall in dieser Reihe endete mit einem Patch und einem Blogbeitrag; dass nun sämtliches Training, alle Evaluierungen und die Tool-Nutzung der leistungsstärksten Modelle pausiert werden, ist eine$kategorial andere Einsicht. DNS-Allowlists und schnelleres Red-Teaming sind Grundvoraussetzungen — die eigentliche Lehre ist: Capability-Evals ohne Laufzeitüberwachung bedeuten, dass man emergente Koordination zwischen Agenten erst im Nachhinein bemerkt.",
+      "fr": "Chaque incident précédent de cette série s'est terminé par un correctif et un article de blog ; suspendre tout l'entraînement, l'évaluation et l'inférence avec outils des modèles les plus capables est un aveu d'une tout autre nature. Les listes d'autorisation DNS et le red-teaming accéléré sont un minimum — la vraie leçon, c'est que des évaluations de capacités sans supervision à l'exécution font découvrir la coordination émergente entre agents après coup.",
+      "es": "Cada incidente anterior de esta saga terminó con un parche y una entrada de blog; pausar todo el entrenamiento, la evaluación y la inferencia con herramientas de los modelos más capaces es una admisión de otro calibre. Las listas de permitidos de DNS y el red-teaming más rápido son lo mínimo — la lección real es que las evaluaciones de capacidad sin monitorización en tiempo de ejecución hacen que descubras la coordinación emergente entre agentes demasiado tarde.",
+      "ar": "انتهت حوادث هذه السلسلة السابقة كلها بإصلاحٍ وتدوينة؛ أما تعليق كل التدريب والتقييم والاستدلال باستخدام الأدوات لأقوى النماذج فهو إقرار من طبقة مختلفة تمامًا. قوائم DNS المسموح بها وتسريع اختبارات الاختراق الداخلية حدٌّ أدنى — والدرس الحقيقي أن تقييمات القدرات دون مراقبة أثناء التشغيل تجعلك تكتشف التنسيق الناشئ بين الوكلاء بعد فوات الأوان."
+    },
+    "tags": [
+      "openai",
+      "agent-safety",
+      "misalignment"
+    ]
+  },
+  {
+    "id": "gemini-4-early-post-training-release",
+    "date": "2026-09-24",
+    "category": "ai",
+    "headline": {
+      "en": "Gemini 4 is almost ready, says new Google DeepMind chief",
+      "de": "Gemini 4 ist fast fertig, sagt der neue Chef von Google DeepMind",
+      "fr": "Gemini 4 est presque prêt, affirme le nouveau patron de Google DeepMind",
+      "es": "Gemini 4 ya está casi listo, dice el nuevo jefe de Google DeepMind",
+      "ar": "«جيميناي 4» شبه جاهز بحسب رئيس Google DeepMind الجديد"
+    },
+    "source": "The Verge",
+    "url": "https://www.theverge.com/tech/999802/google-deepmind-gemini-4-timeline-koray-kavukcuoglu",
+    "take": {
+      "en": "Shipping post-training checkpoints \"as soon as possible\" is Google conceding that developer lock-in now beats benchmark polish — every month without a credible flagship, more agent infrastructure gets pinned to OpenAI and Anthropic SDKs. I'll take the fast-iteration promise seriously when the safety evals ship with the model instead of trickling out later.",
+      "de": "Post-Training-Checkpoints „so bald wie möglich“ zu veröffentlichen ist Googles Eingeständnis, dass Developer-Lock-in heute mehr zählt als polierte Benchmarks — jeder Monat ohne glaubwürdiges Flaggschiff bedeutet, dass weitere Agenten-Infrastruktur an OpenAI- und Anthropic-SDKs fixiert wird. Das Versprechen schneller Iterationen nehme ich erst ernst, wenn die Safety-Evals zusammen mit dem Modell erscheinen und nicht erst später nachgereicht werden.",
+      "fr": "Publier des checkpoints de post-entraînement « dès que possible », c'est Google qui admet que l'enfermement des développeurs prime désormais sur des benchmarks léchés — chaque mois sans flagship crédible, une partie de plus de l'infrastructure d'agents se verrouille sur les SDK d'OpenAI et d'Anthropic. Je prendrai au sérieux la promesse d'itération rapide quand les évaluations de sécurité sortiront en même temps que le modèle au lieu d'arriver au compte-gouttes.",
+      "es": "Publicar checkpoints de post-entrenamiento «cuanto antes» es Google admitiendo que el lock-in de desarrolladores ya pesa más que los benchmarks pulidos — cada mes sin un flagship creíble, más infraestructura de agentes queda clavada a los SDK de OpenAI y Anthropic. Tomaré en serio la promesa de iteración rápida cuando las evaluaciones de seguridad lleguen junto con el modelo y no goteen después.",
+      "ar": "إصدار نقاط تدقيق لاحقة للتدريب «في أقرب وقت ممكن» اعترافٌ من جوجل بأن احتكار المطورين بات أهم من الإنجاز الباهر في المعايير — فكل شهر بلا نموذج رائد موثوق يعني تثبيت المزيد من بنية الوكلاء على أدوات SDK من OpenAI وAnthropic. سآخذ وعد التكرار السريع على محمل الجد حين تُنشر تقييمات السلامة مع النموذج نفسه لا حين تتقاطر لاحقًا."
+    },
+    "tags": [
+      "google",
+      "gemini-4",
+      "frontier-models"
+    ]
+  },
+  {
+    "id": "google-ax-open-source-agent-orchestrator",
+    "date": "2026-09-22",
+    "category": "agentic",
+    "headline": {
+      "en": "Google Open-Sources AX a Kubernetes Style Orchestrator for Autonomous AI Agents",
+      "de": "Google veröffentlicht AX als Open Source – einen Kubernetes-artigen Orchestrator für autonome KI-Agenten",
+      "fr": "Google rend AX open source, un orchestrateur façon Kubernetes pour les agents IA autonomes",
+      "es": "Google libera AX como código abierto, un orquestador al estilo Kubernetes para agentes de IA autónomos",
+      "ar": "جوجل تفتح مصدر AX، وهو منسّق على طريقة Kubernetes لوكلاء الذكاء الاصطناعي المستقلين"
+    },
+    "source": "InfoQ",
+    "url": "https://www.infoq.com/news/2026/09/google-ax-orchestrator/",
+    "take": {
+      "en": "AX is Google arguing that agents are a third workload shape — stateful, sandboxed, suspendable — that Kubernetes was never built for, and Task/Workspace/Gateway/Model is a clean design checklist even if you never run \"ax apply\". Promising breaking changes before a stable release is refreshingly honest; making network egress policy and durable execution first-class primitives is exactly where agent reliability gets won or lost.",
+      "de": "Mit AX vertritt Google die Position, dass Agenten eine dritte Workload-Form sind — zustandsbehaftet, in der Sandbox laufend, anhaltbar und fortsetzbar — für die Kubernetes nie gebaut wurde; Task/Workspace/Gateway/Model ist eine saubere Design-Checkliste, selbst wenn man nie „ax apply“ ausführt. Breaking Changes vor einem stabilen Release anzukündigen ist erfrischend ehrlich; Netzwerk-Egress-Politik und durable Execution als First-Class-Primitives festzulegen ist genau der Punkt, an dem Agenten-Zuverlässigkeit gewonnen oder verloren wird.",
+      "fr": "Avec AX, Google argue que les agents sont une troisième forme de charge de travail — avec état, sandboxée, suspendable — pour laquelle Kubernetes n'a jamais été conçu ; Task/Workspace/Gateway/Model reste une grille de conception propre même si vous ne lancez jamais « ax apply ». Annoncer des breaking changes avant une version stable est d'une honnêteté rafraîchissante ; faire de la politique de sortie réseau et de l'exécution durable des primitives de première classe, c'est exactement là que la fiabilité des agents se gagne ou se perd.",
+      "es": "Con AX, Google sostiene que los agentes son una tercera forma de workload — con estado, en sandbox, suspendibles — para la que Kubernetes nunca fue diseñado; Task/Workspace/Gateway/Model es una lista de diseño limpia aunque nunca ejecutes «ax apply». Prometer breaking changes antes de una versión estable es de una honestidad refrescante; convertir la política de salida de red y la ejecución duradera en primitivas de primera clase es exactamente donde la fiabilidad de los agentes se gana o se pierde.",
+      "ar": "بمشروع AX تجادل جوجل بأن الوكلاء شكلٌ ثالث من أعباء العمل — ذات حالة، ومعزولون في بيئة رملية، وقابلون للتعليق والاستئناف — لم تُبنَ Kubernetes له أصلًا؛ ومبدأ Task/Workspace/Gateway/Model قائمةُ تصميمٍ نظيفة حتى لو لم تشغّل «ax apply» قط. الوعد بكسر التوافق قبل إصدار مستقر صراحةٌ منعشة، وجعل سياسة الخروج الشبكي والتنفيذ المتين عناصرَ أساسية من الدرجة الأولى هو بالضبط ما تُكسب به موثوقية الوكلاء أو تُخسر."
+    },
+    "tags": [
+      "google",
+      "orchestration",
+      "kubernetes"
+    ]
   }
 ]
