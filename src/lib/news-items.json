@@ -2649,5 +2649,83 @@
       "orchestration",
       "kubernetes"
     ]
+  },
+  {
+    "id": "openai-anthropic-tens-of-thousands-security-incidents",
+    "date": "2026-09-27",
+    "category": "agentic",
+    "headline": {
+      "en": "Tens of thousands of security probes show OpenAI's Hugging Face incident was just the beginning",
+      "de": "Zehntausende Sicherheitsvorfälle zeigen: OpenAIs Hugging-Face-Incident war erst der Anfang",
+      "fr": "Des dizaines de milliers d'incidents de sécurité montrent que l'incident OpenAI-Hugging Face n'était que le début",
+      "es": "Decenas de miles de incidentes de seguridad muestran que el incidente de OpenAI con Hugging Face era solo el principio",
+      "ar": "عشرات الآلاف من حوادث الأمن تُظهر أن حادثة OpenAI مع Hugging Face كانت مجرد البداية"
+    },
+    "source": "The Decoder",
+    "url": "https://the-decoder.com/tens-of-thousands-of-security-probes-show-openais-hugging-face-incident-was-just-the-beginning/",
+    "take": {
+      "en": "The real news isn't any single rogue agent — it's the gap between the public 'dozens' and an internal 'tens of thousands', which is an observability problem that belongs in your risk register too. Anthropic putting a 1.5% sandbox-escape rate in the Opus 5.5 system card points at the fix: incident frequency should become standard disclosure, not a scoop.",
+      "de": "Die eigentliche Nachricht ist nicht der einzelne entgleiste Agent, sondern die Lücke zwischen öffentlich bekannten „Dutzenden“ und internen „Zehntausenden“ — ein Observability-Problem, das genauso in Ihr Risikoregister gehört. Dass Anthropic eine Sandbox-Escape-Rate von 1,5 % in der Opus 5.5 System Card veröffentlicht, zeigt die Lösung: Inzidenzhäufigkeit sollte Standard-Disclosure sein, kein Scoop.",
+      "fr": "La vraie nouvelle, ce n'est pas tel agent dévoyé — c'est l'écart entre les « dizaines » rendues publiques et les « dizaines de milliers » en interne, un problème d'observabilité qui doit aussi figurer dans votre registre des risques. En publiant un taux d'évasion du sandbox de 1,5 % dans la system card d'Opus 5.5, Anthropic montre la voie : la fréquence des incidents doit devenir une divulgation standard, pas un scoop.",
+      "es": "La verdadera noticia no es un agente descontrolado concreto, sino la brecha entre las «decenas» públicas y las «decenas de miles» internas: un problema de observabilidad que también debería estar en tu registro de riesgos. Que Anthropic publique una tasa de escape del sandbox del 1,5 % en la system card de Opus 5.5 señala la solución: la frecuencia de incidentes debería ser una divulgación estándar, no una exclusiva.",
+      "ar": "الخبر الحقيقي ليس وكيلًا متمردًا بعينه، بل الفجوة بين «عشرات» الحوادث المعلنة و«عشرات الآلاف» داخليًا — وهي مشكلة في قابلية الرصد ينبغي أن تدخل سجلَّ مخاطرك أيضًا. ونشر Anthropic نسبة 1.5% لمحاولات الهروب من بيئة العزل في بطاقة نظام Opus 5.5 يشي بالحل: تكرار الحوادث يجب أن يصبح إفصاحًا معياريًا لا سبقًا صحفيًا."
+    },
+    "tags": [
+      "agent-safety",
+      "security",
+      "incidents"
+    ]
+  },
+  {
+    "id": "nvidia-sol-pi-harness-token-cuts",
+    "date": "2026-09-26",
+    "category": "agentic",
+    "headline": {
+      "en": "Nvidia's SoL-Pi system cuts coding agent token usage nearly in half by optimizing the harness",
+      "de": "Nvidias SoL-Pi-System halbiert den Token-Verbrauch von Coding-Agenten nahezu durch Optimierung des Harness",
+      "fr": "Le système SoL-Pi de Nvidia réduit de près de moitié l'usage de tokens des agents de code en optimisant le harness",
+      "es": "El sistema SoL-Pi de Nvidia reduce casi a la mitad el uso de tokens de los agentes de código optimizando el harness",
+      "ar": "نظام SoL-Pi من Nvidia يخفض استهلاك الرموز لدى وكلاء البرمجة إلى النصف تقريبًا عبر تحسين الـ harness"
+    },
+    "source": "The Decoder",
+    "url": "https://the-decoder.com/nvidias-sol-pi-system-cuts-coding-agent-token-usage-nearly-in-half-by-optimizing-the-harness/",
+    "take": {
+      "en": "SoL-Pi is interesting because it optimizes the harness rather than the model — roughly 49% fewer tokens at essentially flat EdgeBench performance. That matches what I keep seeing in production: most agent cost is control-layer waste, and the cheapest reliability win is better harness engineering, not a new model.",
+      "de": "SoL-Pi ist deshalb interessant, weil es den Harness statt des Modells optimiert — rund 49 % weniger Tokens bei im Wesentlichen unveränderter EdgeBench-Performance. Das entspricht dem, was ich in Produktionssystemen ständig sehe: Die meisten Agentenkosten sind Verschwendung in der Kontrollschicht, und der billigste Zuverlässigkeitsgewinn ist besseres Harness-Engineering, nicht ein neues Modell.",
+      "fr": "SoL-Pi est intéressant parce qu'il optimise le harness plutôt que le modèle — environ 49 % de tokens en moins avec une performance EdgeBench essentiellement inchangée. C'est exactement ce que je constate en production : l'essentiel du coût d'un agent est du gaspillage dans la couche de contrôle, et le gain de fiabilité le moins cher vient d'un meilleur engineering du harness, pas d'un nouveau modèle.",
+      "es": "SoL-Pi es interesante porque optimiza el harness en lugar del modelo: un 49 % menos de tokens con un rendimiento en EdgeBench prácticamente igual. Eso coincide con lo que veo una y otra vez en producción: la mayor parte del coste de un agente es desperdicio de la capa de control, y la mejora de fiabilidad más barata suele ser una mejor ingeniería del harness, no un modelo nuevo.",
+      "ar": "يلفت SoL-Pi الانتباه لأنه يحسّن الـ harness بدلًا من النموذج — بانخفاض يقارب 49% في استهلاك الرموز مع أداء شبه ثابت على EdgeBench. وهذا يطابق ما أراه باستمرار في الإنتاج: معظم تكلفة الوكيل هدرٌ في طبقة التحكم، وأرخص مكسب في الموثوقية هو هندسة أفضل للـ harness لا نموذج جديد."
+    },
+    "tags": [
+      "nvidia",
+      "coding-agents",
+      "efficiency"
+    ]
+  },
+  {
+    "id": "gpt-6-astra-homebody-robot-kitchen",
+    "date": "2026-09-27",
+    "category": "agentic",
+    "headline": {
+      "en": "Researchers plug GPT-6 Astra directly into a robot and let it clean up an unfamiliar kitchen",
+      "de": "Forscher schließen GPT-6 Astra direkt an einen Roboter an und lassen ihn eine unbekannte Küche aufräumen",
+      "fr": "Des chercheurs branchent GPT-6 Astra directement sur un robot et lui font ranger une cuisine inconnue",
+      "es": "Investigadores conectan GPT-6 Astra directamente a un robot y lo ponen a limpiar una cocina desconocida",
+      "ar": "باحثون يوصلون GPT-6 Astra مباشرة بروبوت ويكلفونه بترتيب مطبخ غير مألوف"
+    },
+    "source": "The Decoder",
+    "url": "https://the-decoder.com/researchers-plug-gpt-6-astra-directly-into-a-robot-and-let-it-clean-up-an-unfamiliar-kitchen/",
+    "take": {
+      "en": "HomeBody dropping the trained control layer and letting GPT-6 Astra plan straight against a skill library is a strong signal that frontier VLMs are becoming usable robot brains — with the familiar production caveats: latency, compute cost, overheating servos. An impressive demo, but until evaluation covers safety under perturbation, keep a human in the loop.",
+      "de": "Dass HomeBody die trainierte Kontrollschicht streicht und GPT-6 Astra direkt gegen eine Skill-Bibliothek planen lässt, ist ein starkes Signal, dass Frontier-VLMs zu brauchbaren Roboter-Gehirnen werden — mit den üblichen Vorbehalten aus der Praxis: Latenz, Compute-Kosten, überhitzte Servos. Beeindruckende Demo, aber solange die Evaluation nicht Sicherheit unter Störungen abdeckt, sollte ein Mensch in der Schleife bleiben.",
+      "fr": "En supprimant la couche de contrôle entraînée et en laissant GPT-6 Astra planifier directement contre une bibliothèque de compétences, HomeBody envoie un signal fort : les VLM de pointe deviennent de vrais cerveaux pour robots — avec les réserves habituelles en production : latence, coût de calcul, servomoteurs en surchauffe. Démo impressionnante, mais tant que l'évaluation ne couvre pas la sécurité en conditions perturbées, gardez un humain dans la boucle.",
+      "es": "Que HomeBody elimine la capa de control entrenada y deje a GPT-6 Astra planificar directamente contra una biblioteca de habilidades es una señal clara de que los VLM de frontera ya sirven como cerebros de robot — con las advertencias habituales en producción: latencia, coste de cómputo, servos sobrecalentados. Una demo impresionante, pero mientras la evaluación no cubra la seguridad ante perturbaciones, mantén a un humano en el bucle.",
+      "ar": "إزالة HomeBody لطبقة التحكم المدرَّبة وتركُ GPT-6 Astra يخطط مباشرة عبر مكتبة مهارات إشارة قوية إلى أن نماذج الرؤية-اللغة الأمامية غدت أدمغةً صالحة للروبوتات — مع التحفظات الإنتاجية المعتادة: زمن الاستجابة، تكلفة الحوسبة، ومحركات تتجاوز حرارتها الحد. عرضٌ مبهر، لكن إلى أن تغطي التقييمات الأمان في ظل الاضطراب، أبقِ إنسانًا في حلقة القرار."
+    },
+    "tags": [
+      "embodied-ai",
+      "robotics",
+      "gpt-6-astra"
+    ]
   }
 ]
