@@ -2727,5 +2727,109 @@
       "robotics",
       "gpt-6-astra"
     ]
+  },
+  {
+    "id": "nvidia-open-agent-safety-platform",
+    "date": "2026-09-28",
+    "category": "agentic",
+    "headline": {
+      "en": "NVIDIA Launches Open Agent Safety Platform to Secure Agents from Testing to Deployment",
+      "de": "NVIDIA startet die Open Agent Safety Platform zur Absicherung von Agenten von Test bis Deployment",
+      "fr": "NVIDIA lance l'Open Agent Safety Platform pour sécuriser les agents des tests au déploiement",
+      "es": "NVIDIA lanza la Open Agent Safety Platform para asegurar a los agentes desde las pruebas hasta el despliegue",
+      "ar": "NVIDIA تطلق منصة Open Agent Safety Platform لتأمين الوكلاء من الاختبار إلى النشر"
+    },
+    "source": "NVIDIA",
+    "url": "https://www.globenewswire.com/news-release/2026/09/28/3369606/0/en/nvidia-launches-open-agent-safety-platform-to-secure-agents-from-testing-to-deployment.html",
+    "take": {
+      "en": "The right lesson from this summer's sandbox escapes: alignment can't enforce boundaries, so enforcement moves into the runtime and the silicon — OpenShell's policy prover plus a BlueField-4 watchdog that can quarantine an agent in milliseconds. Deterministic mediation is the architecture I'd trust in production, though it's telling that OpenAI and Google are absent from the partner list.",
+      "de": "Die richtige Lehre aus den Sandbox-Ausbrüchen dieses Sommers: Alignment kann keine Grenzen durchsetzen, also wandert die Durchsetzung in Runtime und Silizium — der Policy-Prover von OpenShell plus ein BlueField-4-Watchdog, der einen Agenten in Millisekunden isolieren kann. Deterministische Vermittlung ist die Architektur, der ich im Produktionseinsatz vertrauen würde, wobei auffällt, dass OpenAI und Google auf der Partnerliste fehlen.",
+      "fr": "La bonne leçon des évasions de sandbox de cet été : l'alignement ne peut pas faire respecter les limites, donc l'application des règles descend dans le runtime et le silicium — le prouveur de politiques d'OpenShell plus un watchdog BlueField-4 capable de mettre un agent en quarantaine en quelques millisecondes. La médiation déterministe est l'architecture à laquelle je ferais confiance en production, même s'il est révélateur qu'OpenAI et Google soient absents de la liste des partenaires.",
+      "es": "La lección correcta de los escapes de sandbox de este verano: el alignment no puede hacer cumplir límites, así que la aplicación baja al runtime y al silicio — el comprobador de políticas de OpenShell más un watchdog en BlueField-4 capaz de poner a un agente en cuarentena en milisegundos. La mediación determinista es la arquitectura en la que confiaría en producción, aunque es revelador que OpenAI y Google brillen por su ausencia en la lista de socios.",
+      "ar": "الدرس الصحيح من حالات الهروب من بيئات العزل هذا الصيف: المضاهاة لا تستطيع فرض الحدود، لذا ينتقل الفرض التنفيذي إلى زمن التشغيل والسيليكون — مُثبِت السياسات في OpenShell مع راقب على BlueField-4 قادر على عزل الوكيل في أجزاء من الثانية. الوساطة الحتمية هي البنية التي أثق بها في الإنتاج، مع أن غياب OpenAI وGoogle عن قائمة الشركاء له دلالته."
+    },
+    "tags": [
+      "agent-safety",
+      "runtime-verification",
+      "nvidia"
+    ]
+  },
+  {
+    "id": "agentworld-multi-agent-collaboration-benchmark",
+    "date": "2026-09-25",
+    "category": "agentic",
+    "headline": {
+      "en": "AgentWorld: Benchmarking Long-Horizon Collaboration of Multi-agent LLMs",
+      "de": "AgentWorld: Benchmarking der langfristigen Zusammenarbeit von Multi-Agenten-LLMs",
+      "fr": "AgentWorld : évaluer la collaboration à long terme des LLM multi-agents",
+      "es": "AgentWorld: evaluación de la colaboración a largo plazo en LLMs multiagente",
+      "ar": "AgentWorld: معيار لقياس التعاون طويل الأمد في أنظمة LLM متعددة الوكلاء"
+    },
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.31590",
+    "take": {
+      "en": "The number that matters here isn't the best model's 52% task success, it's the CCE of 0.320 — under a third of agent actions causally contributed to the outcome. That's the multi-agent tax nobody prices in: coordination looks impressive in demos while most of the work is redundant motion, and chat volume predicted nothing.",
+      "de": "Die Zahl, die hier zählt, ist nicht die Erfolgsquote von 52 % des besten Modells, sondern der CCE von 0,320 — weniger als ein Drittel der Agentenaktionen hat kausal zum Ergebnis beigetragen. Das ist die Multi-Agenten-Steuer, die niemand einpreist: Koordination wirkt in Demos beeindruckend, während der Großteil der Arbeit redundante Bewegung ist, und das Chatvolumen sagte nichts voraus.",
+      "fr": "Le chiffre qui compte ici n'est pas le taux de réussite de 52 % du meilleur modèle, mais le CCE de 0,320 — moins d'un tiers des actions des agents ont causalement contribué au résultat. C'est l'impôt multi-agents que personne n'intègre : la coordination impressionne en démo alors que l'essentiel du travail est du mouvement redondant, et le volume de chat ne prédisait rien.",
+      "es": "La cifra que importa aquí no es la tasa de éxito del 52 % del mejor modelo, sino el CCE de 0,320: menos de un tercio de las acciones de los agentes contribuyeron causalmente al resultado. Ese es el impuesto multiagente que nadie incluye en el precio: la coordinación impresiona en las demos mientras la mayor parte del trabajo es movimiento redundante, y el volumen de chat no predijo nada.",
+      "ar": "الرقم المهم هنا ليس نسبة نجاح 52% لأفضل نموذج، بل قيمة CCE البالغة 0.320 — أقل من ثلث أفعال الوكلاء أسهمت فعليًا في النتيجة. هذه ضريبة الأنظمة متعددة الوكلاء التي لا يحسبها أحد في التكلفة: التنسيق يبدو مبهرًا في العروض بينما معظم العمل حركة زائدة، وحجم المحادثة لم يتنبأ بشيء."
+    },
+    "tags": [
+      "multi-agent",
+      "benchmarks",
+      "evaluation"
+    ]
+  },
+  {
+    "id": "hcompany-holo4-computer-use-agents",
+    "date": "2026-09-28",
+    "category": "agentic",
+    "headline": {
+      "en": "Holo4: powering generalist computer-use agents",
+      "de": "Holo4: die treibende Kraft für generalistische Computer-Use-Agenten",
+      "fr": "Holo4 : au service des agents généralistes d'utilisation de l'ordinateur",
+      "es": "Holo4: impulsando agentes generalistas de uso de computadora",
+      "ar": "Holo4: تشغيل وكلاء استخدام الحاسوب متعددي الأغراض"
+    },
+    "source": "H Company",
+    "url": "https://huggingface.co/blog/Hcompany/holo4",
+    "take": {
+      "en": "H Company's pitch is the one I keep making: single-interface agents are a benchmark artifact, and real work mixes GUIs, code, MCP and APIs — Holo4 picks per task. Open weights in two sizes (27B dense, 35B-A3B MoE) plus published trajectories is the part I like most, because computer-use progress only counts when others can reproduce the eval.",
+      "de": "H Companys These ist die, die ich ständig vertrete: Agenten mit nur einer Schnittstelle sind ein Benchmark-Artefakt, echte Arbeit mischt GUI, Code, MCP und APIs — Holo4 wählt pro Aufgabe aus. Offene Gewichtungen in zwei Größen (27B dense, 35B-A3B MoE) plus veröffentlichte Trajektorien gefallen mir am besten, denn Fortschritt bei Computer-Use zählt nur, wenn andere die Auswertung reproduzieren können.",
+      "fr": "L'argument de H Company est celui que je répète sans cesse : les agents à interface unique sont un artefact de benchmark, et le travail réel mélange interfaces graphiques, code, MCP et API — Holo4 choisit selon la tâche. Des poids ouverts en deux tailles (27B dense, 35B-A3B MoE) et des trajectoires publiées, c'est ce que je préfère : le progrès en computer-use ne compte que si d'autres peuvent reproduire l'évaluation.",
+      "es": "El argumento de H Company es el que repito siempre: los agentes de interfaz única son un artefacto de benchmark, y el trabajo real mezcla GUIs, código, MCP y APIs — Holo4 elige según la tarea. Pesos abiertos en dos tamaños (27B denso, 35B-A3B MoE) y trayectorias publicadas es lo que más me gusta, porque el progreso en computer-use solo cuenta cuando otros pueden reproducir la evaluación.",
+      "ar": "حجة H Company هي نفسها التي أكررها دائمًا: الوكلاء ذوو الواجهة الواحدة نتاج بيئات القياس لا الواقع، فالعمل الحقيقي يمزج الواجهات الرسومية والكود وMCP وواجهات البرمجة — وHolo4 يختار بحسب المهمة. أكثر ما يعجبني إصدار أوزان مفتوحة بحجمين (27B كثيف و35B-A3B MoE) مع نشر المسارات، لأن التقدم في استخدام الحاسوب لا يُحتسب إلا إذا استطاع الآخرون إعادة إنتاج التقييم."
+    },
+    "tags": [
+      "computer-use",
+      "open-weights",
+      "agents"
+    ]
+  },
+  {
+    "id": "sakana-sail-robot-plan-simulation-search",
+    "date": "2026-09-28",
+    "category": "agentic",
+    "headline": {
+      "en": "Sakana AI uses simulation search to refine robot plans without retraining models",
+      "de": "Sakana AI verfeinert Roboterpläne durch Simulationssuche, ohne Modelle neu zu trainieren",
+      "fr": "Sakana AI affine les plans robotiques par recherche en simulation, sans réentraîner les modèles",
+      "es": "Sakana AI refina los planes de sus robots con búsqueda en simulación, sin reentrenar modelos",
+      "ar": "Sakana AI تحسّن خطط الروبوتات بالبحث في المحاكاة دون إعادة تدريب النماذج"
+    },
+    "source": "RuntimeWire",
+    "url": "https://runtimewire.com/article/sakana-ai-sail-robot-trajectory-search",
+    "take": {
+      "en": "SAIL spends inference-time compute searching candidate plans in simulation instead of retraining, and the honest part is the accounting: the jump from 25% to 73% success is scored against the simulator's ground truth, not the model's own confidence, over six tasks and six physical trials. Verify against an oracle rather than the model's self-report — that's the transferable idea, and also the reason to wait for more hardware evidence.",
+      "de": "SAIL steckt Inferenzzeit-Rechenleistung in die Suche nach Kandidatenplänen in der Simulation, statt neu zu trainieren — und der ehrliche Teil ist die Buchhaltung: der Sprung von 25 % auf 73 % Erfolg wird am Ground Truth des Simulators gemessen, nicht am Selbstvertrauen des Modells, über sechs Aufgaben und sechs physische Versuche. Gegen ein Orakel verifizieren statt gegen den Selbstbericht des Modells — das ist die übertragbare Idee, und auch der Grund, auf mehr Hardware-Evidenz zu warten.",
+      "fr": "SAIL investit du calcul à l'inférence dans la recherche de plans candidats en simulation au lieu de réentraîner, et ce qui est honnête, c'est la comptabilité : le passage de 25 % à 73 % de réussite est mesuré contre le ground truth du simulateur, pas contre la confiance du modèle, sur six tâches et six essais physiques. Vérifier contre un oracle plutôt que contre l'auto-évaluation du modèle — c'est l'idée transférable, et aussi la raison d'attendre plus de preuves sur le matériel.",
+      "es": "SAIL invierte cómputo de inferencia en buscar planes candidatos en simulación en lugar de reentrenar, y lo honesto es la contabilidad: el salto de 25 % a 73 % de éxito se puntúa contra el ground truth del simulador, no contra la confianza del modelo, sobre seis tareas y seis ensayos físicos. Verificar contra un oráculo y no contra el autoinforme del modelo — esa es la idea transferible, y también la razón para esperar más evidencia en hardware.",
+      "ar": "ينفق SAIL حوسبة وقت الاستدلال في البحث عن خطط مرشحة داخل المحاكاة بدلًا من إعادة التدريب، والجزء الأمين هنا هو المحاسبة: القفز من 25% إلى 73% في نسبة النجاح يقاس مقابل الحقيقة الأرضية للمحاكي لا مقابل ثقة النموذج بنفسه، وعبر ست مهام وست تجارب مادية. التحقق مقابل مرجع خارجي لا مقابل تقرير النموذج عن نفسه — هذه هي الفكرة القابلة للنقل، وهي أيضًا سبب انتظار مزيد من الأدلة على العتاد."
+    },
+    "tags": [
+      "robotics",
+      "simulation",
+      "verification"
+    ]
   }
 ]
