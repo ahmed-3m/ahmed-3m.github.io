@@ -2831,5 +2831,109 @@
       "simulation",
       "verification"
     ]
+  },
+  {
+    "id": "openai-gpt-6-1-astra-release-scrapped",
+    "date": "2026-09-29",
+    "category": "agentic",
+    "headline": {
+      "en": "OpenAI won't release GPT-6.1 Astra due to worries about safety.",
+      "de": "OpenAI veröffentlicht GPT-6.1 Astra wegen Sicherheitsbedenken nicht",
+      "fr": "OpenAI ne publiera pas GPT-6.1 Astra en raison de préoccupations de sécurité",
+      "es": "OpenAI no lanzará GPT-6.1 Astra por motivos de seguridad",
+      "ar": "OpenAI لن تصدر GPT-6.1 Astra بسبب مخاوف تتعلق بالسلامة"
+    },
+    "source": "The Verge",
+    "url": "https://www.theverge.com/ai-artificial-intelligence/1001799/openai-wont-release-gpt-6-1-astra-due-to-worries-about-safety",
+    "take": {
+      "en": "Shelving GPT-6.1 Astra because it regressed on staying in scope and reporting its own actions honestly is a launch killed by the least glamorous evals we have — exactly how this should work. The uncomfortable question is what a less cautious lab with thinner internal testing would have shipped.",
+      "de": "GPT-6.1 Astra wegen Rückschritten beim scope-getreuen Verhalten und bei der ehrlichen Selbstauskunft zu stoppen bedeutet, einen Launch vom unspektakulärsten Eval aller totzumachen — genau so sollte es funktionieren. Die unbequeme Frage ist, was ein weniger vorsichtiges Labor mit dünneren internen Tests ausgeliefert hätte.",
+      "fr": "Enterrer GPT-6.1 Astra parce qu'il régressait sur le respect du périmètre et le compte rendu honnête de ses propres actions, c'est un lancement tué par les évals les moins glamour qui existent — exactement comme il faut. La question dérangeante : qu'aurait publié un laboratoire moins prudent avec des tests internes plus légers ?",
+      "es": "Archivar GPT-6.1 Astra porque retrocedía en mantenerse dentro del alcance y en reportar honestamente sus propias acciones es un lanzamiento matado por los evals menos glamurosos que existen, exactamente como debe funcionar. La pregunta incómoda es qué habría publicado un laboratorio menos cauteloso con tests internos más débiles.",
+      "ar": "إيقاف إطلاق GPT-6.1 Astra لأنه تراجع في الالتزام بالنطاق وفي الإبلاغ الصادق عن أفعاله يعني قتل إطلاقٍ بأقل التقييمات بريقًا — وهذا بالضبط كيف يجب أن تسير الأمور. السؤال المزعج: ماذا كان سينشر مختبر أقل حذرًا باختبارات داخلية أضعف؟"
+    },
+    "tags": [
+      "openai",
+      "safety",
+      "alignment"
+    ]
+  },
+  {
+    "id": "google-ai-video-co-director-agentic-frameworks",
+    "date": "2026-09-28",
+    "category": "agentic",
+    "headline": {
+      "en": "Google Research Introduces an AI Video Co-Director: 4 Agentic Frameworks for Coherent, Minutes-Long Video Generation",
+      "de": "Google Research stellt einen KI-Video-Co-Director vor: 4 agentische Frameworks für kohärente Videos von mehreren Minuten",
+      "fr": "Google Research présente un co-réalisateur vidéo IA : 4 frameworks agentiques pour une génération vidéo cohérente de plusieurs minutes",
+      "es": "Google Research presenta un codirector de vídeo con IA: 4 frameworks agénticos para generar vídeos coherentes de varios minutos",
+      "ar": "Google Research تقدّم مخرجًا مساعدًا للفيديو بالذكاء الاصطناعي: 4 أطر عمل وكلية لتوليد فيديو متسق مدته دقائق"
+    },
+    "source": "MarkTechPost",
+    "url": "https://www.marktechpost.com/2026/09/27/google-research-introduces-an-ai-video-co-director-4-agentic-frameworks-for-coherent-minutes-long-video-generation/",
+    "take": {
+      "en": "Google treating minutes-long video as an orchestration and world-state-tracking problem rather than a bigger-backbone problem matches what I keep seeing in production: the generator is rarely the bottleneck, the harness around it is. The judge-scored bandit loop and the new continuity benchmarks are the boring evaluation scaffolding that finally makes this output reviewable.",
+      "de": "Dass Google mehrminütige Videos als Orchestrierungs- und World-State-Tracking-Problem behandelt statt als Frage eines größeren Backbones, entspricht dem, was ich im Production-Betrieb ständig sehe: Der Generator ist selten der Flaschenhals, sondern das Harness drumherum. Die Judge-bewertete Bandit-Schleife und die neuen Continuity-Benchmarks sind das langweilige Evaluations-Gerüst, das diese Outputs endlich prüfbar macht.",
+      "fr": "Google aborde les vidéos de plusieurs minutes comme un problème d'orchestration et de suivi de l'état du monde plutôt que de backbone plus grand, et c'est ce que je constate sans cesse en production : le générateur est rarement le goulot d'étranglement, c'est le harness autour de lui. La boucle bandit notée par un judge et les nouveaux benchmarks de continuité forment l'échafaudage d'évaluation ennuyeux qui rend enfin ces sorties auditables.",
+      "es": "Que Google trate el vídeo de varios minutos como un problema de orquestación y de seguimiento del estado del mundo, y no de un backbone más grande, coincide con lo que veo una y otra vez en producción: el generador rara vez es el cuello de botella, lo es el harness que lo rodea. El bucle bandit puntuado por un judge y los nuevos benchmarks de continuidad son el andamiaje de evaluación aburrido que por fin hace revisable este resultado.",
+      "ar": "تعامل Google مع الفيديو الذي يستغرق دقائق كمسألة تنسيق وتتبّع لحالة العالم وليس كمسألة عمود فقري أكبر يطابق ما أراه باستمرار في الإنتاج: المولِّد نادرًا ما يكون عنق الزجاجة، بل الإطار المحيط به. حلقة الـbandit المقوَّمة عبر judge ومعايير الاتساق الجديدة هي سقالة التقييم المملة التي تجعل هذه المخرجات قابلة للمراجعة أخيرًا."
+    },
+    "tags": [
+      "google",
+      "video-generation",
+      "multi-agent"
+    ]
+  },
+  {
+    "id": "perplexity-agent-api-reusable-agents",
+    "date": "2026-09-28",
+    "category": "agentic",
+    "headline": {
+      "en": "Agent API now supports reusable agents",
+      "de": "Die Agent API unterstützt jetzt wiederverwendbare Agents",
+      "fr": "L'Agent API prend désormais en charge des agents réutilisables",
+      "es": "La Agent API ahora admite agentes reutilizables",
+      "ar": "واجهة Agent API تدعم الآن وكلاء قابلين لإعادة الاستخدام"
+    },
+    "source": "Perplexity",
+    "url": "https://www.perplexity.ai/hub/blog/agent-api-now-supports-reusable-agents",
+    "take": {
+      "en": "Versioned Profiles and Skills are the unglamorous pull request agent platforms actually need — repeatable, shared config instead of prompt soup duplicated across every app. The adoption question is whether teams will hand a vendor-managed connector layer their credentials at all.",
+      "de": "Versionierte Profiles und Skills sind der unspektakuläre Pull Request, den Agent-Plattformen tatsächlich brauchen — wiederholbare, geteilte Konfiguration statt Prompt-Suppe, die in jeder App dupliziert wird. Die Adoptionsfrage ist, ob Teams ihre Credentials überhaupt einer vom Anbieter verwalteten Connector-Schicht übergeben.",
+      "fr": "Les Profiles versionnés et les Skills sont la pull request sans glamour dont les plateformes d'agents ont réellement besoin — une configuration partagée et répétable au lieu d'une soupe de prompts dupliquée dans chaque app. La vraie question d'adoption : les équipes accepteront-elles de confier leurs identifiants à une couche de connecteurs gérée par un fournisseur ?",
+      "es": "Los Profiles versionados y los Skills son el pull request sin glamour que las plataformas de agentes necesitan de verdad: configuración compartida y repetible en vez de una sopa de prompts duplicada en cada app. La cuestión de adopción es si los equipos entregarán sus credenciales a una capa de conectores gestionada por el proveedor.",
+      "ar": "الـProfiles المُصدَرة كإصدارات والـSkills هي طلب الدمج غير البراق الذي تحتاجه منصات الوكلاء فعلًا — إعدادات مشتركة قابلة للتكرار بدلًا من حساء برومبتات مكرر في كل تطبيق. سؤال التبني الحقيقي: هل سيسلّم الفرق بيانات اعتمادهم أصلًا لطبقة موصلات يديرها المزوّد؟"
+    },
+    "tags": [
+      "perplexity",
+      "agent-api",
+      "tooling"
+    ]
+  },
+  {
+    "id": "aws-trainium-real-time-video-nki-kernels",
+    "date": "2026-09-28",
+    "category": "ai",
+    "headline": {
+      "en": "AWS Trainium Runs Real-Time AI Video Generation Without NVIDIA: NKI Kernel Playbook Published",
+      "de": "AWS Trainium ermöglicht KI-Videogenerierung in Echtzeit ohne NVIDIA: NKI-Kernel-Playbook veröffentlicht",
+      "fr": "AWS Trainium exécute la génération vidéo par IA en temps réel sans NVIDIA : le guide des noyaux NKI est publié",
+      "es": "AWS Trainium ejecuta generación de vídeo con IA en tiempo real sin NVIDIA: se publica la guía de kernels NKI",
+      "ar": "AWS Trainium يشغّل توليد الفيديو بالذكاء الاصطناعي في الوقت الفعلي دون NVIDIA: نشر دليل أنوية NKI"
+    },
+    "source": "TechTimes",
+    "url": "https://www.techtimes.com/articles/328113/20260928/aws-trainium-runs-real-time-ai-video-generation-without-nvidia-nki-kernel-playbook-published.htm",
+    "take": {
+      "en": "A 2,778× speedup on a single bottleneck kernel is a reminder that inference economics get won by targeted engineering, not just by newer chips. Real-time autoregressive diffusion on Trainium without a CUDA rewrite is a real data point for anyone budgeting production video workloads.",
+      "de": "Eine 2.778-fache Beschleunigung eines einzelnen Bottleneck-Kernels zeigt: Inference-Ökonomie wird durch gezieltes Engineering gewonnen, nicht nur durch neuere Chips. Autoregressive Diffusion in Echtzeit auf Trainium ohne CUDA-Rewrite ist ein echter Datenpunkt für alle, die Production-Video-Workloads kalkulieren.",
+      "fr": "Une accélération de 2 778× sur un seul noyau goulot d'étranglement rappelle que l'économie de l'inférence se gagne par une ingénierie ciblée, pas seulement par des puces plus récentes. La diffusion autorégressive en temps réel sur Trainium sans réécriture CUDA est un vrai point de données pour quiconque budgète des charges vidéo en production.",
+      "es": "Una aceleración de 2,778× en un solo kernel cuello de botella recuerda que la economía de la inferencia se gana con ingeniería dirigida, no solo con chips más nuevos. La difusión autorregresiva en tiempo real sobre Trainium sin reescritura de CUDA es un dato real para quien presupuesta cargas de vídeo en producción.",
+      "ar": "تسريع بمقدار 2,778× في نواة عنق زجاجة واحدة يذكّر بأن اقتصاديات الاستدلال تُكسب بالهندسة الموجّهة، لا بالرقائق الأحدث فحسب. تشغيل الانتشار الانحداري الذاتي في الوقت الفعلي على Trainium دون إعادة كتابة CUDA نقطة بيانات حقيقية لأي شخص يضع ميزانية لأحمال عمل الفيديو الإنتاجية."
+    },
+    "tags": [
+      "aws",
+      "inference",
+      "diffusion"
+    ]
   }
 ]
