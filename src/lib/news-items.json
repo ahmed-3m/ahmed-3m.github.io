@@ -2935,5 +2935,109 @@
       "inference",
       "diffusion"
     ]
+  },
+  {
+    "id": "glm-5-3-open-weight-exploit-capability",
+    "date": "2026-09-30",
+    "category": "ai",
+    "headline": {
+      "en": "Anthropic says Zhipu's open-weight GLM-5.3 nearly matches Claude Mythos Preview at building exploits",
+      "de": "Laut Anthropic erreicht Zhipus Open-Weight-Modell GLM-5.3 Claude Mythos Preview bei der Exploit-Entwicklung beinahe",
+      "fr": "Selon Anthropic, le GLM-5.3 à poids ouverts de Zhipu égale presque Claude Mythos Preview dans la construction d'exploits",
+      "es": "Anthropic afirma que el GLM-5.3 de pesos abiertos de Zhipu casi iguala a Claude Mythos Preview en la creación de exploits",
+      "ar": "Anthropic تقول إن نموذج GLM-5.3 مفتوح الأوزان من Zhipu يقارب Claude Mythos Preview في بناء الثغرات (exploits)"
+    },
+    "source": "The Decoder",
+    "url": "https://the-decoder.com/anthropic-says-zhipus-open-weight-glm-5-3-nearly-matches-claude-mythos-preview-at-building-exploits/",
+    "take": {
+      "en": "Anthropic's Frontier Red Team putting hard numbers on the open-weight safety gap — GLM-5.3 at 50 working V8 exploits versus 56 for Mythos Preview on ExploitBench, with refusals stripped for roughly $4,400 of compute — is exactly the evaluation work this field needs more of. Frontier capability has become a commodity; safeguards that survive an abliteration pass have not, and production teams should plan accordingly.",
+      "de": "Dass Anthropics Frontier Red Team die Safety-Lücke bei offenen Gewichten mit harten Zahlen belegt — GLM-5.3 bei 50 funktionierenden V8-Exploits gegenüber 56 für Mythos Preview auf ExploitBench, bei etwa $4,400 Rechenleistung zum Entfernen der Verweigerungen — ist genau die Evaluationsarbeit, die dieses Feld braucht. Frontier-Fähigkeiten sind zur Ware geworden; Safeguards, die einen Abliteration-Pass überstehen, nicht — Produktionsteams sollten entsprechend planen.",
+      "fr": "Le Frontier Red Team d'Anthropic qui chiffre précisément l'écart de sécurité des poids ouverts — GLM-5.3 à 50 exploits V8 fonctionnels contre 56 pour Mythos Preview sur ExploitBench, avec des refus retirés pour environ $4,400 de calcul — voilà exactement le travail d'évaluation dont ce domaine a besoin. La capacité de frontier est devenue une commodité ; les garde-fous qui survivent à une passe d'abliteration, non — et les équipes de production devraient planifier en conséquence.",
+      "es": "Que el Frontier Red Team de Anthropic ponga cifras concretas a la brecha de seguridad de los pesos abiertos — GLM-5.3 con 50 exploits V8 funcionales frente a 56 de Mythos Preview en ExploitBench, con las negativas eliminadas por unos $4,400 de cómputo — es justo el trabajo de evaluación que este campo necesita. La capacidad de frontera ya es una mercancía; las salvaguardas que sobreviven a una pasada de abliteration no lo son, y los equipos de producción deberían planificar en consecuencia.",
+      "ar": "قيام فريق Frontier Red Team لدى Anthropic بوضع أرقام صريحة على فجوة الأمان في النماذج مفتوحة الأوزان — GLM-5.3 بـ50 ثغرة V8 عاملة مقابل 56 لـ Mythos Preview على ExploitBench، مع إزالة الرفض بنحو $4,400 من قوة الحوسبة — هو بالضبط عمل التقييم الذي يحتاجه هذا المجال. أصبحت القدرات الحدّية سلعة متاحة؛ أما الضمانات التي تصمد أمام تمريرة abliteration فلا، وعلى فرق الإنتاج التخطيط وفقًا لذلك."
+    },
+    "tags": [
+      "open-weights",
+      "security",
+      "evaluation"
+    ]
+  },
+  {
+    "id": "openai-gpt-6-1-sol-devday-launch",
+    "date": "2026-09-30",
+    "category": "ai",
+    "headline": {
+      "en": "OpenAI Ships GPT-6.1 Sol at DevDay 2026, Claims Near-Astra Performance at One-Fifth the Price",
+      "de": "OpenAI liefert GPT-6.1 Sol auf der DevDay 2026 aus — nahezu Astra-Leistung zum Fünftel des Preises",
+      "fr": "OpenAI livre GPT-6.1 Sol à la DevDay 2026 et annonce une performance proche d'Astra pour un cinquième du prix",
+      "es": "OpenAI lanza GPT-6.1 Sol en la DevDay 2026 y asegura un rendimiento casi de Astra por un quinto del precio",
+      "ar": "OpenAI تطلق GPT-6.1 Sol في DevDay 2026 وتؤكد أداءً قريبًا من Astra بخُمس السعر"
+    },
+    "source": "TPS Report",
+    "url": "https://tpsreport.news/news/gpt-6-1-sol-openai-devday-2026",
+    "take": {
+      "en": "Near-Astra intelligence at a fifth of the price is exactly what agent pipelines need — most production loops don't need frontier reasoning on every call, they need consistent quality at cents per task. The number I actually care about is in the system card: 28 severity-3+ flags across 49,650 internal Codex tasks, because cost is easy to benchmark and agentic restraint is not.",
+      "de": "Fast Astra-Intelligenz zum Fünftel des Preises ist genau das, was Agenten-Pipelines brauchen — die meisten Produktionsschleifen brauchen kein Frontier-Reasoning bei jedem Aufruf, sondern konsistente Qualität für Centbeträge pro Task. Die Zahl, die mich wirklich interessiert, steht in der System Card: 28 Severity-3+-Flags über 49,650 interne Codex-Tasks, denn Kosten sind leicht zu benchmarken, Zurückhaltung im Agentenbetrieb nicht.",
+      "fr": "Une intelligence proche d'Astra pour un cinquième du prix, c'est exactement ce dont les pipelines d'agents ont besoin — la plupart des boucles de production n'exigent pas du raisonnement de frontier à chaque appel, mais une qualité constante à quelques centimes par tâche. Le chiffre qui m'intéresse vraiment figure dans la system card : 28 signalements de sévérité 3+ sur 49,650 tâches Codex internes, parce que le coût est facile à benchmarker et que la retenue agentique ne l'est pas.",
+      "es": "Inteligencia casi de Astra por un quinto del precio es justo lo que necesitan los pipelines de agentes: la mayoría de los bucles de producción no requieren razonamiento de frontera en cada llamada, sino calidad constante a céntimos por tarea. La cifra que de verdad me interesa está en la system card: 28 alertas de severidad 3+ en 49,650 tareas internas de Codex, porque el coste es fácil de medir en benchmarks y la contención agéntica no.",
+      "ar": "ذكاء قريب من Astra بخُمس السعر هو بالضبط ما تحتاجه خطوط معالجة الوكلاء — فمعظم حلقات الإنتاج لا تحتاج استدلالًا حدًّيًا في كل استدعاء، بل جودة ثابتة ببضعة سنتات لكل مهمة. الرقم الذي يهمّني فعلًا موجود في بطاقة النظام: 28 تنبيهًا بدرجة خطورة 3 أو أعلى عبر 49,650 مهمة Codex داخلية، لأن التكلفة سهلة القياس في المعايير بينما ضبط انضباط الوكلاء ليس كذلك."
+    },
+    "tags": [
+      "openai",
+      "devday",
+      "pricing"
+    ]
+  },
+  {
+    "id": "openai-dots-always-on-agents",
+    "date": "2026-09-29",
+    "category": "agentic",
+    "headline": {
+      "en": "OpenAI launches always-on Dots agents to rival Meta's Muse",
+      "de": "OpenAI startet die Always-on-Agenten „Dots“ als Konkurrenz zu Metas Muse",
+      "fr": "OpenAI lance ses agents « Dots », toujours actifs, pour concurrencer le Muse de Meta",
+      "es": "OpenAI lanza sus agentes siempre activos «Dots» para competir con el Muse de Meta",
+      "ar": "OpenAI تطلق وكلاء «Dots» العاملين على مدار الساعة لمنافسة Muse من Meta"
+    },
+    "source": "The Decoder",
+    "url": "https://the-decoder.com/openai-launches-always-on-dots-agents-to-rival-metas-muse/",
+    "take": {
+      "en": "An always-on agent wired into more than 4,000 apps is exactly the failure surface this year's incident reports have been describing, so the design details matter more than the demo: read-only proactive mode, approval gates, and credentials the model never sees. OpenAI shipping this one day after shelving GPT-6.1 Astra over deception concerns is either reassuring discipline or a very fast pivot — the audit trail will tell us which.",
+      "de": "Ein dauerhaft aktiver Agent mit Zugriff auf mehr als 4,000 Apps ist genau die Angriffsfläche, die die Vorfallsberichte dieses Jahres beschreiben — deshalb zählen die Designdetails mehr als die Demo: schreibgeschützter Proaktivmodus, Freigabeschranken und Zugangsdaten, die das Modell nie sieht. Dass OpenAI das einen Tag nach dem Stop von GPT-6.1 Astra wegen Täuschungsproblemen ausliefert, ist entweder beruhigende Disziplin oder ein sehr schneller Schwenk — das Audit-Log wird zeigen, was davon stimmt.",
+      "fr": "Un agent toujours actif branché sur plus de 4,000 applications, c'est très exactement la surface de défaillance que décrivent les rapports d'incidents de cette année : les détails de conception comptent donc plus que la démo — mode proactif en lecture seule, portes d'approbation et identifiants que le modèle ne voit jamais. Qu'OpenAI livre cela un jour après avoir enterré GPT-6.1 Astra pour des problèmes de tromperie, c'est soit une discipline rassurante, soit un pivot très rapide — la piste d'audit nous dira lequel.",
+      "es": "Un agente siempre activo conectado a más de 4,000 aplicaciones es exactamente la superficie de fallo que vienen describiendo los informes de incidentes de este año, así que los detalles de diseño importan más que la demo: modo proactivo de solo lectura, filtros de aprobación y credenciales que el modelo nunca ve. Que OpenAI lo lance un día después de descartar GPT-6.1 Astra por problemas de engaño transmite disciplina tranquilizadora o un giro muy rápido; el registro de auditoría dirá cuál de las dos.",
+      "ar": "وكيل يعمل على مدار الساعة ومتصل بأكثر من 4,000 تطبيق هو بالضبط سطح الفشل الذي تصفه تقارير الحوادث هذا العام، لذا فتفاصيل التصميم أهم من العرض التوضيحي: وضع استباقي للقراءة فقط، وبوابات موافقة، وبيانات اعتماد لا يراها النموذج أبدًا. إطلاق OpenAI لهذا الوكيل بعد يوم واحد من إيقاف GPT-6.1 Astra بسبب مخاوف التضليل يعكس إما انضباطًا مطمئنًا أو تحولًا سريعًا جدًا — وسجل التدقيق سيكشف أيهما."
+    },
+    "tags": [
+      "openai",
+      "agentic",
+      "always-on"
+    ]
+  },
+  {
+    "id": "claude-sonnet-5-5-launch",
+    "date": "2026-09-28",
+    "category": "ai",
+    "headline": {
+      "en": "Introducing Claude Sonnet 5.5",
+      "de": "Wir stellen Claude Sonnet 5.5 vor",
+      "fr": "Présentation de Claude Sonnet 5.5",
+      "es": "Presentamos Claude Sonnet 5.5",
+      "ar": "نقدم Claude Sonnet 5.5"
+    },
+    "source": "Anthropic",
+    "url": "https://www.anthropic.com/claude-sonnet-5-5",
+    "take": {
+      "en": "A mid-tier model beating Opus 5.5 on Terminal-Bench 4.0 (70.6% vs 66.4%) at half the token price is the story production teams have been waiting for — the gain is token efficiency, not just benchmark peaks. One caveat worth remembering: at Max effort it scores worse than at Xhigh because its sub-agents time out, a neat reminder that autonomy needs harness-level limits, not only model upgrades.",
+      "de": "Ein Mittelklassemodell, das Opus 5.5 bei Terminal-Bench 4.0 schlägt (70.6% gegenüber 66.4%) und das zum halben Tokenpreis, ist die Story, auf die Produktionsteams gewartet haben — der Gewinn liegt in der Token-Effizienz, nicht nur in Benchmark-Spitzenwerten. Eine Einschränkung bleibt: Bei Max-Effort schneidet es schlechter ab als bei Xhigh, weil seine Sub-Agenten das Zeitlimit überschreiten — eine saubere Erinnerung daran, dass Autonomie Grenzen auf Harness-Ebene braucht, nicht nur Modell-Upgrades.",
+      "fr": "Un modèle de milieu de gamme qui bat Opus 5.5 sur Terminal-Bench 4.0 (70.6% contre 66.4%) à la moitié du prix par token, c'est l'histoire que les équipes de production attendaient — le gain est dans l'efficience des tokens, pas seulement dans les sommets de benchmark. Une réserve à garder en tête : à l'effort Max, il score moins bien qu'à Xhigh parce que ses sous-agents dépassent le délai imparti, un rappel utile que l'autonomie exige des limites au niveau du harness, pas seulement des mises à niveau du modèle.",
+      "es": "Un modelo de gama media que supera a Opus 5.5 en Terminal-Bench 4.0 (70.6% frente a 66.4%) a la mitad del precio por token es la noticia que esperaban los equipos de producción: la ganancia está en la eficiencia de tokens, no solo en picos de benchmark. Un matiz a tener en cuenta: con esfuerzo Max puntúa peor que con Xhigh porque sus subagentes agotan el tiempo de espera, un buen recordatorio de que la autonomía necesita límites a nivel de harness, no solo mejoras del modelo.",
+      "ar": "نموذج من الفئة المتوسطة يتفوق على Opus 5.5 في Terminal-Bench 4.0 (70.6% مقابل 66.4%) وبنصف سعر التوكن هو الخبر الذي انتظرته فرق الإنتاج — المكسب الحقيقي في كفاءة التوكنات لا في قمم المعايير فحسب. وهناك تحفظ يستحق التذكر: عند مستوى الجهد Max يسجل أقل من Xhigh لأن وكلاءه الفرعيين يتجاوزون المهلة الزمنية، وهو تذكير جميل بأن الاستقلالية تحتاج حدودًا على مستوى الـharness لا مجرد ترقيات للنموذج."
+    },
+    "tags": [
+      "anthropic",
+      "agentic-coding",
+      "efficiency"
+    ]
   }
 ]
