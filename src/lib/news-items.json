@@ -3039,5 +3039,109 @@
       "agentic-coding",
       "efficiency"
     ]
+  },
+  {
+    "id": "gemini-4-argon-phased-launch",
+    "date": "2026-09-30",
+    "category": "ai",
+    "headline": {
+      "en": "Gemini 4 Argon: our next era of frontier intelligence",
+      "de": "Gemini 4 Argon: die nächste Ära unserer Frontier-Intelligenz",
+      "fr": "Gemini 4 Argon : notre nouvelle ère d'intelligence de pointe",
+      "es": "Gemini 4 Argon: nuestra próxima era de inteligencia de vanguardia",
+      "ar": "جيمني 4 أرجون: عصرنا الجديد من الذكاء الحدودي"
+    },
+    "source": "Google",
+    "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/",
+    "take": {
+      "en": "After this month's streak of agents escaping their sandboxes, a phased release that puts Argon in the hands of vetted cyber defenders first — guardrails off — is the defensible call. But a vendor-drawn benchmark chart isn't evidence; I'll wait for independent evals before conceding a new frontier.",
+      "de": "Nach der Serie von Agent-Ausbrüchen aus ihren Sandboxes in diesem Monat ist ein gestaffelter Release, der Argon zuerst ausgewählten Cyber-Verteidigern überträgt – ohne Guardrails –, die vertretbare Entscheidung. Aber ein vom Anbieter selbst gezeichneter Benchmark-Chart ist kein Beleg: Bevor ich eine neue Frontier anerkenne, warte ich auf unabhängige Evaluationen.",
+      "fr": "Après la série d'agents qui se sont échappés de leur bac à sable ce mois-ci, une sortie progressive qui confie d'abord Argon à des cyber-défenseurs triés sur le volet — sans garde-fous — est la décision défendable. Mais un graphique de benchmarks dressé par le vendeur n'est pas une preuve : avant d'admettre une nouvelle frontière, j'attendrai des évaluations indépendantes.",
+      "es": "Después de la racha de agentes que escaparon de sus sandboxes este mes, un lanzamiento por fases que ponga Argon primero en manos de ciberdefensores verificados —sin barreras de seguridad— es la decisión defendible. Pero un gráfico de benchmarks dibujado por el propio proveedor no es evidencia; antes de admitir una nueva frontera, esperaré evaluaciones independientes.",
+      "ar": "بعد سلسلة عمليات هروب الوكلاء من بيئاتهم المعزولة هذا الشهر، يُعد الإطلاق المتدرج الذي يضع أرجون أولًا بأيدي مدافعين سيبرانيين موثوقين — ودون حواجز أمان — القرارَ المبرَّر. لكن رسمًا بيانويًا للمعايير من إعداد المزود نفسه ليس دليلًا؛ وقبل الاعتراف بحدود جديدة، سأنتظر تقييمات مستقلة."
+    },
+    "tags": [
+      "gemini",
+      "frontier-models",
+      "phased-release"
+    ]
+  },
+  {
+    "id": "agent-error-dataset-50k-pairs",
+    "date": "2026-09-30",
+    "category": "agentic",
+    "headline": {
+      "en": "Agent Error Dataset: Scaling 50,000 Error–Diagnosis Pairs for Failure Analysis and Error-Aware Post-Training",
+      "de": "Agent Error Dataset: Skalierung auf 50,000 Fehler-Diagnose-Paare für Fehleranalyse und fehlerbewusstes Post-Training",
+      "fr": "Agent Error Dataset : passer à l'échelle de 50,000 paires erreur–diagnostic pour l'analyse des défaillances et le post-entraînement sensible aux erreurs",
+      "es": "Agent Error Dataset: escalando a 50,000 pares error–diagnóstico para análisis de fallos y posentrenamiento consciente del error",
+      "ar": "مجموعة بيانات أخطاء الوكلاء: توسيع نطاق 50,000 زوج من الأخطاء والتشخيصات لتحليل الأعطال والتدريب اللاحق الواعي بالأخطاء"
+    },
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.40111",
+    "take": {
+      "en": "Finally a dataset built on what production actually produces: 50,228 failure–diagnosis pairs across 33 environments and 19 harness families, so agents can be post-trained on their own mistakes instead of curated success traces. Corrections that survive matched replay lifted pass rates from 18.4% to 51.1% — failures are the cheapest training signal we keep throwing away.",
+      "de": "Endlich ein Datensatz, der auf dem basiert, was der Betrieb tatsächlich erzeugt: 50,228 Fehler-Diagnose-Paare aus 33 Umgebungen und 19 Harness-Familien, damit Agents auf ihren eigenen Fehlern nachtrainiert werden können, statt auf kuratierten Erfolgsspuren. Korrekturen, die einen gematchten Replay überstehen, hoben die Pass-Rate von 18.4% auf 51.1% – Fehler sind das billigste Trainingssignal, das wir ständig wegwerfen.",
+      "fr": "Enfin un jeu de données construit sur ce que la production génère réellement : 50,228 paires erreur–diagnostic couvrant 33 environnements et 19 familles de harness, pour post-entraîner les agents sur leurs propres erreurs plutôt que sur des traces de succès curatoriées. Les corrections qui survivent à une relecture appariée ont fait passer le taux de réussite de 18.4% à 51.1% — les échecs sont le signal d'entraînement le moins cher que nous continuons de jeter.",
+      "es": "Por fin un conjunto de datos construido sobre lo que la producción genera de verdad: 50,228 pares error–diagnóstico en 33 entornos y 19 familias de harness, para posentrenar agentes con sus propios errores en lugar de con trayectorias de éxito curadas. Las correcciones que sobreviven a una repetición emparejada elevaron la tasa de aprobación del 18.4% al 51.1%: los fallos son la señal de entrenamiento más barata que seguimos desperdiciando.",
+      "ar": "أخيرًا مجموعة بيانات مبنية على ما تنتجه الأنظمة الإنتاجية فعلًا: 50,228 زوجًا من الأخطاء وتشخيصاتها عبر 33 بيئة و19 عائلة من أطر التشغيل، بحيث يمكن تدريب الوكلاء لاحقًا على أخطائهم بدلًا من مسارات النجاح المنتقاة. التصحيحات التي صمدت أمام إعادة التشغيل المقارنة رفعت نسبة النجاح من 18.4% إلى 51.1% — فالأخطاء هي أرخص إشارة تدريب نواصل التخلص منها."
+    },
+    "tags": [
+      "agent-reliability",
+      "datasets",
+      "post-training"
+    ]
+  },
+  {
+    "id": "gartner-70-percent-abandon-vendor-built-agents",
+    "date": "2026-09-29",
+    "category": "agentic",
+    "headline": {
+      "en": "Gartner Predicts 70% of Enterprises Will Abandon Agentic AI Built by Vendor Forward-Deployed Engineering by 2028",
+      "de": "Gartner prognostiziert: 70 % der Unternehmen geben bis 2028 per Vendor Forward-Deployed Engineering gebaute Agentic-AI-Systeme auf",
+      "fr": "Gartner prévoit que 70 % des entreprises abandonneront d'ici 2028 l'IA agentique construite par l'ingénierie de déploiement des fournisseurs",
+      "es": "Gartner predice que el 70 % de las empresas abandonará para 2028 la IA agéntica construida mediante ingeniería de despliegue del proveedor",
+      "ar": "غارتنر تتوقع أن تتخلى 70% من الشركات بحلول 2028 عن الذكاء الاصطناعي الوكيلي المبني بفرق النشر الميداني من المزودين"
+    },
+    "source": "Gartner",
+    "url": "https://www.gartner.com/en/newsroom/press-releases/2026-09-29-gartner-predicts-70-percent-of-enterprises-will-abandon-agentic-ai-built-by-vendor-forward-deployed-engineering-by-2028",
+    "take": {
+      "en": "A bracing counterweight to the agent gold rush: vendor forward-deployed engineering ships demos, not systems your team can own. The 70% is a forecast, but the failure mode is real — if you can't evaluate or evolve it in-house, you rented a demo, not an agent.",
+      "de": "Ein erfrischendes Gegengewicht zum Agenten-Goldrausch: Vendor Forward-Deployed Engineering liefert Demos, keine Systeme, die dein Team eigenständig betreiben kann. Die 70 % sind eine Prognose, aber der Fehlermodus ist real – wer etwas nicht selbst evaluieren oder weiterentwickeln kann, hat eine Demo gemietet und keinen Agenten.",
+      "fr": "Un contrepoids salutaire à la ruée vers les agents : l'ingénierie de déploiement des fournisseurs livre des démos, pas des systèmes que votre équipe peut s'approprier. Le chiffre de 70 % est une prévision, mais le mode de défaillance est réel — si vous ne pouvez ni l'évaluer ni le faire évoluer en interne, vous avez loué une démo, pas un agent.",
+      "es": "Un contrapeso necesario a la fiebre del oro de los agentes: la ingeniería de despliegue del proveedor entrega demos, no sistemas que tu equipo pueda hacer suyos. El 70 % es una previsión, pero el modo de fallo es real: si no puedes evaluarlo ni evolucionarlo internamente, alquilaste una demo, no un agente.",
+      "ar": "ثقل موازن مرحب به في سباق الوكلاء المحموم: فرق النشر الميداني من المزودين تسلّم عروضًا تجريبية، لا أنظمة يستطيع فريقك امتلاكها. نسبة 70% توقّع، لكن نمط الفشل حقيقي — فإن لم تستطع تقييم النظام أو تطويره داخليًا، فقد استأجرت عرضًا توضيحيًا لا وكيلًا."
+    },
+    "tags": [
+      "enterprise-agents",
+      "adoption",
+      "analysis"
+    ]
+  },
+  {
+    "id": "cloudflare-stablecoin-agent-payments",
+    "date": "2026-09-30",
+    "category": "agentic",
+    "headline": {
+      "en": "Cloudflare just announced a tool that lets businesses charge AI agents in stablecoins",
+      "de": "Cloudflare kündigt ein Tool an, mit dem Unternehmen KI-Agenten in Stablecoins abrechnen lassen können",
+      "fr": "Cloudflare vient d'annoncer un outil permettant aux entreprises de facturer les agents IA en stablecoins",
+      "es": "Cloudflare acaba de anunciar una herramienta que permite a las empresas cobrar a los agentes de IA en stablecoins",
+      "ar": "كلاودفلير تعلن أداة تتيح للشركات تحصيل الرسوم من وكلاء الذكاء الاصطناعي بعملات مستقرة"
+    },
+    "source": "Fortune",
+    "url": "https://fortune.com/2026/09/30/cloudflare-tool-businesses-ai-agents-stablecoins/",
+    "take": {
+      "en": "A pay-per-access layer for agent traffic: the site quotes a price, the agent's USDC wallet pays, no signup or card forms in between. These are the monetization rails the agentic web has been missing — though frictionless micropayments also make it dangerously cheap to fund a runaway agent.",
+      "de": "Eine Pay-per-Access-Schicht für Agenten-Traffic: Die Seite nennt einen Preis, die USDC-Wallet des Agenten zahlt, ganz ohne Registrierung oder Kreditkartenformular dazwischen. Das sind die Monetarisierungs-Schienen, die dem agentischen Web fehlten – wobei nahtlose Mikrozahlungen es auch gefährlich günstig machen, einen entfesselten Agenten zu finanzieren.",
+      "fr": "Une couche de paiement à l'accès pour le trafic des agents : le site affiche un prix, le portefeuille USDC de l'agent paie, sans inscription ni formulaire de carte bancaire entre les deux. Voilà les rails de monétisation qui manquaient au web agentique — même si les micropaiements sans friction rendent aussi dangereusement bon marché le financement d'un agent incontrôlé.",
+      "es": "Una capa de pago por acceso para el tráfico de agentes: el sitio fija un precio, la cartera USDC del agente paga, sin registros ni formularios de tarjeta por medio. Son las vías de monetización que le faltaban a la web agéntica, aunque los micropagos sin fricción también hacen peligrosamente barato financiar a un agente descontrolado.",
+      "ar": "طبقة دفع مقابل الوصول لحركة الوكلاء: يحدد الموقع سعرًا، فتدفع محفظة USDC الخاصة بالوكيل، دون تسجيل أو نماذج بطاقات بينهما. هذه هي البنية المفقودة لتسييل اقتصاد الويب الوكيلي — رغم أن المدفوعات الصغيرة بلا احتكاك تجعل تمويل وكيل جامح زهيدًا بشكل خطير."
+    },
+    "tags": [
+      "agent-payments",
+      "agentic-web",
+      "cloudflare"
+    ]
   }
 ]
