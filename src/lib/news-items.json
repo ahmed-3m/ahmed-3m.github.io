@@ -3143,5 +3143,109 @@
       "agentic-web",
       "cloudflare"
     ]
+  },
+  {
+    "id": "aws-strands-decider-2b",
+    "date": "2026-10-01",
+    "category": "agentic",
+    "headline": {
+      "en": "Amazon unveils a free, fast, open source Jev killer: Strands Decider 2B makes decisions in fractions of a second",
+      "de": "Amazon stellt einen kostenlosen, schnellen Open-Source-Jev-Konkurrenten vor: Strands Decider 2B trifft Entscheidungen in Bruchteilen einer Sekunde",
+      "fr": "Amazon dévoile un rival gratuit, rapide et open source de Jev : Strands Decider 2B prend des décisions en une fraction de seconde",
+      "es": "Amazon presenta un rival gratuito, rápido y de código abierto de Jev: Strands Decider 2B toma decisiones en fracciones de segundo",
+      "ar": "أمازون تكشف منافسًا مجانيًا وسريعًا ومفتوح المصدر لـ Jev: Strands Decider 2B يتخذ القرارات في أجزاء من الثانية"
+    },
+    "source": "VentureBeat",
+    "url": "https://venturebeat.com/technology/amazon-unveils-a-free-fast-open-source-jev-killer-strands-decider-2b-makes-decisions-in-fractions-of-a-second",
+    "take": {
+      "en": "AWS bolting a million-parameter pointer head onto a Qwen 2B torso and open-sourcing the whole recipe says decision models are becoming a real production layer, not just a Jev novelty. Sub-150ms tool-selection and policy calls under Apache 2.0 are exactly the kind of inspectable component agent stacks need — though I'll trust it once calibration holds on my own traffic, not only on JevBench.",
+      "de": "Dass AWS einer Qwen-2B-Basis einen Pointer-Head mit einer Million Parametern aufsetzt und das komplette Rezept open-sourced, zeigt: Decision Models werden zu einer echten Produktionsschicht, nicht nur zu einer Jev-Kuriosität. Tool-Auswahl und Policy-Entscheidungen unter 150 ms unter Apache 2.0 sind genau die inspizierbare Komponente, die Agent-Stacks brauchen – allerdings vertraue ich dem erst, wenn die Kalibrierung auf meinen eigenen Daten hält, nicht nur auf JevBench.",
+      "fr": "Qu'AWS greffe une tête de pointeur à un million de paramètres sur un châssis Qwen 2B et publie toute la recette en open source montre que les modèles de décision deviennent une vraie couche de production, pas une simple curiosité à la Jev. Des sélections d'outils et décisions de politique en moins de 150 ms sous Apache 2.0, c'est exactement le composant auditable dont les stacks d'agents ont besoin — mais je n'y croirai qu'une fois la calibration validée sur mon propre trafic, pas seulement sur JevBench.",
+      "es": "Que AWS acople una cabeza de punteros de un millón de parámetros sobre un cuerpo Qwen 2B y libere toda la receta como código abierto indica que los modelos de decisión se están convirtiendo en una capa de producción real, no en una simple novedad estilo Jev. Selecciones de herramientas y decisiones de política en menos de 150 ms bajo Apache 2.0 son justo el componente inspeccionable que necesitan las stacks de agentes — aunque solo lo creeré cuando la calibración se mantenga en mi propio tráfico, no solo en JevBench.",
+      "ar": "قيام AWS بتركيب رأس مؤشرات من مليون معامل على قاعدة Qwen 2B والإفراج عن الوصفة كاملة كمصدر مفتوح يؤكد أن نماذج القرار تتحول إلى طبقة إنتاج حقيقية وليست مجرد بدعة على طراز Jev. اختيار الأدوات وقرارات السياسات في أقل من 150 ملّي ثانية بموجب ترخيص Apache 2.0 هو بالضبط المكوّن القابل للتفتيش الذي تحتاجه منظومات الوكلاء — غير أنني لن أثق بها إلا عندما تصمد المعايرة على بياناتي الخاصة، لا على JevBench وحدها."
+    },
+    "tags": [
+      "decision-models",
+      "open-weights",
+      "aws"
+    ]
+  },
+  {
+    "id": "tavus-griffin-video-turing-test",
+    "date": "2026-10-01",
+    "category": "ai",
+    "headline": {
+      "en": "Griffin: The First Human Interaction Model",
+      "de": "Griffin: Das erste Human Interaction Model",
+      "fr": "Griffin : le premier Human Interaction Model",
+      "es": "Griffin: el primer Human Interaction Model",
+      "ar": "Griffin: أول «نموذج تفاعل بشري» في العالم"
+    },
+    "source": "Tavus",
+    "url": "https://www.tavus.io/griffin",
+    "take": {
+      "en": "A self-run study where 26 of 54 people couldn't tell Griffin from a human on a one-minute call is a striking result — but Tavus withholding the model until disclosure safeguards exist is the more newsworthy half. NVIDIA's independent VideoFDB scores lend credibility, yet an n=54 protocol designed by the vendor is exactly the kind of evaluation that needs replication before anyone calls it a Turing-test pass.",
+      "de": "Eine selbst durchgeführte Studie, in der 26 von 54 Teilnehmern Griffin in einem einminütigen Videoanruf nicht von einem Menschen unterscheiden konnten, ist ein bemerkenswertes Ergebnis – wirklich neu ist aber, dass Tavus das Modell zurückhält, bis Schutzmechanismen zur Offenlegung existieren. NVIDIAs unabhängige VideoFDB-Scores verleihen Glaubwürdigkeit, doch ein vom Anbieter selbst entworfenes n=54-Protokoll ist genau die Art von Evaluation, die erst unabhängig reproduziert werden muss, bevor man von einem bestandenen Turing-Test spricht.",
+      "fr": "Une étude menée par l'entreprise elle-même, où 26 personnes sur 54 n'ont pas su distinguer Griffin d'un humain lors d'un appel d'une minute, est un résultat frappant — mais le fait que Tavus retienne le modèle jusqu'à l'existence de garanties de divulgation est la moitié la plus notable. Les scores indépendants de NVIDIA sur VideoFDB apportent de la crédibilité, mais un protocole à n=54 conçu par le vendeur est précisément le type d'évaluation qui exige une réplication avant de parler de test de Turing réussi.",
+      "es": "Un estudio propio en el que 26 de 54 personas no pudieron distinguir a Griffin de un humano en una llamada de un minuto es un resultado llamativo — pero que Tavus retenga el modelo hasta que existan salvaguardas de divulgación es la mitad más noticiosa. Los puntajes independientes de NVIDIA en VideoFDB dan credibilidad, pero un protocolo con n=54 diseñado por el propio proveedor es justamente el tipo de evaluación que necesita replicación antes de que alguien lo llame un test de Turing superado.",
+      "ar": "دراسة أجرتها الشركة نفسها عجز فيها 26 من أصل 54 مشاركًا عن التمييز بين Griffin وإنسان حقيقي في مكالمة مدتها دقيقة واحدة هي نتيجة لافتة — لكن احتفاظ Tavus بالطراز حتى توافر ضمانات الإفصاح هو الجانب الأهم إخباريًا. نقاط NVIDIA المستقلة على VideoFDB تمنح مصداقية، غير أن بروتوكولًا بحجم عينة n=54 من تصميم البائع نفسه هو بالضبط نوع التقييم الذي يحتاج إلى تكرار مستقل قبل أن نسمّيه اجتيازًا لاختبار تورينغ."
+    },
+    "tags": [
+      "video-models",
+      "turing-test",
+      "safety"
+    ]
+  },
+  {
+    "id": "agents-are-systems-not-models",
+    "date": "2026-10-01",
+    "category": "agentic",
+    "headline": {
+      "en": "Agents are systems, not models: Rethinking agentic evaluation",
+      "de": "Agenten sind Systeme, keine Modelle: Agentische Evaluation neu denken",
+      "fr": "Les agents sont des systèmes, pas des modèles : repenser l'évaluation des agents",
+      "es": "Los agentes son sistemas, no modelos: repensar la evaluación agéntica",
+      "ar": "الوكلاء أنظمة لا نماذج: إعادة التفكير في تقييم الوكلاء"
+    },
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2610.01618",
+    "take": {
+      "en": "Roughly 54% of outcome variance came from rerunning the same configuration — not from changing the model, the time budget, or the prompt — which is the cleanest quantification yet of why single-run agent benchmarks mislead. Their finding that a dedicated verification tool changes behavior while prompting for self-verification barely does matches what I keep seeing in production: put the check in the system, not in the prompt.",
+      "de": "Etwa 54 % der Ergebnisvarianz stammten allein vom Wiederholen derselben Konfiguration – nicht vom Wechsel von Modell, Zeitbudget oder Prompt. Das ist die bisher sauberste Quantifizierung dafür, warum Benchmarks mit einem einzelnen Agenten-Lauf in die Irre führen. Die Beobachtung, dass ein dediziertes Verifikations-Tool das Verhalten ändert, das Auffordern zur Selbstverifikation aber kaum, entspricht genau dem, was ich in Produktion sehe: Die Prüfung gehört ins System, nicht in den Prompt.",
+      "fr": "Environ 54 % de la variance des résultats provenait du simple fait de relancer la même configuration — pas de changer de modèle, de budget de temps ou de prompt — c'est la quantification la plus nette à ce jour de pourquoi les benchmarks d'agents en exécution unique induisent en erreur. Leur constat qu'un outil de vérification dédié change le comportement là où une consigne d'auto-vérification y parvient à peine correspond à ce que je vois en production : mettez le contrôle dans le système, pas dans le prompt.",
+      "es": "Alrededor del 54 % de la varianza en los resultados provenía de repetir la misma configuración — no de cambiar el modelo, el presupuesto de tiempo o el prompt —, la cuantificación más limpia hasta la fecha de por qué los benchmarks de agentes de una sola ejecución engañan. Su hallazgo de que darle al agente una herramienta de verificación dedicada cambia su comportamiento, mientras que pedirle autoverificación apenas lo hace, coincide con lo que veo en producción: la comprobación va en el sistema, no en el prompt.",
+      "ar": "نحو 54٪ من تباين النتائج جاء من مجرد إعادة تشغيل التهيئة نفسها — لا من تغيير الطراز أو ميزانية الوقت أو التوجيه — وهو أدق قياس حتى الآن لسبب مضللية معايير تقييم الوكلاء أحادية التشغيل. وملاحظتهم أن منح الوكيل أداة تحقق مخصصة يغيّر سلوكه بينما بالكاد يفعل ذلك مطالبته بالتحقق الذاتي تطابق ما أراه باستمرار في الإنتاج: ضع الفحص في النظام لا في التوجيه."
+    },
+    "tags": [
+      "evaluation",
+      "agent-reliability",
+      "benchmarks"
+    ]
+  },
+  {
+    "id": "jetbrains-air-ides-eap",
+    "date": "2026-10-01",
+    "category": "agentic",
+    "headline": {
+      "en": "A New Agentic Experience: JetBrains Air in IDEs – EAP Now Open",
+      "de": "Ein neues Erlebnis für agentische Entwicklung: JetBrains Air in IDEs – EAP ab sofort offen",
+      "fr": "Une nouvelle expérience agentique : JetBrains Air dans les IDE — l'EAP est désormais ouverte",
+      "es": "Una nueva experiencia agéntica: JetBrains Air en los IDE — el EAP ya está abierto",
+      "ar": "تجربة جديدة للوكلاء: JetBrains Air في بيئات التطوير — برنامج الوصول المبكر مفتوح الآن"
+    },
+    "source": "JetBrains",
+    "url": "https://blog.jetbrains.com/ai/2026/10/air-in-ides-eap/",
+    "take": {
+      "en": "JetBrains rebuilding the IDE around running many agents in parallel — Codex, Copilot, Junie, anything ACP-compatible — while stating plainly that verifying and owning the result is now the hard part is the most honest framing of agentic coding I've read from a vendor. The harness is becoming the unit of work, and the IDE is being repositioned as the review and verification surface.",
+      "de": "Dass JetBrains die IDE um das parallele Betreiben vieler Agenten neu baut — Codex, Copilot, Junie, alles ACP-Kompatible — und dabei klipp und klar sagt, dass Verifizieren und Verantworten des Ergebnisses jetzt der schwierige Teil ist, ist die ehrlichste Beschreibung des agentischen Codierens, die ich von einem Anbieter gelesen habe. Der Harness wird zur Arbeitseinheit, und die IDE wird zur Review- und Verifikationsoberfläche umpositioniert.",
+      "fr": "JetBrains reconstruit l'IDE autour de l'exécution parallèle de nombreux agents — Codex, Copilot, Junie, tout ce qui est compatible ACP — tout en affirmant crûment que vérifier et assumer le résultat est désormais la partie difficile : c'est le cadrage le plus honnête du codage agentique que j'aie lu chez un éditeur. Le harness devient l'unité de travail, et l'IDE se repositionne en surface de revue et de vérification.",
+      "es": "Que JetBrains reconstruya el IDE en torno a ejecutar muchos agentes en paralelo — Codex, Copilot, Junie, cualquier agente compatible con ACP — afirmando sin rodeos que verificar y hacerse responsable del resultado es ahora la parte difícil, es el planteamiento más honesto sobre la codificación agéntica que he leído de un proveedor. El harness se está convirtiendo en la unidad de trabajo, y el IDE se reposiciona como superficie de revisión y verificación.",
+      "ar": "إعادة JetBrains بناء بيئة التطوير حول تشغيل عدة وكلاء بالتوازي — Codex وCopilot وJunie وأي وكيل متوافق مع ACP — مع التصريح بوضوح أن التحقق من النتيجة وتحمّل مسؤوليتها هو الجزء الصعب الآن، هي الصياغة الأكثر صدقًا للبرمجة بالوكلاء التي قرأتها من مورّد. أصبح الـ harness وحدة العمل، وتتحول بيئة التطوير إلى سطح للمراجعة والتحقق."
+    },
+    "tags": [
+      "agentic-coding",
+      "agent-harness",
+      "ides"
+    ]
   }
 ]
