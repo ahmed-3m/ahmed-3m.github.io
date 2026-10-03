@@ -3247,5 +3247,109 @@
       "agent-harness",
       "ides"
     ]
+  },
+  {
+    "id": "openai-agent-log-review-500k-a-day",
+    "date": "2026-10-03",
+    "category": "agentic",
+    "headline": {
+      "en": "OpenAI says its review into hacks, including on Australian government sites, is costing $500,000 a day",
+      "de": "OpenAI sagt, die Überprüfung der Hackerangriffe, auch auf australische Regierungsseiten, koste 500.000 Dollar pro Tag",
+      "fr": "OpenAI affirme que son examen des piratages, y compris sur des sites gouvernementaux australiens, lui coûte 500 000 dollars par jour",
+      "es": "OpenAI dice que la revisión de los ataques informáticos, incluidos los sitios web del gobierno australiano, le cuesta 500.000 dólares al día",
+      "ar": "OpenAI تقول إن مراجعتها للاختراقات، بما في ذلك مواقع الحكومة الأسترالية، تكلّفها 500 ألف دولار يوميًا"
+    },
+    "source": "The Guardian",
+    "url": "https://www.theguardian.com/technology/2026/oct/03/openai-review-hacks-australian-government-sites-costing-500000-a-day",
+    "take": {
+      "en": "Half a million dollars a day and 7,000 GPUs to re-read your own agent logs is the clearest argument yet for runtime verification — retroactive forensics doesn't scale, it just gets expensive. If you're running agents in production, instrument the tool calls as they happen or budget for the archaeology later.",
+      "de": "Eine halbe Million Dollar am Tag und 7.000 GPUs, um die eigenen Agenten-Logs nachträglich durchzusehen, ist das deutlichste Argument für Verifikation zur Laufzeit, das ich kenne — retrospektive Forensik skaliert nicht, sie wird nur teurer. Wer Agenten produktiv betreibt, sollte Tool-Aufrufe im Moment ihres Auftretens instrumentieren oder später die Archäologie einplanen.",
+      "fr": "Un demi-million de dollars par jour et 7 000 GPU pour relire ses propres journaux d'agents : voilà l'argument le plus net en faveur de la vérification à l'exécution — la forensique rétrosactive ne passe pas à l'échelle, elle devient simplement coûteuse. Si vous faites tourner des agents en production, instrumentez les appels d'outils au moment où ils surviennent, ou prévoyez le budget pour l'archéologie plus tard.",
+      "es": "Medio millón de dólares al día y 7.000 GPU para re leer los registros de tus propios agentes es el argumento más claro hasta hoy a favor de la verificación en tiempo de ejecución: la forensica retroactiva no escala, solo se encarece. Si operas agentes en producción, instrumenta las llamadas a herramientas cuando ocurren o presupuesta la arqueología para después.",
+      "ar": "نصف مليون دولار يوميًا و7,000 وحدة معالجة رسومية لإعادة قراءة سجلات وكلائك نفسها هو أوضح حجة حتى الآن لصالح التحقق أثناء التشغيل — فالتحليل الجنائي بأثر رجعي لا يتوسع نطاقه، بل يزداد كلفة فحسب. إذا كنت تشغّل وكلاء في الإنتاج، فعّل رصد استدعاءات الأدوات لحظة حدوثها أو خصّص ميزانية لعلم الآثار لاحقًا."
+    },
+    "tags": [
+      "agents",
+      "security",
+      "observability"
+    ]
+  },
+  {
+    "id": "runway-praxis-1-world-action-model",
+    "date": "2026-10-02",
+    "category": "agentic",
+    "headline": {
+      "en": "Runway introduces Praxis-1 world action model for robotics",
+      "de": "Runway stellt Praxis-1 vor: ein World-Action-Modell für die Robotik",
+      "fr": "Runway présente Praxis-1, un modèle monde-action pour la robotique",
+      "es": "Runway presenta Praxis-1, un modelo de mundo-acción para robótica",
+      "ar": "Runway تقدّم Praxis-1، نموذج عالم-أفعال للروبوتات"
+    },
+    "source": "The Robot Report",
+    "url": "https://www.therobotreport.com/runway-introduces-praxis-1-world-action-model-robotics/",
+    "take": {
+      "en": "Video pretraining transferred into an open-weight robot policy is exactly the kind of leverage I want to see — the web's video corpus dwarfs every teleoperation dataset combined. But that 0.95 sim-real correlation is Runway's own number, so I'll wait for partner hardware results before calling video a shortcut to embodied control.",
+      "de": "Vortrainiertes Video, das in eine offene Robotik-Policy überführt wird, ist genau die Art von Hebel, den ich sehen will — der Videokorpus des Webs übertrifft bei Weitem alle Teleoperations-Datensätze zusammen. Nur stammt diese 0,95-Korrelation zwischen Simulation und Realität von Runway selbst, also warte ich auf die Ergebnisse der Partner-Hardware, bevor ich Video als Königsweg zu verkörperten Steuerung bezeichne.",
+      "fr": "Du préentraînement sur vidéo converti en politique robotique à poids ouverts, c'est exactement le levier que je veux voir — le corpus vidéo du web dépasse à lui seul tous les jeux de données de téléopération réunis. Mais cette corrélation de 0,95 entre simulation et réel vient de Runway elle-même ; j'attendrai les résultats sur le matériel des partenaires avant de considérer la vidéo comme un raccourci vers le contrôle incarné.",
+      "es": "El preentrenamiento en vídeo convertido en una política robótica de pesos abiertos es justo el tipo de palanca que quiero ver: el corpus de vídeo de la web supera con creces a todos los conjuntos de datos de teleoperación juntos. Pero esa correlación de 0,95 entre simulación y realidad es un número del propio Runway, así que esperaré los resultados en el hardware de sus socios antes de llamar al vídeo un atajo hacia el control encarnado.",
+      "ar": "نقل التعلم المسبق من الفيديو إلى سياسة روبوتية مفتوحة الأوزان هو بالضبط نوع الرافعة الذي أريد رؤيته — فمتن الفيديو على الويب يفوق بمجموعه كل مجموعات بيانات القيادة عن بُعد مجتمعةً. لكن ارتباط 0.95 بين المحاكاة والواقع رقم صادر عن Runway نفسها، لذا سأنتظر نتائج عتاد الشركاء قبل أن أعدّ الفيديو اختصارًا نحو التحكم المتجسّد."
+    },
+    "tags": [
+      "robotics",
+      "world-models",
+      "open-weights"
+    ]
+  },
+  {
+    "id": "cloudflare-clef-decision-models",
+    "date": "2026-10-01",
+    "category": "agentic",
+    "headline": {
+      "en": "Introducing Clef: our open-source decision models, and new RL fine-tuning platform",
+      "de": "Wir stellen Clef vor: unsere Open-Source-Entscheidungsmodelle und die neue RL-Fine-Tuning-Plattform",
+      "fr": "Nous présentons Clef : nos modèles de décision open source et notre nouvelle plateforme de fine-tuning par RL",
+      "es": "Presentamos Clef: nuestros modelos de decisión de código abierto y la nueva plataforma de fine-tuning con RL",
+      "ar": "نقدّم Clef: نماذج القرار مفتوحة المصدر ومنصة الضبط الدقيق الجديدة بالتعلم المعزز"
+    },
+    "source": "Cloudflare",
+    "url": "https://blog.cloudflare.com/clef-decision-models/",
+    "take": {
+      "en": "Routing an agent's go/no-go calls through a small calibrated decision model instead of a full LLM is faster, cheaper, and far more auditable — I'm glad Cloudflare is pushing this. The Jev Decision Index lead is day-one marketing, but fine-tuning on your own production traffic is the part that actually hardens a decision boundary.",
+      "de": "Go/No-Go-Entscheidungen eines Agenten über ein kleines, kalibriertes Entscheidungsmodell statt über ein volles LLM zu leiten, ist schneller, günstiger und deutlich auditierbarer — gut, dass Cloudflare das vorantreibt. Die Führung im Jev Decision Index ist Tag-eins-Marketing, aber das Fine-Tuning auf den eigenen Produktions-Traffic ist der Teil, der eine Entscheidungsgrenze wirklich härtet.",
+      "fr": "Faire passer les décisions go/no-go d'un agent par un petit modèle de décision calibré plutôt que par un LLM complet, c'est plus rapide, moins cher et bien plus auditable — c'est une bonne chose que Cloudflare pousse dans cette direction. La première place au Jev Decision Index, c'est du marketing de premier jour, mais le fine-tuning sur votre propre trafic de production est ce qui durcit réellement une frontière de décision.",
+      "es": "Enrutar las decisiones de paso o parada de un agente a través de un pequeño modelo de decisión calibrado en lugar de un LLM completo es más rápido, más barato y mucho más auditable; me alegra que Cloudflare impulse esto. El liderazgo en el Jev Decision Index es marketing de primer día, pero el fine-tuning con tu propio tráfico de producción es lo que de verdad endurece una frontera de decisión.",
+      "ar": "تمرير قرارات التنفيذ أو التوقّف لدى الوكيل عبر نموذج قرار صغير معاير بدلًا من نموذج لغوي كامل أسرع وأرخص وأكثر قابلية للتدقيق بكثير — ويسعدني أن Cloudflare تدفع في هذا الاتجاه. الصدارة في Jev Decision Index مجرد تسويق لليوم الأول، لكن الضبط الدقيق على حركة الإنتاج الخاصة بك هو الجزء الذي يقسّي حدود القرار فعلًا."
+    },
+    "tags": [
+      "decision-models",
+      "calibration",
+      "open-weights"
+    ]
+  },
+  {
+    "id": "argo-bench-enterprise-data-agents",
+    "date": "2026-10-01",
+    "category": "agentic",
+    "headline": {
+      "en": "Argo-Bench: Evaluating Data Agents on Enterprise-Scale Workflows",
+      "de": "Argo-Bench: Die Evaluierung von Datenagenten in Workflows auf Unternehmensniveau",
+      "fr": "Argo-Bench : évaluer les agents de données sur des flux de travail à l'échelle de l'entreprise",
+      "es": "Argo-Bench: evaluación de agentes de datos en flujos de trabajo a escala empresarial",
+      "ar": "Argo-Bench: تقييم وكلاء البيانات في تدفقات عمل بمقياس المؤسسات"
+    },
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2610.02122",
+    "take": {
+      "en": "This is the benchmark shape I actually trust: grade the business consequence of the agent's action, not the SQL it wrote. A 34.8% solve rate for the best of 14 models on enterprise operations work is a healthy corrective to the autonomy slide decks.",
+      "de": "Das ist die Form von Benchmark, der ich tatsächlich traue: bewerten, welche geschäftliche Konsequenz die Aktion des Agenten hat, nicht das SQL, das er geschrieben hat. Eine Lösungsquote von 34,8 % für das beste von 14 Modellen bei operativer Unternehmensarbeit ist eine gesunde Korrektur der Autonomie-Folien.",
+      "fr": "Voilà la forme de benchmark à laquelle je fais vraiment confiance : noter la conséquence métier de l'action de l'agent, pas le SQL qu'il a écrit. Un taux de résolution de 34,8 % pour le meilleur de 14 modèles sur des tâches opérationnelles d'entreprise est un correctif salutaire aux slides sur l'autonomie.",
+      "es": "Esta es la forma de benchmark en la que de verdad confío: calificar la consecuencia de negocio de la acción del agente, no el SQL que escribió. Una tasa de resolución del 34,8 % para el mejor de 14 modelos en tareas operativas empresariales es un correctivo sano a las presentaciones sobre autonomía.",
+      "ar": "هذا هو شكل المعيار الذي أثق به فعلًا: تقييم النتيجة التجارية لفعل الوكيل، لا استعلام SQL الذي كتبه. نسبة حلّ بلغت 34.8% لأفضل نموذج من بين 14 نموذجًا في مهام التشغيل المؤسسية هي تصحيحٌ صحيّ لعروض الشرائح المتفائلة حول الاستقلالية."
+    },
+    "tags": [
+      "benchmark",
+      "evaluation",
+      "agents"
+    ]
   }
 ]
