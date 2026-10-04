@@ -3351,5 +3351,109 @@
       "evaluation",
       "agents"
     ]
+  },
+  {
+    "id": "microsoft-thinkingbox-stateful-agent-benchmark",
+    "date": "2026-10-03",
+    "category": "agentic",
+    "headline": {
+      "en": "The Agent Said It Was Done. The Database Disagreed.",
+      "de": "Der Agent sagte, er sei fertig. Die Datenbank war anderer Meinung.",
+      "fr": "L'agent a déclaré avoir terminé. La base de données n'était pas d'accord.",
+      "es": "El agente dijo que había terminado. La base de datos opinaba lo contrario.",
+      "ar": "قال الوكيل إنه أنجز المهمة. لكن قاعدة البيانات خالفت ذلك."
+    },
+    "source": "Microsoft",
+    "url": "https://huggingface.co/blog/microsoft/thinkingbox",
+    "take": {
+      "en": "Microsoft's ThinkingBox does what production agent evals should have done all along: grade terminal backend state and side effects, not the agent's own 'done' message — and 67% of failed attempts still terminate cleanly, which is exactly why self-reported success is worthless. If your benchmark doesn't check the database, it isn't measuring completion.",
+      "de": "Microsofts ThinkingBox tut, was Produktions-Evaluationen für Agents längst hätten tun sollen: den finalen Backend-Zustand und Nebenwirkungen bewerten statt die eigene „fertig“-Meldung des Agents — 67% der fehlgeschlagenen Versuche terminieren sauber, und genau deshalb ist selbstberichteter Erfolg nichts wert. Ein Benchmark, der die Datenbank nicht prüft, misst keine Fertigstellung.",
+      "fr": "ThinkingBox de Microsoft fait ce que les évaluations d'agents en production auraient dû faire depuis longtemps : noter l'état final du backend et les effets de bord, pas le message « terminé » de l'agent — et 67% des tentatives ratées s'achèvent proprement, preuve qu'un succès auto-déclaré ne vaut rien. Un benchmark qui ne vérifie pas la base de données ne mesure pas l'accomplissement.",
+      "es": "ThinkingBox de Microsoft hace lo que deberían hacer las evaluaciones de agentes en producción desde hace tiempo: calificar el estado final del backend y los efectos secundarios, no el mensaje de «terminado» del propio agente; y 67% de los intentos fallidos terminan limpiamente, razón de más para no fiarse del éxito autoinformado. Si tu benchmark no consulta la base de datos, no está midiendo la finalización.",
+      "ar": "يبعد ما يفعله ThinkingBox من Microsoft هو بالضبط ما كان ينبغي أن تفعله تقييمات الوكلاء في الإنتاج منذ البداية: تقييم الحالة النهائية للخلفية والآثار الجانبية بدلًا من رسالة «انتهيت» الصادرة عن الوكيل نفسه — فـ67% من المحاولات الفاشلة تنتهي بشكل نظيف، ولهذا فإن النجاح المُبلَّغ عنه ذاتيًا بلا قيمة. أي معيار تقييم لا يفحص قاعدة البيانات لا يقيس الإنجاز."
+    },
+    "tags": [
+      "agent-evaluation",
+      "benchmarks",
+      "reliability"
+    ]
+  },
+  {
+    "id": "aleph-alpha-kolibri-sovereign-open-weights",
+    "date": "2026-10-03",
+    "category": "ai",
+    "headline": {
+      "en": "Kolibri Has Landed: A Sovereign Open-Weight Model",
+      "de": "Kolibri ist gelandet: Ein souveränes Open-Weight-Modell",
+      "fr": "Kolibri a atterri : un modèle open-weight souverain",
+      "es": "Kolibri ha aterrizado: un modelo soberano de pesos abiertos",
+      "ar": "وصل Kolibri: نموذج سيادي بأوزان مفتوحة"
+    },
+    "source": "Aleph Alpha",
+    "url": "https://aleph-alpha.com/en/blog/kolibri-has-landed-a-sovereign-open-weight-model/",
+    "take": {
+      "en": "Aleph Alpha finally ships a download instead of a sovereignty slide deck: Kolibri is 78B total parameters with only 3.46B active, a 1M-token context, and Apache 2.0 weights on Hugging Face. The catch is the usual one — on its own benchmarks it beats last spring's open-weight field, but Qwen3.6 still wins on tool-calling and long context, so sovereign doesn't yet mean frontier.",
+      "de": "Aleph Alpha liefert endlich einen Download statt einer Sovereignty-Foliensammlung: Kolibri hat 78B Parameter gesamt, davon nur 3.46B aktiv, einen 1M-Token-Kontext und Apache 2.0-Gewichte auf Hugging Face. Der Haken ist der übliche — in den eigenen Benchmarks schlägt es das Open-Weight-Feld des letzten Frühjahrs, aber Qwen3.6 gewinnt weiter bei Tool-Aufrufen und Langkontext: souverän heißt also noch lange nicht Frontier.",
+      "fr": "Aleph Alpha livre enfin un téléchargement plutôt qu'un deck sur la souveraineté : Kolibri compte 78B de paramètres au total dont seulement 3.46B actifs, un contexte de 1M de tokens et des poids Apache 2.0 sur Hugging Face. Le hic est habituel — sur ses propres benchmarks il batte les modèles open-weight du printemps dernier, mais Qwen3.6 reste devant sur le tool-calling et le contexte long : souverain ne veut pas encore dire frontier.",
+      "es": "Aleph Alpha por fin entrega una descarga en lugar de una presentación sobre soberanía: Kolibri tiene 78B de parámetros totales de los que solo 3.46B están activos, un contexto de 1M de tokens y pesos Apache 2.0 en Hugging Face. La pega es la de siempre: en sus propios benchmarks supera a los modelos open-weight de la pasada primavera, pero Qwen3.6 sigue ganando en tool-calling y contexto largo, así que soberano aún no significa frontier.",
+      "ar": "أخيرًا تقدّم Aleph Alpha تنزيلًا فعليًا بدلًا من عرض تقديمي عن السيادة الرقمية: يضم Kolibri معاملات بإجمالي 78B منها 3.46B فقط نشطة، ونافذة سياق من 1M رمز، وأوزان Apache 2.0 على Hugging Face. لكن المأخذ المعتاد قائم: في معاييرها الخاصة يتفوق على نماذج الأوزان المفتوحة من الربيع الماضي، بينما لا يزال Qwen3.6 يتصدر في استدعاء الأدوات والسياق الطويل — أي أن السيادة لا تعني بعد الوصول إلى حدود القدرة الأمامية."
+    },
+    "tags": [
+      "open-weights",
+      "european-ai",
+      "llm"
+    ]
+  },
+  {
+    "id": "mit-sakana-sift-llm-judge-self-improvement",
+    "date": "2026-10-02",
+    "category": "agentic",
+    "headline": {
+      "en": "New MIT and Sakana AI framework uses an LLM judge to cut evaluation costs for self-improving coding agents",
+      "de": "Neues Framework von MIT und Sakana AI nutzt einen LLM-Judge, um Evaluierungskosten selbstverbessernder Coding-Agents zu senken",
+      "fr": "Un nouveau framework du MIT et de Sakana AI utilise un juge LLM pour réduire les coûts d'évaluation des agents de code auto-améliorés",
+      "es": "Nuevo framework del MIT y Sakana AI usa un juez LLM para reducir los costes de evaluación de agentes de código que se auto-mejoran",
+      "ar": "إطار عمل جديد من MIT وSakana AI يستخدم قاضيًا من LLM لخفض تكاليف تقييم وكلاء البرمجة ذوي التحسين الذاتي"
+    },
+    "source": "VentureBeat",
+    "url": "https://venturebeat.com/orchestration/new-mit-and-sakana-ai-framework-uses-an-llm-judge-to-cut-evaluation-costs-for-self-improving-coding-agents",
+    "take": {
+      "en": "SIFT only triggers the expensive benchmark run after a cheap pairwise LLM-judge comparison — and on Terminal-Bench the judge's pick averaged 36.7% versus 28.1% for the search's own top scorer, a reminder that small eval sets actively mislead. If your self-improvement loop can't afford full evals at every step, this is the pragmatic pattern.",
+      "de": "SIFT löst den teuren Benchmark-Lauf erst nach einem günstigen paarweisen LLM-Judge-Vergleich aus — und auf Terminal-Bench kam der Favorit des Judges auf 36.7% gegenüber 28.1% für den punktbesten Kandidaten der Suche: ein Warnsignal, dass kleine Eval-Sets aktiv in die Irre führen. Wer in seiner Self-Improvement-Schleife nicht bei jedem Schritt volle Evals bezahlen kann, findet hier das pragmatische Muster.",
+      "fr": "SIFT ne déclenche l'exécution coûteuse du benchmark qu'après une comparaison par pares bon marché par un juge LLM — et sur Terminal-Bench, le choix du juge a atteint en moyenne 36.7% contre 28.1% pour le candidat le mieux classé par la recherche, preuve que les petits jeux d'évaluation induisent activement en erreur. Si votre boucle d'auto-amélioration ne peut pas se payer des évaluations complètes à chaque étape, voici le motif pragmatique.",
+      "es": "SIFT solo lanza la costosa ejecución del benchmark tras una comparación por pares barata con un juez LLM — y en Terminal-Bench la elección del juez promedió 36.7% frente a 28.1% del candidato mejor clasificado por la búsqueda: aviso de que los conjuntos pequeños de evaluación engañan activamente. Si tu bucle de automejora no puede pagar evaluaciones completas en cada paso, este es el patrón pragmático.",
+      "ar": "لا يُطلق SIFT تشغيل المعيار المكلف إلا بعد مقارنة زوجية رخيصة عبر قاضٍ من LLM — وفي Terminal-Bench حقق اختيار القاضي متوسط 36.7% مقابل 28.1% للمرشح الأعلى نقاطًا في البحث، وهو تذكير بأن مجموعات التقييم الصغيرة تضلّل فعليًا. إذا كانت حلقة التحسين الذاتي لديك لا تستطيع تحمّل تكلفة تقييمات كاملة في كل خطوة، فهذا هو النمط العملي المناسب."
+    },
+    "tags": [
+      "llm-judge",
+      "self-improvement",
+      "coding-agents"
+    ]
+  },
+  {
+    "id": "decagon-pact-personal-agent-consent",
+    "date": "2026-10-01",
+    "category": "agentic",
+    "headline": {
+      "en": "Personal agents are here. Meet them on your terms.",
+      "de": "Persönliche Agents sind da. Begegne ihnen zu deinen Bedingungen.",
+      "fr": "Les agents personnels sont là. Accueillez-les à vos conditions.",
+      "es": "Los agentes personales ya están aquí. Recíbelos en tus términos.",
+      "ar": "الوكلاء الشخصيون وصلوا. استقبلهم وفق شروطك."
+    },
+    "source": "Decagon",
+    "url": "https://decagon.ai/blog/personal-agents-are-here",
+    "take": {
+      "en": "With Muse and dots already calling support lines, Decagon's PACT is the missing piece: delegated OAuth-style authorization layered on Agent2Agent so a personal agent can prove who it acts for and what it's allowed to do. The identity-and-permission layer is unglamorous, but it's what decides whether agent-to-agent commerce stays auditable or becomes a prompt-injection playground.",
+      "de": "Da Muse und dots bereits beim Kundensupport anrufen, ist PACT von Decagon das fehlende Stück: delegierte Autorisierung im OAuth-Stil, auf Agent2Agent aufgesetzt, damit ein persönlicher Agent nachweisen kann, für wen er handelt und was er darf. Die Identitäts- und Berechtigungsschicht ist unglamourös — aber sie entscheidet, ob Agent-zu-Agent-Geschäfte auditierbar bleiben oder zum Playground für Prompt Injection werden.",
+      "fr": "Alors que Muse et dots appellent déjà le support client, PACT de Decagon est la pièce manquante : une autorisation déléguée façon OAuth posée sur Agent2Agent, pour qu'un agent personnel prouve pour qui il agit et ce qu'il a le droit de faire. La couche identité et permissions n'a rien de glamour, mais c'est elle qui décide si le commerce d'agent à agent reste auditable ou devient un terrain de jeu pour le prompt injection.",
+      "es": "Con Muse y dots llamando ya a atención al cliente, PACT de Decagon es la pieza que faltaba: autorización delegada al estilo OAuth sobre Agent2Agent, para que un agente personal pueda demostrar en nombre de quién actúa y qué tiene permitido hacer. La capa de identidad y permisos no tiene nada de glamurosa, pero es la que decide si el comercio entre agentes sigue siendo auditable o se convierte en un patio de juego para la inyección de prompts.",
+      "ar": "مع بدء Muse وdots في الاتصال بخدمات العملاء أصلًا، يمثّل PACT من Decagon القطعة الناقصة: تفويض بأسلوب OAuth مبني على Agent2Agent كي يستطيع الوكيل الشخصي إثبات لمن يعمل وبماذا يُسمح له. طبقة الهوية والأذونات ليست برّاقة، لكنها التي تحدد ما إذا كان التعامل بين الوكلاء سيبقى قابلًا للتدقيق أم سيصبح ساحة لعب لحقن الأوامر."
+    },
+    "tags": [
+      "agent-protocols",
+      "personal-agents",
+      "authorization"
+    ]
   }
 ]
