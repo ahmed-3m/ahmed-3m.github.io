@@ -13,10 +13,10 @@ const copy = {
   },
   p1: {
     en: 'I am an AI/ML engineer who holds an M.Sc. in Artificial Intelligence from JKU Linz (graduated September 2026; Defensio 25 Sep 2026), supervised by Prof. Sepp Hochreiter.',
-    de: 'Ich bin AI/ML Engineer und habe mein M.Sc.-Studium in Artificial Intelligence an der JKU Linz abgeschlossen (Abschluss Sep 2026), betreut von Prof. Sepp Hochreiter.',
-    fr: "Je suis ingénieur IA/ML et j'ai obtenu un M.Sc. en intelligence artificielle à JKU Linz (diplôme obtenu en sep. 2026), sous la supervision du Prof. Sepp Hochreiter.",
-    es: 'Soy ingeniero de IA/ML y completé un M.Sc. en Inteligencia Artificial en JKU Linz (titulación obtenida en sep. 2026), bajo la supervisión del Prof. Sepp Hochreiter.',
-    ar: 'أنا مهندس ذكاء اصطناعي وتعلم آلي، أكملت درجة الماجستير في الذكاء الاصطناعي في JKU Linz (سبتمبر 2026) تحت إشراف البروفيسور سيب هوخرايتر.',
+    de: 'Ich bin AI/ML Engineer und habe mein M.Sc.-Studium in Artificial Intelligence an der JKU Linz abgeschlossen (Abschluss September 2026; Defensio am 25. September 2026), betreut von Prof. Sepp Hochreiter.',
+    fr: "Je suis ingénieur IA/ML et j'ai obtenu un M.Sc. en intelligence artificielle à JKU Linz (diplômé en septembre 2026; Defensio le 25 septembre 2026), sous la supervision du Prof. Sepp Hochreiter.",
+    es: 'Soy ingeniero de IA/ML y completé un M.Sc. en Inteligencia Artificial en JKU Linz (graduado en septiembre de 2026; Defensio el 25 de septiembre de 2026), bajo la supervisión del Prof. Sepp Hochreiter.',
+    ar: 'أنا مهندس ذكاء اصطناعي وتعلم آلي، وحاصل على درجة الماجستير في الذكاء الاصطناعي من JKU Linz (تخرجت في 25 سبتمبر 2026) تحت إشراف البروفيسور سيب هوخرايتر.',
   },
   p2: {
     en: 'My work spans the full stack: from class-conditional separation loss for diffusion-based OOD detection to industrial computer vision pipelines evaluated under rigorous cross-validation.',
@@ -68,7 +68,7 @@ export default function About() {
   const { t } = useI18n()
 
   const education = [
-    { degree: t(copy.degree1), school: 'Johannes Kepler University Linz', date: 'Oct 2024 – Sep 2026 (graduated)', desc: t(copy.desc1) },
+    { degree: t(copy.degree1), school: 'Johannes Kepler University Linz', date: 'Oct 2024 – Sep 2026 (graduated 25 Sep 2026)', desc: t(copy.desc1) },
     { degree: t(copy.degree2), school: 'Eastern Mediterranean University, Cyprus', date: 'Feb 2015 - Jan 2018', desc: t(copy.desc2) },
   ]
 

@@ -19,7 +19,7 @@ export function PersonSchema() {
     givenName: 'Ahmed',
     familyName: 'Mohammed',
     jobTitle: 'AI/ML Engineer',
-    description: 'AI/ML Engineer specializing in computer vision, anomaly detection, and diffusion models. Builder of Sihem (LLM assistant) and Faultrix (AI quality-control platform). M.Sc. Artificial Intelligence (thesis submitted Jun 2026, degree completed Sep 2026) from Johannes Kepler University Linz, supervised by Prof. Sepp Hochreiter. Achieved 99.03% AUROC on a within-CIFAR airplane-vs-rest binary OOD split (single ID class; not comparable to multi-class CIFAR-10 OOD benchmarks) and 98.4% industrial defect detection accuracy in production (internal deployment metric, threshold-dependent binary classification).',
+    description: 'AI/ML Engineer specializing in computer vision, anomaly detection, and diffusion models. Builder of Sihem (LLM assistant) and Faultrix (AI quality-control platform). M.Sc. Artificial Intelligence (thesis submitted Jun 2026, degree completed 25 Sep 2026) from Johannes Kepler University Linz, supervised by Prof. Sepp Hochreiter. Achieved 99.03% AUROC on a within-CIFAR airplane-vs-rest binary OOD split (single ID class; not comparable to multi-class CIFAR-10 OOD benchmarks) and 98.4% industrial defect detection accuracy in production (internal deployment metric, threshold-dependent binary classification).',
     url: 'https://ahmed-3m.github.io',
     image: 'https://ahmed-3m.github.io/headshot.jpg',
     email: 'ahmed.mo.0595@gmail.com',
@@ -88,15 +88,16 @@ export function PersonSchema() {
       {
         '@type': 'EducationalOccupationalCredential',
         credentialCategory: 'degree',
-        name: 'Master of Science in Artificial Intelligence (thesis submitted Jun 2026, degree completed Sep 2026)',
+        name: 'Master of Science in Artificial Intelligence (thesis submitted Jun 2026, degree completed 25 Sep 2026)',
         educationalLevel: "Master's Degree",
-        description: 'Thesis submitted Jun 2026; degree completed Sep 2026.',
+        description: 'Thesis submitted Jun 2026; Defensio and degree conferral on 25 September 2026.',
         recognizedBy: {
           '@type': 'CollegeOrUniversity',
           name: 'Johannes Kepler University Linz',
         },
-        // Submission window, not conferral date — the degree was conferred Sep 2026.
+        // dateCreated is the submission window, not conferral — the degree was conferred 25 Sep 2026 (validFrom).
         dateCreated: '2026-06',
+        validFrom: '2026-09-25',
       },
       {
         '@type': 'EducationalOccupationalCredential',
@@ -147,7 +148,7 @@ export function WebsiteSchema() {
     '@type': 'WebSite',
     name: 'Ahmed Mohammed — AI/ML Engineer',
     url: 'https://ahmed-3m.github.io',
-    description: 'Portfolio of Ahmed Mohammed — AI/ML Engineer specializing in computer vision, anomaly detection, and diffusion models. Builder of Sihem and Faultrix. 99.03% AUROC on a within-CIFAR airplane-vs-rest binary OOD split (single ID class). 98.4% industrial defect detection accuracy in production (threshold-dependent binary classification). M.Sc. AI (thesis submitted Jun 2026, degree completed Sep 2026) from JKU Linz.',
+    description: 'Portfolio of Ahmed Mohammed — AI/ML Engineer specializing in computer vision, anomaly detection, and diffusion models. Builder of Sihem and Faultrix. 99.03% AUROC on a within-CIFAR airplane-vs-rest binary OOD split (single ID class). 98.4% industrial defect detection accuracy in production (threshold-dependent binary classification). M.Sc. AI (thesis submitted Jun 2026, degree completed 25 Sep 2026) from JKU Linz.',
     author: {
       '@type': 'Person',
       name: 'Ahmed Mohammed',
@@ -206,7 +207,7 @@ export function FAQSchema() {
         name: "What is Ahmed Mohammed's educational background?",
         acceptedAnswer: {
           '@type': 'Answer',
-          text: "Ahmed Mohammed completed a Master of Science in Artificial Intelligence at Johannes Kepler University Linz (JKU) in Sep 2026, having submitted his thesis in Jun 2026; the thesis on conditional diffusion models for out-of-distribution detection was supervised by Prof. Sepp Hochreiter. He also holds a Bachelor of Science in Mechatronics Engineering from Eastern Mediterranean University in Cyprus.",
+          text: "Ahmed Mohammed completed a Master of Science in Artificial Intelligence at Johannes Kepler University Linz (JKU) on 25 September 2026 (Defensio), having submitted his thesis in Jun 2026; the thesis on conditional diffusion models for out-of-distribution detection was supervised by Prof. Sepp Hochreiter. He also holds a Bachelor of Science in Mechatronics Engineering from Eastern Mediterranean University in Cyprus.",
         },
       },
       {
