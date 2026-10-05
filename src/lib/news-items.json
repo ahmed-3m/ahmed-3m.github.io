@@ -3455,5 +3455,109 @@
       "personal-agents",
       "authorization"
     ]
+  },
+  {
+    "id": "cohere-north-2-agent-platform",
+    "date": "2026-10-05",
+    "category": "agentic",
+    "headline": {
+      "en": "Cohere unveils North 2 AI agent platform with rebuilt orchestration and token spending caps",
+      "de": "Cohere stellt North 2 vor: KI-Agenten-Plattform mit überarbeiteter Orchestrierung und Token-Ausgabenlimits",
+      "fr": "Cohere dévoile North 2, sa plateforme d'agents IA avec orchestration repensée et plafonds de dépense en tokens",
+      "es": "Cohere presenta North 2, su plataforma de agentes de IA con orquestación renovada y límites de gasto de tokens",
+      "ar": "كوهير تكشف عن North 2، منصة وكلاء الذكاء الاصطناعي بأوركسترا معاد بناؤها وحدود لإنفاق الرموز"
+    },
+    "source": "SiliconANGLE",
+    "url": "https://siliconangle.com/2026/10/05/cohere-unveils-north-2-ai-agent-platform-with-rebuilt-orchestration-and-token-spending-caps",
+    "take": {
+      "en": "Token-spending caps per user and per agent becoming a headline platform feature is the tell: runaway inference cost is now the norm for agent fleets in production, not the exception. Cohere pairing those caps with human sign-off steps and air-gapped deployment reads like a realistic answer to how mid-size enterprises will actually run agents.",
+      "de": "Dass Token-Ausgabenlimits pro Nutzer und pro Agent zu einem Kernfeature der Plattform werden, verrät alles: Inference-Kosten außer Kontrolle sind bei Agentenflotten in Produktion inzwischen die Regel, nicht die Ausnahme. Dass Cohere diese Limits mit menschlichen Freigabeschritten und Air-gapped-Deployment kombiniert, liest sich wie eine realistische Antwort darauf, wie mittelständische Unternehmen Agenten tatsächlich betreiben werden.",
+      "fr": "Des plafonds de dépense en tokens par utilisateur et par agent promus en fonction phare de la plateforme, cela en dit long : les coûts d'inférence qui dérapent sont désormais la norme pour les flottes d'agents en production, pas l'exception. En associant ces plafonds à des étapes de validation humaine et à un déploiement en environnement isolé, Cohere propose une réponse réaliste à la façon dont les entreprises de taille moyenne feront réellement tourner leurs agents.",
+      "es": "Que los límites de gasto de tokens por usuario y por agente se conviertan en la función estrella de la plataforma lo dice todo: el coste de inferencia descontrolado ya es la norma para las flotas de agentes en producción, no la excepción. Que Cohere combine esos límites con pasos de aprobación humana y despliegue en entornos aislados suena a respuesta realista sobre cómo ejecutarán agentes las empresas medianas.",
+      "ar": "تحوّل حدود إنفاق الرموز (tokens) لكل مستخدم ولكل وكيل إلى ميزة رئيسية في المنصة أمرٌ دالّ: تكاليف الاستدلال الجامحة صارت القاعدة لأسطولات الوكلاء في الإنتاج وليست الاستثناء. جمع Cohere بين هذه الحدود وخطوات الموافقة البشرية والنشر في بيئات معزولة يبدو إجابةً واقعية عن كيفية تشغيل الشركات متوسطة الحجم للوكلاء فعليًا."
+    },
+    "tags": [
+      "agents",
+      "enterprise",
+      "cost-control"
+    ]
+  },
+  {
+    "id": "veriharness-scaling-agentic-verification",
+    "date": "2026-10-01",
+    "category": "agentic",
+    "headline": {
+      "en": "VeriHarness: Scaling Agentic Verification for Long-Horizon Tasks",
+      "de": "VeriHarness: Skalierbare agentische Verifikation für Langzeit-Aufgaben",
+      "fr": "VeriHarness : la vérification agentique à l'échelle des tâches de longue durée",
+      "es": "VeriHarness: verificación agéntica escalable para tareas de larga duración",
+      "ar": "VeriHarness: توسيع نطاق التحقق الوكيلي للمهام طويلة الأمد"
+    },
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2610.00972",
+    "take": {
+      "en": "The finding that consensus among rollouts can conceal errors while disagreement often exposes the correct answer is uncomfortable for an industry that ships majority-vote selection in production. VeriHarness turns the same model into an evidence-gathering verifier instead of a vote counter and claws back 6.2–6.4 points — verification is a harness problem, not a wait-for-a-stronger-model problem.",
+      "de": "Die Erkenntnis, dass Konsens zwischen Rollouts Fehler verbergen kann, während Meinungsverschiedenheiten oft die richtige Antwort offenlegen, ist unangenehm für eine Branche, die Mehrheitsauswahl in Produktionssystemen einsetzt. VeriHarness macht aus demselben Modell einen evidenzbasierten Prüfer statt eines Abstimmungszählers und holt 6.2–6.4 Punkte zurück — Verifikation ist ein Harness-Problem, kein Warten-auf-ein-besseres-Modell-Problem.",
+      "fr": "La découverte selon laquelle le consensus entre rollouts peut masquer des erreurs tandis que le désaccord révèle souvent la bonne réponse est dérangeante pour une industrie qui déploie la sélection à la majorité en production. VeriHarness transforme le même modèle en vérificateur qui collecte des preuves plutôt qu'en compteur de votes et récupère 6.2–6.4 points — la vérification est un problème de harness, pas une attente de modèle plus fort.",
+      "es": "El hallazgo de que el consenso entre rollouts puede ocultar errores mientras que el desacuerdo a menudo expone la respuesta correcta es incómodo para una industria que usa selección por mayoría en producción. VeriHarness convierte al mismo modelo en un verificador que recopila evidencia en lugar de un contador de votos y recupera 6.2–6.4 puntos: la verificación es un problema de harness, no de esperar un modelo mejor.",
+      "ar": "اكتشافُ أن إجماع التشغيلات المتعددة (rollouts) قد يُخفي الأخطاء بينما يكشف الخلاف غالبًا الإجابة الصحيحة أمرٌ مُقلق لصناعةٍ تعتمد اختيار الأغلبية في أنظمة الإنتاج. يحوّل VeriHarness النموذج نفسه إلى مُتحقِّق يجمع الأدلة بدلًا من عدّاد أصوات ويستعيد 6.2–6.4 نقطة — التحقق مشكلة في هيكل التشغيل وليس انتظارًا لنموذج أقوى."
+    },
+    "tags": [
+      "agents",
+      "evaluation",
+      "verification"
+    ]
+  },
+  {
+    "id": "oracle-fusion-claw-agentic-runtime",
+    "date": "2026-09-29",
+    "category": "agentic",
+    "headline": {
+      "en": "Oracle Extends Fusion Agentic Applications with Introduction of Fusion Claw",
+      "de": "Oracle erweitert die Fusion Agentic Applications um die Einführung von Fusion Claw",
+      "fr": "Oracle étend ses Fusion Agentic Applications avec l'introduction de Fusion Claw",
+      "es": "Oracle amplía las Fusion Agentic Applications con la introducción de Fusion Claw",
+      "ar": "أوراكل توسّع تطبيقات Fusion Agentic Applications مع تقديم Fusion Claw"
+    },
+    "source": "Oracle",
+    "url": "https://www.prnewswire.com/news-releases/oracle-extends-fusion-agentic-applications-with-introduction-of-fusion-claw-302892817.html",
+    "take": {
+      "en": "ERP is where agent autonomy either earns trust or gets switched off, and Oracle's split — frontier models propose, deterministic execution disposes, inside an operating envelope with auditable outcome receipts — is the architecture I'd bet on for regulated production work. The interesting signal is that the moat here is governance plumbing, not model quality.",
+      "de": "ERP ist der Ort, an dem Agentenautonomie entweder Vertrauen gewinnt oder abgeschaltet wird, und Oracles Aufteilung — Frontier-Modelle schlagen vor, deterministische Ausführung entscheidet, innerhalb eines Operating Envelope mit auditierbaren Outcome Receipts — ist die Architektur, auf die ich für regulierte Produktionsarbeit setzen würde. Das interessante Signal: Der Wettbewerbsvorteil liegt in der Governance-Infrastruktur, nicht in der Modellqualität.",
+      "fr": "L'ERP est l'endroit où l'autonomie des agents gagne la confiance ou se fait couper, et la répartition d'Oracle — les modèles de pointe proposent, l'exécution déterministe décide, dans un périmètre opérationnel avec des reçus auditables — est l'architecture sur laquelle je parierais pour du travail réglementé en production. Le signal intéressant : la valeur défensive est dans la plomberie de gouvernance, pas dans la qualité du modèle.",
+      "es": "El ERP es donde la autonomía de los agentes o gana confianza o se apaga, y el reparto de Oracle — los modelos frontier proponen, la ejecución determinista dispone, dentro de un operating envelope con recibos auditables — es la arquitectura en la que apostaría para el trabajo regulado en producción. La señal interesante: la ventaja competitiva está en la infraestructura de gobernanza, no en la calidad del modelo.",
+      "ar": "أنظمة ERP هي المكان الذي تكسب فيه استقلالية الوكلاء الثقةَ أو تُفصل، وتقسيم أوراكل — نماذج الحدود الأمامية تقترح والتنفيذ الحتمي يقرّ، ضمن غلاف تشغيلي مع إيصالات قابلة للتدقيق — هو البنية التي أراهن عليها للأعمال التنظيمية في الإنتاج. الإشارة المهمة: الخندق التنافسي هنا في بنية الحوكمة، لا في جودة النموذج."
+    },
+    "tags": [
+      "agents",
+      "governance",
+      "enterprise"
+    ]
+  },
+  {
+    "id": "meta-self-improving-branches-harness-optimization",
+    "date": "2026-09-29",
+    "category": "agentic",
+    "headline": {
+      "en": "Mixture of Self-Improving Branches For Agent Harness Optimization",
+      "de": "Mixture of Self-Improving Branches für die Optimierung von Agent-Harnesses",
+      "fr": "Mixture of Self-Improving Branches pour l'optimisation des harness d'agents",
+      "es": "Mixture of Self-Improving Branches para la optimización del harness de agentes",
+      "ar": "Mixture of Self-Improving Branches لتحسين هيكل تشغيل الوكلاء"
+    },
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.37834",
+    "take": {
+      "en": "A 34.8% relative gain on Olympiad-level math without touching a single weight is the latest evidence that the harness is the highest-leverage layer in agent stacks. I like that the branch-and-router search only ever sees development data — self-improvement that needs test-set leakage to look good isn't self-improvement.",
+      "de": "Ein relativer Zuwachs von 34.8 % bei Mathematik auf Olympiad-Niveau, ohne ein einziges Gewicht anzufassen, ist der jüngste Beweis, dass der Harness die Schicht mit dem größten Hebel im Agenten-Stack ist. Mir gefällt, dass die Suche aus Branches und Router ausschließlich Entwicklungsdaten sieht — Selbstverbesserung, die Test-Set-Leakage braucht, um gut auszusehen, ist keine Selbstverbesserung.",
+      "fr": "Un gain relatif de 34.8 % en mathématiques de niveau olympiade sans toucher un seul poids est une preuve de plus que le harness est la couche au levier le plus fort dans les piles d'agents. J'apprécie que la recherche par branches et routeur ne voie que des données de développement — l'auto-amélioration qui a besoin de fuites du jeu de test pour briller n'est pas de l'auto-amélioration.",
+      "es": "Una mejora relativa del 34.8 % en matemáticas de nivel olimpiada sin tocar un solo peso es la última prueba de que el harness es la capa con mayor palanca en las pilas de agentes. Me gusta que la búsqueda por ramas y router solo vea datos de desarrollo: la automejora que necesita fugas del conjunto de prueba para lucir bien no es automejora.",
+      "ar": "تحسّن نسبي بنسبة 34.8% في الرياضيات بمستوى الأولمبياد دون تغيير وزنٍ واحد هو أحدث دليل على أن هيكل التشغيل هو الطبقة الأعلى رافعةً في منظومات الوكلاء. يعجبني أن البحث عبر الفروع والمُوجِّه يعتمد على بيانات التطوير وحدها — التحسين الذاتي الذي يحتاج إلى تسريب بيانات الاختبار ليبدو جيدًا ليس تحسينًا ذاتيًا."
+    },
+    "tags": [
+      "agents",
+      "harness",
+      "self-improvement"
+    ]
   }
 ]
