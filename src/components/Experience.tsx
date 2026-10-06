@@ -83,19 +83,6 @@ const experiences: Array<{
       ar: 'معماريات RNN/CNN لتصنيف EEG للتخيل الحركي مع تحسين المعاملات.',
     },
     active: false,
-  },
-  {
-    date: 'Jan 2021\nPresent',
-    role: { en: 'AI & Programming Tutor', de: 'KI- & Programmier-Tutor', fr: 'Tuteur IA & programmation', es: 'Tutor de IA y programación', ar: 'مدرب ذكاء اصطناعي وبرمجة' },
-    company: 'Freelance',
-    desc: {
-      en: 'Tailored training in Python, ML, and deep learning, plus mentoring on portfolio projects and GitHub practice.',
-      de: 'Individuelles Training in Python, ML und Deep Learning sowie Mentoring für Portfolio-Projekte und GitHub-Praxis.',
-      fr: 'Formation personnalisée en Python, ML et deep learning, avec mentorat projets portfolio et GitHub.',
-      es: 'Formación personalizada en Python, ML y deep learning, con mentorías de proyectos y GitHub.',
-      ar: 'تدريب مخصص في Python والتعلم الآلي والعميق، مع إرشاد لمشاريع البورتفوليو وممارسات GitHub.',
-    },
-    active: true,
     last: true,
   },
 ]

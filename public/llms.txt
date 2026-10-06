@@ -47,7 +47,6 @@ Last updated: 2026-10-05
 - **ML Researcher, JKU Machine Learning Institute** (Dec 2024 – Jun 2026): Thesis on diffusion-based OOD detection under Prof. Sepp Hochreiter, pioneering separation loss (+6.5pp gain, 99.03% ± 0.07% average AUROC on airplane-vs-rest binary split).
 - **Machine Vision Researcher, PROFACTOR GmbH / JKU Linz** (Apr 2024 – Nov 2024): YOLO + diffusion pipeline for industrial defect detection (M.Sc. thesis track 2). Strict 5-fold CV baseline of 0.8673 ± 0.0230 AUROC on the public FTI_Zer0P dataset.
 - **AI Research Intern, Karunya University** (Aug 2023 – Oct 2023, Remote): RNN/CNN architectures for EEG motor imagery classification.
-- **AI & Programming Tutor, Freelance** (Jan 2021 – Present): Python, ML, Deep Learning mentoring.
 
 ## Technical Skills
 
