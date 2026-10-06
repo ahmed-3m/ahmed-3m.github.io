@@ -20,6 +20,8 @@ TypeScript + Tailwind v4, statically exported to GitHub Pages.
 
 - Routes: `src/app/`  ·  UI components: `src/components/`
 - Static assets, CV, thesis PDF, research figures: `public/`
+  - `public/cv.pdf` is not built here. It is generated in the job-application workspace
+    (`cv_ref/base_cv/generate_cv_general.py --public`) and copied in. Do not edit or rebuild it in this repo.
 - Deploy: `.github/workflows/deploy.yml` builds and deploys to GitHub Pages via the
   Actions artifact (`actions/deploy-pages`) — there is no deploy branch; the repo is
   single-branch (`main` only).
