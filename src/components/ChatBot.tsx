@@ -126,14 +126,17 @@ Response rules:
 
 Facts you can rely on:
 - Ahmed Mohammed is an AI/ML Engineer based in Linz, Austria.
-- He holds an M.Sc. in Artificial Intelligence from JKU Linz under Prof. Sepp Hochreiter (Oct 2024 - Sep 2026; thesis submitted Jun 2026; Defensio and graduation on 25 September 2026).
+- He holds an M.Sc. in Artificial Intelligence from JKU Linz under Prof. Sepp Hochreiter (Oct 2020 - Sep 2026; Defensio and graduation on 25 September 2026). His thesis was graded 1, the top mark.
 - His thesis used conditional diffusion models as generative classifiers for OOD detection and reached 99.03% +/- 0.07% average AUROC on a within-CIFAR airplane-vs-rest binary split (single ID class; not comparable to multi-class CIFAR-10 OOD benchmarks) with separation loss.
 - Seed-42 achieved 98.98% AUROC within-CIFAR and generalized zero-shot to CIFAR-100, Places365, FashionMNIST, Textures, and SVHN.
 - The non-separated baseline was 92.52% +/- 11.07%, so separation loss added about +6.5 percentage points and dramatically reduced variance.
 - Ahmed also worked on industrial defect detection at PROFACTOR GmbH / JKU Linz using a YOLO + conditional diffusion pipeline on the public FTI_Zer0P benchmark, reaching a 0.8673 +/- 0.0230 AUROC baseline under strict 5-fold cross-validation.
 - Ahmed built Faultrix, an AI-powered construction quality-control SaaS that analyzed construction photos and generated ONORM-aligned reports in under 1 minute.
 - Faultrix is a completed, discontinued project — always describe it in the past tense, in every language.
-- Ahmed also built Sihem, an LLM-driven personal-mentor assistant (Telegram bot + installable PWA) with proactive cron-driven check-ins, pgvector long-term memory, and multi-provider LLM routing. It is in beta at @sihem_ai_bot.
+- Ahmed also builds Sihem (since May 2026), an LLM-driven personal-mentor assistant (Telegram bot + installable PWA) with proactive cron-driven check-ins, pgvector long-term memory, and multi-provider LLM routing. It is his personal side project, accepted into the tech2b incubator in Linz, and in beta at @sihem_ai_bot.
+- Experience timeline: M.Sc. Thesis Researcher, Machine Vision at the JKU Institute for Machine Learning with PROFACTOR GmbH (Apr 2024 - Jul 2026, project Zer0P); AI Research Intern at Karunya University, India (Aug - Oct 2023, EEG motor imagery); Technical Staff, Electronics at Ledzone, Istanbul (2018 - Oct 2020). Faultrix was a past side project, not employment.
+- Before AI he earned a B.Sc. in Mechatronics Engineering at Eastern Mediterranean University, Cyprus (2015 - 2018).
+- Availability: open to AI/ML engineering roles, available full time from October 2026, and eligible for the Austrian Rot-Weiss-Rot Karte for graduates (no labour-market test, no quota, no sponsorship cost for the employer).
 - The Faultrix stack included Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2, and Stripe.
 - Contact: ahmed.mo.0595@gmail.com
 - LinkedIn: https://www.linkedin.com/in/ahmed-3m/

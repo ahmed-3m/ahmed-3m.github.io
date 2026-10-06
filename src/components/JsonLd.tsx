@@ -88,9 +88,9 @@ export function PersonSchema() {
       {
         '@type': 'EducationalOccupationalCredential',
         credentialCategory: 'degree',
-        name: 'Master of Science in Artificial Intelligence (thesis submitted Jun 2026, degree completed 25 Sep 2026)',
+        name: 'Master of Science in Artificial Intelligence (degree completed 25 Sep 2026)',
         educationalLevel: "Master's Degree",
-        description: 'Thesis submitted Jun 2026; Defensio and degree conferral on 25 September 2026.',
+        description: 'Studied Oct 2020 – Sep 2026; thesis graded 1; Defensio and degree conferral on 25 September 2026.',
         recognizedBy: {
           '@type': 'CollegeOrUniversity',
           name: 'Johannes Kepler University Linz',
@@ -191,7 +191,7 @@ export function FAQSchema() {
         name: 'Where is Ahmed Mohammed based and how can I contact him?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Ahmed Mohammed is based in Linz, Austria. He can be contacted via email at ahmed.mo.0595@gmail.com, on LinkedIn at linkedin.com/in/ahmed-3m, or through his portfolio at ahmed-3m.github.io. He is open to senior AI/ML roles and research collaborations.',
+          text: 'Ahmed Mohammed is based in Linz, Austria. He can be contacted via email at ahmed.mo.0595@gmail.com, on LinkedIn at linkedin.com/in/ahmed-3m, or through his portfolio at ahmed-3m.github.io. He is open to AI/ML engineering roles and research collaborations.',
         },
       },
       {
@@ -223,7 +223,7 @@ export function FAQSchema() {
         name: 'Is Ahmed Mohammed available for hire or freelance AI/ML projects?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Ahmed Mohammed is open to senior AI/ML engineering roles and research collaborations. He specializes in computer vision, diffusion models, and out-of-distribution detection. Based in Linz, Austria, he is available for positions in the DACH region and remote roles. Contact: ahmed.mo.0595@gmail.com or LinkedIn: linkedin.com/in/ahmed-3m',
+          text: 'Ahmed Mohammed is open to AI/ML engineering roles and research collaborations. He specializes in computer vision, diffusion models, and out-of-distribution detection. Based in Linz, Austria, he is available for positions in the DACH region and remote roles. Contact: ahmed.mo.0595@gmail.com or LinkedIn: linkedin.com/in/ahmed-3m',
         },
       },
       {
