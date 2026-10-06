@@ -7,11 +7,11 @@ import { useReveal } from '@/lib/useReveal'
 
 const copy = {
   open: {
-    en: 'Open to AI/ML roles & research collaborations',
-    de: 'Offen für AI/ML-Rollen und Forschungskooperationen',
-    fr: "Ouvert aux rôles IA/ML et collaborations de recherche",
-    es: 'Abierto a roles de IA/ML y colaboraciones de investigación',
-    ar: 'متاح لأدوار الذكاء الاصطناعي وتعاونات البحث',
+    en: 'Open to AI/ML roles · available full time now',
+    de: 'Offen für AI/ML-Rollen · ab sofort in Vollzeit verfügbar',
+    fr: 'Ouvert aux rôles IA/ML · disponible à temps plein dès maintenant',
+    es: 'Abierto a roles de IA/ML · disponible a tiempo completo ya',
+    ar: 'متاح لأدوار الذكاء الاصطناعي · جاهز للعمل بدوام كامل الآن',
   },
   based: {
     en: 'Based in Linz, Austria',
