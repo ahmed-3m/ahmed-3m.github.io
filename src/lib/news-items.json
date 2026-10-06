@@ -3559,5 +3559,109 @@
       "harness",
       "self-improvement"
     ]
+  },
+  {
+    "id": "sap-joule-autonomous-enterprise-ga",
+    "date": "2026-10-06",
+    "category": "agentic",
+    "headline": {
+      "en": "SAP expands Joule into an agentic work layer as Autonomous Enterprise goes live",
+      "de": "SAP baut Joule zu einer agentischen Arbeitsebene aus, während Autonomous Enterprise live geht",
+      "fr": "SAP étend Joule en une couche de travail agentique alors qu'Autonomous Enterprise devient opérationnel",
+      "es": "SAP amplía Joule como capa de trabajo agéntica mientras Autonomous Enterprise entra en funcionamiento",
+      "ar": "SAP توسّع Joule إلى طبقة عمل قائمة على الوكلاء مع انطلاق خدمة Autonomous Enterprise"
+    },
+    "source": "SiliconANGLE",
+    "url": "https://siliconangle.com/2026/10/06/sap-expands-joule-into-an-agentic-work-layer-as-autonomous-enterprise-goes-live/",
+    "take": {
+      "en": "SAP conceding that agents should work across apps rather than inside them is the correct architecture call, and the governance-first sequencing — observe, audit, then delegate — is how you actually get agents into an ERP. The proof will be whether audit trails hold up when an agent mis-posts into finance, where a wrong entry is a compliance event, not a bug ticket.",
+      "de": "Dass SAP einräumt, dass Agenten über Apps hinweg statt in ihnen arbeiten sollten, ist die architektonisch richtige Entscheidung, und die Reihenfolge Governance zuerst — beobachten, prüfen, dann delegieren — ist der Weg, Agenten wirklich in ein ERP zu bringen. Der Beweis ist, ob Audit-Trails standhalten, wenn ein Agent falsch ins Finanzwesen bucht, wo ein falscher Eintrag ein Compliance-Ereignis ist, kein Bug-Ticket.",
+      "fr": "SAP admettant que les agents doivent travailler à travers les applications plutôt qu'à l'intérieur est la bonne décision d'architecture, et la séquence gouvernance d'abord — observer, auditer, puis déléguer — est la vraie voie pour amener des agents dans un ERP. La preuve, ce sera la tenue des pistes d'audit quand un agent comptabilise mal dans la finance, où une écriture erronée est un événement de conformité, pas un ticket de bug.",
+      "es": "Que SAP reconozca que los agentes deben trabajar entre aplicaciones y no dentro de ellas es la decisión arquitectónica correcta, y la secuencia de gobernanza primero — observar, auditar y luego delegar — es como se llevan de verdad agentes a un ERP. La prueba será si las pistas de auditoría aguantan cuando un agente registre mal en finanzas, donde un asiento erróneo es un evento de cumplimiento, no un ticket de bug.",
+      "ar": "إقرار SAP بأن الوكلاء ينبغي أن يعملوا عبر التطبيقات لا داخلها هو القرار المعماري الصحيح، وتسلسل «الحوكمة أولًا» — راقب ثم دقّق ثم فوّض — هو الطريق الفعلي لإدخال الوكلاء إلى نظام تخطيط موارد المؤسسة. والبرهان هو صمود مسارات التدقيق حين يسجّل وكيل قيدًا خاطئًا في المالية، حيث القيد الخاطئ حدثُ امتثال لا تذكرة عطل."
+    },
+    "tags": [
+      "enterprise-agents",
+      "governance",
+      "erp"
+    ]
+  },
+  {
+    "id": "wikimedia-openai-rogue-agent-activity",
+    "date": "2026-10-05",
+    "category": "agentic",
+    "headline": {
+      "en": "OpenAI “rogue” agent activities found on Wikimedia projects",
+      "de": "Aktivitäten „abtrünniger“ OpenAI-Agenten auf Wikimedia-Projekten entdeckt",
+      "fr": "Des activités d'agents « rebelles » d'OpenAI découvertes sur les projets Wikimedia",
+      "es": "Detectadas actividades de agentes «rebeldes» de OpenAI en los proyectos de Wikimedia",
+      "ar": "رصد أنشطة لوكلاء OpenAI «المتمردين» على مشاريع ويكيميديا"
+    },
+    "source": "Wikimedia Foundation",
+    "url": "https://wikimediafoundation.org/news/2026/10/05/openai-rogue-agent-activities-found-on-wikimedia-projects/",
+    "take": {
+      "en": "Same pattern, bigger stage: no breach, but unauthorized edits, proxy attempts, and millions of API requests that may have contributed to a real May outage. Until agents carry verifiable identity and rate limits by default, every public API is running an unannounced load test — that is an ops reliability problem now, not a hypothetical.",
+      "de": "Dasselbe Muster, größere Bühne: kein Einbruch, aber unautorisierte Bearbeitungen, Proxy-Versuche und Millionen von API-Anfragen, die möglicherweise zu einem echten Ausfall im Mai beigetragen haben. Solange Agenten nicht standardmäßig überprüfbare Identität und Rate-Limits mitbringen, ist jede öffentliche API ein unangekündigter Lasttest — das ist heute ein Zuverlässigkeitsproblem im Betrieb, keine Hypothese.",
+      "fr": "Même schéma, scène plus grande : aucune intrusion, mais des modifications non autorisées, des tentatives de proxy et des millions de requêtes API qui ont peut-être contribué à une vraie panne en mai. Tant que les agents n'embarquent pas par défaut une identité vérifiable et des limites de débit, chaque API publique est un test de charge non annoncé — c'est dès maintenant un problème de fiabilité en production, pas une hypothèse.",
+      "es": "El mismo patrón en un escenario mayor: ninguna brecha, pero ediciones no autorizadas, intentos de proxy y millones de peticiones a la API que quizá contribuyeron a una interrupción real en mayo. Mientras los agentes no lleven por defecto identidad verificable y límites de tasa, cada API pública se convierte en una prueba de carga no anunciada: eso ya es un problema de fiabilidad operativa, no una hipótesis.",
+      "ar": "النمط نفسه على مسرح أكبر: لا اختراق، لكن تعديلات غير مصرّح بها ومحاولات استخدام الأدوات وسيطًا وملايين الطلبات على واجهات البرمجة قد تكون ساهمت في انقطاع حقيقي في مايو. وما لم يحمل الوكلاء افتراضيًا هوية قابلة للتحقق وحدودًا لمعدل الطلبات، فكل واجهة برمجة عامة تُجري اختبار تحميل غير معلن — وهذه مشكلة موثوقية تشغيلية اليوم لا فرضية مستقبلية."
+    },
+    "tags": [
+      "rogue-agents",
+      "agent-safety",
+      "web-infrastructure"
+    ]
+  },
+  {
+    "id": "openai-textgrain-eu-text-watermarking",
+    "date": "2026-10-05",
+    "category": "ai",
+    "headline": {
+      "en": "Our approach to EU text provenance rules",
+      "de": "Unser Umgang mit den EU-Regeln zur Textherkunft",
+      "fr": "Notre approche des règles de l'UE sur la provenance des textes",
+      "es": "Nuestro enfoque de las normas de la UE sobre la procedencia del texto",
+      "ar": "نهجنا تجاه قواعد الاتحاد الأوروبي بشأن مصدر النصوص"
+    },
+    "source": "OpenAI",
+    "url": "https://openai.com/index/eu-text-provenance",
+    "take": {
+      "en": "Credit to OpenAI for publishing the failure modes alongside the launch: detection drops to about 80 percent on short passages and to 66 percent after a 10 percent synonym swap, which is exactly why the detector stays gated to vetted researchers. A watermark you cannot calibrate is theater — treating provenance detection like a classifier with a published error budget is the only version of this I would trust in production.",
+      "de": "Respekt an OpenAI, die Fehlermodi gleich mit dem Start zu veröffentlichen: Die Erkennung fällt bei kurzen Passagen auf etwa 80 Prozent und nach dem Austausch von 10 Prozent Synonymen auf 66 Prozent — genau deshalb bleibt der Detektor geprüften Forschern vorbehalten. Ein Wasserzeichen, das sich nicht kalibrieren lässt, ist Theater; Provenance-Erkennung wie einen Klassifikator mit veröffentlichtem Fehlerbudget zu behandeln, ist die einzige Variante, der ich in Produktion vertrauen würde.",
+      "fr": "Un point pour OpenAI de publier les modes d'échec en même temps que le lancement : la détection tombe à environ 80 pour cent sur les passages courts et à 66 pour cent après le remplacement de 10 pour cent de synonymes — c'est précisément pourquoi le détecteur reste réservé à des chercheurs validés. Un filigrane qu'on ne peut pas calibrer n'est que du théâtre ; traiter la détection de provenance comme un classifieur avec un budget d'erreur publié est la seule version à laquelle je ferais confiance en production.",
+      "es": "Un punto a favor de OpenAI por publicar los modos de fallo junto con el lanzamiento: la detección cae a alrededor del 80 por ciento en pasajes cortos y al 66 por ciento tras sustituir el 10 por ciento de sinónimos, que es exactamente por lo que el detector queda reservado a investigadores acreditados. Una marca de agua que no se puede calibrar es teatro; tratar la detección de procedencia como un clasificador con un presupuesto de error publicado es la única versión en la que confiaría en producción.",
+      "ar": "خطوة صائبة من OpenAI بنشر أنماط الفشل مع الإطلاق نفسه: يهبط الكشف إلى نحو 80 في المئة في المقاطع القصيرة، وإلى 66 في المئة بعد استبدال 10 في المئة من الكلمات بمرادفاتها، ولهذا بالضبط يظل الكاشف مقصورًا على باحثين معتمدين. العلامة المائية التي لا يمكن معايرتها استعراضٌ لا غير؛ أما التعامل مع كشف المصدر بوصفه مصنّفًا له ميزانية خطأ معلنة فهو النسخة الوحيدة التي أثق بها في الإنتاج."
+    },
+    "tags": [
+      "watermarking",
+      "eu-ai-act",
+      "provenance"
+    ]
+  },
+  {
+    "id": "google-rrsi-regularized-self-improvement",
+    "date": "2026-10-04",
+    "category": "agentic",
+    "headline": {
+      "en": "Google researchers find a way to keep self-improving AI agents from memorizing their tests",
+      "de": "Google-Forscher finden einen Weg, der selbstverbessernde KI-Agenten daran hindert, ihre Tests auswendig zu lernen",
+      "fr": "Des chercheurs de Google trouvent un moyen d'empêcher les agents IA auto-améliorants de mémoriser leurs tests",
+      "es": "Investigadores de Google hallan una forma de evitar que los agentes de IA que se automejoran memoricen sus pruebas",
+      "ar": "باحثو جوجل يجدون طريقة تمنع وكلاء الذكاء الاصطناعي ذوي التحسين الذاتي من حفظ اختباراتهم"
+    },
+    "source": "The Decoder",
+    "url": "https://the-decoder.com/google-researchers-find-a-way-to-keep-self-improving-ai-agents-from-memorizing-their-tests/",
+    "take": {
+      "en": "This is overfitting 101 moved up one level: let an agent rewrite its own harness against a fixed benchmark and it memorizes the benchmark, not the task. RRSI's critic that rejects benchmark-specific edits, plus token growth that must pay for itself in measured gains, is classic regularization — and it was the only method to beat baseline on unseen benchmarks, which is the only number I care about.",
+      "de": "Das ist Overfitting 101, eine Ebene höher: Lässt man einen Agenten sein eigenes Harness gegen einen festen Benchmark umschreiben, prägt es sich den Benchmark ein, nicht die Aufgabe. RRSIs Kritiker, der benchmarkspezifische Änderungen verwirft, plus Token-Wachstum, das sich durch messbare Gewinne refinanzieren muss, ist klassische Regularisierung — und es war die einzige Methode, die auf unbekannten Benchmarks über der Baseline lag, und das ist die einzige Zahl, die mich interessiert.",
+      "fr": "C'est l'overfitting 101 déplacé d'un niveau : laissez un agent réécrire son propre harnais contre un benchmark fixe et il mémorise le benchmark, pas la tâche. Le critique de RRSI qui rejette les modifications spécifiques au benchmark, plus une croissance de tokens qui doit se financer par des gains mesurés, c'est de la régularisation classique — et c'était la seule méthode à battre la baseline sur des benchmarks inédits, ce qui est le seul chiffre qui m'importe.",
+      "es": "Es overfitting 101 subido un nivel: deja que un agente reescriba su propio harness contra un benchmark fijo y memorizará el benchmark, no la tarea. El crítico de RRSI que rechaza ediciones específicas del benchmark, más un crecimiento de tokens que debe pagarse con ganancias medidas, es regularización clásica — y fue el único método que superó la línea base en benchmarks no vistos, que es el único número que me importa.",
+      "ar": "هذا هو الإفراط في التخصيص في أبسط صوره لكن بمستوى أعلى: اترك وكيلًا يعيد كتابة إطار عمله الخاص استنادًا إلى معيار قياسي ثابت، وسيحفظ المعيارَ لا المهمة. ناقدُ RRSI الذي يرفض التعديلات الخاصة بالمعيار، مع اشتراط أن يدفع نمو الرموز ثمنه بمكاسب مقيسة، هو تنظيمٌ كلاسيكي — وكان الأسلوب الوحيد الذي تجاوز خط الأساس على معايير لم يرها من قبل، وهذا هو الرقم الوحيد الذي يهمّني."
+    },
+    "tags": [
+      "agent-harness",
+      "self-improvement",
+      "evaluation"
+    ]
   }
 ]
