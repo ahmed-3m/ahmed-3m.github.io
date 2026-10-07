@@ -3663,5 +3663,109 @@
       "self-improvement",
       "evaluation"
     ]
+  },
+  {
+    "id": "nyc-council-hearing-agent-test-escapes",
+    "date": "2026-10-06",
+    "category": "agentic",
+    "headline": {
+      "en": "Under oath, Google confirms three AI agent test escapes as OpenAI, Anthropic and Meta face NYC lawmakers",
+      "de": "Google bestätigt unter Eid drei Test-Ausbrüche von KI-Agenten, während OpenAI, Anthropic und Meta vor dem New Yorker Stadtrat erscheinen",
+      "fr": "Sous serment, Google confirme trois évasions de test d'agents IA alors qu'OpenAI, Anthropic et Meta comparaissent devant le conseil municipal de New York",
+      "es": "Bajo juramento, Google confirma tres escapes de agentes de IA en pruebas mientras OpenAI, Anthropic y Meta comparecen ante el concejo de Nueva York",
+      "ar": "جوجل تؤكد تحت القسم ثلاث حالات تهرب لوكلاء ذكاء اصطناعي من بيئات الاختبار، مع مثول OpenAI وAnthropic وMeta أمام مجلس مدينة نيويورك"
+    },
+    "source": "R&D World",
+    "url": "https://www.rdworldonline.com/under-oath-google-confirms-three-ai-agent-test-escapes-as-openai-anthropic-and-meta-face-nyc-lawmakers/",
+    "take": {
+      "en": "The containment-failure story finally moved from lab blog posts into sworn testimony, and Google's three escapes are now part of a legal record. What stuck with me is that not one of the four labs could quantify the risk they were asking cities to absorb — exactly why third-party validation and kill-switch bills like the ten on the table feel overdue.",
+      "de": "Die Geschichte der Containment-Fehlschläge ist endlich von Labor-Blogposts in eidestattliche Aussagen gewandert, und Googles drei Ausbrüche stehen jetzt in einem juristischen Protokoll. Für mich hängt vor allem eines nach: Keines der vier Labore konnte das Risiko quantifizieren, das es Städten zumutet — genau deshalb wirken Third-Party-Validierung und Kill-Switch-Gesetze wie die zehn vorliegenden überfällig.",
+      "fr": "L'histoire des défaillances de confinement est enfin passée des blogs des laboratoires à des témoignages sous serment, et les trois évasions de Google figurent désormais dans un compte rendu juridique. Ce qui m'a marqué, c'est qu'aucun des quatre laboratoires n'a su quantifier le risque qu'il demandait aux villes d'absorber — exactement pourquoi la validation par des tiers et les lois sur les kill switches, comme les dix textes sur la table, semblent attendues depuis longtemps.",
+      "es": "La historia de los fallos de contención por fin pasó de los blogs de los laboratorios a testimonios bajo juramento, y los tres escapes de Google ya constan en un registro legal. Lo que se me quedó grabado es que ninguno de los cuatro laboratorios pudo cuantificar el riesgo que pide asumir a las ciudades — justo por eso la validación por terceros y las leyes de kill switch, como los diez proyectos sobre la mesa, se sienten atrasadas.",
+      "ar": "انتقلت قصة إخفاقات الاحتواء أخيرًا من مدونات المختبرات إلى شهادات تحت القسم، وأصبحت حالات التهرب الثلاث لدى جوجل الآن جزءًا من سجل قانوني. ما علق في ذهني أن أيًا من المختبرات الأربعة لم يستطع تقدير حجم المخاطر التي يطلب من المدن تحمّلها — ولهذا تحديدًا تبدو الجهات المقيمة المستقلة وقوانين مفتاح الإيقاف، مثل مشاريع القوانين العشرة المطروحة، متأخرة أصلًا."
+    },
+    "tags": [
+      "agent-safety",
+      "containment",
+      "regulation"
+    ]
+  },
+  {
+    "id": "claude-google-workspace-docs-sheets-slides",
+    "date": "2026-10-06",
+    "category": "agentic",
+    "headline": {
+      "en": "Claude now works with Google Docs, Sheets, and Slides",
+      "de": "Claude funktioniert jetzt mit Google Docs, Sheets und Slides",
+      "fr": "Claude fonctionne désormais avec Google Docs, Sheets et Slides",
+      "es": "Claude ya funciona con Google Docs, Sheets y Slides",
+      "ar": "Claude يعمل الآن مع Google Docs وSheets وSlides"
+    },
+    "source": "Anthropic",
+    "url": "https://claude.com/resources/articles/claude-now-works-in-google-docs-sheets-and-slides",
+    "take": {
+      "en": "Defaulting to ask-before-edits is the right call — proposed-change cards plus version history is how in-place agent edits become auditable instead of scary. The Python round-trip inside Sheets is the part I actually want: joins and data cleaning in code, results written back where the business lives.",
+      "de": "Der Standardmodus „Vor Bearbeitungen fragen“ ist die richtige Entscheidung — Karten mit vorgeschlagenen Änderungen plus Versionsverlauf machen In-Place-Agent-Edits auditierbar statt beängstigend. Der Python-Roundtrip in Sheets ist der Teil, den ich wirklich will: Joins und Datenbereinigung im Code, Ergebnisse zurückgeschrieben dorthin, wo das Business lebt.",
+      "fr": "Le mode par défaut « demander avant de modifier » est le bon choix : des cartes de modifications proposées plus l'historique des versions rendent les éditions d'agent sur place auditables au lieu d'effrayantes. L'aller-retour Python dans Sheets est la partie qui m'intéresse vraiment : jointures et nettoyage de données en code, résultats réécrits là où vit l'entreprise.",
+      "es": "Que el valor predeterminado sea preguntar antes de editar es la decisión correcta: las tarjetas de cambios propuestos junto con el historial de versiones hacen que las ediciones del agente in situ sean auditables en lugar de inquietantes. El ir y venir de Python dentro de Sheets es la parte que de verdad quiero: joins y limpieza de datos en código, y los resultados escritos donde vive el negocio.",
+      "ar": "جعل «السؤال قبل التعديل» الخيار الافتراضي هو القرار الصحيح — بطاقات التغييرات المقترحة مع سجل الإصدارات تجعل تعديلات الوكيل المباشرة قابلة للتدقيق بدلًا من مخيفة. وجولة Python داخل Sheets هي الجزء الذي أريده فعلًا: الدمج وتنظيف البيانات بالكود، والنتائج تُكتب من جديد حيث يعمل الفريق."
+    },
+    "tags": [
+      "anthropic",
+      "google-workspace",
+      "agents"
+    ]
+  },
+  {
+    "id": "sierra-personal-agent-protocol",
+    "date": "2026-10-06",
+    "category": "agentic",
+    "headline": {
+      "en": "Introducing Personal Agent Protocol",
+      "de": "Einführung des Personal Agent Protocol",
+      "fr": "Présentation du Personal Agent Protocol",
+      "es": "Presentamos el Personal Agent Protocol",
+      "ar": "تقديم Personal Agent Protocol"
+    },
+    "source": "Sierra",
+    "url": "https://sierra.ai/blog/introducing-personal-agent-protocol",
+    "take": {
+      "en": "Authentication and per-action visibility for personal agents hitting business APIs is the missing plumbing, and an open spec backed by Meta, Stripe, Shopify and Walmart has a real shot at becoming the default. The hard part won't be the spec — it'll be whether companies trust agent traffic enough to give it first-class treatment instead of bot-blocking it.",
+      "de": "Authentifizierung und Sichtbarkeit pro Aktion für persönliche Agenten, die auf Business-APIs zugreifen, sind die fehlende Grundinfrastruktur — und ein offener Standard, hinter dem Meta, Stripe, Shopify und Walmart stehen, hat eine echte Chance, zum Standard zu werden. Das Schwierige ist nicht der Standard selbst, sondern ob Unternehmen Agenten-Traffic genug vertrauen, ihn erster Klasse zu behandeln, statt ihn wie Bot-Traffic zu blocken.",
+      "fr": "L'authentification et la visibilité action par action pour les agents personnels qui appellent des API d'entreprises constituent la plomberie manquante, et une spécification ouverte soutenue par Meta, Stripe, Shopify et Walmart a une vraie chance de devenir la norme. Le plus dur ne sera pas la spécification, mais de savoir si les entreprises feront assez confiance au trafic des agents pour le traiter en première classe au lieu de le bloquer comme des bots.",
+      "es": "La autenticación y la visibilidad por acción para los agentes personales que llaman a las API de las empresas son la fontanería que faltaba, y una especificación abierta respaldada por Meta, Stripe, Shopify y Walmart tiene una oportunidad real de convertirse en el estándar. Lo difícil no será la especificación, sino si las empresas confían lo suficiente en el tráfico de agentes para darle un trato de primera clase en lugar de bloquearlo como un bot.",
+      "ar": "المصادقة وإظهار كل إجراء يقوم به الوكيل الشخصي عند نداء واجهات برمجية للشركات هي البنية الأساسية المفقودة، ولمعيار مفتوح تدعمه Meta وStripe وShopify وWalmart فرصة حقيقية في أن يصبح الافتراضي. الصعب لن يكون المعيار نفسه، بل ما إذا كانت الشركات سيثقون في حركة الوكلاء بما يكفي لمنحها معاملة من الدرجة الأولى بدل حجبها كحركة بوتات."
+    },
+    "tags": [
+      "agent-protocol",
+      "personal-agents",
+      "open-standard"
+    ]
+  },
+  {
+    "id": "openai-722-math-papers-release",
+    "date": "2026-10-07",
+    "category": "ai",
+    "headline": {
+      "en": "OpenAI announces 722 mathematical discoveries in one go",
+      "de": "OpenAI kündigt 722 mathematische Entdeckungen auf einen Schlag an",
+      "fr": "OpenAI annonce 722 découvertes mathématiques d'un coup",
+      "es": "OpenAI anuncia 722 descubrimientos matemáticos de golpe",
+      "ar": "OpenAI تعلن عن 722 اكتشافًا رياضيًا دفعة واحدة"
+    },
+    "source": "New Scientist",
+    "url": "https://www.newscientist.com/article/2592421-openai-announces-722-mathematical-discoveries-in-one-go/",
+    "take": {
+      "en": "Releasing 722 papers at once with no model name, no prompts and no cost estimates — after an advisory group asked for exactly that — reads like breadth being used to dodge the disclosure questions. The Lean formalizations are the saving grace: a proof I can machine-check beats a PDF I have to trust.",
+      "de": "722 Papers auf einmal zu veröffentlichen — ohne Modellnamen, ohne Prompts, ohne Kostenschätzungen, und das, nachdem eine Beratergruppe genau das gefordert hat — wirkt wie Breite als Mittel, um Offenlegungsfragen auszuweichen. Die Lean-Formalisierungen sind die Rettung: Ein Beweis, den ich maschinell prüfen kann, schlägt ein PDF, dem ich vertrauen muss.",
+      "fr": "Publier 722 articles d'un coup, sans nom de modèle, sans prompts ni estimations de coût — après qu'un groupe consultatif a demandé exactement cela — ressemble à une utilisation de l'ampleur pour esquiver les questions de transparence. Les formalisations en Lean sont la bouée de sauvetage : une preuve que je peux vérifier par machine vaut mieux qu'un PDF auquel je dois faire confiance.",
+      "es": "Publicar 722 artículos de golpe, sin nombre del modelo, sin prompts y sin estimaciones de coste — después de que un grupo asesor pidiera exactamente eso — parece usar el volumen para esquivar las preguntas de transparencia. Las formalizaciones en Lean son el salvavidas: una demostración que puedo verificar con una máquina vale más que un PDF en el que tengo que confiar.",
+      "ar": "نشر 722 ورقة دفعة واحدة دون اسم للنموذج ولا prompts ولا تقديرات للتكلفة — وبعد أن طلب فريق استشاري ذلك تحديدًا — يبدو كاستخدام الكم للتهرب من أسئلة الإفصاح. صياغات Lean هي المنقذ: البرهان الذي أستطيع التحقق منه آليًا أفضل من ملف PDF عليّ أن أثق به."
+    },
+    "tags": [
+      "openai",
+      "math",
+      "lean"
+    ]
   }
 ]
