@@ -3767,5 +3767,109 @@
       "math",
       "lean"
     ]
+  },
+  {
+    "id": "google-gemini-agent-universal-work",
+    "date": "2026-10-08",
+    "category": "agentic",
+    "headline": {
+      "en": "Google Cloud launches Gemini agent",
+      "de": "Google Cloud startet den Gemini-Agenten",
+      "fr": "Google Cloud lance l'agent Gemini",
+      "es": "Google Cloud lanza el agente Gemini",
+      "ar": "Google Cloud تطلق وكيل Gemini"
+    },
+    "source": "Google Cloud",
+    "url": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/gemini-at-work/",
+    "take": {
+      "en": "The pitch is \"objectives, not instructions\" — which quietly makes evaluation the whole product: if I delegate an outcome, the only way to trust the agent is audited actions, attested identity, and spending caps, all of which Google says ship on day one. Persistent coworkers with their own Workspace accounts are either the future of team software or its most exotic failure mode, and the audit log is where we'll find out which.",
+      "de": "Das Versprechen lautet „Ziele statt Anweisungen“ — und das macht die Evaluation de facto zum ganzen Produkt: Wenn ich ein Ergebnis delegiere, kann ich dem Agenten nur über protokollierte Aktionen, beglaubigte Identität und Ausgaben-Limits vertrauen, die Google laut eigener Aussage von Anfang an mitliefert. Persistente Kollegen mit eigenen Workspace-Konten sind entweder die Zukunft von Team-Software oder deren exotischster Fehlermodus — und das Audit-Log wird zeigen, was davon wahr ist.",
+      "fr": "La promesse, c'est « des objectifs, pas des instructions » — et cela fait discrètement de l'évaluation tout le produit : si je délègue un résultat, la seule façon de faire confiance à l'agent repose sur des actions auditées, une identité attestée et des plafonds de dépense, que Google dit livrer dès le premier jour. Des collègues numériques persistants avec leur propre compte Workspace, c'est soit l'avenir du logiciel d'équipe, soit son mode de défaillance le plus exotique — et le journal d'audit nous dira lequel.",
+      "es": "La promesa es «objetivos, no instrucciones», y eso convierte en la práctica la evaluación en todo el producto: si delego un resultado, la única forma de confiar en el agente son acciones auditadas, identidad certificada y límites de gasto, que Google dice incluir desde el primer día. Los compañeros digitales persistentes con su propia cuenta de Workspace son o el futuro del software de equipo o su modo de fallo más exótico, y el registro de auditoría nos dirá cuál de los dos.",
+      "ar": "الوعد هنا هو «أهداف لا تعليمات» — وهذا يجعل التقييم هو المنتج كله فعليًا: فحين أوكّل نتيجةً إلى وكيل، لا سبيل للثقة به سوى إجراءات مُدقَّقة وهوية موثّقة وحدود إنفاق، وكلها يقول Google إنها متوفرة منذ اليوم الأول. الزملاء الرقميون الدائمون الذين يملكون حسابات Workspace خاصة بهم إمّا مستقبل برمجيات الفريق وإمّا أعقد أنماط فشلها، وسجل التدقيق هو من سيحسم ذلك."
+    },
+    "tags": [
+      "google",
+      "agentic",
+      "enterprise"
+    ]
+  },
+  {
+    "id": "openai-gpt-6-intelligent-ui-everyone",
+    "date": "2026-10-07",
+    "category": "ai",
+    "headline": {
+      "en": "GPT‑6 and Intelligent UI for everyone",
+      "de": "GPT‑6 und Intelligent UI für alle",
+      "fr": "GPT‑6 et Intelligent UI pour tous",
+      "es": "GPT‑6 e Intelligent UI para todos",
+      "ar": "GPT‑6 و Intelligent UI للجميع"
+    },
+    "source": "OpenAI",
+    "url": "https://openai.com/index/gpt-6-for-everyone/",
+    "take": {
+      "en": "Model-generated UI is quietly an evaluation problem: OpenAI says it trained GPT‑6 to judge its own layouts for clarity and usefulness, which is a lot of self-grading for interfaces people click. The streaming-while-thinking results are the part I'd trust least and want to measure myself — partial answers that stay \"as cohesive as one written all at once\" is a strong claim with no external benchmark behind it.",
+      "de": "Modellgenerierte Oberflächen sind im Stillen ein Evaluationsproblem: OpenAI sagt, GPT‑6 sei darauf trainiert worden, eigene Layouts auf Klarheit und Nutzen zu bewerten — viel Selbstbenotung für Interfaces, auf die Menschen klicken. Die Streaming-Ergebnisse beim gleichzeitigen Denken und Antworten sind der Teil, dem ich am wenigsten traue und den ich selbst messen würde: Teilantworten, die „so kohärent wie eine am Stück geschriebene“ bleiben sollen, sind eine starke Behauptung ohne externes Benchmark dahinter.",
+      "fr": "Les UI générées par le modèle, c'est en réalité un problème d'évaluation : OpenAI affirme avoir entraîné GPT‑6 à juger ses propres interfaces pour leur clarté et leur utilité — beaucoup d'auto-notation pour des écrans sur lesquels les gens cliquent. Les résultats du streaming pendant la réflexion sont la partie à laquelle je fais le moins confiance et que je voudrais mesurer moi-même : des réponses partielles « aussi cohérentes que si elles avaient été écrites d'un bloc », c'est une affirmation forte sans benchmark externe pour l'étayer.",
+      "es": "Las interfaces generadas por el modelo son, en el fondo, un problema de evaluación: OpenAI dice haber entrenado a GPT‑6 para juzgar sus propios diseños por claridad y utilidad, mucha autocorrección para pantallas en las que la gente hace clic. Los resultados del streaming mientras el modelo piensa son la parte en la que menos confío y que querría medir yo mismo: que las respuestas parciales sigan «tan cohesionadas como si se escribieran de una vez» es una afirmación fuerte sin ningún benchmark externo detrás.",
+      "ar": "الواجهات التي يولّدها النموذج هي في حقيقتها مشكلة تقييم: يقول OpenAI إنه درّب GPT‑6 على تقييم تخطيطاته هو من حيث الوضوح والفائدة — وهذا كثيرٌ من التصحيح الذاتي لواجهات ينقر عليها الناس. أما نتائج البث أثناء التفكير فهي الجزء الذي أثق به أقل كله وأرغب في قياسه بنفسي: فادّعاء أن الأجزاء تبقى «متماسكة كأنها كُتبت دفعة واحدة» ادّعاءٌ قوي بلا معيار خارجي يدعمه."
+    },
+    "tags": [
+      "openai",
+      "gpt-6",
+      "intelligent-ui"
+    ]
+  },
+  {
+    "id": "anthropic-claude-haiku-5-5-launch",
+    "date": "2026-10-07",
+    "category": "ai",
+    "headline": {
+      "en": "Introducing Claude Haiku 5.5",
+      "de": "Einführung von Claude Haiku 5.5",
+      "fr": "Présentation de Claude Haiku 5.5",
+      "es": "Presentamos Claude Haiku 5.5",
+      "ar": "تقديم Claude Haiku 5.5"
+    },
+    "source": "Anthropic",
+    "url": "https://www.anthropic.com/claude-haiku-5-5",
+    "take": {
+      "en": "The interesting number isn't the 75% price cut, it's that Anthropic is explicitly positioning a small model as the subagent tier next to Opus 5.5 and Sonnet 5.5 — cost per trajectory is what decides whether multi-agent systems ship or stay demos. Halving Sonnet 5.5 cache reads is the quiet change that makes long-running agent loops actually budgetable.",
+      "de": "Die interessante Zahl ist nicht der Preisnachlass von 75 %, sondern dass Anthropic ein kleines Modell explizit als Subagenten-Ebene neben Opus 5.5 und Sonnet 5.5 positioniert — die Kosten pro Trajektorie entscheiden, ob Multi-Agenten-Systeme ausgeliefert werden oder Demo bleiben. Die halbierten Cache-Lesevorgänge für Sonnet 5.5 sind die leise Änderung, die lange laufende Agenten-Loops tatsächlich planbar macht.",
+      "fr": "Le chiffre intéressant, ce n'est pas la baisse de prix de 75 %, c'est qu'Anthropic positionne explicitement un petit modèle comme l'étage subagent à côté d'Opus 5.5 et Sonnet 5.5 — le coût par trajectoire, c'est ce qui décide si les systèmes multi-agents passent en production ou restent des démos. La division par deux des lectures de cache de Sonnet 5.5 est le changement discret qui rend enfin budgétisables les boucles d'agents longue durée.",
+      "es": "La cifra interesante no es la rebaja del 75 %, sino que Anthropic posiciona explícitamente un modelo pequeño como el nivel de subagente junto a Opus 5.5 y Sonnet 5.5: el coste por trayectoria es lo que decide si los sistemas multiagente se despliegan o se quedan en demo. Reducir a la mitad las lecturas de caché de Sonnet 5.5 es el cambio silencioso que vuelve realmente presupuestables los bucles de agentes de larga duración.",
+      "ar": "الرقم المثير ليس تخفيض السعر بنسبة 75٪، بل أن Anthropic تُموقع صراحةً نموذجًا صغيرًا كطبقة الوكلاء الفرعيين إلى جانب Opus 5.5 و Sonnet 5.5 — فتكلفة كل مسار تشغيل هي ما يقرر ما إذا كانت أنظمة الوكلاء المتعددة ستُنشر فعليًا أم ستبقى عروضًا توضيحية. وخفض قراءات الذاكرة المؤقتة لـ Sonnet 5.5 إلى النصف هو التغيير الهادئ الذي يجعل حلقات الوكلاء طويلة التشغيل قابلةً للموازنة فعلًا."
+    },
+    "tags": [
+      "anthropic",
+      "haiku-5-5",
+      "pricing"
+    ]
+  },
+  {
+    "id": "windows-hybrid-intelligence-mxc-agents",
+    "date": "2026-10-07",
+    "category": "agentic",
+    "headline": {
+      "en": "Building Windows for hybrid intelligence",
+      "de": "Windows für hybride Intelligenz",
+      "fr": "Construire Windows pour l'intelligence hybride",
+      "es": "Construyendo Windows para la inteligencia híbrida",
+      "ar": "بناء Windows للذكاء الهجين"
+    },
+    "source": "Microsoft",
+    "url": "https://blogs.windows.com/windowsexperience/2026/10/07/building-windows-for-hybrid-intelligence/",
+    "take": {
+      "en": "MXC going GA is the real news: OS-enforced filesystem and network policy for agents is exactly the containment layer agent deployments have been missing, and the list of harnesses already supporting it is telling. Local models with cloud fallback is a routing problem I've lived in production — the hard part isn't the routing, it's keeping evaluation consistent across two different models serving \"one\" agent.",
+      "de": "Die allgemeine Verfügbarkeit von MXC ist die eigentliche Nachricht: OS-seitig erzwungene Datei- und Netzwerkrichtlinien für Agenten sind genau die Containment-Schicht, die Agenten-Deployments bislang gefehlt hat, und die Liste der Harnesses, die MXC bereits unterstützen, ist aussagekräftig. Lokale Modelle mit Cloud-Fallback ist ein Routing-Problem, das ich aus der Produktion kenne — schwer ist nicht das Routing, sondern die Evaluation konsistent zu halten, wenn zwei verschiedene Modelle „einen“ Agenten bedienen.",
+      "fr": "La disponibilité générale de MXC, c'est la vraie nouvelle : des politiques de fichiers et de réseau appliquées par l'OS pour les agents, c'est exactement la couche de confinement qui manquait aux déploiements d'agents, et la liste des harness qui la prennent déjà en charge est révélatrice. Modèles locaux avec repli cloud, c'est un problème de routage que j'ai vécu en production — le difficile n'est pas le routage, c'est de garder une évaluation cohérente quand deux modèles différents servent « un » seul agent.",
+      "es": "Que MXC llegue a disponibilidad general es la verdadera noticia: políticas de archivos y red aplicadas por el sistema operativo para agentes son exactamente la capa de contención que faltaba en los despliegues de agentes, y la lista de harnesses que ya la soportan es reveladora. Modelos locales con respaldo en la nube es un problema de enrutado que he vivido en producción: lo difícil no es enrutar, sino mantener la evaluación consistente cuando dos modelos distintos sirven a «un» agente.",
+      "ar": "وصول MXC إلى التوافرية العامة هو الخبر الحقيقي: فسياسات نظام الملفات والشبكة التي يفرضها نظام التشغيل على الوكلاء هي تحديدًا طبقة العزل التي كانت تنقص عمليات نشر الوكلاء، وقائمة الأدوات التي تدعمها فعلًا لهي دالة. أما النماذج المحلية مع التراجع إلى السحابة فمسألة توجيه عشتها في الإنتاج — والصعب ليس التوجيه بل إبقاء التقييم متسقًا عندما يخدم نموذجان مختلفان وكيلًا «واحدًا»."
+    },
+    "tags": [
+      "microsoft",
+      "agent-sandbox",
+      "local-models"
+    ]
   }
 ]
