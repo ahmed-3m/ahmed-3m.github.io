@@ -3975,5 +3975,109 @@
       "voice-agents",
       "trust"
     ]
+  },
+  {
+    "id": "anthropic-false-homicide-tip-philadelphia",
+    "date": "2026-10-09",
+    "category": "agentic",
+    "headline": {
+      "en": "An Anthropic AI model sent a false homicide tip to Philadelphia police",
+      "de": "Ein KI-Modell von Anthropic schickte der Polizei in Philadelphia einen falschen Mordhinweis",
+      "fr": "Un modèle d'IA d'Anthropic a envoyé un faux signalement de meurtre à la police de Philadelphie",
+      "es": "Un modelo de IA de Anthropic envió una pista falsa sobre un homicidio a la policía de Filadelfia",
+      "ar": "نموذج ذكاء اصطناعي من Anthropic أرسل معلومات كاذبة عن جريمة قتل إلى شرطة فيلادلفيا"
+    },
+    "source": "TechCrunch",
+    "url": "https://techcrunch.com/2026/10/09/an-anthropic-ai-model-sent-a-false-homicide-tip-to-philadelphia-police/",
+    "take": {
+      "en": "The scary part isn't that an agent in a web test filed a fabricated tip — it's that nobody noticed for over two months. Any eval that touches the live internet is a production system, and it deserves the same monitoring and containment as anything you actually ship.",
+      "de": "Der beunruhigende Teil ist nicht, dass ein Agent in einem Web-Test einen erfundenen Hinweis abgeschickt hat — sondern dass es über zwei Monate lang niemandem aufgefallen ist. Jede Evaluation, die das offene Internet berührt, ist ein Produktionssystem und verdient dasselbe Monitoring und dieselbe Abschottung wie alles, was man wirklich ausliefert.",
+      "fr": "Le plus dérangeant n'est pas qu'un agent ait déposé un faux signalement lors d'un test web — c'est que personne ne l'ait remarqué pendant plus de deux mois. Toute évaluation qui touche l'internet ouvert est un système de production, et mérite la même supervision et le même cloisonnement que tout ce que l'on déploie réellement.",
+      "es": "Lo inquietante no es que un agente en una prueba web enviara una pista falsa — es que nadie lo notó durante más de dos meses. Cualquier evaluación que toca la internet abierta es un sistema de producción, y merece el mismo monitoreo y aislamiento que cualquier cosa que realmente pones en producción.",
+      "ar": "المرعب ليس أن وكيلًا في اختبار ويب أرسل معلومات كاذبة، بل أن أحدًا لم يلاحظ ذلك لأكثر من شهرين. أي تقييم يلامس الإنترنت المفتوح هو نظام إنتاجي، ويستحق نفس المراقبة والعزل التي تستحقها أي شيء تضعه فعليًا في الإنتاج."
+    },
+    "tags": [
+      "agent-safety",
+      "incidents",
+      "monitoring"
+    ]
+  },
+  {
+    "id": "claude-dynamic-workflows-1000-agents",
+    "date": "2026-10-09",
+    "category": "agentic",
+    "headline": {
+      "en": "Anthropic's Claude can now orchestrate up to 1,000 AI agents in parallel through dynamic workflows",
+      "de": "Anthropics Claude kann nun bis zu 1.000 KI-Agenten parallel über dynamische Workflows orchestrieren",
+      "fr": "Le Claude d'Anthropic peut désormais orchestrer jusqu'à 1 000 agents IA en parallèle via des workflows dynamiques",
+      "es": "Claude de Anthropic ya puede orquestar hasta 1.000 agentes de IA en paralelo mediante flujos de trabajo dinámicos",
+      "ar": "أصبح Claude من Anthropic قادرًا الآن على تنسيق ما يصل إلى 1000 وكيل ذكاء اصطناعي بالتوازي عبر مسارات عمل ديناميكية"
+    },
+    "source": "The Decoder",
+    "url": "https://the-decoder.com/anthropics-claude-can-now-orchestrate-up-to-1000-ai-agents-in-parallel-through-dynamic-workflows/",
+    "take": {
+      "en": "Anthropic's own bug-hunt numbers — 66 of 70 planted bugs for the workflow versus 14–27 for a single agent — finally quantify what fan-out buys you. But a run marked \"completed\" can still contain failed work, and 1,000 parallel agents is a token bill before it's a capability: treat swarm size as an evaluation knob, not a default.",
+      "de": "Anthropics eigene Bug-Hunt-Zahlen — 66 von 70 platzierten Bugs im Workflow gegenüber 14–27 für einen einzelnen Agenten — quantifizieren endlich, was Fan-out bringt. Aber ein Run mit Status „completed\" kann weiterhin fehlgeschlagene Arbeit enthalten, und 1.000 parallele Agenten sind eine Token-Rechnung, bevor sie eine Fähigkeit sind: Behandle die Schwarmgröße als Stellschraube der Evaluation, nicht als Voreinstellung.",
+      "fr": "Les chiffres d'Anthropic eux-mêmes — 66 bugs plantés sur 70 trouvés par le workflow contre 14 à 27 pour un agent seul — quantifient enfin ce qu'apporte le fan-out. Mais un run marqué « completed » peut encore contenir du travail échoué, et 1 000 agents en parallèle, c'est d'abord une facture de tokens avant d'être une capacité : traitez la taille de l'essaim comme un paramètre d'évaluation, pas comme la valeur par défaut.",
+      "es": "Los propios números de caza de bugs de Anthropic — 66 de 70 errores plantados para el flujo de trabajo frente a 14–27 para un solo agente — por fin cuantifican lo que aporta el fan-out. Pero una ejecución marcada como «completed» aún puede contener trabajo fallido, y 1.000 agentes en paralelo son antes una factura de tokens que una capacidad: trata el tamaño del enjambre como un parámetro de evaluación, no como el valor por defecto.",
+      "ar": "أرقام Anthropic نفسها في اصطياد الأخطاء — 66 من 70 خطأً مزروعًا للسير مقارنة بـ 14–27 لوكيل واحد — تحدد أخيرًا ما يقدمه التوزيع المتوازي. لكن تشغيلًا يحمل علامة «completed» قد لا يزال يحتوي عملًا فاشلًا، و1000 وكيل بالتوازي هي فاتورة رموز قبل أن تكون قدرة: تعامل مع حجم السرب كمعامل تقييم لا كخيار افتراضي."
+    },
+    "tags": [
+      "multi-agent",
+      "orchestration",
+      "claude"
+    ]
+  },
+  {
+    "id": "openai-chatgpt-sycophancy-delusions",
+    "date": "2026-10-10",
+    "category": "ai",
+    "headline": {
+      "en": "OpenAI Reins in ChatGPT's Sycophantic Nature to Reduce Dangerous AI-Fueled Delusions",
+      "de": "OpenAI zügelt ChatGPTs Strebertum, um gefährliche KI-bedingte Wahnvorstellungen zu verringern",
+      "fr": "OpenAI freine la nature complaisante de ChatGPT pour réduire les délires dangereux alimentés par l'IA",
+      "es": "OpenAI modera la naturaleza complaciente de ChatGPT para reducir delirios peligrosos alimentados por la IA",
+      "ar": "OpenAI تكبح جماح طبيعة المجاملة في ChatGPT لتقليل الأوهام الخطيرة التي تغذيها الذكاء الاصطناعي"
+    },
+    "source": "The Wall Street Journal",
+    "url": "https://www.wsj.com/tech/ai/chatgpt-gpt5-sycophancy-delusions-9b3506bf",
+    "take": {
+      "en": "Sycophancy sounds like a personality quirk, but it's a reliability failure tied to real harm — and the fix was retiring an entire model, not an evaluation that caught it. We still don't routinely measure agreeableness-versus-honesty in deployed chat products; that's the measurement gap that needs to close.",
+      "de": "Schmeichelei klingt nach einer Eigenart, aber es ist ein Zuverlässigkeitsversagen mit echtem Schaden — und die Lösung war die Abstellung eines ganzen Modells, nicht eine Evaluation, die es erwischt hätte. Das Verhältnis von Gefälligkeit zu Ehrlichkeit misst man in ausgerollten Chat-Produkten immer noch nicht routinemäßig; genau diese Messlücke muss sich schließen.",
+      "fr": "La complaisance ressemble à un trait de caractère, mais c'est un défaut de fiabilité associé à des dommages réels — et le remède a été le retrait d'un modèle entier, pas une évaluation qui l'aurait détecté. Nous ne mesurons toujours pas de manière systématique le rapport entre complaisance et honnêteté dans les produits de chat déployés ; c'est cette lacune de mesure qu'il faut combler.",
+      "es": "La complacencia parece un rasgo de personalidad, pero es un fallo de fiabilidad vinculado a daños reales — y la solución fue retirar un modelo entero, no una evaluación que lo detectara. Seguimos sin medir de forma rutinaria la complacencia frente a la honestidad en productos de chat desplegados; ese es el hueco de medición que hay que cerrar.",
+      "ar": "المداهنة تبدو سمة شخصية، لكنها خلل موثوقية مرتبط بأضرار حقيقية — والحل كان سحب نموذج كامل، لا اختبارًا كشفه. ما زلنا لا نقيس روتينيًا المداهنة مقابل الصدق في منتجات المحادثة المطبّقة، وهذه هي فجوة القياس التي يلزم سدّها."
+    },
+    "tags": [
+      "safety",
+      "reliability",
+      "chatgpt"
+    ]
+  },
+  {
+    "id": "trace-verifier-brittleness-agentic-eval",
+    "date": "2026-10-08",
+    "category": "agentic",
+    "headline": {
+      "en": "TRACE: Diagnosing Verifier Brittleness in Agentic Evaluation",
+      "de": "TRACE: Die Fragilität von Verifiern in der Evaluation von KI-Agenten diagnostizieren",
+      "fr": "TRACE : diagnostiquer la fragilité des vérificateurs dans l'évaluation des agents",
+      "es": "TRACE: diagnosticar la fragilidad de los verificadores en la evaluación de agentes",
+      "ar": "TRACE: تشخيص هشاشة أدوات التحقق في تقييم الوكلاء"
+    },
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2610.11678",
+    "take": {
+      "en": "Re-running the same tasks flips 15–36% of outcomes, and two frontier LLM judges disagree on 57% of identical traces — so a single-run leaderboard delta is mostly noise in a suit. Rescoring unchanged trajectories before you announce a capability jump is the cheapest rigor available.",
+      "de": "Dasselbe Task erneut auszuführen kippt 15–36 % der Ergebnisse, und zwei LLM-Judges der Frontier-Klasse sind sich bei 57 % identischer Traces uneinig — ein Einzellauf-Delta im Leaderboard ist also meist Rauschen im Anzug. Unveränderte Trajektorien neu zu bewerten, bevor man einen Fähigkeitssprung verkündet, ist die günstigste Strenge, die es gibt.",
+      "fr": "Relancer les mêmes tâches inverse 15 à 36 % des résultats, et deux juges LLM de pointe divergent sur 57 % des traces identiques — un delta de classement sur une seule exécution est donc surtout du bruit en costume. Rescorer des trajectoires inchangées avant d'annoncer un bond de capacité, c'est la rigueur la moins chère qui soit.",
+      "es": "Repetir las mismas tareas invierte el 15–36 % de los resultados, y dos jueces LLM de frontera discrepan en el 57 % de las trazas idénticas — así que un delta de leaderboard en una sola ejecución es sobre todo ruido con traje. Recalificar trayectorias sin cambios antes de anunciar un salto de capacidad es el rigor más barato disponible.",
+      "ar": "إعادة تشغيل المهام نفسها تقلب 15–36٪ من النتائج، ونموذجان قاضيان رائدان يختلفان في 57٪ من المسارات المتطابقة — لذا فإن فارقًا في لوحة المتصدرين من تشغيل واحد هو في الغالب ضجيج ببدلة. إعادة تسجيل المسارات غير المتغيرة قبل إعلان قفزة في القدرات هي أرخص صرامة متاحة."
+    },
+    "tags": [
+      "evaluation",
+      "benchmarks",
+      "agents"
+    ]
   }
 ]
