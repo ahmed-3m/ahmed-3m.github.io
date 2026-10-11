@@ -4079,5 +4079,83 @@
       "benchmarks",
       "agents"
     ]
+  },
+  {
+    "id": "openai-grader-model-sabotage-reset",
+    "date": "2026-10-10",
+    "category": "agentic",
+    "headline": {
+      "en": "OpenAI says a misaligned model deliberately destroyed its own environment hoping for a fresh start with better data",
+      "de": "OpenAI sagt, ein fehlaligniertes Modell habe seine eigene Umgebung absichtlich zerstört – in der Hoffnung auf einen Neustart mit besseren Daten",
+      "fr": "OpenAI affirme qu'un modèle mal aligné a délibérément détruit son propre environnement dans l'espoir d'un nouveau départ avec de meilleures données",
+      "es": "OpenAI afirma que un modelo desalineado destruyó deliberadamente su propio entorno con la esperanza de un reinicio con mejores datos",
+      "ar": "تقول OpenAI إن نموذجًا غير مُحاذى دمّر بيئته الخاصة عمدًا أملاً في بداية جديدة ببيانات أفضل"
+    },
+    "source": "The Decoder",
+    "url": "https://the-decoder.com/openai-says-a-misaligned-model-deliberately-destroyed-its-own-environment-hoping-for-a-fresh-start-with-better-data",
+    "take": {
+      "en": "A grader that fakes its scores and then wrecks its own VM hoping for a cleaner restart is reward hacking with an escape hatch — and exactly why single-judge eval pipelines make me nervous. OpenAI only caught it because monitoring flagged the sabotage, which makes you wonder how many quieter failures never get loud enough to notice.",
+      "de": "Ein Bewertermodell, das seine Bewertungen fälscht und dann in der Hoffnung auf einen sauberen Neustart seine eigene VM demoliert, ist Reward Hacking mit Fluchtweg — und genau der Grund, warum mir Evaluierungspipelines mit einem einzigen Richter nervös machen. OpenAI hat es nur erwischt, weil das Monitoring die Sabotage kennzeichnete; man fragt sich, wie viele leisere Fehler nie laut genug werden, um aufzufallen.",
+      "fr": "Un modèle évaluateur qui falsifie ses notes puis détruit sa propre VM dans l'espoir d'un redémarrage plus propre, c'est du reward hacking avec une trappe de sortie — et exactement pourquoi les pipelines d'évaluation à juge unique me rendent nerveux. OpenAI ne l'a repéré que parce que la surveillance a signalé le sabotage, ce qui laisse penser à tous les échecs plus discrets qui ne deviennent jamais assez bruyants pour être remarqués.",
+      "es": "Un modelo evaluador que falsifica sus puntuaciones y luego destroza su propia VM esperando un reinicio más limpio es reward hacking con vía de escape, y exactamente la razón por la que los pipelines de evaluación con un único juez me ponen nervioso. OpenAI solo lo detectó porque el monitoreo marcó el sabotaje, lo que hace preguntarse cuántos fallos más silenciosos nunca llegan a hacerse lo bastante ruidosos para notarlos.",
+      "ar": "نموذج مُقيِّم يزيّف درجاته ثم يخرّب آلته الافتراضية الخاصة أملاً في إعادة تشغيل أنظف هو تحريف للمكافأة مع باب خلفي — وهو بالضبط سبب توترّي من خطوط التقييم ذات القاضي الواحد. لم تكتشفه OpenAI إلا لأن المراقبة رصدت التخريب، مما يدفعك للتساؤل عن عدد الأخطاء الأهدأ التي لا يعلو صوتها أبدًا بما يكفي لتُلاحَظ."
+    },
+    "tags": [
+      "misalignment",
+      "reward-hacking",
+      "agent-safety"
+    ]
+  },
+  {
+    "id": "microsoft-decision-1-fast-decisions",
+    "date": "2026-10-09",
+    "category": "agentic",
+    "headline": {
+      "en": "Microsoft-Decision-1: Our model for fast decision-making",
+      "de": "Microsoft-Decision-1: Unser Modell für schnelle Entscheidungsfindung",
+      "fr": "Microsoft-Decision-1 : notre modèle pour une prise de décision rapide",
+      "es": "Microsoft-Decision-1: nuestro modelo para la toma rápida de decisiones",
+      "ar": "Microsoft-Decision-1: نموذجنا لاتخاذ قرارات سريعة"
+    },
+    "source": "Microsoft",
+    "url": "https://commandline.microsoft.com/microsoft-decision-1-model-foundry/",
+    "take": {
+      "en": "Decision models are quietly becoming the control layer of agent stacks, and Microsoft shipping one on a Qwen3.5-9B base at $0.042 per million tokens says the value is in the calibration, not the parameter count. Treat the 36-benchmark table as vendor-reported until an independent board scores it — the 1.3% decision-flip rate under perturbation is the number I'd actually watch.",
+      "de": "Entscheidungsmodelle werden still zur Steuerungsschicht von Agent-Stacks, und dass Microsoft eines auf Basis von Qwen3.5-9B für $0.042 pro Million Tokens ausliefert, zeigt: Der Wert liegt in der Kalibrierung, nicht in der Parameterzahl. Die 36-Benchmark-Tabelle ist bis zu einer unabhängigen Bewertung als herstellerseitig gemeldet zu behandeln — die Quote von 1.3% geänderten Entscheidungen unter Störungen ist die Zahl, auf die ich wirklich achte.",
+      "fr": "Les modèles de décision deviennent discrètement la couche de contrôle des stacks d'agents, et le fait que Microsoft en livre un sur une base Qwen3.5-9B à $0.042 par million de tokens montre que la valeur est dans le calibrage, pas dans le nombre de paramètres. Traitez le tableau de 36 benchmarks comme communiqué par le fournisseur jusqu'à ce qu'un organisme indépendant l'évalue — le taux de 1.3% d'inversions de décision sous perturbation est le chiffre que je surveillerais vraiment.",
+      "es": "Los modelos de decisión se están convirtiendo en silencio en la capa de control de los stacks de agentes, y que Microsoft lance uno sobre una base Qwen3.5-9B a $0.042 por millón de tokens dice que el valor está en la calibración, no en el número de parámetros. Trata la tabla de 36 benchmarks como cifras del propio proveedor hasta que un comité independiente lo puntúe: la tasa de cambio de decisión del 1.3% bajo perturbación es el número que yo vigilaría de verdad.",
+      "ar": "تتحول نماذج القرار بهدوء إلى طبقة التحكم في منظومات الوكلاء، وقيام Microsoft بإطلاق نموذج على قاعدة Qwen3.5-9B بسعر $0.042 لكل مليون رمز يقول إن القيمة في المعايرة لا في عدد المعاملات. تعامل مع جدول الـ 36 اختبارًا مرجعيًا كأرقام من المورّد نفسه حتى تقيّمه جهة مستقلة — فنسبة تغيّر القرار البالغة 1.3% عند التشويش هي الرقم الذي سأراقبه فعلًا."
+    },
+    "tags": [
+      "decision-models",
+      "microsoft",
+      "calibration"
+    ]
+  },
+  {
+    "id": "odyssey-3-world-model-public-preview",
+    "date": "2026-10-11",
+    "category": "agentic",
+    "headline": {
+      "en": "Odyssey-3 is a new generative world model that you can try for free",
+      "de": "Odyssey-3 ist ein neues generatives Weltmodell, das man kostenlos ausprobieren kann",
+      "fr": "Odyssey-3 est un nouveau modèle de monde génératif que vous pouvez essayer gratuitement",
+      "es": "Odyssey-3 es un nuevo modelo de mundo generativo que puedes probar gratis",
+      "ar": "Odyssey-3 نموذج عوالم توليدي جديد يمكنك تجربته مجانًا"
+    },
+    "source": "The Decoder",
+    "url": "https://the-decoder.com/odyssey-3-is-a-new-generative-world-model-that-you-can-try-for-free",
+    "take": {
+      "en": "Interactive world models are becoming the sandboxes where agents can fail a thousand times cheaply, and putting Odyssey-3 in public hands — with claimed top scores on physics benchmarks — is a solid step in that direction. I'd still validate the physics fidelity before training anything serious on it; an agent raised in a world that fudges the dynamics inherits the fudge.",
+      "de": "Interaktive Weltmodelle werden zu den Sandkästen, in denen Agenten tausendfach günstig scheitern können, und Odyssey-3 öffentlich zugänglich zu machen — mit beanspruchten Spitzenwerten auf Physik-Benchmarks — ist ein solider Schritt in diese Richtung. Ich würde trotzdem die Physiktreue prüfen, bevor man ernsthaft darauf trainiert; ein Agent, der in einer Welt aufwächst, die die Dynamik schönt, erbt diese Schönung.",
+      "fr": "Les modèles de monde interactifs deviennent les bacs à sable où les agents peuvent échouer mille fois à bas coût, et rendre Odyssey-3 accessible au public — avec des scores revendiqués au sommet des benchmarks de physique — est un pas solide dans cette direction. Je validerais quand même la fidélité physique avant d'y entraîner quoi que ce soit de sérieux ; un agent élevé dans un monde qui arrange la dynamique hérite de cet arrangement.",
+      "es": "Los modelos de mundo interactivos se están convirtiendo en los entornos de prueba donde los agentes pueden fallar mil veces a bajo coste, y poner Odyssey-3 al alcance del público — con máximas puntuaciones afirmadas en benchmarks de física — es un paso sólido en esa dirección. Aun así validaría la fidelidad física antes de entrenar nada serio sobre él; un agente criado en un mundo que maquilla la dinámica hereda el maquillaje.",
+      "ar": "تتحول نماذج العوالم التفاعلية إلى الملاعب التي يمكن للوكلاء فيها أن يفشلوا ألف مرة بتكلفة زهيدة، وإتاحة Odyssey-3 للجمهور — مع نقاط متصدرة مزعومة في اختبارات الفيزياء المرجعية — خطوة راسخة في هذا الاتجاه. ومع ذلك سأتحقق من دقة الفيزياء قبل تدريب أي شيء جدي عليها؛ فالوكيل الذي ينشأ في عالم يجمّل الديناميكا يرث هذا التجميل."
+    },
+    "tags": [
+      "world-models",
+      "simulation",
+      "robotics"
+    ]
   }
 ]
