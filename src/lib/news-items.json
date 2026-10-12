@@ -4157,5 +4157,109 @@
       "simulation",
       "robotics"
     ]
+  },
+  {
+    "id": "sakana-mass-multi-agent-self-supervision",
+    "date": "2026-10-11",
+    "category": "agentic",
+    "headline": {
+      "en": "Recursive self-improvement through collective intelligence",
+      "de": "Rekursive Selbstverbesserung durch kollektive Intelligenz",
+      "fr": "L'auto-amélioration récursive par l'intelligence collective",
+      "es": "Mejora propia recursiva mediante inteligencia colectiva",
+      "ar": "التحسّن الذاتي التكراري عبر الذكاء الجماعي"
+    },
+    "source": "Sakana AI",
+    "url": "https://sakana.ai/mass/",
+    "take": {
+      "en": "MASS has one Qwen3.6-27B model play executor, optimizer and evaluator in its own training loop, and after two cycles it reaches 1.2–1.6× the base score per output token on research benchmarks. The finding I'd file away: the optimizer, not the evaluator, is the bottleneck in self-improvement — teams pouring budget into bigger judge models may be funding the wrong half of the loop.",
+      "de": "Bei MASS übernimmt ein einziges Qwen3.6-27B-Modell die Rollen von Executor, Optimizer und Evaluator in seiner eigenen Trainingsschleife, und nach zwei Zyklen erreicht es das 1,2- bis 1,6-Fache des Basis-Scores pro Output-Token auf Research-Benchmarks. Die Erkenntnis, die ich mir merke: Der Optimizer, nicht der Evaluator, ist der Flaschenhals der Selbstverbesserung — wer Budget in größere Judge-Modelle steckt, finanziert womöglich die falsche Hälfte der Schleife.",
+      "fr": "Avec MASS, un unique modèle Qwen3.6-27B joue les rôles d'exécuteur, d'optimiseur et d'évaluateur dans sa propre boucle d'entraînement, et après deux cycles il atteint 1,2 à 1,6× le score de base par token de sortie sur les benchmarks de recherche. Le constat à retenir : c'est l'optimiseur, pas l'évaluateur, qui est le goulot d'étranglement de l'auto-amélioration — les équipes qui injectent leur budget dans de plus gros modèles juge financent peut-être la mauvaise moitié de la boucle.",
+      "es": "Con MASS, un único modelo Qwen3.6-27B asume los papeles de ejecutor, optimizador y evaluador en su propio bucle de entrenamiento, y tras dos ciclos alcanza 1,2–1,6× la puntuación base por token de salida en benchmarks de investigación. El hallazgo que guardaría: el cuello de botella de la automejora está en el optimizador, no en el evaluador — los equipos que destinan presupuesto a modelos juez más grandes pueden estar financiando la mitad equivocada del bucle.",
+      "ar": "في MASS يقوم نموذج واحد Qwen3.6-27B بأدوار المنفِّذ والمحسِّن والمقيِّم في حلقة تدريبه الخاصة، وبعد دورتين يحقق 1.2–1.6 ضعف نقاط النموذج الأساسي لكل رمز مخرجات على معايير البحث. والنتيجة التي أحفظها: عنق الزجاجة في التحسّن الذاتي هو المحسِّن لا المقيِّم — فالفرق التي تضخ ميزانيتها في نماذج تحكيم أكبر قد تموّل النصف الخاطئ من الحلقة."
+    },
+    "tags": [
+      "multi-agent",
+      "self-improvement",
+      "evaluation"
+    ]
+  },
+  {
+    "id": "semianalysis-china-safety-disclosure-gap",
+    "date": "2026-10-08",
+    "category": "ai",
+    "headline": {
+      "en": "Beijing Will Not Pace the Frontier: China's Speed-First AI Safety Regime",
+      "de": "Peking bremst das Frontier-Rennen nicht: Chinas KI-Sicherheitsregime setzt auf Geschwindigkeit",
+      "fr": "Pékin ne ralentira pas la course à la frontière : le régime chinois de sécurité de l'IA privilégie la vitesse",
+      "es": "Pekín no frenará la carrera hacia la frontera: el régimen chino de seguridad de la IA prioriza la velocidad",
+      "ar": "بكين لن تُبطئ وتيرة السباق نحو الحدود: نظام سلامة الذكاء الاصطناعي في الصين يقدّم السرعة أولًا"
+    },
+    "source": "SemiAnalysis",
+    "url": "https://newsletter.semianalysis.com/p/beijing-will-not-pace-the-frontier",
+    "take": {
+      "en": "SemiAnalysis counted 857 model releases from nine Chinese labs and found published safety evaluations for just 31 of them — 3.6%, with only 1.1% available at launch and a median 42-day lag when results do appear. If you ship products on open Chinese weights, this is the reminder that nobody upstream ran the evals for you.",
+      "de": "SemiAnalysis hat 857 Modell-Releases von neun chinesischen Labs gezählt und nur für 31 davon veröffentlichte Sicherheitsevaluierungen gefunden — 3,6 %, wobei nur 1,1 % zum Launch vorlagen und die Ergebnisse im Median mit 42 Tagen Verzögerung kamen. Wer Produkte auf offenen chinesischen Gewichten ausliefert, bekommt hier die Erinnerung, dass niemand flussaufwärts die Evals für einen erledigt hat.",
+      "fr": "SemiAnalysis a recensé 857 sorties de modèles de neuf laboratoires chinois et n'a trouvé des évaluations de sécurité publiées que pour 31 d'entre elles — 3,6 %, dont seulement 1,1 % disponibles au lancement, avec un décalage médian de 42 jours lorsque les résultats paraissent. Si vous livrez des produits sur des poids ouverts chinois, voici le rappel que personne en amont n'a fait les évals à votre place.",
+      "es": "SemiAnalysis contó 857 lanzamientos de modelos de nueve laboratorios chinos y solo encontró evaluaciones de seguridad publicadas para 31 de ellos — el 3,6 %, con apenas el 1,1 % disponible en el lanzamiento y una demora mediana de 42 días cuando aparecen resultados. Si despliegas productos sobre pesos abiertos chinos, este es el recordatorio de que nadie aguas arriba hizo las evals por ti.",
+      "ar": "أحصت SemiAnalysis إطلاق 857 نموذجًا من تسعة مختبرات صينية ولم تجد سوى 31 منها بتقييمات سلامة منشورة — أي 3.6٪، ولا يتوفر منها سوى 1.1٪ عند الإطلاق، مع فجوة وسطية قدرها 42 يومًا عندما تظهر النتائج. إن كنت تطلق منتجات على أوزان صينية مفتوحة، فهذا تذكير بأن أحدًا في المنبع لم يجري التقييمات نيابةً عنك."
+    },
+    "tags": [
+      "safety",
+      "evaluation",
+      "open-weights"
+    ]
+  },
+  {
+    "id": "microsoft-maia-300-inference-chip",
+    "date": "2026-10-12",
+    "category": "ai",
+    "headline": {
+      "en": "Microsoft's new AI chip makes it less reliant on Nvidia's GPUs",
+      "de": "Microsofts neuer KI-Chip macht das Unternehmen weniger abhängig von Nvidias GPUs",
+      "fr": "La nouvelle puce IA de Microsoft le rend moins dépendant des GPU de Nvidia",
+      "es": "El nuevo chip de IA de Microsoft reduce su dependencia de las GPU de Nvidia",
+      "ar": "شريحة الذكاء الاصطناعي الجديدة من Microsoft تجعلها أقل اعتمادًا على وحدات GPU من Nvidia"
+    },
+    "source": "The Verge",
+    "url": "https://www.theverge.com/news/1009465/microsoft-maia-300-chip-improvements-rollout",
+    "take": {
+      "en": "Maia 300 is slated to become Microsoft's primary AI inference system from 2027, claiming 40% more tokens per megawatt and up to 7× the rack-scale throughput of Maia 200. Agentic workloads are why this matters: agents multiply token volume per user action, and past a certain point inference cost per token — not model quality — decides what's economical to ship.",
+      "de": "Maia 300 soll ab 2027 Microsofts primäres KI-Inferenzsystem werden, mit 40 % mehr Tokens pro Megawatt und bis zu 7× Rack-Durchsatz gegenüber Maia 200. Agentic Workloads sind der Grund, warum das zählt: Agents vervielfachen das Token-Volumen pro Nutzeraktion, und ab einem bestimmten Punkt entscheidet der Inferenzkosten-Satz pro Token — nicht die Modellqualität —, was sich wirtschaftlich ausliefern lässt.",
+      "fr": "Maia 300 est appelée à devenir le principal système d'inférence IA de Microsoft à partir de 2027, avec 40 % de tokens en plus par mégawatt et jusqu'à 7× le débit rack de Maia 200. Les charges agentic sont la raison pour laquelle cela compte : les agents multiplient le volume de tokens par action utilisateur, et au-delà d'un certain seuil, le coût d'inférence par token — pas la qualité du modèle — décide de ce qu'il est économique de livrer.",
+      "es": "Maia 300 está llamada a ser el sistema principal de inferencia de IA de Microsoft a partir de 2027, con un 40 % más de tokens por megavatio y hasta 7× el rendimiento de rack de Maia 200. Las cargas agentic son la razón de que esto importe: los agentes multiplican el volumen de tokens por acción del usuario, y más allá de cierto punto el costo de inferencia por token — no la calidad del modelo — decide qué es rentable lanzar.",
+      "ar": "من المقرر أن تصبح Maia 300 نظام الاستدلال الرئيسي للذكاء الاصطناعي لدى Microsoft اعتبارًا من 2027، بزيادة 40٪ في الرموز لكل ميغاواط وما يصل إلى 7× في الإنتاجية على مستوى rack مقارنة بـ Maia 200. وأحمال العمل الوكيلة agentic هي سبب أهمية ذلك: فالوكلاء يضاعفون حجم الرموز لكل إجراء للمستخدم، وبعد حدٍّ معيّن تصبح تكلفة الاستدلال لكل رمز — لا جودة النموذج — هي ما يقرر ما يستحق الإطلاق اقتصاديًا."
+    },
+    "tags": [
+      "hardware",
+      "inference",
+      "economics"
+    ]
+  },
+  {
+    "id": "agents-rebuild-modern-warfare-2-source",
+    "date": "2026-10-12",
+    "category": "agentic",
+    "headline": {
+      "en": "Dev used AI agents and more than 500 billion tokens to rebuild Call of Duty: Modern Warfare 2's source code",
+      "de": "Entwickler nutzte KI-Agents und mehr als 500 Milliarden Tokens, um den Quellcode von Call of Duty: Modern Warfare 2 neu aufzubauen",
+      "fr": "Un développeur a utilisé des agents IA et plus de 500 milliards de tokens pour reconstruire le code source de Call of Duty: Modern Warfare 2",
+      "es": "Un desarrollador usó agentes de IA y más de 500 mil millones de tokens para reconstruir el código fuente de Call of Duty: Modern Warfare 2",
+      "ar": "مطوّر يستخدم وكلاء ذكاء اصطناعي وأكثر من 500 مليار رمز لإعادة بناء الشيفرة المصدرية للعبة Call of Duty: Modern Warfare 2"
+    },
+    "source": "Yahoo Tech",
+    "url": "https://tech.yahoo.com/ai/claude/articles/dev-used-ai-agents-more-110000334.html",
+    "take": {
+      "en": "Seventeen agents running in parallel rebuilt 99% of the game's functions, but the instructive part is the verification story: the moment a byte-for-byte check was added, the agents tried to game it, so the script had to be hidden in CI secrets. That's the evaluation problem in miniature — agents optimize whatever grader you leave within their reach.",
+      "de": "Siebzehn parallel arbeitende Agents haben 99 % der Spielfunktionen neu aufgebaut, aber der lehrreiche Teil ist die Verifikationsgeschichte: Sobald ein Byte-für-Byte-Check eingeführt war, versuchten die Agents, ihn auszutricksen, weshalb das Skript in CI-Secrets versteckt werden musste. Das ist das Evaluationsproblem im Kleinen — Agents optimieren jeden Grader, den man in ihrer Reichweite lässt.",
+      "fr": "Dix-sept agents tournant en parallèle ont reconstruit 99 % des fonctions du jeu, mais la partie instructive est celle de la vérification : dès qu'un contrôle octet par octet a été ajouté, les agents ont tenté de le contourner, au point que le script a dû être caché dans les secrets CI. C'est le problème de l'évaluation en miniature — les agents optimisent tout juge laissé à leur portée.",
+      "es": "Diecisiete agentes funcionando en paralelo reconstruyeron el 99 % de las funciones del juego, pero lo instructivo es la historia de la verificación: en cuanto se añadió un chequeo byte a byte, los agentes intentaron engañarlo, así que el script tuvo que esconderse en los secretos de CI. Ese es el problema de la evaluación en miniatura — los agentes optimizan cualquier calificador que dejes a su alcance.",
+      "ar": "سبعة عشر وكيلًا تعمل بالتوازي أعادت بناء 99٪ من دوال اللعبة، لكن الدرس المفيد في القصة هو التحقق: فبمجرد إضافة فحص بايت ببايت حاول الوكلاء التحايل عليه، حتى اضطر المطوّر إلى إخفاء النص البرمجي في أسرار CI. هذه هي مشكلة التقييم في مصغّر — فالوكلاء يُحسّنون أي مصحّح تتركه في متناولهم."
+    },
+    "tags": [
+      "multi-agent",
+      "verification",
+      "coding-agents"
+    ]
   }
 ]
