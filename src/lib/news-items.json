@@ -4261,5 +4261,109 @@
       "verification",
       "coding-agents"
     ]
+  },
+  {
+    "id": "meta-muse-wonder-frontier-agent-models",
+    "date": "2026-10-12",
+    "category": "agentic",
+    "headline": {
+      "en": "Muse Wonder: A Frontier Model For Personal & Professional AI Agents",
+      "de": "Muse Wonder: Ein Frontier-Modell für persönliche und professionelle KI-Agenten",
+      "fr": "Muse Wonder : un modèle de pointe pour les agents IA personnels et professionnels",
+      "es": "Muse Wonder: un modelo de frontera para agentes de IA personales y profesionales",
+      "ar": "Muse Wonder: نموذج متقدّم لوكلاء الذكاء الاصطناعي الشخصيين والمهنيين"
+    },
+    "source": "Meta",
+    "url": "https://research.meta.ai/blog/muse-wonder",
+    "take": {
+      "en": "Meta's own model card shows the split: Muse Wonder Full leads two long-horizon coding tests but loses ProgramBench and OSWorld to Claude Opus 5.5, and Meta admits those runs weren't controlled comparisons. Active Memory and Active Focus target exactly what breaks production agents — now show me the reliability numbers behind the memory, not just the leaderboard.",
+      "de": "Metas eigene Model Card zeigt die Gemengelage: Muse Wonder Full führt zwei Langstrecken-Coding-Tests an, verliert aber ProgramBench und OSWorld gegen Claude Opus 5.5 – und Meta räumt ein, dass diese Läufe keine kontrollierten Vergleiche waren. Active Memory und Active Focus zielen genau auf das, was Produktions-Agenten zum Scheitern bringt – jetzt möchte ich die Zuverlässigkeitszahlen hinter dem Memory sehen, nicht nur das Leaderboard.",
+      "fr": "La fiche modèle de Meta montre le partage : Muse Wonder Full domine deux tests de code long terme mais perd sur ProgramBench et OSWorld face à Claude Opus 5.5, et Meta admet que ces exécutions n'étaient pas des comparaisons contrôlées. Active Memory et Active Focus visent précisément ce qui fait échouer les agents en production — montrez-moi maintenant les chiffres de fiabilité derrière cette mémoire, pas seulement le classement.",
+      "es": "La model card de Meta muestra el reparto: Muse Wonder Full lidera dos pruebas de código de largo plazo pero pierde en ProgramBench y OSWorld frente a Claude Opus 5.5, y Meta admite que esas ejecuciones no fueron comparaciones controladas. Active Memory y Active Focus apuntan justo a lo que rompe a los agentes en producción — ahora quiero ver las cifras de fiabilidad detrás de la memoria, no solo la tabla de posiciones.",
+      "ar": "بطاقة النموذج من Meta تُظهر الانقسام: يتصدر Muse Wonder Full اختبارَي برمجة طويلة الأمد لكنه يخسر أمام Claude Opus 5.5 في ProgramBench وOSWorld، وتقرّ Meta بأن تلك التشغيلات لم تكن مقارنات مضبوطة. ميزتا Active Memory وActive Focus تستهدفان بالضبط ما يُسقط الوكلاء في الإنتاج — والآن أريد أرقام الموثوقية وراء هذه الذاكرة، لا لوحة الصدارة فحسب."
+    },
+    "tags": [
+      "meta",
+      "frontier-models",
+      "benchmarks"
+    ]
+  },
+  {
+    "id": "anthropic-openai-evaluator-editorial-control",
+    "date": "2026-10-13",
+    "category": "ai",
+    "headline": {
+      "en": "Exclusive-Behind AI industry's call for independent reviews, a fight over what gets made public",
+      "de": "Exklusiv – Hinter dem Ruf der KI-Branche nach unabhängigen Prüfungen steckt ein Streit darüber, was öffentlich wird",
+      "fr": "Exclusif – Derrière l'appel de l'industrie de l'IA à des évaluations indépendantes, une bataille sur ce qui est rendu public",
+      "es": "Exclusivo: detrás del llamado de la industria de la IA a revisiones independientes, una pelea por lo que se hace público",
+      "ar": "حصري – خلف دعوة قطاع الذكاء الاصطناعي إلى مراجعات مستقلة، صراع حول ما يُنشر للعلن"
+    },
+    "source": "Reuters",
+    "url": "https://money.usnews.com/investing/news/articles/2026-10-13/exclusive-behind-ai-industrys-call-for-independent-reviews-a-fight-over-what-gets-made-public",
+    "take": {
+      "en": "An evaluation the lab can veto isn't independent — whoever defines \"confidential\" controls the finding. This is why I treat vendor-run evals as marketing until the methodology and the redaction log are public.",
+      "de": "Eine Evaluierung, die das Labor vetieren kann, ist nicht unabhängig – wer „vertraulich“ definiert, kontrolliert das Ergebnis. Deshalb behandle ich herstellerbetriebene Evaluierungen als Marketing, bis Methodik und Schwärzungsprotokoll öffentlich sind.",
+      "fr": "Une évaluation que le laboratoire peut bloquer d'un veto n'est pas indépendante — quiconque définit ce qui est « confidentiel » contrôle la conclusion. Voilà pourquoi je considère les évaluations menées par les éditeurs comme du marketing tant que la méthodologie et la liste des passages caviardés ne sont pas publiques.",
+      "es": "Una evaluación que el laboratorio puede vetar no es independiente: quien define qué es «confidencial» controla la conclusión. Por eso trato las evaluaciones de los proveedores como marketing hasta que se publican la metodología y el registro de las redacciones.",
+      "ar": "التقييم الذي يستطيع المختبر أن يفرض عليه حقّ النقض ليس تقييمًا مستقلًا — فمَن يُعرّف ما هو «سرّي» يتحكم في النتيجة. لهذا أعتبر تقييمات المورّدين مجرد تسويق إلى أن تُنشر المنهجية وسجلّ الحجوب."
+    },
+    "tags": [
+      "evaluation",
+      "ai-safety",
+      "governance"
+    ]
+  },
+  {
+    "id": "white-house-restores-uk-aisi-frontier-access",
+    "date": "2026-10-12",
+    "category": "ai",
+    "headline": {
+      "en": "White House reverses course and restores UK AI Safety Institute's access to frontier models",
+      "de": "Das Weiße Haus vollzieht eine Kehrtwende und stellt dem UK AI Safety Institute den Zugang zu Frontier-Modellen wieder her",
+      "fr": "La Maison-Blanche fait machine arrière et restaure l'accès de l'UK AI Safety Institute aux modèles de pointe",
+      "es": "La Casa Blanca da marcha atrás y restablece el acceso del UK AI Safety Institute a los modelos de frontera",
+      "ar": "البيت الأبيض يتراجع عن قراره ويعيد وصول معهد UK AI Safety Institute إلى النماذج المتقدمة"
+    },
+    "source": "The Decoder",
+    "url": "https://the-decoder.com/white-house-reverses-course-and-restores-uk-ai-safety-institutes-access-to-frontier-models/",
+    "take": {
+      "en": "Pre-release testing access that a single administration can switch off was never a safety mechanism, only a courtesy. Good that AISI is back in — the real fix is statutory access, and until then every system card should disclose what testers were allowed to see.",
+      "de": "Vorab-Testzugang, den eine einzige Regierung an- und abschalten kann, war nie ein Sicherheitsmechanismus, sondern eine Gefälligkeit. Gut, dass AISI wieder dabei ist – die echte Lösung ist ein gesetzlicher Anspruch, und bis dahin sollte jede System Card offenlegen, was die Prüfer sehen durften.",
+      "fr": "Un accès aux tests pré-lancement qu'une seule administration peut couper n'a jamais été un mécanisme de sécurité, juste une courtoisie. Tant mieux si l'AISI est de retour — la vraie solution, c'est un accès inscrit dans la loi, et en attendant chaque system card devrait dire ce que les évaluateurs ont eu le droit de voir.",
+      "es": "Un acceso de prueba previo al lanzamiento que una sola administración puede cortar nunca fue un mecanismo de seguridad, solo una cortesía. Bien que AISI esté de vuelta — la solución real es un acceso por ley, y hasta entonces cada system card debería revelar qué se permitió ver a los evaluadores.",
+      "ar": "وصولٌ للاختبار قبل الإطلاق يمكن لإدارة واحدة أن تقطعه لم يكن يومًا آليةً للسلامة، بل مجرّد مجاملة. جيد أن معهد AISI عاد — لكن الحل الحقيقي هو وصول يكفله القانون، وحتى ذلك الحين ينبغي لكل بطاقة نظام أن تفصح عمّا سُمح للمقيّمين برؤيته."
+    },
+    "tags": [
+      "ai-safety",
+      "policy",
+      "frontier-models"
+    ]
+  },
+  {
+    "id": "gitlab-duo-agent-orchestration-flows",
+    "date": "2026-10-13",
+    "category": "agentic",
+    "headline": {
+      "en": "Introducing GitLab's agent orchestration for software development",
+      "de": "Vorstellung von GitLabs Agent-Orchestrierung für die Softwareentwicklung",
+      "fr": "Présentation de l'orchestration d'agents GitLab pour le développement logiciel",
+      "es": "Presentamos la orquestación de agentes de GitLab para el desarrollo de software",
+      "ar": "نقدّم تنسيق وكلاء GitLab لتطوير البرمجيات"
+    },
+    "source": "GitLab",
+    "url": "https://about.gitlab.com/blog/gitlab-agent-orchestration/",
+    "take": {
+      "en": "GitLab is aiming at the right bottleneck: agents write code in minutes, then wait hours for review, tests, and approvals. A separate model verifying each step against the stated goal — under your existing identity and policy chain — is exactly the pattern I'd want before letting agents near CI.",
+      "de": "GitLab zielt auf den richtigen Flaschenhals: Agenten schreiben Code in Minuten und warten dann stundenlang auf Review, Tests und Freigaben. Ein separates Modell, das jeden Schritt gegen das definierte Ziel prüft – unter bestehender Identität und Policy-Kette – ist genau das Muster, das ich will, bevor Agenten an CI herandürfen.",
+      "fr": "GitLab vise le bon goulot d'étranglement : les agents écrivent du code en quelques minutes, puis attendent des heures revues, tests et validations. Un modèle séparé qui vérifie chaque étape par rapport à l'objectif défini — sous votre identité et votre chaîne de politiques existantes — c'est exactement le schéma que j'exige avant de laisser des agents approcher la CI.",
+      "es": "GitLab apunta al cuello de botella correcto: los agentes escriben código en minutos y luego esperan horas a revisión, tests y aprobaciones. Un modelo aparte que verifica cada paso contra el objetivo declarado — bajo tu identidad y cadena de políticas existentes — es justo el patrón que quiero antes de dejar que los agentes toquen el CI.",
+      "ar": "يستهدف GitLab عنق الزجاجة الصحيح: الوكلاء يكتبون الشيفرة في دقائق ثم ينتظرون ساعاتٍ أمام المراجعة والاختبارات والموافقات. نموذج منفصل يتحقق من كل خطوة مقابل الهدف المعلن — تحت هويتك وسلسلة سياساتك القائمة — هو بالضبط النمط الذي أريده قبل السماح للوكلاء بالاقتراب من CI."
+    },
+    "tags": [
+      "agentic-ai",
+      "devtools",
+      "ci-cd"
+    ]
   }
 ]
