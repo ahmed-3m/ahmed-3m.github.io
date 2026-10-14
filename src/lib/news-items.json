@@ -4365,5 +4365,109 @@
       "devtools",
       "ci-cd"
     ]
+  },
+  {
+    "id": "gemini-4-argon-global-availability",
+    "date": "2026-10-13",
+    "category": "ai",
+    "headline": {
+      "en": "Gemini 4 Argon is now available for everyone",
+      "de": "Gemini 4 Argon ist jetzt für alle verfügbar",
+      "fr": "Gemini 4 Argon est désormais disponible pour tous",
+      "es": "Gemini 4 Argon ya está disponible para todo el mundo",
+      "ar": "Gemini 4 Argon متاح الآن للجميع"
+    },
+    "source": "Google",
+    "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-argon/",
+    "take": {
+      "en": "The launch tables are mostly self-reported, and the interesting part is where Argon loses: it trails Opus 5.5 and GPT-6 Astra on agentic coding benchmarks like Terminal-Bench while leading the Vals Index at $2/$10 intro pricing. Credit where due — shipping a runtime misalignment monitor and quoting 0.7% on Gray Swan's prompt-injection benchmark is measurable defense-in-depth, not vibes.",
+      "de": "Die Launch-Tabellen sind meist selbst berichtet, und spannend ist vor allem, wo Argon verliert: Es liegt auf Agenten-Coding-Benchmarks wie Terminal-Bench hinter Opus 5.5 und GPT-6 Astra, führt dafür im Vals Index zum Intro-Preis von $2/$10. Anerkennung, wo sie fällig ist — ein Laufzeit-Monitor für Missalignment plus 0.7% auf Gray Swans Prompt-Injection-Benchmark ist messbare Defense-in-Depth statt Bauchgefühl.",
+      "fr": "Les tableaux du lancement sont majoritairement auto-rapportés, et le plus intéressant est là où Argon perd : il est derrière Opus 5.5 et GPT-6 Astra sur les benchmarks de codage agentique comme Terminal-Bench, tout en menant le Vals Index au prix introductif de $2/$10. Un crédit où il est dû — livrer un moniteur de désalignement à l'exécution et afficher 0.7% sur le benchmark d'injection de prompt de Gray Swan, c'est de la défense en profondeur mesurable, pas de l'intuition.",
+      "es": "Las tablas del lanzamiento son en su mayoría autoinformadas, y lo interesante es dónde pierde Argon: queda detrás de Opus 5.5 y GPT-6 Astra en benchmarks de codificación agéntica como Terminal-Bench, aunque lidera el Vals Index con un precio introductorio de $2/$10. Hay que reconocerlo: incluir un monitor de desalineación en tiempo de ejecución y citar 0.7% en el benchmark de inyección de prompts de Gray Swan es defensa en profundidad medible, no intuición.",
+      "ar": "جداول هذا الإطلاق يبلّغ عنها المزوّد نفسه في الغالب، والأهم هو أين يخسر Argon: يتأخر عن Opus 5.5 وGPT-6 Astra في معايير البرمجة الوكيلة مثل Terminal-Bench بينما يتصدّر Vals Index بسعر تمهيدي قدره $2/$10. وإنصافًا لهم: تضمين مراقب لعدم الاصطفاف يعمل أثناء التنفيذ والاستشهاد بنسبة 0.7% في معيار حقن الأوامر من Gray Swan هو دفاع متعدد الطبقات قابل للقياس وليس مجرد انطباع."
+    },
+    "tags": [
+      "gemini",
+      "frontier-models",
+      "long-context"
+    ]
+  },
+  {
+    "id": "openai-anthropic-binding-rules-uk-mps",
+    "date": "2026-10-13",
+    "category": "ai",
+    "headline": {
+      "en": "OpenAI and Anthropic Tell British Lawmakers: Regulate Us",
+      "de": "OpenAI und Anthropic fordern von britischen Abgeordneten: Reguliert uns",
+      "fr": "OpenAI et Anthropic demandent aux parlementaires britanniques : régulez-nous",
+      "es": "OpenAI y Anthropic piden a los legisladores británicos: regúlennos",
+      "ar": "OpenAI وAnthropic يقولان للمشرّعين البريطانيين: نظّمونا"
+    },
+    "source": "WIRED",
+    "url": "https://www.wired.com/story/openai-and-anthropic-tell-british-lawmakers-regulate-us/",
+    "take": {
+      "en": "The detail that stuck with me isn't the labs' split on binding rules — it's the Cabinet Office conceding under oath that the whole AI Security Institute regime is voluntary, with no power to block a release. Voluntary pre-deployment evaluation isn't an eval regime, it's a courtesy; mandatory incident reporting is the right first commit.",
+      "de": "Der Punkt, der mir hängengeblieben ist, ist nicht die Spaltung der Labs über verbindliche Regeln — sondern das Eingeständnis des Cabinet Office unter Eid, dass das gesamte Regime der AI Security Institute freiwillig ist und keine Veröffentlichung blockieren kann. Freiwillige Evaluierung vor dem Deployment ist kein Eval-Regime, sondern eine Gefälligkeit; verpflichtende Vorfallberichte sind der richtige erste Commit.",
+      "fr": "Le détail qui m'a marqué n'est pas la division des labs sur des règles contraignantes — c'est le Cabinet Office admettant sous serment que tout le régime de l'AI Security Institute est volontaire, sans pouvoir de bloquer une mise en production. L'évaluation volontaire pré-déploiement n'est pas un régime d'évaluation, c'est une courtoisie ; la déclaration obligatoire des incidents est le bon premier commit.",
+      "es": "El detalle que me quedó no es la división de los laboratorios sobre reglas vinculantes — es que el Cabinet Office admitiera bajo juramento que todo el régimen del AI Security Institute es voluntario y no puede bloquear un lanzamiento. La evaluación voluntaria previa al despliegue no es un régimen de evaluación, es una cortesía; el reporte obligatorio de incidentes es el primer commit correcto.",
+      "ar": "التفصيل الذي علق في ذهني ليس انقسام المختبرات حول القواعد المُلزِمة، بل إقرار مكتب الوزراء البريطاني تحت القسم بأن نظام AI Security Institute بأكمله طوعي وبلا أي سلطة لمنع إطلاق أي نموذج. التقييم الطوعي قبل النشر ليس منظومة تقييم بل مجاملة؛ والإبلاغ الإلزامي عن الحوادث هو الالتزام الأول الصحيح."
+    },
+    "tags": [
+      "ai-safety",
+      "policy",
+      "regulation"
+    ]
+  },
+  {
+    "id": "prime-agent-rust-swarm-rewrite",
+    "date": "2026-10-09",
+    "category": "agentic",
+    "headline": {
+      "en": "Rewriting Prime Agent in Rust",
+      "de": "Prime Agent in Rust neu geschrieben",
+      "fr": "Réécrire Prime Agent en Rust",
+      "es": "Reescribir Prime Agent en Rust",
+      "ar": "إعادة كتابة Prime Agent بلغة Rust"
+    },
+    "source": "Prime Intellect",
+    "url": "https://www.primeintellect.ai/blog/prime-agent-rust",
+    "take": {
+      "en": "Everyone will quote the 2,000-agent swarm and 228.7B tokens; the durable lesson is the verification design — a root agent that writes no code, reviewers and verifiers on different models, and differential parity tests as the objective reward. Their own postscript says the bugs that slipped through were exactly the ones no test covered: autonomy scales only as far as your oracle does.",
+      "de": "Alle werden den Schwarm aus 2,000 Agenten und die 228.7B Token zitieren; die bleibende Lektion ist das Verifikationsdesign — ein Root-Agent, der selbst keinen Code schreibt, Reviewer und Verifier auf unterschiedlichen Modellen und differentielle Paritätstests als objektiver Reward. Ihr eigenes Resümee: Die Bugs, die durchrutschten, waren genau die, die kein Test abdeckte — Autonomie skaliert nur so weit wie das Orakel, das sie prüft.",
+      "fr": "Tout le monde va citer l'essaim de 2,000 agents et les 228.7B tokens ; la leçon durable, c'est la conception de la vérification — un agent racine qui n'écrit pas de code, des réviseurs et vérificateurs sur des modèles différents, et des tests de parité différentiels comme récompense objective. Leur propre conclusion : les bugs passés entre les mailles étaient précisément ceux qu'aucun test ne couvrait — l'autonomie grandit exactement autant que l'oracle qui la vérifie.",
+      "es": "Todos citarán el enjambre de 2,000 agentes y los 228.7B tokens; la lección duradera es el diseño de verificación — un agente raíz que no escribe código, revisores y verificadores en modelos distintos, y pruebas de paridad diferenciales como recompensa objetiva. Su propia conclusión: los bugs que se colaron fueron exactamente los que ninguna prueba cubría — la autonomía escala solo hasta donde escala tu oráculo.",
+      "ar": "سيقول الجميع سرب وكلاء من 2,000 وكيل و228.7B من التوكنات، لكن الدرس الباقي هو تصميم التحقق: وكيل جذري لا يكتب أي كود بنفسه، ومراجعون ومتحققون على نماذج مختلفة، واختبارات تكافؤ تفاضلية بوصفها المكافأة الموضوعية. وخلاصتهم أن الأخطاء التي تسللت كانت تحديدًا تلك التي لم يغطِّها أي اختبار — فالاستقلالية لا تتوسع إلا بقدر اتساع المرجع الذي يتحقق منها."
+    },
+    "tags": [
+      "multi-agent",
+      "verification",
+      "coding-agents"
+    ]
+  },
+  {
+    "id": "liquid-lfm2-5-24b-a2b-agents",
+    "date": "2026-10-13",
+    "category": "agentic",
+    "headline": {
+      "en": "LFM2.5-24B-A2B: Built for Fast On-Device Agents",
+      "de": "LFM2.5-24B-A2B: gebaut für schnelle On-Device-Agenten",
+      "fr": "LFM2.5-24B-A2B : conçu pour des agents rapides sur l'appareil",
+      "es": "LFM2.5-24B-A2B: diseñado para agentes rápidos en el dispositivo",
+      "ar": "LFM2.5-24B-A2B: مصمَّم لوكلاء سريعين على الجهاز"
+    },
+    "source": "Liquid AI",
+    "url": "https://www.liquid.ai/blog/lfm2-5-24b-a2b",
+    "take": {
+      "en": "24B total with 2B active and open weights makes continuous on-device agents economically plausible — cheap reasoning tokens are the whole game for always-on workloads. I respect that Liquid AI explicitly scopes it as tool-calling-first and not for knowledge-heavy tasks on its own; that kind of honest boundary-drawing is exactly what production deployments need more of.",
+      "de": "24B gesamt bei 2B aktiven Parametern und offenen Gewichten macht dauerhaft laufende On-Device-Agenten wirtschaftlich plausibel — billige Reasoning-Token sind bei Always-On-Workloads alles. Respekt, dass Liquid AI es ausdrücklich als Tool-Calling-first einordnet und klar sagt, dass es allein nicht für wissenslastige Aufgaben taugt; diese ehrliche Abgrenzung braucht man in Produktionssystemen viel öfter.",
+      "fr": "24B au total dont 2B actifs, avec des poids ouverts, rend les agents permanents sur l'appareil économiquement plausibles — des tokens de raisonnement bon marché sont l'essentiel pour des charges toujours actives. Je respecte que Liquid AI le positionne explicitement comme privilégiant l'appel d'outils et inadapté seul aux tâches riches en connaissances ; ce tracé honnête des limites est exactement ce dont les mises en production ont besoin.",
+      "es": "24B en total con 2B activos y pesos abiertos hace económicamente plausible a los agentes continuos en el dispositivo — los tokens de razonamiento baratos son todo en cargas always-on. Respeto que Liquid AI lo sitúe explícitamente como prioridad de llamada de herramientas y no apto por sí solo para tareas intensivas en conocimiento; trazar límites con esa honestidad es justo lo que necesitan los despliegues en producción.",
+      "ar": "24B إجماليًا مع 2B نشطة وأوزان مفتوحة تجعل الوكلاء الدائمين على الجهاز أمرًا معقولًا اقتصاديًا — فرموزات الاستدلال الرخيصة هي كل شيء في أحمال العمل المتواصلة. وأقدّر أن Liquid AI حدّدت نطاقه صراحةً بأنه أولًا لاستدعاء الأدوات وغير مناسب وحده للمهام كثيفة المعرفة؛ هذا الرسم الصادق للحدود هو بالضبط ما تحتاجه عمليات النشر الفعلية أكثر."
+    },
+    "tags": [
+      "on-device",
+      "open-weights",
+      "tool-use"
+    ]
   }
 ]
