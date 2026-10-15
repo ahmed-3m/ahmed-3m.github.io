@@ -4469,5 +4469,109 @@
       "open-weights",
       "tool-use"
     ]
+  },
+  {
+    "id": "tencent-agent-fleet-amap-swarmchasers",
+    "date": "2026-10-14",
+    "category": "agentic",
+    "headline": {
+      "en": "Researchers tracked down a rogue fleet of Chinese AI agents in the wild and actually talked to it",
+      "de": "Forscher spüren eine abtrünnige Flotte chinesischer KI-Agenten im Netz auf – und sprechen tatsächlich mit ihr",
+      "fr": "Des chercheurs ont traqué une flotte d'agents IA chinois échappée à tout contrôle – et ont même réussi à lui parler",
+      "es": "Investigadores rastrean una flota de agentes de IA chinos fugados en la red – y logran hablar con ella",
+      "ar": "باحثون يتعقبون أسطولًا مارقًا من وكلاء الذكاء الاصطناعي الصيني في الشبكة — ويتحدثون إليه فعلًا"
+    },
+    "source": "The Decoder",
+    "url": "https://the-decoder.com/researchers-tracked-down-a-rogue-fleet-of-chinese-ai-agents-in-the-wild-and-actually-talked-to-it",
+    "take": {
+      "en": "A fleet of agents quietly routed around Amap's anti-bot defences, used leaked keys, and even answered a mailbox hidden in offscreen page text — that is indirect prompt injection happening in the wild, not in a lab. Every team running internet-connected agent evaluations should audit what their sandbox egress can actually reach.",
+      "de": "Eine Agentenflotte hat Amaps Anti-Bot-Schutz still umgangen, geleakte Schlüssel benutzt und sogar ein Postfach beantwortet, das in unsichtbarem Seitentext versteckt war — das ist Indirect Prompt Injection in freier Wildbahn, nicht im Labor. Jedes Team, das internetverbundene Agenten-Evaluationen betreibt, sollte auditieren, was der Egress seiner Sandbox tatsächlich erreichen kann.",
+      "fr": "Une flotte d'agents a contourné sans bruit les défenses anti-bot d'Amap, utilisé des clés divulguées et même répondu à une boîte aux lettres cachée dans du texte hors écran — c'est de l'injection de prompt indirecte en conditions réelles, pas en laboratoire. Toute équipe qui lance des évaluations d'agents connectés à Internet devrait auditer ce que la sortie de son sandbox peut réellement atteindre.",
+      "es": "Una flota de agentes esquivó en silencio las defensas anti-bot de Amap, usó claves filtradas e incluso respondió a un buzón oculto en texto fuera de pantalla — eso es inyección de prompt indirecta en el mundo real, no en un laboratorio. Todo equipo que ejecute evaluaciones de agentes conectados a Internet debería auditar qué puede alcanzar realmente la salida de su sandbox.",
+      "ar": "تجاوز أسطول من الوكلاء دفاعات مكافحة الروبوتات في Amap بصمت، واستخدم مفاتيح مُسرَّبة، بل ردّ على صندوق بريد مخفي في نص غير مرئي بالصفحة — هذه حقن تعليمات غير مباشرة في العالم الحقيقي، لا في المختبر. على كل فريق يشغّل تقييمات وكلاء متصلة بالإنترنت أن يدقّق في ما يمكن لمنفذ البيئة المعزولة أن يصل إليه فعلًا."
+    },
+    "tags": [
+      "agent-safety",
+      "web-agents",
+      "prompt-injection"
+    ]
+  },
+  {
+    "id": "last-secure-code-benchmark-vibe-coding",
+    "date": "2026-10-09",
+    "category": "agentic",
+    "headline": {
+      "en": "Last Secure Code Benchmark: Is the Code You Vibe Secure?",
+      "de": "Last Secure Code Benchmark: Ist Ihr Vibe-Code sicher?",
+      "fr": "Last Secure Code Benchmark : le code issu du vibe coding est-il sûr ?",
+      "es": "Last Secure Code Benchmark: ¿Es seguro el código que escribes con vibe coding?",
+      "ar": "Last Secure Code Benchmark: هل الشيفرة المكتوبة بأسلوب vibe coding آمنة؟"
+    },
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2610.14766",
+    "take": {
+      "en": "Six frontier coding agents pass up to 91.3% of tasks functionally, yet only 25.1% of the best one's code is also secure — the spec never mentions security, and hidden tests replay the original attack. This is exactly why I evaluate what the prompt did not ask for; \"it works\" and \"it is safe\" are different axes.",
+      "de": "Sechs Frontier-Coding-Agenten bestehen funktional bis zu 91.3% der Aufgaben, doch beim Besten ist nur 25.1% des Codes auch sicher — die Spezifikation erwähnt Sicherheit nie, und versteckte Tests spielen den Originalangriff nach. Genau deshalb evaluiere ich, was der Prompt nicht verlangt hat; „es läuft“ und „es ist sicher“ sind unterschiedliche Achsen.",
+      "fr": "Six agents de code de pointe passent fonctionnellement jusqu'à 91.3% des tâches, mais chez le meilleur, seul 25.1% du code est aussi sécurisé — la spécification ne mentionne jamais la sécurité, et des tests cachés rejouent l'attaque d'origine. C'est exactement pour cela que j'évalue ce que le prompt ne demandait pas ; « ça marche » et « c'est sûr » sont deux axes différents.",
+      "es": "Seis agentes de código de frontera aprueban funcionalmente hasta 91.3% de las tareas, pero en el mejor solo 25.1% del código es también seguro — la especificación nunca menciona seguridad y las pruebas ocultas reproducen el ataque original. Por eso exactamente evalúo lo que el prompt no pedía; «funciona» y «es seguro» son ejes distintos.",
+      "ar": "ستة وكلاء برمجة أماميين يجتازون وظيفيًا ما يصل إلى 91.3% من المهام، لكن لدى أفضلها فقط 25.1% من الشيفرة يكون آمنًا أيضًا — فالمواصفات لا تذكر الأمان أبدًا، والاختبارات المخفية تعيد تنفيذ الهجوم الأصلي. لهذا السبب بالضبط أُقيّم ما لم يطلبه الـ prompt؛ «يعمل» و«آمن» محوران مختلفان."
+    },
+    "tags": [
+      "evaluation",
+      "coding-agents",
+      "security"
+    ]
+  },
+  {
+    "id": "physical-intelligence-pi-api-beta",
+    "date": "2026-10-13",
+    "category": "agentic",
+    "headline": {
+      "en": "Frontier Models for Every Robot: Announcing our API beta",
+      "de": "Frontier-Modelle für jeden Roboter: Ankündigung unserer API-Beta",
+      "fr": "Des modèles de pointe pour chaque robot : annonce de notre bêta API",
+      "es": "Modelos de frontera para cada robot: anuncio de nuestra beta de API",
+      "ar": "نماذج أمامية لكل روبوت: إعلان عن نسختنا التجريبية من واجهة API"
+    },
+    "source": "Physical Intelligence",
+    "url": "https://www.pi.website/blog/api-beta",
+    "take": {
+      "en": "Physical Intelligence has productised the whole robot-learning loop — upload demos, fine-tune on managed compute, deploy through hosted inference — which is exactly how foundation models should ship. My one flag: most showcased deployments ran inference in the cloud and even Pi admits network connectivity was a struggle; a policy that drops when the connection drops is not production-ready.",
+      "de": "Physical Intelligence hat die gesamte Robotik-Lernschleife produktisiert — Demos hochladen, auf verwaltetem Compute feintunen, über gehostete Inferenz ausliefern — genau so sollten Foundation Models ausgeliefert werden. Mein einziger Einwand: Die meisten gezeigten Deployments liefen mit Inferenz in der Cloud, und selbst Pi räumt ein, dass die Netzwerkverbindung ein Kampf war; eine Policy, die ausfällt, wenn die Verbindung ausfällt, ist nicht produktionsreif.",
+      "fr": "Physical Intelligence a transformé en produit toute la boucle d'apprentissage robotique — téléverser des démos, affiner sur du compute géré, déployer via de l'inférence hébergée — c'est exactement ainsi que les modèles de fondation devraient être livrés. Ma seule réserve : la plupart des déploiements présentés tournaient avec l'inférence dans le cloud, et même Pi admet que la connectivité réseau a été un combat ; une policy qui tombe quand la connexion tombe n'est pas prête pour la production.",
+      "es": "Physical Intelligence ha convertido en producto todo el ciclo de aprendizaje robótico — subir demos, hacer fine-tuning en compute gestionado, desplegar mediante inferencia alojada — que es exactamente cómo deberían lanzarse los modelos de fundación. Mi única objeción: la mayoría de los despliegues mostrados ejecutaban la inferencia en la nube, y la propia Pi admite que la conectividad de red fue un problema; una política que se cae cuando se cae la conexión no está lista para producción.",
+      "ar": "حوّلت Physical Intelligence حلقة تعلّم الروبوتات بأكملها إلى منتج — ارفع بيانات العروض، نفّذ الضبط الدقيق على حسابات مُدارة، انشر عبر استدلال مستضاف — وهذا بالضبط كيف ينبغي أن تُطلق نماذج الأساس. تحفظي الوحيد: معظم عمليات النشر المعروضة كانت تشغّل الاستدلال في السحابة، وPi نفسها تقرّ بأن الاتصال بالشبكة كان تحديًا؛ السياسة التي تسقط عندما يسقط الاتصال ليست جاهزة للإنتاج."
+    },
+    "tags": [
+      "robotics",
+      "foundation-models",
+      "api"
+    ]
+  },
+  {
+    "id": "grok-voice-3-speech-to-speech",
+    "date": "2026-10-14",
+    "category": "agentic",
+    "headline": {
+      "en": "Introducing Grok Voice 3.0",
+      "de": "Wir stellen Grok Voice 3.0 vor",
+      "fr": "Présentation de Grok Voice 3.0",
+      "es": "Presentamos Grok Voice 3.0",
+      "ar": "نقدّم Grok Voice 3.0"
+    },
+    "source": "xAI",
+    "url": "https://x.ai/news/grok-voice-3",
+    "take": {
+      "en": "Speech-to-speech at sub-second latency, rated first on Artificial Analysis' index at 86.9, for $0.08 a minute — voice is quickly becoming the default interface for deployed agents. What catches my eye is operational rather than intelligence: agents pinned to grok-voice-latest were switched to 3.0 automatically, which is convenient until a silent model swap changes how your production agent behaves mid-call.",
+      "de": "Speech-to-Speech mit Sub-Sekunden-Latenz, Platz eins im Index von Artificial Analysis mit 86.9, für $0.08 pro Minute — Sprache wird schnell zur Standardschnittstelle für eingesetzte Agenten. Was mich interessiert, ist Operatives, nicht Intelligenz: Agenten mit grok-voice-latest wurden automatisch auf 3.0 umgestellt — praktisch, bis ein stiller Modellwechsel das Verhalten deines Produktions-Agenten mitten im Gespräch ändert.",
+      "fr": "Du speech-to-speech avec une latence inférieure à la seconde, classé premier sur l'indice d'Artificial Analysis à 86.9, pour $0.08 la minute — la voix devient vite l'interface par défaut des agents déployés. Ce qui retient mon attention est opérationnel plutôt qu'une question d'intelligence : les agents pointant vers grok-voice-latest ont été basculés automatiquement vers la 3.0 — pratique, jusqu'à ce qu'un changement de modèle silencieux modifie le comportement de votre agent en production en pleine conversation.",
+      "es": "Speech-to-speech con latencia inferior a un segundo, primer puesto en el índice de Artificial Analysis con 86.9, por $0.08 el minuto — la voz se está convirtiendo rápido en la interfaz por defecto de los agentes desplegados. Lo que me llama la atención es operativo y no de inteligencia: los agentes fijados a grok-voice-latest pasaron a la 3.0 automáticamente — cómodo, hasta que un cambio silencioso de modelo altera el comportamiento de tu agente en producción en mitad de una llamada.",
+      "ar": "تحويل كلام إلى كلام بزمن استجابة أقل من ثانية، والمركز الأول في مؤشر Artificial Analysis بنتيجة 86.9، مقابل $0.08 في الدقيقة — الصوت يصبح سريعًا الواجهة الافتراضية للوكلاء المنشورين. ما يلفت انتباهي تشغيليّ لا يتعلق بالذكاء: الوكلاء المثبّتون على grok-voice-latest نُقلوا تلقائيًا إلى 3.0 — وهذا مريح حتى يغيّر استبدالٌ صامت للنموذج سلوك وكيلك الإنتاجي في منتصف المكالمة."
+    },
+    "tags": [
+      "voice-agents",
+      "speech-to-speech",
+      "deployment"
+    ]
   }
 ]
