@@ -4573,5 +4573,109 @@
       "speech-to-speech",
       "deployment"
     ]
+  },
+  {
+    "id": "meta-muse-spark-open-816b",
+    "date": "2026-10-15",
+    "category": "agentic",
+    "headline": {
+      "en": "Introducing Muse Spark Open, The Most Capable US Open-Weight Model to Date",
+      "de": "Meta veröffentlicht Muse Spark Open, das bislang leistungsstärkste US-Modell mit offenen Gewichten",
+      "fr": "Meta publie Muse Spark Open, le modèle américain à poids ouverts le plus performant à ce jour",
+      "es": "Meta lanza Muse Spark Open, el modelo de pesos abiertos de EE. UU. más capaz hasta la fecha",
+      "ar": "ميتا تطلق Muse Spark Open، أقوى نموذج أمريكي مفتوح الأوزان حتى اليوم"
+    },
+    "source": "Meta AI Research",
+    "url": "https://research.meta.ai/blog/muse-spark-open",
+    "take": {
+      "en": "816B parameters (42B active) running full agentic workflows on two Mac Studios is the real headline — frontier-class agents you own end to end instead of renting by the token. \"Most capable US open-weight model\" is a self-graded claim, though, so I'll trust the benchmark table only after running it against my own failure cases.",
+      "de": "816B Parameter (42B aktiv), die auf zwei Mac Studios komplette Agenten-Workflows stemmen — das ist die eigentliche Schlagzeile: Frontier-Klasse-Agenten, die man besitzt, statt sie pro Token zu mieten. „Das fähigste US-Modell mit offenen Gewichten“ ist allerdings eine Selbstbenotung; der Benchmark-Tabelle vertraue ich erst, nachdem ich das Modell an meinen eigenen Failure-Cases gemessen habe.",
+      "fr": "816B de paramètres (42B actifs) qui exécutent des workflows d'agents complets sur deux Mac Studios — voilà la vraie nouvelle : des agents de classe frontière qu'on possède de bout en bout au lieu de les louer au token. « Le modèle américain à poids ouverts le plus capable » reste une note que Meta s'attribue elle-même ; je ne ferai confiance au tableau de benchmarks qu'après l'avoir testé sur mes propres cas d'échec.",
+      "es": "816B parámetros (42B activos) ejecutando flujos de agentes completos en dos Mac Studios: ese es el titular real — agentes de clase frontera que puedes poseer de punta a punta en vez de alquilar por token. «El modelo de pesos abiertos de EE. UU. más capaz» es una nota que Meta se pone a sí misma; solo confiaré en la tabla de benchmarks después de probarlo en mis propios casos de fallo.",
+      "ar": "816B معاملًا (42B نشطًا) تشغّل تدفقات عمل وكلاء كاملة على جهازي Mac Studios — هذا هو الخبر الحقيقي: وكلاء بمستوى حدودي تمتلكهم من البداية إلى النهاية بدلًا من استئجارهم بالتوكن. لكن لقب «أقوى نموذج أمريكي مفتوح الأوزان» تقييمٌ تمنحه ميتا لنفسها، ولن أثق بجدول المعايير إلا بعد اختباره على حالات الفشل الخاصة بي."
+    },
+    "tags": [
+      "open-weights",
+      "on-device",
+      "meta"
+    ]
+  },
+  {
+    "id": "nvidia-nemotron-3-5-super-vl-agents",
+    "date": "2026-10-15",
+    "category": "agentic",
+    "headline": {
+      "en": "NVIDIA Nemotron 3.5 Super VL Powers Specialized Agents with Multimodal Reasoning",
+      "de": "NVIDIA Nemotron 3.5 Super VL versorgt spezialisierte Agenten mit multimodalem Reasoning",
+      "fr": "NVIDIA Nemotron 3.5 Super VL propulse des agents spécialisés avec un raisonnement multimodal",
+      "es": "NVIDIA Nemotron 3.5 Super VL impulsa agentes especializados con razonamiento multimodal",
+      "ar": "NVIDIA Nemotron 3.5 Super VL يشغّل وكلاء متخصصين بقدرات استدلال متعددة الوسائط"
+    },
+    "source": "NVIDIA",
+    "url": "https://developer.nvidia.com/blog/nvidia-nemotron-3-5-super-vl-powers-specialized-agents-with-multimodal-reasoning/",
+    "take": {
+      "en": "Always-on agents die on token economics, and a multimodal MoE with 120B total / 12B active parameters plus tool use, claiming 5x the throughput of same-class open models, is aiming at exactly the right bottleneck. Credit where due: shipping eval recipes and RL environments alongside the weights makes the post-training claims reproducible instead of just louder.",
+      "de": "Always-on-Agenten scheitern an den Token-Kosten, und ein multimodales MoE mit 120B Gesamt- und 12B aktiven Parametern plus Tool-Nutzung, das 5x Durchsatz gegenüber gleich großen offenen Modellen verspricht, zielt genau auf den richtigen Flaschenhals. Und Anerkennung, wo sie fällig ist: Eval-Rezepte und RL-Umgebungen zusammen mit den Gewichten zu veröffentlichen, macht die Post-Training-Behauptungen reproduzierbar statt nur lauter.",
+      "fr": "Les agents toujours actifs échouent sur l'économie des tokens, et un MoE multimodal de 120B de paramètres totaux (12B actifs) avec appel d'outils, qui revendique un débit 5x supérieur aux modèles ouverts de même taille, vise exactement le bon goulot d'étranglement. Crédit où il est dû : publier les recettes d'évaluation et les environnements de RL avec les poids rend les affirmations de post-entraînement reproductibles au lieu de simplement plus bruyantes.",
+      "es": "Los agentes siempre activos mueren por economía de tokens, y un MoE multimodal de 120B de parámetros totales (12B activos) con uso de herramientas, que promete 5x de rendimiento frente a modelos abiertos de su clase, apunta exactamente al cuello de botella correcto. Y un mérito que reconocer: publicar recetas de evaluación y entornos de RL junto con los pesos hace que las afirmaciones de post-entrenamiento sean reproducibles y no solo más ruidosas.",
+      "ar": "الوكلاء الدائمون يفشلون بسبب اقتصاد التوكنات، ونموذج MoE متعدد الوسائط بـ 120B معاملًا إجماليًا (12B نشطًا) مع استخدام الأدوات، ويَعِد بإنتاجية أعلى بـ 5 مرات من النماذج المفتوحة المماثلة — يستهدف عنق الزجاجة الصحيح تمامًا. وحقٌّ يُذكر: نشر وصفات التقييم وبيئات التعلم المعزز مع الأوزان يجعل ادعاءات ما بعد التدريب قابلة للتكرار لا مجرد أعلى صوتًا."
+    },
+    "tags": [
+      "open-weights",
+      "multimodal",
+      "agents"
+    ]
+  },
+  {
+    "id": "claude-otel-agent-observability",
+    "date": "2026-10-14",
+    "category": "agentic",
+    "headline": {
+      "en": "Trace agents with OpenTelemetry on the Claude Platform",
+      "de": "Agenten mit OpenTelemetry auf der Claude Platform nachverfolgen",
+      "fr": "Suivre les agents avec OpenTelemetry sur la plateforme Claude",
+      "es": "Traza agentes con OpenTelemetry en la plataforma de Claude",
+      "ar": "تتبّع الوكلاء عبر OpenTelemetry في منصة Claude"
+    },
+    "source": "Anthropic",
+    "url": "https://claude.com/resources/articles/agent-observability-on-the-claude-platform",
+    "take": {
+      "en": "This is the unglamorous feature that actually gets agents to production: OTel traces for every model call and tool use mean agent behavior lands in the same dashboards as the rest of the stack. I'd wire evals directly off that real-traffic trace data — debugging agents from vibes doesn't scale.",
+      "de": "Das ist das unglamouröse Feature, das Agenten wirklich in Produktion bringt: OTel-Traces für jeden Model-Aufruf und jedes Tool-Use sorgen dafür, dass Agentenverhalten in denselben Dashboards landet wie der Rest des Systems. Ich würde Evals direkt aus diesen Trace-Daten des echten Traffics speisen — Agenten aus dem Bauchgefühl heraus zu debuggen, skaliert nicht.",
+      "fr": "C'est la fonction peu glamour qui met réellement les agents en production : des traces OTel pour chaque appel de modèle et chaque usage d'outil font atterrir le comportement des agents dans les mêmes tableaux de bord que le reste du système. Je brancherais mes évals directement sur ces traces de trafic réel — déboguer les agents au feeling ne passe pas à l'échelle.",
+      "es": "Esta es la función poco glamurosa que de verdad lleva agentes a producción: trazas OTel para cada llamada al modelo y cada uso de herramientas hacen que el comportamiento del agente aterrice en los mismos dashboards que el resto del stack. Conectaría las evals directamente a esas trazas de tráfico real — depurar agentes por intuición no escala.",
+      "ar": "هذه هي الميزة غير البرّاقة التي تُدخل الوكلاء فعليًا إلى الإنتاج: تتبّعات OTel لكل استدعاء نموذج وكل استخدام أداة تجعل سلوك الوكيل يظهر في لوحات المراقبة نفسها التي يستخدمها باقي النظام. سأربط التقييمات مباشرةً بتتبّعات حركة المرور الحقيقية هذه — فتصحيح الوكلاء بالحدس لا يتّسع مع النمو."
+    },
+    "tags": [
+      "observability",
+      "opentelemetry",
+      "agents"
+    ]
+  },
+  {
+    "id": "google-earth-ai-geospatial-agents",
+    "date": "2026-10-14",
+    "category": "agentic",
+    "headline": {
+      "en": "Putting Earth AI to work: Geospatial agents for our planet's biggest challenges",
+      "de": "Earth AI in der Praxis: Geodaten-Agenten für die größten Herausforderungen unseres Planeten",
+      "fr": "Mettre Earth AI au travail : des agents géospatiaux pour les plus grands défis de notre planète",
+      "es": "Earth AI al trabajo: agentes geoespaciales para los mayores desafíos de nuestro planeta",
+      "ar": "تشغيل Earth AI: وكلاء جغرافيون مكانيون لأكبر تحديات كوكبنا"
+    },
+    "source": "Google Research",
+    "url": "https://research.google/blog/putting-earth-ai-to-work-geospatial-agents-for-our-planets-biggest-challenges/",
+    "take": {
+      "en": "The interesting part isn't the domain, it's the method: specialized tools plus upfront planning beat out-of-the-box LLMs on geospatial reasoning, and Google released two new benchmarks (GeoKTools, GeoExpertQueries) so the claim is checkable. That's the eval-first pattern every serious agent deployment should copy.",
+      "de": "Interessant ist nicht die Domäne, sondern die Methode: spezialisierte Tools plus vorausgehende Planung schlagen Standard-LLMs bei geospatialen Reasoning-Aufgaben, und Google hat mit GeoKTools und GeoExpertQueries zwei neue Benchmarks veröffentlicht, damit sich die Behauptung prüfen lässt. Dieses Eval-first-Muster sollte jedes ernsthafte Agenten-Deployment kopieren.",
+      "fr": "Ce qui est intéressant, ce n'est pas le domaine mais la méthode : des outils spécialisés et une planification en amont battent les LLM standard sur le raisonnement géospatial, et Google publie deux nouveaux benchmarks (GeoKTools, GeoExpertQueries) pour que l'affirmation soit vérifiable. C'est le pattern eval-first que chaque déploiement d'agents sérieux devrait copier.",
+      "es": "Lo interesante no es el dominio, sino el método: herramientas especializadas más planificación anticipada superan a los LLM estándar en razonamiento geoespacial, y Google publicó dos benchmarks nuevos (GeoKTools, GeoExpertQueries) para que la afirmación sea verificable. Ese es el patrón eval-first que todo despliegue serio de agentes debería copiar.",
+      "ar": "الملفت ليس المجال بل المنهج: أدوات متخصصة مع تخطيط مسبق تتفوق على نماذج LLM الجاهزة في الاستدلال الجغرافي المكاني، وقد أصدرت Google معيارَي تقييم جديدين (GeoKTools وGeoExpertQueries) ليصبح الادعاء قابلًا للتحقق. هذا هو نمط «التقييم أولًا» الذي ينبغي أن يقلده كل نشر جاد للوكلاء."
+    },
+    "tags": [
+      "agent-reasoning",
+      "benchmarks",
+      "a2a"
+    ]
   }
 ]
