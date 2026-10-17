@@ -4677,5 +4677,109 @@
       "benchmarks",
       "a2a"
     ]
+  },
+  {
+    "id": "anthropic-scion-source-control-agents",
+    "date": "2026-10-13",
+    "category": "agentic",
+    "headline": {
+      "en": "Redesigning source control at Anthropic",
+      "de": "Anthropic gestaltet seine Versionskontrolle neu",
+      "fr": "Anthropic repense son contrôle de version",
+      "es": "Anthropic rediseña su control de versiones",
+      "ar": "أنثروبيك تعيد تصميم نظام التحكم بالإصدارات"
+    },
+    "source": "Anthropic",
+    "url": "https://www.anthropic.com/engineering/redesigning-source-control",
+    "take": {
+      "en": "Anthropic's daily merges grew more than tenfold because Claude writes most of the code, so git broke and a seven-person team rebuilt source control for an all-agent workforce in five months. I keep saying the hard part of agentic coding isn't generation, it's everything downstream — review, merge, CI — and this is the strongest production evidence yet.",
+      "de": "Anthropics tägliche Merges sind um mehr als das Zehnfache gestiegen, weil Claude den größten Teil des Codes schreibt — also brach git, und ein siebenköpfiges Team baute in fünf Monaten eine Versionskontrolle für eine Belegschaft, die fast nur aus Agenten besteht. Ich sage es immer wieder: Das Schwierige am agentic Coding ist nicht die Generierung, sondern alles danach — Review, Merge, CI — und das ist der bisher stärkste Beweis aus dem Produktionsbetrieb.",
+      "fr": "Les fusions quotidiennes d'Anthropic ont été multipliées par plus de dix parce que Claude écrit la majorité du code ; git a fini par céder, et une équipe de sept personnes a reconstruit en cinq mois un contrôle de version pensé pour une main-d'œuvre composée d'agents. Je le répète souvent : le difficile dans le codage agentique n'est pas la génération, mais tout ce qui suit — revue, fusion, CI — et voilà la preuve la plus solide venue de la production.",
+      "es": "Las fusiones diarias de Anthropic crecieron más de diez veces porque Claude escribe la mayor parte del código, así que git se rompió y un equipo de siete personas reconstruyó el control de versiones para una plantilla formada por agentes en cinco meses. Siempre digo lo mismo: lo difícil del código agéntico no es generar, sino todo lo que viene después — revisión, merge, CI — y esta es la evidencia más contundente que hay hasta ahora desde producción.",
+      "ar": "تضاعفت عمليات الدمج اليومية في أنثروبيك أكثر من عشر مرات لأن Claude يكتب معظم الكود، فانهار git وقام فريق من سبعة أشخاص بإعادة بناء نظام إدارة الإصدارات خلال خمسة أشهر لقوة عاملة تتألف بالكامل من الوكلاء. أكرر دائمًا أن الجزء الصعب في البرمجة الوكيلة ليس توليد الكود بل كل ما يأتي بعده — المراجعة والدمج والتكامل المستمر — وهذا أقوى دليل من بيئة الإنتاج حتى الآن."
+    },
+    "tags": [
+      "agentic-coding",
+      "source-control",
+      "production"
+    ]
+  },
+  {
+    "id": "deepmind-gemini-agents-beat-minecraft",
+    "date": "2026-10-15",
+    "category": "agentic",
+    "headline": {
+      "en": "A team of Gemini 4 Argon agents beats Minecraft",
+      "de": "Ein Team von Gemini 4 Argon Agents schlägt Minecraft",
+      "fr": "Une équipe d'agents Gemini 4 Argon vient à bout de Minecraft",
+      "es": "Un equipo de agentes Gemini 4 Argon supera Minecraft",
+      "ar": "فريق من وكلاء Gemini 4 Argon يهزم لعبة Minecraft"
+    },
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2610.22319",
+    "take": {
+      "en": "Four general-purpose coding agents beat the Ender Dragon in 27 hours with no assigned roles and no human-written game logic, coordinating only through chat and shared memory — a genuine existence proof for long-horizon multi-agent work. Better still, the authors say outright it's one run on Easy, not a reliability estimate; that honesty is exactly what agent papers need more of.",
+      "de": "Vier Allzweck-Coding-Agenten haben den Ender Dragon in 27 Stunden geschlagen — ohne zugewiesene Rollen und ohne menschlich geschriebene Spiellogik, koordiniert nur über Chat und gemeinsamen Speicher: ein echter Existenzbeweis für Langstrecken-Multi-Agenten-Arbeit. Besser noch: Die Autoren sagen offen, dass es ein einziger Lauf auf Easy ist, keine belastbare Zuverlässigkeitsschätzung — genau diese Ehrlichkeit braucht die Agenten-Forschung.",
+      "fr": "Quatre agents de codage généralistes ont vaincu l'Ender Dragon en 27 heures, sans rôles assignés ni logique de jeu écrite par des humains, en ne coordonnant que par le chat et une mémoire partagée — une véritable preuve d'existence du travail multi-agents de longue durée. Mieux : les auteurs assument d'emblée qu'il s'agit d'une seule partie en mode Easy, pas d'une estimation de fiabilité ; cette honnêteté est exactement ce qui manque aux articles sur les agents.",
+      "es": "Cuatro agentes de código de propósito general vencieron al Ender Dragon en 27 horas, sin roles asignados ni lógica de juego escrita por humanos, coordinándose solo por chat y memoria compartida: una verdadera prueba de existencia del trabajo multiagente de largo plazo. Mejor aún: los autores dicen sin rodeos que es una sola partida en modo Easy, no una estimación de fiabilidad; esa honestidad es justo lo que necesitan más los papers sobre agentes.",
+      "ar": "أربعة وكلاء برمجة للأغراض العامة هزموا تنين الإندر خلال 27 ساعة دون أدوار محددة مسبقًا ودون منطق لعبة كتبه البشر، بتنسيق يعتمد فقط على الدردشة والذاكرة المشتركة — وهذا دليل وجود حقيقي على العمل متعدد الوكلاء طويل الأمد. والأفضل أن المؤلفين يقولون بصراحة إنها محاولة واحدة على مستوى السهولة وليست تقديرًا للموثوقية؛ هذه الصراحة هي بالضبط ما تحتاجه أبحاث الوكلاء اليوم."
+    },
+    "tags": [
+      "multi-agent",
+      "long-horizon",
+      "gemini"
+    ]
+  },
+  {
+    "id": "anthropic-metr-embedded-evaluators",
+    "date": "2026-10-15",
+    "category": "ai",
+    "headline": {
+      "en": "An update on independent evaluators",
+      "de": "Ein Update zu unabhängigen Evaluatoren",
+      "fr": "Des nouvelles de nos évaluateurs indépendants",
+      "es": "Novedades sobre evaluadores independientes",
+      "ar": "مستجدات بشأن المقيمين المستقلين"
+    },
+    "source": "Anthropic",
+    "url": "https://www.anthropic.com/news/an-update-on-independent-evaluators",
+    "take": {
+      "en": "Six METR employees now have employee-like access inside Anthropic and can publish their risk findings without a company veto — the first real implementation of embedded evaluation after weeks of industry fighting over publication rights. The details are better than I expected: redactions confined to narrow predefined categories, and METR may publicly say whether it thinks a redaction was justified.",
+      "de": "Sechs METR-Mitarbeiter haben jetzt mitarbeiterähnlichen Zugriff innerhalb von Anthropic und können ihre Risikobefunde ohne Vetorecht des Unternehmens veröffentlichen — die erste echte Umsetzung eingebetteter Evaluation nach Wochen des branchenweiten Streits über Veröffentlichungsrechte. Die Details sind besser als erwartet: Schwärzungen nur in engen, vorab definierten Kategorien, und METR darf öffentlich sagen, ob es eine Schwärzung für gerechtfertigt hält.",
+      "fr": "Six employés de METR disposent désormais d'un accès quasi-salarial au sein d'Anthropic et peuvent publier leurs conclusions sur les risques sans veto de l'entreprise — la première véritable mise en œuvre de l'évaluation intégrée après des semaines de querelle sectorielle sur les droits de publication. Les détails sont meilleurs que prévu : des caviardages limités à des catégories prédéfinies étroites, et METR peut dire publiquement s'il juge un caviardage justifié.",
+      "es": "Seis empleados de METR ahora tienen acceso casi de empleado dentro de Anthropic y pueden publicar sus hallazgos de riesgo sin veto de la empresa: la primera implementación real de la evaluación incrustada tras semanas de disputa sectorial por los derechos de publicación. Los detalles son mejores de lo que esperaba: redacciones limitadas a categorías predefinidas estrechas, y METR puede decir públicamente si considera justificada una redacción.",
+      "ar": "ستة موظفين من METR أصبح لديهم الآن وصول شبه كامل داخل أنثروبيك ويمكنهم نشر نتائجهم حول المخاطر دون حق نقض من الشركة — وهي أول تنفيذ حقيقي للتقييم المضمّن بعد أسابيع من الصراع في القطاع حول حقوق النشر. التفاصيل أفضل مما توقعت: الحجب محصور في فئات ضيقة محددة سلفًا، ويمكن لـ METR أن يقول علنًا ما إذا كان يرى الحجب مبررًا."
+    },
+    "tags": [
+      "evaluation",
+      "ai-safety",
+      "governance"
+    ]
+  },
+  {
+    "id": "anthropic-ai-worms-iot-self-replication",
+    "date": "2026-10-12",
+    "category": "agentic",
+    "headline": {
+      "en": "AI models may be capable of self-replicating without access to a datacenter",
+      "de": "KI-Modelle könnten sich möglicherweise ohne Rechenzentrum selbst replizieren",
+      "fr": "Les modèles d'IA pourraient être capables de s'auto-répliquer sans accès à un centre de données",
+      "es": "Los modelos de IA podrían ser capaces de autorreplicarse sin acceso a un centro de datos",
+      "ar": "نماذج الذكاء الاصطناعي قد تصبح قادرة على تكرار ذاتها دون الحاجة إلى مركز بيانات"
+    },
+    "source": "Anthropic",
+    "url": "https://www.anthropic.com/research/self-replicating-ai",
+    "take": {
+      "en": "Anthropic's Frontier Red Team ran a 26B model across 15 cheap Android TV boxes and found GLM-5.2 already chains every replication step end to end, projecting small models reach that bar by end of 2026. The exploit was deliberately trivial, so treat it as an upper bound — but the framing is exactly right: a capability floor, a model-size ceiling, and a falsifiable timeline.",
+      "de": "Anthropics Frontier Red Team betrieb ein 26B-Modell auf 15 billigen Android-TV-Boxen und fand heraus, dass GLM-5.2 bereits jeden Replikationsschritt Ende-zu-Ende verkettet; kleinen Modellen wird dieser Stand bis Ende 2026 zugetraut. Der Exploit war absichtlich trivial, also ist das eine obere Schranke — aber die Rahmung stimmt: eine Capability-Schwelle, eine Größenobergrenze des Modells und eine überprüfbare Zeitlinie.",
+      "fr": "Le Frontier Red Team d'Anthropic a fait tourner un modèle de 26B sur 15 box Android TV bon marché et constaté que GLM-5.2 enchaîne déjà toutes les étapes de réplication de bout en bout ; les petits modèles devraient atteindre ce niveau d'ici fin 2026. L'exploit était volontairement trivial, donc c'est une borne supérieure — mais le cadrage est juste : un plancher de capacité, un plafond de taille de modèle et une échéance réfutable.",
+      "es": "El Frontier Red Team de Anthropic ejecutó un modelo de 26B en 15 cajas Android TV baratas y descubrió que GLM-5.2 ya encadena todos los pasos de replicación de principio a fin, y proyecta que los modelos pequeños alcancen ese nivel a finales de 2026. El exploit fue deliberadamente trivial, así que tómalo como un límite superior — pero el planteamiento es correcto: un suelo de capacidad, un techo de tamaño de modelo y un cronograma falsable.",
+      "ar": "شغّل فريق الأمن الحدودي في أنثروبيك نموذجًا من فئة 26B على 15 جهاز أندرويد تي في رخيصًا ووجد أن GLM-5.2 يسلسل بالفعل كل خطوات التكرار من البداية إلى النهاية، مع توقع أن تصل النماذج الصغيرة إلى هذا المستوى بحلول نهاية 2026. كان الاختراق بسيطًا عمدًا، فاعتبره حدًّا أعلى — لكن التأطير صحيح تمامًا: حد أدنى للقدرة، وسقف لحجم النموذج، وجدول زمني قابل للاختبار."
+    },
+    "tags": [
+      "agent-safety",
+      "self-replication",
+      "iot"
+    ]
   }
 ]
