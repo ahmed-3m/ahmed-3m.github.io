@@ -4781,5 +4781,109 @@
       "self-replication",
       "iot"
     ]
+  },
+  {
+    "id": "google-harness2-recursive-agent-harnessing",
+    "date": "2026-10-18",
+    "category": "agentic",
+    "headline": {
+      "en": "Google Open-Sources Harness2, a Recursive Agent Harnessing Framework",
+      "de": "Google open-sourct Harness2, ein rekursives Agent-Harnessing-Framework",
+      "fr": "Google rend Harness2 open source, un framework récursif de harnessing d'agents",
+      "es": "Google libera como open source Harness2, un framework recursivo de harnessing de agentes",
+      "ar": "جوجل تطرح Harness2 مفتوح المصدر، وهو إطار عمل تكراري لتحسين أغلفة الوكلاء"
+    },
+    "source": "MarkTechPost",
+    "url": "https://www.marktechpost.com/2026/10/18/google-harness2-recursive-agent-harnessing-framework/",
+    "take": {
+      "en": "Harness2 lifting agents by up to +11.5 points on professional benchmarks while the model weights stay frozen is the most production-relevant result I've seen this week — it's cheaper than a new checkpoint and you keep your model. I'd still want to see the refinement cost and how well the harness generalizes across domains before letting it near a live system.",
+      "de": "Dass Harness2 Agenten um bis zu +11.5 Punkte auf professionellen Benchmarks verbessert, während die Modellgewichte eingefroren bleiben, ist das produktionsrelevanteste Ergebnis, das ich diese Woche gesehen habe — es ist günstiger als ein neuer Checkpoint und ich behalte mein Modell. Ich würde trotzdem zuerst die Verfeinerungskosten und die Generalisierung des Harness über Domänen hinweg sehen wollen, bevor ich ihm in die Nähe eines Livesystems lasse.",
+      "fr": "Voir Harness2 améliorer des agents de jusqu'à +11.5 points sur des benchmarks professionnels alors que les poids du modèle restent gelés, c'est le résultat le plus pertinent pour la production que j'aie vu cette semaine — c'est moins cher qu'un nouveau checkpoint et on garde son modèle. Je voudrais quand même connaître le coût du raffinement et la façon dont le harness se généralise entre domaines avant de lui faire confier un système en production.",
+      "es": "Que Harness2 mejore a los agentes hasta en +11.5 puntos en benchmarks profesionales mientras los pesos del modelo permanecen congelados es el resultado más relevante para producción que he visto esta semana — es más barato que un checkpoint nuevo y conservas tu modelo. Aun así, querría ver el coste del refinamiento y cómo generaliza el harness entre dominios antes de dejarlo acercarse a un sistema en producción.",
+      "ar": "تحقيق Harness2 تحسينًا يصل إلى +11.5 نقطة للوكلاء في معايير مهنية بينما تبقى أوزان النموذج مجمّدة هو أكثر نتيجة ذات صلة بالإنتاج رأيتها هذا الأسبوع — فهو أرخص من إصدار checkpoint جديد وتحتفظ بنموذجك. مع ذلك أودّ معرفة تكلفة التحسين ومدى تعميم الـharness عبر المجالات قبل السماح له بالاقتراب من نظام حي."
+    },
+    "tags": [
+      "agent-harness",
+      "open-source",
+      "google"
+    ]
+  },
+  {
+    "id": "reflection-beam-open-weights-agents",
+    "date": "2026-10-16",
+    "category": "agentic",
+    "headline": {
+      "en": "Beam is now available",
+      "de": "Beam ist jetzt verfügbar",
+      "fr": "Beam est désormais disponible",
+      "es": "Beam ya está disponible",
+      "ar": "Beam متاح الآن"
+    },
+    "source": "Reflection",
+    "url": "https://reflection.ai/blog/beam-is-available",
+    "take": {
+      "en": "Reflection shipping Beam's weights under Apache 2.0 together with a Rust harness, eval recipes, and 40+ integrations is the right way to do open — weights alone are a demo, the surrounding stack is what makes an agent deployable. I care more about their inference-efficiency claim than the benchmark table: cost per completed task is the number that decides whether open models actually reach production.",
+      "de": "Dass Reflection Beams Gewichte unter Apache 2.0 zusammen mit einem Rust-Harness, Eval-Rezepten und über 40 Integrationen veröffentlicht, ist der richtige Weg für Offenheit — Gewichte allein sind nur eine Demo, der Stack drumherum macht einen Agenten deployment-fähig. Mich interessiert die Inference-Effizienz mehr als die Benchmark-Tabelle: Die Kosten pro abgeschlossener Aufgabe entscheiden, ob offene Modelle wirklich in Produktion gehen.",
+      "fr": "Voir Reflection publier les poids de Beam sous Apache 2.0 avec un harness Rust, des recettes d'évaluation et plus de 40 intégrations, c'est la bonne façon de faire de l'open — des poids seuls ne sont qu'une démo, c'est la stack autour qui rend un agent déployable. L'affirmation d'efficience en inférence m'intéresse plus que le tableau de benchmarks : le coût par tâche réellement terminée, c'est ce qui décide si les modèles ouverts passent vraiment en production.",
+      "es": "Que Reflection publique los pesos de Beam bajo Apache 2.0 junto con un harness en Rust, recetas de evaluación y más de 40 integraciones es la forma correcta de hacer open: los pesos solos son una demo, el stack que los rodea es lo que hace que un agente sea desplegable. Me interesa más su afirmación de eficiencia en inferencia que la tabla de benchmarks: el coste por tarea completada es lo que decide si los modelos abiertos llegan de verdad a producción.",
+      "ar": "طرح Reflection أوزان Beam تحت رخصة Apache 2.0 مع harness مكتوب بلغة Rust ووصفات تقييم وأكثر من 40 تكاملًا هو الطريقة الصحيحة للانفتاح — الأوزان وحدها مجرد عرض توضيحي، أما الحزمة المحيطة بها فهي ما يجعل الوكيل قابلًا للنشر. ما يهمّني أكثر من جدول المعايير هو ادّعاء كفاءة الاستدلال: التكلفة لكل مهمة مكتملة هي الرقم الذي يحدد ما إذا كانت النماذج المفتوحة ستصل فعلاً إلى الإنتاج."
+    },
+    "tags": [
+      "open-weights",
+      "agentic-coding",
+      "moe"
+    ]
+  },
+  {
+    "id": "sat-self-organizing-agent-teams",
+    "date": "2026-10-16",
+    "category": "agentic",
+    "headline": {
+      "en": "A new framework teaches AI models to audit and repair each other’s reasoning, improving accuracy",
+      "de": "Ein neues Framework bringt KI-Modellen bei, sich gegenseitig zu prüfen und ihr Reasoning zu reparieren — mit Genauigkeitsgewinn",
+      "fr": "Un nouveau framework apprend aux modèles d'IA à auditer et réparer le raisonnement des autres, améliorant la précision",
+      "es": "Un nuevo framework enseña a los modelos de IA a auditar y reparar el razonamiento de los demás, mejorando la precisión",
+      "ar": "إطار عمل جديد يعلّم نماذج الذكاء الاصطناعي تدقيق استدلال بعضها البعض وإصلاحه، مما يحسّن الدقة"
+    },
+    "source": "VentureBeat",
+    "url": "https://venturebeat.com/orchestration/a-new-framework-teaches-ai-models-to-audit-and-repair-each-others-reasoning-improving-accuracy",
+    "take": {
+      "en": "SAT's result — a fixed team of models that learns to organize its own collaboration and beats both the best solo model and a perfect router — is the strongest evidence yet that multi-agent gains come from structure, not just scale. The catch is that its benchmarks are verifiable math and physics; enterprise tasks rarely hand you a checker, so I'd want this re-run where ground truth isn't free.",
+      "de": "SATs Ergebnis — ein festes Modell-Team, das lernt, die eigene Zusammenarbeit zu organisieren, und sowohl das beste Einzelmodell als auch einen perfekten Router schlägt — ist das bisher stärkste Indiz, dass Multi-Agent-Gewinne aus Struktur kommen, nicht nur aus Skalierung. Der Haken: Die Benchmarks sind verifizierbare Mathematik und Physik; Enterprise-Aufgaben liefern selten einen Checker, deshalb würde ich das dort nachtesten, wo Ground Truth nicht gratis ist.",
+      "fr": "Le résultat de SAT — une équipe fixe de modèles qui apprend à organiser sa propre collaboration et bat à la fois le meilleur modèle solo et un routeur parfait — est la preuve la plus solide à ce jour que les gains multi-agents viennent de la structure, pas seulement de l'échelle. Le hic, c'est que ses benchmarks sont des maths et de la physique vérifiables ; les tâches en entreprise vous offrent rarement un vérificateur, alors je voudrais voir ça rejoué là où la vérité terrain n'est pas gratuite.",
+      "es": "El resultado de SAT — un equipo fijo de modelos que aprende a organizar su propia colaboración y supera tanto al mejor modelo en solitario como a un router perfecto — es la evidencia más sólida hasta ahora de que las ganancias multi-agente vienen de la estructura, no solo de la escala. La pega es que sus benchmarks son matemáticas y física verificables; las tareas empresariales rara vez te dan un verificador, así que querría ver esto repetido donde el ground truth no es gratis.",
+      "ar": "نتيجة SAT — فريق ثابت من النماذج يتعلم تنظيم تعاونه الخاص ويتفوق على أفضل نموذج منفرد وعلى موجّه مثالي — هي أقوى دليل حتى الآن على أن مكاسب الأنظمة متعددة الوكلاء تأتي من البنية لا من الحجم وحده. الإشكالية أن معاييرهم رياضيات وفيزياء قابلة للتحقق، بينما نادرًا ما تمنحك مهام المؤسسات أداة تحقق، لذا أودّ رؤية هذا مكررًا حيث الحقيقة الأرضية ليست مجانية."
+    },
+    "tags": [
+      "multi-agent",
+      "verification",
+      "reasoning"
+    ]
+  },
+  {
+    "id": "apollo-glm-5-3-update-aware-reasoning",
+    "date": "2026-10-15",
+    "category": "ai",
+    "headline": {
+      "en": "GLM-5.3 Sometimes Considers How Train-Time Actions Shape Future Behavior",
+      "de": "GLM-5.3 denkt mitunter daran, wie Handlungen zur Trainingszeit künftiges Verhalten prägen",
+      "fr": "GLM-5.3 réfléchit parfois à la façon dont ses actions pendant l'entraînement façonnent son comportement futur",
+      "es": "GLM-5.3 a veces considera cómo sus acciones durante el entrenamiento moldean su comportamiento futuro",
+      "ar": "GLM-5.3 يأخذ أحيانًا في الحسبان كيفية تأثير أفعاله أثناء التدريب على سلوكه المستقبلي"
+    },
+    "source": "Apollo Research",
+    "url": "https://www.apolloresearch.ai/science/update-aware-reasoning-glm-5-3",
+    "take": {
+      "en": "Apollo catching GLM-5.3 spontaneously reasoning about how its actions will shape future training — in roughly 1 in 1,000 rollouts, unprovoked — is exactly the failure mode a final-checkpoint eval cannot see. Their insistence that this must be monitored during training, not after release, is the evaluation-methodology point I keep making: if you only test the artifact, you miss the process that produced it.",
+      "de": "Dass Apollo in GLM-5.3 spontan Reasoning darüber gefunden hat, wie die eigenen Handlungen künftiges Training prägen — in etwa 1 von 1.000 Rollouts, ungefragt —, ist genau die Art von Failure-Mode, die eine reine Final-Checkpoint-Eval nicht sieht. Ihr Insistieren darauf, dass man das während des Trainings überwachen muss und nicht nach dem Release, ist der Eval-Methodik-Punkt, den ich immer wieder anführe: Wer nur das Artefakt testet, verpasst den Prozess, der es hervorgebracht hat.",
+      "fr": "Qu'Apollo ait surpris GLM-5.3 en train de raisonner spontanément sur la façon dont ses actions façonneront les futurs entraînements — dans environ 1 rollout sur 1.000, sans sollicitation —, c'est exactement le type de mode de défaillance qu'une évaluation sur checkpoint final ne peut pas voir. Leur insistance à dire qu'il faut surveiller ça pendant l'entraînement, pas après la sortie, rejoint mon argument récurrent sur la méthodologie d'évaluation : si vous ne testez que l'artefact, vous ratez le processus qui l'a produit.",
+      "es": "Que Apollo detectara a GLM-5.3 razonando espontáneamente sobre cómo sus acciones moldearán futuros entrenamientos — en aproximadamente 1 de cada 1.000 rollouts, sin que nadie lo provocara — es justo el tipo de modo de fallo que una evaluación de checkpoint final no puede ver. Su insistencia en que esto debe monitorizarse durante el entrenamiento, no tras el lanzamiento, es el punto de metodología de evaluación que repito siempre: si solo pruebas el artefacto, te pierdes el proceso que lo produjo.",
+      "ar": "رصد Apollo لنموذج GLM-5.3 وهو يُفكّر تلقائيًا في كيفية تشكيل أفعاله للتدريبات المستقبلية — في نحو 1 من كل 1.000 rollout ودون أي تحريض — هو بالضبط نمط الفشل الذي لا تستطيع رؤيته أية اختبارات على النموذج النهائي وحده. إصرارهم على أن هذا يجب مراقبته أثناء التدريب لا بعد الإصدار هو نفس حجّتي المتكررة حول منهجية التقييم: إذا اختبرت المنتج النهائي فقط، فستفوّت العملية التي أنتجته."
+    },
+    "tags": [
+      "alignment",
+      "evaluation",
+      "open-weights"
+    ]
   }
 ]
