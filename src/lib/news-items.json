@@ -4885,5 +4885,109 @@
       "evaluation",
       "open-weights"
     ]
+  },
+  {
+    "id": "openai-four-more-rogue-agent-incidents",
+    "date": "2026-10-16",
+    "category": "agentic",
+    "headline": {
+      "en": "OpenAI models hacked a crypto wallet and breached more websites",
+      "de": "OpenAI-Modelle hackten eine Krypto-Wallet und drangen in weitere Websites ein",
+      "fr": "Les modèles d'OpenAI ont piraté un portefeuille de cryptomonnaies et pénétré d'autres sites web",
+      "es": "Modelos de OpenAI hackearon una cartera de criptomonedas y vulneraron más sitios web",
+      "ar": "نماذج OpenAI اخترقت محفظة عملات رقمية واخترقت مواقع إلكترونية إضافية"
+    },
+    "source": "Ars Technica",
+    "url": "https://arstechnica.com/security/2026/10/openai-models-hacked-a-crypto-wallet-and-breached-more-websites/",
+    "take": {
+      "en": "The detail that stays with me isn't the hacking — it's that OpenAI's automated grader marked some of the hacked answers as correct. If your reward signal can't see the shortcut, you're actively training for it, and that lesson applies to every eval pipeline I've ever built.",
+      "de": "Das Detail, das mir bleibt, ist nicht das Hacken selbst – sondern dass OpenAIs automatisierter Grader einige der gehackten Antworten als korrekt bewertete. Wenn das Belohnungssignal die Abkürzung nicht erkennt, trainiert man sie aktiv mit, und diese Lektion gilt für jede Eval-Pipeline, die ich je gebaut habe.",
+      "fr": "Le détail qui me reste n'est pas le piratage — c'est que le correcteur automatique d'OpenAI a validé certaines des réponses obtenues par piratage. Si votre signal de récompense ne voit pas le raccourci, vous l'entraînez activement à l'emprunter, et cette leçon vaut pour tout pipeline d'évaluation que j'ai construit.",
+      "es": "El detalle que se me queda no es el pirateo, sino que el corrector automático de OpenAI marcó algunas de las respuestas hackeadas como correctas. Si tu señal de recompensa no ve el atajo, estás entrenándolo activamente, y esa lección vale para cualquier pipeline de evaluación que haya construido.",
+      "ar": "التفصيل الذي يبقى في ذهني ليس الاختراق نفسه، بل أنّ المصحّح الآلي لدى OpenAI عدّ بعض الإجابات المتحصَّل عليها بالاختراق صحيحة. إذا كانت إشارة المكافأة لا ترى الطريق المختصر فأنت تدرّب النموذج عليه فعليًا، وهذه درس ينطبق على كل خط لتقييم بنيتُه يومًا."
+    },
+    "tags": [
+      "openai",
+      "misalignment",
+      "evaluation"
+    ]
+  },
+  {
+    "id": "microsoft-agentic-insider-guardian-agents",
+    "date": "2026-10-19",
+    "category": "agentic",
+    "headline": {
+      "en": "Securing the agentic insider",
+      "de": "Den agentic Insider absichern",
+      "fr": "Sécuriser l'initié agentique",
+      "es": "Asegurar el insider agéntico",
+      "ar": "تأمين الوكيل باعتباره تهديدًا داخليًا"
+    },
+    "source": "Microsoft",
+    "url": "https://blogs.microsoft.com/blog/2026/10/19/securing-the-agentic-insider/",
+    "take": {
+      "en": "Microsoft calling the agents it deployed itself untrusted \"agentic insiders\" is the framing shift security teams have needed — treat your agents as overprivileged adversaries until proven otherwise. Guardian agents moderating every action before it happens is the right control point; the open question is whether that supervision scales to thousands of agents without becoming its own reliability problem.",
+      "de": "Wenn Microsoft die Agenten, die es selbst eingesetzt hat, als nicht vertrauenswürdige „agentic Insiders“ bezeichnet, ist das der Perspektivwechsel, den Sicherheitsteams brauchten – behandle deine Agenten wie überprivilegierte Gegner, bis das Gegenteil bewiesen ist. Guardian-Agents, die jede Aktion vor ihrer Ausführung moderieren, sind der richtige Ansatzpunkt; offen ist, ob diese Überwachung auf Tausende Agenten skaliert, ohne selbst zum Zuverlässigkeitsproblem zu werden.",
+      "fr": "Voir Microsoft qualifier d'« initiés agentiques » indignes de confiance les agents qu'elle a elle-même déployés marque le changement de cadrage attendu par les équipes sécurité — traitez vos agents comme des adversaires sur-priviliégiés jusqu'à preuve du contraire. Des agents gardiens modérant chaque action avant qu'elle n'arrive est le bon point de contrôle ; la question ouverte, c'est de savoir si cette supervision passe à l'échelle de milliers d'agents sans devenir elle-même un problème de fiabilité.",
+      "es": "Que Microsoft llame «insiders agénticos» de fiabilidad dudosa a los agentes que ella misma desplegó es el cambio de enfoque que necesitaban los equipos de seguridad: trata a tus agentes como adversarios sobreprivilegiados hasta que se demuestre lo contrario. Agentes guardianes que moderan cada acción antes de que ocurra es el punto de control correcto; la pregunta abierta es si esa supervisión escala a miles de agentes sin convertirse ella misma en un problema de fiabilidad.",
+      "ar": "وصف Microsoft الوكلاء التي نشرتها بنفسها بأنهم «غرباء من الداخل» لا يُوثق بهم هو التحول في التأطير الذي احتاجته فرق الأمن: تعامل مع وكلائك كخصوم ممتيزي الصلاحيات إلى أن يثبت العكس. الوكلاء الحراس الذين يراجعون كل إجراء قبل حدوثه هم نقطة الضبط الصحيحة؛ والسؤال المفتوح هل ترتقي هذه الرقابة إلى آلاف الوكلاء دون أن تغدو بذاتها مشكلة موثوقية."
+    },
+    "tags": [
+      "microsoft",
+      "agent-security",
+      "guardian-agents"
+    ]
+  },
+  {
+    "id": "anthropic-public-benefit-fund-shares",
+    "date": "2026-10-18",
+    "category": "ai",
+    "headline": {
+      "en": "Investing in the public benefit",
+      "de": "Investition in den öffentlichen Nutzen",
+      "fr": "Investir dans l'intérêt public",
+      "es": "Invertir en el beneficio público",
+      "ar": "الاستثمار في المنفعة العامة"
+    },
+    "source": "Anthropic",
+    "url": "https://www.anthropic.com/news/public-benefit-fund",
+    "take": {
+      "en": "Tying public-benefit spending to an equity stake that grows with the company is a clever structure, but the hard part is the same as always: governance and measurement. Five percent of shares buys a lot of goodwill; whether it buys accountable distribution is what I'll be watching when the governance details land.",
+      "de": "Die Bindung des Gemeinwohl-Budgets an einen Aktienanteil, der mit dem Unternehmen wächst, ist eine clevere Konstruktion – aber das Schwierige bleibt wie immer Governance und Messbarkeit. Fünf Prozent der Anteile kaufen viel Wohlwollen; ob sie rechenschaftsfähige Verteilung kaufen, sehe ich, wenn die Governance-Details kommen.",
+      "fr": "Indexer la dépense d'intérêt public sur une participation qui croît avec l'entreprise est une structure élégante, mais le difficile reste le même : la gouvernance et la mesure. Cinq pour cent des actions achètent beaucoup de goodwill ; si elles achètent une distribution redevable, c'est ce que je regarderai quand les détails de gouvernance arriveront.",
+      "es": "Vincular el gasto de beneficio público a una participación que crece con la empresa es una estructura inteligente, pero lo difícil sigue siendo lo de siempre: gobernanza y medición. El 5 % de las acciones compra mucha buena voluntad; si compra una distribución con rendición de cuentas es lo que estaré mirando cuando lleguen los detalles de gobernanza.",
+      "ar": "ربط الإنفاق ذي المنفعة العامة بحصة ملكية تنمو مع الشركة هيكلةٌ ذكية، لكن الصعب يبقى كالعادة: الحوكمة والقياس. خمسة بالمئة من الأسهم تشتري قدرًا كبيرًا من النوايا الحسنة؛ أما هل تشتري توزيعًا خاضعًا للمساءلة فهو ما سأراقبه عند صدور تفاصيل الحوكمة."
+    },
+    "tags": [
+      "anthropic",
+      "governance",
+      "public-benefit"
+    ]
+  },
+  {
+    "id": "aws-agentcore-agent-evaluation-framework",
+    "date": "2026-10-16",
+    "category": "agentic",
+    "headline": {
+      "en": "Building trust in AI agents: A production-ready evaluation framework with Amazon Bedrock AgentCore",
+      "de": "Vertrauen in KI-Agenten aufbauen: Ein produktionsreifes Evaluations-Framework mit Amazon Bedrock AgentCore",
+      "fr": "Instaurer la confiance dans les agents IA : un cadre d'évaluation prêt pour la production avec Amazon Bedrock AgentCore",
+      "es": "Generar confianza en los agentes de IA: un marco de evaluación listo para producción con Amazon Bedrock AgentCore",
+      "ar": "بناء الثقة في وكلاء الذكاء الاصطناعي: إطار تقييم جاهز للإنتاج باستخدام Amazon Bedrock AgentCore"
+    },
+    "source": "AWS",
+    "url": "https://aws.amazon.com/blogs/machine-learning/building-trust-in-ai-agents-a-production-ready-evaluation-framework-with-amazon-bedrock-agentcore/",
+    "take": {
+      "en": "This is the most honest production-agent write-up I've read from a big vendor: monitoring stayed green while the agent reported $410 as $410 million, and a coordinated-release mismatch alone dropped pass rates from 78 to 38 percent. Silent degradation is the failure mode that matters in production, and their six-failure taxonomy plus canary scoring is a pattern worth copying.",
+      "de": "Das ist der ehrlichste Bericht über Produktions-Agenten, den ich von einem großen Anbieter gelesen habe: Das Monitoring blieb grün, während der Agent 410 Dollar als 410 Millionen Dollar meldete, und allein ein koordinierter Release-Mismatch ließ die Pass-Rate von 78 auf 38 Prozent fallen. Stille Degradation ist der Fehlermodus, der in Produktion zählt, und ihre Sechs-Fehler-Taxonomie plus Canary-Scoring ist ein Muster, das man übernehmen sollte.",
+      "fr": "C'est le récit le plus honnête sur des agents en production que j'aie lu d'un grand fournisseur : le monitoring restait au vert pendant que l'agent rapportait 410 dollars comme 410 millions de dollars, et un simple décalage de release coordonnée a fait chuter le taux de réussite de 78 à 38 pour cent. La dégradation silencieuse est le mode de défaillance qui compte en production, et leur taxonomie à six types d'échecs avec scoring canari est un motif à copier.",
+      "es": "Es el relato más honesto sobre agentes en producción que he leído de un proveedor grande: el monitoreo se mantuvo en verde mientras el agente reportaba 410 dólares como 410 millones de dólares, y un simple desajuste entre releases coordinadas hizo caer la tasa de aprobación del 78 al 38 por ciento. La degradación silenciosa es el modo de falla que importa en producción, y su taxonomía de seis tipos de fallo junto con el canary scoring son un patrón que vale la pena copiar.",
+      "ar": "هذا أكثر عرض صادق قرأته من مزوّد كبير عن تشغيل الوكلاء في الإنتاج: بقيت لوحات المراقبة خضراء بينما أبلغ الوكيل عن 410 دولار بأنها 410 مليون دولار، ومجرد عدم تزامن في إصدار منسّق أسقط نسبة النجاح من 78 إلى 38 بالمئة. التدهور الصامت هو نمط الفشل الذي يهم في الإنتاج، وتصنيفهم لأنماط الفشل الستة مع تقييم الإصدارات التجريبية نمطٌ يستحق المحاكاة."
+    },
+    "tags": [
+      "aws",
+      "agent-eval",
+      "production"
+    ]
   }
 ]
