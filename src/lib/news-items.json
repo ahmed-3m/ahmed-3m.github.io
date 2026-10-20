@@ -4989,5 +4989,109 @@
       "agent-eval",
       "production"
     ]
+  },
+  {
+    "id": "ai-agent-army-hacks-100-sites",
+    "date": "2026-10-19",
+    "category": "agentic",
+    "headline": {
+      "en": "A hacker broke into John Deere and SharkNinja with an army of AI agents",
+      "de": "Ein Hacker brach mit einer Armee von KI-Agenten bei John Deere und SharkNinja ein",
+      "fr": "Un pirate a piraté John Deere et SharkNinja avec une armée d'agents IA",
+      "es": "Un hacker irrumpió en John Deere y SharkNinja con un ejército de agentes de IA",
+      "ar": "هاكر اخترق John Deere وSharkNinja بجيش من وكلاء الذكاء الاصطناعي"
+    },
+    "source": "The Verge",
+    "url": "https://www.theverge.com/ai-artificial-intelligence/1013643/ai-agents-hack-john-deere-shark-ninja-cummins",
+    "take": {
+      "en": "This is the agent story that worries me most: not superhuman exploits, but commodity agents grinding through 1,200 sites at roughly $5 a task while their operator sleeps. A ~10% success rate is a bad eval score and a great business model — defenders now have to assume goal-directed autonomy is the default attacker.",
+      "de": "Das ist die Agenten-Story, die mir am meisten Sorgen macht: keine übermenschlichen Exploits, sondern Standard-Agenten, die sich für etwa $5 pro Aufgabe durch 1.200 Websites arbeiten, während ihr Betreiber schläft. Eine Erfolgsquote von rund 10% ist ein schlechter Eval-Score und ein tolles Geschäftsmodell — Verteidiger müssen jetzt davon ausgehen, dass zielgerichtete Autonomie der Standard-Angreifer ist.",
+      "fr": "C'est l'histoire d'agents qui m'inquiète le plus : pas des exploits surhumains, mais des agents standards qui explorent 1 200 sites pour environ $5 la tâche pendant que leur opérateur dort. Un taux de réussite d'environ 10% est un mauvais score d'éval et un excellent modèle économique — les défenseurs doivent désormais partir du principe que l'autonomie dirigée vers un objectif est l'attaquant par défaut.",
+      "es": "Esta es la noticia sobre agentes que más me preocupa: no son exploits sobrehumanos, sino agentes de serie recorriendo 1.200 sitios a unos $5 por tarea mientras su operador duerme. Una tasa de éxito de ~10% es un mal resultado de evaluación y un gran modelo de negocio — los defensores ahora deben asumir que la autonomía dirigida a objetivos es el atacante por defecto.",
+      "ar": "هذه هي قصة الوكلاء التي تقلقني أكثر من غيرها: ليست اختراقات خارقة، بل وكلاء جاهزون يزحفون عبر 1,200 موقع مقابل نحو $5 لكل مهمة بينما مشغّلهم نائم. نسبة نجاح تقارب 10% هي نتيجة تقييم سيئة ونموذج عمل رائع — على المدافعين الآن أن يفترضوا أن الاستقلالية الموجهة بهدف هي المهاجم الافتراضي."
+    },
+    "tags": [
+      "security",
+      "agents",
+      "cybercrime"
+    ]
+  },
+  {
+    "id": "minimax-m3-1-flash-agentic-cost",
+    "date": "2026-10-19",
+    "category": "agentic",
+    "headline": {
+      "en": "MiniMax M3.1 Flash: Redefining Agent Performance and Cost",
+      "de": "MiniMax M3.1 Flash: Leistung und Kosten für Agenten neu definiert",
+      "fr": "MiniMax M3.1 Flash : redéfinir la performance et le coût des agents",
+      "es": "MiniMax M3.1 Flash: redefiniendo el rendimiento y el costo de los agentes",
+      "ar": "MiniMax M3.1 Flash: إعادة تعريف أداء الوكلاء وتكلفتهم"
+    },
+    "source": "MiniMax",
+    "url": "https://www.minimax.io/blog/minimax-m31f",
+    "take": {
+      "en": "70% cheaper agents are only a win if you budget the verification layer too — Artificial Analysis measured a 93% hallucination rate when the model doesn't know an answer, which is exactly the failure that quietly corrupts autonomous workflows. Cheap tokens just move the bottleneck from inference cost to trust.",
+      "de": "70% günstigere Agenten sind nur ein Gewinn, wenn du auch die Verifikationsschicht einplanst — Artificial Analysis hat eine Halluzinationsrate von 93% gemessen, wenn das Modell eine Antwort nicht weiß, und genau dieser Fehler korrumpiert leise autonome Workflows. Billige Tokens verlagern den Flaschenhals nur von den Inferenzkosten zum Vertrauen.",
+      "fr": "Des agents 70% moins chers ne sont une victoire que si vous budgétez aussi la couche de vérification — Artificial Analysis a mesuré un taux d'hallucination de 93% quand le modèle ne connaît pas la réponse, et c'est exactement la défaillance qui corrompt silencieusement les workflows autonomes. Les tokens bon marché déplacent simplement le goulot d'étranglement du coût d'inférence vers la confiance.",
+      "es": "Los agentes un 70% más baratos solo son una victoria si también presupuestas la capa de verificación — Artificial Analysis midió una tasa de alucinación del 93% cuando el modelo no sabe una respuesta, y ese es justo el fallo que corrompe en silencio los flujos de trabajo autónomos. Los tokens baratos solo mueven el cuello de botella del costo de inferencia a la confianza.",
+      "ar": "الوكلاء الأرخص بنسبة 70% لا يمثلون مكسبًا إلا إذا احتسبتَ أيضًا طبقة التحقق — قاست Artificial Analysis معدل هلوسة يبلغ 93% عندما لا يعرف النموذج الإجابة، وهذا بالضبط هو الفشل الذي يفسد سير العمل المستقل بصمت. الرموز الرخيصة تنقل عنق الزجاجة من تكلفة الاستدلال إلى الثقة."
+    },
+    "tags": [
+      "agents",
+      "economics",
+      "reliability"
+    ]
+  },
+  {
+    "id": "meta-muse-glimmer-30b-on-device",
+    "date": "2026-10-19",
+    "category": "agentic",
+    "headline": {
+      "en": "Muse Glimmer 30B: An On-Device Agentic Model",
+      "de": "Muse Glimmer 30B: Ein agentisches Modell auf dem Gerät",
+      "fr": "Muse Glimmer 30B : un modèle d'agents sur l'appareil",
+      "es": "Muse Glimmer 30B: un modelo agéntico on-device",
+      "ar": "Muse Glimmer 30B: نموذج وكيلي يعمل على الجهاز"
+    },
+    "source": "Meta",
+    "url": "https://ai.meta.com/research/publications/muse-glimmer-30b-an-on-device-agentic-model/",
+    "take": {
+      "en": "An Apache-2.0 30B agent that runs on a single consumer GPU relocates the reliability problem: no provider guardrails, no cloud filter, only your own harness and evals. Credit to Meta for benchmarking tool use and failure recovery explicitly — that's the spec that matters once agents ship on-device.",
+      "de": "Ein Apache-2.0-Agent mit 30B Parametern, der auf einer einzigen Consumer-GPU läuft, verlagert das Zuverlässigkeitsproblem: keine Provider-Guardrails, kein Cloud-Filter, nur dein eigenes Harness und deine eigenen Evals. Respekt, dass Meta Tool-Nutzung und Failure-Recovery explizit misst — das ist die Spezifikation, die zählt, sobald Agenten auf dem Gerät ausgeliefert werden.",
+      "fr": "Un agent Apache-2.0 de 30B paramètres qui tourne sur un seul GPU grand public déplace le problème de fiabilité : plus de garde-fous du fournisseur, plus de filtre cloud, seulement votre harness et vos évals. Il faut saluer le fait que Meta mesure explicitement l'usage d'outils et la récupération d'erreurs — c'est la spécification qui compte dès que les agents sont livrés sur l'appareil.",
+      "es": "Un agente Apache-2.0 de 30B parámetros que corre en una sola GPU de consumo reubica el problema de fiabilidad: sin barreras del proveedor, sin filtro en la nube, solo tu harness y tus evaluaciones. Hay que reconocer que Meta mide explícitamente el uso de herramientas y la recuperación de fallos — esa es la especificación que importa cuando los agentes se ejecutan en el dispositivo.",
+      "ar": "نموذج وكيل بحجم 30B باراميترًا وبترخيص Apache-2.0 يعمل على GPU استهلاكية واحدة ينقل مشكلة الموثوقية إلى مكان آخر: لا حواجز من المزوّد ولا مرشّح سحابي، بل فقط الـ harness والتقييمات الخاصة بك. يحسب لـ Meta أنها تقيس صراحة استخدام الأدوات والتعافي من الأخطاء — هذه هي المواصفات المهمة حين تُشحن الوكلاء على الأجهزة."
+    },
+    "tags": [
+      "on-device",
+      "open-weights",
+      "agents"
+    ]
+  },
+  {
+    "id": "notion-agents-24h-harness",
+    "date": "2026-10-19",
+    "category": "agentic",
+    "headline": {
+      "en": "Agents, rebuilt to do more for less",
+      "de": "Agenten, neu gebaut, um mehr für weniger zu leisten",
+      "fr": "Des agents repensés pour en faire plus avec moins",
+      "es": "Agentes, reconstruidos para hacer más por menos",
+      "ar": "وكلاء أعيد بناؤهم لإنجاز المزيد بتكلفة أقل"
+    },
+    "source": "Notion",
+    "url": "https://www.notion.com/releases/2026-10-19",
+    "take": {
+      "en": "Notion quietly shipped the production-agent checklist: a dedicated computer and browser per agent, 24-hour task horizons, safety checks, and spending caps. The 90%-cheaper Auto router gets the headline, but governance surfaces like the AI Command Center are the tell — cost control is becoming a product category of its own.",
+      "de": "Notion hat leise die Checkliste für Produktions-Agenten ausgeliefert: eigener Computer und Browser pro Agent, 24-Stunden-Aufgaben, Sicherheitschecks und Ausgaben-Limits. Der um 90% günstigere Auto-Router liefert die Schlagzeile, aber Governance-Oberflächen wie das AI Command Center verraten die Richtung — Kostenkontrolle wird eine eigene Produktkategorie.",
+      "fr": "Notion a discrètement livré la checklist de l'agent en production : un ordinateur et un navigateur dédiés par agent, des horizons de tâches de 24 heures, des contrôles de sécurité et des plafonds de dépenses. Le routeur Auto 90% moins cher fait la une, mais les surfaces de gouvernance comme l'AI Command Center trahissent la tendance — le contrôle des coûts devient une catégorie de produit à part entière.",
+      "es": "Notion lanzó discretamente la lista de verificación del agente en producción: computadora y navegador dedicados por agente, tareas de 24 horas, controles de seguridad y límites de gasto. El router Auto un 90% más barato acapara el titular, pero las superficies de gobernanza como el AI Command Center revelan la dirección — el control de costos se está convirtiendo en su propia categoría de producto.",
+      "ar": "شحنت Notion بهدوء قائمة مراجعة الوكلاء الإنتاجيين: حاسوب ومتصفح مخصصان لكل وكيل، ومهام تمتد 24 ساعة، وفحوصات أمان، وحدود للإنفاق. موجّه Auto الأرخص بنسبة 90% يحصد العنوان، لكن أسطح الحوكمة مثل AI Command Center تكشف الاتجاه الحقيقي — ضبط التكاليف يتحول إلى فئة منتجات قائمة بذاتها."
+    },
+    "tags": [
+      "agents",
+      "harness",
+      "cost"
+    ]
   }
 ]
