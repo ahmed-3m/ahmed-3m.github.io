@@ -5093,5 +5093,109 @@
       "harness",
       "cost"
     ]
+  },
+  {
+    "id": "nvidia-openshell-reference-architecture",
+    "date": "2026-10-21",
+    "category": "agentic",
+    "headline": {
+      "en": "NVIDIA Launches OpenShell Reference Architecture for Safe AI Agents",
+      "de": "NVIDIA startet OpenShell-Referenzarchitektur für sichere KI-Agenten",
+      "fr": "NVIDIA lance l'architecture de référence OpenShell pour des agents IA sûrs",
+      "es": "NVIDIA lanza la arquitectura de referencia OpenShell para agentes de IA seguros",
+      "ar": "NVIDIA تطلق معمارية OpenShell المرجعية لوكلاء الذكاء الاصطناعي الآمنين"
+    },
+    "source": "NVIDIA",
+    "url": "https://nvidianews.nvidia.com/news/openshell-reference-architecture",
+    "take": {
+      "en": "The kind of agent safety I keep pushing for is enforcement that lives outside the model, and NVIDIA putting quarantine-on-violation in silicon via BlueField-4 is that pattern at industrial scale. The partner list is the real signal: when OpenAI, Anthropic, and Google all line up behind one runtime boundary, per-agent isolation stops being a design choice and becomes table stakes.",
+      "de": "Bei Agentensicherheit bestehe ich auf Durchsetzung, die außerhalb des Modells liegt — und dass NVIDIA Quarantäne bei Richtverletzungen mit BlueField-4 direkt in Silizium verankert, ist dieses Muster im Industriemaßstab. Die echte Botschaft ist die Partnerliste: Wenn OpenAI, Anthropic und Google sich hinter einer gemeinsamen Runtime-Grenze einreihen, wird Isolation pro Agent keine Designentscheidung mehr, sondern Grundvoraussetzung.",
+      "fr": "En matière de sécurité des agents, je plaide pour une application qui vit hors du modèle — et NVIDIA qui ancre la mise en quarantaine en cas de violation dans le silicium via BlueField-4, c'est ce motif à l'échelle industrielle. Le vrai signal, c'est la liste des partenaires : quand OpenAI, Anthropic et Google s'alignent derrière une même frontière d'exécution, l'isolation par agent cesse d'être un choix de conception pour devenir un prérequis.",
+      "es": "En seguridad de agentes insisto en un cumplimiento que viva fuera del modelo, y que NVIDIA ponga la cuarentena ante violaciones en el silicio vía BlueField-4 es ese patrón a escala industrial. La verdadera señal es la lista de socios: cuando OpenAI, Anthropic y Google se alinean detrás de una misma frontera de ejecución, el aislamiento por agente deja de ser una decisión de diseño y se convierte en un requisito mínimo.",
+      "ar": "في أمن الوكلاء أُصرّ على إنفاذ يعيش خارج النموذج، وقيام NVIDIA بترسيخ العزل عند المخالفة في السيليكون عبر BlueField-4 هو هذا النمط ولكن على نطاق صناعي. الإشارة الحقيقية هي قائمة الشركاء: عندما تصطف OpenAI وAnthropic وGoogle خلف حدّ تنفيذ واحد، يتحول عزل كل وكيل من خيار تصميمي إلى شرط أساسي."
+    },
+    "tags": [
+      "agent-safety",
+      "runtime-enforcement",
+      "nvidia"
+    ]
+  },
+  {
+    "id": "databricks-agent-memory-memcurrent",
+    "date": "2026-10-20",
+    "category": "agentic",
+    "headline": {
+      "en": "Introducing Agent Memory on Databricks",
+      "de": "Einführung von Agent Memory auf Databricks",
+      "fr": "Présentation d'Agent Memory sur Databricks",
+      "es": "Presentamos Agent Memory en Databricks",
+      "ar": "إطلاق ذاكرة الوكلاء (Agent Memory) على Databricks"
+    },
+    "source": "Databricks",
+    "url": "https://www.databricks.com/blog/introducing-agent-memory-databricks",
+    "take": {
+      "en": "Memory has been the roll-your-own gap in most agent stacks, so Databricks shipping it as managed infrastructure — with a claimed 3x agent pass rate at 31% fewer tokens — is exactly the kind of production news I like. The detail that matters: memories are distilled by an offline pipeline instead of being written mid-task, which is how you keep a long-lived agent's context from rotting.",
+      "de": "Gedächtnis war in den meisten Agent-Stacks die selbstgebaute Lücke, dass Databricks es nun als verwaltete Infrastruktur liefert — mit einer beanspruchten 3x Pass-Rate bei 31% weniger Tokens — ist genau die Art von Production-News, die mir gefällt. Das entscheidende Detail: Erinnerungen werden von einer Offline-Pipeline destilliert, statt mitten in der Aufgabe geschrieben zu werden — so verhindert man, dass der Kontext eines langlebigen Agents verrottet.",
+      "fr": "La mémoire restait le maillon bricolé à la main dans la plupart des stacks d'agents ; la voir arriver chez Databricks comme infrastructure gérée — avec un taux de réussite annoncé de 3x pour 31% de tokens en moins — c'est exactement le genre d'actualité production que j'apprécie. Le détail qui compte : les souvenirs sont distillés par un pipeline hors ligne au lieu d'être écrits en pleine tâche, c'est ainsi qu'on empêche le contexte d'un agent durable de se dégrader.",
+      "es": "La memoria ha sido el hueco de fabricación propia en la mayoría de stacks de agentes, así que ver a Databricks lanzarla como infraestructura gestionada — con una tasa de aprobación de agentes 3x usando 31% menos tokens — es justo el tipo de noticia de producción que me gusta. El detalle que importa: los recuerdos se destilan con un pipeline offline en vez de escribirse a mitad de la tarea, y así se evita que el contexto de un agente duradero se pudra.",
+      "ar": "كانت الذاكرة هي الفجوة التي يبنيها كل فريق بنفسه في معظم منظومات الوكلاء، ولذلك فإن تقديم Databricks لها كبنية تحتية مُدارة — بمعدل نجاح للوكلاء يبلغ 3x وبتوفير 31% من الرموز — هو بالضبط نوع أخبار الإنتاج الذي يعجبني. التفصيلة المهمة: تُقطَّر الذكريات عبر خط معالجة دون اتصال بدل كتابتها في منتصف المهمة، وهكذا تمنع تعفّن سياق وكيلٍ طويل العمر."
+    },
+    "tags": [
+      "agent-memory",
+      "production",
+      "databricks"
+    ]
+  },
+  {
+    "id": "claude-scorpion-toxin-binder-design",
+    "date": "2026-10-20",
+    "category": "agentic",
+    "headline": {
+      "en": "How Claude designed protein binders against scorpion neurotoxins",
+      "de": "Wie Claude Protein-Binder gegen Skorpion-Neurotoxine entwarf",
+      "fr": "Comment Claude a conçu des protéines de liaison contre les neurotoxines de scorpion",
+      "es": "Cómo Claude diseñó proteínas de unión contra neurotoxinas de escorpión",
+      "ar": "كيف صمّم Claude بروتينات رابطة ضد سموم عقرب عصبية"
+    },
+    "source": "Anthropic",
+    "url": "https://www.anthropic.com/research/claude-scorpion-toxin-binder-design",
+    "take": {
+      "en": "17 of 211 designs actually bound in the lab, and Anthropic released every design and its data — that ratio, not the 318,484 in-silico designs, is the honest headline in AI-for-science. This is the evaluation pattern I want more of: generate at scale, validate physically, publish the misses next to the hits.",
+      "de": "17 von 211 Designs haben im Labor tatsächlich gebunden, und Anthropic hat jedes Design samt Daten veröffentlicht — diese Quote, nicht die 318,484 In-Silico-Designs, ist die ehrliche Schlagzeile in KI-gestützter Wissenschaft. Genau dieses Evaluationsmuster will ich öfter sehen: im großen Maßstab generieren, physisch validieren und die Fehlschläge neben den Treffern veröffentlichen.",
+      "fr": "17 des 211 designs se sont réellement liés en laboratoire, et Anthropic a publié chaque design avec ses données — c'est ce ratio, pas les 318,484 designs in silico, qui fait la une honnête de l'IA pour la science. C'est exactement le motif d'évaluation que je veux voir plus souvent : générer à grande échelle, valider physiquement, publier les échecs à côté des réussites.",
+      "es": "17 de 211 diseños se unieron realmente en el laboratorio, y Anthropic publicó cada diseño con sus datos — esa proporción, no los 318,484 diseños in silicio, es el titular honesto de la IA para la ciencia. Este es el patrón de evaluación que quiero ver más: generar a escala, validar físicamente y publicar los fallos junto a los aciertos.",
+      "ar": "من أصل 211 تصميمًا ارتبط 17 منها فعليًا في المختبر، ونشرت Anthropic كل تصميم مع بياناته — هذه النسبة، لا 318,484 تصميمًا حاسوبيًا، هي العنوان الصادق في مجال الذكاء الاصطناعي للعلوم. هذا هو نمط التقييم الذي أريد رؤيته أكثر: توليد على نطاق واسع، وتحقق عملي، ونشر الإخفاقات جنبًا إلى جنب مع النجاحات."
+    },
+    "tags": [
+      "scientific-discovery",
+      "evaluation",
+      "anthropic"
+    ]
+  },
+  {
+    "id": "inception-mercury-3-diffusion-speed",
+    "date": "2026-10-20",
+    "category": "ai",
+    "headline": {
+      "en": "Inception says Mercury 3 beats GPT-6 Luna and Claude Haiku 5.5 at up to 8x the speed",
+      "de": "Inception sagt, Mercury 3 schlägt GPT-6 Luna und Claude Haiku 5.5 mit bis zu 8-facher Geschwindigkeit",
+      "fr": "Inception affirme que Mercury 3 bat GPT-6 Luna et Claude Haiku 5.5 avec une vitesse allant jusqu'à 8 fois supérieure",
+      "es": "Inception afirma que Mercury 3 supera a GPT-6 Luna y Claude Haiku 5.5 hasta 8 veces más rápido",
+      "ar": "تقول Inception إن Mercury 3 يتفوق على GPT-6 Luna وClaude Haiku 5.5 بسرعة تصل إلى 8 أضعاف"
+    },
+    "source": "SiliconANGLE",
+    "url": "https://siliconangle.com/2026/10/20/inception-says-mercury-3-beats-gpt-6-luna-and-claude-haiku-5-5-at-up-to-8x-the-speed/",
+    "take": {
+      "en": "As a diffusion-model person, Mercury 3 beating GPT-6 Luna and Claude Haiku 5.5 on 8 of 12 benchmarks at 4-8x the speed is the scaling answer diffusion language models needed — but these are Inception's own numbers with no independent replication yet. If 1,068 tokens per second holds up outside their benchmarks, it genuinely changes what an interactive agent can feel like.",
+      "de": "Als jemand aus dem Diffusionsmodell-Lager ist Mercury 3, das GPT-6 Luna und Claude Haiku 5.5 bei 8 von 12 Benchmarks mit 4-8x Geschwindigkeit schlägt, die Skalierungsantwort, die Diffusionssprachmodelle brauchten — allerdings sind das Inceptions eigene Zahlen, noch ohne unabhängige Replikation. Wenn 1,068 Tokens pro Sekunde auch außerhalb ihrer Benchmarks hält, ändert das spürbar, wie sich ein interaktiver Agent anfühlen kann.",
+      "fr": "Venant de quelqu'un qui travaille sur les modèles de diffusion, Mercury 3 qui bat GPT-6 Luna et Claude Haiku 5.5 sur 8 benchmarks sur 12 à une vitesse 4-8x supérieure, c'est la réponse de scalabilité que les modèles de langage par diffusion attendaient — mais ce sont les chiffres d'Inception eux-mêmes, sans réplication indépendante pour l'instant. Si les 1,068 tokens par seconde tiennent hors de leurs benchmarks, cela change vraiment ce que peut être un agent interactif.",
+      "es": "Como persona de modelos de difusión, que Mercury 3 supere a GPT-6 Luna y Claude Haiku 5.5 en 8 de 12 benchmarks a 4-8x la velocidad es la respuesta de escalado que los modelos de lenguaje por difusión necesitaban — pero son los números propios de Inception, aún sin replicación independiente. Si los 1,068 tokens por segundo se sostienen fuera de sus benchmarks, eso cambia de verdad cómo puede sentirse un agente interactivo.",
+      "ar": "بصفتي شخصًا يعمل على نماذج الانتشار، فإن تفوق Mercury 3 على GPT-6 Luna وClaude Haiku 5.5 في 8 من 12 معيارًا وبيسرعة تبلغ 4-8x هو جواب التوسع الذي احتاجته نماذج اللغة الانتشارية — لكن هذه أرقام Inception نفسها ولا توجد نسخة مستقلة منها بعد. إذا صمدت سرعة 1,068 رمزًا في الثانية خارج معاييرهم، فسيغيّر ذلك فعلًا الشكل الذي قد يبدو عليه وكيل تفاعلي."
+    },
+    "tags": [
+      "diffusion",
+      "benchmarks",
+      "speed"
+    ]
   }
 ]
