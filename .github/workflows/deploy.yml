@@ -22,8 +22,10 @@ permissions:
 concurrency:
   # Separate lanes: production deploys (push/manual) never queue behind PR
   # builds, and a superseded PR run (new push to the same PR) is cancelled
-  # instead of burning CI minutes on now-outdated commits.
-  group: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.number) || 'deploy' }}
+  # instead of burning CI minutes on now-outdated commits. Title/body-only
+  # edits get a lane of their own: Dependabot edits the PR body right after
+  # pushing, and that skip-only run must not cancel the real build.
+  group: ${{ github.event_name != 'pull_request' && 'deploy' || (github.event.action == 'edited' && !github.event.changes.base) && format('pr-{0}-edit-{1}', github.event.number, github.run_id) || format('pr-{0}', github.event.number) }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
