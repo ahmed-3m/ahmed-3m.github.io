@@ -4,8 +4,7 @@ See **[AGENTS.md](AGENTS.md)** for the project overview, commands, and conventio
 
 ## Branch rule
 
-- Do all work on **`agents-work`** — the shared lane for non-Claude agents — then open a
-  PR into `main`.
-- The repo is kept to three branches (`main`, `claude-work`, `agents-work`) plus the
-  auto-managed `gh-pages`. **Do not create new branches** and **never edit `gh-pages`.**
-- `claude-work` belongs to Claude Code — don't commit there.
+- `main` is the only long-lived branch.
+- Branch off `main` using a short-lived descriptive branch (e.g. `fix/...`, `chore/...`, `feat/...`) and open a PR into `main`.
+- Never commit directly to `main` — always go through a PR.
+- Agents never merge their own PRs: open the PR, report, and stop — the owner reviews and merges.

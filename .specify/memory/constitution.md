@@ -1,10 +1,10 @@
 <!--
 Sync Impact Report
-- Version change: template → 1.0.0
-- Modified principles: placeholders → portfolio-specific principles
-- Added sections: Branch Model, Claim Integrity, Quality Gates
-- Removed sections: none (template placeholders replaced)
-- Templates requiring updates: none required for v1.0.0 (standard Speckit templates retained)
+- Version change: template → 1.0.0 → 1.0.1
+- Modified principles: update branch discipline to single-branch main model
+- Added sections: none
+- Removed sections: none
+- Templates requiring updates: none
 - Follow-up TODOs: none
 -->
 # Ahmed Mohammed Portfolio Constitution
@@ -49,8 +49,8 @@ The site MUST remain a statically exported Next.js app suitable for GitHub Pages
 be optional client-side paths, documented edge workers, or out of scope for the
 static host.
 
-**Rationale**: Deploy path is `.github/workflows/deploy.yml` → `gh-pages`. Server-only
-APIs break the hosting model.
+**Rationale**: Deploy path is `.github/workflows/deploy.yml` via Actions artifact
+(`actions/deploy-pages`). Server-only APIs break the hosting model.
 
 ### V. Multilingual Completeness & Locale Quality
 
@@ -61,19 +61,20 @@ meaning, e.g. Spanish "Anos").
 
 **Rationale**: DACH recruiters are a primary audience; the site advertises German B1.
 
-## Branch Model
+## Branch Discipline
 
-Only three long-lived source branches plus deploy output:
+`main` is the only long-lived branch. The repository follows a single-branch model:
 
 | Branch | Purpose |
 |--------|---------|
-| `main` | Source of truth; change only via PR |
-| `claude-work` | Claude Code working lane |
-| `agents-work` | Shared lane for other agents |
-| `gh-pages` | Deploy output — never edit by hand |
+| `main` | Source of truth. Stable, deployable. Change only via PR. |
 
-No per-feature branches. Speckit feature directories under `specs/` are independent of
-git branch names.
+Rules:
+- Branch off `main` for each change using short-lived descriptive feature/fix branches (e.g. `feat/…`, `fix/…`, `chore/…`).
+- Never commit feature work directly to `main` — always go through a PR.
+- Agents never merge their own PRs (the automated news bot's self-merged JSON-only PR is the only sanctioned exception).
+- On merge, GitHub deletes head branches automatically.
+- Deployment is automated via GitHub Actions workflow artifact (`.github/workflows/deploy.yml` using `actions/deploy-pages`) — there is no deploy branch; the legacy `gh-pages` branch was deleted.
 
 ## Claim Integrity Standards
 
@@ -94,8 +95,7 @@ git branch names.
 - `npm run lint` and `npm run build` MUST pass before merge.
 - News items in `src/lib/news-items.ts` self-validate at build time; never invent
   future dates for public content.
-- Prefer reversible local changes; never force-push shared history; never edit
-  `gh-pages` by hand.
+- Prefer reversible local changes; never force-push shared history.
 
 ## Governance
 
@@ -107,7 +107,7 @@ repository. When principles conflict with convenience, principles win.
   Last Amended to the change date.
 - PR reviews SHOULD check claim integrity for any change that touches metrics,
   dates, education, or downloadable artifacts.
-- Runtime agent guidance lives in `AGENTS.md` / `Claude.md` and MUST remain
-  consistent with the Branch Model section above.
+- Runtime agent guidance lives in `AGENTS.md` / `GEMINI.md` and MUST remain
+  consistent with the Branch Discipline section above.
 
-**Version**: 1.0.0 | **Ratified**: 2026-07-12 | **Last Amended**: 2026-07-12
+**Version**: 1.0.1 | **Ratified**: 2026-07-12 | **Last Amended**: 2026-11-07
