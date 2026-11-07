@@ -403,7 +403,32 @@ export function WebPageSchema() {
       'https://ahmed-3m.github.io/case-studies/diffusion-ood/',
       'https://ahmed-3m.github.io/case-studies/inkjet-ood/',
       'https://ahmed-3m.github.io/case-studies/faultrix/',
+      'https://ahmed-3m.github.io/case-studies/sihem/',
     ],
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(schema) }}
+    />
+  );
+}
+
+export function BreadcrumbSchema({
+  items,
+}: {
+  items: Array<{ name: string; url: string }>;
+}) {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: item.url,
+    })),
   };
 
   return (

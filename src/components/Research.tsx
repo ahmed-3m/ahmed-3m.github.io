@@ -3,21 +3,149 @@ import { useEffect, useRef, useState } from 'react'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { useReveal } from '@/lib/useReveal'
 
-const cifarCharts = [
-  { src: '/fig_lambda_sweep.png', alt: 'Separation Loss Weight Sweep', caption: 'Separation weight sweep: best stability at lambda=0.02' },
-  { src: '/fig_calibration.png', alt: 'Operating Threshold Calibration', caption: 'Score distributions at calibrated operating threshold' },
-  { src: '/fig_per_timestep_error.png', alt: 'Per-Timestep Reconstruction Error', caption: 'Reconstruction error gap peaks at intermediate noise' },
+const cifarCharts: Array<{ src: string; alt: TranslationMap; caption: TranslationMap }> = [
+  {
+    src: '/fig_lambda_sweep.png',
+    alt: {
+      en: 'Separation Loss Weight Sweep',
+      de: 'Separation Loss Gewichtungs-Sweep',
+      fr: 'Balayage du poids de la separation loss',
+      es: 'Barrido del peso de la separation loss',
+      ar: 'مسح وزن خسارة الفصل',
+    },
+    caption: {
+      en: 'Separation weight sweep: best stability at lambda=0.02',
+      de: 'Separation-Weight-Sweep: beste Stabilität bei lambda=0.02',
+      fr: 'Balayage du poids de séparation : meilleure stabilité à lambda=0.02',
+      es: 'Barrido de peso de separación: mejor estabilidad en lambda=0.02',
+      ar: 'مسح وزن الفصل: أفضل ثبات عند lambda=0.02',
+    },
+  },
+  {
+    src: '/fig_calibration.png',
+    alt: {
+      en: 'Operating Threshold Calibration',
+      de: 'Kalibrierung des Betriebsschwellenwerts',
+      fr: 'Calibration du seuil opérationnel',
+      es: 'Calibración del umbral operativo',
+      ar: 'معايرة عتبة التشغيل',
+    },
+    caption: {
+      en: 'Score distributions at calibrated operating threshold',
+      de: 'Score-Verteilungen am kalibrierten Betriebsschwellenwert',
+      fr: 'Distributions des scores au seuil opérationnel calibré',
+      es: 'Distribuciones de puntuaciones en el umbral calibrado',
+      ar: 'توزيعات الدرجات عند عتبة التشغيل المعايرة',
+    },
+  },
+  {
+    src: '/fig_per_timestep_error.png',
+    alt: {
+      en: 'Per-Timestep Reconstruction Error',
+      de: 'Rekonstruktionsfehler pro Zeitschritt',
+      fr: 'Erreur de reconstruction par pas de temps',
+      es: 'Error de reconstrucción por paso de tiempo',
+      ar: 'خطأ إعادة البناء لكل خطوة زمنية',
+    },
+    caption: {
+      en: 'Reconstruction error gap peaks at intermediate noise',
+      de: 'Rekonstruktionsfehler-Lücke hat ihren Peak bei mittlerem Rauschen',
+      fr: "L'écart d'erreur de reconstruction culmine au bruit intermédiaire",
+      es: 'La brecha de error de reconstrucción tiene su pico en ruido intermedio',
+      ar: 'فجوة خطأ إعادة البناء تبلغ ذروتها عند الضوضاء المتوسطة',
+    },
+  },
 ]
 
-const industrialCharts = [
-  { src: '/fig_cross_domain_comparison.png', alt: 'Cross-Domain Impact of Separation Loss', caption: 'Cross-domain impact: CIFAR-10 gain vs. Inkjet QC variance' },
-  { src: '/fig_inkjet_lambda.png', alt: 'Per-Feature AUROC Sweep', caption: 'Per-feature AUROC across separation weights' },
+const industrialCharts: Array<{ src: string; alt: TranslationMap; caption: TranslationMap }> = [
+  {
+    src: '/fig_cross_domain_comparison.png',
+    alt: {
+      en: 'Cross-Domain Impact of Separation Loss',
+      de: 'Domänenübergreifender Einfluss der Separation Loss',
+      fr: 'Impact cross-domain de la separation loss',
+      es: 'Impacto entre dominios de la separation loss',
+      ar: 'تأثير خسارة الفصل عبر المجالات',
+    },
+    caption: {
+      en: 'Cross-domain impact: CIFAR-10 gain vs. Inkjet QC variance',
+      de: 'Cross-Domain-Einfluss: CIFAR-10-Gewinn vs. Inkjet-QC-Varianz',
+      fr: 'Impact cross-domain : gain CIFAR-10 vs variance Inkjet QC',
+      es: 'Impacto entre dominios: ganancia en CIFAR-10 frente a varianza en Inkjet QC',
+      ar: 'التأثير عبر المجالات: تحسن CIFAR-10 مقابل تباين مراقبة جودة الطباعة',
+    },
+  },
+  {
+    src: '/fig_inkjet_lambda.png',
+    alt: {
+      en: 'Per-Feature AUROC Sweep',
+      de: 'AUROC-Sweep pro Merkmal',
+      fr: 'Balayage AUROC par caractéristique',
+      es: 'Barrido de AUROC por característica',
+      ar: 'مسح مقياس AUROC لكل ميزة',
+    },
+    caption: {
+      en: 'Per-feature AUROC across separation weights',
+      de: 'AUROC pro Merkmal über verschiedene Separation-Gewichte',
+      fr: 'AUROC par caractéristique selon les poids de séparation',
+      es: 'AUROC por característica a través de los pesos de separación',
+      ar: 'مقياس AUROC لكل ميزة عبر مختلف أوزان الفصل',
+    },
+  },
 ]
 
-const formulaVisuals = [
-  { src: '/research/separation-denoise-clean.png', alt: 'Noisy image becoming clean through denoising', caption: 'Step 1: reconstruct images under each class condition' },
-  { src: '/research/separation-apart-clean.png', alt: 'Two model explanations being pushed apart', caption: 'Step 2: push the conditional explanations apart' },
-  { src: '/research/separation-gap-clean.png', alt: 'Difference between reconstruction errors becoming an OOD signal', caption: 'Step 3: score the reconstruction gap as the OOD signal' },
+const formulaVisuals: Array<{ src: string; alt: TranslationMap; caption: TranslationMap }> = [
+  {
+    src: '/research/separation-denoise-clean.png',
+    alt: {
+      en: 'Noisy image becoming clean through denoising',
+      de: 'Verrauschtes Bild wird durch Entrauschen klar',
+      fr: 'Image bruitée devenant nette par débruitage',
+      es: 'Imagen ruidosa volviéndose limpia mediante reducción de ruido',
+      ar: 'صورة مشوشة تصبح نقية عبر إزالة الضوضاء',
+    },
+    caption: {
+      en: 'Step 1: reconstruct images under each class condition',
+      de: 'Schritt 1: Bilder unter jeder Klassenbedingung rekonstruieren',
+      fr: 'Étape 1 : reconstruire les images sous chaque condition de classe',
+      es: 'Paso 1: reconstruir imágenes bajo cada condición de clase',
+      ar: 'الخطوة 1: إعادة بناء الصور تحت شرط كل فئة',
+    },
+  },
+  {
+    src: '/research/separation-apart-clean.png',
+    alt: {
+      en: 'Two model explanations being pushed apart',
+      de: 'Zwei Modellerklärungen werden auseinandergedrückt',
+      fr: 'Deux explications du modèle poussées à s éloigner',
+      es: 'Dos explicaciones del modelo siendo separadas',
+      ar: 'دفع تفسيري النموذج للابتعاد عن بعضهما',
+    },
+    caption: {
+      en: 'Step 2: push the conditional explanations apart',
+      de: 'Schritt 2: die konditionalen Erklärungen trennen',
+      fr: 'Étape 2 : éloigner les explications conditionnelles',
+      es: 'Paso 2: separar las explicaciones condicionales',
+      ar: 'الخطوة 2: إبعاد التفسيرات الشرطية عن بعضها',
+    },
+  },
+  {
+    src: '/research/separation-gap-clean.png',
+    alt: {
+      en: 'Difference between reconstruction errors becoming an OOD signal',
+      de: 'Differenz der Rekonstruktionsfehler wird zum OOD-Signal',
+      fr: "La différence entre erreurs de reconstruction devient un signal OOD",
+      es: 'La diferencia entre errores de reconstrucción se convierte en señal OOD',
+      ar: 'الفرق بين أخطاء إعادة البناء يصبح إشارة لكشف الخارج عن التوزيع',
+    },
+    caption: {
+      en: 'Step 3: score the reconstruction gap as the OOD signal',
+      de: 'Schritt 3: die Rekonstruktionslücke als OOD-Signal bewerten',
+      fr: "Étape 3 : mesurer l'écart de reconstruction comme signal OOD",
+      es: 'Paso 3: puntuar la brecha de reconstrucción como signal OOD',
+      ar: 'الخطوة 3: قياس فجوة إعادة البناء كإشارة OOD',
+    },
+  },
 ]
 
 const copy = {
@@ -62,10 +190,31 @@ const copy = {
   assistant: { en: 'Assistant', de: 'Assistent', fr: 'Assistant', es: 'Asistente', ar: 'المساعد' },
   metricLabel: { en: 'AUROC - CIFAR-10 Average', de: 'AUROC - CIFAR-10 Durchschnitt', fr: 'AUROC - moyenne CIFAR-10', es: 'AUROC - promedio CIFAR-10', ar: 'AUROC - متوسط CIFAR-10' },
   variance: { en: '+/-0.07% variance (3 seeds)', de: '+/-0.07% Varianz (3 Seeds)', fr: '+/-0.07% variance (3 seeds)', es: '+/-0.07% varianza (3 semillas)', ar: '+/-0.07% تباين (3 بذور)' },
+  binaryAurocHeader: {
+    en: 'Binary OOD AUROC (↑ better, 3 seeds)',
+    de: 'Binäre OOD-AUROC (↑ besser, 3 Seeds)',
+    fr: 'AUROC OOD binaire (↑ meilleur, 3 seeds)',
+    es: 'AUROC OOD binario (↑ mejor, 3 semillas)',
+    ar: 'AUROC الثنائي لكشف OOD (↑ الأفضل، 3 بذور)',
+  },
+  multiClassAuroc: {
+    en: 'Multi-class leave-one-class-out AUROC',
+    de: 'Mehrklassen Leave-One-Class-Out AUROC',
+    fr: 'AUROC multi-classes leave-one-class-out',
+    es: 'AUROC multiclase leave-one-class-out',
+    ar: 'AUROC متعدد الفئات مع استبعاد فئة واحدة',
+  },
+  comparisonOodMethods: {
+    en: 'Comparison across OOD methods',
+    de: 'Vergleich über OOD-Methoden',
+    fr: 'Comparaison entre méthodes OOD',
+    es: 'Comparación entre métodos OOD',
+    ar: 'مقارنة بين طرق كشف OOD',
+  },
   formulaLabel: { en: 'Novel contribution - separation loss', de: 'Neuer Beitrag - Separation Loss', fr: 'Contribution nouvelle - separation loss', es: 'Contribución nueva - separation loss', ar: 'المساهمة الجديدة - خسارة الفصل' },
   plainIdea: { en: 'Plain idea: train the model to make its two explanations visibly different. The gap becomes the anomaly signal.', de: 'Einfache Idee: Das Modell soll zwei Erklärungen sichtbar unterscheiden. Der Abstand wird zum Anomalie-Signal.', fr: "Idee simple : le modèle apprend à rendre deux explications clairement différentes. L'écart devient le signal anomalie.", es: 'Idea simple: el modelo aprende a hacer distintas sus dos explicaciones. La brecha se vuelve la señal de anomalía.', ar: 'الفكرة ببساطة: ندرب النموذج كي يجعل تفسيرين مختلفين بوضوح. الفجوة بينهما تصبح إشارة الشذوذ.' },
   step1: { en: 'Learn to denoise', de: 'Entrauschen lernen', fr: 'Apprendre à dénoiser', es: 'Aprender a limpiar ruido', ar: 'تعلم إزالة الضوضاء' },
-  step1Text: { en: 'Reconstruct images under each class condition.', de: 'Bilder unter jeder Klassenbedingung rekonstruieren.', fr: 'Reconstruire les images sous chaque condition de classe.', es: 'Reconstruir imágenes bajo cada condición de clase.', ar: 'إعادة بناء الصور تحت كل شرط فئة.' },
+  step1Text: { en: 'Reconstruct images under each class condition.', de: 'Bilder unter jeder Klassenbedingung rekonstruieren.', fr: 'Reconstruire les images sous chaque condition de classe.', es: 'Reconstruir imágenes bajo cada condición de classe.', ar: 'إعادة بناء الصور تحت كل شرط فئة.' },
   step2: { en: 'Push explanations apart', de: 'Erklärungen trennen', fr: 'Éloigner les explications', es: 'Separar explicaciones', ar: 'إبعاد التفسيرات' },
   step2Text: { en: 'Increase the distance between conditional predictions.', de: 'Den Abstand zwischen konditionalen Vorhersagen erhöhen.', fr: 'Augmenter la distance entre prédictions conditionnelles.', es: 'Aumentar la distancia entre predicciones condicionales.', ar: 'زيادة المسافة بين التنبؤات الشرطية.' },
   step3: { en: 'Score the gap', de: 'Abstand bewerten', fr: "Mesurer l'écart", es: 'Medir la brecha', ar: 'قياس الفجوة' },
@@ -78,7 +227,56 @@ const copy = {
   track2: { en: "Master's Thesis (Track 2) - JKU Linz - 2026", de: 'Masterarbeit (Track 2) - JKU Linz - 2026', fr: 'Mémoire de master (Track 2) - JKU Linz - 2026', es: 'Tesis de master (Track 2) - JKU Linz - 2026', ar: 'رسالة ماجستير (المسار 2) - JKU Linz - 2026' },
   track2Title: { en: 'Rigorous Cross-Domain Transfer & FTI_Zer0P Benchmark', de: 'Strenger Cross-Domain Transfer & FTI_Zer0P Benchmark', fr: 'Transfert cross-domain rigoureux & benchmark FTI_Zer0P', es: 'Transferencia cross-domain rigurosa y benchmark FTI_Zer0P', ar: 'انتقال صارم بين المجالات ومعيار FTI_Zer0P' },
   track2Desc: { en: 'The public YOLO+CDM print-quality pipeline was evaluated on FTI_Zer0P with strict 5-fold cross-validation, showing where separation loss transfers and where small manufacturing textures behave differently.', de: 'Die öffentliche YOLO+CDM Pipeline wurde auf FTI_Zer0P mit strenger 5-facher Kreuzvalidierung evaluiert und zeigt die Grenzen der Übertragbarkeit.', fr: 'La pipeline publique YOLO+CDM a été évaluée sur FTI_Zer0P avec validation croisée stricte en 5 plis, montrant les limites du transfert.', es: 'La pipeline pública YOLO+CDM se evaluó en FTI_Zer0P con validación cruzada estricta de 5 folds, mostrando los límites de transferencia.', ar: 'تم تقييم خط YOLO+CDM العام على FTI_Zer0P بتحقق تقاطعي صارم من 5 طيات، مع توضيح حدود انتقال خسارة الفصل.' },
+  track2Meta: {
+    en: 'Public Benchmark - InkjetOOD Codebase - FTI_Zer0P Public Dataset',
+    de: 'Öffentlicher Benchmark - InkjetOOD Codebasis - Öffentlicher FTI_Zer0P Datensatz',
+    fr: 'Benchmark public - base de code InkjetOOD - jeu de données public FTI_Zer0P',
+    es: 'Benchmark público - base de código InkjetOOD - conjunto de datos público FTI_Zer0P',
+    ar: 'معيار عام - كود InkjetOOD - مجموعة بيانات FTI_Zer0P العامة',
+  },
+  auroc5FoldCv: {
+    en: 'AUROC - 5-Fold CV Baseline',
+    de: 'AUROC - 5-fache Kreuzvalidierungs-Baseline',
+    fr: 'AUROC - baseline validation croisée 5 plis',
+    es: 'AUROC - línea base 5-fold CV',
+    ar: 'AUROC - خط أساس التحقق التقاطعي الخماسي',
+  },
   publicEval: { en: 'Rigorous Public Evaluation', de: 'Strenge öffentliche Evaluierung', fr: 'Évaluation publique rigoureuse', es: 'Evaluación pública rigurosa', ar: 'تقييم عام صارم' },
+  datasetOverview: {
+    en: 'Dataset Overview',
+    de: 'Datensatz-Übersicht',
+    fr: 'Aperçu du jeu de données',
+    es: 'Descripción del conjunto de datos',
+    ar: 'نظرة عامة على مجموعة البيانات',
+  },
+  fiveFoldCv: {
+    en: '5-Fold Cross-Validation',
+    de: '5-fache Kreuzvalidierung',
+    fr: 'Validation croisée en 5 plis',
+    es: 'Validación cruzada de 5 folds',
+    ar: 'تحقق تقاطعي خماسي (5-Fold)',
+  },
+  zeroDefectSamples: {
+    en: 'Zero-defect samples',
+    de: 'Fehlerfreie Stichproben',
+    fr: 'Échantillons sans défaut',
+    es: 'Muestras sin defectos',
+    ar: 'عينات خالية من العيوب',
+  },
+  defectCategories: {
+    en: 'Defect categories',
+    de: 'Fehlerkategorien',
+    fr: 'Catégories de défauts',
+    es: 'Categorías de defectos',
+    ar: 'فئات العيوب',
+  },
+  thermographicFrames: {
+    en: 'Industrial thermographic frames',
+    de: 'Industrielle thermografische Einzelbilder',
+    fr: 'Images thermographiques industrielles',
+    es: 'Fotogramas termográficos industriales',
+    ar: 'إطارات تصوير حراري صناعي',
+  },
   industrialReport: { en: 'View Early Technical Report (2024) ->', de: 'Frühzeitigen Technikbericht ansehen (2024) ->', fr: 'Voir le rapport technique précoce (2024) ->', es: 'Ver informe técnico temprano (2024) ->', ar: 'عرض التقرير التقني المبكر (2024) ->' },
 } satisfies Record<string, TranslationMap>
 
@@ -96,18 +294,16 @@ export default function Research() {
 
   useEffect(() => {
     if (lightbox === null) {
-      // Restore focus to the chart thumbnail that opened the lightbox
       if (lastFocusedRef.current) {
         lastFocusedRef.current.focus()
         lastFocusedRef.current = null
       }
       return
     }
-    // Move focus into the lightbox when it opens
-    const t = window.setTimeout(() => {
+    const timer = window.setTimeout(() => {
       lightboxRef.current?.focus()
     }, 0)
-    return () => window.clearTimeout(t)
+    return () => window.clearTimeout(timer)
   }, [lightbox])
 
   return (
@@ -160,6 +356,10 @@ export default function Research() {
             </div>
           </div>
 
+          <div className="cd-band-eyebrow" style={{ marginTop: 20, marginBottom: 10 }}>
+            {t(copy.comparisonOodMethods)} · {t(copy.binaryAurocHeader)} · {t(copy.multiClassAuroc)}
+          </div>
+
           <div className="cd-rf-charts">
             {cifarCharts.map(({ src, alt, caption }, index) => (
               <div
@@ -167,7 +367,7 @@ export default function Research() {
                 className="cd-rf-chart cd-rf-chart--zoom"
                 role="button"
                 tabIndex={0}
-                aria-label={`Open ${alt} chart in viewer. ${caption}`}
+                aria-label={`Open ${t(alt)} chart in viewer. ${t(caption)}`}
                 title="Click to expand"
                 onClick={(event) => {
                   lastFocusedRef.current = event.currentTarget
@@ -181,8 +381,8 @@ export default function Research() {
                   }
                 }}
               >
-                <img src={src} alt={alt} style={{ width: '100%', height: '260px', objectFit: 'contain', borderRadius: '8px' }} />
-                <div className="cd-rf-chart-caption">{caption}</div>
+                <img src={src} alt={t(alt)} style={{ width: '100%', height: '260px', objectFit: 'contain', borderRadius: '8px' }} />
+                <div className="cd-rf-chart-caption">{t(caption)}</div>
               </div>
             ))}
           </div>
@@ -193,7 +393,7 @@ export default function Research() {
             <div className="cd-rfc-flow" aria-label="Separation loss workflow">
               <div>
                 <button type="button" className="cd-rfc-visual-button" onClick={(event) => { lastFocusedRef.current = event.currentTarget; setLightbox({ type: 'formula', index: 0 }) }} title="Click to expand">
-                  <img src={formulaVisuals[0].src} alt={formulaVisuals[0].alt} className="cd-rfc-visual cd-rf-chart--zoom" />
+                  <img src={formulaVisuals[0].src} alt={t(formulaVisuals[0].alt)} className="cd-rfc-visual cd-rf-chart--zoom" />
                 </button>
                 <span className="cd-rfc-step">1</span>
                 <strong>{t(copy.step1)}</strong>
@@ -201,7 +401,7 @@ export default function Research() {
               </div>
               <div>
                 <button type="button" className="cd-rfc-visual-button" onClick={(event) => { lastFocusedRef.current = event.currentTarget; setLightbox({ type: 'formula', index: 1 }) }} title="Click to expand">
-                  <img src={formulaVisuals[1].src} alt={formulaVisuals[1].alt} className="cd-rfc-visual cd-rf-chart--zoom" />
+                  <img src={formulaVisuals[1].src} alt={t(formulaVisuals[1].alt)} className="cd-rfc-visual cd-rf-chart--zoom" />
                 </button>
                 <span className="cd-rfc-step">2</span>
                 <strong>{t(copy.step2)}</strong>
@@ -209,7 +409,7 @@ export default function Research() {
               </div>
               <div>
                 <button type="button" className="cd-rfc-visual-button" onClick={(event) => { lastFocusedRef.current = event.currentTarget; setLightbox({ type: 'formula', index: 2 }) }} title="Click to expand">
-                  <img src={formulaVisuals[2].src} alt={formulaVisuals[2].alt} className="cd-rfc-visual cd-rf-chart--zoom" />
+                  <img src={formulaVisuals[2].src} alt={t(formulaVisuals[2].alt)} className="cd-rfc-visual cd-rf-chart--zoom" />
                 </button>
                 <span className="cd-rfc-step">3</span>
                 <strong>{t(copy.step3)}</strong>
@@ -235,13 +435,17 @@ export default function Research() {
               <div className="cd-rf-label">{t(copy.track2)}</div>
               <div className="cd-rf-title">{t(copy.track2Title)}</div>
               <div className="cd-rf-desc">{t(copy.track2Desc)} <strong>0.8673 +/- 0.0230 AUROC</strong>.</div>
-              <div className="cd-rf-meta">Public Benchmark - InkjetOOD Codebase - FTI_Zer0P Public Dataset</div>
+              <div className="cd-rf-meta">{t(copy.track2Meta)}</div>
             </div>
             <div className="cd-rf-metric">
               <div className="cd-rf-metric-num">0.8673</div>
-              <div className="cd-rf-metric-label">AUROC - 5-Fold CV Baseline</div>
+              <div className="cd-rf-metric-label">{t(copy.auroc5FoldCv)}</div>
               <div className="cd-rf-metric-delta">{t(copy.publicEval)}</div>
             </div>
+          </div>
+
+          <div className="cd-band-eyebrow" style={{ marginTop: 20, marginBottom: 10 }}>
+            {t(copy.datasetOverview)}: {t(copy.thermographicFrames)} · {t(copy.zeroDefectSamples)} · {t(copy.defectCategories)} · {t(copy.fiveFoldCv)}
           </div>
 
           <div className="cd-rf-charts" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
@@ -251,7 +455,7 @@ export default function Research() {
                 className="cd-rf-chart cd-rf-chart--zoom"
                 role="button"
                 tabIndex={0}
-                aria-label={`Open ${alt} chart in viewer. ${caption}`}
+                aria-label={`Open ${t(alt)} chart in viewer. ${t(caption)}`}
                 title="Click to expand"
                 onClick={(event) => {
                   lastFocusedRef.current = event.currentTarget
@@ -265,8 +469,8 @@ export default function Research() {
                   }
                 }}
               >
-                <img src={src} alt={alt} style={{ width: '100%', height: '260px', objectFit: 'contain', borderRadius: '8px' }} />
-                <div className="cd-rf-chart-caption">{caption}</div>
+                <img src={src} alt={t(alt)} style={{ width: '100%', height: '260px', objectFit: 'contain', borderRadius: '8px' }} />
+                <div className="cd-rf-chart-caption">{t(caption)}</div>
               </div>
             ))}
           </div>
@@ -330,18 +534,18 @@ export default function Research() {
             <button type="button" className="cd-lightbox-close" aria-label="Close image viewer" onClick={() => setLightbox(null)}>x</button>
             {lightbox.type === 'industrial' ? (
               <>
-                <img src={industrialCharts[lightbox.index].src} alt={industrialCharts[lightbox.index].alt} />
-                <div className="cd-lightbox-caption">{industrialCharts[lightbox.index].caption}</div>
+                <img src={industrialCharts[lightbox.index].src} alt={t(industrialCharts[lightbox.index].alt)} />
+                <div className="cd-lightbox-caption">{t(industrialCharts[lightbox.index].caption)}</div>
               </>
             ) : lightbox.type === 'formula' ? (
               <>
-                <img src={formulaVisuals[lightbox.index].src} alt={formulaVisuals[lightbox.index].alt} />
-                <div className="cd-lightbox-caption">{formulaVisuals[lightbox.index].caption}</div>
+                <img src={formulaVisuals[lightbox.index].src} alt={t(formulaVisuals[lightbox.index].alt)} />
+                <div className="cd-lightbox-caption">{t(formulaVisuals[lightbox.index].caption)}</div>
               </>
             ) : (
               <>
-                <img src={cifarCharts[lightbox.index].src} alt={cifarCharts[lightbox.index].alt} />
-                <div className="cd-lightbox-caption">{cifarCharts[lightbox.index].caption}</div>
+                <img src={cifarCharts[lightbox.index].src} alt={t(cifarCharts[lightbox.index].alt)} />
+                <div className="cd-lightbox-caption">{t(cifarCharts[lightbox.index].caption)}</div>
               </>
             )}
           </div>

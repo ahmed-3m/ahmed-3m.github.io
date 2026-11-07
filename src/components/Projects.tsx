@@ -17,6 +17,8 @@ const copy = {
   },
   reportMetric: { en: 'min per report', de: 'Min. pro Bericht', fr: 'min par rapport', es: 'min por informe', ar: 'دقيقة لكل تقرير' },
   caseStudy: { en: 'Case study', de: 'Fallstudie', fr: 'Étude de cas', es: 'Caso de estudio', ar: 'دراسة حالة' },
+  caseStudyLink: { en: 'Case study', de: 'Fallstudie', fr: 'Étude de cas', es: 'Caso de estudio', ar: 'دراسة حالة' },
+  liveProduct: { en: 'Live Product', de: 'Live-Produkt', fr: 'Produit en ligne', es: 'Producto en vivo', ar: 'المنتج المباشر' },
   code: { en: 'Code', de: 'Code', fr: 'Code', es: 'Código', ar: 'الكود' },
   thesis: { en: "Master's Thesis - JKU Linz", de: 'Masterarbeit - JKU Linz', fr: 'Mémoire de master - JKU Linz', es: 'Tesis de master - JKU Linz', ar: 'رسالة ماجستير - JKU Linz' },
   oodTitle: { en: 'OOD Detection Framework', de: 'OOD-Erkennungsframework', fr: 'Framework de détection OOD', es: 'Framework de detección OOD', ar: 'إطار كشف الخارج عن التوزيع' },
@@ -80,8 +82,10 @@ export default function Projects() {
                 Telegram bot · PWA · pgvector memory
               </div>
               <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-                <a href="https://t.me/sihem_ai_bot" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>Telegram &rarr;</a>
-                <a href="https://sihem-pwa.pages.dev/" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12, opacity: 0.78 }}>PWA &rarr;</a>
+                <Link href="/case-studies/sihem/" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.caseStudyLink)} &rarr;</Link>
+                <a href="https://sihem.at" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.liveProduct)} &rarr;</a>
+                <a href="https://t.me/sihem_ai_bot" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12, opacity: 0.78 }}>Telegram &rarr;</a>
+                <a href="https://sihem-pwa.pages.dev/" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12, opacity: 0.65 }}>PWA &rarr;</a>
               </div>
             </div>
           </article>

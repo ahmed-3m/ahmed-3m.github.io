@@ -54,13 +54,57 @@ const copy = {
   desc2: { en: 'Thesis: SCARA robotic system for dynamic object tracking.', de: 'Thesis: SCARA-Robotersystem für dynamische Objektverfolgung.', fr: 'Mémoire : système robotique SCARA pour suivi dynamique d\'objets.', es: 'Tesis: sistema robótico SCARA para seguimiento dinámico de objetos.', ar: 'المشروع: نظام روبوت SCARA لتتبع الأجسام المتحركة.' },
 } satisfies Record<string, TranslationMap>
 
-const skillCategories = [
-  { name: 'Deep Learning', skills: ['PyTorch', 'PyTorch Lightning', 'Diffusion Models (DDPM, UNet)', 'CNNs', 'Transformers', 'LSTM'] },
-  { name: 'Computer Vision', skills: ['OOD Detection', 'Object Detection (YOLOv8)', 'Defect Inspection', 'Image Classification', 'Roboflow'] },
-  { name: 'LLMs & GenAI', skills: ['LLM API Integration', 'Multi-Provider Routing & Failover', 'Prompt Engineering', 'Structured Output Validation', 'pgvector Retrieval'] },
-  { name: 'Research Methods', skills: ['Hydra', 'Ablation Studies', 'AUROC/FPR95', 'Cross-Validation', 'Multi-Seed Runs'] },
-  { name: 'Cloud & Software', skills: ['Python', 'Git', 'Linux', 'Docker', 'REST APIs', 'GitHub Actions CI/CD', 'Supabase', 'TypeScript', 'React'] },
-  { name: 'AI-Assisted Delivery', skills: ['Claude Code', 'GitHub Copilot', 'Microsoft 365 Copilot', 'ChatGPT'] },
+const skillCategories: { title: TranslationMap; skills: string[] }[] = [
+  {
+    title: {
+      en: 'Deep Learning & CV',
+      de: 'Deep Learning & Computer Vision',
+      fr: 'Deep Learning & Vision par ordinateur',
+      es: 'Deep Learning y Visión por Computador',
+      ar: 'التعلم العميق والرؤية الحاسوبية',
+    },
+    skills: ['PyTorch', 'PyTorch Lightning', 'Diffusion Models (DDPM, UNet)', 'CNNs', 'Transformers', 'OOD Detection', 'YOLOv8', 'Defect Inspection'],
+  },
+  {
+    title: {
+      en: 'GenAI & Agentic AI',
+      de: 'Generative & Agentische KI',
+      fr: 'IA générative & agentique',
+      es: 'IA generativa y agéntica',
+      ar: 'الذكاء الاصطناعي التوليدي والوكيلي',
+    },
+    skills: ['LLM API Integration', 'Multi-Provider Routing & Failover', 'Prompt Engineering', 'Structured Output Validation', 'pgvector Retrieval', 'Claude Code'],
+  },
+  {
+    title: {
+      en: 'ML & Data Science',
+      de: 'ML & Data Science',
+      fr: 'ML & Science des données',
+      es: 'ML y Ciencia de Datos',
+      ar: 'تعلم الآلة وعلوم البيانات',
+    },
+    skills: ['Hydra', 'Ablation Studies', 'AUROC/FPR95', 'Cross-Validation', 'Multi-Seed Runs', 'Roboflow'],
+  },
+  {
+    title: {
+      en: 'Deployment & MLOps',
+      de: 'Deployment & MLOps',
+      fr: 'Déploiement & MLOps',
+      es: 'Despliegue y MLOps',
+      ar: 'النشر وعمليات تعلم الآلة (MLOps)',
+    },
+    skills: ['Python', 'Git', 'Linux', 'Docker', 'REST APIs', 'GitHub Actions CI/CD', 'Supabase', 'TypeScript', 'React'],
+  },
+  {
+    title: {
+      en: 'Certifications',
+      de: 'Zertifizierungen',
+      fr: 'Certifications',
+      es: 'Certificaciones',
+      ar: 'الشهادات المهنية',
+    },
+    skills: ['M.Sc. Artificial Intelligence (JKU Linz)', 'B.Sc. Mechatronics Engineering (EMU)'],
+  },
 ]
 
 export default function About() {
@@ -79,10 +123,19 @@ export default function About() {
     { label: t(copy.openTo), value: t(copy.roles), accent: false },
   ]
 
-  const languages = [
-    { lang: 'Arabic', level: t({ en: 'Native', de: 'Muttersprache', fr: 'Natif', es: 'Nativo', ar: 'اللغة الأم' }) },
-    { lang: 'English', level: t({ en: 'B2 - Professional', de: 'B2 - Professionell', fr: 'B2 - professionnel', es: 'B2 - profesional', ar: 'B2 - مهني' }) },
-    { lang: 'German', level: t({ en: 'B1 CEFR - preparing for B2', de: 'B1 CEFR - Vorbereitung auf B2', fr: 'B1 CEFR - préparation au B2', es: 'B1 CEFR - preparando el B2', ar: 'B1 CEFR - أستعد لمستوى B2' }) },
+  const languages: { name: TranslationMap; level: string }[] = [
+    {
+      name: { en: 'Arabic', de: 'Arabisch', fr: 'Arabe', es: 'Árabe', ar: 'العربية' },
+      level: t({ en: 'Native', de: 'Muttersprache', fr: 'Natif', es: 'Nativo', ar: 'اللغة الأم' }),
+    },
+    {
+      name: { en: 'English', de: 'Englisch', fr: 'Anglais', es: 'Inglés', ar: 'الإنجليزية' },
+      level: t({ en: 'B2 - Professional', de: 'B2 - Professionell', fr: 'B2 - professionnel', es: 'B2 - profesional', ar: 'B2 - مهني' }),
+    },
+    {
+      name: { en: 'German', de: 'Deutsch', fr: 'Allemand', es: 'Alemán', ar: 'الألمانية' },
+      level: t({ en: 'B1 CEFR - preparing for B2', de: 'B1 CEFR - Vorbereitung auf B2', fr: 'B1 CEFR - préparation au B2', es: 'B1 CEFR - preparando el B2', ar: 'B1 CEFR - أستعد لمستوى B2' }),
+    },
   ]
 
   return (
@@ -148,8 +201,8 @@ export default function About() {
           <div className="cd-band-eyebrow">{t(copy.skills)}</div>
           <div className="cd-skills-grid">
             {skillCategories.map(cat => (
-              <div key={cat.name} className="cd-skill-category">
-                <div className="cd-skill-cat-name">{cat.name}</div>
+              <div key={cat.title.en} className="cd-skill-category">
+                <div className="cd-skill-cat-name">{t(cat.title)}</div>
                 <div className="cd-chips" style={{ marginTop: 0 }}>
                   {cat.skills.map(skill => <span key={skill} className="cd-chip">{skill}</span>)}
                 </div>
@@ -162,8 +215,8 @@ export default function About() {
           <div className="cd-band-eyebrow">{t(copy.languages)}</div>
           <div className="cd-lang-row">
             {languages.map(lang => (
-              <div key={lang.lang} className="cd-lang-card">
-                <div className="cd-lang-name">{lang.lang}</div>
+              <div key={lang.name.en} className="cd-lang-card">
+                <div className="cd-lang-name">{t(lang.name)}</div>
                 <div className="cd-lang-level">{lang.level}</div>
               </div>
             ))}

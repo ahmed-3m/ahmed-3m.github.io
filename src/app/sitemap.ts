@@ -65,6 +65,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.7,
     },
+    {
+      url: `${baseUrl}/case-studies/sihem/`,
+      lastModified: latestContent,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
     ...blogPostEntries,
   ];
 }

@@ -29,20 +29,41 @@ function formatContent(content: string | undefined) {
     return url
   }
 
-  // Inline transform shared by paragraphs and list items: bold markup plus
-  // bare-URL linkification. (Long-URL wrapping and LTR code blocks are handled
-  // by the .prose container rules in globals.css.)
-  const inline = (text: string) =>
-    text
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(
-        /(https?:\/\/[^\s<>"]+)/g,
-        (rawUrl) => {
-          const url = cleanUrl(rawUrl)
-          const trailing = rawUrl.slice(url.length)
-          return `<a href="${url}" class="text-[var(--cd-accent)] underline underline-offset-2" target="_blank" rel="noopener noreferrer">${url}</a>${trailing}`
-        }
-      )
+  // Inline transform shared by paragraphs and list items: inline code,
+  // markdown links, bold markup, and bare-URL linkification.
+  const inline = (text: string) => {
+    // 1. Inline code: `...`
+    const codeSpans: string[] = []
+    let s = text.replace(/`([^`]+)`/g, (_, code) => {
+      const idx = codeSpans.length
+      codeSpans.push(`<code class="px-1.5 py-0.5 rounded bg-slate-800/60 font-mono text-sm">${code}</code>`)
+      return `___CODE_SPAN_${idx}___`
+    })
+
+    // 2. Markdown links: [text](https://...)
+    const links: string[] = []
+    s = s.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, (_, label, url) => {
+      const idx = links.length
+      links.push(`<a href="${url}" target="_blank" rel="noopener noreferrer" class="underline text-cyan-400 hover:text-cyan-300">${label}</a>`)
+      return `___LINK_SPAN_${idx}___`
+    })
+
+    // 3. Bold: **text**
+    s = s.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+
+    // 4. Bare URLs: https://...
+    s = s.replace(/(https?:\/\/[^\s<>"]+)/g, (rawUrl) => {
+      const url = cleanUrl(rawUrl)
+      const trailing = rawUrl.slice(url.length)
+      return `<a href="${url}" class="text-[var(--cd-accent)] underline underline-offset-2" target="_blank" rel="noopener noreferrer">${url}</a>${trailing}`
+    })
+
+    // 5. Restore placeholders
+    s = s.replace(/___LINK_SPAN_(\d+)___/g, (_, idx) => links[Number(idx)])
+    s = s.replace(/___CODE_SPAN_(\d+)___/g, (_, idx) => codeSpans[Number(idx)])
+
+    return s
+  }
 
   return content
     .trim()
