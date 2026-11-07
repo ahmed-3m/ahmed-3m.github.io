@@ -33,6 +33,18 @@ total loss = denoising loss + lambda * separation loss
 
 At `lambda = 0.02`, the three-seed mean improved from a seed-sensitive `92.52% +/- 11.07%` to `99.03% +/- 0.07%` AUROC. The interesting part is not only the higher score; it is the collapse in variance.
 
+### Interactive Thesis Explorer
+
+The portfolio ships an in-browser explorer built from the thesis artefacts (raw score tensors and ablation JSON from [`ahmed-3m/DiffusionOOD`](https://huggingface.co/ahmed-3m/DiffusionOOD)). All numbers are precomputed — there is no client-side inference. It appears in the Research section of the homepage (mounted lazily when scrolled into view) and on the [DiffusionOOD case study](https://ahmed-3m.github.io/case-studies/diffusion-ood).
+
+| Tab | What you can explore |
+| --- | --- |
+| Score distributions & threshold | Empirical ID-vs-OOD score histograms and ROC curves for six benchmarks (Table 6.1), the `lambda = 0.02` vs `lambda = 0` regimes, and a live decision threshold with TPR / FPR / Youden's J |
+| Per-timestep & scoring rules | Reconstruction error across diffusion timesteps `t = 50..950`, plus difference vs. ratio vs. ID-only scoring (ID-only collapses to 20.23% AUROC on SVHN) |
+| Ablations & inkjet transfer | The `lambda` sweep, the Monte Carlo trial budget `K` (accuracy vs. runtime), and per-feature 5-fold CV inkjet results showing where the separation loss does not transfer |
+
+Data lives in [`src/lib/ood-explorer-data.ts`](src/lib/ood-explorer-data.ts); the UI is [`src/components/OodDemo.tsx`](src/components/OodDemo.tsx). Numerical qualifiers (airplane-vs-rest binary split, 3 seeds, seed-42 external checks) stay next to every headline figure on purpose.
+
 ## Featured Work
 
 | Project | Role | Links |
@@ -49,7 +61,7 @@ At `lambda = 0.02`, the three-seed mean improved from a seed-sensitive `92.52% +
 - Industrial report: [Diffusion-Based Multi-class Defect Detection](https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf)
 - Research poster: [Poster PDF](https://ahmed-3m.github.io/research-poster.pdf)
 - Case studies:
-  - [DiffusionOOD](https://ahmed-3m.github.io/case-studies/diffusion-ood) — includes an interactive precomputed OOD threshold & metric explorer
+  - [DiffusionOOD](https://ahmed-3m.github.io/case-studies/diffusion-ood) — includes the interactive thesis explorer
   - [InkjetOOD](https://ahmed-3m.github.io/case-studies/inkjet-ood)
   - [Faultrix](https://ahmed-3m.github.io/case-studies/faultrix)
   - [Sihem](https://ahmed-3m.github.io/case-studies/sihem)
@@ -73,15 +85,51 @@ Deployment habits   GitHub Pages (static export), Linux, CUDA, REST APIs, public
 
 ## This Site
 
-The portfolio is a **Next.js 16.4** + **React 19** + TypeScript + Tailwind v4 static export, deployed to GitHub Pages. It features automatic OS dark/light mode (`prefers-color-scheme`) and reduced-transparency adaptation, complete 5-locale internationalization (`en` / `de` / `fr` / `es` / `ar`) across UI and case studies, an interactive Diffusion OOD Explorer on /case-studies/diffusion-ood/, localized blog posts, the automated daily AI/Agentic [`/news`](https://ahmed-3m.github.io/news/) pipeline (with SSRF-hardened link validation and rolling catalog retention), and a theme-aware chatbot (Genie) powered by a hardened Cloudflare Worker proxy (`worker/chat-proxy.js`). Compact on purpose: fast to scan, easy to verify, anchored to public artifacts.
+A **Next.js 16.4** + **React 19** + TypeScript + Tailwind v4 static export, deployed to GitHub Pages. Compact on purpose: fast to scan, easy to verify, anchored to public artefacts.
+
+**Features**
+
+- Homepage sections: Hero, Trust strip, About, Projects, Evidence, Experience, Research (with the interactive thesis explorer), Writing, News, Contact.
+- Four case studies under `/case-studies/` — DiffusionOOD, InkjetOOD, Faultrix, and Sihem.
+- Automatic OS dark/light mode via `prefers-color-scheme` (live updates, pre-paint script to avoid flash, manual toggle override) plus reduced-transparency support.
+- Five locales (`en` / `de` / `fr` / `es` / `ar`, with RTL for Arabic) across UI copy, case studies, news and blog metadata.
+- Accessibility: skip-to-content link, focus management in dialogs and the chatbot, keyboard-operable lightboxes and controls.
+- SEO and machine readability: JSON-LD, sitemap, RSS feed (`/feed.xml`), `robots.txt`, and `llms.txt` / `llms-full.txt`.
+- Blog with four localized posts, and a `/news` page of AI and agentic-AI items with editorial takes.
+- Chatbot (Genie) backed by a hardened Cloudflare Worker proxy ([`worker/`](worker/)) with origin allow-listing, request-size limits and rate limiting, and local fallback answers when providers are unavailable.
+
+**Repository layout**
+
+| Path | Purpose |
+| --- | --- |
+| `src/app/` | Routes (home, blog, news, case studies, sitemap, robots, feed) |
+| `src/components/` | UI components, chatbot, interactive thesis explorer |
+| `src/lib/` | i18n, news catalog (`news-items.json`), case-study and blog content, explorer data, SEO helpers |
+| `public/` | Static assets, thesis PDF, research figures, `llms.txt` |
+| `worker/` | Cloudflare Worker chat proxy and its self-test |
+| `.github/` | Workflows and the news-agent task, validators and self-tests |
+| `tools/` | Sitemap alias, icon and OG-image generators |
+
+**Development**
 
 ```bash
-npm ci
-npm run dev
-npm run build
+npm ci            # install (lockfile is committed)
+npm run dev       # local dev server
+npm run lint      # eslint
+npm run typecheck # tsc --noEmit
+npm run build     # production static export — must pass before pushing
+node .github/news/news-selftest.mjs     # news catalog and link-validator checks
+node worker/chat-proxy.selftest.mjs     # chat proxy checks
 ```
 
 The Calendly booking button points to `https://calendly.com/ahmed-3m` by default. To override it, set `NEXT_PUBLIC_CALENDLY_URL` before starting the app.
+
+**Automation and workflow**
+
+- `main` is the only long-lived branch; every change lands through a short-lived branch and a pull request.
+- `deploy.yml` builds and publishes to GitHub Pages; `site-health.yml` runs a daily health check.
+- `news-update.yml` runs daily: a research agent proposes a JSON delta, a validate job sanitizes it against `main`, and a JSON-only PR lands it once the quality and build checks pass. See [`AGENTS.md`](AGENTS.md) for the full protocol and required secrets.
+- `claude.yml` runs Claude on `@claude` mentions, restricted to the repository owner.
 
 ## Contact
 
