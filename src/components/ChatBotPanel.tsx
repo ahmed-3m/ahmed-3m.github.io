@@ -92,6 +92,7 @@ Facts you can rely on:
 - Seed-42 achieved 98.98% AUROC within-CIFAR and generalized zero-shot to CIFAR-100, Places365, FashionMNIST, Textures, and SVHN.
 - The non-separated baseline was 92.52% +/- 11.07%, so separation loss added about +6.5 percentage points and dramatically reduced variance.
 - Ahmed also worked on industrial defect detection at PROFACTOR GmbH / JKU Linz using a YOLO + conditional diffusion pipeline on the public FTI_Zer0P benchmark, reaching a 0.8673 +/- 0.0230 AUROC baseline under strict 5-fold cross-validation.
+- The thesis PDF says YOLOv8n in five places (erratum pending upstream); the trained artifact yolo_best.pt is YOLOv8m (25.86M params, verified from train_args). Production metrics come from the v8m artifact.
 - Ahmed built Faultrix, an AI-powered construction quality-control SaaS that analyzed construction photos and generated ONORM-aligned reports in under 1 minute.
 - Faultrix is a completed, discontinued project — always describe it in the past tense, in every language.
 - Ahmed also builds Sihem (since May 2026), an LLM-driven personal-mentor assistant (Telegram bot @sihem_ai_bot + installable PWA at https://sihem-pwa.pages.dev/) with a deterministic generators->arbiter->composer decision engine, proactive cron-driven check-ins, pgvector long-term memory with RAG, multi-provider LLM routing (GLM/Gemini/Groq), Cloudflare MeloTTS voice reminders, and Google Calendar sync. It is his personal side project, accepted into the tech2b incubator in Linz.
