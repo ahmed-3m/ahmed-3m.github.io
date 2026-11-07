@@ -115,7 +115,26 @@ export function applyNewsDelta(
     }
   }
 
-  return parseNewsItems([...existing, ...parsedDelta], now)
+  return parseNewsItems(evictOldest([...existing, ...parsedDelta]), now)
+}
+
+/**
+ * Rolling window: once the catalog is full, drop the oldest-dated items
+ * (earliest-appended first on ties) so new deltas keep landing instead of
+ * failing every run. Append order of the kept items is preserved — sorting
+ * by date is a read-time concern.
+ */
+function evictOldest(items: readonly NewsItem[]): readonly NewsItem[] {
+  const overflow = items.length - NEWS_LIMITS.maxCatalog
+  if (overflow <= 0) return items
+  const evicted = new Set(
+    items
+      .map((item, index) => ({ date: item.date, index }))
+      .sort((a, b) => a.date.localeCompare(b.date) || a.index - b.index)
+      .slice(0, overflow)
+      .map(({ index }) => index),
+  )
+  return items.filter((_, index) => !evicted.has(index))
 }
 
 function parseNewsItem(value: unknown, today: string, index: number): NewsItem {
