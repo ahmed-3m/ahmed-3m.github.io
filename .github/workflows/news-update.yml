@@ -225,7 +225,10 @@ jobs:
           const existing = parseNewsItems(JSON.parse(await readFile('src/lib/news-items.json', 'utf8')))
           const next = applyNewsDelta(existing, delta)
           // Write sanitized delta (parsed items only), NOT the full catalog.
-          const sanitized = { items: next.slice(existing.length) }
+          // Filter by id rather than slicing: once the catalog is full, eviction
+          // keeps next.length === existing.length and a slice would come back empty.
+          const existingIds = new Set(existing.map((item) => item.id))
+          const sanitized = { items: next.filter((item) => !existingIds.has(item.id)) }
           await writeFile(path, JSON.stringify(sanitized) + '\n')
           EOF
 

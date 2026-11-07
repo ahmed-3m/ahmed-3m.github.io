@@ -81,6 +81,9 @@ JSON; they do not edit TypeScript.
    by date is done at read time, newest first). The daily research agent does **not**
    edit this file: it prints a `{ "items": [ ... ] }` delta on stdout (0–4 items).
    `parseNewsItems` is the only way to obtain `NewsItem[]` — do not validate-then-cast.
+   The catalog is a rolling window of 200 items: when it is full, applying a delta
+   evicts the oldest-dated items (earliest-appended first on ties) — that is normal
+   behavior, not data loss, and the daily pipeline relies on it.
 2. **Fields:**
    - `id` — unique, stable, kebab-case. **Never reuse an id.**
    - `date` — ISO `YYYY-MM-DD`, a real calendar day (e.g. `2026-02-31` is rejected), not

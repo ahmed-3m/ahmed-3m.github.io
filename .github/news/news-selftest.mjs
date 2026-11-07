@@ -9,7 +9,7 @@ import { register } from 'node:module'
 import { dirname, join } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { fileURLToPath } from 'node:url'
-import { parseNewsItems, canonicalNewsUrl, applyNewsDelta } from '../../src/lib/news.ts'
+import { parseNewsItems, canonicalNewsUrl, applyNewsDelta, NEWS_LIMITS } from '../../src/lib/news.ts'
 import { serializeJsonLd } from '../../src/lib/serialize-json-ld.ts'
 import { isBlockedHostname, isBlockedIp } from './check-news-links.mjs'
 
@@ -123,6 +123,40 @@ assertThrows('delta maxDelta', () => {
 assertThrows('delta unknown field', () => {
   applyNewsDelta([valid], { items: [], leftover: true })
 })
+
+{
+  // Rolling window: a full catalog evicts its oldest-dated items (earliest-
+  // appended first on ties) instead of rejecting the delta.
+  const full = Array.from({ length: NEWS_LIMITS.maxCatalog }, (_, i) => ({
+    ...valid,
+    id: `item-${i + 1}`,
+    url: `https://example.com/item-${i + 1}`,
+  }))
+  full[150] = { ...full[150], date: '2026-01-01' }
+  const next = applyNewsDelta(parseNewsItems(full), {
+    items: [1, 2].map((n) => ({
+      ...valid,
+      id: `new-${n}`,
+      url: `https://example.com/new-${n}`,
+    })),
+  })
+  const ids = next.map((item) => item.id)
+  assert(
+    'delta rolling window evicts oldest-dated first',
+    next.length === NEWS_LIMITS.maxCatalog &&
+      !ids.includes('item-151') &&
+      !ids.includes('item-1') &&
+      ids[0] === 'item-2' &&
+      ids.at(-1) === 'new-2',
+    `${ids.slice(0, 2).join(',')} … ${ids.slice(-2).join(',')} (${ids.length})`,
+  )
+}
+
+assert(
+  'delta below maxCatalog evicts nothing',
+  applyNewsDelta([valid], { items: [{ ...valid, id: 'other', url: 'https://example.com/b' }] })
+    .length === 2,
+)
 
 function ssrfUrlBlocked(url) {
   const parsed = new URL(url)
