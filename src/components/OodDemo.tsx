@@ -5,6 +5,7 @@ import { useI18n, type TranslationMap } from '@/lib/i18n'
 import {
   BENCHMARK_DATASETS,
   LAMBDA0_SEED42_HISTOGRAM,
+  LAMBDA0_SEED42_META,
   PER_TIMESTEP_ERRORS,
   SCORING_METHODS,
   TIMESTEP_STRATEGIES,
@@ -99,6 +100,13 @@ const copy = {
     fr: '2. Débruitage par pas (t) & Règles de score',
     es: '2. Denoising por paso (t) y Reglas de score',
     ar: '2. إزالة الضوضاء عبر الزمن (t) وطرق التقييم',
+  },
+  tabsAria: {
+    en: 'Interactive Thesis Explorer Tabs',
+    de: 'Interaktive Thesis-Explorer-Tabs',
+    fr: "Onglets de l'explorateur interactif de la thèse",
+    es: 'Pestañas del explorador interactivo de la tesis',
+    ar: 'تبويبات مستكشف الأطروحة التفاعلي',
   },
   tabAblations: {
     en: '3. Separation Loss (λ), MC Trials (K) & Inkjet QC',
@@ -245,7 +253,7 @@ export default function OodDemo() {
     setRegime(next)
     if (next === 'base') {
       setDatasetKey('within_cifar')
-      setThreshold(0.013591) // tau@TPR95 for lambda=0 seed42
+      setThreshold(LAMBDA0_SEED42_META.tauTpr95)
     } else {
       setThreshold(BENCHMARK_DATASETS[datasetKey].tauTpr95)
     }
@@ -380,7 +388,7 @@ export default function OodDemo() {
       {/* 3-Tab Navigation */}
       <div
         role="tablist"
-        aria-label="Interactive Thesis Explorer Tabs"
+        aria-label={t(copy.tabsAria)}
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
@@ -546,7 +554,7 @@ export default function OodDemo() {
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                 <button
                   type="button"
-                  onClick={() => setThreshold(regime === 'base' ? 0.013591 : activeMeta.tauTpr95)}
+                  onClick={() => setThreshold(regime === 'base' ? LAMBDA0_SEED42_META.tauTpr95 : activeMeta.tauTpr95)}
                   style={{
                     padding: '5px 10px',
                     borderRadius: 6,
@@ -562,7 +570,7 @@ export default function OodDemo() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => setThreshold(regime === 'base' ? 0.022778 : activeMeta.tauYouden)}
+                  onClick={() => setThreshold(regime === 'base' ? LAMBDA0_SEED42_META.tauYouden : activeMeta.tauYouden)}
                   style={{
                     padding: '5px 10px',
                     borderRadius: 6,
@@ -618,7 +626,7 @@ export default function OodDemo() {
               <div style={{ padding: '10px 12px', borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-fg3)' }}>AUROC (Seed 42 · K=100)</div>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: 18, fontWeight: 700, color: 'var(--cd-accent)' }}>
-                  {regime === 'base' ? '79.73%' : `${activeMeta.auroc.toFixed(2)}%`}
+                  {`${(regime === 'base' ? LAMBDA0_SEED42_META.auroc : activeMeta.auroc).toFixed(2)}%`}
                 </div>
                 <div style={{ fontSize: 11, color: 'var(--cd-fg3)' }}>
                   {regime === 'base' ? '3-seed: 92.52% ± 11.07%' : datasetKey === 'within_cifar' ? '3-seed: 99.03% ± 0.07%' : `AUPRC: ${activeMeta.auprc.toFixed(2)}%`}
@@ -771,7 +779,7 @@ export default function OodDemo() {
                 </text>
               </svg>
               <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--cd-fg2)', marginTop: 6 }}>
-                Operating Point: <strong>FPR = {liveDiagnostics.fpr.toFixed(1)}%</strong>, <strong>TPR = {liveDiagnostics.tpr.toFixed(1)}%</strong> (Benchmark FPR@95%TPR = {regime === 'base' ? '60.2%' : `${activeMeta.fpr95}%`})
+                Operating Point: <strong>FPR = {liveDiagnostics.fpr.toFixed(1)}%</strong>, <strong>TPR = {liveDiagnostics.tpr.toFixed(1)}%</strong> (Benchmark FPR@95%TPR = {`${regime === 'base' ? LAMBDA0_SEED42_META.fpr95 : activeMeta.fpr95}%`})
               </div>
             </div>
           </div>

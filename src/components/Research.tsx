@@ -474,7 +474,7 @@ export default function Research() {
             <div className="cd-rfc-result">{t(copy.latest)}</div>
           </div>
 
-          <div ref={labContainerRef} style={{ minHeight: shouldRenderLab ? undefined : 120 }}>
+          <div ref={labContainerRef} style={{ minHeight: shouldRenderLab ? undefined : 720 }}>
             {shouldRenderLab ? (
               <OodDemo />
             ) : (

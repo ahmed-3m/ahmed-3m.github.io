@@ -43,6 +43,14 @@ export interface BenchmarkDatasetMeta {
  */
 export const SEED42_ID_PCT: readonly number[] = [0.3, 0.0, 0.3, 0.2, 0.5, 0.5, 0.6, 0.6, 0.7, 1.8, 1.8, 2.4, 2.3, 3.2, 4.8, 7.6, 9.8, 12.0, 12.8, 11.6, 9.7, 6.9, 4.9, 2.2, 1.0, 1.2, 0.1, 0.0, 0.1, 0.0, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 
+/** Headline operating-point metrics for the lambda = 0.0 baseline (Within-CIFAR-10, seed 42). */
+export const LAMBDA0_SEED42_META = {
+  auroc: 79.73,
+  fpr95: 60.2,
+  tauTpr95: 0.013591,
+  tauYouden: 0.022778,
+} as const
+
 export const LAMBDA0_SEED42_HISTOGRAM: EmpiricalHistogram = {
   lo: -0.018955152481794357,
   hi: 0.09857774525880814,
