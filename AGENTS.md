@@ -29,11 +29,41 @@ TypeScript + Tailwind v4, statically exported to GitHub Pages.
 ## Commands
 
 ```bash
-npm ci          # install (lockfile is committed — use ci, not install)
-npm run dev     # local dev server
-npm run build   # production static export — MUST pass before pushing
-npm run lint    # eslint
+npm ci              # install (lockfile is committed — use ci, not install)
+npm run dev         # local dev server on http://localhost:3000
+npm run build       # production static export to out/ — MUST pass before pushing
+npm run lint        # eslint (src/)
+npm run typecheck   # tsc --noEmit
+node .github/news/news-selftest.mjs   # news catalog + link-validator self-test
+node worker/chat-proxy.selftest.mjs   # Cloudflare Worker chat-proxy self-test
 ```
+
+Build notes:
+- `prebuild` runs `tools/emit-homepage-news.mjs` (writes `src/lib/news-homepage.json`);
+  `postbuild` runs `tools/emit-sitemap-alias.mjs` (writes `out/sitemap-pages.xml`).
+- `next/font/google` downloads Space Grotesk and the other fonts at build time, so
+  **`npm run build` needs network access to fonts.googleapis.com**. In a sandbox without
+  network it fails with "Failed to fetch Space Grotesk"; that is an environment problem,
+  not a code regression.
+- `NEXT_PUBLIC_CALENDLY_URL` overrides the default Calendly link; the chatbot keys are
+  described under "Required repository secrets" below. None are needed for local dev.
+
+## Where things live
+
+| Path | What it holds |
+| ---- | ------------- |
+| `src/app/` | Routes: home (`page.tsx`), `blog/`, `news/`, `case-studies/`, `sitemap.ts`, `robots.ts`, `feed.xml/`, root `layout.tsx` (pre-paint theme script) |
+| `src/app/globals.css` | All site styles: `--cd-*` design tokens, light/dark overrides, section styles (`.cd-hero*`, `.cd-signal*`, …) |
+| `src/components/` | One component per homepage section (`Hero.tsx`, `HeroSignal.tsx`, `Research.tsx`, `OodDemo.tsx`, …), chatbot, buttons |
+| `src/lib/i18n.tsx`, `i18n-config.ts` | `useI18n()` / `TranslationMap`; language persisted in `localStorage['language']` |
+| `src/lib/ThemeContext.tsx` | Theme store (`localStorage['theme']` + `prefers-color-scheme`), sets `data-theme` on `<html>` |
+| `src/lib/ood-explorer-data.ts` | **Single source of truth for thesis numbers** (benchmarks, histograms, λ sweep, K ablation, inkjet CV) |
+| `src/lib/news-items.json` | News catalog (see the news protocol below) |
+| `public/` | Static assets, CV, thesis PDF, research figures, `llms.txt` |
+| `worker/` | Cloudflare Worker chat proxy (`chat-proxy.js`, `wrangler.toml`) and self-test |
+| `tools/` | Build-time emitters (homepage news, sitemap alias) |
+| `specs/NNN-*/` | Spec Kit feature specs (spec / tasks / reports); `.specify/memory/constitution.md` holds the project principles |
+| `.github/` | Workflows (`deploy`, `news-update`, `news-update-monitor`, `site-health`, `claude`) and the news agent's task, validators and self-tests |
 
 ## Branch structure — read before you branch
 
@@ -171,5 +201,45 @@ sanctioned exception to the "agents never merge their own PRs" rule.
 
 - Match the surrounding code style.
 - UI strings are multilingual (en / de / fr / es / ar) — see the `copy` objects in
-  components such as `src/components/Hero.tsx`. Add a translation for every language key.
+  components such as `src/components/Hero.tsx`
+  (`const copy = { … } satisfies Record<string, TranslationMap>`, read with `t(copy.key)`).
+  Add a translation for every language key.
 - Run `npm run build` before pushing; the static export must succeed.
+
+### Theming (dark + light)
+
+- The theme is the `data-theme="dark" | "light"` attribute on `<html>`. Dark is the
+  default, and the OS preference is followed unless the visitor toggles.
+- Use the `--cd-*` tokens from `globals.css` (`--cd-bg`, `--cd-surf`, `--cd-elev`,
+  `--cd-b0/b1`, `--cd-fg1/2/3`, `--cd-accent`, `--cd-success`, `--cd-warn`, …), never
+  hard-coded colours. Put light-specific tweaks under `[data-theme="light"] …`.
+- Every visual change must be checked in **both** themes. In the browser console:
+  `document.documentElement.setAttribute('data-theme', 'light')`.
+- Respect `prefers-reduced-motion`. A global rule already shortens animations; don't
+  rely on an animation's end state for layout.
+
+### i18n and RTL
+
+- Arabic switches the document to `dir="rtl"`. Use logical properties
+  (`margin-inline-*`, `padding-inline-*`, `inset-inline-*`) instead of left/right.
+- Wrap Latin text that ends in punctuation in `<bdi>` (see the hero name), or bidi
+  moves the punctuation to the wrong side. Charts and plots can force `dir="ltr"`.
+- To test a locale: `localStorage.setItem('language', 'ar'); location.reload()`.
+
+### Claim integrity (numbers on the site)
+
+- Never invent or round up a metric. Thesis figures come from
+  `src/lib/ood-explorer-data.ts`; CV and claims reconciliation lives in `specs/001-*`
+  and `specs/002-*`.
+- Keep qualifiers next to headline numbers. Example: the hero's **99.03% ± 0.07 AUROC
+  is the 3-seed mean** at λ = 0.02 (`CIFAR_LAMBDA_SWEEP`). The histogram in
+  `HeroSignal` is the **single seed-42 run (98.98%)**. When both appear, label which
+  is which.
+
+### Verifying UI changes
+
+- Run `npm run dev` and check desktop **and** 375 px mobile, in light and dark, in
+  English and Arabic. Also check that the console has no errors.
+- Known pre-existing issue (not a regression): on mobile the education cards overflow
+  horizontally by about 70 px. (`npm run lint` currently passes with warnings only —
+  any lint *error* is a real regression, not a known issue.)

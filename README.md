@@ -168,7 +168,7 @@ npm run dev
 npm run lint
 npm run typecheck
 
-# Full production static export (Must pass before push)
+# Full production static export (Must pass before push; needs network for Google Fonts)
 npm run build
 
 # System & security self-tests
