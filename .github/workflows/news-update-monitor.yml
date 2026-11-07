@@ -1,9 +1,10 @@
 name: News-update start monitor
 
 # Fires when "Daily news update" completes. Catches YAML that cannot start
-# (the in-workflow alert job never runs in that case). Duplicates comments
-# on a normal job failure; that is acceptable. First-failure issue, not a
-# consecutive-failure counter.
+# (the in-workflow alert job never runs in that case). A normal job failure is
+# reported by both this workflow and the in-workflow alert job; both dedupe on
+# the run URL, so one failure still leaves one comment. First-failure issue,
+# not a consecutive-failure counter.
 
 on:
   workflow_run:
@@ -29,6 +30,12 @@ jobs:
           body="Workflow \`news-update\` failed: $url"
           existing=$(gh issue list --state open --search "$title in:title" --json number --jq '.[0].number // empty')
           if [ -n "$existing" ]; then
+            # one failure = one comment; a new run URL always comments
+            last=$(gh issue view "$existing" --json comments --jq '.comments[-1].body // empty')
+            if printf '%s' "$last" | grep -qF "$url"; then
+              echo "Issue #$existing already reports $url — skipping duplicate comment."
+              exit 0
+            fi
             gh issue comment "$existing" --body "$body"
           else
             gh issue create --title "$title" --body "$body"

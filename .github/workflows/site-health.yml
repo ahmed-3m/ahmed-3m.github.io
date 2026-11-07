@@ -41,6 +41,10 @@ jobs:
             "/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf"
             "/sitemap.xml"
             "/sitemap-pages.xml"
+            "/case-studies/diffusion-ood/"
+            "/case-studies/inkjet-ood/"
+            "/case-studies/faultrix/"
+            "/case-studies/sihem/"
           )
           fail=0
           for p in "${paths[@]}"; do
@@ -61,6 +65,34 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 1
+
+      - name: Deep pages return 200 (newest blog post)
+        shell: bash
+        run: |
+          # Deep-page canaries added 2026-11-07 (issue #182)
+          set -euo pipefail
+          # Newest blog slug from the meta list: one `slug` + `date` string
+          # literal pair per post, both indented four spaces (translation and
+          # citation fields sit deeper). The (.)…\1 / (.)…\2 captures accept
+          # either quote style. ISO dates sort lexicographically.
+          pairs=$(sed -nE 's/^    (.)slug\1: (.)([a-z0-9-]+)\2,$/\3/p; s/^    (.)date\1: (.)([0-9]{4}-[0-9]{2}-[0-9]{2})\2,$/\3/p' src/lib/blog-posts-meta.ts)
+          if [ -z "$pairs" ]; then
+            echo "::error::Could not parse any slug/date pairs from src/lib/blog-posts-meta.ts"
+            exit 1
+          fi
+          slug=$(printf '%s\n' "$pairs" | paste - - | sort -k2,2 | tail -n 1 | cut -f1)
+          if [ -z "$slug" ]; then
+            echo "::error::Parsed slug/date pairs from src/lib/blog-posts-meta.ts but found no newest slug"
+            exit 1
+          fi
+          echo "Newest blog post: $slug"
+          url="https://ahmed-3m.github.io/blog/$slug/"
+          code=$(curl -s -o /dev/null -w '%{http_code}' -L --max-time 30 "$url") || code="000"
+          if [ "$code" != "200" ]; then
+            echo "::error::$url returned HTTP $code (expected 200) — the newest post's deep page is broken or the deploy is stale"
+            exit 1
+          fi
+          echo "OK   $url -> 200"
 
       - name: News live/repo date parity
         shell: bash

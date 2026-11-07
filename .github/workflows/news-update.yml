@@ -468,7 +468,9 @@ jobs:
 
           # PR merges are evaluated against the PR's pull_request check runs —
           # the canonical path required protection accepts. GITHUB_TOKEN
-          # merges fire no push events, so deploy explicitly; a NEWS_PAT merge
+          # merges fire no push events, so deploy explicitly and follow that
+          # run to a conclusion (issue #177: a fire-and-forget dispatch let a
+          # broken deploy fail silently after a green merge); a NEWS_PAT merge
           # runs as the owner and its push event already triggers deploy.yml,
           # where an extra dispatch would just queue a duplicate run.
           if [ "$(gh pr view "$PR_NUMBER" --json state --jq .state 2>/dev/null)" != "MERGED" ]; then
@@ -476,7 +478,59 @@ jobs:
               --subject "chore(news): daily automated update (#$PR_NUMBER)"
             if [ -z "$PAT_TOKEN" ]; then
               gh workflow run deploy.yml --ref main
+              echo "dispatched=true" >> "$GITHUB_OUTPUT"
             fi
+          fi
+
+      - name: Verify dispatched deploy
+        # Only a bot merge under GITHUB_TOKEN dispatches a run; a no-op day, a
+        # human merge and a NEWS_PAT merge all leave the push event to deploy.
+        if: steps.publish.outputs.dispatched == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.NEWS_PAT || github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          git fetch origin main --quiet
+          sha=$(git rev-parse origin/main)
+          echo "Following the deploy.yml run dispatched for $sha"
+          # 25 min covers queueing behind another production deploy
+          # (deploy.yml's concurrency group "deploy").
+          deadline=$((SECONDS + 1500))
+          run_id=""
+          while [ -z "$run_id" ]; do
+            found="$(gh run list --workflow deploy.yml --branch main --event workflow_dispatch --limit 10 \
+              --json databaseId,headSha,createdAt \
+              --jq "[.[] | select(.headSha == \"$sha\")] | sort_by(.createdAt) | last // empty | [(.databaseId // \"\"), (.createdAt // \"\")] | @tsv" 2>/dev/null || true)"
+            run_id="$(printf '%s' "$found" | cut -f1)"
+            if [ -n "$run_id" ]; then break; fi
+            if [ "$SECONDS" -ge "$deadline" ]; then
+              echo "::error::Deploy did not conclude within 25 minutes (no dispatched run appeared for $sha)"
+              exit 1
+            fi
+            echo "No dispatched deploy.yml run for $sha yet — retrying in 30s (elapsed ${SECONDS}s)."
+            sleep 30
+          done
+          url="${GITHUB_SERVER_URL:-https://github.com}/${GITHUB_REPOSITORY}/actions/runs/${run_id}"
+          echo "Watching deploy.yml run $run_id: $url"
+          while :; do
+            info="$(gh run view "$run_id" --json status,conclusion --jq '[.status, (.conclusion // "")] | @tsv' 2>/dev/null || true)"
+            status="$(printf '%s' "$info" | cut -f1)"
+            conclusion="$(printf '%s' "$info" | cut -f2)"
+            if [ -n "$conclusion" ]; then break; fi
+            if [ "$SECONDS" -ge "$deadline" ]; then
+              echo "::error::Deploy did not conclude within 25 minutes (run $run_id status=${status:-unknown}: $url)"
+              exit 1
+            fi
+            echo "Deploy $run_id status=${status:-unknown} — waiting 30s (elapsed ${SECONDS}s)."
+            sleep 30
+          done
+          if [ "$conclusion" = "success" ]; then
+            echo "Deploy $run_id succeeded: $url"
+          else
+            echo "Deploy $run_id concluded $conclusion"
+            echo "::error::Deploy $run_id failed: $url"
+            exit 1
           fi
 
       - name: Clean up delta PR and temp branch
@@ -517,6 +571,12 @@ jobs:
           body="Workflow \`news-update\` failed: $RUN_URL"
           existing=$(gh issue list --state open --search "$title in:title" --json number --jq '.[0].number // empty')
           if [ -n "$existing" ]; then
+            # one failure = one comment; a new run URL always comments
+            last=$(gh issue view "$existing" --json comments --jq '.comments[-1].body // empty')
+            if printf '%s' "$last" | grep -qF "$RUN_URL"; then
+              echo "Issue #$existing already reports $RUN_URL — skipping duplicate comment."
+              exit 0
+            fi
             gh issue comment "$existing" --body "$body"
           else
             gh issue create --title "$title" --body "$body"
