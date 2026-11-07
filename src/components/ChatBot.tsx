@@ -94,8 +94,8 @@ Facts you can rely on:
 - Ahmed also worked on industrial defect detection at PROFACTOR GmbH / JKU Linz using a YOLO + conditional diffusion pipeline on the public FTI_Zer0P benchmark, reaching a 0.8673 +/- 0.0230 AUROC baseline under strict 5-fold cross-validation.
 - Ahmed built Faultrix, an AI-powered construction quality-control SaaS that analyzed construction photos and generated ONORM-aligned reports in under 1 minute.
 - Faultrix is a completed, discontinued project — always describe it in the past tense, in every language.
-- Ahmed is also Co-Founder & AI Lead at Sihem (since May 2026, https://sihem.at), accepted into the tech2b incubator in Linz. Sihem builds satellite-driven crop health and yield intelligence by fusing Sentinel-1 SAR and Sentinel-2 multispectral data with an LLM agronomic copilot.
-- Experience timeline: Co-Founder & AI Lead at Sihem (May 2026–Present); M.Sc. Thesis Researcher, Machine Vision at the JKU Institute for Machine Learning with PROFACTOR GmbH (Apr 2024 - Jul 2026, project Zer0P); AI Research Intern at Karunya University, India (Aug - Oct 2023, EEG motor imagery); Technical Staff, Electronics at Ledzone, Istanbul (2018 - Oct 2020). Faultrix was a past side project, not employment.
+- Ahmed also builds Sihem (since May 2026), an LLM-driven personal-mentor assistant (Telegram bot @sihem_ai_bot + installable PWA at https://sihem-pwa.pages.dev/) with a deterministic generators->arbiter->composer decision engine, proactive cron-driven check-ins, pgvector long-term memory with RAG, multi-provider LLM routing (GLM/Gemini/Groq), Cloudflare MeloTTS voice reminders, and Google Calendar sync. It is his personal side project, accepted into the tech2b incubator in Linz.
+- Experience timeline: Solo Developer & Project Lead at Sihem (side project · tech2b incubator, Linz, May 2026–Present); M.Sc. Thesis Researcher, Machine Vision at the JKU Institute for Machine Learning with PROFACTOR GmbH (Apr 2024 - Jul 2026, project Zer0P); AI Research Intern at Karunya University, India (Aug - Oct 2023, EEG motor imagery); Technical Staff, Electronics at Ledzone, Istanbul (2018 - Oct 2020). Faultrix was a past side project, not employment.
 - Before AI he earned a B.Sc. in Mechatronics Engineering at Eastern Mediterranean University, Cyprus (2015 - 2018).
 - Availability: open to AI/ML engineering roles, available full time, and eligible for the Austrian Rot-Weiss-Rot Karte for graduates (no labour-market test, no quota, no sponsorship cost for the employer).
 - The Faultrix stack included Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2, and Stripe.
@@ -187,11 +187,11 @@ export const PROMPT_LIBRARY: Record<PromptId, TranslationMap> = {
     ar: 'ما هو مشروع Sihem؟',
   },
   sihem_tech: {
-    en: 'How does Sihem fuse Sentinel-1 SAR and Sentinel-2 data?',
-    de: 'Wie fusioniert Sihem Sentinel-1 SAR und Sentinel-2 Daten?',
-    fr: 'Comment Sihem fusionne-t-il les données Sentinel-1 SAR et Sentinel-2 ?',
-    es: '¿Cómo fusiona Sihem datos de Sentinel-1 SAR y Sentinel-2?',
-    ar: 'كيف يدمج Sihem بيانات Sentinel-1 SAR وSentinel-2؟',
+    en: "How does Sihem's generators→arbiter→composer engine, pgvector memory, and multi-provider LLM routing work?",
+    de: 'Wie funktionieren Sihems Generatoren→Arbiter→Komponor-Engine, pgvector-Gedächtnis und Multi-Provider-LLM-Routing?',
+    fr: 'Comment fonctionnent le moteur générateurs→arbitre→compositeur, la mémoire pgvector et le routage LLM multi-fournisseurs de Sihem ?',
+    es: '¿Cómo funcionan el motor generadores→árbitro→compositor, la memoria pgvector y el enrutamiento LLM multiproveedor de Sihem?',
+    ar: 'كيف يعمل محرك المولدات←المحكم←المؤلف وذاكرة pgvector وتوجيه LLM متعدد المزودين في Sihem؟',
   },
   faultrix_intro: {
     en: 'What was Faultrix?',
@@ -367,11 +367,11 @@ export const STARTER_PROMPT_IDS: PromptId[] = [
 
 export const LOCAL_REPLIES = {
   sihem: {
-    en: `Sihem (https://sihem.at) is Ahmed Mohammed's agtech venture where he serves as Co-Founder & AI Lead (May 2026–Present). Accepted into the tech2b incubator in Linz, Sihem builds satellite-driven crop health and yield intelligence. It fuses Sentinel-1 SAR (synthetic aperture radar) and Sentinel-2 multispectral imagery with an LLM agronomic copilot to provide parcel-level agricultural monitoring and decision support.`,
-    de: `Sihem (https://sihem.at) ist Ahmed Mohammeds AgTech-Unternehmen, bei dem er als Co-Founder & AI Lead tätig ist (Mai 2026–heute). Aufgenommen in den tech2b-Inkubator in Linz, entwickelt Sihem satellitengestützte Pflanzen- und Ertragsanalysen. Die Plattform fusioniert Sentinel-1 SAR (Radar) und Sentinel-2 Multispektraldaten mit einem LLM-basierten agronomischen Copiloten für parzellengenaue Überwachung und Entscheidungsunterstützung.`,
-    fr: `Sihem (https://sihem.at) est l'entreprise agtech d'Ahmed Mohammed où il intervient en tant que cofondateur et responsable IA (mai 2026–présent). Accueillie au sein de l'incubateur tech2b à Linz, Sihem développe une solution d'intelligence satellitaire pour la santé des cultures et les rendements. Elle fusionne les données radar Sentinel-1 SAR et multispectrales Sentinel-2 avec un copilote agronomique basé sur un LLM pour un suivi parcellaire précis.`,
-    es: `Sihem (https://sihem.at) es la iniciativa agtech de Ahmed Mohammed en la que se desempeña como cofundador y líder de IA (mayo 2026–presente). Seleccionada en la incubadora tech2b en Linz, Sihem desarrolla inteligencia de cultivos y rendimientos basada en satélites. Fusiona datos de radar Sentinel-1 SAR y multiespectrales de Sentinel-2 con un copiloto agronómico LLM para el monitoreo y toma de decisiones a nivel de parcela.`,
-    ar: `مشروع Sihem (https://sihem.at) هو شركة ناشئة في التقنية الزراعية يشارك أحمد محمد في تأسيسها ويشغل منصب قائد الذكاء الاصطناعي (منذ مايو 2026). انضم المشروع إلى حاضنة tech2b في لينز، ويعمل على توفير ذكاء زراعي لمراقبة صحة المحاصيل والإنتاجية عبر الأقمار الصناعية، من خلال دمج رادار Sentinel-1 SAR وبيانات Sentinel-2 متعددة الأطياف مع مساعد زراعي مدعوم بنماذج اللغة الكبيرة (LLM).`,
+    en: `Sihem (Telegram @sihem_ai_bot, PWA: https://sihem-pwa.pages.dev/) is Ahmed's proactive AI personal-mentor and habits/daily-routine assistant, accepted into the tech2b incubator in Linz (May 2026–Present). Built on Supabase Edge Functions (Deno/TypeScript) and PostgreSQL with RLS, it features a deterministic generators→arbiter→composer decision engine for non-spammy check-ins, pgvector long-term memory with RAG, multi-provider LLM routing (GLM/Gemini/Groq) with automated failover, Cloudflare MeloTTS voice reminders, and Google Calendar sync.`,
+    de: `Sihem (Telegram @sihem_ai_bot, PWA: https://sihem-pwa.pages.dev/) ist Ahmeds proaktiver KI-Mentor-Assistent für Gewohnheiten und Tagesroutinen, aufgenommen in den tech2b-Inkubator in Linz (Mai 2026–heute). Entwickelt auf Supabase Edge Functions (Deno/TypeScript) und PostgreSQL mit RLS, nutzt das System eine deterministische Generatoren→Arbiter→Komponor-Entscheidungsmaschine für adaptive Check-Ins, pgvector-Langzeitgedächtnis mit RAG, Multi-Provider-LLM-Routing (GLM/Gemini/Groq) mit Failover, Cloudflare MeloTTS-Spracherinnerungen und Google-Kalender-Synchronisation.`,
+    fr: `Sihem (Telegram @sihem_ai_bot, PWA : https://sihem-pwa.pages.dev/) est l'assistant personnel mentor proactif d'Ahmed pour les habitudes et routines quotidiennes, incubé chez tech2b à Linz (mai 2026–présent). Développé sur Supabase Edge Functions (Deno/TypeScript) et PostgreSQL avec RLS, il intègre un moteur décisionnel générateurs→arbitre→compositeur pour des rappels adaptatifs, une mémoire long terme pgvector avec RAG, un routage LLM multi-fournisseurs (GLM/Gemini/Groq) avec basculement automatique, des rappels vocaux Cloudflare MeloTTS et la synchronisation Google Calendar.`,
+    es: `Sihem (Telegram @sihem_ai_bot, PWA: https://sihem-pwa.pages.dev/) es el asistente mentor personal proactivo de Ahmed para hábitos y rutinas diarias, aceptado en la incubadora tech2b de Linz (mayo 2026–presente). Desarrollado con Supabase Edge Functions (Deno/TypeScript) y PostgreSQL con RLS, cuenta con un motor de decisiones generadores→árbitro→compositor para recordatorios adaptativos, memoria a largo plazo pgvector con RAG, enrutamiento LLM multiproveedor (GLM/Gemini/Groq) con failover, avisos de voz Cloudflare MeloTTS y sincronización con Google Calendar.`,
+    ar: `مشروع Sihem (تيليجرام @sihem_ai_bot، وتطبيق الويب: https://sihem-pwa.pages.dev/) هو مساعد شخصي موجه واستباقي للعادات والروتين اليومي من تطوير أحمد، ومقبول في حاضنة الأعمال tech2b في لينز (مايو 2026 – الآن). مبني على Supabase Edge Functions (Deno/TypeScript) وPostgreSQL مع RLS، ويتميز بمحرك قرار حتمي (مولدات←محكم←مؤلف) لتنبيهات تكيفية غير مزعجة، وذاكرة pgvector طويلة المدى مع RAG، وتوجيه LLM متعدد المزودين (GLM/Gemini/Groq) مع تبديل تلقائي، وتذكيرات صوتية بـ Cloudflare MeloTTS، ومزامنة Google Calendar.`,
   },
   thesis: {
     en: `Ahmed's thesis used conditional diffusion models as generative classifiers for out-of-distribution detection. The key idea was to compare class-conditional reconstruction behavior and use the gap as the anomaly signal. The main contribution was a class-conditional separation loss that pushed competing explanations apart, achieving 99.03% ± 0.07% AUROC on a within-CIFAR airplane-vs-rest binary split (+6.5 pp over non-separated baseline). Supervised by Prof. Sepp Hochreiter at JKU Linz.`,
@@ -409,17 +409,17 @@ export const LOCAL_REPLIES = {
     ar: `يشمل الـ stack الخاص بأحمد أبحاث الذكاء الاصطناعي وهندسة الإنتاج:\n- تعلم الآلة: PyTorch وPython ونماذج الانتشار وYOLO وOpenCV وكشف الشذوذ\n- المنتج والبنية: Next.js وReact وTypeScript وConvex وDocker وPostgreSQL وCloudflare\n- الأدوات: Git وWeights & Biases وHugging Face وLinux`,
   },
   achievements: {
-    en: `Key proof points:\n- 99.03% ± 0.07% AUROC on within-CIFAR airplane-vs-rest binary OOD split with novel class-conditional separation loss (M.Sc. thesis under Prof. Sepp Hochreiter, graded 1)\n- 98.4% industrial defect detection accuracy in production at PROFACTOR GmbH (FTI_Zer0P benchmark, 0.8673 ± 0.0230 AUROC baseline under 5-fold CV)\n- Co-Founder & AI Lead at Sihem (tech2b incubator Linz, satellite crop intelligence)\n- Built and launched Faultrix (ÖNORM construction compliance SaaS)`,
-    de: `Wichtige Meilensteine:\n- 99,03 % ± 0,07 % AUROC auf Within-CIFAR Airplane-vs-Rest Binary OOD Split mit class-conditional separation loss (Masterarbeit bei Prof. Sepp Hochreiter, Note 1)\n- 98,4 % industrielle Defekterkennungsgenauigkeit in der Produktion bei PROFACTOR GmbH (0,8673 ± 0,0230 AUROC)\n- Co-Founder & AI Lead bei Sihem (tech2b Inkubator Linz, Satelliten-Agraranalyse)\n- Gründer von Faultrix (ÖNORM-Bau-Compliance SaaS)`,
-    fr: `Principaux résultats :\n- 99,03 % ± 0,07 % AUROC sur split binaire within-CIFAR avec separation loss (mémoire dirigé par Prof. Sepp Hochreiter, note 1)\n- 98,4 % de précision en détection de défauts industriels en production chez PROFACTOR GmbH\n- Cofondateur & responsable IA chez Sihem (incubateur tech2b Linz)\n- Fondateur de Faultrix (SaaS de conformité ÖNORM)`,
-    es: `Logros destacados:\n- 99.03% ± 0.07% AUROC en split binario within-CIFAR con separation loss (tesis con Prof. Sepp Hochreiter, nota 1)\n- 98.4% de precisión en detección de defectos industriales en PROFACTOR GmbH\n- Cofundador y líder de IA en Sihem (incubadora tech2b Linz)\n- Creador de Faultrix (SaaS de cumplimiento ÖNORM)`,
-    ar: `أبرز الإنجازات:\n- 99.03% ± 0.07% AUROC في كشف OOD على تقسيم within-CIFAR الثنائي مع separation loss (رسالة الماجستير بإشراف Prof. Sepp Hochreiter، تقدير ممتاز 1)\n- دقة 98.4% في كشف العيوب الصناعية في الإنتاج لدى PROFACTOR GmbH (خط أساس 0.8673 ± 0.0230 AUROC)\n- شريك مؤسس وقائد الذكاء الاصطناعي في Sihem (حاضنة tech2b لينز)\n- مؤسس Faultrix (منصة SaaS للامتثال لمعيار ÖNORM)`,
+    en: `Key proof points:\n- 99.03% ± 0.07% AUROC on within-CIFAR airplane-vs-rest binary OOD split with novel class-conditional separation loss (M.Sc. thesis under Prof. Sepp Hochreiter, graded 1)\n- 98.4% industrial defect detection accuracy in production at PROFACTOR GmbH (FTI_Zer0P benchmark, 0.8673 ± 0.0230 AUROC baseline under 5-fold CV)\n- Solo Developer & Project Lead at Sihem (tech2b incubator Linz, proactive AI personal-mentor assistant)\n- Built and launched Faultrix (ÖNORM construction compliance SaaS)`,
+    de: `Wichtige Meilensteine:\n- 99,03 % ± 0,07 % AUROC auf Within-CIFAR Airplane-vs-Rest Binary OOD Split mit class-conditional separation loss (Masterarbeit bei Prof. Sepp Hochreiter, Note 1)\n- 98,4 % industrielle Defekterkennungsgenauigkeit in der Produktion bei PROFACTOR GmbH (0,8673 ± 0,0230 AUROC)\n- Solo-Entwickler & Projektleiter bei Sihem (tech2b Inkubator Linz, proaktiver KI-Mentor-Assistent)\n- Gründer von Faultrix (ÖNORM-Bau-Compliance SaaS)`,
+    fr: `Principaux résultats :\n- 99,03 % ± 0,07 % AUROC sur split binaire within-CIFAR avec separation loss (mémoire dirigé par Prof. Sepp Hochreiter, note 1)\n- 98,4 % de précision en détection de défauts industriels en production chez PROFACTOR GmbH\n- Développeur solo & chef de projet chez Sihem (incubateur tech2b Linz, assistant mentor IA proactif)\n- Fondateur de Faultrix (SaaS de conformité ÖNORM)`,
+    es: `Logros destacados:\n- 99.03% ± 0.07% AUROC en split binario within-CIFAR con separation loss (tesis con Prof. Sepp Hochreiter, nota 1)\n- 98.4% de precisión en detección de defectos industriales en PROFACTOR GmbH\n- Desarrollador en solitario y líder de proyecto en Sihem (incubadora tech2b Linz, asistente mentor IA proactivo)\n- Creador de Faultrix (SaaS de cumplimiento ÖNORM)`,
+    ar: `أبرز الإنجازات:\n- 99.03% ± 0.07% AUROC في كشف OOD على تقسيم within-CIFAR الثنائي مع separation loss (رسالة الماجستير بإشراف Prof. Sepp Hochreiter، تقدير ممتاز 1)\n- دقة 98.4% في كشف العيوب الصناعية في الإنتاج لدى PROFACTOR GmbH (خط أساس 0.8673 ± 0.0230 AUROC)\n- مطور منفرد وقائد مشروع في Sihem (حاضنة tech2b لينز، مساعد موجه بالذكاء الاصطناعي استباقي)\n- مؤسس Faultrix (منصة SaaS للامتثال لمعيار ÖNORM)`,
   },
 } satisfies Record<string, TranslationMap>
 
 export function getLocalReply(prompt: string, lang: Language): string | null {
   const text = prompt.toLowerCase()
-  if (/\b(sihem|agtech|agri|satellite|sentinel|crop|tech2b)\b/i.test(text)) {
+  if (/\b(sihem|mentor|habit|routine|telegram|tech2b|pgvector)\b/i.test(text)) {
     return translateValue(lang, LOCAL_REPLIES.sihem)
   }
   if (/(thesis|separation loss|ood|out.?of.?distribution|cifar|auroc)/i.test(text)) {
@@ -445,7 +445,7 @@ export function getLocalReply(prompt: string, lang: Language): string | null {
 
 const FOLLOWUP_RULES: Array<{ pattern: RegExp; prompts: PromptId[] }> = [
   {
-    pattern: /\b(sihem|agtech|agri|satellite|sentinel|crop|tech2b)\b/i,
+    pattern: /\b(sihem|mentor|habit|routine|telegram|tech2b|pgvector)\b/i,
     prompts: ['sihem_tech', 'faultrix_overview', 'hire_fit'],
   },
   {

@@ -13,10 +13,10 @@ This repository powers my portfolio: a compact, evidence-heavy record of the res
 
 | Track | What changed | Result |
 | --- | --- | --- |
-| Master's thesis, JKU Linz | Conditional diffusion models used as generative classifiers, with a class-conditional separation loss | **99.03% +/- 0.07% AUROC** across 3 seeds on a within-CIFAR airplane-vs-rest binary split |
+| Master's thesis, JKU Linz | Conditional diffusion models used as generative classifiers, with a class-conditional separation loss (graduated Sep 2026, thesis graded 1) | **99.03% +/- 0.07% AUROC** across 3 seeds on a within-CIFAR airplane-vs-rest binary split |
 | External OOD checks | Seed-42 model tested zero-shot on CIFAR-100, Places365, FashionMNIST, Textures, and SVHN | **90.50%-96.97% AUROC**, 94.17% external-set mean |
 | Industrial transfer | Public YOLO + CDM pipeline for inkjet print quality control | **86.73% +/- 2.30% AUROC** under 5-fold CV; separation loss did not transfer automatically |
-| Current product | Sihem, an LLM personal-mentor assistant | Live beta on Telegram (`@sihem_ai_bot`) and a PWA |
+| Current product | Sihem, an LLM personal-mentor assistant (tech2b incubator, Linz) | Live beta on Telegram (`@sihem_ai_bot`), [PWA](https://sihem-pwa.pages.dev/), and [Case study](https://ahmed-3m.github.io/case-studies/sihem) |
 | Previous product | Faultrix construction quality-control SaaS (Jul 2025 – Jul 2026) | Photo-to-report workflow with evidence chain, DSGVO-minded storage, and OpenAI-powered analysis |
 
 ## Research Thread
@@ -37,7 +37,7 @@ At `lambda = 0.02`, the three-seed mean improved from a seed-sensitive `92.52% +
 
 | Project | Role | Links |
 | --- | --- | --- |
-| Sihem | Current — LLM personal-mentor assistant (live beta) | [Telegram](https://t.me/sihem_ai_bot) / [PWA](https://sihem-pwa.pages.dev/) |
+| Sihem | Current — LLM personal-mentor assistant (tech2b incubator, Linz; live beta) | [Case study](https://ahmed-3m.github.io/case-studies/sihem) / [Telegram](https://t.me/sihem_ai_bot) / [PWA](https://sihem-pwa.pages.dev/) |
 | DiffusionOOD | Thesis implementation for CIFAR-10 OOD detection | [Code](https://github.com/ahmed-3m/DiffusionOOD) / [Weights](https://huggingface.co/ahmed-3m/DiffusionOOD) / [Thesis PDF](https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf) |
 | InkjetOOD | Industrial quality-control transfer study | [Code](https://github.com/ahmed-3m/InkjetOOD) / [Weights](https://huggingface.co/ahmed-3m/InkjetOOD) |
 | Faultrix | Previous — full-stack builder (built solo) | [Site](https://faultrix.com) / [Case study](https://ahmed-3m.github.io/case-studies/faultrix) |
@@ -52,6 +52,7 @@ At `lambda = 0.02`, the three-seed mean improved from a seed-sensitive `92.52% +
   - [DiffusionOOD](https://ahmed-3m.github.io/case-studies/diffusion-ood)
   - [InkjetOOD](https://ahmed-3m.github.io/case-studies/inkjet-ood)
   - [Faultrix](https://ahmed-3m.github.io/case-studies/faultrix)
+  - [Sihem](https://ahmed-3m.github.io/case-studies/sihem)
 
 ## Engineering Palette
 
@@ -59,7 +60,7 @@ At `lambda = 0.02`, the three-seed mean improved from a seed-sensitive `92.52% +
 Deep learning       PyTorch, PyTorch Lightning, DDPMs, UNet, CNNs, Transformers, LLMs
 Computer vision     OOD detection, YOLOv8, defect detection, image classification
 Experimentation     Hydra, Weights & Biases, AUROC, FPR95, cross-validation
-Product systems     Next.js 16.3, React 19, TypeScript, Tailwind v4, Deno, Supabase
+Product systems     Next.js 16.4, React 19, TypeScript, Tailwind v4, Deno, Supabase
 Deployment habits   GitHub Pages (static export), Linux, CUDA, REST APIs, public artefacts
 ```
 
@@ -72,7 +73,7 @@ Deployment habits   GitHub Pages (static export), Linux, CUDA, REST APIs, public
 
 ## This Site
 
-The portfolio is a **Next.js 16.3** + **React 19** + TypeScript + Tailwind v4 static export, deployed to GitHub Pages. It has dark and cream themes, multilingual UI (en / de / fr / es / ar), localized blog posts, a curated [`/news`](https://ahmed-3m.github.io/news/) page, and a theme-aware chatbot (Genie). Compact on purpose: fast to scan, easy to verify, anchored to public artifacts.
+The portfolio is a **Next.js 16.4** + **React 19** + TypeScript + Tailwind v4 static export, deployed to GitHub Pages. It features automatic OS dark/light mode (`prefers-color-scheme`) and reduced-transparency adaptation, complete 5-locale internationalization (`en` / `de` / `fr` / `es` / `ar`) across UI and case studies, localized blog posts, the automated daily AI/Agentic [`/news`](https://ahmed-3m.github.io/news/) pipeline (with SSRF-hardened link validation and rolling catalog retention), and a theme-aware chatbot (Genie) powered by a hardened Cloudflare Worker proxy (`worker/chat-proxy.js`). Compact on purpose: fast to scan, easy to verify, anchored to public artifacts.
 
 ```bash
 npm ci
