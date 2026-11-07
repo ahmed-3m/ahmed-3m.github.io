@@ -1,7 +1,11 @@
 'use client'
 
 import { useI18n, type TranslationMap } from '@/lib/i18n'
-import { BENCHMARK_DATASETS } from '@/lib/ood-explorer-data'
+import { BENCHMARK_DATASETS, CIFAR_LAMBDA_SWEEP } from '@/lib/ood-explorer-data'
+
+// The hero's 99.03% is the 3-seed mean at lambda = 0.02; the histogram below is the
+// single seed-42 run (98.98%). Both are shown so the numbers reconcile on screen.
+const SWEEP_002 = CIFAR_LAMBDA_SWEEP.find((e) => e.lambda === '0.02')
 
 /**
  * Hero "signal panel": the real seed-42 anomaly-score histogram from the thesis
@@ -53,6 +57,20 @@ const copy = {
     fr: 'CIFAR-10, seed 42, λ = 0,02, K = 100 · 1 000 images ID vs 9 000 OOD',
     es: 'CIFAR-10, seed 42, λ = 0,02, K = 100 · 1.000 imágenes ID vs 9.000 OOD',
     ar: 'CIFAR-10، seed 42، λ = 0.02، K = 100 · 1,000 صورة داخلية مقابل 9,000 خارجية',
+  },
+  runLabel: {
+    en: 'This run · seed 42',
+    de: 'Dieser Lauf · Seed 42',
+    fr: 'Ce run · seed 42',
+    es: 'Esta ejecución · seed 42',
+    ar: 'هذا التشغيل · seed 42',
+  },
+  meanLabel: {
+    en: 'Headline figure · mean of 3 seeds',
+    de: 'Hauptwert · Mittel aus 3 Seeds',
+    fr: 'Chiffre clé · moyenne sur 3 seeds',
+    es: 'Cifra principal · media de 3 seeds',
+    ar: 'الرقم الرئيسي · متوسط 3 تشغيلات',
   },
   explore: {
     en: 'Explore the interactive lab',
@@ -126,6 +144,17 @@ export default function HeroSignal() {
         <li><span className="sw sw-ood" aria-hidden="true" />{t(copy.ood)}</li>
       </ul>
 
+      {SWEEP_002 && (
+        <div className="cd-signal-mean">
+          <span className="cd-signal-mean-label">{t(copy.meanLabel)}</span>
+          <span className="cd-signal-mean-value">
+            AUROC {SWEEP_002.withinCifarMean.toFixed(2)}%
+            {SWEEP_002.withinCifarStd != null && <span> ± {SWEEP_002.withinCifarStd.toFixed(2)}</span>}
+          </span>
+        </div>
+      )}
+
+      <p className="cd-signal-run-label">{t(copy.runLabel)}</p>
       <dl className="cd-signal-metrics">
         <div><dt>AUROC</dt><dd>{ds.auroc.toFixed(2)}<span>%</span></dd></div>
         <div><dt>FPR@95</dt><dd>{ds.fpr95.toFixed(1)}<span>%</span></dd></div>
