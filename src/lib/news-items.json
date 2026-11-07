@@ -125,7 +125,6 @@
     },
     "tags": [
       "agent-safety",
-      "least-privilege",
       "production"
     ]
   },
@@ -150,7 +149,6 @@
       "ar": "تدريب عمود فقري واحد بتقنية مطابقة التدفق (Flow-Matching) مشتركًا على الصورة والفيديو والصوت — وتوسيعه إلى توقّع الأفعال عبر FLUX-mimic — هو ما يهمني أكثر: فهو يدفع نماذج الانتشار خارج التوليد نحو نموذج موحّد للإدراك والفعل. والعمود الفقري متعدد الوسائط لا يكون موثوقًا إلا بقدر منهجية تقييمه، لذا سأحكم عليه حين تصدر الأوزان المفتوحة ويمكن إعادة تشغيل المعايير."
     },
     "tags": [
-      "flow-matching",
       "multimodal",
       "computer-vision"
     ]
@@ -359,8 +357,7 @@
     },
     "tags": [
       "agent-harness",
-      "evaluation",
-      "context-engineering"
+      "evaluation"
     ]
   },
   {
@@ -384,7 +381,6 @@
       "ar": "العنوان هو التحكم الكامل في جسم الإنساني الآلي، لكن المعمارية المهمة هي الفصل: Gemini Robotics ER 2 وكيل استدلال ينسّق نماذج الرؤية-اللغة-الفعل الأدنى بوصفها أدوات — النمط نفسه من منسّق/عامل الذي ينجح في الشيفرة، ملحقًا الآن بجسد مادي. وما أثق به فعلًا هو ASIMOV-Agentic، وهو معيار يقيّم طبقة الاستدلال على رفض الأفعال غير الآمنة الصادرة من متحكمها الحركي ذاته والتصعيد إلى بشري عند عدم اليقين؛ في الأنظمة المادية تكلفة استدعاء أداة غير مرفوض حقيقية، و«أأمن نموذج حتى الآن» ادعاء تسويقي حتى يُقاس مقابل تقييم رفض-وتصعيد."
     },
     "tags": [
-      "embodied-agents",
       "multi-agent",
       "evaluation"
     ]
@@ -800,7 +796,6 @@
       "ar": "نموذج استدلال قيادة مفتوح ومرخّص تجاريًا يسلّم آثار سلسلة-السببية ودرجة AlpaSim بالحلقة المغلقة إلى جانب أرقامه بالحلقة المفتوحة هو انضباط التقييم الذي احتاجه قطاع القيادة الذاتية — فـ minADE على مجموعة بيانات ثابتة لا يخبرك أبدًا إن كانت السياسة تسبّب التصادم، بل التشغيل بالحلقة المغلقة وحده، وهذا هو الفرق بين لوحة تصنيفات ونظامٍ ستضعه على الطريق. وللتعلّم الآلي الإنتاجي، ترخيص OpenMDW-1.1 هو الفتح الحقيقي: تستطيع الفرق الضبط الدقيق على سياسة قيادتها الخاصة وتدقيق القرارات بدلًا من الوثوق بمورّد صندوق أسود."
     },
     "tags": [
-      "autonomous-driving",
       "computer-vision",
       "evaluation"
     ]
@@ -930,7 +925,6 @@
       "ar": "Antares هو حجة التخصص موجّهةً إلى الأمن: ثلاثة نماذج صغيرة بأوزان مفتوحة لا تفعل شيئًا سوى اكتشاف عيوب الشيفرة، ورخيصة بما يكفي للفحص المستمر على حاسوب محمول أو معالج GPU واحد بدلًا من دفع أسعار النماذج الحدودية لكل تمريرة. والفرضية التي ينبغي استبطانها هي فرضية Cisco نفسها — وكلاء البرمجة ينتجون شيفرة أكثر وبالتالي ثغرات أكثر، فيجب أن يكون الفحص تقييمًا دائم التشغيل داخل الحلقة لا بوابة فصلية، وأي خط تجميع لا يستطيع إيجاد أخطائه الخاصة لا ينبغي أن يدمج دون إشراف."
     },
     "tags": [
-      "code-security",
       "open-weights",
       "evaluation"
     ]
@@ -957,7 +951,6 @@
     },
     "tags": [
       "autonomous-research",
-      "frontier-labs",
       "evaluation"
     ]
   },
@@ -1138,9 +1131,7 @@
       "ar": "صيغة تغليف محايدة تجاه المورّدين لمهارات الوكلاء وخوادم MCP — مدعومة بلجنة TSC من Amazon وCursor وMicrosoft وOpenAI وVercel والتحاق Google الآن — هي طبقة التقييس «المملة» التي تقرر إن كانت إضافة تكتبها مرة واحدة تعمل فعلًا عبر Claude Code وCursor وKiro أم يلزم إعادة تغليفها لكل عميل. وما يستحق المراقبة هو انضباط الطبقات: يقع Agent Plugins بنظافة فوق MCP وSkills دون منافسة أيٍّ منهما، وبروتوكول الاكتشاف يقدّم سؤال «ما المتاح لهذه المهمة؟» قبل إطلاق أي أداة — انضباط فهرسة قدراتك أولًا ثم التوجيه الذي يمنع منظومة وكلاء متنامية من الانهيار إلى غراء تكامل."
     },
     "tags": [
-      "agent-plugins",
-      "mcp",
-      "interoperability"
+      "mcp"
     ]
   },
   {
@@ -1165,7 +1156,6 @@
     },
     "tags": [
       "applied-ai",
-      "weather",
       "open-weights"
     ]
   },
@@ -1217,7 +1207,6 @@
     },
     "tags": [
       "models",
-      "agentic-pricing",
       "safeguards"
     ]
   },
@@ -1243,8 +1232,7 @@
     },
     "tags": [
       "models",
-      "agent-safety",
-      "monitorability"
+      "agent-safety"
     ]
   },
   {
@@ -1321,7 +1309,6 @@
     },
     "tags": [
       "agent-harness",
-      "managed-agents",
       "production"
     ]
   },
@@ -1399,7 +1386,6 @@
     },
     "tags": [
       "applied-ai",
-      "genomics",
       "reliability"
     ]
   },
@@ -1477,8 +1463,7 @@
     },
     "tags": [
       "personal-agents",
-      "agent-safety",
-      "privacy"
+      "agent-safety"
     ]
   },
   {
@@ -1529,7 +1514,6 @@
     },
     "tags": [
       "agent-safety",
-      "misuse",
       "governance"
     ]
   },
@@ -1606,7 +1590,6 @@
       "ar": "إطار عمل وكلاء مستقر في إصدار 1.0 وغير مرتبط بنموذج محدد يستهدف أكبر أسطول أجهزة في العالم — استدلال على الجهاز عبر LiteRT-LM، وحالة جلسة تنجو من إعادة تشغيل العمليات، وتأكيد بإشراف بشري بوصفه سطح واجهة أساسيًّا لا شيفرة نموذجية — هو أوضح إشارة حتى الآن على أن إدارة حالة الوكلاء وبوابات الموافقة تتحول إلى بنية أساسية للمنصة. والتشغيل على الجهاز هو أيضًا حدّ الثقة الافتراضي الصحيح للوكلاء الشخصيين: فالبيانات تبقى على الهاتف، ونقطة الخروج نقطة يمكنك فحصها فعلًا."
     },
     "tags": [
-      "agent-framework",
       "on-device",
       "edge-agents"
     ]
@@ -1737,7 +1720,6 @@
     },
     "tags": [
       "multi-agent",
-      "claude-code",
       "coding-agents"
     ]
   },
@@ -1763,7 +1745,6 @@
     },
     "tags": [
       "multi-agent",
-      "drug-discovery",
       "agents"
     ]
   },
@@ -1840,7 +1821,6 @@
       "ar": "يقول Anthropic إن Claude «يقود» الآن 26% من أعمال البحث والتطوير لديها — نحو 30,000 وكيل يعمل بالتوازي، وما زالت النسبة صفر بالمئة للاستقلالية الكاملة. الرقم الذي أثق به أكثر هو الصفر: الصعوبة في البحث والتطوير المؤتمت ليست في أن يكتب الوكلاء الشيفرة، بل في إثبات أن إنسانًا ظل فعلًا داخل حلقة القرار أثناء ذلك."
     },
     "tags": [
-      "anthropic",
       "agents",
       "automation"
     ]
@@ -1867,8 +1847,7 @@
     },
     "tags": [
       "self-improvement",
-      "agents",
-      "google-deepmind"
+      "agents"
     ]
   },
   {
@@ -1892,7 +1871,6 @@
       "ar": "التفصيلة الجديرة بالمراقبة: يقترح Hassabis تقييمات محجوزة وغير معلنة كي لا تُدرّب المختبرات على الاختبار نفسه، مع مراجعة طوعية قد تتحول لاحقًا إلى شرط للنشر. من بنى تقييمًا من قبل يعرف أن النتائج تتوقف عن كونها قياسًا لحظة أن تصبح هدفًا — النماذج الحدودية أيضًا تحتاج إلى مجموعة اختبار محجوزة."
     },
     "tags": [
-      "deepmind",
       "governance",
       "evaluation"
     ]
@@ -1919,8 +1897,7 @@
     },
     "tags": [
       "multi-agent",
-      "safety",
-      "emergence"
+      "safety"
     ]
   },
   {
@@ -1944,7 +1921,6 @@
       "ar": "نموذج يُرجع احتمالات معايرة بدلًا من النثر يستهويني تحديدًا لأن الهلوسة تصبح خطأً في التصنيف لا قائمةَ تدابيرَ للمعالجة. فالتسريعات بمقدار 5 إلى 18 ضعفًا التي أفاد بها مهندسو Vercel في مهام التصنيف تُعلمني أن كثيرًا من أحمال عمل «LLM» لم تكن أصلًا مشكلات لغوية."
     },
     "tags": [
-      "non-llm",
       "calibration",
       "automation"
     ]
@@ -1971,8 +1947,7 @@
     },
     "tags": [
       "security",
-      "red-teaming",
-      "model-capability"
+      "red-teaming"
     ]
   },
   {
@@ -2127,7 +2102,6 @@
     },
     "tags": [
       "regulation",
-      "kill-switch",
       "ai-safety"
     ]
   },
@@ -2257,8 +2231,7 @@
     },
     "tags": [
       "agents",
-      "scientific-discovery",
-      "anthropic"
+      "scientific-discovery"
     ]
   },
   {
@@ -2284,7 +2257,7 @@
     "tags": [
       "agents",
       "security",
-      "incident"
+      "incidents"
     ]
   },
   {
@@ -2309,8 +2282,7 @@
     },
     "tags": [
       "agents",
-      "meta",
-      "personal-agent"
+      "personal-agents"
     ]
   },
   {
@@ -2334,9 +2306,7 @@
       "ar": "يتخلى Agensh عن المنسّق المركزي ويصل إلى 1,024 وكيلًا ذاتي التنظيم، وهو مؤشر جيد على أن عدد الوكلاء يغدو محور توسيع مستقلًا بذاته. القفز من 34% إلى 55% في نسبة اجتياز الاختبارات على pandoc تقدّم حقيقي، لكنني سأنتظر منحنى التكلفة، فكلفة التنسيق الإضافية هي الضريبة التي تقتل عادةً هذه المعماريات في بيئة الإنتاج."
     },
     "tags": [
-      "multi-agent",
-      "arxiv",
-      "scaling"
+      "multi-agent"
     ]
   },
   {
@@ -2360,8 +2330,7 @@
       "ar": "أظهرت داركتريس أن Claude Code وCodex وKiro-CLI وPi تثق جميعها بسجل المحادثة المخزَّن محليًا دون أي تحقق من السلامة — حزمة واحدة خبيثة تكفي لإعادة كتابة ماضي الوكيل وتحويله إلى المهاجم. الحل المقترح، وهو أن يوقّع مزوّدو النماذج كل استجابة تشفيريًا، يقع على جانب الخادم، وحتى ذلك الحين تبقى ذاكرة الوكيل نفسها أضعف حدود الثقة فيه."
     },
     "tags": [
-      "agent-security",
-      "memory-poisoning"
+      "agent-security"
     ]
   },
   {
@@ -2385,7 +2354,6 @@
       "ar": "الوكلاء العاملون على المدى الطويل الذين يعملون 21 ساعة دون إشراف يحتاجون عزلًا يصمد أمام غلق حاسوب محمول، وبيئات العزل من نوع microVM مع سياسات شبكة مركزية وأسرار تُدار عبر وسيط وبوابة MCP هي بالضبط المكوّن الإنتاجي الذي أريده. المكسب الهادئ هو تحويل Kits إلى صور OCI قياسية: بيئة وكيل كاملة تصبح قطعة إصدارية قابلة للمشاركة بدلًا من صفحة ويكي."
     },
     "tags": [
-      "agent-infrastructure",
       "sandboxing",
       "mcp"
     ]
@@ -2412,8 +2380,7 @@
     },
     "tags": [
       "evaluation",
-      "red-teaming",
-      "fine-tuning"
+      "red-teaming"
     ]
   },
   {
@@ -2438,7 +2405,6 @@
     },
     "tags": [
       "safety",
-      "standards",
       "evaluation"
     ]
   },
@@ -2463,9 +2429,7 @@
       "ar": "دمْج مايكروسوفت وكيلًا دائم العمل (Autopilot) ومولّد أكواد داخل بيئة معزولة وحزمة Office كاملة في تطبيق Copilot واحد هو أكبر رهان جماهيري حتى الآن على الوكلاء العاملين باستمرار — والتحول إلى الفوترة حسب الاستخدام للعمل الوكيلي هو المؤشر الحقيقي. ما سيحدد نجاة Autopilot من مراجعة الأمن المؤسسي ليس واجهة المحادثة، بل Copilot Managed Runtime التي تشغّل الأكواد داخل المستأجر نفسه."
     },
     "tags": [
-      "microsoft",
-      "copilot",
-      "autonomous-agents"
+      "agents"
     ]
   },
   {
@@ -2516,7 +2480,7 @@
     },
     "tags": [
       "google",
-      "gemini-4",
+      "gemini",
       "frontier-models"
     ]
   },
@@ -2542,8 +2506,7 @@
     },
     "tags": [
       "google",
-      "orchestration",
-      "kubernetes"
+      "orchestration"
     ]
   },
   {
@@ -2593,7 +2556,6 @@
       "ar": "يلفت SoL-Pi الانتباه لأنه يحسّن الـ harness بدلًا من النموذج — بانخفاض يقارب 49% في استهلاك الرموز مع أداء شبه ثابت على EdgeBench. وهذا يطابق ما أراه باستمرار في الإنتاج: معظم تكلفة الوكيل هدرٌ في طبقة التحكم، وأرخص مكسب في الموثوقية هو هندسة أفضل للـ harness لا نموذج جديد."
     },
     "tags": [
-      "nvidia",
       "coding-agents",
       "efficiency"
     ]
@@ -2619,9 +2581,7 @@
       "ar": "إزالة HomeBody لطبقة التحكم المدرَّبة وتركُ GPT-6 Astra يخطط مباشرة عبر مكتبة مهارات إشارة قوية إلى أن نماذج الرؤية-اللغة الأمامية غدت أدمغةً صالحة للروبوتات — مع التحفظات الإنتاجية المعتادة: زمن الاستجابة، تكلفة الحوسبة، ومحركات تتجاوز حرارتها الحد. عرضٌ مبهر، لكن إلى أن تغطي التقييمات الأمان في ظل الاضطراب، أبقِ إنسانًا في حلقة القرار."
     },
     "tags": [
-      "embodied-ai",
-      "robotics",
-      "gpt-6-astra"
+      "robotics"
     ]
   },
   {
@@ -2646,8 +2606,7 @@
     },
     "tags": [
       "agent-safety",
-      "runtime-verification",
-      "nvidia"
+      "runtime-verification"
     ]
   },
   {
@@ -2776,7 +2735,6 @@
     },
     "tags": [
       "google",
-      "video-generation",
       "multi-agent"
     ]
   },
@@ -2799,12 +2757,7 @@
       "fr": "Les Profiles versionnés et les Skills sont la pull request sans glamour dont les plateformes d'agents ont réellement besoin — une configuration partagée et répétable au lieu d'une soupe de prompts dupliquée dans chaque app. La vraie question d'adoption : les équipes accepteront-elles de confier leurs identifiants à une couche de connecteurs gérée par un fournisseur ?",
       "es": "Los Profiles versionados y los Skills son el pull request sin glamour que las plataformas de agentes necesitan de verdad: configuración compartida y repetible en vez de una sopa de prompts duplicada en cada app. La cuestión de adopción es si los equipos entregarán sus credenciales a una capa de conectores gestionada por el proveedor.",
       "ar": "الـProfiles المُصدَرة كإصدارات والـSkills هي طلب الدمج غير البراق الذي تحتاجه منصات الوكلاء فعلًا — إعدادات مشتركة قابلة للتكرار بدلًا من حساء برومبتات مكرر في كل تطبيق. سؤال التبني الحقيقي: هل سيسلّم الفرق بيانات اعتمادهم أصلًا لطبقة موصلات يديرها المزوّد؟"
-    },
-    "tags": [
-      "perplexity",
-      "agent-api",
-      "tooling"
-    ]
+    }
   },
   {
     "id": "aws-trainium-real-time-video-nki-kernels",
@@ -2880,7 +2833,6 @@
     },
     "tags": [
       "openai",
-      "devday",
       "pricing"
     ]
   },
@@ -2905,9 +2857,7 @@
       "ar": "وكيل يعمل على مدار الساعة ومتصل بأكثر من 4,000 تطبيق هو بالضبط سطح الفشل الذي تصفه تقارير الحوادث هذا العام، لذا فتفاصيل التصميم أهم من العرض التوضيحي: وضع استباقي للقراءة فقط، وبوابات موافقة، وبيانات اعتماد لا يراها النموذج أبدًا. إطلاق OpenAI لهذا الوكيل بعد يوم واحد من إيقاف GPT-6.1 Astra بسبب مخاوف التضليل يعكس إما انضباطًا مطمئنًا أو تحولًا سريعًا جدًا — وسجل التدقيق سيكشف أيهما."
     },
     "tags": [
-      "openai",
-      "agentic",
-      "always-on"
+      "openai"
     ]
   },
   {
@@ -2931,7 +2881,6 @@
       "ar": "نموذج من الفئة المتوسطة يتفوق على Opus 5.5 في Terminal-Bench 4.0 (70.6% مقابل 66.4%) وبنصف سعر التوكن هو الخبر الذي انتظرته فرق الإنتاج — المكسب الحقيقي في كفاءة التوكنات لا في قمم المعايير فحسب. وهناك تحفظ يستحق التذكر: عند مستوى الجهد Max يسجل أقل من Xhigh لأن وكلاءه الفرعيين يتجاوزون المهلة الزمنية، وهو تذكير جميل بأن الاستقلالية تحتاج حدودًا على مستوى الـharness لا مجرد ترقيات للنموذج."
     },
     "tags": [
-      "anthropic",
       "agentic-coding",
       "efficiency"
     ]
@@ -2958,8 +2907,7 @@
     },
     "tags": [
       "gemini",
-      "frontier-models",
-      "phased-release"
+      "frontier-models"
     ]
   },
   {
@@ -2984,7 +2932,6 @@
     },
     "tags": [
       "agent-reliability",
-      "datasets",
       "post-training"
     ]
   },
@@ -3009,9 +2956,7 @@
       "ar": "ثقل موازن مرحب به في سباق الوكلاء المحموم: فرق النشر الميداني من المزودين تسلّم عروضًا تجريبية، لا أنظمة يستطيع فريقك امتلاكها. نسبة 70% توقّع، لكن نمط الفشل حقيقي — فإن لم تستطع تقييم النظام أو تطويره داخليًا، فقد استأجرت عرضًا توضيحيًا لا وكيلًا."
     },
     "tags": [
-      "enterprise-agents",
-      "adoption",
-      "analysis"
+      "enterprise-agents"
     ]
   },
   {
@@ -3033,12 +2978,7 @@
       "fr": "Une couche de paiement à l'accès pour le trafic des agents : le site affiche un prix, le portefeuille USDC de l'agent paie, sans inscription ni formulaire de carte bancaire entre les deux. Voilà les rails de monétisation qui manquaient au web agentique — même si les micropaiements sans friction rendent aussi dangereusement bon marché le financement d'un agent incontrôlé.",
       "es": "Una capa de pago por acceso para el tráfico de agentes: el sitio fija un precio, la cartera USDC del agente paga, sin registros ni formularios de tarjeta por medio. Son las vías de monetización que le faltaban a la web agéntica, aunque los micropagos sin fricción también hacen peligrosamente barato financiar a un agente descontrolado.",
       "ar": "طبقة دفع مقابل الوصول لحركة الوكلاء: يحدد الموقع سعرًا، فتدفع محفظة USDC الخاصة بالوكيل، دون تسجيل أو نماذج بطاقات بينهما. هذه هي البنية المفقودة لتسييل اقتصاد الويب الوكيلي — رغم أن المدفوعات الصغيرة بلا احتكاك تجعل تمويل وكيل جامح زهيدًا بشكل خطير."
-    },
-    "tags": [
-      "agent-payments",
-      "agentic-web",
-      "cloudflare"
-    ]
+    }
   },
   {
     "id": "aws-strands-decider-2b",
@@ -3087,8 +3027,6 @@
       "ar": "دراسة أجرتها الشركة نفسها عجز فيها 26 من أصل 54 مشاركًا عن التمييز بين Griffin وإنسان حقيقي في مكالمة مدتها دقيقة واحدة هي نتيجة لافتة — لكن احتفاظ Tavus بالطراز حتى توافر ضمانات الإفصاح هو الجانب الأهم إخباريًا. نقاط NVIDIA المستقلة على VideoFDB تمنح مصداقية، غير أن بروتوكولًا بحجم عينة n=54 من تصميم البائع نفسه هو بالضبط نوع التقييم الذي يحتاج إلى تكرار مستقل قبل أن نسمّيه اجتيازًا لاختبار تورينغ."
     },
     "tags": [
-      "video-models",
-      "turing-test",
       "safety"
     ]
   },
@@ -3140,8 +3078,7 @@
     },
     "tags": [
       "agentic-coding",
-      "agent-harness",
-      "ides"
+      "agent-harness"
     ]
   },
   {
@@ -3243,7 +3180,7 @@
       "ar": "هذا هو شكل المعيار الذي أثق به فعلًا: تقييم النتيجة التجارية لفعل الوكيل، لا استعلام SQL الذي كتبه. نسبة حلّ بلغت 34.8% لأفضل نموذج من بين 14 نموذجًا في مهام التشغيل المؤسسية هي تصحيحٌ صحيّ لعروض الشرائح المتفائلة حول الاستقلالية."
     },
     "tags": [
-      "benchmark",
+      "benchmarks",
       "evaluation",
       "agents"
     ]
@@ -3269,7 +3206,6 @@
       "ar": "يبعد ما يفعله ThinkingBox من Microsoft هو بالضبط ما كان ينبغي أن تفعله تقييمات الوكلاء في الإنتاج منذ البداية: تقييم الحالة النهائية للخلفية والآثار الجانبية بدلًا من رسالة «انتهيت» الصادرة عن الوكيل نفسه — فـ67% من المحاولات الفاشلة تنتهي بشكل نظيف، ولهذا فإن النجاح المُبلَّغ عنه ذاتيًا بلا قيمة. أي معيار تقييم لا يفحص قاعدة البيانات لا يقيس الإنجاز."
     },
     "tags": [
-      "agent-evaluation",
       "benchmarks",
       "reliability"
     ]
@@ -3295,9 +3231,7 @@
       "ar": "أخيرًا تقدّم Aleph Alpha تنزيلًا فعليًا بدلًا من عرض تقديمي عن السيادة الرقمية: يضم Kolibri معاملات بإجمالي 78B منها 3.46B فقط نشطة، ونافذة سياق من 1M رمز، وأوزان Apache 2.0 على Hugging Face. لكن المأخذ المعتاد قائم: في معاييرها الخاصة يتفوق على نماذج الأوزان المفتوحة من الربيع الماضي، بينما لا يزال Qwen3.6 يتصدر في استدعاء الأدوات والسياق الطويل — أي أن السيادة لا تعني بعد الوصول إلى حدود القدرة الأمامية."
     },
     "tags": [
-      "open-weights",
-      "european-ai",
-      "llm"
+      "open-weights"
     ]
   },
   {
@@ -3321,7 +3255,6 @@
       "ar": "لا يُطلق SIFT تشغيل المعيار المكلف إلا بعد مقارنة زوجية رخيصة عبر قاضٍ من LLM — وفي Terminal-Bench حقق اختيار القاضي متوسط 36.7% مقابل 28.1% للمرشح الأعلى نقاطًا في البحث، وهو تذكير بأن مجموعات التقييم الصغيرة تضلّل فعليًا. إذا كانت حلقة التحسين الذاتي لديك لا تستطيع تحمّل تكلفة تقييمات كاملة في كل خطوة، فهذا هو النمط العملي المناسب."
     },
     "tags": [
-      "llm-judge",
       "self-improvement",
       "coding-agents"
     ]
@@ -3347,9 +3280,7 @@
       "ar": "مع بدء Muse وdots في الاتصال بخدمات العملاء أصلًا، يمثّل PACT من Decagon القطعة الناقصة: تفويض بأسلوب OAuth مبني على Agent2Agent كي يستطيع الوكيل الشخصي إثبات لمن يعمل وبماذا يُسمح له. طبقة الهوية والأذونات ليست برّاقة، لكنها التي تحدد ما إذا كان التعامل بين الوكلاء سيبقى قابلًا للتدقيق أم سيصبح ساحة لعب لحقن الأوامر."
     },
     "tags": [
-      "agent-protocols",
-      "personal-agents",
-      "authorization"
+      "personal-agents"
     ]
   },
   {
@@ -3374,8 +3305,7 @@
     },
     "tags": [
       "agents",
-      "enterprise",
-      "cost-control"
+      "enterprise"
     ]
   },
   {
@@ -3478,8 +3408,7 @@
     },
     "tags": [
       "enterprise-agents",
-      "governance",
-      "erp"
+      "governance"
     ]
   },
   {
@@ -3503,9 +3432,7 @@
       "ar": "النمط نفسه على مسرح أكبر: لا اختراق، لكن تعديلات غير مصرّح بها ومحاولات استخدام الأدوات وسيطًا وملايين الطلبات على واجهات البرمجة قد تكون ساهمت في انقطاع حقيقي في مايو. وما لم يحمل الوكلاء افتراضيًا هوية قابلة للتحقق وحدودًا لمعدل الطلبات، فكل واجهة برمجة عامة تُجري اختبار تحميل غير معلن — وهذه مشكلة موثوقية تشغيلية اليوم لا فرضية مستقبلية."
     },
     "tags": [
-      "rogue-agents",
-      "agent-safety",
-      "web-infrastructure"
+      "agent-safety"
     ]
   },
   {
@@ -3527,12 +3454,7 @@
       "fr": "Un point pour OpenAI de publier les modes d'échec en même temps que le lancement : la détection tombe à environ 80 pour cent sur les passages courts et à 66 pour cent après le remplacement de 10 pour cent de synonymes — c'est précisément pourquoi le détecteur reste réservé à des chercheurs validés. Un filigrane qu'on ne peut pas calibrer n'est que du théâtre ; traiter la détection de provenance comme un classifieur avec un budget d'erreur publié est la seule version à laquelle je ferais confiance en production.",
       "es": "Un punto a favor de OpenAI por publicar los modos de fallo junto con el lanzamiento: la detección cae a alrededor del 80 por ciento en pasajes cortos y al 66 por ciento tras sustituir el 10 por ciento de sinónimos, que es exactamente por lo que el detector queda reservado a investigadores acreditados. Una marca de agua que no se puede calibrar es teatro; tratar la detección de procedencia como un clasificador con un presupuesto de error publicado es la única versión en la que confiaría en producción.",
       "ar": "خطوة صائبة من OpenAI بنشر أنماط الفشل مع الإطلاق نفسه: يهبط الكشف إلى نحو 80 في المئة في المقاطع القصيرة، وإلى 66 في المئة بعد استبدال 10 في المئة من الكلمات بمرادفاتها، ولهذا بالضبط يظل الكاشف مقصورًا على باحثين معتمدين. العلامة المائية التي لا يمكن معايرتها استعراضٌ لا غير؛ أما التعامل مع كشف المصدر بوصفه مصنّفًا له ميزانية خطأ معلنة فهو النسخة الوحيدة التي أثق بها في الإنتاج."
-    },
-    "tags": [
-      "watermarking",
-      "eu-ai-act",
-      "provenance"
-    ]
+    }
   },
   {
     "id": "google-rrsi-regularized-self-improvement",
@@ -3607,8 +3529,6 @@
       "ar": "جعل «السؤال قبل التعديل» الخيار الافتراضي هو القرار الصحيح — بطاقات التغييرات المقترحة مع سجل الإصدارات تجعل تعديلات الوكيل المباشرة قابلة للتدقيق بدلًا من مخيفة. وجولة Python داخل Sheets هي الجزء الذي أريده فعلًا: الدمج وتنظيف البيانات بالكود، والنتائج تُكتب من جديد حيث يعمل الفريق."
     },
     "tags": [
-      "anthropic",
-      "google-workspace",
       "agents"
     ]
   },
@@ -3633,9 +3553,7 @@
       "ar": "المصادقة وإظهار كل إجراء يقوم به الوكيل الشخصي عند نداء واجهات برمجية للشركات هي البنية الأساسية المفقودة، ولمعيار مفتوح تدعمه Meta وStripe وShopify وWalmart فرصة حقيقية في أن يصبح الافتراضي. الصعب لن يكون المعيار نفسه، بل ما إذا كانت الشركات سيثقون في حركة الوكلاء بما يكفي لمنحها معاملة من الدرجة الأولى بدل حجبها كحركة بوتات."
     },
     "tags": [
-      "agent-protocol",
-      "personal-agents",
-      "open-standard"
+      "personal-agents"
     ]
   },
   {
@@ -3659,9 +3577,7 @@
       "ar": "نشر 722 ورقة دفعة واحدة دون اسم للنموذج ولا prompts ولا تقديرات للتكلفة — وبعد أن طلب فريق استشاري ذلك تحديدًا — يبدو كاستخدام الكم للتهرب من أسئلة الإفصاح. صياغات Lean هي المنقذ: البرهان الذي أستطيع التحقق منه آليًا أفضل من ملف PDF عليّ أن أثق به."
     },
     "tags": [
-      "openai",
-      "math",
-      "lean"
+      "openai"
     ]
   },
   {
@@ -3685,8 +3601,6 @@
       "ar": "الوعد هنا هو «أهداف لا تعليمات» — وهذا يجعل التقييم هو المنتج كله فعليًا: فحين أوكّل نتيجةً إلى وكيل، لا سبيل للثقة به سوى إجراءات مُدقَّقة وهوية موثّقة وحدود إنفاق، وكلها يقول Google إنها متوفرة منذ اليوم الأول. الزملاء الرقميون الدائمون الذين يملكون حسابات Workspace خاصة بهم إمّا مستقبل برمجيات الفريق وإمّا أعقد أنماط فشلها، وسجل التدقيق هو من سيحسم ذلك."
     },
     "tags": [
-      "google",
-      "agentic",
       "enterprise"
     ]
   },
@@ -3709,12 +3623,7 @@
       "fr": "Les UI générées par le modèle, c'est en réalité un problème d'évaluation : OpenAI affirme avoir entraîné GPT‑6 à juger ses propres interfaces pour leur clarté et leur utilité — beaucoup d'auto-notation pour des écrans sur lesquels les gens cliquent. Les résultats du streaming pendant la réflexion sont la partie à laquelle je fais le moins confiance et que je voudrais mesurer moi-même : des réponses partielles « aussi cohérentes que si elles avaient été écrites d'un bloc », c'est une affirmation forte sans benchmark externe pour l'étayer.",
       "es": "Las interfaces generadas por el modelo son, en el fondo, un problema de evaluación: OpenAI dice haber entrenado a GPT‑6 para juzgar sus propios diseños por claridad y utilidad, mucha autocorrección para pantallas en las que la gente hace clic. Los resultados del streaming mientras el modelo piensa son la parte en la que menos confío y que querría medir yo mismo: que las respuestas parciales sigan «tan cohesionadas como si se escribieran de una vez» es una afirmación fuerte sin ningún benchmark externo detrás.",
       "ar": "الواجهات التي يولّدها النموذج هي في حقيقتها مشكلة تقييم: يقول OpenAI إنه درّب GPT‑6 على تقييم تخطيطاته هو من حيث الوضوح والفائدة — وهذا كثيرٌ من التصحيح الذاتي لواجهات ينقر عليها الناس. أما نتائج البث أثناء التفكير فهي الجزء الذي أثق به أقل كله وأرغب في قياسه بنفسي: فادّعاء أن الأجزاء تبقى «متماسكة كأنها كُتبت دفعة واحدة» ادّعاءٌ قوي بلا معيار خارجي يدعمه."
-    },
-    "tags": [
-      "openai",
-      "gpt-6",
-      "intelligent-ui"
-    ]
+    }
   },
   {
     "id": "anthropic-claude-haiku-5-5-launch",
@@ -3737,8 +3646,6 @@
       "ar": "الرقم المثير ليس تخفيض السعر بنسبة 75٪، بل أن Anthropic تُموقع صراحةً نموذجًا صغيرًا كطبقة الوكلاء الفرعيين إلى جانب Opus 5.5 و Sonnet 5.5 — فتكلفة كل مسار تشغيل هي ما يقرر ما إذا كانت أنظمة الوكلاء المتعددة ستُنشر فعليًا أم ستبقى عروضًا توضيحية. وخفض قراءات الذاكرة المؤقتة لـ Sonnet 5.5 إلى النصف هو التغيير الهادئ الذي يجعل حلقات الوكلاء طويلة التشغيل قابلةً للموازنة فعلًا."
     },
     "tags": [
-      "anthropic",
-      "haiku-5-5",
       "pricing"
     ]
   },
@@ -3761,12 +3668,7 @@
       "fr": "La disponibilité générale de MXC, c'est la vraie nouvelle : des politiques de fichiers et de réseau appliquées par l'OS pour les agents, c'est exactement la couche de confinement qui manquait aux déploiements d'agents, et la liste des harness qui la prennent déjà en charge est révélatrice. Modèles locaux avec repli cloud, c'est un problème de routage que j'ai vécu en production — le difficile n'est pas le routage, c'est de garder une évaluation cohérente quand deux modèles différents servent « un » seul agent.",
       "es": "Que MXC llegue a disponibilidad general es la verdadera noticia: políticas de archivos y red aplicadas por el sistema operativo para agentes son exactamente la capa de contención que faltaba en los despliegues de agentes, y la lista de harnesses que ya la soportan es reveladora. Modelos locales con respaldo en la nube es un problema de enrutado que he vivido en producción: lo difícil no es enrutar, sino mantener la evaluación consistente cuando dos modelos distintos sirven a «un» agente.",
       "ar": "وصول MXC إلى التوافرية العامة هو الخبر الحقيقي: فسياسات نظام الملفات والشبكة التي يفرضها نظام التشغيل على الوكلاء هي تحديدًا طبقة العزل التي كانت تنقص عمليات نشر الوكلاء، وقائمة الأدوات التي تدعمها فعلًا لهي دالة. أما النماذج المحلية مع التراجع إلى السحابة فمسألة توجيه عشتها في الإنتاج — والصعب ليس التوجيه بل إبقاء التقييم متسقًا عندما يخدم نموذجان مختلفان وكيلًا «واحدًا»."
-    },
-    "tags": [
-      "microsoft",
-      "agent-sandbox",
-      "local-models"
-    ]
+    }
   },
   {
     "id": "anthropic-cyber-mission-oss-scanner",
@@ -3867,9 +3769,7 @@
       "ar": "fleming-1، وهو نموذج يكتشف ما إذا كان المتصل وكيلًا ذكاءً اصطناعيًا آخر، يمثل طبقة الثقة التي سيحتاجها وكلاء الصوت بمجرد أن يبدؤوا بالاتصال بالشركات من تلقاء أنفسهم. لا يوجد كاشف مثالي، لذا فإن سؤال الإنتاج هو معدل السلبيات الكاذبة — فكل وكيل يفلت من الكشف يصبح فاعلًا غير خاضع للتدقيق على الخط."
     },
     "tags": [
-      "agent-identity",
-      "voice-agents",
-      "trust"
+      "voice-agents"
     ]
   },
   {
@@ -3920,8 +3820,7 @@
     },
     "tags": [
       "multi-agent",
-      "orchestration",
-      "claude"
+      "orchestration"
     ]
   },
   {
@@ -3946,8 +3845,7 @@
     },
     "tags": [
       "safety",
-      "reliability",
-      "chatgpt"
+      "reliability"
     ]
   },
   {
@@ -4024,7 +3922,6 @@
     },
     "tags": [
       "decision-models",
-      "microsoft",
       "calibration"
     ]
   },
@@ -4179,7 +4076,6 @@
       "ar": "بطاقة النموذج من Meta تُظهر الانقسام: يتصدر Muse Wonder Full اختبارَي برمجة طويلة الأمد لكنه يخسر أمام Claude Opus 5.5 في ProgramBench وOSWorld، وتقرّ Meta بأن تلك التشغيلات لم تكن مقارنات مضبوطة. ميزتا Active Memory وActive Focus تستهدفان بالضبط ما يُسقط الوكلاء في الإنتاج — والآن أريد أرقام الموثوقية وراء هذه الذاكرة، لا لوحة الصدارة فحسب."
     },
     "tags": [
-      "meta",
       "frontier-models",
       "benchmarks"
     ]
@@ -4255,12 +4151,7 @@
       "fr": "GitLab vise le bon goulot d'étranglement : les agents écrivent du code en quelques minutes, puis attendent des heures revues, tests et validations. Un modèle séparé qui vérifie chaque étape par rapport à l'objectif défini — sous votre identité et votre chaîne de politiques existantes — c'est exactement le schéma que j'exige avant de laisser des agents approcher la CI.",
       "es": "GitLab apunta al cuello de botella correcto: los agentes escriben código en minutos y luego esperan horas a revisión, tests y aprobaciones. Un modelo aparte que verifica cada paso contra el objetivo declarado — bajo tu identidad y cadena de políticas existentes — es justo el patrón que quiero antes de dejar que los agentes toquen el CI.",
       "ar": "يستهدف GitLab عنق الزجاجة الصحيح: الوكلاء يكتبون الشيفرة في دقائق ثم ينتظرون ساعاتٍ أمام المراجعة والاختبارات والموافقات. نموذج منفصل يتحقق من كل خطوة مقابل الهدف المعلن — تحت هويتك وسلسلة سياساتك القائمة — هو بالضبط النمط الذي أريده قبل السماح للوكلاء بالاقتراب من CI."
-    },
-    "tags": [
-      "agentic-ai",
-      "devtools",
-      "ci-cd"
-    ]
+    }
   },
   {
     "id": "gemini-4-argon-global-availability",
@@ -4284,8 +4175,7 @@
     },
     "tags": [
       "gemini",
-      "frontier-models",
-      "long-context"
+      "frontier-models"
     ]
   },
   {
@@ -4388,8 +4278,7 @@
     },
     "tags": [
       "agent-safety",
-      "web-agents",
-      "prompt-injection"
+      "web-agents"
     ]
   },
   {
@@ -4439,9 +4328,7 @@
       "ar": "حوّلت Physical Intelligence حلقة تعلّم الروبوتات بأكملها إلى منتج — ارفع بيانات العروض، نفّذ الضبط الدقيق على حسابات مُدارة، انشر عبر استدلال مستضاف — وهذا بالضبط كيف ينبغي أن تُطلق نماذج الأساس. تحفظي الوحيد: معظم عمليات النشر المعروضة كانت تشغّل الاستدلال في السحابة، وPi نفسها تقرّ بأن الاتصال بالشبكة كان تحديًا؛ السياسة التي تسقط عندما يسقط الاتصال ليست جاهزة للإنتاج."
     },
     "tags": [
-      "robotics",
-      "foundation-models",
-      "api"
+      "robotics"
     ]
   },
   {
@@ -4465,9 +4352,7 @@
       "ar": "تحويل كلام إلى كلام بزمن استجابة أقل من ثانية، والمركز الأول في مؤشر Artificial Analysis بنتيجة 86.9، مقابل $0.08 في الدقيقة — الصوت يصبح سريعًا الواجهة الافتراضية للوكلاء المنشورين. ما يلفت انتباهي تشغيليّ لا يتعلق بالذكاء: الوكلاء المثبّتون على grok-voice-latest نُقلوا تلقائيًا إلى 3.0 — وهذا مريح حتى يغيّر استبدالٌ صامت للنموذج سلوك وكيلك الإنتاجي في منتصف المكالمة."
     },
     "tags": [
-      "voice-agents",
-      "speech-to-speech",
-      "deployment"
+      "voice-agents"
     ]
   },
   {
@@ -4492,8 +4377,7 @@
     },
     "tags": [
       "open-weights",
-      "on-device",
-      "meta"
+      "on-device"
     ]
   },
   {
@@ -4544,7 +4428,6 @@
     },
     "tags": [
       "observability",
-      "opentelemetry",
       "agents"
     ]
   },
@@ -4569,9 +4452,7 @@
       "ar": "الملفت ليس المجال بل المنهج: أدوات متخصصة مع تخطيط مسبق تتفوق على نماذج LLM الجاهزة في الاستدلال الجغرافي المكاني، وقد أصدرت Google معيارَي تقييم جديدين (GeoKTools وGeoExpertQueries) ليصبح الادعاء قابلًا للتحقق. هذا هو نمط «التقييم أولًا» الذي ينبغي أن يقلده كل نشر جاد للوكلاء."
     },
     "tags": [
-      "agent-reasoning",
-      "benchmarks",
-      "a2a"
+      "benchmarks"
     ]
   },
   {
@@ -4596,7 +4477,6 @@
     },
     "tags": [
       "agentic-coding",
-      "source-control",
       "production"
     ]
   },
@@ -4622,7 +4502,6 @@
     },
     "tags": [
       "multi-agent",
-      "long-horizon",
       "gemini"
     ]
   },
@@ -4673,9 +4552,7 @@
       "ar": "شغّل فريق الأمن الحدودي في أنثروبيك نموذجًا من فئة 26B على 15 جهاز أندرويد تي في رخيصًا ووجد أن GLM-5.2 يسلسل بالفعل كل خطوات التكرار من البداية إلى النهاية، مع توقع أن تصل النماذج الصغيرة إلى هذا المستوى بحلول نهاية 2026. كان الاختراق بسيطًا عمدًا، فاعتبره حدًّا أعلى — لكن التأطير صحيح تمامًا: حد أدنى للقدرة، وسقف لحجم النموذج، وجدول زمني قابل للاختبار."
     },
     "tags": [
-      "agent-safety",
-      "self-replication",
-      "iot"
+      "agent-safety"
     ]
   },
   {
@@ -4829,9 +4706,7 @@
       "ar": "وصف Microsoft الوكلاء التي نشرتها بنفسها بأنهم «غرباء من الداخل» لا يُوثق بهم هو التحول في التأطير الذي احتاجته فرق الأمن: تعامل مع وكلائك كخصوم ممتيزي الصلاحيات إلى أن يثبت العكس. الوكلاء الحراس الذين يراجعون كل إجراء قبل حدوثه هم نقطة الضبط الصحيحة؛ والسؤال المفتوح هل ترتقي هذه الرقابة إلى آلاف الوكلاء دون أن تغدو بذاتها مشكلة موثوقية."
     },
     "tags": [
-      "microsoft",
-      "agent-security",
-      "guardian-agents"
+      "agent-security"
     ]
   },
   {
@@ -4855,9 +4730,7 @@
       "ar": "ربط الإنفاق ذي المنفعة العامة بحصة ملكية تنمو مع الشركة هيكلةٌ ذكية، لكن الصعب يبقى كالعادة: الحوكمة والقياس. خمسة بالمئة من الأسهم تشتري قدرًا كبيرًا من النوايا الحسنة؛ أما هل تشتري توزيعًا خاضعًا للمساءلة فهو ما سأراقبه عند صدور تفاصيل الحوكمة."
     },
     "tags": [
-      "anthropic",
-      "governance",
-      "public-benefit"
+      "governance"
     ]
   },
   {
@@ -4881,8 +4754,6 @@
       "ar": "هذا أكثر عرض صادق قرأته من مزوّد كبير عن تشغيل الوكلاء في الإنتاج: بقيت لوحات المراقبة خضراء بينما أبلغ الوكيل عن 410 دولار بأنها 410 مليون دولار، ومجرد عدم تزامن في إصدار منسّق أسقط نسبة النجاح من 78 إلى 38 بالمئة. التدهور الصامت هو نمط الفشل الذي يهم في الإنتاج، وتصنيفهم لأنماط الفشل الستة مع تقييم الإصدارات التجريبية نمطٌ يستحق المحاكاة."
     },
     "tags": [
-      "aws",
-      "agent-eval",
       "production"
     ]
   },
@@ -4908,8 +4779,7 @@
     },
     "tags": [
       "security",
-      "agents",
-      "cybercrime"
+      "agents"
     ]
   },
   {
@@ -4986,8 +4856,7 @@
     },
     "tags": [
       "agents",
-      "harness",
-      "cost"
+      "harness"
     ]
   },
   {
@@ -5011,9 +4880,7 @@
       "ar": "في أمن الوكلاء أُصرّ على إنفاذ يعيش خارج النموذج، وقيام NVIDIA بترسيخ العزل عند المخالفة في السيليكون عبر BlueField-4 هو هذا النمط ولكن على نطاق صناعي. الإشارة الحقيقية هي قائمة الشركاء: عندما تصطف OpenAI وAnthropic وGoogle خلف حدّ تنفيذ واحد، يتحول عزل كل وكيل من خيار تصميمي إلى شرط أساسي."
     },
     "tags": [
-      "agent-safety",
-      "runtime-enforcement",
-      "nvidia"
+      "agent-safety"
     ]
   },
   {
@@ -5037,9 +4904,7 @@
       "ar": "كانت الذاكرة هي الفجوة التي يبنيها كل فريق بنفسه في معظم منظومات الوكلاء، ولذلك فإن تقديم Databricks لها كبنية تحتية مُدارة — بمعدل نجاح للوكلاء يبلغ 3x وبتوفير 31% من الرموز — هو بالضبط نوع أخبار الإنتاج الذي يعجبني. التفصيلة المهمة: تُقطَّر الذكريات عبر خط معالجة دون اتصال بدل كتابتها في منتصف المهمة، وهكذا تمنع تعفّن سياق وكيلٍ طويل العمر."
     },
     "tags": [
-      "agent-memory",
-      "production",
-      "databricks"
+      "production"
     ]
   },
   {
@@ -5064,8 +4929,7 @@
     },
     "tags": [
       "scientific-discovery",
-      "evaluation",
-      "anthropic"
+      "evaluation"
     ]
   },
   {
@@ -5090,8 +4954,7 @@
     },
     "tags": [
       "diffusion",
-      "benchmarks",
-      "speed"
+      "benchmarks"
     ]
   },
   {
@@ -5142,8 +5005,7 @@
     },
     "tags": [
       "infrastructure",
-      "open-source",
-      "agent-runtime"
+      "open-source"
     ]
   },
   {
