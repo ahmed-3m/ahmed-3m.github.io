@@ -1,7 +1,11 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
+import dynamic from 'next/dynamic'
+import Link from 'next/link'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { useReveal } from '@/lib/useReveal'
+
+const OodDemo = dynamic(() => import('@/components/OodDemo'))
 
 const cifarCharts: Array<{ src: string; alt: TranslationMap; caption: TranslationMap }> = [
   {
@@ -415,9 +419,20 @@ export default function Research() {
             <div className="cd-rfc-result">{t(copy.latest)}</div>
           </div>
 
-          <div className="cd-rf-footer">
+          <OodDemo />
+
+          <div className="cd-rf-footer" style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center' }}>
             <a href="https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf" target="_blank" rel="noopener noreferrer" className="cd-proj-link">
               {t(copy.thesisPdf)}
+            </a>
+            <Link href="/case-studies/diffusion-ood/" className="cd-proj-link" style={{ opacity: 0.85 }}>
+              Case Study -&gt;
+            </Link>
+            <a href="https://github.com/ahmed-3m/DiffusionOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ opacity: 0.8 }}>
+              Code: DiffusionOOD -&gt;
+            </a>
+            <a href="https://huggingface.co/ahmed-3m/DiffusionOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ opacity: 0.8 }}>
+              HF: Raw Scores &amp; Weights -&gt;
             </a>
           </div>
         </div>
