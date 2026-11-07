@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
-import { getAllNews, newsCategoryLabels } from '@/lib/news-items'
+import { getHomepageNews, homepageCategoryLabels } from '@/lib/news-homepage'
 import { useReveal } from '@/lib/useReveal'
 
 const copy = {
@@ -21,7 +21,8 @@ const copy = {
 export default function News() {
   useReveal()
   const { lang, t } = useI18n()
-  const items = getAllNews(lang).slice(0, 3)
+  // Already the newest 3 — capped by tools/emit-homepage-news.mjs at build time.
+  const items = getHomepageNews(lang)
 
   return (
     <section id="news" className="cd-section">
@@ -43,7 +44,7 @@ export default function News() {
               style={{ animationDelay: `${i * 60}ms` }}
             >
               <div className="cd-wc-tags">
-                <span className="cd-wc-tag">{t(newsCategoryLabels[item.category])}</span>
+                <span className="cd-wc-tag">{t(homepageCategoryLabels[item.category])}</span>
                 <span className="cd-wc-tag">{item.source}</span>
               </div>
               <div className="cd-wc-title">{item.headline}</div>

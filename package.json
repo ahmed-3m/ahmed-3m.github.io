@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node tools/emit-homepage-news.mjs",
     "build": "next build",
     "postbuild": "node tools/emit-sitemap-alias.mjs",
     "start": "next start",
