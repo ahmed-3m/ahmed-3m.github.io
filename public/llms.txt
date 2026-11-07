@@ -2,7 +2,7 @@
 
 > AI/ML Engineer based in Linz, Austria. M.Sc. in Artificial Intelligence from Johannes Kepler University Linz (Oct 2020 - Sep 2026; Defensio 25 Sep 2026, thesis graded 1, supervised by Prof. Sepp Hochreiter). Builder of Sihem (LLM assistant) and Faultrix (AI QC platform). Specializing in computer vision, diffusion models, out-of-distribution detection, and industrial defect detection.
 
-Last updated: 2026-10-06
+Last updated: 2026-11-07
 
 ## Identity
 
@@ -90,4 +90,5 @@ Deep-dives on research decisions, production lessons, and the gap between papers
 - DiffusionOOD case study: https://ahmed-3m.github.io/case-studies/diffusion-ood/
 - InkjetOOD case study: https://ahmed-3m.github.io/case-studies/inkjet-ood/
 - Faultrix case study: https://ahmed-3m.github.io/case-studies/faultrix/
+- Sihem case study: https://ahmed-3m.github.io/case-studies/sihem/
 - Sihem live beta: https://t.me/sihem_ai_bot (Telegram bot) · https://sihem-pwa.pages.dev/ (PWA)

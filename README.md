@@ -13,7 +13,7 @@ This repository powers my portfolio: a compact, evidence-heavy record of the res
 
 | Track | What changed | Result |
 | --- | --- | --- |
-| Master's thesis, JKU Linz | Conditional diffusion models used as generative classifiers, with a class-conditional separation loss (graduated Sep 2026, thesis graded 1) | **99.03% +/- 0.07% AUROC** across 3 seeds on a within-CIFAR airplane-vs-rest binary split |
+| Master's thesis, JKU Linz | Conditional diffusion models used as generative classifiers, with a class-conditional separation loss (Defensio & graduation 25 Sep 2026, thesis graded 1) | **99.03% +/- 0.07% AUROC** across 3 seeds on a within-CIFAR airplane-vs-rest binary split |
 | External OOD checks | Seed-42 model tested zero-shot on CIFAR-100, Places365, FashionMNIST, Textures, and SVHN | **90.50%-96.97% AUROC**, 94.17% external-set mean |
 | Industrial transfer | Public YOLO + CDM pipeline for inkjet print quality control | **86.73% +/- 2.30% AUROC** under 5-fold CV; separation loss did not transfer automatically |
 | Current product | Sihem, an LLM personal-mentor assistant (tech2b incubator, Linz) | Live beta on Telegram (`@sihem_ai_bot`), [PWA](https://sihem-pwa.pages.dev/), and [Case study](https://ahmed-3m.github.io/case-studies/sihem) |

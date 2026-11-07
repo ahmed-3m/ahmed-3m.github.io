@@ -560,6 +560,8 @@ async function routeWithClassifier(
   }
 }
 
+type ProviderAuth = { token: string; url: string; useProxy: boolean }
+
 async function fetchBigModel({
   messages,
   auth,
@@ -567,7 +569,7 @@ async function fetchBigModel({
   onDelta,
 }: {
   messages: readonly ChatMessage[]
-  auth: { token: string; url: string; useProxy: boolean }
+  auth: ProviderAuth
   lane: ChatLane
   onDelta?: StreamDelta
 }): Promise<string> {
@@ -686,18 +688,20 @@ async function fetchBigModel({
 
 async function fetchGroq({
   messages,
-  token,
+  auth,
   onDelta,
 }: {
   messages: readonly ChatMessage[]
-  token: string
+  auth: ProviderAuth
   onDelta?: StreamDelta
 }): Promise<string> {
   const payloadMessages = buildChatMessages(SYSTEM_PROMPT, messages)
 
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${token}`,
+  }
+  if (!auth.useProxy && auth.token) {
+    headers.Authorization = `Bearer ${auth.token}`
   }
 
   const controller = new AbortController()
@@ -712,7 +716,7 @@ async function fetchGroq({
 
   try {
     const streaming = Boolean(onDelta)
-    const response = await fetch(GROQ_CHAT_URL, {
+    const response = await fetch(auth.url, {
       method: 'POST',
       headers,
       body: JSON.stringify({
@@ -1246,12 +1250,21 @@ export default function ChatBot() {
         }
       }
 
-      if (rawReply === null && hasGroqToken && groqToken) {
+      const groqAuth: ProviderAuth | null =
+        hasGroqToken || hasProxy
+          ? {
+              token: groqToken ?? '',
+              url: CHAT_PROXY_URL || GROQ_CHAT_URL,
+              useProxy: Boolean(CHAT_PROXY_URL),
+            }
+          : null
+
+      if (rawReply === null && groqAuth) {
         try {
           streamStarted = false
           rawReply = await fetchGroq({
             messages: nextMessages,
-            token: groqToken,
+            auth: groqAuth,
             onDelta: emitDelta,
           })
         } catch (providerError) {
