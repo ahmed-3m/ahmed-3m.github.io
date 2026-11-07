@@ -181,11 +181,11 @@ const CHAT_COPY = {
     ar: 'إغلاق الدردشة',
   },
   open: {
-    en: 'Open chat',
-    de: 'Chat öffnen',
-    fr: 'Ouvrir le chat',
-    es: 'Abrir chat',
-    ar: 'فتح الدردشة',
+    en: 'Ask Genie',
+    de: 'Genie fragen',
+    fr: 'Demander à Genie',
+    es: 'Preguntar a Genie',
+    ar: 'اسأل جيني',
   },
   send: {
     en: 'Send message',
@@ -908,8 +908,48 @@ export default function ChatBot() {
   const [error, setError] = useState<string | null>(null)
   const currentSection = useCurrentSection()
   const messagesRef = useRef<HTMLDivElement>(null)
+  const launcherRef = useRef<HTMLButtonElement>(null)
+  const dialogRef = useRef<HTMLDivElement>(null)
 
   const starterPrompts = useMemo(() => getStarterPrompts(currentSection), [currentSection])
+
+  useEffect(() => {
+    if (!isOpen) return
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        setIsOpen(false)
+        launcherRef.current?.focus()
+        return
+      }
+
+      if (event.key === 'Tab') {
+        if (!dialogRef.current) return
+        const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), [href], input:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+        if (focusable.length === 0) return
+        const first = focusable[0]
+        const last = focusable[focusable.length - 1]
+
+        if (event.shiftKey) {
+          if (document.activeElement === first) {
+            event.preventDefault()
+            last.focus()
+          }
+        } else {
+          if (document.activeElement === last) {
+            event.preventDefault()
+            first.focus()
+          }
+        }
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [isOpen])
 
   useEffect(() => {
     const container = messagesRef.current
@@ -1129,10 +1169,15 @@ export default function ChatBot() {
   return (
     <>
       <div
+        ref={dialogRef}
+        id="chatbot-dialog"
         className={`fixed bottom-20 right-4 z-[9998] w-[min(400px,calc(100vw-2rem))] transition-all duration-300 ease-out sm:bottom-24 sm:right-6 ${
           isOpen ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none translate-y-6 opacity-0'
         }`}
         aria-hidden={!isOpen}
+        aria-modal="true"
+        tabIndex={-1}
+        inert={!isOpen}
       >
         <section
           id="ahmed-chatbot-panel"
@@ -1272,6 +1317,7 @@ export default function ChatBot() {
       </div>
 
       <button
+        ref={launcherRef}
         type="button"
         onClick={() => setIsOpen((value) => !value)}
         className="group fixed bottom-6 right-6 z-[9999] inline-flex h-14 items-center gap-2 overflow-hidden rounded-full border pl-1.5 pr-4 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:pr-5 focus-visible:pr-5"
@@ -1282,16 +1328,16 @@ export default function ChatBot() {
           boxShadow: '0 18px 40px rgba(7, 11, 20, 0.38)',
         }}
         aria-expanded={isOpen}
-        aria-controls="ahmed-chatbot-panel"
+        aria-controls="chatbot-dialog"
         aria-label={isOpen ? t(CHAT_COPY.close) : t(CHAT_COPY.open)}
       >
         <GenieOrb />
         <span
-          className={`whitespace-nowrap text-sm font-semibold tracking-[0.01em] transition-all duration-300 ${
+          className={`cd-chatbot-launcher-text whitespace-nowrap text-sm font-semibold tracking-[0.01em] transition-all duration-300 ${
             isOpen ? 'max-w-0 opacity-0' : 'max-w-0 opacity-0 group-hover:max-w-32 group-hover:opacity-100 group-focus-visible:max-w-32 group-focus-visible:opacity-100'
           }`}
         >
-          Ask Genie
+          {t(CHAT_COPY.open)}
         </span>
         {isOpen && (
           <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/8 text-[#f3eee4]">

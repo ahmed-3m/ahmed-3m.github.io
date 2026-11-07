@@ -190,7 +190,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
   }
 
   return (
-    <main className="min-h-screen pb-20 pt-24">
+    <main id="main" tabIndex={-1} className="min-h-screen pb-20 pt-24">
       {jsonLd && (
         <script
           type="application/ld+json"

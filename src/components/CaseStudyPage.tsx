@@ -31,7 +31,7 @@ export default function CaseStudyPage({ slug }: { slug: string }) {
   if (!study) return null
 
   return (
-    <main className="min-h-screen pb-20 pt-24">
+    <main id="main" tabIndex={-1} className="min-h-screen pb-20 pt-24">
       <article className="mx-auto max-w-4xl px-5">
         <Link href="/#projects" className="mb-8 inline-flex items-center gap-2 text-[var(--cd-accent)]">
           <ArrowLeft size={18} />

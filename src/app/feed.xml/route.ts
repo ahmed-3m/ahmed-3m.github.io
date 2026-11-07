@@ -1,9 +1,9 @@
-import { getAllBlogPosts } from '@/lib/blog-posts';
+import { getAllBlogPostsMeta } from '@/lib/blog-posts-meta';
 
 export const dynamic = 'force-static';
 
 export async function GET() {
-  const posts = getAllBlogPosts();
+  const posts = getAllBlogPostsMeta();
   const baseUrl = 'https://ahmed-3m.github.io';
 
   const items = posts.map((post) => `

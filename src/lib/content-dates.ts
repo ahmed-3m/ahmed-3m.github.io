@@ -1,4 +1,4 @@
-import { getAllBlogPosts } from '@/lib/blog-posts'
+import { getAllBlogPostsMeta } from '@/lib/blog-posts-meta'
 import { getAllNews } from '@/lib/news-items'
 
 // Shared "when did the content last change" dates.
@@ -23,7 +23,7 @@ function postDate(post: { date: string; lastModified?: string }): number {
 
 /** Newest effective date across blog posts. */
 export function getLatestBlogDate(): Date {
-  const posts = getAllBlogPosts('en')
+  const posts = getAllBlogPostsMeta('en')
   return posts.length ? new Date(Math.max(...posts.map(postDate))) : new Date()
 }
 

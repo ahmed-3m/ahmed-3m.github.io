@@ -58,7 +58,7 @@ export default function NewsPageClient() {
   }
 
   return (
-    <main className="min-h-screen pb-20 pt-24">
+    <main id="main" tabIndex={-1} className="min-h-screen pb-20 pt-24">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}

@@ -2,22 +2,44 @@
 
 import { useEffect } from 'react';
 
-export function useReveal() {
-  useEffect(() => {
-    const observer = new IntersectionObserver(
+let sharedObserver: IntersectionObserver | null = null;
+let activeCount = 0;
+
+function getSharedObserver(): IntersectionObserver | null {
+  if (typeof window === 'undefined') return null;
+  if (!sharedObserver) {
+    sharedObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
+            sharedObserver?.unobserve(entry.target);
           }
         });
       },
       { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
     );
+  }
+  return sharedObserver;
+}
 
-    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+export function useReveal() {
+  useEffect(() => {
+    const observer = getSharedObserver();
+    if (!observer) return;
 
-    return () => observer.disconnect();
+    activeCount++;
+    document.querySelectorAll('.reveal:not(.visible)').forEach((el) => {
+      observer.observe(el);
+    });
+
+    return () => {
+      activeCount--;
+      if (activeCount <= 0) {
+        sharedObserver?.disconnect();
+        sharedObserver = null;
+        activeCount = 0;
+      }
+    };
   }, []);
 }

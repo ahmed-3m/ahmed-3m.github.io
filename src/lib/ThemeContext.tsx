@@ -20,7 +20,7 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-// ── theme as an external store (localStorage) ─────────────────────────────
+// ── theme as an external store (localStorage + prefers-color-scheme) ───────
 // useSyncExternalStore keeps hydration safe: React uses getServerSnapshot
 // ('dark') for the hydration pass — matching the SSR HTML — then re-renders
 // with the client snapshot after mount. Reading localStorage during initial
@@ -28,13 +28,24 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 // which failed hydration and forced React to re-render the entire tree
 // (duplicating every JSON-LD script tag for returning light-theme visitors).
 
-function subscribeStorage(callback: () => void) {
+const colorSchemeQuery =
+  typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+    ? window.matchMedia('(prefers-color-scheme: light)')
+    : null;
+
+function subscribeTheme(callback: () => void) {
   window.addEventListener('storage', callback);
-  return () => window.removeEventListener('storage', callback);
+  colorSchemeQuery?.addEventListener('change', callback);
+  return () => {
+    window.removeEventListener('storage', callback);
+    colorSchemeQuery?.removeEventListener('change', callback);
+  };
 }
 
 function getClientTheme(): Theme {
-  return localStorage.getItem('theme') === 'light' ? 'light' : 'dark';
+  const saved = localStorage.getItem('theme');
+  if (saved === 'light' || saved === 'dark') return saved;
+  return colorSchemeQuery?.matches ? 'light' : 'dark';
 }
 
 function getServerTheme(): Theme {
@@ -69,7 +80,7 @@ function getServerReduceTransparency(): boolean {
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const theme = useSyncExternalStore(subscribeStorage, getClientTheme, getServerTheme);
+  const theme = useSyncExternalStore(subscribeTheme, getClientTheme, getServerTheme);
   const reduceTransparency = useSyncExternalStore(
     subscribeTransparency,
     getClientReduceTransparency,
@@ -78,6 +89,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.style.colorScheme = theme;
     document.documentElement.setAttribute(
       'data-reduce-transparency',
       reduceTransparency ? 'true' : 'false'
