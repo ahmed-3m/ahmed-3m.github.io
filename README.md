@@ -30,7 +30,7 @@ Every headline metric in my work is backed by seed sweeps, cross-validation, or 
 | **M.Sc. Thesis**<br>(JKU Linz) | Conditional Diffusion Models with class-conditional separation loss ($\lambda = 0.02$) | **99.03% &plusmn; 0.07% AUROC**<br>*(3-seed mean on within-CIFAR airplane vs. rest; vs. 92.52% &plusmn; 11.07% baseline)* | [Thesis PDF](https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf) &bull; [Model Weights](https://huggingface.co/ahmed-3m/DiffusionOOD) |
 | **Zero-Shot External OOD** | Seed-42 generative classifier tested across five disparate vision distributions | **90.50% &ndash; 96.97% AUROC**<br>*(94.17% mean across CIFAR-100, Places365, FashionMNIST, Textures, SVHN)* | [Interactive Explorer](https://ahmed-3m.github.io/case-studies/diffusion-ood) &bull; [Raw Tensors](https://huggingface.co/ahmed-3m/DiffusionOOD) |
 | **Industrial Inspection**<br>(PROFACTOR GmbH) | Multi-class inkjet defect detection combining YOLOv8 bounding boxes + CDM verification | **86.73% &plusmn; 2.30% AUROC**<br>*(5-fold cross-validation on FTI_Zer0P; negative transfer documented)* | [Industrial Report](https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf) &bull; [InkjetOOD Code](https://github.com/ahmed-3m/InkjetOOD) |
-| **LLM Mentoring System**<br>(tech2b Incubator) | Multi-turn personalized learning agent with persistent memory & adaptive curriculum | **Live Beta Stage**<br>*(Active testing via Telegram Bot & Progressive Web App)* | [Sihem Case Study](https://ahmed-3m.github.io/case-studies/sihem) &bull; [Bot Demo](https://t.me/sihem_ai_bot) |
+| **LLM Mentoring System**<br>(tech2b Incubator) | Multi-turn personalized mentoring agent with persistent long-term memory and proactive check-ins | **Live Beta Stage**<br>*(Active testing via Telegram Bot & Progressive Web App)* | [Sihem Case Study](https://ahmed-3m.github.io/case-studies/sihem) &bull; [Bot Demo](https://t.me/sihem_ai_bot) |
 | **Computer Vision SaaS**<br>(Faultrix Solo Build) | Construction defect detection pipeline: on-site capture to automated DSGVO-compliant audit | **Production Shipped**<br>*(12-month lifecycle: mobile capture &rarr; OpenAI vision audit)* | [Faultrix Case Study](https://ahmed-3m.github.io/case-studies/faultrix) |
 
 ---
@@ -57,14 +57,14 @@ Standard discriminative classifiers assign overconfident probabilities to inputs
      +----------+----------+                     +-----------+-----------+
                 |                                            |
                 v                                            v
-         Recon Error E_ID                             Recon Error E_OOD
+         Recon Error E_target                          Recon Error E_competing
                 \                                           /
                  \                                         /
                   v                                       v
-               +---------------------------------------------+
-               | Detection Score: S(x) = E_OOD(x) - E_ID(x)   |
-               | Decision: S(x) > Threshold tau => In-Dist   |
-               +---------------------------------------------+
+               +---------------------------------------------------+
+               | Anomaly Score: S(x) = E_target(x) - E_competing(x) |
+               | Decision: S(x) > Threshold tau => OOD              |
+               +---------------------------------------------------+
 ```
 
 To eliminate seed sensitivity and guarantee separation, we train with a joint objective:
@@ -138,7 +138,7 @@ Evaluation & Tooling   ::  AUROC, FPR95, Youden's J, Cross-Validation, Hydra, We
 Production Fullstack   ::  Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS v4,
                            Cloudflare Workers (Edge Proxies), Supabase, Deno, REST APIs
 Systems & Practices    ::  Static Web Export, Docker, Linux, CI/CD Actions, Strict i18n (5 Locales),
-                           Machine-Readable Specs (llms.txt, JSON-LD, OpenAPI)
+                           Machine-Readable Specs (llms.txt, JSON-LD)
 ```
 
 ---
@@ -148,14 +148,14 @@ Systems & Practices    ::  Static Web Export, Docker, Linux, CI/CD Actions, Stri
 This site is statically exported to GitHub Pages with high performance, strict accessibility, and deterministic reproduction:
 
 * **Engine**: Next.js 16.4 + React 19 + TypeScript + Tailwind CSS v4.
-* **Resilience**: Hardened Cloudflare Worker edge proxy (`worker/chat-proxy.ts`) with origin enforcement, client-side rate limits, payload validation, and instant deterministic fallbacks.
+* **Resilience**: Hardened Cloudflare Worker edge proxy (`worker/chat-proxy.js`) with origin enforcement, payload validation, hourly rate limiting, and instant deterministic local fallbacks.
 * **Internationalization**: Native support for 5 languages (`en`, `de`, `fr`, `es`, `ar`) including full bidirectional RTL layout mechanics for Arabic.
-* **Machine Accessibility**: Fully configured semantic feeds, including `llms.txt`, `llms-full.txt`, JSON-LD schemas, and auto-validating RSS feeds.
+* **Machine Accessibility**: `llms.txt` / `llms-full.txt`, JSON-LD schemas, sitemap, and RSS feed.
 * **Daily Autonomous News**: Automated agentic pipeline collecting, verifying, and publishing curated AI and agentic breakthroughs daily via GitHub Actions.
 
 ### Local Verification & Commands
 
-All development dependencies are strictly version-pinned. Validate changes locally before submitting:
+Dependencies are pinned via the committed lockfile. Validate changes locally before submitting:
 
 ```bash
 # Clean deterministic install
