@@ -1,1357 +1,1210 @@
 'use client'
 
-import React, { useState, useId, useMemo } from 'react'
-import {
-  Plane,
-  Car,
-  Bird,
-  Ship,
-  Truck,
-  Sliders,
-  Shield,
-  CheckCircle2,
-  AlertCircle,
-  Info,
-  Layers,
-  Sparkles,
-  BarChart3,
-} from 'lucide-react'
+import React, { useState, useMemo, useId } from 'react'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
+import {
+  BENCHMARK_DATASETS,
+  LAMBDA0_SEED42_HISTOGRAM,
+  LAMBDA0_SEED42_META,
+  PER_TIMESTEP_ERRORS,
+  SCORING_METHODS,
+  TIMESTEP_STRATEGIES,
+  K_ABLATION_TABLE,
+  CIFAR_LAMBDA_SWEEP,
+  INKJET_OVERALL_SWEEP,
+  INKJET_PER_FEATURE,
+  type OodDatasetKey,
+  type ScoringRuleKey,
+  type InkjetLambdaKey,
+} from '@/lib/ood-explorer-data'
 
-export type MethodKey = 'cc_ddpm' | 'uncond_ddpm' | 'vae' | 'ae'
+type LabTab = 'calibration' | 'timesteps' | 'ablations'
 
-interface SampleMetrics {
-  mse: number
-  lpips: number
-}
-
-interface SampleData {
-  id: string
-  categoryKey: 'plane1' | 'plane2' | 'car' | 'bird' | 'ship' | 'truck'
-  groundTruth: 'ID' | 'OOD'
-  icon: React.ComponentType<{ className?: string; size?: number }>
-  title: TranslationMap
-  description: TranslationMap
-  metrics: Record<MethodKey, SampleMetrics>
+const DATASET_LABELS: Record<OodDatasetKey, TranslationMap> = {
+  within_cifar: {
+    en: 'Within-CIFAR-10 (Airplane vs 9 Rest)',
+    de: 'Within-CIFAR-10 (Flugzeug vs. 9 Rest)',
+    fr: 'Within-CIFAR-10 (Avion vs 9 autres)',
+    es: 'Within-CIFAR-10 (Avión vs 9 restantes)',
+    ar: 'ضمن CIFAR-10 (طائرة مقابل 9 فئات)',
+  },
+  cifar100: {
+    en: 'CIFAR-100 (Near-OOD · 100 classes)',
+    de: 'CIFAR-100 (Near-OOD · 100 Klassen)',
+    fr: 'CIFAR-100 (Near-OOD · 100 classes)',
+    es: 'CIFAR-100 (Near-OOD · 100 clases)',
+    ar: 'CIFAR-100 (شذوذ قريب · 100 فئة)',
+  },
+  places365: {
+    en: 'Places365 (Far-OOD · Scenes)',
+    de: 'Places365 (Far-OOD · Szenen)',
+    fr: 'Places365 (Far-OOD · Scènes)',
+    es: 'Places365 (Far-OOD · Escenas)',
+    ar: 'Places365 (شذوذ بعيد · مشاهد)',
+  },
+  fashionmnist: {
+    en: 'FashionMNIST (Far-OOD · Greyscale)',
+    de: 'FashionMNIST (Far-OOD · Graustufen)',
+    fr: 'FashionMNIST (Far-OOD · Niveaux de gris)',
+    es: 'FashionMNIST (Far-OOD · Escala de grises)',
+    ar: 'FashionMNIST (شذوذ بعيد · رمادي)',
+  },
+  textures: {
+    en: 'Textures / DTD (Far-OOD · 47 classes)',
+    de: 'Textures / DTD (Far-OOD · 47 Klassen)',
+    fr: 'Textures / DTD (Far-OOD · 47 classes)',
+    es: 'Textures / DTD (Far-OOD · 47 clases)',
+    ar: 'Textures / DTD (شذوذ بعيد · 47 فئة)',
+  },
+  svhn: {
+    en: 'SVHN (Far-OOD · House Numbers)',
+    de: 'SVHN (Far-OOD · Hausnummern)',
+    fr: 'SVHN (Far-OOD · Numéros de rue)',
+    es: 'SVHN (Far-OOD · Números de calle)',
+    ar: 'SVHN (شذوذ بعيد · أرقام المباني)',
+  },
 }
 
 const copy = {
   eyebrow: {
-    en: 'Interactive Thesis Explorer',
-    de: 'Interaktiver Thesis-Explorer',
-    fr: 'Explorateur interactif de thèse',
-    es: 'Explorador interactivo de tesis',
-    ar: 'مستكشف الأطروحة التفاعلي',
+    en: '// INTERACTIVE THESIS LAB · JKU LINZ (GRADE 1.0)',
+    de: '// INTERAKTIVES THESIS-LABOR · JKU LINZ (NOTE 1,0)',
+    fr: '// LABORATOIRE INTERACTIF DE THÈSE · JKU LINZ (NOTE 1,0)',
+    es: '// LABORATORIO INTERACTIVO DE TESIS · JKU LINZ (NOTA 1.0)',
+    ar: '// مختبر الأطروحة التفاعلي · جامعة JKU لينتس (الدرجة 1.0)',
   },
   title: {
-    en: 'Diffusion OOD Detection & Anomaly Scoring Lab',
-    de: 'Diffusions-OOD-Erkennung & Anomaliebewertungs-Labor',
-    fr: "Laboratoire de détection OOD & score d'anomalie par diffusion",
-    es: 'Laboratorio de detección OOD y puntuación de anomalías por difusión',
-    ar: 'مختبر كشف العينات الشاذة وتقييم الانحراف بالانتشار',
+    en: 'Conditional Diffusion as a Generative Classifier: Interactive Evidence Explorer',
+    de: 'Konditionale Diffusion als generativer Klassifikator: Interaktiver Evidenz-Explorer',
+    fr: 'Diffusion conditionnelle comme classificateur génératif : Explorateur interactif',
+    es: 'Difusión condicional como clasificador generativo: Explorador interactivo de evidencia',
+    ar: 'الانتشار الشرطي كمصنّف توليدي: مستكشف الأدلة التفاعلي',
   },
   subtitle: {
-    en: "Explore real precomputed reconstruction metrics from Ahmed's JKU Linz Master's thesis (Table 6.1). Observe how class-conditional separation loss (λ = 0.02) separates in-distribution airplanes from out-of-distribution classes with 99.03% AUROC.",
-    de: 'Erkunden Sie reale vorberechnete Rekonstruktionsmetriken aus Ahmeds JKU Linz Masterarbeit (Tabelle 6.1). Erleben Sie, wie klassenkonditionale Trennungsverluste (λ = 0,02) In-Distribution-Flugzeuge mit 99,03 % AUROC von OOD-Klassen trennen.',
-    fr: "Explorez les métriques de reconstruction réelles du mémoire de master d'Ahmed à JKU Linz (Tableau 6.1). Observez comment la perte de séparation conditionnelle (λ = 0,02) isole les avions en distribution avec 99,03 % d'AUROC.",
-    es: 'Explore métricas de reconstrucción reales de la tesis de maestría de Ahmed en JKU Linz (Tabla 6.1). Compruebe cómo la pérdida de separación condicional (λ = 0.02) aísla aviones en distribución con 99.03% de AUROC.',
-    ar: 'استكشف مقاييس إعادة البناء المحسوبة مسبقاً من أطروحة ماجستير أحمد في جامعة JKU لينتس (جدول 6.1). شاهد كيف تفصل دالة الفقد المشروطة (λ = 0.02) طائرات التوزيع عن الفئات الشاذة بمعدل 99.03% AUROC.',
+    en: 'Built directly from the raw PyTorch score tensors (seed42_*.pt) and ablation JSON artefacts on Hugging Face (ahmed-3m/DiffusionOOD). Explore how the class-conditional separation loss (Eq. 3.23), contrastive noise-error scoring (Eq. 3.3), Monte Carlo trial budget K, and industrial transfer behave.',
+    de: 'Direkt aus den realen PyTorch-Score-Tensoren (seed42_*.pt) und Ablations-Artefakten auf Hugging Face (ahmed-3m/DiffusionOOD) erstellt. Erkunden Sie Separation Loss (Gl. 3.23), kontrastives Scoring (Gl. 3.3), Monte-Carlo-Budget K und den Industrietransfer.',
+    fr: 'Construit directement à partir des tenseurs PyTorch réels (seed42_*.pt) et des artefacts JSON sur Hugging Face (ahmed-3m/DiffusionOOD). Explorez la perte de séparation (Éq. 3.23), le score contrastif (Éq. 3.3), le budget Monte Carlo K et le transfert industriel.',
+    es: 'Construido directamente desde los tensores reales de PyTorch (seed42_*.pt) y artefactos JSON en Hugging Face (ahmed-3m/DiffusionOOD). Explore la pérdida de separación (Ec. 3.23), el puntaje contrastivo (Ec. 3.3), el presupuesto Monte Carlo K y la transferencia industrial.',
+    ar: 'مبني مباشرة من موتورات النتائج الحقيقية (seed42_*.pt) وملفات التقييم على Hugging Face (ahmed-3m/DiffusionOOD). استكشف دالة الفصل الشرطية (معادلة 3.23)، التقييم التبايني (معادلة 3.3)، ميزانية مونت كارلو K، والنقل الصناعي.',
   },
-  scopeBadge: {
-    en: 'Scope: Binary airplane-vs-rest · 3 random seeds · Table 6.1 (JKU Linz)',
-    de: 'Umfang: Binär Flugzeug vs. Rest · 3 Zufalls-Seeds · Tabelle 6.1 (JKU Linz)',
-    fr: 'Périmètre : Binaire avion contre reste · 3 graines · Tableau 6.1 (JKU Linz)',
-    es: 'Alcance: Binario avión vs. resto · 3 semillas aleatorias · Tabla 6.1 (JKU Linz)',
-    ar: 'النطاق: تصنيف ثنائي طائرة مقابل البقية · 3 بذور عشوائية · جدول 6.1 (JKU لينتس)',
+  tabCalibration: {
+    en: '1. Score Distributions & Threshold (τ)',
+    de: '1. Score-Verteilungen & Schwelle (τ)',
+    fr: '1. Distributions des scores & Seuil (τ)',
+    es: '1. Distribuciones de score y Umbral (τ)',
+    ar: '1. توزيعات الدرجات وعتبة القرار (τ)',
   },
-  zeroInferenceBadge: {
-    en: 'Zero client inference · 100% precomputed from thesis benchmark eval',
-    de: 'Keine Client-Inferenz · 100% vorberechnet aus Thesis-Benchmark-Eval',
-    fr: 'Zéro inférence client · 100 % précalculé depuis les tests de la thèse',
-    es: 'Cero inferencia en cliente · 100% precalculado de la evaluación de tesis',
-    ar: 'بدون استدلال في المتصفح · محسوب مسبقاً بنسبة 100% من تقييم الأطروحة',
+  tabTimesteps: {
+    en: '2. Per-Timestep Denoising (t) & Scoring Rules',
+    de: '2. Pro-Zeitschritt-Denoising (t) & Scoring',
+    fr: '2. Débruitage par pas (t) & Règles de score',
+    es: '2. Denoising por paso (t) y Reglas de score',
+    ar: '2. إزالة الضوضاء عبر الزمن (t) وطرق التقييم',
   },
-  methodsHeading: {
-    en: '1. Select Reconstruction Architecture',
-    de: '1. Rekonstruktionsarchitektur wählen',
-    fr: '1. Choisir l’architecture de reconstruction',
-    es: '1. Seleccionar arquitectura de reconstrucción',
-    ar: '1. اختر معمارية إعادة البناء',
+  tabsAria: {
+    en: 'Interactive Thesis Explorer Tabs',
+    de: 'Interaktive Thesis-Explorer-Tabs',
+    fr: "Onglets de l'explorateur interactif de la thèse",
+    es: 'Pestañas del explorador interactivo de la tesis',
+    ar: 'تبويبات مستكشف الأطروحة التفاعلي',
   },
-  controlsHeading: {
-    en: '2. Threshold (τ) & Perceptual Balance (α)',
-    de: '2. Schwellenwert (τ) & Metrikgewichtung (α)',
-    fr: '2. Seuil (τ) & Équilibre perceptuel (α)',
-    es: '2. Umbral (τ) y Balance perceptual (α)',
-    ar: '2. عتبة القرار (τ) والوزن الإدراكي (α)',
+  tabAblations: {
+    en: '3. Separation Loss (λ), MC Trials (K) & Inkjet QC',
+    de: '3. Separation Loss (λ), MC-Trials (K) & Inkjet QC',
+    fr: '3. Perte de séparation (λ), Essais MC (K) & Inkjet QC',
+    es: '3. Pérdida de separación (λ), Ensayos MC (K) e Inkjet QC',
+    ar: '3. خسارة الفصل (λ)، تجارب مونت كارلو (K) وجودة الطباعة',
   },
-  thresholdLabel: {
-    en: 'Decision Threshold (τ)',
-    de: 'Entscheidungsschwelle (τ)',
-    fr: 'Seuil de décision (τ)',
-    es: 'Umbral de decisión (τ)',
-    ar: 'عتبة القرار (τ)',
+  regimeHeading: {
+    en: 'Training Objective Regime (Eq. 3.24: L = L_diffusion + λ · L_sep)',
+    de: 'Trainingsziel-Regime (Gl. 3.24: L = L_diffusion + λ · L_sep)',
+    fr: "Régime d'objectif d'entraînement (Éq. 3.24 : L = L_diffusion + λ · L_sep)",
+    es: 'Régimen del objetivo de entrenamiento (Ec. 3.24: L = L_diffusion + λ · L_sep)',
+    ar: 'نظام هدف التدريب (معادلة 3.24: L = L_diffusion + λ · L_sep)',
   },
-  thresholdDesc: {
-    en: 'Samples with anomaly score S(x) > τ are flagged as Out-of-Distribution (OOD).',
-    de: 'Muster mit Anomaliewert S(x) > τ werden als Out-of-Distribution (OOD) eingestuft.',
-    fr: 'Les échantillons avec score S(x) > τ sont classés hors distribution (OOD).',
-    es: 'Las muestras con puntuación S(x) > τ se clasifican como fuera de distribución (OOD).',
-    ar: 'العينات ذات درجة الشذوذ S(x) > τ تصنف كعينات شاذة خارج التوزيع (OOD).',
+  regimeSep: {
+    en: 'λ = 0.02 · With Separation Loss (99.03% ± 0.07% 3-seed · 98.98% seed-42)',
+    de: 'λ = 0.02 · Mit Separation Loss (99,03% ± 0,07% 3-Seeds · 98,98% Seed-42)',
+    fr: 'λ = 0.02 · Avec Separation Loss (99,03% ± 0,07% 3 graines · 98,98% seed-42)',
+    es: 'λ = 0.02 · Con Separation Loss (99.03% ± 0.07% 3 semillas · 98.98% seed-42)',
+    ar: 'λ = 0.02 · مع خسارة الفصل (99.03% ± 0.07% لـ 3 بذور · 98.98% لبذرة 42)',
   },
-  weightLabel: {
-    en: 'Perceptual Metric Weight (α)',
-    de: 'Perzeptuelles Metrikgewicht (α)',
-    fr: 'Poids de la métrique perceptuelle (α)',
-    es: 'Ponderación de métrica perceptual (α)',
-    ar: 'الوزن الإدراكي للمقياس (α)',
+  regimeBase: {
+    en: 'λ = 0.00 · Baseline No Sep. Loss (92.52% ± 11.07% 3-seed · 79.73% seed-42)',
+    de: 'λ = 0.00 · Baseline ohne Sep. Loss (92,52% ± 11,07% 3-Seeds · 79,73% Seed-42)',
+    fr: 'λ = 0.00 · Baseline sans Sep. Loss (92,52% ± 11,07% 3 graines · 79,73% seed-42)',
+    es: 'λ = 0.00 · Baseline sin Sep. Loss (92.52% ± 11.07% 3 semillas · 79.73% seed-42)',
+    ar: 'λ = 0.00 · خط الأساس بدون فصل (92.52% ± 11.07% لـ 3 بذور · 79.73% لبذرة 42)',
   },
-  weightFormula: {
-    en: 'Anomaly Score Formula: S(x) = α · MSE + (1 - α) · LPIPS',
-    de: 'Anomalieformel: S(x) = α · MSE + (1 - α) · LPIPS',
-    fr: "Formule du score d'anomalie : S(x) = α · MSE + (1 - α) · LPIPS",
-    es: 'Fórmula de puntuación de anomalía: S(x) = α · MSE + (1 - α) · LPIPS',
-    ar: 'معادلة درجة الشذوذ: S(x) = α · MSE + (1 - α) · LPIPS',
+  datasetHeading: {
+    en: 'Evaluation Benchmark (Table 6.1 · Seed 42 Raw Score Tensors, K = 100)',
+    de: 'Evaluations-Benchmark (Tabelle 6.1 · Seed-42 Raw-Score-Tensoren, K = 100)',
+    fr: "Benchmark d'évaluation (Tableau 6.1 · Tenseurs bruts Seed 42, K = 100)",
+    es: 'Benchmark de evaluación (Tabla 6.1 · Tensores crudos Seed 42, K = 100)',
+    ar: 'معيار التقييم (جدول 6.1 · موتورات النتائج الخام للبذرة 42، K = 100)',
   },
-  presetsLabel: {
-    en: 'Quick Presets:',
-    de: 'Schnell-Voreinstellungen:',
-    fr: 'Préréglages rapides :',
-    es: 'Preajustes rápidos:',
-    ar: 'إعدادات مسبقة سريعة:',
+  thresholdHeading: {
+    en: 'Decision Threshold τ on s_OOD(x) = ê₀(x) − ê₁(x)',
+    de: 'Entscheidungsschwelle τ auf s_OOD(x) = ê₀(x) − ê₁(x)',
+    fr: 'Seuil de décision τ sur s_OOD(x) = ê₀(x) − ê₁(x)',
+    es: 'Umbral de decisión τ sobre s_OOD(x) = ê₀(x) − ê₁(x)',
+    ar: 'عتبة القرار τ على الدرجة s_OOD(x) = ê₀(x) − ê₁(x)',
   },
-  presetBalanced: {
-    en: 'Balanced (τ=0.45, α=0.50)',
-    de: 'Ausgewogen (τ=0.45, α=0.50)',
-    fr: 'Équilibré (τ=0,45, α=0,50)',
-    es: 'Equilibrado (τ=0.45, α=0.50)',
-    ar: 'متوازن (τ=0.45، α=0.50)',
+  presetTpr95: {
+    en: 'Calibrate @ TPR = 95% (Fig. 6.8)',
+    de: 'Kalibrieren @ TPR = 95% (Abb. 6.8)',
+    fr: 'Calibrer @ TPR = 95% (Fig. 6.8)',
+    es: 'Calibrar @ TPR = 95% (Fig. 6.8)',
+    ar: 'معايرة عند TPR = 95% (شكل 6.8)',
   },
-  presetSensitivity: {
-    en: 'High Sensitivity (τ=0.30, α=0.40)',
-    de: 'Hohe Sensitivität (τ=0.30, α=0.40)',
-    fr: 'Haute sensibilité (τ=0,30, α=0,40)',
-    es: 'Alta sensibilidad (τ=0.30, α=0.40)',
-    ar: 'حساسية عالية (τ=0.30، α=0.40)',
+  presetYouden: {
+    en: "Max Youden's J (Eq. 3.10)",
+    de: 'Max. Youden-J (Gl. 3.10)',
+    fr: 'Max J de Youden (Éq. 3.10)',
+    es: 'Máx. J de Youden (Ec. 3.10)',
+    ar: 'أقصى معامل Youden J (معادلة 3.10)',
   },
-  presetSpecificity: {
-    en: 'Strict Specificity (τ=0.60, α=0.60)',
-    de: 'Strikte Spezifität (τ=0.60, α=0.60)',
-    fr: 'Spécificité stricte (τ=0,60, α=0,60)',
-    es: 'Especificidad estricta (τ=0.60, α=0.60)',
-    ar: 'نوعية صارمة (τ=0.60، α=0.60)',
+  presetZero: {
+    en: 'Zero Boundary (τ = 0 · ê₀ = ê₁)',
+    de: 'Nullgrenze (τ = 0 · ê₀ = ê₁)',
+    fr: 'Frontière zéro (τ = 0 · ê₀ = ê₁)',
+    es: 'Frontera cero (τ = 0 · ê₀ = ê₁)',
+    ar: 'الحد الصفري (τ = 0 · ê₀ = ê₁)',
   },
-  presetPureMse: {
-    en: 'Pure MSE (α=1.00)',
-    de: 'Reines MSE (α=1.00)',
-    fr: 'MSE pure (α=1,00)',
-    es: 'MSE puro (α=1.00)',
-    ar: 'MSE خالص (α=1.00)',
+  histTitle: {
+    en: 'Empirical Score Distribution s_OOD(x) = ê₀(x) − ê₁(x) (48 bins from .pt tensors)',
+    de: 'Empirische Score-Verteilung s_OOD(x) = ê₀(x) − ê₁(x) (48 Bins aus .pt-Tensoren)',
+    fr: 'Distribution empirique s_OOD(x) = ê₀(x) − ê₁(x) (48 classes depuis tenseurs .pt)',
+    es: 'Distribución empírica s_OOD(x) = ê₀(x) − ê₁(x) (48 bins de tensores .pt)',
+    ar: 'التوزيع التجريبي للدرجات s_OOD(x) = ê₀(x) − ê₁(x) (من ملفات .pt الحقيقية)',
   },
-  presetPureLpips: {
-    en: 'Pure LPIPS (α=0.00)',
-    de: 'Reines LPIPS (α=0.00)',
-    fr: 'LPIPS pur (α=0,00)',
-    es: 'LPIPS puro (α=0.00)',
-    ar: 'LPIPS خالص (α=0.00)',
+  rocTitle: {
+    en: 'Empirical ROC Curve & Live Operating Point (FPR(τ), TPR(τ))',
+    de: 'Empirische ROC-Kurve & Live-Arbeitspunkt (FPR(τ), TPR(τ))',
+    fr: 'Courbe ROC empirique & Point de fonctionnement (FPR(τ), TPR(τ))',
+    es: 'Curva ROC empírica y Punto de operación en vivo (FPR(τ), TPR(τ))',
+    ar: 'منحنى ROC التجريبي ونقطة التشغيل الحية (FPR(τ), TPR(τ))',
   },
-  cohortHeading: {
-    en: '3. Cohort Diagnostics Under Active Parameters',
-    de: '3. Kohorten-Diagnose unter aktiven Parametern',
-    fr: '3. Diagnostic de la cohorte selon les paramètres actifs',
-    es: '3. Diagnóstico de la cohorte bajo parámetros activos',
-    ar: '3. تشخيص المجموعة وفق المعلمات الحالية',
+  timestepHeading: {
+    en: 'Diffusion Timestep Explorer t ∈ [50, 950] (Thesis Fig. 6.7 · per_timestep JSON)',
+    de: 'Diffusions-Zeitschritt-Explorer t ∈ [50, 950] (Abb. 6.7 · per_timestep JSON)',
+    fr: 'Explorateur de pas de diffusion t ∈ [50, 950] (Fig. 6.7 · JSON per_timestep)',
+    es: 'Explorador de paso de difusión t ∈ [50, 950] (Fig. 6.7 · JSON per_timestep)',
+    ar: 'مستكشف خطوات زمن الانتشار t ∈ [50, 950] (شكل 6.7 · بيانات per_timestep)',
   },
-  tprLabel: {
-    en: 'True Positive Rate (TPR / Sensitivity)',
-    de: 'True Positive Rate (TPR / Sensitivität)',
-    fr: 'Taux de vrais positifs (TPR / Sensibilité)',
-    es: 'Tasa de verdaderos positivos (TPR / Sensibilidad)',
-    ar: 'معدل الإيجابيات الحقيقية (TPR)',
+  scoringHeading: {
+    en: 'Why Contrastive Scoring Is Essential (Table 6.5 & D.3 · Seed 42, λ = 0.01, K = 50)',
+    de: 'Warum kontrastives Scoring essenziell ist (Tabelle 6.5 & D.3 · Seed 42, λ = 0.01, K = 50)',
+    fr: 'Pourquoi le score contrastif est essentiel (Tableau 6.5 & D.3 · Seed 42, λ = 0.01, K = 50)',
+    es: 'Por qué el puntaje contrastivo es esencial (Tabla 6.5 y D.3 · Seed 42, λ = 0.01, K = 50)',
+    ar: 'لماذا يعد التقييم التبايني ضرورياً (جدول 6.5 و D.3 · بذرة 42، λ = 0.01، K = 50)',
   },
-  fprLabel: {
-    en: 'False Positive Rate (FPR / Fall-out)',
-    de: 'False Positive Rate (FPR / Fehlalarm)',
-    fr: 'Taux de faux positifs (FPR / Fausse alerte)',
-    es: 'Tasa de falsos positivos (FPR / Falsa alarma)',
-    ar: 'معدل الإيجابيات الكاذبة (FPR)',
+  lambdaSweepHeading: {
+    en: 'Separation Loss Weight Sweep λ ∈ {0.0 … 0.1} (Table 6.6 & Fig. 6.6)',
+    de: 'Separation-Loss-Gewichts-Sweep λ ∈ {0.0 … 0.1} (Tabelle 6.6 & Abb. 6.6)',
+    fr: 'Balayage du poids λ ∈ {0.0 … 0.1} (Tableau 6.6 & Fig. 6.6)',
+    es: 'Barrido del peso λ ∈ {0.0 … 0.1} (Tabla 6.6 y Fig. 6.6)',
+    ar: 'مسح معامل خسارة الفصل λ ∈ {0.0 … 0.1} (جدول 6.6 وشكل 6.6)',
   },
-  accuracyLabel: {
-    en: 'Cohort Accuracy',
-    de: 'Kohorten-Genauigkeit',
-    fr: 'Exactitude de la cohorte',
-    es: 'Precisión de la cohorte',
-    ar: 'دقة تصنيف المجموعة',
+  kSweepHeading: {
+    en: 'Monte Carlo Timestep Trials K ∈ {1 … 100} Frontier (Table 6.3 & Fig. 6.3)',
+    de: 'Monte-Carlo-Zeitschritt-Budget K ∈ {1 … 100} (Tabelle 6.3 & Abb. 6.3)',
+    fr: "Frontière d'essais Monte Carlo K ∈ {1 … 100} (Tableau 6.3 & Fig. 6.3)",
+    es: 'Frontera de ensayos Monte Carlo K ∈ {1 … 100} (Tabla 6.3 y Fig. 6.3)',
+    ar: 'منحنى تجارب مونت كارلو K ∈ {1 … 100} (جدول 6.3 وشكل 6.3)',
   },
-  tpShort: { en: 'TP: OOD Detected', de: 'TP: OOD Erkannt', fr: 'TP : OOD Détecté', es: 'TP: OOD Detectado', ar: 'إيجابي حقيقي: تم كشف الشذوذ' },
-  tnShort: { en: 'TN: ID Cleared', de: 'TN: ID Akzeptiert', fr: 'TN : ID Accepté', es: 'TN: ID Aceptado', ar: 'سلبي حقيقي: تم قبول الفئة الأصلية' },
-  fpShort: { en: 'FP: False Alarm', de: 'FP: Fehlalarm', fr: 'FP : Fausse Alerte', es: 'FP: Falsa Alarma', ar: 'إيجابي كاذب: إنذار خاطئ' },
-  fnShort: { en: 'FN: Missed OOD', de: 'FN: Verpasst', fr: 'FN : OOD Manqué', es: 'FN: OOD Omitido', ar: 'سلبي كاذب: شذوذ غير مكتشف' },
-  samplesHeading: {
-    en: '4. Interactive CIFAR-10 Test Cohort (Click to Inspect)',
-    de: '4. Interaktive CIFAR-10 Testkohorte (Klick zur Detailansicht)',
-    fr: '4. Cohorte de test CIFAR-10 interactive (Cliquer pour inspecter)',
-    es: '4. Cohorte de prueba CIFAR-10 interactiva (Clic para inspeccionar)',
-    ar: '4. مجموعة عينات CIFAR-10 التفاعلية (انقر للفحص التفصيلي)',
+  inkjetHeading: {
+    en: 'Cross-Domain Boundary Condition: Inkjet Print QC (Tables 6.7–6.9 · 5-Fold Stratified CV)',
+    de: 'Cross-Domain-Randbedingung: Inkjet-Qualitätskontrolle (Tab. 6.7–6.9 · 5-Fold-CV)',
+    fr: 'Condition aux limites inter-domaines : Contrôle qualité Inkjet (Tab. 6.7–6.9 · CV 5 plis)',
+    es: 'Condición de frontera entre dominios: Control de calidad Inkjet (Tab. 6.7–6.9 · CV 5-fold)',
+    ar: 'شروط الحدود عبر المجالات: فحص جودة الطباعة النفاثة (جداول 6.7–6.9 · تحقق من 5 طيات)',
   },
-  idBadge: {
-    en: 'In-Distribution (Airplane)',
-    de: 'In-Distribution (Flugzeug)',
-    fr: 'En distribution (Avion)',
-    es: 'En distribución (Avión)',
-    ar: 'داخل التوزيع (طائرة)',
-  },
-  oodBadge: {
-    en: 'Out-of-Distribution',
-    de: 'Out-of-Distribution',
-    fr: 'Hors distribution',
-    es: 'Fuera de distribución',
-    ar: 'خارج التوزيع',
-  },
-  predId: {
-    en: 'Classified: In-Distribution',
-    de: 'Klassifiziert: In-Distribution',
-    fr: 'Classé : En distribution',
-    es: 'Clasificado: En distribución',
-    ar: 'التصنيف: داخل التوزيع',
-  },
-  predOod: {
-    en: 'Classified: Out-of-Distribution',
-    de: 'Klassifiziert: Out-of-Distribution',
-    fr: 'Classé : Hors distribution',
-    es: 'Clasificado: Fuera de distribución',
-    ar: 'التصنيف: خارج التوزيع',
-  },
-  verdictCorrect: {
-    en: 'Correct classification',
-    de: 'Korrekte Klassifikation',
-    fr: 'Classification correcte',
-    es: 'Clasificación correcta',
-    ar: 'تصنيف سليم',
-  },
-  verdictIncorrect: {
-    en: 'Misclassification',
-    de: 'Fehlklassifikation',
-    fr: 'Erreur de classification',
-    es: 'Clasificación errónea',
-    ar: 'تصنيف خاطئ',
-  },
-  sampleInspectionHeading: {
-    en: 'Cross-Architecture Comparison for Selected Sample',
-    de: 'Architektur-Vergleich für gewähltes Muster',
-    fr: 'Comparaison multi-architectures pour l’échantillon sélectionné',
-    es: 'Comparación entre arquitecturas para la muestra seleccionada',
-    ar: 'مقارنة بين المعماريات للعينة المحددة',
-  },
-  benchmarkTableHeading: {
-    en: 'Master’s Thesis Table 6.1 — Benchmark Comparison',
-    de: 'Masterarbeit Tabelle 6.1 — Benchmark-Vergleich',
-    fr: 'Mémoire de master Tableau 6.1 — Comparaison de référence',
-    es: 'Tesis de maestría Tabla 6.1 — Comparación de referencia',
-    ar: 'جدول 6.1 من رسالة الماجستير — مقارنة المعايير',
-  },
-  colModel: { en: 'Model Architecture', de: 'Modellarchitektur', fr: 'Architecture du modèle', es: 'Arquitectura del modelo', ar: 'معمارية النموذج' },
-  colBinary: { en: 'Binary AUROC (3 seeds)', de: 'Binärer AUROC (3 Seeds)', fr: 'AUROC binaire (3 graines)', es: 'AUROC binario (3 semillas)', ar: 'AUROC ثنائي (3 بذور)' },
-  colLoco: { en: 'Multi-Class LOCO', de: 'Multi-Klassen LOCO', fr: 'Multi-classes LOCO', es: 'Multiclase LOCO', ar: 'متعدد الفئات LOCO' },
-  colLoss: { en: 'Separation Loss (λ)', de: 'Trennungsverlust (λ)', fr: 'Perte de séparation (λ)', es: 'Pérdida de separación (λ)', ar: 'فقدان الفصل (λ)' },
-  colBehavior: { en: 'Key Mechanism & Characteristic', de: 'Schlüsselmechanismus & Eigenschaft', fr: 'Mécanisme clé & caractéristique', es: 'Mecanismo clave y característica', ar: 'الآلية والخاصية الأساسية' },
-  tableNote: {
-    en: 'Results directly reproduced from Table 6.1 of Ahmed Mohammed’s Master’s Thesis (JKU Linz). Binary AUROC reflects the airplane-vs-rest evaluation across 3 seeds {42, 123, 456}. Multi-class LOCO reflects leave-one-class-out experiments.',
-    de: 'Ergebnisse direkt aus Tabelle 6.1 der Masterarbeit von Ahmed Mohammed (JKU Linz). Binärer AUROC bewertet Flugzeug vs. Rest über 3 Seeds {42, 123, 456}. Multi-Klassen LOCO bewertet Leave-One-Class-Out.',
-    fr: 'Résultats directement reproduits du Tableau 6.1 du mémoire de master d’Ahmed Mohammed (JKU Linz). L’AUROC binaire évalue avion contre reste sur 3 graines {42, 123, 456}. Le LOCO multi-classes évalue le leave-one-class-out.',
-    es: 'Resultados reproducidos de la Tabla 6.1 de la tesis de maestría de Ahmed Mohammed (JKU Linz). El AUROC binario evalúa avión vs. resto en 3 semillas {42, 123, 456}. El LOCO multiclase evalúa leave-one-class-out.',
-    ar: 'النتائج مستخرجة مباشرة من جدول 6.1 من أطروحة ماجستير أحمد محمد (جامعة JKU لينتس). AUROC الثنائي يعكس تقييم طائرة مقابل البقية عبر 3 بذور {42, 123, 456}.',
-  },
-} as const
+} satisfies Record<string, TranslationMap>
 
-interface MethodConfig {
-  key: MethodKey
-  name: TranslationMap
-  shortName: TranslationMap
-  binaryAuroc: string
-  locoAuroc: string
-  lambda: string
-  description: TranslationMap
-  behavior: TranslationMap
-}
-
-const METHODS: MethodConfig[] = [
-  {
-    key: 'cc_ddpm',
-    name: {
-      en: 'Class-Conditional DDPM (Ours)',
-      de: 'Klassen-konditionales DDPM (Unser Ansatz)',
-      fr: 'DDPM conditionnel par classe (Notre méthode)',
-      es: 'DDPM condicional por clase (Nuestro método)',
-      ar: 'نموذج الانتشار المشروط فئوياً (طريقتنا)',
-    },
-    shortName: {
-      en: 'Conditional DDPM (Ours)',
-      de: 'Konditionales DDPM (Ours)',
-      fr: 'DDPM conditionnel (Ours)',
-      es: 'DDPM condicional (Ours)',
-      ar: 'الانتشار المشروط (طريقتنا)',
-    },
-    binaryAuroc: '99.03% ± 0.07%',
-    locoAuroc: '62.29% ± 7.12%',
-    lambda: 'λ = 0.02',
-    description: {
-      en: 'Class-conditional diffusion with explicit separation loss. Reconstructs in-distribution airplanes with high visual fidelity while repelling OOD classes into significantly higher error.',
-      de: 'Klassen-konditionale Diffusion mit explizitem Trennungsverlust. Rekonstruiert In-Distribution-Flugzeuge originalgetreu und stößt OOD-Klassen in deutlich höhere Rekonstruktionsfehler ab.',
-      fr: 'Diffusion conditionnelle avec perte de séparation explicite. Reconstruit les avions en distribution avec fidélité tout en repoussant les classes OOD vers des erreurs nettement plus élevées.',
-      es: 'Difusión condicional con pérdida de separación explícita. Reconstruye aviones en distribución con alta fidelidad y repele clases OOD hacia errores notablemente mayores.',
-      ar: 'نموذج انتشار مشروط فئوياً مع فقدان فصل صريح. يعيد بناء طائرات التوزيع بدقة عالية مع دفع العينات الشاذة لأخطاء مرتفعة جداً.',
-    },
-    behavior: {
-      en: 'Separation loss pushes class representations apart; tight ID reconstruction + high OOD error.',
-      de: 'Trennungsverlust stößt Klassendarstellungen auseinander; präzise ID-Rekonstruktion + hoher OOD-Fehler.',
-      fr: 'La perte de séparation éloigne les représentations ; reconstruction ID fine + erreur OOD élevée.',
-      es: 'La pérdida de separación aleja representaciones; reconstrucción ID exacta + alto error OOD.',
-      ar: 'فقدان الفصل يدفع تمثيلات الفئات بعيداً؛ إعادة بناء دقيقة للتوزيع الأصلي وخطأ مرتفع للشذوذ.',
-    },
-  },
-  {
-    key: 'uncond_ddpm',
-    name: {
-      en: 'Unconditional DDPM',
-      de: 'Unkonditionales DDPM',
-      fr: 'DDPM inconditionnel',
-      es: 'DDPM incondicional',
-      ar: 'نموذج الانتشار غير المشروط',
-    },
-    shortName: {
-      en: 'Unconditional DDPM',
-      de: 'Unkonditionales DDPM',
-      fr: 'DDPM inconditionnel',
-      es: 'DDPM incondicional',
-      ar: 'الانتشار غير المشروط',
-    },
-    binaryAuroc: '92.52% ± 11.07%',
-    locoAuroc: '60.20% ± 6.53%',
-    lambda: 'λ = 0.00',
-    description: {
-      en: 'Standard unconditional diffusion model baseline without separation loss. Shows good average performance but wide variance across random training seeds (79.73% to 99.01%).',
-      de: 'Klassische unkonditionale Diffusions-Baseline ohne Trennungsverlust. Gute Durchschnittsleistung, jedoch ausgeprägte Streuung über verschiedene Trainings-Seeds (79,73 % bis 99,01 %).',
-      fr: 'Modèle de diffusion standard sans perte de séparation. Bonnes performances moyennes mais forte variabilité selon les graines d’entraînement (79,73 % à 99,01 %).',
-      es: 'Línea base de difusión estándar sin pérdida de separación. Buen rendimiento promedio pero amplia dispersión entre semillas de entrenamiento (79.73% a 99.01%).',
-      ar: 'خط أساس الانتشار القياسي غير المشروط بدون فقدان الفصل. أداء جيد في المتوسط لكن مع تشتت كبير عبر البذور (79.73% إلى 99.01%).',
-    },
-    behavior: {
-      en: 'No explicit repulsion; seed fragility causes wide variance (79.73% – 99.01%).',
-      de: 'Keine explizite Abstoßung; Seed-Fragilität führt zu hoher Varianz (79,73 % – 99,01 %).',
-      fr: 'Sans répulsion explicite ; fragilité selon la graine provoquant une forte variance (79,73 % - 99,01 %).',
-      es: 'Sin repulsión explícita; la fragilidad de semilla genera gran varianza (79.73% - 99.01%).',
-      ar: 'بدون تنافر صريح؛ حساسية للبذور تسبب تبايناً واسعاً (79.73% - 99.01%).',
-    },
-  },
-  {
-    key: 'vae',
-    name: {
-      en: 'Variational Autoencoder (VAE)',
-      de: 'Variational Autoencoder (VAE)',
-      fr: 'Auto-encodeur variationnel (VAE)',
-      es: 'Autoencoder variacional (VAE)',
-      ar: 'المشفر التلقائي التبايني (VAE)',
-    },
-    shortName: {
-      en: 'VAE',
-      de: 'VAE',
-      fr: 'VAE',
-      es: 'VAE',
-      ar: 'VAE',
-    },
-    binaryAuroc: '83.40% ± 2.15%',
-    locoAuroc: '—',
-    lambda: 'N/A',
-    description: {
-      en: 'Latent-space probabilistic baseline with Gaussian prior. Smooth bottleneck results in blurrier reconstructions that diminish perceptual anomaly discrimination on high-frequency details.',
-      de: 'Probabilistische Baseline mit Gauß-Prior im latenten Raum. Der regulierte Flaschenhals führt zu weicheren Rekonstruktionen, die feine Hochfrequenz-Anomalien abschwächen.',
-      fr: 'Ligne de base probabiliste dans l’espace latent avec a priori gaussien. Le goulot d’étranglement produit des reconstructions floues qui réduisent la discrimination.',
-      es: 'Línea base probabilística con prior gaussiano. El cuello de botella suavizado produce reconstrucciones borrosas que reducen la discriminación de anomalías.',
-      ar: 'خط أساس احتمالي مع توزيع غاوسي مسبق. عنق الزجاجة ينتج إعادة بناء ضبابية تقلل من تمييز التفاصيل عالية التردد.',
-    },
-    behavior: {
-      en: 'Gaussian latent regularisation produces blurry outputs with compressed error contrast.',
-      de: 'Gauß-Regularisierung führt zu Unschärfe und komprimiertem Fehlerkontrast.',
-      fr: 'La régularisation gaussienne entraîne un flou et compresse le contraste d’erreur.',
-      es: 'La regularización gaussiana produce borrosidad y reduce el contraste de error.',
-      ar: 'الانتظام الغاوسي يولد مخرجات غير حادة ويقلص الفارق في درجات الخطأ.',
-    },
-  },
-  {
-    key: 'ae',
-    name: {
-      en: 'Autoencoder (AE)',
-      de: 'Autoencoder (AE)',
-      fr: 'Auto-encodeur (AE)',
-      es: 'Autoencoder (AE)',
-      ar: 'المشفر التلقائي (AE)',
-    },
-    shortName: {
-      en: 'Autoencoder (AE)',
-      de: 'Autoencoder (AE)',
-      fr: 'Auto-encodeur (AE)',
-      es: 'Autoencoder (AE)',
-      ar: 'المشفر التلقائي (AE)',
-    },
-    binaryAuroc: '76.10% ± 3.40%',
-    locoAuroc: '—',
-    lambda: 'N/A',
-    description: {
-      en: 'Deterministic bottleneck baseline. Lacks generative guidance and frequently reconstructs smooth OOD background textures with misleadingly low MSE, hurting separation.',
-      de: 'Deterministische Bottleneck-Baseline. Rekonstruiert mangels generativer Führung oft glatte OOD-Hintergrundstrukturen mit täuschend geringem MSE-Fehler.',
-      fr: 'Ligne de base déterministe. Reconstruit souvent les textures d’arrière-plan OOD lisses avec une MSE trompeusement basse.',
-      es: 'Línea base determinista. Reconstruye a menudo fondos lisos de clases OOD con un MSE engañosamente bajo.',
-      ar: 'خط أساس حتمي ذو عنق زجاجة. يفتقر إلى التوجيه التوليدي ويعيد بناء خلفيات العينات الشاذة بخطأ MSE منخفض مضلل.',
-    },
-    behavior: {
-      en: 'Shortcut reconstructions on smooth patches cause false negatives on non-airplane classes.',
-      de: 'Abkürzungen bei glatten Bildbereichen verursachen falsch-negative Einstufungen.',
-      fr: 'Des raccourcis de reconstruction sur zones lisses provoquent des faux négatifs.',
-      es: 'Reconstrucciones atajo en zonas suaves causan falsos negativos en clases OOD.',
-      ar: 'إعادة البناء السطحي للمناطق الملساء يؤدي إلى إغفال كشف العينات الشاذة.',
-    },
-  },
-]
-
-const SAMPLES: SampleData[] = [
-  {
-    id: 'airplane-01',
-    categoryKey: 'plane1',
-    groundTruth: 'ID',
-    icon: Plane,
-    title: {
-      en: 'Airplane #1 (Commercial Jet)',
-      de: 'Flugzeug #1 (Verkehrsflugzeug)',
-      fr: 'Avion n°1 (Avion de ligne)',
-      es: 'Avión #1 (Avión comercial)',
-      ar: 'طائرة رقم 1 (طائرة ركاب)',
-    },
-    description: {
-      en: 'In-Distribution (ID): High-altitude passenger jet against uniform sky background.',
-      de: 'In-Distribution (ID): Passagierflugzeug auf Reiseflughöhe vor klarem Himmel.',
-      fr: 'En distribution (ID) : Avion de ligne à haute altitude dans un ciel uniforme.',
-      es: 'En distribución (ID): Avión de pasajeros a gran altitud contra cielo uniforme.',
-      ar: 'داخل التوزيع (ID): طائرة ركاب في ارتفاع شاهق في سماء صافية.',
-    },
-    metrics: {
-      cc_ddpm: { mse: 0.11, lpips: 0.13 },
-      uncond_ddpm: { mse: 0.21, lpips: 0.25 },
-      vae: { mse: 0.38, lpips: 0.43 },
-      ae: { mse: 0.35, lpips: 0.41 },
-    },
-  },
-  {
-    id: 'airplane-02',
-    categoryKey: 'plane2',
-    groundTruth: 'ID',
-    icon: Plane,
-    title: {
-      en: 'Airplane #2 (Propeller Aircraft)',
-      de: 'Flugzeug #2 (Propellerflugzeug)',
-      fr: 'Avion n°2 (Avion à hélice)',
-      es: 'Avión #2 (Avión de hélice)',
-      ar: 'طائرة رقم 2 (طائرة مروحية)',
-    },
-    description: {
-      en: 'In-Distribution (ID): Light aircraft with propeller and visible landing gear on approach.',
-      de: 'In-Distribution (ID): Leichtflugzeug mit Propeller und ausgefahrenem Fahrwerk im Anflug.',
-      fr: 'En distribution (ID) : Avion léger à hélice avec train d’atterrissage visible en approche.',
-      es: 'En distribución (ID): Avión ligero de hélice y tren de aterrizaje visible en aproximación.',
-      ar: 'داخل التوزيع (ID): طائرة خفيفة ذات مروحة وعجلات هبوط ظاهرة.',
-    },
-    metrics: {
-      cc_ddpm: { mse: 0.14, lpips: 0.17 },
-      uncond_ddpm: { mse: 0.24, lpips: 0.28 },
-      vae: { mse: 0.40, lpips: 0.45 },
-      ae: { mse: 0.37, lpips: 0.44 },
-    },
-  },
-  {
-    id: 'automobile-01',
-    categoryKey: 'car',
-    groundTruth: 'OOD',
-    icon: Car,
-    title: {
-      en: 'Automobile (Sedan)',
-      de: 'Automobil (Limousine)',
-      fr: 'Automobile (Berline)',
-      es: 'Automóvil (Sedán)',
-      ar: 'سيارة (سيدان)',
-    },
-    description: {
-      en: 'Out-of-Distribution (OOD): Road vehicle with wheels and asphalt background.',
-      de: 'Out-of-Distribution (OOD): Straßenfahrzeug mit Rädern auf Fahrbahnuntergrund.',
-      fr: 'Hors distribution (OOD) : Véhicule routier avec roues sur fond d’asphalte.',
-      es: 'Fuera de distribución (OOD): Vehículo de carretera con ruedas sobre asfalto.',
-      ar: 'خارج التوزيع (OOD): مركبة طريق بعجلات وخلفية طريق معبد.',
-    },
-    metrics: {
-      cc_ddpm: { mse: 0.79, lpips: 0.83 },
-      uncond_ddpm: { mse: 0.62, lpips: 0.67 },
-      vae: { mse: 0.53, lpips: 0.59 },
-      ae: { mse: 0.44, lpips: 0.50 },
-    },
-  },
-  {
-    id: 'bird-01',
-    categoryKey: 'bird',
-    groundTruth: 'OOD',
-    icon: Bird,
-    title: {
-      en: 'Bird (Songbird)',
-      de: 'Vogel (Singvogel)',
-      fr: 'Oiseau (Passereau)',
-      es: 'Pájaro (Pájaro cantor)',
-      ar: 'طائر (طائر مغرد)',
-    },
-    description: {
-      en: 'Out-of-Distribution (OOD): Natural bird perched with wings and foliage (near-OOD).',
-      de: 'Out-of-Distribution (OOD): Singvogel auf Ast mit Blattwerk (Near-OOD-Testfall).',
-      fr: 'Hors distribution (OOD) : Oiseau perché avec feuillage naturel (cas proche Near-OOD).',
-      es: 'Fuera de distribución (OOD): Pájaro posado con follaje natural (caso Near-OOD).',
-      ar: 'خارج التوزيع (OOD): طائر جاثم بين أوراق الشجر (شبه قريب من التوزيع).',
-    },
-    metrics: {
-      cc_ddpm: { mse: 0.83, lpips: 0.88 },
-      uncond_ddpm: { mse: 0.59, lpips: 0.65 },
-      vae: { mse: 0.50, lpips: 0.55 },
-      ae: { mse: 0.46, lpips: 0.49 },
-    },
-  },
-  {
-    id: 'ship-01',
-    categoryKey: 'ship',
-    groundTruth: 'OOD',
-    icon: Ship,
-    title: {
-      en: 'Ship (Cargo Vessel)',
-      de: 'Schiff (Frachtschiff)',
-      fr: 'Navire (Cargo)',
-      es: 'Barco (Buque de carga)',
-      ar: 'سفينة (سفينة شحن)',
-    },
-    description: {
-      en: 'Out-of-Distribution (OOD): Maritime vessel on ocean surface; shares blue horizon context.',
-      de: 'Out-of-Distribution (OOD): Schiff auf Meeresoberfläche; teilt bläulichen Horizont.',
-      fr: 'Hors distribution (OOD) : Navire sur l’océan ; partage un horizon bleuté avec le ciel.',
-      es: 'Fuera de distribución (OOD): Barco en superficie marina; comparte horizonte azulado.',
-      ar: 'خارج التوزيع (OOD): سفينة على سطح البحر؛ تشترك في زرقة الأفق.',
-    },
-    metrics: {
-      cc_ddpm: { mse: 0.73, lpips: 0.77 },
-      uncond_ddpm: { mse: 0.55, lpips: 0.61 },
-      vae: { mse: 0.48, lpips: 0.53 },
-      ae: { mse: 0.43, lpips: 0.48 },
-    },
-  },
-  {
-    id: 'truck-01',
-    categoryKey: 'truck',
-    groundTruth: 'OOD',
-    icon: Truck,
-    title: {
-      en: 'Truck (Heavy Transport)',
-      de: 'LKW (Schwerlasttransporter)',
-      fr: 'Camion (Poids lourd)',
-      es: 'Camión (Transporte pesado)',
-      ar: 'شاحنة (نقل ثقيل)',
-    },
-    description: {
-      en: 'Out-of-Distribution (OOD): Large boxy transport vehicle with high spatial geometry.',
-      de: 'Out-of-Distribution (OOD): Großes Nutzfahrzeug mit kastenförmiger Geometrie.',
-      fr: 'Hors distribution (OOD) : Véhicule utilitaire lourd à géométrie volumique marquée.',
-      es: 'Fuera de distribución (OOD): Vehículo de transporte pesado con geometría definida.',
-      ar: 'خارج التوزيع (OOD): مركبة نقل ثقيلة ذات هيكل ضخم وهندسة واضحة.',
-    },
-    metrics: {
-      cc_ddpm: { mse: 0.89, lpips: 0.93 },
-      uncond_ddpm: { mse: 0.69, lpips: 0.73 },
-      vae: { mse: 0.57, lpips: 0.63 },
-      ae: { mse: 0.49, lpips: 0.52 },
-    },
-  },
-]
-
+/**
+ * Interactive 3-tab thesis explorer backed by empirical raw PyTorch score histograms
+ * (seed42_*.pt) and ablation JSON artefacts from ahmed-3m/DiffusionOOD.
+ */
 export default function OodDemo() {
-  const { t } = useI18n()
-  const thresholdInputId = useId()
-  const weightInputId = useId()
+  const { t, lang } = useI18n()
+  const sliderId = useId()
+  const timestepSliderId = useId()
 
-  const [activeMethod, setActiveMethod] = useState<MethodKey>('cc_ddpm')
-  const [threshold, setThreshold] = useState<number>(0.45)
-  const [alpha, setAlpha] = useState<number>(0.5)
-  const [selectedSampleId, setSelectedSampleId] = useState<string>('airplane-01')
+  const [activeTab, setActiveTab] = useState<LabTab>('calibration')
+  const [regime, setRegime] = useState<'sep' | 'base'>('sep')
+  const [datasetKey, setDatasetKey] = useState<OodDatasetKey>('within_cifar')
+  const [threshold, setThreshold] = useState<number>(BENCHMARK_DATASETS.within_cifar.tauTpr95)
 
-  const currentMethodConfig = useMemo(
-    () => METHODS.find((m) => m.key === activeMethod) ?? METHODS[0],
-    [activeMethod]
-  )
+  // Tab 2 states
+  const [timestepIdx, setTimestepIdx] = useState<number>(5) // t = 300 default
+  const [scoringKey, setScoringKey] = useState<ScoringRuleKey>('difference')
 
-  const selectedSample = useMemo(
-    () => SAMPLES.find((s) => s.id === selectedSampleId) ?? SAMPLES[0],
-    [selectedSampleId]
-  )
+  // Tab 3 states
+  const [selectedLambdaIdx, setSelectedLambdaIdx] = useState<number>(3) // lambda = 0.02
+  const [selectedKIdx, setSelectedKIdx] = useState<number>(2) // K = 10 recommended
+  const [inkjetLambda, setInkjetLambda] = useState<InkjetLambdaKey>('0.0')
 
-  // Compute anomaly scores and diagnostics
-  const sampleEvaluations = useMemo(() => {
-    return SAMPLES.map((sample) => {
-      const metric = sample.metrics[activeMethod]
-      const score = alpha * metric.mse + (1 - alpha) * metric.lpips
-      const isPredictedOod = score > threshold
-      const isGroundTruthOod = sample.groundTruth === 'OOD'
-      const isCorrect = isPredictedOod === isGroundTruthOod
+  const activeMeta = BENCHMARK_DATASETS[datasetKey]
+  const activeHist = regime === 'base' ? LAMBDA0_SEED42_HISTOGRAM : activeMeta.histogram
 
-      let confusionType: 'TP' | 'TN' | 'FP' | 'FN'
-      if (isGroundTruthOod && isPredictedOod) {
-        confusionType = 'TP'
-      } else if (!isGroundTruthOod && !isPredictedOod) {
-        confusionType = 'TN'
-      } else if (!isGroundTruthOod && isPredictedOod) {
-        confusionType = 'FP'
-      } else {
-        confusionType = 'FN'
+  /** Switches between the separation-loss (lambda=0.02) and baseline (lambda=0.0) regimes. */
+  const handleRegimeChange = (next: 'sep' | 'base') => {
+    setRegime(next)
+    if (next === 'base') {
+      setDatasetKey('within_cifar')
+      setThreshold(LAMBDA0_SEED42_META.tauTpr95)
+    } else {
+      setThreshold(BENCHMARK_DATASETS[datasetKey].tauTpr95)
+    }
+  }
+
+  /** Selects an evaluation benchmark from Table 6.1 and resets tau to its TPR=95% operating point. */
+  const handleDatasetChange = (next: OodDatasetKey) => {
+    setRegime('sep')
+    setDatasetKey(next)
+    setThreshold(BENCHMARK_DATASETS[next].tauTpr95)
+  }
+
+  // Compute exact empirical TPR, FPR, Youden's J, and image counts from the 48-bin .pt histogram
+  const liveDiagnostics = useMemo(() => {
+    const { lo, hi, bins, id_pct, ood_pct, n_id, n_ood } = activeHist
+    const step = (hi - lo) / bins
+    let fpPct = 0
+    let tpPct = 0
+
+    for (let i = 0; i < bins; i++) {
+      const binStart = lo + i * step
+      const binEnd = binStart + step
+      if (binStart >= threshold) {
+        fpPct += id_pct[i]
+        tpPct += ood_pct[i]
+      } else if (binEnd > threshold) {
+        const frac = (binEnd - threshold) / step
+        fpPct += id_pct[i] * frac
+        tpPct += ood_pct[i] * frac
       }
+    }
 
-      return {
-        sample,
-        metric,
-        score,
-        isPredictedOod,
-        isGroundTruthOod,
-        isCorrect,
-        confusionType,
-      }
-    })
-  }, [activeMethod, threshold, alpha])
+    const tpr = Math.min(100, Math.max(0, tpPct))
+    const fpr = Math.min(100, Math.max(0, fpPct))
+    const tnr = 100 - fpr
+    const fnr = 100 - tpr
+    const youdenJ = tpr - fpr
+    const balAcc = 0.5 * (tpr + tnr)
+    const tpCount = Math.round((tpr / 100) * n_ood)
+    const fnCount = n_ood - tpCount
+    const fpCount = Math.round((fpr / 100) * n_id)
+    const tnCount = n_id - fpCount
 
-  const cohortStats = useMemo(() => {
-    let tp = 0
-    let tn = 0
-    let fp = 0
-    let fn = 0
+    return {
+      tpr,
+      fpr,
+      tnr,
+      fnr,
+      youdenJ,
+      balAcc,
+      tpCount,
+      fnCount,
+      fpCount,
+      tnCount,
+      nId: n_id,
+      nOod: n_ood,
+    }
+  }, [activeHist, threshold])
 
-    sampleEvaluations.forEach((item) => {
-      if (item.confusionType === 'TP') tp++
-      if (item.confusionType === 'TN') tn++
-      if (item.confusionType === 'FP') fp++
-      if (item.confusionType === 'FN') fn++
-    })
+  const maxHistDensity = useMemo(() => {
+    return Math.max(...activeHist.id_pct, ...activeHist.ood_pct, 1)
+  }, [activeHist])
 
-    const totalPositives = tp + fn // 4 OOD samples
-    const totalNegatives = tn + fp // 2 ID samples
-    const total = sampleEvaluations.length
-
-    const tpr = totalPositives > 0 ? (tp / totalPositives) * 100 : 0
-    const fpr = totalNegatives > 0 ? (fp / totalNegatives) * 100 : 0
-    const accuracy = total > 0 ? ((tp + tn) / total) * 100 : 0
-
-    return { tp, tn, fp, fn, tpr, fpr, accuracy, totalPositives, totalNegatives }
-  }, [sampleEvaluations])
-
-  const activeSelectedEval = useMemo(
-    () => sampleEvaluations.find((e) => e.sample.id === selectedSampleId) ?? sampleEvaluations[0],
-    [sampleEvaluations, selectedSampleId]
-  )
+  const activeTimestep = PER_TIMESTEP_ERRORS[timestepIdx] ?? PER_TIMESTEP_ERRORS[5]
+  const activeScoring = SCORING_METHODS[scoringKey]
+  const activeLambda = CIFAR_LAMBDA_SWEEP[selectedLambdaIdx] ?? CIFAR_LAMBDA_SWEEP[3]
+  const activeK = K_ABLATION_TABLE[selectedKIdx] ?? K_ABLATION_TABLE[2]
+  const activeInkjetOverall = INKJET_OVERALL_SWEEP[inkjetLambda]
 
   return (
     <section
-      aria-labelledby="ood-demo-title"
-      className="glass-surface glass-subtle mt-10 rounded-2xl p-6 sm:p-8"
+      id="ood-explorer"
+      dir={lang === 'ar' ? 'rtl' : 'ltr'}
       style={{
-        border: '1px solid var(--cd-b-accent)',
-        background: 'var(--cd-surf)',
+        marginTop: 28,
+        marginBottom: 28,
+        padding: '28px 24px',
+        borderRadius: 16,
+        border: '1px solid var(--cd-border)',
+        background: 'var(--cd-surface)',
+        boxShadow: '0 16px 40px -20px rgba(0, 0, 0, 0.45)',
       }}
     >
-      {/* Header & Eyebrow */}
-      <div className="mb-6 flex flex-col gap-3">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <div className="cd-section-eyebrow flex items-center gap-2">
-            <Sparkles size={15} className="text-[var(--cd-accent)]" />
+      {/* Header */}
+      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: 16, marginBottom: 20 }}>
+        <div style={{ maxWidth: 780 }}>
+          <div
+            style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: 11,
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+              color: 'var(--cd-accent)',
+              marginBottom: 6,
+            }}
+          >
             {t(copy.eyebrow)}
           </div>
-          <span
-            className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-mono text-xs text-[var(--cd-accent)]"
-            style={{
-              background: 'var(--cd-elev)',
-              border: '1px solid var(--cd-b0)',
-            }}
-          >
-            <Shield size={12} />
-            {t(copy.zeroInferenceBadge)}
-          </span>
+          <h3 style={{ fontSize: 'clamp(1.25rem, 2.2vw, 1.6rem)', fontWeight: 700, color: 'var(--cd-fg)', margin: '0 0 8px 0' }}>
+            {t(copy.title)}
+          </h3>
+          <p style={{ fontSize: 13.5, lineHeight: 1.6, color: 'var(--cd-fg2)', margin: 0 }}>
+            {t(copy.subtitle)}
+          </p>
         </div>
 
-        <h2 id="ood-demo-title" className="text-2xl font-bold tracking-tight text-[var(--cd-fg1)] sm:text-3xl">
-          {t(copy.title)}
-        </h2>
-
-        <p className="max-w-3xl text-sm leading-relaxed text-[var(--cd-fg2)] sm:text-base">
-          {t(copy.subtitle)}
-        </p>
-
-        <div className="inline-block self-start rounded-md px-2.5 py-1 text-xs text-[var(--cd-fg2)]" style={{ background: 'var(--cd-elev)', border: '1px solid var(--cd-b0)' }}>
-          {t(copy.scopeBadge)}
-        </div>
-      </div>
-
-      {/* 1. Method Architecture Selector */}
-      <div className="mb-8">
-        <div className="mb-3 flex items-center gap-2 font-semibold text-sm text-[var(--cd-fg1)]">
-          <Layers size={16} className="text-[var(--cd-accent)]" />
-          {t(copy.methodsHeading)}
-        </div>
-
-        <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-4">
-          {METHODS.map((method) => {
-            const isSelected = method.key === activeMethod
-            return (
-              <button
-                key={method.key}
-                type="button"
-                onClick={() => setActiveMethod(method.key)}
-                aria-pressed={isSelected}
-                className="group relative flex flex-col justify-between rounded-xl p-3.5 text-left transition-all focus-visible:outline-2 focus-visible:outline-[var(--cd-accent)]"
-                style={{
-                  background: isSelected ? 'var(--cd-elev)' : 'var(--cd-surf)',
-                  border: isSelected
-                    ? '1.5px solid var(--cd-accent)'
-                    : '1px solid var(--cd-b0)',
-                  boxShadow: isSelected
-                    ? '0 0 16px rgba(0, 212, 255, 0.15)'
-                    : 'none',
-                }}
-              >
-                <div>
-                  <div className="mb-1 flex items-center justify-between">
-                    <span className="font-semibold text-sm text-[var(--cd-fg1)]">
-                      {t(method.shortName)}
-                    </span>
-                    {isSelected && (
-                      <CheckCircle2 size={15} className="text-[var(--cd-accent)]" />
-                    )}
-                  </div>
-                  <div className="font-mono text-xs font-bold text-[var(--cd-accent)]">
-                    AUROC: {method.binaryAuroc}
-                  </div>
-                </div>
-                <div className="mt-2 text-[11px] text-[var(--cd-fg2)]">
-                  {method.lambda}
-                </div>
-              </button>
-            )
-          })}
-        </div>
-
-        {/* Active method callout */}
+        {/* Core Thesis Equations Pill Box */}
         <div
-          className="mt-3 rounded-lg p-3 text-xs leading-relaxed text-[var(--cd-fg2)]"
-          style={{ background: 'var(--cd-elev)', border: '1px solid var(--cd-b0)' }}
+          style={{
+            padding: '12px 16px',
+            borderRadius: 12,
+            border: '1px solid var(--cd-border)',
+            background: 'var(--cd-bg)',
+            fontFamily: 'var(--font-mono)',
+            fontSize: 11.5,
+            lineHeight: 1.7,
+            color: 'var(--cd-fg2)',
+            alignSelf: 'flex-start',
+          }}
         >
-          <span className="font-semibold text-[var(--cd-fg1)]">
-            {t(currentMethodConfig.name)}:
-          </span>{' '}
-          {t(currentMethodConfig.description)}
+          <div>
+            <strong style={{ color: 'var(--cd-accent)' }}>Eq. 3.23 (Sep. Loss):</strong>{' '}
+            L_sep = −‖ε_θ(x_t, t, c=0) − ε_θ(x_t, t, c=1)‖²
+          </div>
+          <div>
+            <strong style={{ color: '#10b981' }}>Eq. 3.3 (OOD Score):</strong>{' '}
+            s_OOD(x) = ê₀(x) − ê₁(x) &gt; τ ⇒ OOD
+          </div>
         </div>
       </div>
 
-      {/* 2. Controls Panel: Threshold (τ) & Perceptual Balance (α) */}
+      {/* 3-Tab Navigation */}
       <div
-        className="mb-8 rounded-xl p-5"
-        style={{ background: 'var(--cd-elev)', border: '1px solid var(--cd-b0)' }}
+        role="tablist"
+        aria-label={t(copy.tabsAria)}
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gap: 10,
+          marginBottom: 24,
+        }}
       >
-        <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center gap-2 font-semibold text-sm text-[var(--cd-fg1)]">
-            <Sliders size={16} className="text-[var(--cd-accent)]" />
-            {t(copy.controlsHeading)}
-          </div>
-          <span className="font-mono text-xs text-[var(--cd-accent)]">
-            {t(copy.weightFormula)}
-          </span>
-        </div>
-
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          {/* Threshold Slider */}
-          <div>
-            <div className="mb-1.5 flex items-center justify-between">
-              <label htmlFor={thresholdInputId} className="font-medium text-xs text-[var(--cd-fg1)]">
-                {t(copy.thresholdLabel)}
-              </label>
-              <span className="font-mono text-xs font-bold text-[var(--cd-accent)]">
-                τ = {threshold.toFixed(2)}
-              </span>
-            </div>
-            <input
-              id={thresholdInputId}
-              type="range"
-              min="0.10"
-              max="0.90"
-              step="0.01"
-              value={threshold}
-              onChange={(e) => setThreshold(parseFloat(e.target.value))}
-              aria-label={t(copy.thresholdLabel)}
-              aria-valuemin={0.1}
-              aria-valuemax={0.9}
-              aria-valuenow={threshold}
-              className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-[var(--cd-b1)] accent-[var(--cd-accent)]"
-            />
-            <p className="mt-1.5 text-[11px] text-[var(--cd-fg2)]">
-              {t(copy.thresholdDesc)}
-            </p>
-          </div>
-
-          {/* Metric Balance (α) Slider */}
-          <div>
-            <div className="mb-1.5 flex items-center justify-between">
-              <label htmlFor={weightInputId} className="font-medium text-xs text-[var(--cd-fg1)]">
-                {t(copy.weightLabel)}
-              </label>
-              <span className="font-mono text-xs font-bold text-[var(--cd-accent)]">
-                α = {alpha.toFixed(2)} ({(alpha * 100).toFixed(0)}% MSE / {((1 - alpha) * 100).toFixed(0)}% LPIPS)
-              </span>
-            </div>
-            <input
-              id={weightInputId}
-              type="range"
-              min="0.00"
-              max="1.00"
-              step="0.05"
-              value={alpha}
-              onChange={(e) => setAlpha(parseFloat(e.target.value))}
-              aria-label={t(copy.weightLabel)}
-              aria-valuemin={0.0}
-              aria-valuemax={1.0}
-              aria-valuenow={alpha}
-              className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-[var(--cd-b1)] accent-[var(--cd-accent)]"
-            />
-            <p className="mt-1.5 text-[11px] text-[var(--cd-fg2)]">
-              α = 1.0 focuses exclusively on pixel-level MSE; α = 0.0 prioritises deep perceptual LPIPS.
-            </p>
-          </div>
-        </div>
-
-        {/* Quick Presets */}
-        <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-[var(--cd-b0)] pt-3">
-          <span className="text-xs text-[var(--cd-fg2)]">{t(copy.presetsLabel)}</span>
-          <button
-            type="button"
-            onClick={() => {
-              setThreshold(0.45)
-              setAlpha(0.5)
-            }}
-            className="rounded px-2.5 py-1 text-xs transition-colors hover:text-[var(--cd-accent)] focus-visible:outline-2 focus-visible:outline-[var(--cd-accent)]"
-            style={{
-              background: threshold === 0.45 && alpha === 0.5 ? 'var(--cd-b-accent)' : 'var(--cd-surf)',
-              border: '1px solid var(--cd-b0)',
-            }}
-          >
-            {t(copy.presetBalanced)}
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              setThreshold(0.3)
-              setAlpha(0.4)
-            }}
-            className="rounded px-2.5 py-1 text-xs transition-colors hover:text-[var(--cd-accent)] focus-visible:outline-2 focus-visible:outline-[var(--cd-accent)]"
-            style={{
-              background: threshold === 0.3 && alpha === 0.4 ? 'var(--cd-b-accent)' : 'var(--cd-surf)',
-              border: '1px solid var(--cd-b0)',
-            }}
-          >
-            {t(copy.presetSensitivity)}
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              setThreshold(0.6)
-              setAlpha(0.6)
-            }}
-            className="rounded px-2.5 py-1 text-xs transition-colors hover:text-[var(--cd-accent)] focus-visible:outline-2 focus-visible:outline-[var(--cd-accent)]"
-            style={{
-              background: threshold === 0.6 && alpha === 0.6 ? 'var(--cd-b-accent)' : 'var(--cd-surf)',
-              border: '1px solid var(--cd-b0)',
-            }}
-          >
-            {t(copy.presetSpecificity)}
-          </button>
-          <button
-            type="button"
-            onClick={() => setAlpha(1.0)}
-            className="rounded px-2.5 py-1 text-xs transition-colors hover:text-[var(--cd-accent)] focus-visible:outline-2 focus-visible:outline-[var(--cd-accent)]"
-            style={{
-              background: alpha === 1.0 ? 'var(--cd-b-accent)' : 'var(--cd-surf)',
-              border: '1px solid var(--cd-b0)',
-            }}
-          >
-            {t(copy.presetPureMse)}
-          </button>
-          <button
-            type="button"
-            onClick={() => setAlpha(0.0)}
-            className="rounded px-2.5 py-1 text-xs transition-colors hover:text-[var(--cd-accent)] focus-visible:outline-2 focus-visible:outline-[var(--cd-accent)]"
-            style={{
-              background: alpha === 0.0 ? 'var(--cd-b-accent)' : 'var(--cd-surf)',
-              border: '1px solid var(--cd-b0)',
-            }}
-          >
-            {t(copy.presetPureLpips)}
-          </button>
-        </div>
+        {(
+          [
+            { id: 'calibration', label: copy.tabCalibration },
+            { id: 'timesteps', label: copy.tabTimesteps },
+            { id: 'ablations', label: copy.tabAblations },
+          ] as const
+        ).map((tab) => {
+          const isSelected = activeTab === tab.id
+          return (
+            <button
+              key={tab.id}
+              type="button"
+              role="tab"
+              aria-selected={isSelected}
+              onClick={() => setActiveTab(tab.id)}
+              style={{
+                padding: '11px 14px',
+                borderRadius: 10,
+                border: isSelected ? '1px solid var(--cd-accent)' : '1px solid var(--cd-border)',
+                background: isSelected ? 'rgba(0, 212, 255, 0.12)' : 'var(--cd-bg)',
+                color: isSelected ? 'var(--cd-fg)' : 'var(--cd-fg2)',
+                fontFamily: 'var(--font-mono)',
+                fontSize: 12,
+                fontWeight: isSelected ? 700 : 500,
+                cursor: 'pointer',
+                textAlign: 'left',
+                transition: 'all 0.15s ease',
+              }}
+            >
+              {t(tab.label)}
+            </button>
+          )
+        })}
       </div>
 
-      {/* 3. Cohort Diagnostics */}
-      <div className="mb-8">
-        <div className="mb-3 flex items-center justify-between">
-          <div className="flex items-center gap-2 font-semibold text-sm text-[var(--cd-fg1)]">
-            <BarChart3 size={16} className="text-[var(--cd-accent)]" />
-            {t(copy.cohortHeading)}
-          </div>
-          <span className="font-mono text-xs text-[var(--cd-fg2)]">
-            6 Samples (2 ID / 4 OOD)
-          </span>
-        </div>
-
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-          {/* Sensitivity / TPR */}
+      {/* =====================================================================
+          TAB 1: SCORE DISTRIBUTIONS & THRESHOLD CALIBRATION (Table 6.1 & Fig 6.8)
+         ===================================================================== */}
+      {activeTab === 'calibration' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+          {/* Regime + Dataset Controls */}
           <div
-            className="rounded-xl p-4"
-            style={{ background: 'var(--cd-elev)', border: '1px solid var(--cd-b0)' }}
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))',
+              gap: 16,
+              padding: 16,
+              borderRadius: 12,
+              border: '1px solid var(--cd-border)',
+              background: 'var(--cd-bg)',
+            }}
           >
-            <div className="mb-1 text-xs text-[var(--cd-fg2)]">{t(copy.tprLabel)}</div>
-            <div className="flex items-baseline gap-2">
-              <span className="font-mono text-2xl font-bold text-[var(--cd-accent)]">
-                {cohortStats.tpr.toFixed(0)}%
-              </span>
-              <span className="text-xs text-[var(--cd-fg2)]">
-                ({cohortStats.tp}/{cohortStats.totalPositives} OOD caught)
-              </span>
+            <div>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-fg3)', marginBottom: 8 }}>
+                {t(copy.regimeHeading)}
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <button
+                  type="button"
+                  onClick={() => handleRegimeChange('sep')}
+                  style={{
+                    padding: '9px 12px',
+                    borderRadius: 8,
+                    border: regime === 'sep' ? '1px solid #10b981' : '1px solid var(--cd-border)',
+                    background: regime === 'sep' ? 'rgba(16, 185, 129, 0.12)' : 'transparent',
+                    color: 'var(--cd-fg)',
+                    fontSize: 12,
+                    fontFamily: 'var(--font-mono)',
+                    textAlign: 'left',
+                    cursor: 'pointer',
+                  }}
+                >
+                  ● {t(copy.regimeSep)}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleRegimeChange('base')}
+                  style={{
+                    padding: '9px 12px',
+                    borderRadius: 8,
+                    border: regime === 'base' ? '1px solid #f59e0b' : '1px solid var(--cd-border)',
+                    background: regime === 'base' ? 'rgba(245, 158, 11, 0.12)' : 'transparent',
+                    color: 'var(--cd-fg)',
+                    fontSize: 12,
+                    fontFamily: 'var(--font-mono)',
+                    textAlign: 'left',
+                    cursor: 'pointer',
+                  }}
+                >
+                  ○ {t(copy.regimeBase)}
+                </button>
+              </div>
             </div>
-            <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-[var(--cd-b1)]">
-              <div
-                className="h-full bg-[var(--cd-accent)] transition-all duration-300"
-                style={{ width: `${cohortStats.tpr}%` }}
-              />
-            </div>
-          </div>
 
-          {/* False Positive Rate */}
-          <div
-            className="rounded-xl p-4"
-            style={{ background: 'var(--cd-elev)', border: '1px solid var(--cd-b0)' }}
-          >
-            <div className="mb-1 text-xs text-[var(--cd-fg2)]">{t(copy.fprLabel)}</div>
-            <div className="flex items-baseline gap-2">
-              <span
-                className="font-mono text-2xl font-bold"
-                style={{
-                  color: cohortStats.fpr > 0 ? 'var(--cd-warn)' : 'var(--cd-success)',
-                }}
-              >
-                {cohortStats.fpr.toFixed(0)}%
-              </span>
-              <span className="text-xs text-[var(--cd-fg2)]">
-                ({cohortStats.fp}/{cohortStats.totalNegatives} false flags)
-              </span>
-            </div>
-            <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-[var(--cd-b1)]">
-              <div
-                className="h-full transition-all duration-300"
-                style={{
-                  width: `${cohortStats.fpr}%`,
-                  background: cohortStats.fpr > 0 ? 'var(--cd-warn)' : 'var(--cd-success)',
-                }}
-              />
-            </div>
-          </div>
-
-          {/* Cohort Accuracy */}
-          <div
-            className="rounded-xl p-4"
-            style={{ background: 'var(--cd-elev)', border: '1px solid var(--cd-b0)' }}
-          >
-            <div className="mb-1 text-xs text-[var(--cd-fg2)]">{t(copy.accuracyLabel)}</div>
-            <div className="flex items-baseline gap-2">
-              <span className="font-mono text-2xl font-bold text-[var(--cd-fg1)]">
-                {cohortStats.accuracy.toFixed(0)}%
-              </span>
-              <span className="text-xs text-[var(--cd-fg2)]">
-                ({cohortStats.tp + cohortStats.tn}/6 correct)
-              </span>
-            </div>
-            <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-[var(--cd-b1)]">
-              <div
-                className="h-full bg-[var(--cd-success)] transition-all duration-300"
-                style={{ width: `${cohortStats.accuracy}%` }}
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Matrix Chips */}
-        <div className="mt-3 flex flex-wrap gap-2">
-          <span
-            className="inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs"
-            style={{ background: 'var(--cd-elev)', border: '1px solid var(--cd-b0)' }}
-          >
-            <span className="h-2 w-2 rounded-full bg-[var(--cd-accent)]" />
-            <span className="font-mono font-semibold">{t(copy.tpShort)}:</span> {cohortStats.tp}
-          </span>
-          <span
-            className="inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs"
-            style={{ background: 'var(--cd-elev)', border: '1px solid var(--cd-b0)' }}
-          >
-            <span className="h-2 w-2 rounded-full bg-[var(--cd-success)]" />
-            <span className="font-mono font-semibold">{t(copy.tnShort)}:</span> {cohortStats.tn}
-          </span>
-          <span
-            className="inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs"
-            style={{ background: 'var(--cd-elev)', border: '1px solid var(--cd-b0)' }}
-          >
-            <span className="h-2 w-2 rounded-full bg-[var(--cd-warn)]" />
-            <span className="font-mono font-semibold">{t(copy.fpShort)}:</span> {cohortStats.fp}
-          </span>
-          <span
-            className="inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs"
-            style={{ background: 'var(--cd-elev)', border: '1px solid var(--cd-b0)' }}
-          >
-            <span className="h-2 w-2 rounded-full bg-[var(--cd-fg3)]" />
-            <span className="font-mono font-semibold">{t(copy.fnShort)}:</span> {cohortStats.fn}
-          </span>
-        </div>
-      </div>
-
-      {/* 4. Interactive Sample Cohort Grid */}
-      <div className="mb-8">
-        <div className="mb-3 flex items-center justify-between">
-          <div className="flex items-center gap-2 font-semibold text-sm text-[var(--cd-fg1)]">
-            <Shield size={16} className="text-[var(--cd-accent)]" />
-            {t(copy.samplesHeading)}
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
-          {sampleEvaluations.map(({ sample, metric, score, isPredictedOod, isCorrect }) => {
-            const isSelected = sample.id === selectedSampleId
-            const Icon = sample.icon
-
-            return (
-              <button
-                key={sample.id}
-                type="button"
-                onClick={() => setSelectedSampleId(sample.id)}
-                aria-pressed={isSelected}
-                className="group relative flex flex-col justify-between rounded-xl p-4 text-left transition-all focus-visible:outline-2 focus-visible:outline-[var(--cd-accent)]"
-                style={{
-                  background: isSelected ? 'var(--cd-elev)' : 'var(--cd-surf)',
-                  border: isSelected
-                    ? '1.5px solid var(--cd-accent)'
-                    : '1px solid var(--cd-b0)',
-                  boxShadow: isSelected
-                    ? '0 0 20px rgba(0, 212, 255, 0.18)'
-                    : 'none',
-                }}
-              >
-                <div>
-                  <div className="mb-2 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <div
-                        className="flex h-8 w-8 items-center justify-center rounded-lg"
-                        style={{
-                          background: sample.groundTruth === 'ID' ? 'var(--cd-accent-dim)' : 'var(--cd-elev)',
-                          border: '1px solid var(--cd-b0)',
-                        }}
-                      >
-                        <Icon size={16} className={sample.groundTruth === 'ID' ? 'text-[var(--cd-accent)]' : 'text-[var(--cd-fg2)]'} />
-                      </div>
-                      <span className="font-semibold text-sm text-[var(--cd-fg1)]">
-                        {t(sample.title)}
-                      </span>
-                    </div>
-
-                    <span
-                      className="rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider"
+            <div>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-fg3)', marginBottom: 8 }}>
+                {t(copy.datasetHeading)}
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(175px, 1fr))', gap: 6 }}>
+                {(Object.keys(BENCHMARK_DATASETS) as OodDatasetKey[]).map((key) => {
+                  const meta = BENCHMARK_DATASETS[key]
+                  const selected = regime === 'sep' && datasetKey === key
+                  return (
+                    <button
+                      key={key}
+                      type="button"
+                      onClick={() => handleDatasetChange(key)}
                       style={{
-                        background: sample.groundTruth === 'ID' ? 'var(--cd-accent-dim)' : 'rgba(245, 158, 11, 0.12)',
-                        color: sample.groundTruth === 'ID' ? 'var(--cd-accent)' : 'var(--cd-warn)',
-                        border: '1px solid var(--cd-b0)',
+                        padding: '7px 10px',
+                        borderRadius: 8,
+                        border: selected ? '1px solid var(--cd-accent)' : '1px solid var(--cd-border)',
+                        background: selected ? 'rgba(0, 212, 255, 0.12)' : 'transparent',
+                        color: 'var(--cd-fg)',
+                        fontSize: 11.5,
+                        textAlign: 'left',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        gap: 6,
                       }}
                     >
-                      {sample.groundTruth}
-                    </span>
-                  </div>
-
-                  <p className="mb-3 text-xs leading-relaxed text-[var(--cd-fg2)] line-clamp-2">
-                    {t(sample.description)}
-                  </p>
-                </div>
-
-                <div>
-                  {/* Error & Score Bars */}
-                  <div className="mb-2 space-y-1.5 text-[11px]">
-                    <div className="flex justify-between text-[var(--cd-fg2)]">
-                      <span>MSE: {metric.mse.toFixed(2)}</span>
-                      <span>LPIPS: {metric.lpips.toFixed(2)}</span>
-                      <span className="font-mono font-bold text-[var(--cd-accent)]">
-                        S(x): {score.toFixed(2)}
+                      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        {t(DATASET_LABELS[key]).split(' (')[0]}
                       </span>
-                    </div>
-
-                    {/* Score Bar with Threshold Pin */}
-                    <div className="relative h-2 w-full overflow-hidden rounded-full bg-[var(--cd-b1)]">
-                      <div
-                        className="h-full transition-all duration-300"
-                        style={{
-                          width: `${Math.min(100, Math.max(0, score * 100))}%`,
-                          background: isPredictedOod ? 'var(--cd-warn)' : 'var(--cd-accent)',
-                        }}
-                      />
-                      {/* Threshold Pin Indicator */}
-                      <div
-                        className="absolute top-0 bottom-0 w-0.5 bg-white shadow-sm"
-                        style={{
-                          left: `${threshold * 100}%`,
-                          transform: 'translateX(-50%)',
-                        }}
-                        title={`Threshold τ = ${threshold.toFixed(2)}`}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Classification result badge */}
-                  <div
-                    className="flex items-center justify-between rounded-lg px-2.5 py-1.5 text-xs font-medium"
-                    style={{
-                      background: isCorrect ? 'rgba(0, 255, 136, 0.08)' : 'rgba(245, 158, 11, 0.12)',
-                      border: `1px solid ${isCorrect ? 'rgba(0, 255, 136, 0.25)' : 'rgba(245, 158, 11, 0.3)'}`,
-                      color: isCorrect ? 'var(--cd-success)' : 'var(--cd-warn)',
-                    }}
-                  >
-                    <div className="flex items-center gap-1.5">
-                      {isCorrect ? <CheckCircle2 size={13} /> : <AlertCircle size={13} />}
-                      <span>{isPredictedOod ? t(copy.predOod) : t(copy.predId)}</span>
-                    </div>
-                    <span className="text-[10px] font-bold">
-                      {isCorrect ? t(copy.verdictCorrect) : t(copy.verdictIncorrect)}
-                    </span>
-                  </div>
-                </div>
-              </button>
-            )
-          })}
-        </div>
-      </div>
-
-      {/* 5. Deep Sample Inspection Card */}
-      <div
-        className="mb-8 rounded-xl p-5"
-        style={{ background: 'var(--cd-elev)', border: '1px solid var(--cd-b0)' }}
-      >
-        <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center gap-2 font-semibold text-sm text-[var(--cd-fg1)]">
-            <Info size={16} className="text-[var(--cd-accent)]" />
-            {t(copy.sampleInspectionHeading)}:
-            <span className="font-bold text-[var(--cd-accent)]">
-              {t(selectedSample.title)}
-            </span>
+                      <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--cd-accent)' }}>
+                        {meta.auroc.toFixed(2)}%
+                      </span>
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
           </div>
-          <span
-            className="rounded px-2.5 py-0.5 text-xs font-bold"
+
+          {/* Threshold Slider & Presets */}
+          <div
             style={{
-              background: selectedSample.groundTruth === 'ID' ? 'var(--cd-accent-dim)' : 'rgba(245, 158, 11, 0.15)',
-              color: selectedSample.groundTruth === 'ID' ? 'var(--cd-accent)' : 'var(--cd-warn)',
+              padding: 16,
+              borderRadius: 12,
+              border: '1px solid var(--cd-border)',
+              background: 'var(--cd-bg)',
             }}
           >
-            Ground Truth: {selectedSample.groundTruth} ({t(selectedSample.groundTruth === 'ID' ? copy.idBadge : copy.oodBadge)})
-          </span>
-        </div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: 12, marginBottom: 10 }}>
+              <label
+                htmlFor={sliderId}
+                style={{ fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 600, color: 'var(--cd-fg)' }}
+              >
+                {t(copy.thresholdHeading)}:{' '}
+                <span style={{ color: '#f97316', fontWeight: 700 }}>
+                  τ = {threshold >= 0 ? `+${threshold.toFixed(5)}` : threshold.toFixed(5)}
+                </span>
+              </label>
 
-        <p className="mb-4 text-xs leading-relaxed text-[var(--cd-fg2)]">
-          {t(selectedSample.description)}
-        </p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                <button
+                  type="button"
+                  onClick={() => setThreshold(regime === 'base' ? LAMBDA0_SEED42_META.tauTpr95 : activeMeta.tauTpr95)}
+                  style={{
+                    padding: '5px 10px',
+                    borderRadius: 6,
+                    border: '1px solid var(--cd-border)',
+                    background: 'var(--cd-surface)',
+                    color: 'var(--cd-fg)',
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: 11,
+                    cursor: 'pointer',
+                  }}
+                >
+                  {t(copy.presetTpr95)}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setThreshold(regime === 'base' ? LAMBDA0_SEED42_META.tauYouden : activeMeta.tauYouden)}
+                  style={{
+                    padding: '5px 10px',
+                    borderRadius: 6,
+                    border: '1px solid var(--cd-border)',
+                    background: 'var(--cd-surface)',
+                    color: 'var(--cd-fg)',
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: 11,
+                    cursor: 'pointer',
+                  }}
+                >
+                  {t(copy.presetYouden)}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setThreshold(0)}
+                  style={{
+                    padding: '5px 10px',
+                    borderRadius: 6,
+                    border: '1px solid var(--cd-border)',
+                    background: 'var(--cd-surface)',
+                    color: 'var(--cd-fg)',
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: 11,
+                    cursor: 'pointer',
+                  }}
+                >
+                  {t(copy.presetZero)}
+                </button>
+              </div>
+            </div>
 
-        {/* Active evaluation summary for selected sample */}
-        <div
-          className="mb-4 flex flex-wrap items-center gap-4 rounded-lg p-3 text-xs"
-          style={{ background: 'var(--cd-surf)', border: '1px solid var(--cd-b0)' }}
-        >
-          <div>
-            <span className="text-[var(--cd-fg2)]">Active Architecture: </span>
-            <span className="font-semibold text-[var(--cd-fg1)]">
-              {t(currentMethodConfig.shortName)}
-            </span>
-          </div>
-          <div>
-            <span className="text-[var(--cd-fg2)]">Anomaly Score S(x): </span>
-            <span className="font-mono font-bold text-[var(--cd-accent)]">
-              {activeSelectedEval.score.toFixed(2)}
-            </span>
-          </div>
-          <div>
-            <span className="text-[var(--cd-fg2)]">Threshold Outcome: </span>
-            <span
-              className="font-medium"
+            <input
+              id={sliderId}
+              type="range"
+              min={activeHist.lo}
+              max={activeHist.hi}
+              step={(activeHist.hi - activeHist.lo) / 300}
+              value={threshold}
+              onChange={(e) => setThreshold(parseFloat(e.target.value))}
+              style={{ width: '100%', accentColor: '#f97316', cursor: 'pointer' }}
+            />
+
+            {/* Live KPI Strip */}
+            <div
               style={{
-                color: activeSelectedEval.isPredictedOod ? 'var(--cd-warn)' : 'var(--cd-accent)',
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+                gap: 10,
+                marginTop: 14,
               }}
             >
-              {activeSelectedEval.isPredictedOod ? t(copy.predOod) : t(copy.predId)}
-            </span>
+              <div style={{ padding: '10px 12px', borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-fg3)' }}>AUROC (Seed 42 · K=100)</div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 18, fontWeight: 700, color: 'var(--cd-accent)' }}>
+                  {`${(regime === 'base' ? LAMBDA0_SEED42_META.auroc : activeMeta.auroc).toFixed(2)}%`}
+                </div>
+                <div style={{ fontSize: 11, color: 'var(--cd-fg3)' }}>
+                  {regime === 'base' ? '3-seed: 92.52% ± 11.07%' : datasetKey === 'within_cifar' ? '3-seed: 99.03% ± 0.07%' : `AUPRC: ${activeMeta.auprc.toFixed(2)}%`}
+                </div>
+              </div>
+
+              <div style={{ padding: '10px 12px', borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-fg3)' }}>Live TPR(τ) · Sensitivity</div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 18, fontWeight: 700, color: '#10b981' }}>
+                  {liveDiagnostics.tpr.toFixed(1)}%
+                </div>
+                <div style={{ fontSize: 11, color: 'var(--cd-fg3)' }}>
+                  TP: {liveDiagnostics.tpCount.toLocaleString()} / {liveDiagnostics.nOod.toLocaleString()} OOD
+                </div>
+              </div>
+
+              <div style={{ padding: '10px 12px', borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-fg3)' }}>Live FPR(τ) · False Alarms</div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 18, fontWeight: 700, color: liveDiagnostics.fpr <= 15 ? '#38bdf8' : '#ef4444' }}>
+                  {liveDiagnostics.fpr.toFixed(1)}%
+                </div>
+                <div style={{ fontSize: 11, color: 'var(--cd-fg3)' }}>
+                  FP: {liveDiagnostics.fpCount.toLocaleString()} / {liveDiagnostics.nId.toLocaleString()} Airplanes
+                </div>
+              </div>
+
+              <div style={{ padding: '10px 12px', borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-fg3)' }}>Youden&apos;s J(τ) = TPR − FPR</div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 18, fontWeight: 700, color: 'var(--cd-fg)' }}>
+                  {liveDiagnostics.youdenJ.toFixed(1)}%
+                </div>
+                <div style={{ fontSize: 11, color: 'var(--cd-fg3)' }}>
+                  Balanced Acc: {liveDiagnostics.balAcc.toFixed(1)}%
+                </div>
+              </div>
+            </div>
           </div>
-          <div>
-            <span className="text-[var(--cd-fg2)]">Evaluation: </span>
-            <span
-              className="font-semibold"
-              style={{
-                color: activeSelectedEval.isCorrect ? 'var(--cd-success)' : 'var(--cd-warn)',
-              }}
-            >
-              {activeSelectedEval.isCorrect ? t(copy.verdictCorrect) : t(copy.verdictIncorrect)}
-            </span>
+
+          {/* Side-by-Side Empirical Histogram SVG & ROC Curve SVG */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(310px, 1fr))', gap: 16 }}>
+            {/* 48-Bin Empirical Histogram */}
+            <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--cd-fg)', marginBottom: 10 }}>
+                {t(copy.histTitle)}
+              </div>
+              <svg viewBox="0 0 520 230" style={{ width: '100%', height: 'auto', overflow: 'visible' }} role="img" aria-label="Empirical OOD Score Histogram">
+                {/* Axes */}
+                <line x1="40" y1="195" x2="500" y2="195" stroke="var(--cd-border)" strokeWidth="1" />
+                <line x1="40" y1="20" x2="40" y2="195" stroke="var(--cd-border)" strokeWidth="1" />
+
+                {/* Histogram Bars */}
+                {activeHist.id_pct.map((idVal, idx) => {
+                  const oodVal = activeHist.ood_pct[idx] ?? 0
+                  const barW = 460 / activeHist.bins
+                  const x = 40 + idx * barW
+                  const idH = (idVal / maxHistDensity) * 165
+                  const oodH = (oodVal / maxHistDensity) * 165
+                  return (
+                    <g key={idx}>
+                      <rect
+                        x={x}
+                        y={195 - idH}
+                        width={Math.max(1.5, barW - 1)}
+                        height={idH}
+                        fill="rgba(56, 189, 248, 0.55)"
+                      />
+                      <rect
+                        x={x}
+                        y={195 - oodH}
+                        width={Math.max(1.5, barW - 1)}
+                        height={oodH}
+                        fill="rgba(239, 68, 68, 0.50)"
+                      />
+                    </g>
+                  )
+                })}
+
+                {/* Threshold vertical line */}
+                {(() => {
+                  const ratio = Math.min(1, Math.max(0, (threshold - activeHist.lo) / (activeHist.hi - activeHist.lo)))
+                  const tx = 40 + ratio * 460
+                  return (
+                    <g>
+                      <line x1={tx} y1="16" x2={tx} y2="195" stroke="#f97316" strokeWidth="2.5" strokeDasharray="5 4" />
+                      <rect x={Math.min(415, Math.max(42, tx - 44))} y="12" width="88" height="18" rx="4" fill="#f97316" />
+                      <text x={Math.min(459, Math.max(86, tx))} y="24" textAnchor="middle" fill="#000" fontSize="9.5" fontWeight="700" fontFamily="monospace">
+                        τ = {threshold.toFixed(4)}
+                      </text>
+                    </g>
+                  )
+                })()}
+
+                {/* X-axis labels */}
+                <text x="40" y="212" fill="var(--cd-fg3)" fontSize="10" fontFamily="monospace">
+                  {activeHist.lo.toFixed(4)}
+                </text>
+                <text x="270" y="212" textAnchor="middle" fill="var(--cd-fg2)" fontSize="10" fontFamily="monospace">
+                  s_OOD(x) = ê₀(x) − ê₁(x)
+                </text>
+                <text x="500" y="212" textAnchor="end" fill="var(--cd-fg3)" fontSize="10" fontFamily="monospace">
+                  +{activeHist.hi.toFixed(4)}
+                </text>
+              </svg>
+              <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--cd-fg2)', marginTop: 6 }}>
+                <span><strong style={{ color: '#38bdf8' }}>■</strong> ID: CIFAR-10 Airplane (N={activeHist.n_id.toLocaleString()})</span>
+                <span><strong style={{ color: '#ef4444' }}>■</strong> OOD Cohort (N={activeHist.n_ood.toLocaleString()})</span>
+                <span><strong style={{ color: '#f97316' }}>┆</strong> Threshold τ</span>
+              </div>
+            </div>
+
+            {/* Empirical ROC Curve */}
+            <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--cd-fg)', marginBottom: 10 }}>
+                {t(copy.rocTitle)}
+              </div>
+              <svg viewBox="0 0 320 230" style={{ width: '100%', height: 'auto', overflow: 'visible' }} role="img" aria-label="Empirical ROC Curve">
+                <line x1="45" y1="195" x2="295" y2="195" stroke="var(--cd-border)" strokeWidth="1" />
+                <line x1="45" y1="20" x2="45" y2="195" stroke="var(--cd-border)" strokeWidth="1" />
+                {/* Diagonal chance line */}
+                <line x1="45" y1="195" x2="295" y2="20" stroke="var(--cd-border)" strokeWidth="1" strokeDasharray="4 4" />
+
+                {/* Empirical ROC Polyline */}
+                <polyline
+                  fill="none"
+                  stroke="var(--cd-accent)"
+                  strokeWidth="2.5"
+                  points={activeHist.roc
+                    .map(([fpr, tpr]) => `${(45 + fpr * 250).toFixed(1)},${(195 - tpr * 175).toFixed(1)}`)
+                    .join(' ')}
+                />
+
+                {/* Active operating point */}
+                {(() => {
+                  const cx = 45 + (liveDiagnostics.fpr / 100) * 250
+                  const cy = 195 - (liveDiagnostics.tpr / 100) * 175
+                  return (
+                    <g>
+                      <line x1={cx} y1={cy} x2={cx} y2="195" stroke="#f97316" strokeWidth="1" strokeDasharray="3 3" />
+                      <line x1="45" y1={cy} x2={cx} y2={cy} stroke="#f97316" strokeWidth="1" strokeDasharray="3 3" />
+                      <circle cx={cx} cy={cy} r="5.5" fill="#f97316" stroke="#fff" strokeWidth="1.5" />
+                    </g>
+                  )
+                })()}
+
+                <text x="170" y="214" textAnchor="middle" fill="var(--cd-fg2)" fontSize="10" fontFamily="monospace">
+                  False Positive Rate (FPR)
+                </text>
+                <text x="16" y="110" textAnchor="middle" fill="var(--cd-fg2)" fontSize="10" fontFamily="monospace" transform="rotate(-90 16 110)">
+                  True Positive Rate (TPR)
+                </text>
+              </svg>
+              <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--cd-fg2)', marginTop: 6 }}>
+                Operating Point: <strong>FPR = {liveDiagnostics.fpr.toFixed(1)}%</strong>, <strong>TPR = {liveDiagnostics.tpr.toFixed(1)}%</strong> (Benchmark FPR@95%TPR = {`${regime === 'base' ? LAMBDA0_SEED42_META.fpr95 : activeMeta.fpr95}%`})
+              </div>
+            </div>
           </div>
         </div>
+      )}
 
-        {/* Cross-method table for this sample */}
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs" style={{ borderCollapse: 'collapse' }}>
-            <thead>
-              <tr className="border-b border-[var(--cd-b0)] text-[var(--cd-fg2)]">
-                <th className="py-2 pr-3">{t(copy.colModel)}</th>
-                <th className="py-2 px-3">MSE</th>
-                <th className="py-2 px-3">LPIPS</th>
-                <th className="py-2 px-3 font-bold text-[var(--cd-accent)]">
-                  S(x) Score
-                </th>
-                <th className="py-2 px-3">Predicted Status</th>
-                <th className="py-2 pl-3">Evaluation</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-[var(--cd-b0)]">
-              {METHODS.map((method) => {
-                const metric = selectedSample.metrics[method.key]
-                const score = alpha * metric.mse + (1 - alpha) * metric.lpips
-                const isPredOod = score > threshold
-                const isCorrect = isPredOod === (selectedSample.groundTruth === 'OOD')
-                const isCurrent = method.key === activeMethod
+      {/* =====================================================================
+          TAB 2: PER-TIMESTEP ERROR (Fig. 6.7) & CONTRASTIVE SCORING (Table 6.5)
+         ===================================================================== */}
+      {activeTab === 'timesteps' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+          <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: 12, marginBottom: 10 }}>
+              <label htmlFor={timestepSliderId} style={{ fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 600, color: 'var(--cd-fg)' }}>
+                {t(copy.timestepHeading)}:{' '}
+                <span style={{ color: 'var(--cd-accent)' }}>
+                  t = {activeTimestep.t} / 1000 (Signal ᾱ_t = {activeTimestep.alphaBar.toFixed(4)})
+                </span>
+              </label>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-fg3)' }}>
+                Eq. 3.25 Cosine Schedule · s = 0.008
+              </span>
+            </div>
 
-                return (
-                  <tr
-                    key={method.key}
+            <input
+              id={timestepSliderId}
+              type="range"
+              min={0}
+              max={PER_TIMESTEP_ERRORS.length - 1}
+              step={1}
+              value={timestepIdx}
+              onChange={(e) => setTimestepIdx(parseInt(e.target.value, 10))}
+              style={{ width: '100%', accentColor: 'var(--cd-accent)', cursor: 'pointer', marginBottom: 14 }}
+            />
+
+            {/* Per-Timestep SVG Curve (Thesis Figure 6.7) */}
+            <svg viewBox="0 0 600 220" style={{ width: '100%', height: 'auto', overflow: 'visible' }} role="img" aria-label="Per-timestep reconstruction error curves">
+              <line x1="45" y1="190" x2="575" y2="190" stroke="var(--cd-border)" strokeWidth="1" />
+              <line x1="45" y1="15" x2="45" y2="190" stroke="var(--cd-border)" strokeWidth="1" />
+
+              {/* OOD c=0 curve (red) */}
+              <polyline
+                fill="none"
+                stroke="#ef4444"
+                strokeWidth="2.2"
+                points={PER_TIMESTEP_ERRORS.map((pt, i) => {
+                  const x = 45 + (i / (PER_TIMESTEP_ERRORS.length - 1)) * 530
+                  const y = 190 - (pt.oodC0Mean / 0.25) * 170
+                  return `${x.toFixed(1)},${y.toFixed(1)}`
+                }).join(' ')}
+              />
+              {/* OOD c=1 curve (orange dashed) */}
+              <polyline
+                fill="none"
+                stroke="#fb923c"
+                strokeWidth="1.8"
+                strokeDasharray="4 3"
+                points={PER_TIMESTEP_ERRORS.map((pt, i) => {
+                  const x = 45 + (i / (PER_TIMESTEP_ERRORS.length - 1)) * 530
+                  const y = 190 - (pt.oodC1Mean / 0.25) * 170
+                  return `${x.toFixed(1)},${y.toFixed(1)}`
+                }).join(' ')}
+              />
+              {/* ID c=0 curve (blue) */}
+              <polyline
+                fill="none"
+                stroke="#38bdf8"
+                strokeWidth="2.2"
+                points={PER_TIMESTEP_ERRORS.map((pt, i) => {
+                  const x = 45 + (i / (PER_TIMESTEP_ERRORS.length - 1)) * 530
+                  const y = 190 - (pt.idC0Mean / 0.25) * 170
+                  return `${x.toFixed(1)},${y.toFixed(1)}`
+                }).join(' ')}
+              />
+              {/* ID c=1 curve (cyan dashed) */}
+              <polyline
+                fill="none"
+                stroke="#818cf8"
+                strokeWidth="1.8"
+                strokeDasharray="4 3"
+                points={PER_TIMESTEP_ERRORS.map((pt, i) => {
+                  const x = 45 + (i / (PER_TIMESTEP_ERRORS.length - 1)) * 530
+                  const y = 190 - (pt.idC1Mean / 0.25) * 170
+                  return `${x.toFixed(1)},${y.toFixed(1)}`
+                }).join(' ')}
+              />
+
+              {/* Active timestep marker */}
+              {(() => {
+                const cx = 45 + (timestepIdx / (PER_TIMESTEP_ERRORS.length - 1)) * 530
+                return <line x1={cx} y1="15" x2={cx} y2="190" stroke="var(--cd-accent)" strokeWidth="2" strokeDasharray="4 3" />
+              })()}
+
+              <text x="45" y="208" fill="var(--cd-fg3)" fontSize="10" fontFamily="monospace">t = 50 (Low noise)</text>
+              <text x="310" y="208" textAnchor="middle" fill="var(--cd-fg2)" fontSize="10" fontFamily="monospace">t = 500 (Mid noise · Peak OOD signal)</text>
+              <text x="575" y="208" textAnchor="end" fill="var(--cd-fg3)" fontSize="10" fontFamily="monospace">t = 950 (Near-pure Gaussian)</text>
+            </svg>
+
+            {/* Live Timestep Metrics */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 10, marginTop: 12 }}>
+              <div style={{ padding: 10, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: '#38bdf8' }}>ID (Airplane) MSE @ t={activeTimestep.t}</div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--cd-fg)', marginTop: 4 }}>
+                  c=0: <strong>{activeTimestep.idC0Mean.toFixed(4)}</strong> · c=1: <strong>{activeTimestep.idC1Mean.toFixed(4)}</strong>
+                </div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: '#10b981', marginTop: 2 }}>
+                  ê₀ − ê₁ = {(activeTimestep.idC0Mean - activeTimestep.idC1Mean).toFixed(5)} (ID &lt; 0)
+                </div>
+              </div>
+
+              <div style={{ padding: 10, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: '#ef4444' }}>OOD Cohort MSE @ t={activeTimestep.t}</div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--cd-fg)', marginTop: 4 }}>
+                  c=0: <strong>{activeTimestep.oodC0Mean.toFixed(4)}</strong> · c=1: <strong>{activeTimestep.oodC1Mean.toFixed(4)}</strong>
+                </div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: '#f97316', marginTop: 2 }}>
+                  ê₀ − ê₁ = +{(activeTimestep.oodC0Mean - activeTimestep.oodC1Mean).toFixed(5)} (OOD &gt; 0)
+                </div>
+              </div>
+
+              <div style={{ padding: 10, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-fg3)' }}>Manifold Mismatch Δ_OOD(t) (Eq. 3.15)</div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 16, fontWeight: 700, color: 'var(--cd-accent)', marginTop: 4 }}>
+                  +{(activeTimestep.oodC0Mean - activeTimestep.idC0Mean).toFixed(4)} MSE
+                </div>
+                <div style={{ fontSize: 11, color: 'var(--cd-fg3)' }}>
+                  Uniform t ~ U[1,1000] achieves 98.9% CIFAR / 95.4% SVHN
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Contrastive Scoring Comparison (Table 6.5 & D.3) + Timestep Strategy (Table 6.4) */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: 16 }}>
+            <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--cd-fg)', marginBottom: 10 }}>
+                {t(copy.scoringHeading)}
+              </div>
+              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 12 }}>
+                {(
+                  [
+                    { key: 'difference', label: 'Difference: ê₀ − ê₁ (Default)' },
+                    { key: 'ratio', label: 'Ratio: ê₀ / ê₁' },
+                    { key: 'id_error', label: 'ID-Only: ê₀ (No Contrast)' },
+                  ] as const
+                ).map((item) => (
+                  <button
+                    key={item.key}
+                    type="button"
+                    onClick={() => setScoringKey(item.key)}
                     style={{
-                      background: isCurrent ? 'var(--cd-accent-dim)' : 'transparent',
+                      padding: '6px 10px',
+                      borderRadius: 8,
+                      border: scoringKey === item.key ? '1px solid var(--cd-accent)' : '1px solid var(--cd-border)',
+                      background: scoringKey === item.key ? 'rgba(0, 212, 255, 0.12)' : 'transparent',
+                      color: 'var(--cd-fg)',
+                      fontFamily: 'var(--font-mono)',
+                      fontSize: 11,
+                      cursor: 'pointer',
                     }}
                   >
-                    <td className="py-2.5 pr-3 font-medium text-[var(--cd-fg1)]">
-                      {t(method.shortName)}
-                      {isCurrent && (
-                        <span className="ml-2 font-mono text-[10px] text-[var(--cd-accent)]">
-                          [Active]
-                        </span>
-                      )}
-                    </td>
-                    <td className="py-2.5 px-3 font-mono text-[var(--cd-fg2)]">
-                      {metric.mse.toFixed(2)}
-                    </td>
-                    <td className="py-2.5 px-3 font-mono text-[var(--cd-fg2)]">
-                      {metric.lpips.toFixed(2)}
-                    </td>
-                    <td className="py-2.5 px-3 font-mono font-bold text-[var(--cd-accent)]">
-                      {score.toFixed(2)}
-                    </td>
-                    <td className="py-2.5 px-3 font-medium">
-                      <span
-                        className="rounded px-2 py-0.5 text-[11px]"
-                        style={{
-                          background: isPredOod ? 'rgba(245, 158, 11, 0.15)' : 'rgba(0, 212, 255, 0.15)',
-                          color: isPredOod ? 'var(--cd-warn)' : 'var(--cd-accent)',
-                        }}
-                      >
-                        {isPredOod ? 'OOD' : 'ID'}
-                      </span>
-                    </td>
-                    <td className="py-2.5 pl-3">
-                      <span
-                        className="inline-flex items-center gap-1 font-semibold text-[11px]"
-                        style={{
-                          color: isCorrect ? 'var(--cd-success)' : 'var(--cd-warn)',
-                        }}
-                      >
-                        {isCorrect ? <CheckCircle2 size={12} /> : <AlertCircle size={12} />}
-                        {isCorrect ? t(copy.verdictCorrect) : t(copy.verdictIncorrect)}
-                      </span>
-                    </td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
-        </div>
-      </div>
+                    {item.label}
+                  </button>
+                ))}
+              </div>
 
-      {/* 6. Thesis Benchmark Summary Table (Table 6.1) */}
-      <div
-        className="rounded-xl p-5"
-        style={{ background: 'var(--cd-elev)', border: '1px solid var(--cd-b0)' }}
-      >
-        <div className="mb-3 flex items-center justify-between">
-          <div className="flex items-center gap-2 font-semibold text-sm text-[var(--cd-fg1)]">
-            <BarChart3 size={16} className="text-[var(--cd-accent)]" />
-            {t(copy.benchmarkTableHeading)}
-          </div>
-        </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+                <div style={{ padding: 12, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-fg3)' }}>Within-CIFAR AUROC</div>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 20, fontWeight: 700, color: activeScoring.cifarAuroc > 90 ? '#10b981' : '#f59e0b' }}>
+                    {activeScoring.cifarAuroc.toFixed(2)}%
+                  </div>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-fg3)' }}>
+                    FPR95: {activeScoring.cifarFpr95.toFixed(1)}%
+                  </div>
+                </div>
+                <div style={{ padding: 12, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-fg3)' }}>External SVHN AUROC</div>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 20, fontWeight: 700, color: activeScoring.svhnAuroc > 90 ? '#10b981' : '#ef4444' }}>
+                    {activeScoring.svhnAuroc.toFixed(2)}%
+                  </div>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-fg3)' }}>
+                    FPR95: {activeScoring.svhnFpr95.toFixed(1)}%
+                  </div>
+                </div>
+              </div>
+              <p style={{ fontSize: 12, color: 'var(--cd-fg2)', margin: '10px 0 0 0', lineHeight: 1.55 }}>
+                {scoringKey === 'id_error'
+                  ? 'Collapse alert (Table D.3): Using ID reconstruction error ê₀(x) alone collapses to 20.23% AUROC on SVHN (worse than random) because smooth SVHN digits have lower raw reconstruction error than textured airplanes.'
+                  : 'Contrastive scoring (comparing c=0 vs c=1 on the same noisy sample x_t) cancels raw image-complexity bias and isolates class-manifold fit.'}
+              </p>
+            </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs" style={{ borderCollapse: 'collapse' }}>
-            <thead>
-              <tr className="border-b border-[var(--cd-b0)] text-[var(--cd-fg2)]">
-                <th className="py-2 pr-3">{t(copy.colModel)}</th>
-                <th className="py-2 px-3">{t(copy.colBinary)}</th>
-                <th className="py-2 px-3">{t(copy.colLoco)}</th>
-                <th className="py-2 px-3">{t(copy.colLoss)}</th>
-                <th className="py-2 pl-3">{t(copy.colBehavior)}</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-[var(--cd-b0)]">
-              {METHODS.map((method) => {
-                const isCurrent = method.key === activeMethod
-                return (
-                  <tr
-                    key={method.key}
+            {/* Table 6.4 Timestep Sampling Strategies */}
+            <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--cd-fg)', marginBottom: 10 }}>
+                Timestep Sampling Strategy Ablation (Table 6.4 · K = 50, λ = 0.01)
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {TIMESTEP_STRATEGIES.map((strat) => (
+                  <div
+                    key={strat.key}
                     style={{
-                      background: isCurrent ? 'var(--cd-accent-dim)' : 'transparent',
+                      padding: '10px 12px',
+                      borderRadius: 8,
+                      border: '1px solid var(--cd-border)',
+                      background: 'var(--cd-surface)',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      fontFamily: 'var(--font-mono)',
+                      fontSize: 11.5,
                     }}
                   >
-                    <td className="py-3 pr-3 font-semibold text-[var(--cd-fg1)]">
-                      {t(method.name)}
-                      {isCurrent && (
-                        <span className="ml-2 font-mono text-[10px] text-[var(--cd-accent)]">
-                          [Selected]
-                        </span>
-                      )}
-                    </td>
-                    <td className="py-3 px-3 font-mono font-bold text-[var(--cd-accent)]">
-                      {method.binaryAuroc}
-                    </td>
-                    <td className="py-3 px-3 font-mono text-[var(--cd-fg2)]">
-                      {method.locoAuroc}
-                    </td>
-                    <td className="py-3 px-3 font-mono text-[var(--cd-fg2)]">
-                      {method.lambda}
-                    </td>
-                    <td className="py-3 pl-3 text-[var(--cd-fg2)]">
-                      {t(method.behavior)}
-                    </td>
-                  </tr>
+                    <div>
+                      <strong style={{ color: 'var(--cd-fg)', textTransform: 'capitalize' }}>{strat.key.replace('_', '-')}</strong>
+                      <div style={{ fontSize: 10.5, color: 'var(--cd-fg3)' }}>{strat.distribution}</div>
+                    </div>
+                    <div style={{ textAlign: 'right' }}>
+                      <div style={{ color: 'var(--cd-accent)', fontWeight: 700 }}>CIFAR: {strat.cifarAuroc.toFixed(1)}%</div>
+                      <div style={{ color: 'var(--cd-fg2)', fontSize: 11 }}>SVHN: {strat.svhnAuroc.toFixed(1)}%</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* =====================================================================
+          TAB 3: SEPARATION LOSS (λ), MONTE CARLO (K) & INKJET QC (Tables 6.3, 6.6–6.9)
+         ===================================================================== */}
+      {activeTab === 'ablations' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 16 }}>
+            {/* Separation Loss Lambda Sweep (Table 6.6) */}
+            <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--cd-fg)', marginBottom: 10 }}>
+                {t(copy.lambdaSweepHeading)}
+              </div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 12 }}>
+                {CIFAR_LAMBDA_SWEEP.map((row, idx) => (
+                  <button
+                    key={row.lambda}
+                    type="button"
+                    onClick={() => setSelectedLambdaIdx(idx)}
+                    style={{
+                      padding: '6px 10px',
+                      borderRadius: 8,
+                      border: selectedLambdaIdx === idx ? '1px solid var(--cd-accent)' : '1px solid var(--cd-border)',
+                      background: selectedLambdaIdx === idx ? 'rgba(0, 212, 255, 0.14)' : 'var(--cd-surface)',
+                      color: 'var(--cd-fg)',
+                      fontFamily: 'var(--font-mono)',
+                      fontSize: 11.5,
+                      fontWeight: row.isOptimal ? 700 : 500,
+                      cursor: 'pointer',
+                    }}
+                  >
+                    λ={row.lambda}{row.isOptimal ? ' ★' : ''}
+                  </button>
+                ))}
+              </div>
+
+              <div style={{ padding: 12, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 12 }}>
+                  <span>Within-CIFAR AUROC:</span>
+                  <strong style={{ color: '#10b981' }}>
+                    {activeLambda.withinCifarMean.toFixed(2)}%
+                    {activeLambda.withinCifarStd !== null ? ` ± ${activeLambda.withinCifarStd.toFixed(2)}%` : ' (seed 42)'}
+                  </strong>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
+                  <span>Seed runs (42 / 123 / 456):</span>
+                  <span>{activeLambda.seeds.map((s) => `${s.toFixed(2)}%`).join(' · ')}</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
+                  <span>Best Convergence Epoch (seed 42):</span>
+                  <span>Epoch {activeLambda.bestEpochSeed42}</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
+                  <span>SVHN External AUROC (seed 42):</span>
+                  <span>
+                    {activeLambda.svhnAuroc.toFixed(1)}%{activeLambda.svhnArtefact ? '† (artefact)' : ''}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Monte Carlo Trials K Sweep (Table 6.3 & D.2) */}
+            <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--cd-fg)', marginBottom: 10 }}>
+                {t(copy.kSweepHeading)}
+              </div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 12 }}>
+                {K_ABLATION_TABLE.map((row, idx) => (
+                  <button
+                    key={row.k}
+                    type="button"
+                    onClick={() => setSelectedKIdx(idx)}
+                    style={{
+                      padding: '6px 10px',
+                      borderRadius: 8,
+                      border: selectedKIdx === idx ? '1px solid var(--cd-accent)' : '1px solid var(--cd-border)',
+                      background: selectedKIdx === idx ? 'rgba(0, 212, 255, 0.14)' : 'var(--cd-surface)',
+                      color: 'var(--cd-fg)',
+                      fontFamily: 'var(--font-mono)',
+                      fontSize: 11.5,
+                      fontWeight: row.recommended ? 700 : 500,
+                      cursor: 'pointer',
+                    }}
+                  >
+                    K={row.k}{row.recommended ? ' ★' : ''}
+                  </button>
+                ))}
+              </div>
+
+              <div style={{ padding: 12, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 12 }}>
+                  <span>Within-CIFAR AUROC (λ=0.01, seed 42):</span>
+                  <strong style={{ color: 'var(--cd-accent)' }}>{activeK.auroc.toFixed(2)}%</strong>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
+                  <span>FPR@95%TPR:</span>
+                  <span>{activeK.fpr95.toFixed(1)}%</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
+                  <span>RTX 2080 Ti Time (per 10K images):</span>
+                  <span>{activeK.timeSeconds10k.toFixed(1)} s ({activeK.msPerSample.toFixed(1)} ms / img)</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
+                  <span>Cost vs. ResNet-18 Forward Pass:</span>
+                  <span>{activeK.resnetMultiple}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Inkjet Print QC Per-Feature & Lambda Explorer (Tables 6.7, 6.8, 6.9) */}
+          <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: 12, marginBottom: 12 }}>
+              <div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--cd-fg)' }}>
+                  {t(copy.inkjetHeading)}
+                </div>
+                <div style={{ fontSize: 12, color: 'var(--cd-fg2)', marginTop: 2 }}>
+                  Public FTI_Zer0P Dataset · 573 Source-Image Groups · 6,408 YOLO Crops (128×128) · Multi-Head AdaGN CDM
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: 6 }}>
+                {(['0.0', '0.01', '0.02', '0.05'] as const).map((lKey) => (
+                  <button
+                    key={lKey}
+                    type="button"
+                    onClick={() => setInkjetLambda(lKey)}
+                    style={{
+                      padding: '6px 10px',
+                      borderRadius: 8,
+                      border: inkjetLambda === lKey ? '1px solid var(--cd-accent)' : '1px solid var(--cd-border)',
+                      background: inkjetLambda === lKey ? 'rgba(0, 212, 255, 0.14)' : 'var(--cd-surface)',
+                      color: 'var(--cd-fg)',
+                      fontFamily: 'var(--font-mono)',
+                      fontSize: 11,
+                      cursor: 'pointer',
+                    }}
+                  >
+                    Inkjet λ={lKey}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, marginBottom: 12, fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--cd-fg2)' }}>
+              <span>
+                5-Fold CV Mean AUROC: <strong style={{ color: 'var(--cd-accent)' }}>{activeInkjetOverall.aurocMean.toFixed(4)} ± {activeInkjetOverall.aurocStd.toFixed(4)}</strong>
+              </span>
+              <span>
+                Accuracy: <strong>{(activeInkjetOverall.accMean * 100).toFixed(2)}% ± {(activeInkjetOverall.accStd * 100).toFixed(2)}%</strong>
+              </span>
+              <span>
+                Holm-Adjusted p vs λ=0:{' '}
+                <strong>{activeInkjetOverall.holmPValue === null ? 'Baseline' : `p = ${activeInkjetOverall.holmPValue.toFixed(3)} (not significant)`}</strong>
+              </span>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: 8 }}>
+              {INKJET_PER_FEATURE.map((feat) => {
+                const stats = feat.byLambda[inkjetLambda]
+                const pct = stats.mean * 100
+                return (
+                  <div
+                    key={feat.feature}
+                    style={{
+                      padding: '9px 11px',
+                      borderRadius: 8,
+                      border: '1px solid var(--cd-border)',
+                      background: 'var(--cd-surface)',
+                    }}
+                  >
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5 }}>
+                      <strong style={{ color: 'var(--cd-fg)' }}>{feat.feature}</strong>
+                      <span style={{ color: pct >= 90 ? '#10b981' : pct >= 80 ? 'var(--cd-accent)' : '#f59e0b', fontWeight: 700 }}>
+                        {stats.mean.toFixed(4)} ± {stats.std.toFixed(4)}
+                      </span>
+                    </div>
+                    <div style={{ height: 5, borderRadius: 3, background: 'var(--cd-bg)', marginTop: 6, overflow: 'hidden' }}>
+                      <div
+                        style={{
+                          width: `${Math.max(0, Math.min(100, (stats.mean - 0.5) * 200))}%`,
+                          height: '100%',
+                          background: pct >= 90 ? '#10b981' : pct >= 80 ? 'var(--cd-accent)' : '#f59e0b',
+                        }}
+                      />
+                    </div>
+                    <div style={{ fontSize: 10.5, color: 'var(--cd-fg3)', marginTop: 4, fontFamily: 'var(--font-mono)' }}>
+                      GOOD:BAD = {feat.goodBadRatio}{feat.unreliableNote ? ' (<5 BAD/fold)' : ''}
+                    </div>
+                  </div>
                 )
               })}
-            </tbody>
-          </table>
+            </div>
+          </div>
         </div>
-
-        <p className="mt-3 text-[11px] leading-relaxed text-[var(--cd-fg3)]">
-          {t(copy.tableNote)}
-        </p>
-      </div>
+      )}
     </section>
   )
 }
