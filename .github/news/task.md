@@ -57,7 +57,8 @@ Read the JSON (and AGENTS.md if needed) before researching. Do not edit TypeScri
      and company name exactly as in the English take; keep tags untranslated. The site
      displays the take in the visitor's language with fallback to English, so an
      en-only take ships an untranslated page for four of the five languages.
-   - `tags`: 2-3 short chips matching `/^[a-z0-9-]+$/` (lowercase ASCII, never translated).
+   - `tags`: 1-3 short chips matching `/^[a-z0-9-]+$/` (lowercase ASCII, never translated;
+     one chip is fine when only one fits — never force a weak second tag).
      Reuse tags already present in the current catalog where they fit; mint a new tag
      only when nothing fits. Never repeat the source/vendor name or the category —
      the source and category are displayed on the card already.
