@@ -2,6 +2,7 @@
 
 import RequestCvButton from '@/components/RequestCvButton'
 import ScheduleMeetingButton from '@/components/ScheduleMeetingButton'
+import HeroSignal from '@/components/HeroSignal'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { useReveal } from '@/lib/useReveal'
 
@@ -29,6 +30,7 @@ const copy = {
   },
   viewWork: { en: 'View work', de: 'Arbeiten ansehen', fr: 'Voir les projets', es: 'Ver trabajos', ar: 'عرض الأعمال' },
   contact: { en: 'Get in touch', de: 'Kontakt', fr: 'Contact', es: 'Contacto', ar: 'تواصل' },
+  or: { en: 'or', de: 'oder', fr: 'ou', es: 'o', ar: 'أو' },
   years: { en: 'Years in AI/ML', de: 'Jahre in AI/ML', fr: 'Années en IA/ML', es: 'Años en IA/ML', ar: 'سنوات في الذكاء الاصطناعي' },
   auroc: { en: 'OOD Detection AUROC', de: 'OOD-Erkennung AUROC', fr: 'Détection OOD AUROC', es: 'Detección OOD AUROC', ar: 'مقياس AUROC لكشف الخارج عن التوزيع' },
   gain: { en: 'Gain over baseline (stable)', de: 'Gewinn gegenüber Baseline (stabil)', fr: 'Gain face au baseline (stable)', es: 'Mejora sobre la base (estable)', ar: 'تحسن على خط الأساس (مستقر)' },
@@ -49,30 +51,36 @@ export default function Hero() {
     <section id="hero" className="cd-hero" style={{ borderTop: 'none' }}>
       <div className="cd-container">
         <div className="cd-hero-grid">
-          <div>
-            <div className="cd-open-badge">
-              <span className="cd-open-dot" />
-              {t(copy.open)}
+          <div className="cd-hero-copy">
+            <div className="cd-hero-status">
+              <span className="cd-open-badge">
+                <span className="cd-open-dot" aria-hidden="true" />
+                {t(copy.open)}
+              </span>
+              <span className="cd-hero-eyebrow">{t(copy.based)}</span>
             </div>
-            <div className="cd-hero-eyebrow">{t(copy.based)}</div>
             <h1 className="cd-hero-name">
-              Ahmed
-              <br />
-              Mohammed
+              <bdi>
+                Ahmed
+                <br />
+                Mohammed<span className="cd-hero-dot" aria-hidden="true">.</span>
+              </bdi>
             </h1>
             <div className="cd-hero-title">
               <span>Computer Vision</span>
-              {' · '}
               <span>Diffusion Models</span>
-              {' · '}
               <span>OOD Detection</span>
             </div>
             <p className="cd-hero-body" data-speakable>{t(copy.body)}</p>
             <div className="cd-hero-ctas">
-              <a href="#projects" className="cd-btn-primary">{t(copy.viewWork)} &rarr;</a>
-              <a href="#contact" className="cd-btn-ghost">{t(copy.contact)}</a>
-              <ScheduleMeetingButton />
+              <a href="#projects" className="cd-btn-primary">{t(copy.viewWork)} <span aria-hidden="true">&rarr;</span></a>
               <RequestCvButton />
+            </div>
+            <div className="cd-hero-secondary">
+              <span>{t(copy.or)}</span>
+              <ScheduleMeetingButton variant="link" compact className="cd-hero-textlink" />
+              <span aria-hidden="true">&middot;</span>
+              <a href="#contact" className="cd-hero-textlink">{t(copy.contact)}</a>
             </div>
             <div className="cd-hero-stats">
               <div className="cd-stat">
@@ -80,17 +88,18 @@ export default function Hero() {
                 <div className="cd-stat-label">{t(copy.years)}</div>
               </div>
               <div className="cd-stat">
-                <div className="cd-stat-num">99<span className="a">.</span>03<span style={{ fontSize: 14, color: 'var(--cd-fg3)', fontWeight: 400 }}>%</span></div>
+                <div className="cd-stat-num">99<span className="a">.</span>03<span className="u">%</span></div>
                 <div className="cd-stat-label">{t(copy.auroc)}</div>
               </div>
               <div className="cd-stat">
-                <div className="cd-stat-num">+6.5<span className="g" style={{ fontSize: 14 }}>pp</span></div>
+                <div className="cd-stat-num">+6.5<span className="g u">pp</span></div>
                 <div className="cd-stat-label">{t(copy.gain)}</div>
               </div>
             </div>
-            <p className="cd-hero-legend" style={{ fontSize: 11, color: 'var(--cd-fg3)', marginTop: 14, lineHeight: 1.6, maxWidth: 480 }}>
-              {t(copy.legend)}
-            </p>
+            <p className="cd-hero-legend">{t(copy.legend)}</p>
+          </div>
+          <div className="cd-hero-visual">
+            <HeroSignal />
           </div>
         </div>
       </div>
