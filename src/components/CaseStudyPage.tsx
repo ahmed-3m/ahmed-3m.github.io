@@ -1,10 +1,14 @@
 'use client'
 
+import { Fragment } from 'react'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
 import { ArrowLeft } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
 import { translateValue } from '@/lib/i18n-config'
 import { getCaseStudy } from '@/lib/case-studies'
+
+const OodDemo = dynamic(() => import('./OodDemo'))
 
 const labels = {
   eyebrow: { en: 'Case study', de: 'Fallstudie', fr: 'Étude de cas', es: 'Caso de estudio', ar: 'دراسة حالة' },
@@ -103,14 +107,17 @@ export default function CaseStudyPage({ slug }: { slug: string }) {
         )}
 
         {(['approach', 'results', 'lessons'] as const).map((key) => (
-          <section key={key} className="glass-surface glass-subtle mt-6 p-5">
-            <h2 className="mb-4 text-lg font-semibold">{t(labels[key])}</h2>
-            <ul className="list-disc space-y-3 pl-5 text-[var(--cd-fg2)]">
-              {study[key].map((item, idx) => (
-                <li key={idx}>{translateValue(lang, item)}</li>
-              ))}
-            </ul>
-          </section>
+          <Fragment key={key}>
+            <section className="glass-surface glass-subtle mt-6 p-5">
+              <h2 className="mb-4 text-lg font-semibold">{t(labels[key])}</h2>
+              <ul className="list-disc space-y-3 pl-5 text-[var(--cd-fg2)]">
+                {study[key].map((item, idx) => (
+                  <li key={idx}>{translateValue(lang, item)}</li>
+                ))}
+              </ul>
+            </section>
+            {key === 'results' && study.slug === 'diffusion-ood' && <OodDemo />}
+          </Fragment>
         ))}
 
         <section className="glass-surface glass-subtle mt-6 p-5">

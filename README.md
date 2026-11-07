@@ -49,7 +49,7 @@ At `lambda = 0.02`, the three-seed mean improved from a seed-sensitive `92.52% +
 - Industrial report: [Diffusion-Based Multi-class Defect Detection](https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf)
 - Research poster: [Poster PDF](https://ahmed-3m.github.io/research-poster.pdf)
 - Case studies:
-  - [DiffusionOOD](https://ahmed-3m.github.io/case-studies/diffusion-ood)
+  - [DiffusionOOD](https://ahmed-3m.github.io/case-studies/diffusion-ood) — includes an interactive precomputed OOD threshold & metric explorer
   - [InkjetOOD](https://ahmed-3m.github.io/case-studies/inkjet-ood)
   - [Faultrix](https://ahmed-3m.github.io/case-studies/faultrix)
   - [Sihem](https://ahmed-3m.github.io/case-studies/sihem)
@@ -73,7 +73,7 @@ Deployment habits   GitHub Pages (static export), Linux, CUDA, REST APIs, public
 
 ## This Site
 
-The portfolio is a **Next.js 16.4** + **React 19** + TypeScript + Tailwind v4 static export, deployed to GitHub Pages. It features automatic OS dark/light mode (`prefers-color-scheme`) and reduced-transparency adaptation, complete 5-locale internationalization (`en` / `de` / `fr` / `es` / `ar`) across UI and case studies, localized blog posts, the automated daily AI/Agentic [`/news`](https://ahmed-3m.github.io/news/) pipeline (with SSRF-hardened link validation and rolling catalog retention), and a theme-aware chatbot (Genie) powered by a hardened Cloudflare Worker proxy (`worker/chat-proxy.js`). Compact on purpose: fast to scan, easy to verify, anchored to public artifacts.
+The portfolio is a **Next.js 16.4** + **React 19** + TypeScript + Tailwind v4 static export, deployed to GitHub Pages. It features automatic OS dark/light mode (`prefers-color-scheme`) and reduced-transparency adaptation, complete 5-locale internationalization (`en` / `de` / `fr` / `es` / `ar`) across UI and case studies, an interactive Diffusion OOD Explorer on /case-studies/diffusion-ood/, localized blog posts, the automated daily AI/Agentic [`/news`](https://ahmed-3m.github.io/news/) pipeline (with SSRF-hardened link validation and rolling catalog retention), and a theme-aware chatbot (Genie) powered by a hardened Cloudflare Worker proxy (`worker/chat-proxy.js`). Compact on purpose: fast to scan, easy to verify, anchored to public artifacts.
 
 ```bash
 npm ci
