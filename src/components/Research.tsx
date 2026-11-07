@@ -275,6 +275,34 @@ const copy = {
     ar: 'إطارات تصوير حراري صناعي',
   },
   industrialReport: { en: 'View Early Technical Report (2024) ->', de: 'Frühzeitigen Technikbericht ansehen (2024) ->', fr: 'Voir le rapport technique précoce (2024) ->', es: 'Ver informe técnico temprano (2024) ->', ar: 'عرض التقرير التقني المبكر (2024) ->' },
+  diffusionCaseStudy: {
+    en: 'Case Study ->',
+    de: 'Fallstudie ->',
+    fr: 'Étude de cas ->',
+    es: 'Caso de estudio ->',
+    ar: 'دراسة الحالة ->',
+  },
+  diffusionCode: {
+    en: 'Code: DiffusionOOD ->',
+    de: 'Code: DiffusionOOD ->',
+    fr: 'Code : DiffusionOOD ->',
+    es: 'Código: DiffusionOOD ->',
+    ar: 'الكود: DiffusionOOD ->',
+  },
+  diffusionHf: {
+    en: 'HF: Raw Scores & Weights ->',
+    de: 'HF: Rohwerte & Gewichte ->',
+    fr: 'HF : Scores bruts & poids ->',
+    es: 'HF: Puntuaciones y pesos ->',
+    ar: 'HF: النتائج الخام والأوزان ->',
+  },
+  loadInteractiveLab: {
+    en: 'Launch Interactive Thesis Explorer',
+    de: 'Interaktives Thesis-Labor starten',
+    fr: 'Lancer le laboratoire interactif de thèse',
+    es: 'Abrir laboratorio interactivo de tesis',
+    ar: 'تشغيل مختبر الأطروحة التفاعلي',
+  },
 } satisfies Record<string, TranslationMap>
 
 const publications = [
@@ -282,12 +310,39 @@ const publications = [
   { title: 'Reading Thoughts Using GANs', venue: 'Project Report - JKU Linz - 2023', href: 'https://ahmed-3m.github.io/Reading%20Thoughts%20Using%20GANs.pdf' },
 ]
 
+/**
+ * Renders the two-track M.Sc. thesis research section (CIFAR-10 binary CDM OOD detection
+ * and FTI_Zer0P inkjet print quality control) with lightbox figures and the on-demand
+ * interactive thesis explorer.
+ */
 export default function Research() {
   useReveal()
   const { t } = useI18n()
   const [lightbox, setLightbox] = useState<{ type: 'cifar' | 'industrial' | 'formula', index: number } | null>(null)
+  const [shouldRenderLab, setShouldRenderLab] = useState(false)
+  const labContainerRef = useRef<HTMLDivElement>(null)
   const lightboxRef = useRef<HTMLDivElement>(null)
   const lastFocusedRef = useRef<HTMLElement | null>(null)
+
+  useEffect(() => {
+    if (shouldRenderLab) return
+    const node = labContainerRef.current
+    if (!node || typeof IntersectionObserver === 'undefined') {
+      setShouldRenderLab(true)
+      return
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setShouldRenderLab(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '350px 0px' },
+    )
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [shouldRenderLab])
 
   useEffect(() => {
     if (lightbox === null) {
@@ -419,20 +474,41 @@ export default function Research() {
             <div className="cd-rfc-result">{t(copy.latest)}</div>
           </div>
 
-          <OodDemo />
+          <div ref={labContainerRef} style={{ minHeight: shouldRenderLab ? undefined : 120 }}>
+            {shouldRenderLab ? (
+              <OodDemo />
+            ) : (
+              <div style={{ marginTop: 24, marginBottom: 24, textAlign: 'center' }}>
+                <button
+                  type="button"
+                  onClick={() => setShouldRenderLab(true)}
+                  className="cd-proj-link"
+                  style={{
+                    padding: '10px 18px',
+                    borderRadius: 10,
+                    border: '1px solid var(--cd-border)',
+                    background: 'var(--cd-surface)',
+                    cursor: 'pointer',
+                  }}
+                >
+                  {t(copy.loadInteractiveLab)} &rarr;
+                </button>
+              </div>
+            )}
+          </div>
 
           <div className="cd-rf-footer" style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center' }}>
             <a href="https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf" target="_blank" rel="noopener noreferrer" className="cd-proj-link">
               {t(copy.thesisPdf)}
             </a>
             <Link href="/case-studies/diffusion-ood/" className="cd-proj-link" style={{ opacity: 0.85 }}>
-              Case Study -&gt;
+              {t(copy.diffusionCaseStudy)}
             </Link>
             <a href="https://github.com/ahmed-3m/DiffusionOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ opacity: 0.8 }}>
-              Code: DiffusionOOD -&gt;
+              {t(copy.diffusionCode)}
             </a>
             <a href="https://huggingface.co/ahmed-3m/DiffusionOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ opacity: 0.8 }}>
-              HF: Raw Scores &amp; Weights -&gt;
+              {t(copy.diffusionHf)}
             </a>
           </div>
         </div>

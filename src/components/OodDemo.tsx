@@ -214,6 +214,10 @@ const copy = {
   },
 } satisfies Record<string, TranslationMap>
 
+/**
+ * Interactive 3-tab thesis explorer backed by empirical raw PyTorch score histograms
+ * (seed42_*.pt) and ablation JSON artefacts from ahmed-3m/DiffusionOOD.
+ */
 export default function OodDemo() {
   const { t, lang } = useI18n()
   const sliderId = useId()
@@ -236,6 +240,7 @@ export default function OodDemo() {
   const activeMeta = BENCHMARK_DATASETS[datasetKey]
   const activeHist = regime === 'base' ? LAMBDA0_SEED42_HISTOGRAM : activeMeta.histogram
 
+  /** Switches between the separation-loss (lambda=0.02) and baseline (lambda=0.0) regimes. */
   const handleRegimeChange = (next: 'sep' | 'base') => {
     setRegime(next)
     if (next === 'base') {
@@ -246,6 +251,7 @@ export default function OodDemo() {
     }
   }
 
+  /** Selects an evaluation benchmark from Table 6.1 and resets tau to its TPR=95% operating point. */
   const handleDatasetChange = (next: OodDatasetKey) => {
     setRegime('sep')
     setDatasetKey(next)
