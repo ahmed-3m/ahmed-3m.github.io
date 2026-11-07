@@ -1,19 +1,7 @@
 import { type Language } from '@/lib/i18n-config'
+import type { BlogFaqItem, BlogCitation } from './blog-posts-meta'
 
-export interface BlogFaqItem {
-  question: string
-  answer: string
-}
-
-/**
- * Optional Highwire Press citation tags (citation_*) for Google Scholar
- * inclusion — set on posts that describe a formal publication/thesis.
- */
-export interface BlogCitation {
-  title: string
-  date: string
-  pdfUrl: string
-}
+export type { BlogFaqItem, BlogCitation }
 
 export interface BlogPostTranslation {
   title: string

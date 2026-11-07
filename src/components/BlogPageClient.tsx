@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { ArrowLeft, ArrowRight, Calendar, Clock } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
 import { languageLocale } from '@/lib/i18n-config'
-import { getAllBlogPosts } from '@/lib/blog-posts'
+import { getAllBlogPostsMeta } from '@/lib/blog-posts-meta'
 import { serializeJsonLd } from '@/lib/serialize-json-ld'
 
 const copy = {
@@ -34,7 +34,7 @@ const copy = {
 
 export default function BlogPageClient() {
   const { lang, t } = useI18n()
-  const posts = getAllBlogPosts(lang)
+  const posts = getAllBlogPostsMeta(lang)
   const locale = languageLocale[lang]
 
   // JSON-LD is built client-side (the post data already ships in this chunk)
@@ -50,7 +50,7 @@ export default function BlogPageClient() {
       '@type': 'Person',
       name: 'Ahmed Mohammed',
     },
-    blogPost: getAllBlogPosts('en').map((post) => ({
+    blogPost: getAllBlogPostsMeta('en').map((post) => ({
       '@type': 'BlogPosting',
       headline: post.title,
       description: post.excerpt,
@@ -60,7 +60,7 @@ export default function BlogPageClient() {
   }
 
   return (
-    <main className="min-h-screen pb-20 pt-24">
+    <main id="main" tabIndex={-1} className="min-h-screen pb-20 pt-24">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}

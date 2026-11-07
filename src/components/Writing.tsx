@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
-import { getAllBlogPosts } from '@/lib/blog-posts'
+import { getAllBlogPostsMeta } from '@/lib/blog-posts-meta'
 import { useReveal } from '@/lib/useReveal'
 
 const copy = {
@@ -21,7 +21,7 @@ const copy = {
 export default function Writing() {
   useReveal()
   const { lang, t } = useI18n()
-  const posts = getAllBlogPosts(lang).slice(0, 3)
+  const posts = getAllBlogPostsMeta(lang).slice(0, 3)
 
   return (
     <section id="writing" className="cd-section">
@@ -58,7 +58,7 @@ export default function Writing() {
         </div>
 
         <div style={{ textAlign: 'center', marginTop: 32 }}>
-          <Link href="/blog/" className="cd-btn-ghost" style={{ fontSize: 13 }}>
+          <Link href="/blog/" className="cd-btn cd-btn-ghost">
             {t(copy.all)} &rarr;
           </Link>
         </div>

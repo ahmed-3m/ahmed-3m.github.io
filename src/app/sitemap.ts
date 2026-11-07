@@ -1,12 +1,13 @@
+import { caseStudies } from '@/lib/case-studies';
 import { MetadataRoute } from 'next';
-import { getAllBlogPosts } from '@/lib/blog-posts';
+import { getAllBlogPostsMeta } from '@/lib/blog-posts-meta';
 import { getLatestBlogDate, getLatestContentDate, getLatestNewsDate } from '@/lib/content-dates';
 
 export const dynamic = 'force-static';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://ahmed-3m.github.io';
-  const blogPosts = getAllBlogPosts('en');
+  const blogPosts = getAllBlogPostsMeta('en');
 
   // Real content dates instead of build time, so lastModified survives
   // no-op rebuilds and means something to crawlers. Shared with the JSON-LD
@@ -47,26 +48,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly' as const,
       priority: 0.4,
     },
-    {
-      url: `${baseUrl}/case-studies/diffusion-ood/`,
-      lastModified: new Date('2026-05-25'),
-      changeFrequency: 'monthly',
+    ...caseStudies.map((study) => ({
+      url: `${baseUrl}/case-studies/${study.slug}/`,
+      lastModified: new Date(study.lastModified),
+      changeFrequency: 'monthly' as const,
       priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/case-studies/inkjet-ood/`,
-      lastModified: new Date('2026-05-25'),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/case-studies/faultrix/`,
-      lastModified: new Date('2026-05-25'),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-
+    })),
     ...blogPostEntries,
   ];
 }
-

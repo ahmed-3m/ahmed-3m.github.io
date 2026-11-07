@@ -4,12 +4,13 @@ import type { CSSProperties, FormEvent, ReactNode } from 'react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { ArrowUp, X } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
-import { languageName, translateValue, type TranslationMap } from '@/lib/i18n-config'
+import { translateValue, type Language, type TranslationMap } from '@/lib/i18n-config'
+import { buildChatMessages, createRequestTimers } from '@/lib/chat-request'
 
-type ChatRole = 'user' | 'assistant'
-type ApiRole = ChatRole | 'system'
-type PromptId =
+export type ChatRole = 'user' | 'assistant'
+export type PromptId =
   | 'faultrix_intro'
+  | 'faultrix_overview'
   | 'faultrix_stack'
   | 'faultrix_build'
   | 'faultrix_story'
@@ -24,21 +25,20 @@ type PromptId =
   | 'projects_best'
   | 'achievements'
   | 'open_to_work'
+  | 'hire_summary'
+  | 'hire_fit'
   | 'contact'
   | 'tech_stack'
   | 'industrial_pipeline'
   | 'industrial_result'
   | 'product_story'
+  | 'sihem_overview'
+  | 'sihem_tech'
 
-type ChatMessage = {
+export type ChatMessage = {
   role: ChatRole
   content: string
   followUps?: PromptId[]
-}
-
-type ApiMessage = {
-  role: ApiRole
-  content: string
 }
 
 type ApiErrorDetail = { message?: string; type?: string; code?: string }
@@ -52,62 +52,23 @@ type ChatCompletionResponse = {
   error?: string | ApiErrorDetail
 }
 
-type ProviderConfig = {
-  name: 'Groq' | 'BigModel'
-  token: string
-  url: string
-  body: Record<string, unknown>
-  useProxy?: boolean
-}
-
 type ChatCompletionError = Error & {
   status?: number
   code?: string
-  provider?: ProviderConfig['name']
+  provider?: 'Groq' | 'BigModel'
 }
 
-// Groq decommissioned llama-3.1-8b-instant (and llama-3.3-70b-versatile) for
-// free/developer tiers on 2026-08-16; their deprecation guide recommends
-// openai/gpt-oss-20b as the replacement. Override via NEXT_PUBLIC_GROQ_MODEL.
-// https://console.groq.com/docs/deprecations
 const GROQ_MODEL = process.env.NEXT_PUBLIC_GROQ_MODEL || 'openai/gpt-oss-20b'
-// GLM via the Z.ai GLM Coding Plan (api.z.ai — the international host).
-// The Coding Plan uses the dedicated /api/coding/paas/v4 base — distinct from
-// the generic pay-as-you-go /api/paas/v4 path and from the open.bigmodel.cn
-// host (keys are provisioned per platform; a bigmodel.cn key will not
-// authenticate here).
-// GLM-5.3 always runs with thinking enabled and rejects
-// `thinking: { type: 'disabled' }` (which GLM-4.5 accepted), so that
-// parameter must never be sent for this model.
-// Override via NEXT_PUBLIC_BIGMODEL_MODEL.
 const ZAI_MODEL = process.env.NEXT_PUBLIC_BIGMODEL_MODEL || 'glm-5.3'
-// Fast lane for simple prompts — non-thinking, enabled for all Coding Plan
-// tiers. Cuts simple-question latency from ~4.5s (thinking model) to ~1-2s.
-// Override via NEXT_PUBLIC_ZAI_FAST_MODEL.
 const ZAI_FAST_MODEL = process.env.NEXT_PUBLIC_ZAI_FAST_MODEL || 'glm-5-turbo'
-// Tiny classifier that decides fast vs deep for non-obvious prompts.
-// Override via NEXT_PUBLIC_ZAI_ROUTER_MODEL.
 const ZAI_ROUTER_MODEL = process.env.NEXT_PUBLIC_ZAI_ROUTER_MODEL || 'glm-5.3-flash'
 const GROQ_CHAT_URL = 'https://api.groq.com/openai/v1/chat/completions'
 const ZAI_CHAT_URL = 'https://api.z.ai/api/coding/paas/v4/chat/completions'
 const CHAT_PROXY_URL = process.env.NEXT_PUBLIC_CHAT_PROXY_URL
 const MAX_REPLY_CHARS = 1600
 const GENIE_NAME = 'Genie\u{1F9DE}\u200D\u2642\uFE0F'
-// Router lane decision must be near-instant next to the answer it precedes.
 const ROUTER_TIMEOUT_MS = 1500
-// Ceiling on time-to-first-byte for a completion call. Covers the failover
-// path: a provider that hangs (browser-side CORS/network break, black-holed
-// request) must not hold the typing indicator and the provider chain hostage.
-// The clock stops when headers arrive — streaming itself stays unbounded.
 const TTFB_TIMEOUT_MS = 20000
-
-// ── Security model ──────────────────────────────────────────
-// NEXT_PUBLIC_GROQ_TOKEN / NEXT_PUBLIC_BIGMODEL_TOKEN are inlined into
-// the static bundle and publicly extractable. Use disposable, rate-
-// limited keys only. For production, set NEXT_PUBLIC_CHAT_PROXY_URL
-// to a Cloudflare Worker proxy (see worker/README.md) — the proxy
-// holds the real API key server-side, and these tokens become unused.
-// ────────────────────────────────────────────────────────────
 
 const SYSTEM_PROMPT = `You are ${GENIE_NAME}, Ahmed Mohammed's personal assistant.
 
@@ -133,10 +94,10 @@ Facts you can rely on:
 - Ahmed also worked on industrial defect detection at PROFACTOR GmbH / JKU Linz using a YOLO + conditional diffusion pipeline on the public FTI_Zer0P benchmark, reaching a 0.8673 +/- 0.0230 AUROC baseline under strict 5-fold cross-validation.
 - Ahmed built Faultrix, an AI-powered construction quality-control SaaS that analyzed construction photos and generated ONORM-aligned reports in under 1 minute.
 - Faultrix is a completed, discontinued project — always describe it in the past tense, in every language.
-- Ahmed also builds Sihem (since May 2026), an LLM-driven personal-mentor assistant (Telegram bot + installable PWA) with proactive cron-driven check-ins, pgvector long-term memory, and multi-provider LLM routing. It is his personal side project, accepted into the tech2b incubator in Linz, and in beta at @sihem_ai_bot.
-- Experience timeline: M.Sc. Thesis Researcher, Machine Vision at the JKU Institute for Machine Learning with PROFACTOR GmbH (Apr 2024 - Jul 2026, project Zer0P); AI Research Intern at Karunya University, India (Aug - Oct 2023, EEG motor imagery); Technical Staff, Electronics at Ledzone, Istanbul (2018 - Oct 2020). Faultrix was a past side project, not employment.
+- Ahmed also builds Sihem (since May 2026), an LLM-driven personal-mentor assistant (Telegram bot @sihem_ai_bot + installable PWA at https://sihem-pwa.pages.dev/) with a deterministic generators->arbiter->composer decision engine, proactive cron-driven check-ins, pgvector long-term memory with RAG, multi-provider LLM routing (GLM/Gemini/Groq), Cloudflare MeloTTS voice reminders, and Google Calendar sync. It is his personal side project, accepted into the tech2b incubator in Linz.
+- Experience timeline: Solo Developer & Project Lead at Sihem (side project · tech2b incubator, Linz, May 2026–Present); M.Sc. Thesis Researcher, Machine Vision at the JKU Institute for Machine Learning with PROFACTOR GmbH (Apr 2024 - Jul 2026, project Zer0P); AI Research Intern at Karunya University, India (Aug - Oct 2023, EEG motor imagery); Technical Staff, Electronics at Ledzone, Istanbul (2018 - Oct 2020). Faultrix was a past side project, not employment.
 - Before AI he earned a B.Sc. in Mechatronics Engineering at Eastern Mediterranean University, Cyprus (2015 - 2018).
-- Availability: open to AI/ML engineering roles, available full time from October 2026, and eligible for the Austrian Rot-Weiss-Rot Karte for graduates (no labour-market test, no quota, no sponsorship cost for the employer).
+- Availability: open to AI/ML engineering roles, available full time, and eligible for the Austrian Rot-Weiss-Rot Karte for graduates (no labour-market test, no quota, no sponsorship cost for the employer).
 - The Faultrix stack included Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2, and Stripe.
 - Contact: ahmed.mo.0595@gmail.com
 - LinkedIn: https://www.linkedin.com/in/ahmed-3m/
@@ -181,11 +142,11 @@ const CHAT_COPY = {
     ar: 'إغلاق الدردشة',
   },
   open: {
-    en: 'Open chat',
-    de: 'Chat öffnen',
-    fr: 'Ouvrir le chat',
-    es: 'Abrir chat',
-    ar: 'فتح الدردشة',
+    en: 'Ask Genie',
+    de: 'Genie fragen',
+    fr: 'Demander à Genie',
+    es: 'Preguntar a Genie',
+    ar: 'اسأل جيني',
   },
   send: {
     en: 'Send message',
@@ -217,13 +178,34 @@ const CHAT_COPY = {
   },
 } satisfies Record<string, TranslationMap>
 
-const PROMPTS: Record<PromptId, TranslationMap> = {
+export const PROMPT_LIBRARY: Record<PromptId, TranslationMap> = {
+  sihem_overview: {
+    en: 'What is Sihem?',
+    de: 'Was ist Sihem?',
+    fr: 'Qu’est-ce que Sihem ?',
+    es: '¿Qué es Sihem?',
+    ar: 'ما هو مشروع Sihem؟',
+  },
+  sihem_tech: {
+    en: "How does Sihem's generators→arbiter→composer engine, pgvector memory, and multi-provider LLM routing work?",
+    de: 'Wie funktionieren Sihems Generatoren→Arbiter→Komponor-Engine, pgvector-Gedächtnis und Multi-Provider-LLM-Routing?',
+    fr: 'Comment fonctionnent le moteur générateurs→arbitre→compositeur, la mémoire pgvector et le routage LLM multi-fournisseurs de Sihem ?',
+    es: '¿Cómo funcionan el motor generadores→árbitro→compositor, la memoria pgvector y el enrutamiento LLM multiproveedor de Sihem?',
+    ar: 'كيف يعمل محرك المولدات←المحكم←المؤلف وذاكرة pgvector وتوجيه LLM متعدد المزودين في Sihem؟',
+  },
   faultrix_intro: {
     en: 'What was Faultrix?',
     de: 'Was war Faultrix?',
     fr: 'Qu’était Faultrix ?',
     es: '¿Qué era Faultrix?',
     ar: 'ماذا كان Faultrix؟',
+  },
+  faultrix_overview: {
+    en: 'Tell me about Faultrix',
+    de: 'Erzähl mir von Faultrix',
+    fr: 'Parlez-moi de Faultrix',
+    es: 'Cuéntame sobre Faultrix',
+    ar: 'حدثني عن Faultrix',
   },
   faultrix_stack: {
     en: 'What was the Faultrix tech stack?',
@@ -323,6 +305,20 @@ const PROMPTS: Record<PromptId, TranslationMap> = {
     es: '¿Está abierto a nuevas oportunidades?',
     ar: 'هل هو متاح لفرص عمل؟',
   },
+  hire_summary: {
+    en: 'Is Ahmed available for hire?',
+    de: 'Ist Ahmed für Stellen verfügbar?',
+    fr: 'Ahmed est-il disponible pour un recrutement ?',
+    es: '¿Está disponible Ahmed para contratación?',
+    ar: 'هل أحمد متاح للتوظيف؟',
+  },
+  hire_fit: {
+    en: 'What roles fit him best?',
+    de: 'Welche Rollen passen am besten zu ihm?',
+    fr: 'Quels rôles lui conviennent le mieux ?',
+    es: '¿Qué puestos se adaptan mejor a él?',
+    ar: 'ما الأدوار الأنسب له؟',
+  },
   contact: {
     en: 'How can I contact him?',
     de: 'Wie kann ich ihn kontaktieren?',
@@ -360,16 +356,98 @@ const PROMPTS: Record<PromptId, TranslationMap> = {
   },
 }
 
-const DEFAULT_PROMPTS: PromptId[] = [
-  'faultrix_intro',
+export const PROMPTS = PROMPT_LIBRARY
+
+export const STARTER_PROMPT_IDS: PromptId[] = [
   'thesis_summary',
-  'tech_stack',
-  'open_to_work',
-  'achievements',
-  'contact',
+  'sihem_overview',
+  'faultrix_overview',
+  'hire_summary',
 ]
 
+export const LOCAL_REPLIES = {
+  sihem: {
+    en: `Sihem (Telegram @sihem_ai_bot, PWA: https://sihem-pwa.pages.dev/) is Ahmed's proactive AI personal-mentor and habits/daily-routine assistant, accepted into the tech2b incubator in Linz (May 2026–Present). Built on Supabase Edge Functions (Deno/TypeScript) and PostgreSQL with RLS, it features a deterministic generators→arbiter→composer decision engine for non-spammy check-ins, pgvector long-term memory with RAG, multi-provider LLM routing (GLM/Gemini/Groq) with automated failover, Cloudflare MeloTTS voice reminders, and Google Calendar sync.`,
+    de: `Sihem (Telegram @sihem_ai_bot, PWA: https://sihem-pwa.pages.dev/) ist Ahmeds proaktiver KI-Mentor-Assistent für Gewohnheiten und Tagesroutinen, aufgenommen in den tech2b-Inkubator in Linz (Mai 2026–heute). Entwickelt auf Supabase Edge Functions (Deno/TypeScript) und PostgreSQL mit RLS, nutzt das System eine deterministische Generatoren→Arbiter→Komponor-Entscheidungsmaschine für adaptive Check-Ins, pgvector-Langzeitgedächtnis mit RAG, Multi-Provider-LLM-Routing (GLM/Gemini/Groq) mit Failover, Cloudflare MeloTTS-Spracherinnerungen und Google-Kalender-Synchronisation.`,
+    fr: `Sihem (Telegram @sihem_ai_bot, PWA : https://sihem-pwa.pages.dev/) est l'assistant personnel mentor proactif d'Ahmed pour les habitudes et routines quotidiennes, incubé chez tech2b à Linz (mai 2026–présent). Développé sur Supabase Edge Functions (Deno/TypeScript) et PostgreSQL avec RLS, il intègre un moteur décisionnel générateurs→arbitre→compositeur pour des rappels adaptatifs, une mémoire long terme pgvector avec RAG, un routage LLM multi-fournisseurs (GLM/Gemini/Groq) avec basculement automatique, des rappels vocaux Cloudflare MeloTTS et la synchronisation Google Calendar.`,
+    es: `Sihem (Telegram @sihem_ai_bot, PWA: https://sihem-pwa.pages.dev/) es el asistente mentor personal proactivo de Ahmed para hábitos y rutinas diarias, aceptado en la incubadora tech2b de Linz (mayo 2026–presente). Desarrollado con Supabase Edge Functions (Deno/TypeScript) y PostgreSQL con RLS, cuenta con un motor de decisiones generadores→árbitro→compositor para recordatorios adaptativos, memoria a largo plazo pgvector con RAG, enrutamiento LLM multiproveedor (GLM/Gemini/Groq) con failover, avisos de voz Cloudflare MeloTTS y sincronización con Google Calendar.`,
+    ar: `مشروع Sihem (تيليجرام @sihem_ai_bot، وتطبيق الويب: https://sihem-pwa.pages.dev/) هو مساعد شخصي موجه واستباقي للعادات والروتين اليومي من تطوير أحمد، ومقبول في حاضنة الأعمال tech2b في لينز (مايو 2026 – الآن). مبني على Supabase Edge Functions (Deno/TypeScript) وPostgreSQL مع RLS، ويتميز بمحرك قرار حتمي (مولدات←محكم←مؤلف) لتنبيهات تكيفية غير مزعجة، وذاكرة pgvector طويلة المدى مع RAG، وتوجيه LLM متعدد المزودين (GLM/Gemini/Groq) مع تبديل تلقائي، وتذكيرات صوتية بـ Cloudflare MeloTTS، ومزامنة Google Calendar.`,
+  },
+  thesis: {
+    en: `Ahmed's thesis used conditional diffusion models as generative classifiers for out-of-distribution detection. The key idea was to compare class-conditional reconstruction behavior and use the gap as the anomaly signal. The main contribution was a class-conditional separation loss that pushed competing explanations apart, achieving 99.03% ± 0.07% AUROC on a within-CIFAR airplane-vs-rest binary split (+6.5 pp over non-separated baseline). Supervised by Prof. Sepp Hochreiter at JKU Linz.`,
+    de: `Ahmeds Thesis nutzte konditionale Diffusionsmodelle als generative Klassifikatoren für Out-of-Distribution-Erkennung. Kernbeitrag war eine class-conditional separation loss, die 99,03 % ± 0,07 % AUROC auf einem Within-CIFAR Airplane-vs-Rest Binary-Split erzielte (+6,5 Prozentpunkte über der Baseline ohne Separation). Betreut von Prof. Sepp Hochreiter an der JKU Linz.`,
+    fr: `Le mémoire d'Ahmed utilise des modèles de diffusion conditionnels comme classificateurs génératifs pour la détection out-of-distribution. La contribution principale est une class-conditional separation loss, atteignant 99,03 % ± 0,07 % d'AUROC sur un split binaire within-CIFAR (+6,5 points par rapport à la baseline). Supervisé par le Prof. Sepp Hochreiter à JKU Linz.`,
+    es: `La tesis de Ahmed usó modelos de difusión condicional como clasificadores generativos para detección out-of-distribution. La contribución principal fue una class-conditional separation loss, alcanzando 99.03% ± 0.07% AUROC en un split binario within-CIFAR (+6.5 pp sobre la línea base). Supervisada por el Prof. Sepp Hochreiter en JKU Linz.`,
+    ar: `استخدمت رسالة أحمد نماذج الانتشار الشرطية كمصنفات توليدية لكشف OOD. والمساهمة الأساسية كانت دالة الفقد الطبقي الشرطي (separation loss) محققة 99.03% ± 0.07% AUROC على تقسيم ثنائي within-CIFAR (+6.5 نقطة فوق الأساس). تحت إشراف البروفيسور سيب هوخريتر في جامعة JKU لينز.`,
+  },
+  faultrix: {
+    en: `Faultrix was Ahmed's AI-powered construction quality control SaaS. It analyzed site photos and generated ÖNORM B 2110-compliant technical reports in under 1 minute with SHA-256 evidence chain and DSGVO compliance. Stack: Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2, Stripe.`,
+    de: `Faultrix war Ahmeds KI-gestütztes SaaS für Bauqualitätskontrolle. Es analysierte Baustellenfotos und erstellte ÖNORM B 2110-konforme Berichte in unter 1 Minute mit SHA-256-Beweiskette und DSGVO-Konformität. Stack: Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2, Stripe.`,
+    fr: `Faultrix était le SaaS de contrôle qualité construction basé sur l'IA d'Ahmed. Il analysait les photos de chantier et générait des rapports conformes ÖNORM B 2110 en moins d'une minute avec chaîne de preuves SHA-256 et conformité RGPD.`,
+    es: `Faultrix fue el SaaS de control de calidad para construcción con IA de Ahmed. Analizaba fotos de obra y generaba informes según ÖNORM B 2110 en menos de 1 minuto con cadena de custodia SHA-256 y cumplimiento RGPD.`,
+    ar: `كان Faultrix منصة SaaS للتحكم بجودة البناء بالذكاء الاصطناعي من تطوير أحمد. يقوم بتحليل صور الموقع وتوليد تقارير متوافقة مع معيار ÖNORM B 2110 في أقل من دقيقة مع سلسلة توثيق SHA-256 وتوافق DSGVO.`,
+  },
+  contact: {
+    en: `Ahmed Mohammed's contact details:\n- Email: ahmed.mo.0595@gmail.com\n- LinkedIn: https://www.linkedin.com/in/ahmed-3m/\n- GitHub: https://github.com/ahmed-3m\n- Website: https://ahmed-3m.github.io`,
+    de: `Kontaktdaten von Ahmed Mohammed:\n- E-Mail: ahmed.mo.0595@gmail.com\n- LinkedIn: https://www.linkedin.com/in/ahmed-3m/\n- GitHub: https://github.com/ahmed-3m\n- Website: https://ahmed-3m.github.io`,
+    fr: `Coordonnées d'Ahmed Mohammed :\n- Email : ahmed.mo.0595@gmail.com\n- LinkedIn : https://www.linkedin.com/in/ahmed-3m/\n- GitHub : https://github.com/ahmed-3m\n- Site : https://ahmed-3m.github.io`,
+    es: `Datos de contacto de Ahmed Mohammed:\n- Correo: ahmed.mo.0595@gmail.com\n- LinkedIn: https://www.linkedin.com/in/ahmed-3m/\n- GitHub: https://github.com/ahmed-3m\n- Sitio web: https://ahmed-3m.github.io`,
+    ar: `بيانات التواصل مع أحمد محمد:\n- البريد: ahmed.mo.0595@gmail.com\n- LinkedIn: https://www.linkedin.com/in/ahmed-3m/\n- GitHub: https://github.com/ahmed-3m\n- الموقع: https://ahmed-3m.github.io`,
+  },
+  open_to_work: {
+    en: `Yes, Ahmed is open to AI/ML engineering roles and research collaborations. Based in Linz, Austria, he is eligible for the Austrian Rot-Weiß-Rot Karte for graduates (no quota, no labour-market test). Contact: ahmed.mo.0595@gmail.com.`,
+    de: `Ja, Ahmed ist offen für AI/ML-Positionen und Forschungskooperationen. Ansässig in Linz, Österreich, qualifiziert für die Rot-Weiß-Rot-Karte für Hochschulabsolventen (keine Quote, keine Arbeitsmarktprüfung). Kontakt: ahmed.mo.0595@gmail.com.`,
+    fr: `Oui, Ahmed est ouvert aux postes d'ingénieur IA/ML et collaborations de recherche. Basé à Linz (Autriche), éligible à la carte Rot-Weiß-Rot pour diplômés. Contact : ahmed.mo.0595@gmail.com.`,
+    es: `Sí, Ahmed está disponible para roles de ingeniería IA/ML y colaboraciones de investigación. Radicado en Linz, Austria, elegible para la tarjeta Rot-Weiß-Rot para graduados. Contacto: ahmed.mo.0595@gmail.com.`,
+    ar: `نعم، أحمد متاح لوظائف هندسة الذكاء الاصطناعي (AI/ML) والتعاون البحثي. يقيم في لينز، النمسا، ومؤهل لبطاقة Rot-Weiß-Rot Karte للخريجين. للتواصل: ahmed.mo.0595@gmail.com.`,
+  },
+  tech_stack: {
+    en: `Ahmed's stack spans AI research and production engineering:\n- ML: PyTorch, Python, Diffusion Models, YOLO, OpenCV, Anomaly Detection\n- Product/Infra: Next.js, React, TypeScript, Convex, Docker, PostgreSQL, Cloudflare\n- Tools: Git, Weights & Biases, Hugging Face, Linux`,
+    de: `Ahmeds Stack umfasst KI-Forschung und Produktionsentwicklung:\n- ML: PyTorch, Python, Diffusionsmodelle, YOLO, OpenCV, Anomalieerkennung\n- Produkt/Infra: Next.js, React, TypeScript, Convex, Docker, PostgreSQL, Cloudflare\n- Tools: Git, Weights & Biases, Hugging Face, Linux`,
+    fr: `Le stack d'Ahmed couvre la recherche IA et la production :\n- ML : PyTorch, Python, Modèles de diffusion, YOLO, OpenCV, Détection d'anomalies\n- Produit/Infra : Next.js, React, TypeScript, Convex, Docker, PostgreSQL, Cloudflare\n- Outils : Git, Weights & Biases, Hugging Face, Linux`,
+    es: `El stack de Ahmed abarca investigación en IA e ingeniería de producción:\n- ML: PyTorch, Python, Modelos de difusión, YOLO, OpenCV, Detección de anomalías\n- Producto/Infra: Next.js, React, TypeScript, Convex, Docker, PostgreSQL, Cloudflare\n- Herramientas: Git, Weights & Biases, Hugging Face, Linux`,
+    ar: `يشمل الـ stack الخاص بأحمد أبحاث الذكاء الاصطناعي وهندسة الإنتاج:\n- تعلم الآلة: PyTorch وPython ونماذج الانتشار وYOLO وOpenCV وكشف الشذوذ\n- المنتج والبنية: Next.js وReact وTypeScript وConvex وDocker وPostgreSQL وCloudflare\n- الأدوات: Git وWeights & Biases وHugging Face وLinux`,
+  },
+  achievements: {
+    en: `Key proof points:\n- 99.03% ± 0.07% AUROC on within-CIFAR airplane-vs-rest binary OOD split with novel class-conditional separation loss (M.Sc. thesis under Prof. Sepp Hochreiter, graded 1)\n- 98.4% industrial defect detection accuracy in production at PROFACTOR GmbH (FTI_Zer0P benchmark, 0.8673 ± 0.0230 AUROC baseline under 5-fold CV)\n- Solo Developer & Project Lead at Sihem (tech2b incubator Linz, proactive AI personal-mentor assistant)\n- Built and launched Faultrix (ÖNORM construction compliance SaaS)`,
+    de: `Wichtige Meilensteine:\n- 99,03 % ± 0,07 % AUROC auf Within-CIFAR Airplane-vs-Rest Binary OOD Split mit class-conditional separation loss (Masterarbeit bei Prof. Sepp Hochreiter, Note 1)\n- 98,4 % industrielle Defekterkennungsgenauigkeit in der Produktion bei PROFACTOR GmbH (0,8673 ± 0,0230 AUROC)\n- Solo-Entwickler & Projektleiter bei Sihem (tech2b Inkubator Linz, proaktiver KI-Mentor-Assistent)\n- Gründer von Faultrix (ÖNORM-Bau-Compliance SaaS)`,
+    fr: `Principaux résultats :\n- 99,03 % ± 0,07 % AUROC sur split binaire within-CIFAR avec separation loss (mémoire dirigé par Prof. Sepp Hochreiter, note 1)\n- 98,4 % de précision en détection de défauts industriels en production chez PROFACTOR GmbH\n- Développeur solo & chef de projet chez Sihem (incubateur tech2b Linz, assistant mentor IA proactif)\n- Fondateur de Faultrix (SaaS de conformité ÖNORM)`,
+    es: `Logros destacados:\n- 99.03% ± 0.07% AUROC en split binario within-CIFAR con separation loss (tesis con Prof. Sepp Hochreiter, nota 1)\n- 98.4% de precisión en detección de defectos industriales en PROFACTOR GmbH\n- Desarrollador en solitario y líder de proyecto en Sihem (incubadora tech2b Linz, asistente mentor IA proactivo)\n- Creador de Faultrix (SaaS de cumplimiento ÖNORM)`,
+    ar: `أبرز الإنجازات:\n- 99.03% ± 0.07% AUROC في كشف OOD على تقسيم within-CIFAR الثنائي مع separation loss (رسالة الماجستير بإشراف Prof. Sepp Hochreiter، تقدير ممتاز 1)\n- دقة 98.4% في كشف العيوب الصناعية في الإنتاج لدى PROFACTOR GmbH (خط أساس 0.8673 ± 0.0230 AUROC)\n- مطور منفرد وقائد مشروع في Sihem (حاضنة tech2b لينز، مساعد موجه بالذكاء الاصطناعي استباقي)\n- مؤسس Faultrix (منصة SaaS للامتثال لمعيار ÖNORM)`,
+  },
+} satisfies Record<string, TranslationMap>
+
+export function getLocalReply(prompt: string, lang: Language): string | null {
+  const text = prompt.toLowerCase()
+  if (/\b(sihem|mentor|habit|routine|telegram|tech2b|pgvector)\b/i.test(text)) {
+    return translateValue(lang, LOCAL_REPLIES.sihem)
+  }
+  if (/\b(thesis|separation loss|ood|out.?of.?distribution|cifar|auroc)\b/i.test(text)) {
+    return translateValue(lang, LOCAL_REPLIES.thesis)
+  }
+  if (/(faultrix|construction|onorm|dsgvo|report)/i.test(text)) {
+    return translateValue(lang, LOCAL_REPLIES.faultrix)
+  }
+  if (/(contact|email|linkedin|github|website|reach|talk to|connect)/i.test(text)) {
+    return translateValue(lang, LOCAL_REPLIES.contact)
+  }
+  if (/(open to work|available|hire|job|role|opportunit)/i.test(text)) {
+    return translateValue(lang, LOCAL_REPLIES.open_to_work)
+  }
+  if (/(tech stack|stack|tools|technolog)/i.test(text)) {
+    return translateValue(lang, LOCAL_REPLIES.tech_stack)
+  }
+  if (/(achievement|accomplishment|highlights|best result|proof points)/i.test(text)) {
+    return translateValue(lang, LOCAL_REPLIES.achievements)
+  }
+  return null
+}
+
 const FOLLOWUP_RULES: Array<{ pattern: RegExp; prompts: PromptId[] }> = [
+  {
+    pattern: /\b(sihem|mentor|habit|routine|telegram|tech2b|pgvector)\b/i,
+    prompts: ['sihem_tech', 'faultrix_overview', 'hire_fit'],
+  },
   {
     pattern: /faultrix|construction|report|onorm|dsgvo|sha|aes/i,
     prompts: ['faultrix_stack', 'faultrix_speed', 'faultrix_compliance', 'faultrix_build', 'faultrix_story', 'product_story'],
@@ -384,7 +462,7 @@ const FOLLOWUP_RULES: Array<{ pattern: RegExp; prompts: PromptId[] }> = [
   },
   {
     pattern: /project|github|work|portfolio/i,
-    prompts: ['projects_best', 'achievements', 'thesis_summary', 'faultrix_intro'],
+    prompts: ['projects_best', 'achievements', 'thesis_summary', 'sihem_overview'],
   },
   {
     pattern: /job|role|hire|available|open to work|contact|email|linkedin/i,
@@ -412,7 +490,7 @@ function shortenReply(reply: string): string {
 
 function createChatError(
   message: string,
-  provider: ProviderConfig['name'],
+  provider: 'Groq' | 'BigModel',
   status?: number,
   code?: string
 ): ChatCompletionError {
@@ -432,152 +510,9 @@ type StreamChunk = ChatCompletionResponse & {
   }>
 }
 
-/**
- * fetch with a time-to-first-byte ceiling: if no response headers arrive
- * within `timeoutMs`, the request is aborted and rethrown as a provider-tagged
- * error so the failover chain can move on. Once headers arrive the clock is
- * cleared — reading (or streaming) the body is not bounded.
- */
-async function fetchWithTimeout(
-  url: string,
-  init: RequestInit,
-  timeoutMs: number,
-  providerName: ProviderConfig['name']
-): Promise<Response> {
-  const controller = new AbortController()
-  const timeout = setTimeout(() => controller.abort(), timeoutMs)
-  try {
-    return await fetch(url, { ...init, signal: controller.signal })
-  } catch (networkError) {
-    if (networkError instanceof DOMException && networkError.name === 'AbortError') {
-      throw createChatError(`${providerName} did not respond in time.`, providerName)
-    }
-    throw networkError
-  } finally {
-    clearTimeout(timeout)
-  }
-}
-
-/**
- * Requests a chat completion. When `onDelta` is provided the request streams
- * (OpenAI-compatible SSE) and invokes `onDelta` with the full accumulated
- * content on every token — the caller renders progressively. Without it, the
- * call is a plain JSON completion (used by the model router).
- *
- * A stream that dies mid-flight after content has arrived returns the partial
- * text rather than throwing, so a transient blip can't blank a reply the user
- * is already reading.
- */
-async function requestChatCompletion(
-  provider: ProviderConfig,
-  onDelta?: StreamDelta
-): Promise<string> {
-  const headers: Record<string, string> = { 'Content-Type': 'application/json' }
-  // When using the Cloudflare Worker proxy, the Authorization header is added
-  // server-side from a secret — the browser must NOT send the public token.
-  if (provider.token && !provider.useProxy) {
-    headers.Authorization = `Bearer ${provider.token}`
-  }
-
-  const streaming = Boolean(onDelta)
-  const response = await fetchWithTimeout(
-    provider.url,
-    {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({ ...provider.body, stream: streaming }),
-    },
-    TTFB_TIMEOUT_MS,
-    provider.name
-  )
-
-  if (!response.ok) {
-    const data = (await response.json().catch(() => ({}))) as ChatCompletionResponse
-    const errorDetail = typeof data.error === 'string' ? undefined : data.error
-    const message =
-      typeof data.error === 'string'
-        ? data.error
-        : errorDetail?.message ?? `${provider.name} could not respond right now.`
-
-    if (provider.name === 'Groq' && response.status === 503) {
-      throw createChatError('Model is warming up, try again in a moment.', provider.name, response.status)
-    }
-
-    throw createChatError(message, provider.name, response.status, errorDetail?.code)
-  }
-
-  if (!streaming || !response.body) {
-    const data = (await response.json()) as ChatCompletionResponse
-    const reply = data.choices?.[0]?.message?.content?.trim()
-    if (!reply) throw createChatError(`${provider.name} returned an empty response.`, provider.name)
-    return reply
-  }
-
-  const reader = response.body.getReader()
-  const decoder = new TextDecoder()
-  let buffer = ''
-  let content = ''
-
-  const consumeLine = (line: string) => {
-    const trimmed = line.trim()
-    if (!trimmed.startsWith('data:')) return
-    const payload = trimmed.slice(5).trim()
-    if (!payload || payload === '[DONE]') return
-    let chunk: StreamChunk
-    try {
-      chunk = JSON.parse(payload) as StreamChunk
-    } catch {
-      return // partial or keepalive line
-    }
-    if (chunk.error) {
-      const message =
-        typeof chunk.error === 'string'
-          ? chunk.error
-          : chunk.error.message ?? `${provider.name} stream failed.`
-      throw createChatError(message, provider.name)
-    }
-    const delta = chunk.choices?.[0]?.delta?.content
-    if (delta) {
-      content += delta
-      onDelta?.(content)
-    }
-  }
-
-  try {
-    for (;;) {
-      const { done, value } = await reader.read()
-      if (done) break
-      buffer += decoder.decode(value, { stream: true })
-      const lines = buffer.split('\n')
-      buffer = lines.pop() ?? ''
-      for (const line of lines) consumeLine(line)
-    }
-    if (buffer) consumeLine(buffer)
-  } catch (streamError) {
-    if (content.trim()) {
-      console.warn(`Chat stream from ${provider.name} ended early — keeping partial reply.`, streamError)
-      return content.trim()
-    }
-    throw streamError
-  }
-
-  if (!content.trim()) {
-    throw createChatError(`${provider.name} returned an empty response.`, provider.name)
-  }
-  return content.trim()
-}
-
-// ── Model routing ───────────────────────────────────────────
-// glm-5.3 always thinks (slow but thorough); glm-5-turbo is fast for
-// simple prompts. A tiny flash-model classifier picks the lane for
-// non-obvious prompts, with zero-latency local shortcuts for the
-// clearest cases and a 'deep' default whenever routing is uncertain.
-
 type ChatLane = 'fast' | 'deep'
 
-// Pure social messages: never worth a router call.
 const SOCIAL_PATTERN = /^(hi|hey|hello|yo|good (morning|afternoon|evening)|thanks|thank you|thx|ok|okay|great|nice|cool|bye|goodbye)[\s!.?]*$/i
-// Unmistakably analytical asks: go straight to the deep model.
 const DEEP_PATTERN = /\b(explain|compare|why|how (does|do|did|would|to think)|walk me|deep dive|detailed|difference between|pros and cons|evaluate|critique)\b/i
 
 function routeLocally(message: string): ChatLane | null {
@@ -586,11 +521,6 @@ function routeLocally(message: string): ChatLane | null {
   return null
 }
 
-/**
- * Routes a message to either the fast or deep model lane using a lightweight
- * classifier. Times out after 1.5s and defaults to deep on any failure to
- * preserve answer quality.
- */
 async function routeWithClassifier(
   message: string,
   auth: { token: string; url: string; useProxy: boolean }
@@ -598,9 +528,10 @@ async function routeWithClassifier(
   try {
     const headers: Record<string, string> = { 'Content-Type': 'application/json' }
     if (auth.token && !auth.useProxy) headers.Authorization = `Bearer ${auth.token}`
-    const response = await fetchWithTimeout(
-      auth.url,
-      {
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), ROUTER_TIMEOUT_MS)
+    try {
+      const response = await fetch(auth.url, {
         method: 'POST',
         headers,
         body: JSON.stringify({
@@ -615,23 +546,274 @@ async function routeWithClassifier(
           temperature: 0,
           stream: false,
         }),
-      },
-      ROUTER_TIMEOUT_MS,
-      'BigModel'
-    )
-    if (!response.ok) return 'deep'
-    const data = (await response.json()) as ChatCompletionResponse
-    const verdict = data.choices?.[0]?.message?.content?.trim().toLowerCase() ?? ''
-    return verdict.includes('fast') ? 'fast' : 'deep'
+        signal: controller.signal,
+      })
+      if (!response.ok) return 'deep'
+      const data = (await response.json()) as ChatCompletionResponse
+      const verdict = data.choices?.[0]?.message?.content?.trim().toLowerCase() ?? ''
+      return verdict.includes('fast') ? 'fast' : 'deep'
+    } finally {
+      clearTimeout(timeout)
+    }
   } catch {
-    // Router unavailable, timed out, or unparsable — keep quality.
     return 'deep'
+  }
+}
+
+type ProviderAuth = { token: string; url: string; useProxy: boolean }
+
+async function fetchBigModel({
+  messages,
+  auth,
+  lane,
+  onDelta,
+}: {
+  messages: readonly ChatMessage[]
+  auth: ProviderAuth
+  lane: ChatLane
+  onDelta?: StreamDelta
+}): Promise<string> {
+  const model = lane === 'fast' ? ZAI_FAST_MODEL : ZAI_MODEL
+  const maxTokens = lane === 'fast' ? 380 : 1200
+  const payloadMessages = buildChatMessages(SYSTEM_PROMPT, messages)
+
+  const headers: Record<string, string> = { 'Content-Type': 'application/json' }
+  if (auth.token && !auth.useProxy) {
+    headers.Authorization = `Bearer ${auth.token}`
+  }
+
+  const controller = new AbortController()
+  const timers = createRequestTimers({
+    firstByteMs: TTFB_TIMEOUT_MS,
+    idleMs: 15_000,
+    totalMs: 60_000,
+    onTimeout: (reason) => {
+      controller.abort(createChatError(`BigModel timed out (${reason})`, 'BigModel'))
+    },
+  })
+
+  try {
+    const streaming = Boolean(onDelta)
+    const response = await fetch(auth.url, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        model,
+        messages: payloadMessages,
+        max_tokens: maxTokens,
+        temperature: 0.5,
+        stream: streaming,
+        ...(lane === 'deep' ? { reasoning_effort: 'low' } : {}),
+      }),
+      signal: controller.signal,
+    })
+
+    if (!response.ok) {
+      const data = (await response.json().catch(() => ({}))) as ChatCompletionResponse
+      const errorDetail = typeof data.error === 'string' ? undefined : data.error
+      const message =
+        typeof data.error === 'string'
+          ? data.error
+          : errorDetail?.message ?? 'BigModel could not respond right now.'
+      throw createChatError(message, 'BigModel', response.status, errorDetail?.code)
+    }
+
+    if (!streaming || !response.body) {
+      timers.onFirstByte()
+      const data = (await response.json()) as ChatCompletionResponse
+      const reply = data.choices?.[0]?.message?.content?.trim()
+      if (!reply) throw createChatError('BigModel returned an empty response.', 'BigModel')
+      return reply
+    }
+
+    timers.onFirstByte()
+
+    const reader = response.body.getReader()
+    const decoder = new TextDecoder()
+    let buffer = ''
+    let content = ''
+
+    const consumeLine = (line: string) => {
+      const trimmed = line.trim()
+      if (!trimmed.startsWith('data:')) return
+      const payload = trimmed.slice(5).trim()
+      if (!payload || payload === '[DONE]') return
+      let chunk: StreamChunk
+      try {
+        chunk = JSON.parse(payload) as StreamChunk
+      } catch {
+        return
+      }
+      if (chunk.error) {
+        const message =
+          typeof chunk.error === 'string'
+            ? chunk.error
+            : chunk.error.message ?? 'BigModel stream failed.'
+        throw createChatError(message, 'BigModel')
+      }
+      const delta = chunk.choices?.[0]?.delta?.content
+      if (delta) {
+        content += delta
+        onDelta?.(content)
+      }
+    }
+
+    try {
+      for (;;) {
+        const { done, value } = await reader.read()
+        if (done) break
+        timers.onChunk()
+        buffer += decoder.decode(value, { stream: true })
+        const lines = buffer.split('\n')
+        buffer = lines.pop() ?? ''
+        for (const line of lines) consumeLine(line)
+      }
+      if (buffer) consumeLine(buffer)
+    } catch (streamError) {
+      if (content.trim()) {
+        console.warn('Chat stream from BigModel ended early — keeping partial reply.', streamError)
+        return content.trim()
+      }
+      throw streamError
+    }
+
+    if (!content.trim()) {
+      throw createChatError('BigModel returned an empty response.', 'BigModel')
+    }
+    return content.trim()
+  } finally {
+    timers.clear()
+  }
+}
+
+async function fetchGroq({
+  messages,
+  auth,
+  onDelta,
+}: {
+  messages: readonly ChatMessage[]
+  auth: ProviderAuth
+  onDelta?: StreamDelta
+}): Promise<string> {
+  const payloadMessages = buildChatMessages(SYSTEM_PROMPT, messages)
+
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+  }
+  if (!auth.useProxy && auth.token) {
+    headers.Authorization = `Bearer ${auth.token}`
+  }
+
+  const controller = new AbortController()
+  const timers = createRequestTimers({
+    firstByteMs: TTFB_TIMEOUT_MS,
+    idleMs: 15_000,
+    totalMs: 60_000,
+    onTimeout: (reason) => {
+      controller.abort(createChatError(`Groq timed out (${reason})`, 'Groq'))
+    },
+  })
+
+  try {
+    const streaming = Boolean(onDelta)
+    const response = await fetch(auth.url, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        model: GROQ_MODEL,
+        messages: payloadMessages,
+        max_tokens: 380,
+        temperature: 0.5,
+        stream: streaming,
+      }),
+      signal: controller.signal,
+    })
+
+    if (!response.ok) {
+      const data = (await response.json().catch(() => ({}))) as ChatCompletionResponse
+      const errorDetail = typeof data.error === 'string' ? undefined : data.error
+      const message =
+        typeof data.error === 'string'
+          ? data.error
+          : errorDetail?.message ?? 'Groq could not respond right now.'
+      if (response.status === 503) {
+        throw createChatError('Model is warming up, try again in a moment.', 'Groq', response.status)
+      }
+      throw createChatError(message, 'Groq', response.status, errorDetail?.code)
+    }
+
+    if (!streaming || !response.body) {
+      timers.onFirstByte()
+      const data = (await response.json()) as ChatCompletionResponse
+      const reply = data.choices?.[0]?.message?.content?.trim()
+      if (!reply) throw createChatError('Groq returned an empty response.', 'Groq')
+      return reply
+    }
+
+    timers.onFirstByte()
+
+    const reader = response.body.getReader()
+    const decoder = new TextDecoder()
+    let buffer = ''
+    let content = ''
+
+    const consumeLine = (line: string) => {
+      const trimmed = line.trim()
+      if (!trimmed.startsWith('data:')) return
+      const payload = trimmed.slice(5).trim()
+      if (!payload || payload === '[DONE]') return
+      let chunk: StreamChunk
+      try {
+        chunk = JSON.parse(payload) as StreamChunk
+      } catch {
+        return
+      }
+      if (chunk.error) {
+        const message =
+          typeof chunk.error === 'string'
+            ? chunk.error
+            : chunk.error.message ?? 'Groq stream failed.'
+        throw createChatError(message, 'Groq')
+      }
+      const delta = chunk.choices?.[0]?.delta?.content
+      if (delta) {
+        content += delta
+        onDelta?.(content)
+      }
+    }
+
+    try {
+      for (;;) {
+        const { done, value } = await reader.read()
+        if (done) break
+        timers.onChunk()
+        buffer += decoder.decode(value, { stream: true })
+        const lines = buffer.split('\n')
+        buffer = lines.pop() ?? ''
+        for (const line of lines) consumeLine(line)
+      }
+      if (buffer) consumeLine(buffer)
+    } catch (streamError) {
+      if (content.trim()) {
+        console.warn('Chat stream from Groq ended early — keeping partial reply.', streamError)
+        return content.trim()
+      }
+      throw streamError
+    }
+
+    if (!content.trim()) {
+      throw createChatError('Groq returned an empty response.', 'Groq')
+    }
+    return content.trim()
+  } finally {
+    timers.clear()
   }
 }
 
 function renderInline(text: string, keyPrefix: string): ReactNode[] {
   const renderLinkedText = (value: string, segmentKey: string): ReactNode[] => {
-    const linkPattern = /((?:https?:\/\/|www\.)[^\s]+|(?:[a-z0-9-]+\.)+[a-z]{2,}(?:\/[^\s]*)?|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/gi
+    const linkPattern =
+      /((?:https?:\/\/|www\.)[^\s]+|(?:[a-z0-9-]+\.)+[a-z]{2,}(?:\/[^\s]*)?|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/gi
     const nodes: ReactNode[] = []
     let lastIndex = 0
     let matchIndex = 0
@@ -680,10 +862,18 @@ function renderInline(text: string, keyPrefix: string): ReactNode[] {
   const parts = text.split(/(\*\*[^*]+\*\*|\*[^*]+\*)/g)
   return parts.map((part, index) => {
     if (part.startsWith('**') && part.endsWith('**') && part.length > 4) {
-      return <strong key={`${keyPrefix}-b${index}`}>{renderLinkedText(part.slice(2, -2), `${keyPrefix}-b${index}`)}</strong>
+      return (
+        <strong key={`${keyPrefix}-b${index}`}>
+          {renderLinkedText(part.slice(2, -2), `${keyPrefix}-b${index}`)}
+        </strong>
+      )
     }
     if (part.startsWith('*') && part.endsWith('*') && part.length > 2) {
-      return <em key={`${keyPrefix}-i${index}`}>{renderLinkedText(part.slice(1, -1), `${keyPrefix}-i${index}`)}</em>
+      return (
+        <em key={`${keyPrefix}-i${index}`}>
+          {renderLinkedText(part.slice(1, -1), `${keyPrefix}-i${index}`)}
+        </em>
+      )
     }
     return <span key={`${keyPrefix}-t${index}`}>{renderLinkedText(part, `${keyPrefix}-t${index}`)}</span>
   })
@@ -717,7 +907,10 @@ function renderMarkdown(text: string): ReactNode {
     if (heading) {
       flushList()
       result.push(
-        <span key={`h-${index}`} style={{ display: 'block', fontWeight: 600, marginTop: '0.5em', marginBottom: '0.1em' }}>
+        <span
+          key={`h-${index}`}
+          style={{ display: 'block', fontWeight: 600, marginTop: '0.5em', marginBottom: '0.1em' }}
+        >
           {renderInline(heading[2], `h-${index}`)}
         </span>
       )
@@ -741,12 +934,11 @@ function renderMarkdown(text: string): ReactNode {
   return <>{result}</>
 }
 
-function trackChatEvent(question: string) {
+function trackChatEvent() {
   if (typeof window !== 'undefined' && 'gtag' in window) {
     // @ts-expect-error gtag is injected by analytics
     window.gtag('event', 'chat_message', {
       event_category: 'chatbot',
-      event_label: question.slice(0, 100),
     })
   }
 }
@@ -795,24 +987,26 @@ function useCurrentSection() {
   return section
 }
 
-function getStarterPrompts(section: string): PromptId[] {
+export function getStarterPrompts(section: string): PromptId[] {
   if (section === 'research') {
     return ['thesis_summary', 'thesis_loss', 'thesis_results', 'industrial_result', 'achievements', 'contact']
   }
   if (section === 'projects') {
-    return ['faultrix_intro', 'projects_best', 'tech_stack', 'faultrix_build', 'product_story', 'contact']
+    return ['sihem_overview', 'faultrix_intro', 'projects_best', 'tech_stack', 'faultrix_build', 'contact']
   }
   if (section === 'contact') {
-    return ['open_to_work', 'contact', 'achievements', 'tech_stack', 'faultrix_intro', 'thesis_summary']
+    return ['open_to_work', 'hire_summary', 'contact', 'achievements', 'tech_stack', 'sihem_overview']
   }
-  return DEFAULT_PROMPTS
+  return STARTER_PROMPT_IDS
 }
+
+export const DEFAULT_PROMPTS = STARTER_PROMPT_IDS
 
 function uniquePromptIds(items: PromptId[]): PromptId[] {
   return [...new Set(items)]
 }
 
-function generateFollowUps(reply: string, question: string, section: string): PromptId[] {
+export function pickFollowUpIds(reply: string, question: string, section: string): PromptId[] {
   const context = `${section} ${question} ${reply}`
   for (const rule of FOLLOWUP_RULES) {
     if (rule.pattern.test(context)) return uniquePromptIds(rule.prompts).slice(0, 4)
@@ -820,8 +1014,11 @@ function generateFollowUps(reply: string, question: string, section: string): Pr
   return uniquePromptIds(getStarterPrompts(section)).slice(0, 4)
 }
 
+export const generateFollowUps = pickFollowUpIds
+
 const panelStyle = {
-  background: 'linear-gradient(180deg, color-mix(in srgb, var(--cd-surf) 92%, var(--cd-bg) 8%) 0%, var(--cd-elev) 100%)',
+  background:
+    'linear-gradient(180deg, color-mix(in srgb, var(--cd-surf) 92%, var(--cd-bg) 8%) 0%, var(--cd-elev) 100%)',
   borderColor: 'var(--cd-b0)',
   boxShadow: '0 28px 80px rgba(0, 0, 0, 0.24)',
   fontFamily: 'var(--font-body)',
@@ -834,7 +1031,8 @@ const bubbleStyles = {
     color: 'var(--cd-fg1)',
   },
   user: {
-    background: 'linear-gradient(135deg, var(--cd-accent) 0%, color-mix(in srgb, var(--cd-accent) 70%, var(--cd-success) 30%) 100%)',
+    background:
+      'linear-gradient(135deg, var(--cd-accent) 0%, color-mix(in srgb, var(--cd-accent) 70%, var(--cd-success) 30%) 100%)',
     borderColor: 'var(--cd-b-accent)',
     color: 'var(--cd-bg)',
   },
@@ -902,14 +1100,57 @@ export default function ChatBot() {
   const [input, setInput] = useState('')
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [isLoading, setIsLoading] = useState(false)
-  // True once streamed tokens have started arriving — the typing dots then
-  // give way to the growing reply bubble.
   const [isStreaming, setIsStreaming] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const currentSection = useCurrentSection()
   const messagesRef = useRef<HTMLDivElement>(null)
+  const launcherRef = useRef<HTMLButtonElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+  const dialogRef = useRef<HTMLDivElement>(null)
 
   const starterPrompts = useMemo(() => getStarterPrompts(currentSection), [currentSection])
+
+  useEffect(() => {
+    if (!isOpen) return
+    const launcher = launcherRef.current
+    inputRef.current?.focus()
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        setIsOpen(false)
+        return
+      }
+
+      if (event.key === 'Tab') {
+        if (!dialogRef.current) return
+        const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), [href], input:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+        if (focusable.length === 0) return
+        const first = focusable[0]
+        const last = focusable[focusable.length - 1]
+
+        if (event.shiftKey) {
+          if (document.activeElement === first) {
+            event.preventDefault()
+            last.focus()
+          }
+        } else {
+          if (document.activeElement === last) {
+            event.preventDefault()
+            first.focus()
+          }
+        }
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+      launcher?.focus()
+    }
+  }, [isOpen])
 
   useEffect(() => {
     const container = messagesRef.current
@@ -926,65 +1167,41 @@ export default function ChatBot() {
     if (!content || isLoading) return
 
     const groqToken = process.env.NEXT_PUBLIC_GROQ_TOKEN
-    // Z.ai (api.z.ai) GLM Coding Plan key. Keys are provisioned per host, so
-    // an open.bigmodel.cn key will NOT authenticate here — if the secret is
-    // unset, the chatbot fails loudly (missing-token UI) rather than silently
-    // sending the wrong key to the wrong host.
     const zaiToken = process.env.NEXT_PUBLIC_BIGMODEL_TOKEN
     const hasGroqToken = isConfiguredToken(groqToken)
     const hasZaiToken = isConfiguredToken(zaiToken)
     const hasProxy = Boolean(CHAT_PROXY_URL)
 
-    if (!hasGroqToken && !hasZaiToken && !hasProxy) {
-      setError(t(CHAT_COPY.missingToken))
-      return
-    }
-
     const nextUserMessage: ChatMessage = { role: 'user', content }
     const nextMessages = [...messages, nextUserMessage]
-    const hasAssistantReplied = messages.some((message) => message.role === 'assistant')
 
     setMessages(nextMessages)
     setInput('')
     setError(null)
+    trackChatEvent()
+
+    // If no external model tokens or proxy are available, check local reply first
+    if (!hasGroqToken && !hasZaiToken && !hasProxy) {
+      const local = getLocalReply(content, lang)
+      if (local) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: 'assistant',
+            content: local,
+            followUps: pickFollowUpIds(local, content, currentSection),
+          },
+        ])
+        return
+      }
+      setError(t(CHAT_COPY.missingToken))
+      return
+    }
+
     setIsLoading(true)
     setIsStreaming(false)
-    trackChatEvent(content)
 
     try {
-      const payloadMessages: ApiMessage[] = [
-        { role: 'system', content: SYSTEM_PROMPT },
-        {
-          role: 'system',
-          content: `The selected UI language is ${languageName[lang]}. Keep names, product names, repository names, equations, metrics, and links unchanged.`,
-        },
-        {
-          role: 'system',
-          content: `The user is currently viewing the "${currentSection}" section of the portfolio. Prefer relevant context when it helps.`,
-        },
-        {
-          role: 'system',
-          content: hasAssistantReplied
-            ? `Do not introduce yourself unless the user explicitly asks who you are.`
-            : `This is your first reply in this chat, so briefly introduce yourself as ${GENIE_NAME} before answering.`,
-        },
-        ...nextMessages.map(({ role, content: messageContent }) => ({ role, content: messageContent })),
-      ]
-
-      const groqProvider: ProviderConfig | null = hasGroqToken
-        ? {
-            name: 'Groq',
-            token: groqToken,
-            url: GROQ_CHAT_URL,
-            body: {
-              model: GROQ_MODEL,
-              messages: payloadMessages,
-              max_tokens: 380,
-              temperature: 0.5,
-            },
-          }
-        : null
-
       const zaiAuth = (hasZaiToken || hasProxy)
         ? {
             token: zaiToken ?? '',
@@ -993,57 +1210,11 @@ export default function ChatBot() {
           }
         : null
 
-      // Pick the BigModel lane first: obvious cases are decided locally at
-      // zero latency; everything else goes through the flash classifier.
       let lane: ChatLane = 'deep'
       if (zaiAuth) {
         lane = routeLocally(content) ?? (await routeWithClassifier(content, zaiAuth))
       }
-      const zaiModel = lane === 'fast' ? ZAI_FAST_MODEL : ZAI_MODEL
-      // glm-5.3 spends its token budget on thinking BEFORE the visible
-      // answer, so the deep lane needs a much larger ceiling — with 380 it
-      // sometimes exhausted the budget mid-thought and returned an empty
-      // reply, silently failing over to Groq (verified live). The fast lane
-      // doesn't think, so 380 stays ample there.
-      const zaiMaxTokens = lane === 'fast' ? 380 : 2048
 
-      const zaiProvider: ProviderConfig | null = zaiAuth
-        ? {
-            name: 'BigModel',
-            // When the proxy URL is set, route through it; the Worker holds the
-            // real API key server-side. Otherwise call BigModel (GLM Coding Plan) directly.
-            token: zaiAuth.token,
-            url: zaiAuth.url,
-            useProxy: zaiAuth.useProxy,
-            body: {
-              model: zaiModel,
-              messages: payloadMessages,
-              max_tokens: zaiMaxTokens,
-              temperature: 0.5,
-              // Deep lane: bound the reasoning so thinking can't run away
-              // with the whole token budget before any answer text is
-              // produced. GLM-5.x supports reasoning_effort; older GLM-4.x
-              // ignored unknown fields, and the fast lane doesn't think.
-              ...(lane === 'deep' ? { reasoning_effort: 'low' as const } : {}),
-              // No `thinking` parameter: GLM-5.3 always thinks and rejects
-              // `thinking: { type: 'disabled' }` (accepted by GLM-4.5).
-            },
-          }
-        : null
-
-      // Provider order: BigModel (GLM Coding Plan / proxy) is PRIMARY whenever
-      // it is configured; Groq is the fallback. When only Groq is configured,
-      // it serves directly.
-      const providers = [zaiProvider, groqProvider].filter(
-        (provider): provider is ProviderConfig => provider !== null
-      )
-
-      // Resilient failover: ANY primary failure (non-OK HTTP status such as a
-      // decommissioned model, network error, or empty response) falls through
-      // to the next configured provider — not just rate-limit errors.
-      // Replies stream token-by-token into a growing assistant bubble; the
-      // bubble is created lazily on the first delta so a provider that fails
-      // before producing text doesn't leave an empty message behind.
       let streamStarted = false
       const emitDelta = (fullContent: string) => {
         if (!streamStarted) {
@@ -1063,26 +1234,56 @@ export default function ChatBot() {
 
       let rawReply: string | null = null
       let lastProviderError: unknown = null
-      for (const provider of providers) {
+
+      if (zaiAuth) {
         try {
-          streamStarted = false // fresh bubble per provider attempt
-          rawReply = await requestChatCompletion(provider, emitDelta)
-          break
+          streamStarted = false
+          rawReply = await fetchBigModel({
+            messages: nextMessages,
+            auth: zaiAuth,
+            lane,
+            onDelta: emitDelta,
+          })
         } catch (providerError) {
           lastProviderError = providerError
-          console.error(`Chat provider ${provider.name} failed:`, providerError)
+          console.error('Chat provider BigModel failed:', providerError)
+        }
+      }
+
+      const groqAuth: ProviderAuth | null =
+        hasGroqToken || hasProxy
+          ? {
+              token: groqToken ?? '',
+              url: CHAT_PROXY_URL || GROQ_CHAT_URL,
+              useProxy: Boolean(CHAT_PROXY_URL),
+            }
+          : null
+
+      if (rawReply === null && groqAuth) {
+        try {
+          streamStarted = false
+          rawReply = await fetchGroq({
+            messages: nextMessages,
+            auth: groqAuth,
+            onDelta: emitDelta,
+          })
+        } catch (providerError) {
+          lastProviderError = providerError
+          console.error('Chat provider Groq failed:', providerError)
         }
       }
 
       if (rawReply === null) {
-        throw lastProviderError ?? new Error('No chat provider succeeded.')
+        const local = getLocalReply(content, lang)
+        if (local) {
+          rawReply = local
+        } else {
+          throw lastProviderError ?? new Error('No chat provider succeeded.')
+        }
       }
 
       const reply = shortenReply(rawReply)
 
-      // With streaming the assistant bubble already exists (created on the
-      // first delta) — finalize it in place with the clamped reply and the
-      // follow-up chips instead of appending a second copy.
       setMessages((prev) => {
         const lastIndex = prev.length - 1
         if (lastIndex >= 0 && prev[lastIndex].role === 'assistant') {
@@ -1091,7 +1292,7 @@ export default function ChatBot() {
               ? {
                   ...message,
                   content: reply,
-                  followUps: generateFollowUps(reply, content, currentSection),
+                  followUps: pickFollowUpIds(reply, content, currentSection),
                 }
               : message
           )
@@ -1101,14 +1302,11 @@ export default function ChatBot() {
           {
             role: 'assistant',
             content: reply,
-            followUps: generateFollowUps(reply, content, currentSection),
+            followUps: pickFollowUpIds(reply, content, currentSection),
           },
         ]
       })
     } catch (caughtError) {
-      // Raw provider/API error text must never reach visitors — show only the
-      // localized generic message; the details are logged to the console for
-      // debugging (see the per-provider logs in the loop above).
       console.error('Chat failed across all configured providers:', caughtError)
       setError(t(CHAT_COPY.genericError))
     } finally {
@@ -1129,16 +1327,21 @@ export default function ChatBot() {
   return (
     <>
       <div
+        ref={dialogRef}
+        id="chatbot-dialog"
         className={`fixed bottom-20 right-4 z-[9998] w-[min(400px,calc(100vw-2rem))] transition-all duration-300 ease-out sm:bottom-24 sm:right-6 ${
           isOpen ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none translate-y-6 opacity-0'
         }`}
         aria-hidden={!isOpen}
+        tabIndex={-1}
+        inert={!isOpen}
       >
         <section
           id="ahmed-chatbot-panel"
           className="flex h-[min(560px,calc(100vh-7rem))] flex-col overflow-hidden rounded-[28px] border"
           style={panelStyle}
           role="dialog"
+          aria-modal="true"
           aria-label={t(CHAT_COPY.dialogLabel)}
         >
           <header
@@ -1242,6 +1445,7 @@ export default function ChatBot() {
             )}
             <form onSubmit={handleSubmit} className="flex items-center gap-2">
               <input
+                ref={inputRef}
                 value={input}
                 onChange={(event) => setInput(event.target.value)}
                 placeholder={t(CHAT_COPY.placeholder)}
@@ -1272,6 +1476,7 @@ export default function ChatBot() {
       </div>
 
       <button
+        ref={launcherRef}
         type="button"
         onClick={() => setIsOpen((value) => !value)}
         className="group fixed bottom-6 right-6 z-[9999] inline-flex h-14 items-center gap-2 overflow-hidden rounded-full border pl-1.5 pr-4 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:pr-5 focus-visible:pr-5"
@@ -1282,16 +1487,16 @@ export default function ChatBot() {
           boxShadow: '0 18px 40px rgba(7, 11, 20, 0.38)',
         }}
         aria-expanded={isOpen}
-        aria-controls="ahmed-chatbot-panel"
+        aria-controls="chatbot-dialog"
         aria-label={isOpen ? t(CHAT_COPY.close) : t(CHAT_COPY.open)}
       >
         <GenieOrb />
         <span
-          className={`whitespace-nowrap text-sm font-semibold tracking-[0.01em] transition-all duration-300 ${
+          className={`cd-chatbot-launcher-text whitespace-nowrap text-sm font-semibold tracking-[0.01em] transition-all duration-300 ${
             isOpen ? 'max-w-0 opacity-0' : 'max-w-0 opacity-0 group-hover:max-w-32 group-hover:opacity-100 group-focus-visible:max-w-32 group-focus-visible:opacity-100'
           }`}
         >
-          Ask Genie
+          {t(CHAT_COPY.open)}
         </span>
         {isOpen && (
           <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/8 text-[#f3eee4]">

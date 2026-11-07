@@ -54,13 +54,48 @@ const copy = {
   desc2: { en: 'Thesis: SCARA robotic system for dynamic object tracking.', de: 'Thesis: SCARA-Robotersystem für dynamische Objektverfolgung.', fr: 'Mémoire : système robotique SCARA pour suivi dynamique d\'objets.', es: 'Tesis: sistema robótico SCARA para seguimiento dinámico de objetos.', ar: 'المشروع: نظام روبوت SCARA لتتبع الأجسام المتحركة.' },
 } satisfies Record<string, TranslationMap>
 
-const skillCategories = [
-  { name: 'Deep Learning', skills: ['PyTorch', 'PyTorch Lightning', 'Diffusion Models (DDPM, UNet)', 'CNNs', 'Transformers', 'LSTM'] },
-  { name: 'Computer Vision', skills: ['OOD Detection', 'Object Detection (YOLOv8)', 'Defect Inspection', 'Image Classification', 'Roboflow'] },
-  { name: 'LLMs & GenAI', skills: ['LLM API Integration', 'Multi-Provider Routing & Failover', 'Prompt Engineering', 'Structured Output Validation', 'pgvector Retrieval'] },
-  { name: 'Research Methods', skills: ['Hydra', 'Ablation Studies', 'AUROC/FPR95', 'Cross-Validation', 'Multi-Seed Runs'] },
-  { name: 'Cloud & Software', skills: ['Python', 'Git', 'Linux', 'Docker', 'REST APIs', 'GitHub Actions CI/CD', 'Supabase', 'TypeScript', 'React'] },
-  { name: 'AI-Assisted Delivery', skills: ['Claude Code', 'GitHub Copilot', 'Microsoft 365 Copilot', 'ChatGPT'] },
+const skillCategories: { title: TranslationMap; skills: (string | TranslationMap)[] }[] = [
+  {
+    title: {
+      en: 'Deep Learning & CV',
+      de: 'Deep Learning & Computer Vision',
+      fr: 'Deep Learning & Vision par ordinateur',
+      es: 'Deep Learning y Visión por Computador',
+      ar: 'التعلم العميق والرؤية الحاسوبية',
+    },
+    skills: ['PyTorch', 'PyTorch Lightning', { en: "Diffusion Models (DDPM, UNet)", de: "Diffusionsmodelle (DDPM, UNet)", fr: "Modèles de diffusion (DDPM, UNet)", es: "Modelos de difusión (DDPM, UNet)", ar: "نماذج الانتشار (DDPM, UNet)" }, 'CNNs', 'Transformers', { en: "OOD Detection", de: "OOD-Erkennung", fr: "Détection OOD", es: "Detección OOD", ar: "كشف OOD" }, 'YOLOv8', { en: "Defect Inspection", de: "Fehlerprüfung", fr: "Inspection des défauts", es: "Inspección de defectos", ar: "فحص العيوب" }],
+  },
+  {
+    title: {
+      en: 'GenAI & Agentic AI',
+      de: 'Generative & Agentische KI',
+      fr: 'IA générative & agentique',
+      es: 'IA generativa y agéntica',
+      ar: 'الذكاء الاصطناعي التوليدي والوكيلي',
+    },
+    skills: [{ en: "LLM API Integration", de: "LLM-API-Integration", fr: "Intégration d’API LLM", es: "Integración de API LLM", ar: "تكامل واجهات LLM" }, { en: "Multi-Provider Routing & Failover", de: "Routing und Ausfallsicherung über mehrere Anbieter", fr: "Routage et basculement entre fournisseurs", es: "Enrutamiento y conmutación entre proveedores", ar: "التوجيه بين مزودين متعددين وتجاوز الأعطال" }, { en: "Prompt Engineering", de: "Prompt-Entwicklung", fr: "Ingénierie des prompts", es: "Ingeniería de instrucciones", ar: "هندسة التعليمات" }, { en: "Structured Output Validation", de: "Validierung strukturierter Ausgaben", fr: "Validation des sorties structurées", es: "Validación de salidas estructuradas", ar: "التحقق من المخرجات المنظمة" }, { en: "pgvector Retrieval", de: "Abruf mit pgvector", fr: "Recherche avec pgvector", es: "Recuperación con pgvector", ar: "الاسترجاع باستخدام pgvector" }, 'Claude Code'],
+  },
+  {
+    title: {
+      en: 'ML & Data Science',
+      de: 'ML & Data Science',
+      fr: 'ML & Science des données',
+      es: 'ML y Ciencia de Datos',
+      ar: 'تعلم الآلة وعلوم البيانات',
+    },
+    skills: ['Hydra', { en: "Ablation Studies", de: "Ablationsstudien", fr: "Études d’ablation", es: "Estudios de ablación", ar: "دراسات الاستئصال" }, 'AUROC/FPR95', { en: "Cross-Validation", de: "Kreuzvalidierung", fr: "Validation croisée", es: "Validación cruzada", ar: "التحقق المتقاطع" }, { en: "Multi-Seed Runs", de: "Läufe mit mehreren Zufallsseeds", fr: "Exécutions avec plusieurs graines aléatoires", es: "Ejecuciones con múltiples semillas", ar: "تجارب ببذور عشوائية متعددة" }, 'Roboflow'],
+  },
+  {
+    title: {
+      en: 'Deployment & MLOps',
+      de: 'Deployment & MLOps',
+      fr: 'Déploiement & MLOps',
+      es: 'Despliegue y MLOps',
+      ar: 'النشر وعمليات تعلم الآلة (MLOps)',
+    },
+    skills: ['Python', 'Git', 'Linux', 'Docker', { en: "REST APIs", de: "REST-APIs", fr: "API REST", es: "API REST", ar: "واجهات REST" }, { en: "GitHub Actions CI/CD", de: "CI/CD mit GitHub Actions", fr: "CI/CD avec GitHub Actions", es: "CI/CD con GitHub Actions", ar: "التكامل والتسليم المستمران باستخدام GitHub Actions" }, 'Supabase', 'TypeScript', 'React'],
+  },
+
 ]
 
 export default function About() {
@@ -79,10 +114,19 @@ export default function About() {
     { label: t(copy.openTo), value: t(copy.roles), accent: false },
   ]
 
-  const languages = [
-    { lang: 'Arabic', level: t({ en: 'Native', de: 'Muttersprache', fr: 'Natif', es: 'Nativo', ar: 'اللغة الأم' }) },
-    { lang: 'English', level: t({ en: 'B2 - Professional', de: 'B2 - Professionell', fr: 'B2 - professionnel', es: 'B2 - profesional', ar: 'B2 - مهني' }) },
-    { lang: 'German', level: t({ en: 'B1 CEFR - preparing for B2', de: 'B1 CEFR - Vorbereitung auf B2', fr: 'B1 CEFR - préparation au B2', es: 'B1 CEFR - preparando el B2', ar: 'B1 CEFR - أستعد لمستوى B2' }) },
+  const languages: { name: TranslationMap; level: string }[] = [
+    {
+      name: { en: 'Arabic', de: 'Arabisch', fr: 'Arabe', es: 'Árabe', ar: 'العربية' },
+      level: t({ en: 'Native', de: 'Muttersprache', fr: 'Natif', es: 'Nativo', ar: 'اللغة الأم' }),
+    },
+    {
+      name: { en: 'English', de: 'Englisch', fr: 'Anglais', es: 'Inglés', ar: 'الإنجليزية' },
+      level: t({ en: 'B2 - Professional', de: 'B2 - Professionell', fr: 'B2 - professionnel', es: 'B2 - profesional', ar: 'B2 - مهني' }),
+    },
+    {
+      name: { en: 'German', de: 'Deutsch', fr: 'Allemand', es: 'Alemán', ar: 'الألمانية' },
+      level: t({ en: 'B1 CEFR - preparing for B2', de: 'B1 CEFR - Vorbereitung auf B2', fr: 'B1 CEFR - préparation au B2', es: 'B1 CEFR - preparando el B2', ar: 'B1 CEFR - أستعد لمستوى B2' }),
+    },
   ]
 
   return (
@@ -148,10 +192,10 @@ export default function About() {
           <div className="cd-band-eyebrow">{t(copy.skills)}</div>
           <div className="cd-skills-grid">
             {skillCategories.map(cat => (
-              <div key={cat.name} className="cd-skill-category">
-                <div className="cd-skill-cat-name">{cat.name}</div>
+              <div key={cat.title.en} className="cd-skill-category">
+                <div className="cd-skill-cat-name">{t(cat.title)}</div>
                 <div className="cd-chips" style={{ marginTop: 0 }}>
-                  {cat.skills.map(skill => <span key={skill} className="cd-chip">{skill}</span>)}
+                  {cat.skills.map(skill => <span key={typeof skill === 'string' ? skill : skill.en} className="cd-chip">{typeof skill === 'string' ? skill : t(skill)}</span>)}
                 </div>
               </div>
             ))}
@@ -162,8 +206,8 @@ export default function About() {
           <div className="cd-band-eyebrow">{t(copy.languages)}</div>
           <div className="cd-lang-row">
             {languages.map(lang => (
-              <div key={lang.lang} className="cd-lang-card">
-                <div className="cd-lang-name">{lang.lang}</div>
+              <div key={lang.name.en} className="cd-lang-card">
+                <div className="cd-lang-name">{t(lang.name)}</div>
                 <div className="cd-lang-level">{lang.level}</div>
               </div>
             ))}

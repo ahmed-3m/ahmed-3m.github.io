@@ -10,6 +10,10 @@ import { serializeJsonLd } from '@/lib/serialize-json-ld'
 function formatContent(content: string | undefined) {
   if (!content) return ''
 
+  const escapeHtml = (value: string) => value.replace(/[&<>"']/g, (char) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  })[char]!)
+
   const cleanUrl = (rawUrl: string) => {
     let url = rawUrl
     let previousUrl = ''
@@ -29,20 +33,41 @@ function formatContent(content: string | undefined) {
     return url
   }
 
-  // Inline transform shared by paragraphs and list items: bold markup plus
-  // bare-URL linkification. (Long-URL wrapping and LTR code blocks are handled
-  // by the .prose container rules in globals.css.)
-  const inline = (text: string) =>
-    text
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(
-        /(https?:\/\/[^\s<>"]+)/g,
-        (rawUrl) => {
-          const url = cleanUrl(rawUrl)
-          const trailing = rawUrl.slice(url.length)
-          return `<a href="${url}" class="text-[var(--cd-accent)] underline underline-offset-2" target="_blank" rel="noopener noreferrer">${url}</a>${trailing}`
-        }
-      )
+  // Inline transform shared by paragraphs and list items: inline code,
+  // markdown links, bold markup, and bare-URL linkification.
+  const inline = (text: string) => {
+    // 1. Inline code: `...`
+    const codeSpans: string[] = []
+    let s = text.replace(/`([^`]+)`/g, (_, code) => {
+      const idx = codeSpans.length
+      codeSpans.push(`<code class="px-1.5 py-0.5 rounded bg-slate-800/60 font-mono text-sm">${escapeHtml(code)}</code>`)
+      return `___CODE_SPAN_${idx}___`
+    })
+
+    // 2. Markdown links: [text](https://...)
+    const links: string[] = []
+    s = s.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, (_, label, url) => {
+      const idx = links.length
+      links.push(`<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" class="underline text-cyan-400 hover:text-cyan-300">${escapeHtml(label)}</a>`)
+      return `___LINK_SPAN_${idx}___`
+    })
+
+    // 3. Bold: **text**
+    s = s.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+
+    // 4. Bare URLs: https://...
+    s = s.replace(/(https?:\/\/[^\s<>"]+)/g, (rawUrl) => {
+      const url = cleanUrl(rawUrl)
+      const trailing = rawUrl.slice(url.length)
+      return `<a href="${escapeHtml(url)}" class="text-[var(--cd-accent)] underline underline-offset-2" target="_blank" rel="noopener noreferrer">${escapeHtml(url)}</a>${trailing}`
+    })
+
+    // 5. Restore placeholders
+    s = s.replace(/___LINK_SPAN_(\d+)___/g, (_, idx) => links[Number(idx)])
+    s = s.replace(/___CODE_SPAN_(\d+)___/g, (_, idx) => codeSpans[Number(idx)])
+
+    return s
+  }
 
   return content
     .trim()
@@ -56,7 +81,7 @@ function formatContent(content: string | undefined) {
       }
       if (block.startsWith('```')) {
         const code = block.replace(/```[\w]*\n?/g, '').replace(/```/g, '')
-        return `<pre class="mb-4 overflow-x-auto rounded-lg border border-[var(--cd-b0)] bg-[var(--cd-elev)] p-4"><code>${code}</code></pre>`
+        return `<pre class="mb-4 overflow-x-auto rounded-lg border border-[var(--cd-b0)] bg-[var(--cd-elev)] p-4"><code>${escapeHtml(code)}</code></pre>`
       }
       if (block.startsWith('- ')) {
         const items = block
@@ -190,7 +215,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
   }
 
   return (
-    <main className="min-h-screen pb-20 pt-24">
+    <main id="main" tabIndex={-1} className="min-h-screen pb-20 pt-24">
       {jsonLd && (
         <script
           type="application/ld+json"

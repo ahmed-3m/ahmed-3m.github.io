@@ -1,172 +1,257 @@
 /**
  * Cloudflare Worker: ahmed-chat-proxy
  *
- * Proxies chat completion requests from the portfolio's ChatBot to the Zhipu
- * BigModel API (GLM Coding Plan) so the real API key never ships to the browser
- * bundle. The browser POSTs a plain `{ messages, model, max_tokens, temperature }`
- * body; the Worker attaches `Authorization: Bearer ${env.ZAI_API_KEY}` and
- * forwards the request to BigModel.
- *
- * Env:
- *   ZAI_API_KEY  (secret)  The real Zhipu BigModel API key. Set via
- *                         `wrangler secret put ZAI_API_KEY`. (The binding name is
- *                         kept for backward compatibility with existing deployments;
- *                         the value it holds is a BigModel key, not a Z.ai one.)
- *   CHAT_RATE_KV (optional KV namespace binding) for simple IP-based rate limiting.
- *
- * See worker/README.md for deployment and usage.
+ * Proxies chat completions to api.z.ai (GLM Coding Plan) or Groq so the real
+ * API keys never ship to the browser bundle. Rate limiting uses CHAT_RATE_LIMITER
+ * (with fallback to CHAT_RATE_KV); CORS is restricted to an origin allowlist.
  */
 
 const ZAI_CHAT_URL = 'https://api.z.ai/api/coding/paas/v4/chat/completions'
-// Keep in sync with ZAI_MODEL in src/components/ChatBot.tsx. GLM-5.3 always
-// runs with thinking enabled and rejects `thinking: { type: 'disabled' }`
-// (which GLM-4.5 accepted), so the Worker must not inject that parameter.
-const DEFAULT_MODEL = 'glm-5.3'
-// glm-5.3 thinks before answering and thinking tokens count against
-// max_tokens, so deep-lane requests legitimately need a large ceiling.
-const MAX_TOKENS = 2048
+const GROQ_CHAT_URL = 'https://api.groq.com/openai/v1/chat/completions'
 const RATE_LIMIT_PER_HOUR = 60
 
-// Allow the portfolio origin (and localhost for dev). Use '*' as a fallback so
-// the Worker works before the canonical origin is known.
-const ALLOWED_ORIGINS = new Set([
+export const DEFAULT_MODEL = 'glm-5.3'
+export const MAX_BODY_BYTES = 64_000
+export const MAX_MESSAGES = 24
+export const MAX_CONTENT_CHARS = 16_000
+export const MAX_TOKENS_CAP = 1_200
+
+export const ALLOWED_ORIGINS = new Set([
   'https://ahmed-3m.github.io',
   'http://localhost:3000',
 ])
 
-function corsHeaders(request) {
-  const origin = request.headers.get('Origin') || ''
-  const allowOrigin = ALLOWED_ORIGINS.has(origin) ? origin : '*'
-  return {
-    'Access-Control-Allow-Origin': allowOrigin,
+export const ALLOWED_ROLES = new Set(['system', 'user', 'assistant'])
+
+export const ALLOWED_MODELS = {
+  zai: new Set(['glm-5.3', 'glm-5-turbo', 'glm-5.3-flash']),
+  groq: new Set(['openai/gpt-oss-20b']),
+}
+
+export const ALLOWED_REASONING_EFFORT = new Set(['low', 'medium', 'high'])
+
+export function corsHeaders(origin) {
+  const headers = {
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Max-Age': '86400',
     Vary: 'Origin',
   }
+  if (origin && ALLOWED_ORIGINS.has(origin)) {
+    headers['Access-Control-Allow-Origin'] = origin
+  }
+  return headers
 }
 
-function jsonResponse(body, status, request, extraHeaders = {}) {
+function jsonResponse(body, status, origin, extraHeaders = {}) {
   return new Response(JSON.stringify(body), {
     status,
     headers: {
       'Content-Type': 'application/json',
-      ...corsHeaders(request),
+      ...corsHeaders(origin),
       ...extraHeaders,
     },
   })
 }
 
-/**
- * Simple per-IP rate limit using the optional CHAT_RATE_KV namespace.
- * Each IP gets a rolling hour window counter. If the KV binding is missing,
- * rate limiting is skipped (logged) so the Worker still works during dev.
- */
-async function checkRateLimit(request, env, ctx) {
-  if (!env || !env.CHAT_RATE_KV || typeof env.CHAT_RATE_KV.get !== 'function') {
-    // KV not bound — skip rate limiting. To enable it, bind a KV namespace:
-    //   [kv_namespaces]
-    //   binding = "CHAT_RATE_KV"
-    //   id = "..."
-    return { ok: true }
-  }
-
-  const ip = request.headers.get('CF-Connecting-IP') || 'unknown'
-  const key = `rl:${ip}`
-  const now = Date.now()
-  const windowMs = 60 * 60 * 1000
-
-  let record
-  try {
-    record = JSON.parse((await env.CHAT_RATE_KV.get(key)) || 'null')
-  } catch {
-    record = null
-  }
-
-  if (!record || now - record.startedAt > windowMs) {
-    record = { startedAt: now, count: 0 }
-  }
-
-  record.count += 1
-  const ttl = Math.ceil((record.startedAt + windowMs - now) / 1000)
-
-  ctx.waitUntil(env.CHAT_RATE_KV.put(key, JSON.stringify(record), { expirationTtl: Math.max(ttl, 60) }))
-
-  if (record.count > RATE_LIMIT_PER_HOUR) {
-    return {
-      ok: false,
-      status: 429,
-      body: { error: 'Rate limit exceeded. Please try again later.' },
-    }
-  }
-
-  return { ok: true }
+function forbiddenOrigin() {
+  return new Response(JSON.stringify({ error: 'Origin not allowed' }), {
+    status: 403,
+    headers: {
+      'Content-Type': 'application/json',
+      Vary: 'Origin',
+    },
+  })
 }
 
 export default {
   async fetch(request, env, ctx) {
-    // Handle CORS preflight.
+    const origin = request.headers.get('Origin') || ''
+
     if (request.method === 'OPTIONS') {
-      return new Response(null, { status: 204, headers: corsHeaders(request) })
+      if (origin && !ALLOWED_ORIGINS.has(origin)) {
+        return forbiddenOrigin()
+      }
+      return new Response(null, { status: 204, headers: corsHeaders(origin) })
     }
 
-    // Only POST is supported.
     if (request.method !== 'POST') {
       return jsonResponse(
         { error: 'Method not allowed. Use POST.' },
         405,
-        request,
+        origin,
         { Allow: 'POST, OPTIONS' }
       )
     }
 
-    // Make sure the Worker has been configured with a secret.
-    if (!env || !env.ZAI_API_KEY) {
-      return jsonResponse(
-        { error: 'Server is not configured: missing ZAI_API_KEY secret.' },
-        500,
-        request
+    if (origin && !ALLOWED_ORIGINS.has(origin)) {
+      return forbiddenOrigin()
+    }
+
+    // Rate limiting: prefer env.CHAT_RATE_LIMITER (or CHAT_RATE_LIMIT), fallback to CHAT_RATE_KV
+    const limiter = env?.CHAT_RATE_LIMITER || env?.CHAT_RATE_LIMIT
+    if (limiter && typeof limiter.limit === 'function') {
+      const ip = request.headers.get('CF-Connecting-IP') || 'unknown'
+      const { success } = await limiter.limit({ key: ip })
+      if (success === false) {
+        return jsonResponse(
+          { error: 'Rate limit exceeded. Please try again later.' },
+          429,
+          origin
+        )
+      }
+    } else if (env?.CHAT_RATE_KV && typeof env.CHAT_RATE_KV.get === 'function') {
+      const ip = request.headers.get('CF-Connecting-IP') || 'unknown'
+      const key = `rl:${ip}`
+      const now = Date.now()
+      const windowMs = 60 * 60 * 1000
+
+      let record
+      try {
+        record = JSON.parse((await env.CHAT_RATE_KV.get(key)) || 'null')
+      } catch {
+        record = null
+      }
+
+      if (!record || now - record.startedAt > windowMs) {
+        record = { startedAt: now, count: 0 }
+      }
+
+      record.count += 1
+      const ttl = Math.ceil((record.startedAt + windowMs - now) / 1000)
+
+      ctx?.waitUntil?.(
+        env.CHAT_RATE_KV.put(key, JSON.stringify(record), {
+          expirationTtl: Math.max(ttl, 60),
+        })
       )
+
+      if (record.count > RATE_LIMIT_PER_HOUR) {
+        return jsonResponse(
+          { error: 'Rate limit exceeded. Please try again later.' },
+          429,
+          origin
+        )
+      }
     }
 
-    // Rate limit (no-op if KV is not bound).
-    const limit = await checkRateLimit(request, env, ctx)
-    if (!limit.ok) {
-      return jsonResponse(limit.body, limit.status, request)
+    // Reject declared oversize bodies before reading; enforce actual byte count too.
+    if (Number(request.headers.get('Content-Length')) > MAX_BODY_BYTES) {
+      return jsonResponse({ error: 'Payload too large.' }, 413, origin)
+    }
+    let raw
+    try {
+      const reader = request.body?.getReader()
+      const chunks = []
+      let size = 0
+      if (reader) {
+        try {
+          for (;;) {
+            const { done, value } = await reader.read()
+            if (done) break
+            size += value.byteLength
+            if (size > MAX_BODY_BYTES) {
+              void reader.cancel().catch(() => {})
+              return jsonResponse({ error: 'Payload too large.' }, 413, origin)
+            }
+            chunks.push(value)
+          }
+        } finally {
+          reader.releaseLock()
+        }
+      }
+      const bytes = new Uint8Array(size)
+      let offset = 0
+      for (const chunk of chunks) {
+        bytes.set(chunk, offset)
+        offset += chunk.byteLength
+      }
+      raw = new TextDecoder().decode(bytes)
+    } catch {
+      return jsonResponse({ error: 'Failed to read request body.' }, 400, origin)
     }
 
-    // Parse and validate the request body.
     let body
     try {
-      body = await request.json()
+      body = JSON.parse(raw)
     } catch {
-      return jsonResponse({ error: 'Invalid JSON body.' }, 400, request)
+      return jsonResponse({ error: 'Invalid JSON body.' }, 400, origin)
     }
 
     if (!body || typeof body !== 'object') {
-      return jsonResponse({ error: 'Request body must be a JSON object.' }, 400, request)
+      return jsonResponse({ error: 'Request body must be a JSON object.' }, 400, origin)
     }
 
-    if (!Array.isArray(body.messages) || body.messages.length === 0) {
+    if (!Array.isArray(body.messages) || body.messages.length < 1 || body.messages.length > MAX_MESSAGES) {
       return jsonResponse(
-        { error: 'Request body must include a non-empty "messages" array.' },
+        { error: `Request body must include a "messages" array of length 1–${MAX_MESSAGES}.` },
         400,
-        request
+        origin
       )
     }
 
-    // Cap tokens to prevent abuse; clients may request fewer but never more.
+    for (const message of body.messages) {
+      if (!message || typeof message !== 'object') {
+        return jsonResponse({ error: 'Each message must be an object.' }, 400, origin)
+      }
+      if (!ALLOWED_ROLES.has(message.role)) {
+        return jsonResponse(
+          { error: 'Each message role must be system, user, or assistant.' },
+          400,
+          origin
+        )
+      }
+      if (typeof message.content !== 'string') {
+        return jsonResponse({ error: 'Each message content must be a string.' }, 400, origin)
+      }
+      if (message.content.length > MAX_CONTENT_CHARS) {
+        return jsonResponse(
+          { error: `Each message content must be at most ${MAX_CONTENT_CHARS} characters.` },
+          400,
+          origin
+        )
+      }
+    }
+
+    const requestedModel =
+      typeof body.model === 'string' && body.model.trim() ? body.model.trim() : DEFAULT_MODEL
+    const isZai = ALLOWED_MODELS.zai.has(requestedModel)
+    const isGroq = ALLOWED_MODELS.groq.has(requestedModel)
+
+    if (!isZai && !isGroq) {
+      return jsonResponse({ error: `Disallowed model: ${requestedModel}` }, 400, origin)
+    }
+
+    const model = requestedModel
+
+    if (isGroq) {
+      if (!env || !env.GROQ_API_KEY) {
+        return jsonResponse(
+          { error: 'Server is not configured: missing GROQ_API_KEY secret.' },
+          500,
+          origin
+        )
+      }
+    } else {
+      if (!env || !env.ZAI_API_KEY) {
+        return jsonResponse(
+          { error: 'Server is not configured: missing ZAI_API_KEY secret.' },
+          500,
+          origin
+        )
+      }
+    }
+
     const requestedTokens = Number(body.max_tokens)
-    const maxTokens = Number.isFinite(requestedTokens) && requestedTokens > 0
-      ? Math.min(Math.floor(requestedTokens), MAX_TOKENS)
-      : MAX_TOKENS
+    const maxTokens =
+      Number.isFinite(requestedTokens) && requestedTokens > 0
+        ? Math.min(Math.floor(requestedTokens), MAX_TOKENS_CAP)
+        : MAX_TOKENS_CAP
 
     const temperature =
       typeof body.temperature === 'number' && Number.isFinite(body.temperature)
         ? Math.min(Math.max(body.temperature, 0), 2)
         : 0.5
-
-    const model = typeof body.model === 'string' && body.model.trim() ? body.model.trim() : DEFAULT_MODEL
 
     const upstreamPayload = {
       model,
@@ -174,43 +259,39 @@ export default {
       max_tokens: maxTokens,
       temperature,
       stream: body.stream === true,
+      ...(isZai && ALLOWED_REASONING_EFFORT.has(body.reasoning_effort)
+        ? { reasoning_effort: body.reasoning_effort }
+        : {}),
     }
 
-    // Pass through optional thinking control only when the client sends it.
-    // GLM-5.3 always thinks and rejects `thinking: { type: 'disabled' }`, so
-    // this must stay a pass-through — never a hardcoded value.
-    if (body.thinking && typeof body.thinking === 'object') {
-      upstreamPayload.thinking = body.thinking
-    }
+    const targetUrl = isGroq ? GROQ_CHAT_URL : ZAI_CHAT_URL
+    const apiKey = isGroq ? env.GROQ_API_KEY : env.ZAI_API_KEY
 
-    // Forward to BigModel with the server-side secret.
     try {
-      const upstream = await fetch(ZAI_CHAT_URL, {
+      const upstream = await fetch(targetUrl, {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${env.ZAI_API_KEY}`,
+          Authorization: `Bearer ${apiKey}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(upstreamPayload),
       })
 
-      // Pass the upstream body through unbuffered so streamed tokens reach the
-      // browser as they are produced and non-streaming JSON is not needlessly
-      // buffered by the Worker.
       return new Response(upstream.body, {
         status: upstream.status,
         headers: {
-          'Content-Type': upstream.headers.get('Content-Type') ||
+          'Content-Type':
+            upstream.headers.get('Content-Type') ||
             (upstreamPayload.stream ? 'text/event-stream' : 'application/json'),
           ...(upstreamPayload.stream ? { 'Cache-Control': 'no-cache' } : {}),
-          ...corsHeaders(request),
+          ...corsHeaders(origin),
         },
       })
-    } catch (networkError) {
+    } catch {
       return jsonResponse(
         { error: 'Failed to reach the model provider.' },
         502,
-        request
+        origin
       )
     }
   },
