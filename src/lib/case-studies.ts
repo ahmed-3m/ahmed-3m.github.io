@@ -2,6 +2,8 @@ import { type TranslationMap } from '@/lib/i18n-config'
 
 export type CaseStudy = {
   slug: 'diffusion-ood' | 'inkjet-ood' | 'faultrix' | 'sihem'
+  // Update this stored date whenever this case study changes.
+  lastModified: string
   title: TranslationMap
   summary: TranslationMap
   problem: TranslationMap
@@ -17,6 +19,7 @@ export type CaseStudy = {
 export const caseStudies: CaseStudy[] = [
   {
     slug: 'diffusion-ood',
+    lastModified: '2026-11-07',
     title: {
       en: 'DiffusionOOD: Class-Conditional Separation Loss for Out-of-Distribution Detection',
       de: 'DiffusionOOD: Klassenkonditionale Separation Loss für OOD-Erkennung',
@@ -136,6 +139,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: 'inkjet-ood',
+    lastModified: '2026-11-07',
     title: {
       en: 'InkjetOOD: Transferring Generative OOD Detection to Industrial Print Quality Control',
       de: 'InkjetOOD: Transfer generativer OOD-Erkennung auf industrielle Druckqualitätskontrolle',
@@ -257,6 +261,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: 'faultrix',
+    lastModified: '2026-11-07',
     title: {
       en: 'Faultrix: AI-Powered Construction Quality Control & Automated Report Generation',
       de: 'Faultrix: KI-gestützte Bauqualitätskontrolle & automatisierte Berichterstellung',
@@ -376,6 +381,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: 'sihem',
+    lastModified: '2026-11-07',
     title: {
       en: 'Sihem: Proactive AI Personal-Mentor & Routine Assistant',
       de: 'Sihem: Proaktiver KI-Mentor & Routine-Assistent',
@@ -434,7 +440,7 @@ export const caseStudies: CaseStudy[] = [
       {
         title: {
           en: '2. Generators → Arbiter → Composer',
-          de: '2. Generatoren → Arbiter → Komponor',
+          de: '2. Generatoren → Arbiter → Komponist',
           fr: '2. Générateurs → Arbitre → Compositeur',
           es: '2. Generadores → Árbitro → Compositor',
           ar: '2. المولدات ← المحكم ← المؤلف',
@@ -474,7 +480,7 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         en: 'Implemented a deterministic generators→arbiter→composer decision engine that evaluates calendar shifts and user habits before synthesizing check-ins.',
-        de: 'Deterministische Generatoren→Arbiter→Komponor-Entscheidungsmaschine implementiert, die Kalenderänderungen und Gewohnheiten prüft, bevor Check-Ins generiert werden.',
+        de: 'Deterministische Generatoren→Arbiter→Komponist-Entscheidungsmaschine implementiert, die Kalenderänderungen und Gewohnheiten prüft, bevor Check-Ins generiert werden.',
         fr: 'Moteur de décision déterministe générateurs→arbitre→compositeur évaluant les décalages de planning et les habitudes avant de composer les rappels.',
         es: 'Motor de decisión determinista generadores→árbitro→compositor que evalúa variaciones de calendario y hábitos antes de componer los check-ins.',
         ar: 'تطبيق محرك قرار حتمي (مولدات←محكم←مؤلف) يقيّم تغيرات الجدول وعادات المستخدم قبل توليد رسائل المتابعة.',

@@ -2,7 +2,7 @@
  * Fetch-level self-test for the chat proxy Worker.
  * Calls `export default.fetch`.
  */
-import handler from './chat-proxy.js'
+import handler, { MAX_BODY_BYTES } from './chat-proxy.js'
 
 const SITE = 'https://ahmed-3m.github.io'
 const EVIL = 'https://evil.example'
@@ -141,6 +141,50 @@ await test('Max body bytes (>64,000) → 413', async () => {
   assert(hugeBody.length > 64_000, `hugeBody length is ${hugeBody.length}`)
   const res = await call(hugeBody, { origin: SITE })
   assert(res.status === 413, `status ${res.status}`)
+})
+
+await test('UTF-8 byte limit rejects multibyte payload below character limit', async () => {
+  const body = JSON.stringify({ messages: [{ role: 'user', content: '😀'.repeat(16_000) }] })
+  assert(body.length < MAX_BODY_BYTES, 'fixture must fit character limit')
+  const res = await call(body)
+  assert(res.status === 413, `status ${res.status}`)
+})
+
+await test('Declared oversized body is rejected without reading', async () => {
+  const res = await handler.fetch({
+    method: 'POST',
+    headers: new Headers({ 'Content-Length': String(MAX_BODY_BYTES + 1) }),
+    get body() { throw new Error('must not read body') },
+  }, env())
+  assert(res.status === 413, `status ${res.status}`)
+})
+
+await test('Stream exceeding limit is canceled before remaining data is read', async () => {
+  let canceled = false
+  let pulls = 0
+  const body = new ReadableStream({
+    pull(controller) {
+      pulls++
+      controller.enqueue(new Uint8Array(MAX_BODY_BYTES / 2 + 1))
+    },
+    cancel() { canceled = true },
+  }, { highWaterMark: 0 })
+  const res = await handler.fetch({ method: 'POST', headers: new Headers(), body }, env())
+  assert(res.status === 413, `status ${res.status}`)
+  assert(canceled && pulls === 2, `canceled=${canceled}, pulls=${pulls}`)
+})
+
+await test('Body at exact byte limit is accepted', async () => {
+  const raw = JSON.stringify(validBody)
+  const res = await call(raw + ' '.repeat(MAX_BODY_BYTES - raw.length))
+  assert(res.status === 200, `status ${res.status}`)
+})
+
+await test('Stream read failure retains 400 response', async () => {
+  const body = new ReadableStream({ start(controller) { controller.error(new Error('read failed')) } })
+  const res = await handler.fetch({ method: 'POST', headers: new Headers(), body }, env())
+  assert(res.status === 400, `status ${res.status}`)
+  assert((await res.json()).error === 'Failed to read request body.', 'wrong read error')
 })
 
 // 8. Rate limit exceeded (CHAT_RATE_LIMITER returning { success: false })

@@ -135,16 +135,40 @@ export default {
       }
     }
 
-    // Read and enforce max body bytes
+    // Reject declared oversize bodies before reading; enforce actual byte count too.
+    if (Number(request.headers.get('Content-Length')) > MAX_BODY_BYTES) {
+      return jsonResponse({ error: 'Payload too large.' }, 413, origin)
+    }
     let raw
     try {
-      raw = await request.text()
+      const reader = request.body?.getReader()
+      const chunks = []
+      let size = 0
+      if (reader) {
+        try {
+          for (;;) {
+            const { done, value } = await reader.read()
+            if (done) break
+            size += value.byteLength
+            if (size > MAX_BODY_BYTES) {
+              void reader.cancel().catch(() => {})
+              return jsonResponse({ error: 'Payload too large.' }, 413, origin)
+            }
+            chunks.push(value)
+          }
+        } finally {
+          reader.releaseLock()
+        }
+      }
+      const bytes = new Uint8Array(size)
+      let offset = 0
+      for (const chunk of chunks) {
+        bytes.set(chunk, offset)
+        offset += chunk.byteLength
+      }
+      raw = new TextDecoder().decode(bytes)
     } catch {
       return jsonResponse({ error: 'Failed to read request body.' }, 400, origin)
-    }
-
-    if (raw.length > MAX_BODY_BYTES) {
-      return jsonResponse({ error: 'Payload too large.' }, 413, origin)
     }
 
     let body

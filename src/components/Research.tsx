@@ -190,26 +190,19 @@ const copy = {
   assistant: { en: 'Assistant', de: 'Assistent', fr: 'Assistant', es: 'Asistente', ar: 'المساعد' },
   metricLabel: { en: 'AUROC - CIFAR-10 Average', de: 'AUROC - CIFAR-10 Durchschnitt', fr: 'AUROC - moyenne CIFAR-10', es: 'AUROC - promedio CIFAR-10', ar: 'AUROC - متوسط CIFAR-10' },
   variance: { en: '+/-0.07% variance (3 seeds)', de: '+/-0.07% Varianz (3 Seeds)', fr: '+/-0.07% variance (3 seeds)', es: '+/-0.07% varianza (3 semillas)', ar: '+/-0.07% تباين (3 بذور)' },
-  binaryAurocHeader: {
-    en: 'Binary OOD AUROC (↑ better, 3 seeds)',
-    de: 'Binäre OOD-AUROC (↑ besser, 3 Seeds)',
-    fr: 'AUROC OOD binaire (↑ meilleur, 3 seeds)',
-    es: 'AUROC OOD binario (↑ mejor, 3 semillas)',
-    ar: 'AUROC الثنائي لكشف OOD (↑ الأفضل، 3 بذور)',
+  chartHeading: {
+    en: 'Separation-weight sweep · Threshold calibration · Reconstruction error',
+    de: 'Variation des Separationsgewichts · Schwellenwertkalibrierung · Rekonstruktionsfehler',
+    fr: 'Balayage du poids de séparation · Calibration du seuil · Erreur de reconstruction',
+    es: 'Barrido del peso de separación · Calibración del umbral · Error de reconstrucción',
+    ar: 'مسح وزن الفصل · معايرة العتبة · خطأ إعادة البناء',
   },
-  multiClassAuroc: {
-    en: 'Multi-class leave-one-class-out AUROC',
-    de: 'Mehrklassen Leave-One-Class-Out AUROC',
-    fr: 'AUROC multi-classes leave-one-class-out',
-    es: 'AUROC multiclase leave-one-class-out',
-    ar: 'AUROC متعدد الفئات مع استبعاد فئة واحدة',
-  },
-  comparisonOodMethods: {
-    en: 'Comparison across OOD methods',
-    de: 'Vergleich über OOD-Methoden',
-    fr: 'Comparaison entre méthodes OOD',
-    es: 'Comparación entre métodos OOD',
-    ar: 'مقارنة بين طرق كشف OOD',
+  openChart: {
+    en: 'Open {chart} chart in viewer.',
+    de: 'Diagramm {chart} im Betrachter öffnen.',
+    fr: 'Ouvrir le graphique {chart} dans la visionneuse.',
+    es: 'Abrir el gráfico {chart} en el visor.',
+    ar: 'فتح الرسم البياني {chart} في العارض.',
   },
   formulaLabel: { en: 'Novel contribution - separation loss', de: 'Neuer Beitrag - Separation Loss', fr: 'Contribution nouvelle - separation loss', es: 'Contribución nueva - separation loss', ar: 'المساهمة الجديدة - خسارة الفصل' },
   plainIdea: { en: 'Plain idea: train the model to make its two explanations visibly different. The gap becomes the anomaly signal.', de: 'Einfache Idee: Das Modell soll zwei Erklärungen sichtbar unterscheiden. Der Abstand wird zum Anomalie-Signal.', fr: "Idee simple : le modèle apprend à rendre deux explications clairement différentes. L'écart devient le signal anomalie.", es: 'Idea simple: el modelo aprende a hacer distintas sus dos explicaciones. La brecha se vuelve la señal de anomalía.', ar: 'الفكرة ببساطة: ندرب النموذج كي يجعل تفسيرين مختلفين بوضوح. الفجوة بينهما تصبح إشارة الشذوذ.' },
@@ -357,7 +350,7 @@ export default function Research() {
           </div>
 
           <div className="cd-band-eyebrow" style={{ marginTop: 20, marginBottom: 10 }}>
-            {t(copy.comparisonOodMethods)} · {t(copy.binaryAurocHeader)} · {t(copy.multiClassAuroc)}
+            {t(copy.chartHeading)}
           </div>
 
           <div className="cd-rf-charts">
@@ -367,7 +360,7 @@ export default function Research() {
                 className="cd-rf-chart cd-rf-chart--zoom"
                 role="button"
                 tabIndex={0}
-                aria-label={`Open ${t(alt)} chart in viewer. ${t(caption)}`}
+                aria-label={`${t(copy.openChart).replace('{chart}', t(alt))} ${t(caption)}`}
                 title="Click to expand"
                 onClick={(event) => {
                   lastFocusedRef.current = event.currentTarget
@@ -455,7 +448,7 @@ export default function Research() {
                 className="cd-rf-chart cd-rf-chart--zoom"
                 role="button"
                 tabIndex={0}
-                aria-label={`Open ${t(alt)} chart in viewer. ${t(caption)}`}
+                aria-label={`${t(copy.openChart).replace('{chart}', t(alt))} ${t(caption)}`}
                 title="Click to expand"
                 onClick={(event) => {
                   lastFocusedRef.current = event.currentTarget

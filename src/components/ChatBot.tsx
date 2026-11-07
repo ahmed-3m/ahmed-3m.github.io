@@ -422,7 +422,7 @@ export function getLocalReply(prompt: string, lang: Language): string | null {
   if (/\b(sihem|mentor|habit|routine|telegram|tech2b|pgvector)\b/i.test(text)) {
     return translateValue(lang, LOCAL_REPLIES.sihem)
   }
-  if (/(thesis|separation loss|ood|out.?of.?distribution|cifar|auroc)/i.test(text)) {
+  if (/\b(thesis|separation loss|ood|out.?of.?distribution|cifar|auroc)\b/i.test(text)) {
     return translateValue(lang, LOCAL_REPLIES.thesis)
   }
   if (/(faultrix|construction|onorm|dsgvo|report)/i.test(text)) {
@@ -651,7 +651,6 @@ async function fetchBigModel({
       }
       const delta = chunk.choices?.[0]?.delta?.content
       if (delta) {
-        timers.onChunk()
         content += delta
         onDelta?.(content)
       }
@@ -661,6 +660,7 @@ async function fetchBigModel({
       for (;;) {
         const { done, value } = await reader.read()
         if (done) break
+        timers.onChunk()
         buffer += decoder.decode(value, { stream: true })
         const lines = buffer.split('\n')
         buffer = lines.pop() ?? ''
@@ -773,7 +773,6 @@ async function fetchGroq({
       }
       const delta = chunk.choices?.[0]?.delta?.content
       if (delta) {
-        timers.onChunk()
         content += delta
         onDelta?.(content)
       }
@@ -783,6 +782,7 @@ async function fetchGroq({
       for (;;) {
         const { done, value } = await reader.read()
         if (done) break
+        timers.onChunk()
         buffer += decoder.decode(value, { stream: true })
         const lines = buffer.split('\n')
         buffer = lines.pop() ?? ''
@@ -1101,18 +1101,20 @@ export default function ChatBot() {
   const currentSection = useCurrentSection()
   const messagesRef = useRef<HTMLDivElement>(null)
   const launcherRef = useRef<HTMLButtonElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
   const dialogRef = useRef<HTMLDivElement>(null)
 
   const starterPrompts = useMemo(() => getStarterPrompts(currentSection), [currentSection])
 
   useEffect(() => {
     if (!isOpen) return
+    const launcher = launcherRef.current
+    inputRef.current?.focus()
 
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === 'Escape') {
         event.preventDefault()
         setIsOpen(false)
-        launcherRef.current?.focus()
         return
       }
 
@@ -1140,7 +1142,10 @@ export default function ChatBot() {
     }
 
     window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+      launcher?.focus()
+    }
   }, [isOpen])
 
   useEffect(() => {
@@ -1315,7 +1320,6 @@ export default function ChatBot() {
           isOpen ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none translate-y-6 opacity-0'
         }`}
         aria-hidden={!isOpen}
-        aria-modal="true"
         tabIndex={-1}
         inert={!isOpen}
       >
@@ -1324,6 +1328,7 @@ export default function ChatBot() {
           className="flex h-[min(560px,calc(100vh-7rem))] flex-col overflow-hidden rounded-[28px] border"
           style={panelStyle}
           role="dialog"
+          aria-modal="true"
           aria-label={t(CHAT_COPY.dialogLabel)}
         >
           <header
@@ -1427,6 +1432,7 @@ export default function ChatBot() {
             )}
             <form onSubmit={handleSubmit} className="flex items-center gap-2">
               <input
+                ref={inputRef}
                 value={input}
                 onChange={(event) => setInput(event.target.value)}
                 placeholder={t(CHAT_COPY.placeholder)}

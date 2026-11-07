@@ -1,3 +1,4 @@
+import { caseStudies } from '@/lib/case-studies';
 import { MetadataRoute } from 'next';
 import { getAllBlogPostsMeta } from '@/lib/blog-posts-meta';
 import { getLatestBlogDate, getLatestContentDate, getLatestNewsDate } from '@/lib/content-dates';
@@ -47,30 +48,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly' as const,
       priority: 0.4,
     },
-    {
-      url: `${baseUrl}/case-studies/diffusion-ood/`,
-      lastModified: latestContent,
-      changeFrequency: 'monthly',
+    ...caseStudies.map((study) => ({
+      url: `${baseUrl}/case-studies/${study.slug}/`,
+      lastModified: new Date(study.lastModified),
+      changeFrequency: 'monthly' as const,
       priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/case-studies/inkjet-ood/`,
-      lastModified: latestContent,
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/case-studies/faultrix/`,
-      lastModified: latestContent,
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/case-studies/sihem/`,
-      lastModified: latestContent,
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
+    })),
     ...blogPostEntries,
   ];
 }

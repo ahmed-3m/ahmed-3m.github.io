@@ -54,7 +54,7 @@ const copy = {
   desc2: { en: 'Thesis: SCARA robotic system for dynamic object tracking.', de: 'Thesis: SCARA-Robotersystem für dynamische Objektverfolgung.', fr: 'Mémoire : système robotique SCARA pour suivi dynamique d\'objets.', es: 'Tesis: sistema robótico SCARA para seguimiento dinámico de objetos.', ar: 'المشروع: نظام روبوت SCARA لتتبع الأجسام المتحركة.' },
 } satisfies Record<string, TranslationMap>
 
-const skillCategories: { title: TranslationMap; skills: string[] }[] = [
+const skillCategories: { title: TranslationMap; skills: (string | TranslationMap)[] }[] = [
   {
     title: {
       en: 'Deep Learning & CV',
@@ -63,7 +63,7 @@ const skillCategories: { title: TranslationMap; skills: string[] }[] = [
       es: 'Deep Learning y Visión por Computador',
       ar: 'التعلم العميق والرؤية الحاسوبية',
     },
-    skills: ['PyTorch', 'PyTorch Lightning', 'Diffusion Models (DDPM, UNet)', 'CNNs', 'Transformers', 'OOD Detection', 'YOLOv8', 'Defect Inspection'],
+    skills: ['PyTorch', 'PyTorch Lightning', { en: "Diffusion Models (DDPM, UNet)", de: "Diffusionsmodelle (DDPM, UNet)", fr: "Modèles de diffusion (DDPM, UNet)", es: "Modelos de difusión (DDPM, UNet)", ar: "نماذج الانتشار (DDPM, UNet)" }, 'CNNs', 'Transformers', { en: "OOD Detection", de: "OOD-Erkennung", fr: "Détection OOD", es: "Detección OOD", ar: "كشف OOD" }, 'YOLOv8', { en: "Defect Inspection", de: "Fehlerprüfung", fr: "Inspection des défauts", es: "Inspección de defectos", ar: "فحص العيوب" }],
   },
   {
     title: {
@@ -73,7 +73,7 @@ const skillCategories: { title: TranslationMap; skills: string[] }[] = [
       es: 'IA generativa y agéntica',
       ar: 'الذكاء الاصطناعي التوليدي والوكيلي',
     },
-    skills: ['LLM API Integration', 'Multi-Provider Routing & Failover', 'Prompt Engineering', 'Structured Output Validation', 'pgvector Retrieval', 'Claude Code'],
+    skills: [{ en: "LLM API Integration", de: "LLM-API-Integration", fr: "Intégration d’API LLM", es: "Integración de API LLM", ar: "تكامل واجهات LLM" }, { en: "Multi-Provider Routing & Failover", de: "Routing und Ausfallsicherung über mehrere Anbieter", fr: "Routage et basculement entre fournisseurs", es: "Enrutamiento y conmutación entre proveedores", ar: "التوجيه بين مزودين متعددين وتجاوز الأعطال" }, { en: "Prompt Engineering", de: "Prompt-Entwicklung", fr: "Ingénierie des prompts", es: "Ingeniería de instrucciones", ar: "هندسة التعليمات" }, { en: "Structured Output Validation", de: "Validierung strukturierter Ausgaben", fr: "Validation des sorties structurées", es: "Validación de salidas estructuradas", ar: "التحقق من المخرجات المنظمة" }, { en: "pgvector Retrieval", de: "Abruf mit pgvector", fr: "Recherche avec pgvector", es: "Recuperación con pgvector", ar: "الاسترجاع باستخدام pgvector" }, 'Claude Code'],
   },
   {
     title: {
@@ -83,7 +83,7 @@ const skillCategories: { title: TranslationMap; skills: string[] }[] = [
       es: 'ML y Ciencia de Datos',
       ar: 'تعلم الآلة وعلوم البيانات',
     },
-    skills: ['Hydra', 'Ablation Studies', 'AUROC/FPR95', 'Cross-Validation', 'Multi-Seed Runs', 'Roboflow'],
+    skills: ['Hydra', { en: "Ablation Studies", de: "Ablationsstudien", fr: "Études d’ablation", es: "Estudios de ablación", ar: "دراسات الاستئصال" }, 'AUROC/FPR95', { en: "Cross-Validation", de: "Kreuzvalidierung", fr: "Validation croisée", es: "Validación cruzada", ar: "التحقق المتقاطع" }, { en: "Multi-Seed Runs", de: "Läufe mit mehreren Zufallsseeds", fr: "Exécutions avec plusieurs graines aléatoires", es: "Ejecuciones con múltiples semillas", ar: "تجارب ببذور عشوائية متعددة" }, 'Roboflow'],
   },
   {
     title: {
@@ -93,18 +93,9 @@ const skillCategories: { title: TranslationMap; skills: string[] }[] = [
       es: 'Despliegue y MLOps',
       ar: 'النشر وعمليات تعلم الآلة (MLOps)',
     },
-    skills: ['Python', 'Git', 'Linux', 'Docker', 'REST APIs', 'GitHub Actions CI/CD', 'Supabase', 'TypeScript', 'React'],
+    skills: ['Python', 'Git', 'Linux', 'Docker', { en: "REST APIs", de: "REST-APIs", fr: "API REST", es: "API REST", ar: "واجهات REST" }, { en: "GitHub Actions CI/CD", de: "CI/CD mit GitHub Actions", fr: "CI/CD avec GitHub Actions", es: "CI/CD con GitHub Actions", ar: "التكامل والتسليم المستمران باستخدام GitHub Actions" }, 'Supabase', 'TypeScript', 'React'],
   },
-  {
-    title: {
-      en: 'Certifications',
-      de: 'Zertifizierungen',
-      fr: 'Certifications',
-      es: 'Certificaciones',
-      ar: 'الشهادات المهنية',
-    },
-    skills: ['M.Sc. Artificial Intelligence (JKU Linz)', 'B.Sc. Mechatronics Engineering (EMU)'],
-  },
+
 ]
 
 export default function About() {
@@ -204,7 +195,7 @@ export default function About() {
               <div key={cat.title.en} className="cd-skill-category">
                 <div className="cd-skill-cat-name">{t(cat.title)}</div>
                 <div className="cd-chips" style={{ marginTop: 0 }}>
-                  {cat.skills.map(skill => <span key={skill} className="cd-chip">{skill}</span>)}
+                  {cat.skills.map(skill => <span key={typeof skill === 'string' ? skill : skill.en} className="cd-chip">{typeof skill === 'string' ? skill : t(skill)}</span>)}
                 </div>
               </div>
             ))}
