@@ -2,7 +2,7 @@
 
 <p align="center">
   <strong>AI / Machine Learning Engineer &middot; Linz, Austria</strong><br>
-  <em>M.Sc. Artificial Intelligence, Johannes Kepler University Linz (Supervised by Prof. Sepp Hochreiter)</em>
+  <em>M.Sc. Artificial Intelligence, Johannes Kepler University Linz </em>
 </p>
 
 <p align="center">
