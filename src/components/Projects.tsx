@@ -67,6 +67,20 @@ const copy = {
     es: 'Decide si un pull request escrito por un agente de IA es seguro para fusionar. Código determinista puro que nunca llama a un LLM — el agente evaluado no puede convencer al veredicto con palabras.',
     ar: 'يقرر ما إذا كان طلب الدمج المكتوب بواسطة وكيل ذكاء اصطناعي آمنًا للدمج. شيفرة حتمية خالصة لا تستدعي أي نموذج لغة — فلا يمكن للوكيل المُقيَّم الإفلات من الحكم بالكلام.',
   },
+  tagZeroDeps: {
+    en: 'Zero dependencies',
+    de: 'Keine Abhängigkeiten',
+    fr: 'Zéro dépendance',
+    es: 'Sin dependencias',
+    ar: 'بدون تبعيات',
+  },
+  tagLlmFree: {
+    en: 'LLM-free gate',
+    de: 'LLM-freies Gate',
+    fr: 'Garde-fou sans LLM',
+    es: 'Compuerta sin LLM',
+    ar: 'بوابة خالية من LLM',
+  },
   mergeproofMetric: {
     en: 'LLM calls',
     de: 'LLM-Aufrufe',
@@ -137,7 +151,7 @@ export default function Projects() {
             <div className="cd-pc-desc">{t(copy.mergeproofDesc)}</div>
             <div className="cd-pc-metric">0<span> {t(copy.mergeproofMetric)}</span></div>
             <div className="cd-proj-tags" style={{ marginTop: 12 }}>
-              {['JavaScript', 'Zero dependencies', 'LLM-free gate', 'npm'].map(tag => (
+              {['JavaScript', t(copy.tagZeroDeps), t(copy.tagLlmFree), 'npm'].map(tag => (
                 <span key={tag} className="cd-proj-tag">{tag}</span>
               ))}
             </div>
