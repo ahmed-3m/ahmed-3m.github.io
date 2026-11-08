@@ -153,29 +153,6 @@ This site is statically exported to GitHub Pages with high performance, strict a
 * **Machine Accessibility**: `llms.txt` / `llms-full.txt`, JSON-LD schemas, sitemap, and RSS feed.
 * **Daily Autonomous News**: Automated agentic pipeline collecting, verifying, and publishing curated AI and agentic breakthroughs daily via GitHub Actions.
 
-### Local Verification & Commands
-
-Dependencies are pinned via the committed lockfile. Validate changes locally before submitting:
-
-```bash
-# Clean deterministic install
-npm ci
-
-# Start development server
-npm run dev
-
-# Code quality & type safety
-npm run lint
-npm run typecheck
-
-# Full production static export (Must pass before push; needs network for Google Fonts)
-npm run build
-
-# System & security self-tests
-node .github/news/news-selftest.mjs     # Validate news schemas & canonical links
-node worker/chat-proxy.selftest.mjs     # Test chat proxy resilience & sanitization
-```
-
 ---
 
 ## Direct Contacts & Research Profiles
