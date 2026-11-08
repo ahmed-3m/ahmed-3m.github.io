@@ -1,0 +1,4 @@
+# Binary deliverables: never EOL-convert. core.autocrlf=true on Windows checkouts
+# otherwise smudges PDFs as text and corrupts them (caught on public/cv.pdf
+# 2026-11-08: worktree copy 39957 B vs intact 39815 B blob; live site unaffected).
+*.pdf -text
