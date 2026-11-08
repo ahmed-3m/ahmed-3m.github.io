@@ -19,11 +19,11 @@ const copy = {
     ar: 'أنا مهندس ذكاء اصطناعي وتعلم آلي، وحاصل على درجة الماجستير في الذكاء الاصطناعي من JKU Linz (تخرجت في 25 سبتمبر 2026) تحت إشراف البروفيسور سيب هوخرايتر، وحصلت رسالتي على تقدير 1، وهو أعلى درجة.',
   },
   p2: {
-    en: 'My work spans the full stack: from class-conditional separation loss for diffusion-based OOD detection to industrial computer vision pipelines evaluated under rigorous cross-validation.',
-    de: 'Meine Arbeit umfasst den gesamten Stack: von class-conditional separation loss für diffusionsbasierte OOD-Erkennung bis zu industriellen Computer-Vision-Pipelines mit strenger Kreuzvalidierung.',
-    fr: "Mon travail couvre toute la chaîne : de la separation loss conditionnelle pour la détection OOD par diffusion aux pipelines de vision industrielle validés rigoureusement.",
-    es: 'Mi trabajo cubre todo el stack: desde separation loss condicional para detección OOD con difusión hasta pipelines industriales de visión por computador evaluados rigurosamente.',
-    ar: 'يمتد عملي عبر كامل السلسلة: من خسارة الفصل الشرطية لكشف الخارج عن التوزيع بنماذج الانتشار إلى خطوط رؤية حاسوبية صناعية بتقييم صارم.',
+    en: 'My work spans the full stack: from class-conditional separation loss for diffusion-based OOD detection to industrial computer vision pipelines evaluated under rigorous cross-validation. I also ship LLM products and the deterministic tooling that keeps AI coding agents honest.',
+    de: 'Meine Arbeit umfasst den gesamten Stack: von class-conditional separation loss für diffusionsbasierte OOD-Erkennung bis zu industriellen Computer-Vision-Pipelines mit strenger Kreuzvalidierung. Daneben liefere ich LLM-Produkte und deterministisches Tooling, das KI-Coding-Agenten ehrlich hält.',
+    fr: "Mon travail couvre toute la chaîne : de la separation loss conditionnelle pour la détection OOD par diffusion aux pipelines de vision industrielle validés rigoureusement. Je livre aussi des produits LLM et un outillage déterministe qui garde les agents de code honnêtes.",
+    es: 'Mi trabajo cubre todo el stack: desde separation loss condicional para detección OOD con difusión hasta pipelines industriales de visión por computador evaluados rigurosamente. También lanzo productos LLM y herramientas deterministas que mantienen honestos a los agentes de código.',
+    ar: 'يمتد عملي عبر كامل السلسلة: من خسارة الفصل الشرطية لكشف الخارج عن التوزيع بنماذج الانتشار إلى خطوط رؤية حاسوبية صناعية بتقييم صارم. كما أُطلق منتجات نماذج لغة وأدوات حتمية تُبقي وكلاء البرمجة على المسار الصحيح.',
   },
   p3: {
     en: 'I also build and ship — most recently Sihem, an LLM personal-mentor side project accepted into the tech2b incubator, and before that Faultrix, an AI quality-control platform I took from zero to production on my own. Both taught me that production reliability is its own kind of rigor.',
@@ -73,7 +73,7 @@ const skillCategories: { title: TranslationMap; skills: (string | TranslationMap
       es: 'IA generativa y agéntica',
       ar: 'الذكاء الاصطناعي التوليدي والوكيلي',
     },
-    skills: [{ en: "LLM API Integration", de: "LLM-API-Integration", fr: "Intégration d’API LLM", es: "Integración de API LLM", ar: "تكامل واجهات LLM" }, { en: "Multi-Provider Routing & Failover", de: "Routing und Ausfallsicherung über mehrere Anbieter", fr: "Routage et basculement entre fournisseurs", es: "Enrutamiento y conmutación entre proveedores", ar: "التوجيه بين مزودين متعددين وتجاوز الأعطال" }, { en: "Prompt Engineering", de: "Prompt-Entwicklung", fr: "Ingénierie des prompts", es: "Ingeniería de instrucciones", ar: "هندسة التعليمات" }, { en: "Structured Output Validation", de: "Validierung strukturierter Ausgaben", fr: "Validation des sorties structurées", es: "Validación de salidas estructuradas", ar: "التحقق من المخرجات المنظمة" }, { en: "pgvector Retrieval", de: "Abruf mit pgvector", fr: "Recherche avec pgvector", es: "Recuperación con pgvector", ar: "الاسترجاع باستخدام pgvector" }, 'Claude Code'],
+    skills: [{ en: "LLM API Integration", de: "LLM-API-Integration", fr: "Intégration d’API LLM", es: "Integración de API LLM", ar: "تكامل واجهات LLM" }, { en: "Multi-Provider Routing & Failover", de: "Routing und Ausfallsicherung über mehrere Anbieter", fr: "Routage et basculement entre fournisseurs", es: "Enrutamiento y conmutación entre proveedores", ar: "التوجيه بين مزودين متعددين وتجاوز الأعطال" }, { en: "Prompt Engineering", de: "Prompt-Entwicklung", fr: "Ingénierie des prompts", es: "Ingeniería de instrucciones", ar: "هندسة التعليمات" }, { en: "Structured Output Validation", de: "Validierung strukturierter Ausgaben", fr: "Validation des sorties structurées", es: "Validación de salidas estructuradas", ar: "التحقق من المخرجات المنظمة" }, { en: "pgvector Retrieval", de: "Abruf mit pgvector", fr: "Recherche avec pgvector", es: "Recuperación con pgvector", ar: "الاسترجاع باستخدام pgvector" }],
   },
   {
     title: {
@@ -94,6 +94,16 @@ const skillCategories: { title: TranslationMap; skills: (string | TranslationMap
       ar: 'النشر وعمليات تعلم الآلة (MLOps)',
     },
     skills: ['Python', 'Git', 'Linux', 'Docker', { en: "REST APIs", de: "REST-APIs", fr: "API REST", es: "API REST", ar: "واجهات REST" }, { en: "GitHub Actions CI/CD", de: "CI/CD mit GitHub Actions", fr: "CI/CD avec GitHub Actions", es: "CI/CD con GitHub Actions", ar: "التكامل والتسليم المستمران باستخدام GitHub Actions" }, 'Supabase', 'TypeScript', 'React'],
+  },
+  {
+    title: {
+      en: 'Agent Tooling',
+      de: 'Agent-Tooling',
+      fr: 'Outillage pour agents',
+      es: 'Herramientas para agentes',
+      ar: 'أدوات الوكلاء',
+    },
+    skills: ['mergeproof', 'Claude Code', 'GitHub Copilot', { en: "Deterministic checks", de: "Deterministische Prüfungen", fr: "Vérifications déterministes", es: "Comprobaciones deterministas", ar: "فحوصات حتمية" }],
   },
 
 ]
