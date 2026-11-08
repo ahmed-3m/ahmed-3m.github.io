@@ -15,7 +15,7 @@ export const metadata: Metadata = {
       'YOLO + conditional diffusion pipeline for industrial print QC on FTI_Zer0P under strict 5-fold cross-validation: 0.8673 ± 0.0230 AUROC.',
     type: 'article',
     url: 'https://ahmed-3m.github.io/case-studies/inkjet-ood/',
-    images: ogImage('Inkjet OOD case study'),
+    images: ogImage('Inkjet OOD case study', '/og-inkjet-ood.png'),
   },
 }
 

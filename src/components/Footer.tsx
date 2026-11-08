@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 
 const copy = {
@@ -10,6 +11,9 @@ const copy = {
     es: '© 2026 · Ingeniero de IA/ML · Linz, Austria',
     ar: '© 2026 · مهندس ذكاء اصطناعي وتعلم آلي · لينز، النمسا',
   },
+  blog: { en: 'Blog', de: 'Blog', fr: 'Blog', es: 'Blog', ar: 'المدونة' },
+  news: { en: 'News', de: 'News', fr: 'Actualités', es: 'Noticias', ar: 'الأخبار' },
+  caseStudies: { en: 'Case Studies', de: 'Fallstudien', fr: 'Études de cas', es: 'Casos de estudio', ar: 'دراسات الحالة' },
 } satisfies Record<string, TranslationMap>
 
 export default function Footer() {
@@ -21,6 +25,10 @@ export default function Footer() {
         <div className="cd-footer-inner">
           <div className="cd-footer-brand">Ahmed<span>.</span></div>
           <nav aria-label="Footer links" style={{ display: 'flex', gap: '1.25rem', flexWrap: 'wrap', alignItems: 'center' }}>
+            <Link href="/blog/" style={{ color: 'var(--cd-fg3)', fontSize: '0.8rem', textDecoration: 'none' }}>{t(copy.blog)}</Link>
+            <Link href="/news/" style={{ color: 'var(--cd-fg3)', fontSize: '0.8rem', textDecoration: 'none' }}>{t(copy.news)}</Link>
+            <Link href="/#projects" style={{ color: 'var(--cd-fg3)', fontSize: '0.8rem', textDecoration: 'none' }}>{t(copy.caseStudies)}</Link>
+            <span aria-hidden="true" style={{ color: 'var(--cd-fg3)', opacity: 0.35 }}>·</span>
             <a href="https://www.linkedin.com/in/ahmed-3m/" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--cd-fg3)', fontSize: '0.8rem', textDecoration: 'none' }}>LinkedIn</a>
             <a href="https://github.com/ahmed-3m" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--cd-fg3)', fontSize: '0.8rem', textDecoration: 'none' }}>GitHub</a>
             <a href="https://huggingface.co/ahmed-3m" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--cd-fg3)', fontSize: '0.8rem', textDecoration: 'none' }}>HuggingFace</a>
