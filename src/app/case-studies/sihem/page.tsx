@@ -16,7 +16,7 @@ export const metadata: Metadata = {
       'Proactive personal-mentor and daily-routine assistant with deterministic nudging, pgvector RAG memory, and multi-provider LLM routing, incubated at tech2b Linz.',
     type: 'article',
     url: 'https://ahmed-3m.github.io/case-studies/sihem/',
-    images: ogImage('Sihem case study'),
+    images: ogImage('Sihem case study', '/og-sihem.png'),
   },
 }
 

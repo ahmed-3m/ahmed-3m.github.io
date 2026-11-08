@@ -15,7 +15,7 @@ export const metadata: Metadata = {
       'Solo-built AI construction QC SaaS: photo analysis to ÖNORM B 2110-compliant reports in under a minute, SHA-256 evidence chain, DSGVO compliant.',
     type: 'article',
     url: 'https://ahmed-3m.github.io/case-studies/faultrix/',
-    images: ogImage('Faultrix case study'),
+    images: ogImage('Faultrix case study', '/og-faultrix.png'),
   },
 }
 

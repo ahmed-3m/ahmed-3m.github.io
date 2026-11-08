@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     url: 'https://ahmed-3m.github.io/news/',
     // Page-level openGraph replaces the layout's object wholesale — without
     // an images array the route ships no og:image.
-    images: ogImage('Ahmed Mohammed - AI/ML Engineer'),
+    images: ogImage('AI & Agentic AI News — curated daily with a take', '/og-news.png'),
   },
 }
 
