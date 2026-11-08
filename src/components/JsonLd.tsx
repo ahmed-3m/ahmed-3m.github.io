@@ -131,7 +131,7 @@ export function PersonSchema() {
       itemOffered: {
         '@type': 'Service',
         name: 'AI/ML Engineering & Consulting',
-        description: 'Computer vision systems, anomaly detection pipelines, diffusion model research, and production ML engineering for industrial and construction applications.',
+        description: 'AI systems end to end: computer vision and anomaly detection, diffusion model research, LLM products and integrations, deterministic agent tooling, and production ML engineering for industrial and construction applications.',
       },
     },
   };
@@ -151,7 +151,7 @@ export function WebsiteSchema() {
     '@type': 'WebSite',
     name: 'Ahmed Mohammed — AI/ML Engineer',
     url: 'https://ahmed-3m.github.io',
-    description: 'Portfolio of Ahmed Mohammed — AI/ML Engineer specializing in computer vision, anomaly detection, and diffusion models. Builder of Sihem and Faultrix. 99.03% AUROC on a within-CIFAR airplane-vs-rest binary OOD split (single ID class). 98.4% industrial defect detection accuracy in production (threshold-dependent binary classification). M.Sc. AI (thesis submitted Jun 2026, degree completed 25 Sep 2026) from JKU Linz.',
+    description: 'Portfolio of Ahmed Mohammed — AI/ML Engineer building AI systems end to end: computer vision, diffusion models, OOD detection, LLM products, and agent tooling. Builder of Sihem, Faultrix, and mergeproof. 99.03% AUROC on a within-CIFAR airplane-vs-rest binary OOD split (single ID class). 98.4% industrial defect detection accuracy at PROFACTOR in production (threshold-dependent binary classification). M.Sc. AI (thesis submitted Jun 2026, degree completed 25 Sep 2026) from JKU Linz.',
     author: {
       '@type': 'Person',
       name: 'Ahmed Mohammed',

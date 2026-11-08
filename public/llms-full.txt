@@ -1,6 +1,6 @@
 # Ahmed Mohammed — AI/ML Engineer
 
-> AI/ML Engineer based in Linz, Austria. M.Sc. in Artificial Intelligence from Johannes Kepler University Linz (Oct 2020 - Sep 2026; Defensio 25 Sep 2026, thesis graded 1, supervised by Prof. Sepp Hochreiter). Builder of Sihem (LLM assistant) and Faultrix (AI QC platform), and mergeproof (deterministic merge-safety gate for AI-agent pull requests). Specializing in computer vision, diffusion models, out-of-distribution detection, industrial defect detection, LLM products, and agent tooling.
+> AI/ML Engineer based in Linz, Austria. M.Sc. in Artificial Intelligence from Johannes Kepler University Linz (Oct 2020 - Sep 2026; Defensio 25 Sep 2026, thesis graded 1, supervised by Prof. Sepp Hochreiter). Builder of Sihem (LLM assistant), Faultrix (AI QC platform), and mergeproof (deterministic merge-safety gate for AI-agent pull requests). Specializing in computer vision, diffusion models, out-of-distribution detection, industrial defect detection, LLM products, and agent tooling.
 
 Last updated: 2026-11-08
 

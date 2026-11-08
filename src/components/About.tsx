@@ -201,8 +201,8 @@ export default function About() {
         <div className="cd-about-band reveal">
           <div className="cd-band-eyebrow">{t(copy.skills)}</div>
           <div className="cd-skills-grid">
-            {skillCategories.map(cat => (
-              <div key={cat.title.en} className="cd-skill-category">
+            {skillCategories.map((cat, i) => (
+              <div key={cat.title.en} className="cd-skill-category" style={i === skillCategories.length - 1 ? { gridColumn: '1 / -1' } : undefined}>
                 <div className="cd-skill-cat-name">{t(cat.title)}</div>
                 <div className="cd-chips" style={{ marginTop: 0 }}>
                   {cat.skills.map(skill => <span key={typeof skill === 'string' ? skill : skill.en} className="cd-chip">{typeof skill === 'string' ? skill : t(skill)}</span>)}

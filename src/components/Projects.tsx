@@ -145,7 +145,7 @@ export default function Projects() {
             </div>
           </article>
 
-          <article className="cd-project-card reveal">
+          <article className="cd-project-card cd-project-card--full reveal">
             <div className="cd-pc-eyebrow">{t(copy.mergeproofEyebrow)}</div>
             <div className="cd-pc-title">mergeproof</div>
             <div className="cd-pc-desc">{t(copy.mergeproofDesc)}</div>
@@ -209,7 +209,7 @@ export default function Projects() {
 
           <article className="cd-project-card cd-project-card--full reveal">
             <div className="cd-pc-eyebrow">{t(copy.moreOssEyebrow)}</div>
-            <p className="cd-pc-desc" style={{ maxWidth: 760 }}>
+            <div className="cd-pc-desc" style={{ maxWidth: 760 }}>
               <a href="https://github.com/ahmed-3m/Elbostan-Pazar-bot" target="_blank" rel="noopener noreferrer" className="cd-proj-link">Elbostan Pazar bot</a>
               {' — '}
               {t(copy.moreOss1)}
@@ -219,7 +219,7 @@ export default function Projects() {
               <a href="https://github.com/ahmed-3m/idea2prototype" target="_blank" rel="noopener noreferrer" className="cd-proj-link">idea2prototype</a>
               {' — '}
               {t(copy.moreOss2)}
-            </p>
+            </div>
           </article>
         </div>
       </div>

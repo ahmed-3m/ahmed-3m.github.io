@@ -49,14 +49,14 @@ export const metadata: Metadata = {
     template: '%s | Ahmed Mohammed'
   },
   description: "AI/ML Engineer in Linz, Austria. 99.03% +/- 0.07% AUROC thesis result (within-CIFAR airplane-vs-rest binary split), 0.8673 +/- 0.0230 industrial baseline, builder of Sihem (LLM assistant), Faultrix (AI QC) and mergeproof (deterministic agent-PR merge gate), plus public proof artifacts across thesis, reports, repositories, and case studies.",
-  keywords: ["AI Engineer", "Machine Learning Engineer", "Computer Vision", "Deep Learning", "PyTorch", "YOLO", "Diffusion Models", "Anomaly Detection", "Ahmed Mohammed", "Faultrix", "Sihem", "LLM applications", "Linz Austria", "JKU", "OOD Detection", "Industrial Quality Control", "Construction AI", "DiffusionOOD", "InkjetOOD", "Case Study", "Research Portfolio"],
+  keywords: ["AI Engineer", "Machine Learning Engineer", "Computer Vision", "Deep Learning", "PyTorch", "YOLO", "Diffusion Models", "Anomaly Detection", "Ahmed Mohammed", "Faultrix", "Sihem", "LLM applications", "mergeproof", "AI Agent Tooling", "Linz Austria", "JKU", "OOD Detection", "Industrial Quality Control", "Construction AI", "DiffusionOOD", "InkjetOOD", "Case Study", "Research Portfolio"],
   authors: [{ name: "Ahmed Mohammed", url: 'https://ahmed-3m.github.io' }],
   creator: 'Ahmed Mohammed',
   publisher: 'Ahmed Mohammed',
   formatDetection: { email: false, address: false, telephone: false },
   openGraph: {
     title: "Ahmed Mohammed | AI/ML Engineer",
-    description: "AI/ML Engineer in Linz, Austria. Thesis, industrial evaluation, Faultrix product work, and public proof artifacts including PDFs, repositories, and case studies.",
+    description: "AI/ML Engineer in Linz, Austria. Thesis, industrial evaluation, LLM products, agent tooling (mergeproof), Faultrix, and public proof artifacts including PDFs, repositories, and case studies.",
     url: 'https://ahmed-3m.github.io/',
     siteName: 'Ahmed Mohammed Portfolio',
     images: ogImage('Ahmed Mohammed - AI/ML Engineer'),
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Ahmed Mohammed | AI/ML Engineer',
-    description: 'AI/ML engineer with public thesis artifacts, industrial AI evaluation, and product case studies.',
+    description: 'AI/ML engineer with public thesis artifacts, industrial AI evaluation, LLM products, agent tooling (mergeproof), and product case studies.',
     images: ['/og-image.png'],
     // TODO(owner): re-enable with new X account
     // creator: '@Ahmed_mo_93',
@@ -108,7 +108,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <noscript>
           <div style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto', fontFamily: 'system-ui, sans-serif' }}>
             <h1>Ahmed Mohammed — AI/ML Engineer</h1>
-            <p>Based in Linz, Austria. Specializing in computer vision, anomaly detection, and diffusion models. Builder of <a href="https://sihem-pwa.pages.dev/">Sihem</a> and <a href="https://faultrix.com">Faultrix</a>.</p>
+            <p>Based in Linz, Austria. Building AI systems end to end — computer vision, diffusion models, LLM products, and agent tooling. Builder of <a href="https://sihem-pwa.pages.dev/">Sihem</a>, <a href="https://faultrix.com">Faultrix</a>, and <a href="https://github.com/ahmed-3m/mergeproof">mergeproof</a>.</p>
             <h2>Contact</h2>
             <p>Email: <a href="mailto:ahmed.mo.0595@gmail.com">ahmed.mo.0595@gmail.com</a> | <a href="https://www.linkedin.com/in/ahmed-3m/">LinkedIn</a> | <a href="https://github.com/ahmed-3m">GitHub</a></p>
           </div>
