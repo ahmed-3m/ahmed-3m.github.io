@@ -9,6 +9,7 @@ const socials = [
   { label: 'GitHub', href: 'https://github.com/ahmed-3m' },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/ahmed-3m/' },
   { label: 'Hugging Face', href: 'https://huggingface.co/ahmed-3m' },
+  { label: 'ORCID', href: 'https://orcid.org/0009-0004-8934-1270' },
   { label: 'W&B', href: 'https://wandb.ai/ahmed-mu-0593' },
   // TODO(owner): re-enable with new X account
   // { label: 'X / Twitter', href: 'https://x.com/Ahmed_mo_93' },

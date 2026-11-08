@@ -53,6 +53,62 @@ const copy = {
     es: 'Un asistente mentor personal proactivo en Telegram que planifica tu semana, envía briefings matutinos y revisiones nocturnas, y activa check-ins inteligentes. Construido sobre Supabase edge functions (Deno/TS) con un modelo de actividad genérico (ejercicio, medicación, sesiones de estudio, hábitos personalizados — sin cambio de esquema por tipo), un motor de decisión determinista generadores→árbitro→compositor para nudging adaptativo, memoria a largo plazo pgvector con RAG, enrutamiento LLM multiproveedor (GLM/Gemini/Groq) con failover, visión multimodal de fotos de comidas, recordatorios de voz TTS (Cloudflare MeloTTS), sincronización con Google Calendar, integración opcional con Alexa Echo, acceso beta por código de invitación, y un panel de ops con seguimiento de costos. Ahora en beta — pruébalo en Telegram en @sihem_ai_bot.',
     ar: 'مساعد موجّه شخصي استباقي على تيليجرام يخطط أسبوعك، ويرسل موجزات صباحية ومراجعات مسائية، ويطلق تنبيهات ذكية للتحقق. مبني على Supabase edge functions (Deno/TS) مع نموذج نشاط عام (التمارين، الأدوية، جلسات الدراسة، العادات المخصصة — بدون تغيير المخطط لكل نوع)، محرك قرار حتمي (مولدات→محكّم→مؤلف) للتنبيه التكيّفي، ذاكرة طويلة المدى pgvector مع RAG، توجيه LLM متعدد المزودين (GLM/Gemini/Groq) مع تبديل المزود، رؤية متعددة الوسائط لصور الطعام، تذكيرات صوتية TTS (Cloudflare MeloTTS)، مزامنة Google Calendar، تكامل اختياري مع Alexa Echo، وصول تجريبي برمز دعوة، ولوحة تشغيل مع تتبع التكاليف. الآن في النسخة التجريبية — جرّبه على تيليجرام عبر @sihem_ai_bot.',
   },
+  mergeproofEyebrow: {
+    en: 'Open source · Agent tooling',
+    de: 'Open Source · Agent-Tooling',
+    fr: 'Open source · Outillage agents',
+    es: 'Open source · Herramientas para agentes',
+    ar: 'مصدر مفتوح · أدوات الوكلاء',
+  },
+  mergeproofDesc: {
+    en: 'Decides whether a pull request written by an AI agent is safe to merge. Plain deterministic code that never calls an LLM, so the agent being judged cannot talk its way past it.',
+    de: 'Entscheidet, ob ein von einem KI-Agenten geschriebener Pull Request sicher gemergt werden kann. Reiner deterministischer Code, der niemals ein LLM aufruft — der beurteilte Agent kann sich nicht mit Worten daran vorbeimogeln.',
+    fr: "Décide si une pull request écrite par un agent IA est sûre à fusionner. Du code déterministe pur qui n'appelle jamais de LLM — l'agent évalué ne peut pas convaincre le verdict par la parole.",
+    es: 'Decide si un pull request escrito por un agente de IA es seguro para fusionar. Código determinista puro que nunca llama a un LLM — el agente evaluado no puede convencer al veredicto con palabras.',
+    ar: 'يقرر ما إذا كان طلب الدمج المكتوب بواسطة وكيل ذكاء اصطناعي آمنًا للدمج. شيفرة حتمية خالصة لا تستدعي أي نموذج لغة — فلا يمكن للوكيل المُقيَّم الإفلات من الحكم بالكلام.',
+  },
+  tagZeroDeps: {
+    en: 'Zero dependencies',
+    de: 'Keine Abhängigkeiten',
+    fr: 'Zéro dépendance',
+    es: 'Sin dependencias',
+    ar: 'بدون تبعيات',
+  },
+  tagLlmFree: {
+    en: 'LLM-free gate',
+    de: 'LLM-freies Gate',
+    fr: 'Garde-fou sans LLM',
+    es: 'Compuerta sin LLM',
+    ar: 'بوابة خالية من LLM',
+  },
+  mergeproofMetric: {
+    en: 'LLM calls',
+    de: 'LLM-Aufrufe',
+    fr: 'appels LLM',
+    es: 'llamadas LLM',
+    ar: 'استدعاءات LLM',
+  },
+  moreOssEyebrow: {
+    en: 'More open source',
+    de: 'Mehr Open Source',
+    fr: "Plus d'open source",
+    es: 'Más open source',
+    ar: 'المزيد من المصادر المفتوحة',
+  },
+  moreOss1: {
+    en: "a Messenger bot that answers a real shop's customers about prices, hours and delivery.",
+    de: 'ein Messenger-Bot, der den Kunden eines echten Ladens zu Preisen, Öffnungszeiten und Lieferung antwortet.',
+    fr: "un bot Messenger qui répond aux clients d'une vraie boutique sur les prix, les horaires et la livraison.",
+    es: 'un bot de Messenger que responde a los clientes de una tienda real sobre precios, horarios y entrega.',
+    ar: 'بوت ماسنجر يجيب عملاء متجر حقيقي حول الأسعار وأوقات العمل والتوصيل.',
+  },
+  moreOss2: {
+    en: 'zero-dependency tools that take a fuzzy idea to a linted brief, then to a tested prototype, with any coding agent.',
+    de: 'Zero-Dependency-Werkzeuge, die eine vage Idee in ein gelintetes Briefing und dann in einen getesteten Prototyp überführen — mit jedem Coding-Agent.',
+    fr: "des outils sans dépendance qui transforment une idée floue en brief linté, puis en prototype testé, avec n'importe quel agent de code.",
+    es: 'herramientas sin dependencias que llevan una idea difusa a un brief lintado y luego a un prototipo probado, con cualquier agente de código.',
+    ar: 'أدوات بدون تبعيات تحوّل فكرة غامضة إلى موجز مُدقَّق ثم إلى نموذج أولي مُختبَر، مع أي وكيل برمجي.',
+  },
 } satisfies Record<string, TranslationMap>
 
 export default function Projects() {
@@ -86,6 +142,21 @@ export default function Projects() {
                 <a href="https://t.me/sihem_ai_bot" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12, opacity: 0.78 }}>Telegram &rarr;</a>
                 <a href="https://sihem-pwa.pages.dev/" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12, opacity: 0.65 }}>PWA &rarr;</a>
               </div>
+            </div>
+          </article>
+
+          <article className="cd-project-card cd-project-card--full reveal">
+            <div className="cd-pc-eyebrow">{t(copy.mergeproofEyebrow)}</div>
+            <div className="cd-pc-title">mergeproof</div>
+            <div className="cd-pc-desc">{t(copy.mergeproofDesc)}</div>
+            <div className="cd-pc-metric">0<span> {t(copy.mergeproofMetric)}</span></div>
+            <div className="cd-proj-tags" style={{ marginTop: 12 }}>
+              {['JavaScript', t(copy.tagZeroDeps), t(copy.tagLlmFree), 'npm'].map(tag => (
+                <span key={tag} className="cd-proj-tag">{tag}</span>
+              ))}
+            </div>
+            <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
+              <a href="https://github.com/ahmed-3m/mergeproof" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.code)} &rarr;</a>
             </div>
           </article>
 
@@ -133,6 +204,21 @@ export default function Projects() {
             <div className="cd-pc-desc">{t(copy.eegDesc)}</div>
             <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
               <a href="https://github.com/ahmed-3m/Motor-Imagery-classification" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.code)} &rarr;</a>
+            </div>
+          </article>
+
+          <article className="cd-project-card cd-project-card--full reveal">
+            <div className="cd-pc-eyebrow">{t(copy.moreOssEyebrow)}</div>
+            <div className="cd-pc-desc" style={{ maxWidth: 760 }}>
+              <a href="https://github.com/ahmed-3m/Elbostan-Pazar-bot" target="_blank" rel="noopener noreferrer" className="cd-proj-link">Elbostan Pazar bot</a>
+              {' — '}
+              {t(copy.moreOss1)}
+              {' · '}
+              <a href="https://github.com/ahmed-3m/brainstorm2idea" target="_blank" rel="noopener noreferrer" className="cd-proj-link">brainstorm2idea</a>
+              {' + '}
+              <a href="https://github.com/ahmed-3m/idea2prototype" target="_blank" rel="noopener noreferrer" className="cd-proj-link">idea2prototype</a>
+              {' — '}
+              {t(copy.moreOss2)}
             </div>
           </article>
         </div>

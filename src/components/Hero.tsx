@@ -21,6 +21,27 @@ const copy = {
     es: 'Con base en Linz, Austria',
     ar: 'مقيم في لينز، النمسا',
   },
+  title1: {
+    en: 'AI Systems',
+    de: 'KI-Systeme',
+    fr: "Systèmes d'IA",
+    es: 'Sistemas de IA',
+    ar: 'أنظمة الذكاء الاصطناعي',
+  },
+  title2: {
+    en: 'LLM Products',
+    de: 'LLM-Produkte',
+    fr: 'Produits LLM',
+    es: 'Productos LLM',
+    ar: 'منتجات نماذج اللغة',
+  },
+  title3: {
+    en: 'Agent Tooling',
+    de: 'Agent-Tooling',
+    fr: 'Outillage pour agents',
+    es: 'Herramientas para agentes',
+    ar: 'أدوات الوكلاء',
+  },
   body: {
     en: 'AI/ML engineer. I build ML systems I can stand behind — verified error bars in research, eval harnesses in production.',
     de: 'AI/ML Engineer. Ich baue ML-Systeme, für die ich geradestehen kann — belegte Fehlerbalken in der Forschung, Eval-Harnesses in der Produktion.',
@@ -67,9 +88,9 @@ export default function Hero() {
               </bdi>
             </h1>
             <div className="cd-hero-title">
-              <span>Computer Vision</span>
-              <span>Diffusion Models</span>
-              <span>OOD Detection</span>
+              <span>{t(copy.title1)}</span>
+              <span>{t(copy.title2)}</span>
+              <span>{t(copy.title3)}</span>
             </div>
             <p className="cd-hero-body" data-speakable>{t(copy.body)}</p>
             <div className="cd-hero-ctas">
