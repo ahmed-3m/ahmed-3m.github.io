@@ -1,57 +1,5 @@
 [
   {
-    "id": "claude-fable-5-mythos-tier",
-    "date": "2026-06-24",
-    "category": "ai",
-    "headline": {
-      "en": "Claude Mythos 5 and Fable 5 Explained: What Anthropic Actually Shipped",
-      "de": "Claude Mythos 5 und Fable 5 erklärt: Was Anthropic wirklich ausgeliefert hat",
-      "fr": "Claude Mythos 5 et Fable 5 expliqués : ce qu'Anthropic a réellement livré",
-      "es": "Claude Mythos 5 y Fable 5 explicados: lo que Anthropic lanzó realmente",
-      "ar": "Claude Mythos 5 وFable 5 بالشرح: ما الذي أطلقته Anthropic فعلًا"
-    },
-    "source": "AI DOERS",
-    "url": "https://www.aidoers.io/blog/claude-mythos-5-and-fable-5-explained-what-anthropic-actually-shipped",
-    "take": {
-      "en": "Anthropic’s new Mythos-class tier above Opus is significant for agentic coding, but at double Opus’s price, the production economics need scrutiny. The temporary free window before June 23 is telling—Anthropic is effectively trialing capacity constraints before committing to subscription inclusion.",
-      "de": "Die neue Mythos-Klasse oberhalb von Opus ist relevant für agentisches Coden, aber zum doppelten Opus-Preis braucht die Produktions-Ökonomie eine genaue Prüfung. Das temporäre kostenlose Zeitfenster vor dem 23. Juni ist verräterisch — Anthropic testet faktisch Kapazitätsgrenzen aus, bevor es sich zur Aufnahme ins Abo festlegt.",
-      "fr": "La nouvelle gamme Mythos, au-dessus d'Opus, compte pour le codage agentique, mais au double du prix d'Opus, l'économie de production mérite un examen sérieux. La fenêtre gratuite temporaire avant le 23 juin est révélatrice : Anthropic teste en pratique ses contraintes de capacité avant de s'engager à l'inclure dans l'abonnement.",
-      "es": "La nueva gama Mythos, por encima de Opus, es relevante para el coding agéntico, pero al doble del precio de Opus, la economía de producción exige escrutinio. La ventana gratuita temporal antes del 23 de junio es reveladora: Anthropic está tanteando de facto sus límites de capacidad antes de comprometerse a incluirla en la suscripción.",
-      "ar": "فئة Mythos الجديدة من Anthropic والتي تعلو Opus مهمة للبرمجة الوكيلة، لكن بضعف سعر Opus تبدو اقتصاديات الإنتاج بحاجة إلى تدقيق. والنافذة المجانية المؤقتة قبل 23 يونيو دلالتها واضحة — فـ Anthropic تختبر عمليًا قيود قدرتها قبل الالتزام بإدراجها في الاشتراك."
-    },
-    "tags": [
-      "models",
-      "agentic-coding",
-      "pricing"
-    ]
-  },
-  {
-    "id": "qwen-agentworld-simulator-training",
-    "date": "2026-06-24",
-    "category": "agentic",
-    "headline": {
-      "en": "Alibaba's model never trained as an agent — and improved agent performance across seven benchmarks",
-      "de": "Alibabas Modell wurde nie als Agent trainiert — und verbesserte die Agenten-Performance über sieben Benchmarks",
-      "fr": "Le modèle d'Alibaba n'a jamais été entraîné comme agent — et a amélioré les performances d'agent sur sept benchmarks",
-      "es": "El modelo de Alibaba nunca se entrenó como agente — y mejoró el rendimiento de agente en siete benchmarks",
-      "ar": "نموذج Alibaba لم يُدرَّب قط كوكيل — ومع ذلك حسّن أداء الوكلاء عبر سبعة معايير"
-    },
-    "source": "VentureBeat",
-    "url": "https://venturebeat.com/technology/alibabas-model-never-trained-as-an-agent-and-improved-agent-performance-across-seven-benchmarks",
-    "take": {
-      "en": "Training agents to predict environment states rather than actions is a clever inversion, and controlled simulation that injects edge cases real environments rarely surface is genuinely useful. But the overfitting risk is real—synthetic training should complement real-environment RL, not replace it.",
-      "de": "Agenten darauf zu trainieren, Umgebungszustände statt Aktionen vorherzusagen, ist eine clevere Umkehrung, und kontrollierte Simulation, die Edge Cases einspritzt, die echte Umgebungen selten zeigen, ist wirklich nützlich. Das Overfitting-Risiko ist aber real — synthetisches Training sollte RL in echten Umgebungen ergänzen, nicht ersetzen.",
-      "fr": "Entraîner des agents à prédire les états de l'environnement plutôt que des actions est une inversion astucieuse, et la simulation contrôlée qui injecte des cas limites que les environnements réels révèlent rarement est réellement utile. Mais le risque de surapprentissage est bien réel : l'entraînement synthétique doit compléter la RL en environnement réel, pas la remplacer.",
-      "es": "Entrenar agentes para predecir estados del entorno en lugar de acciones es una inversión ingeniosa, y la simulación controlada que inyecta casos límite que los entornos reales rara vez revelan es genuinamente útil. Pero el riesgo de sobreajuste es real: el entrenamiento sintético debe complementar la RL en entornos reales, no sustituirla.",
-      "ar": "تدريب الوكلاء على توقّع حالات البيئة بدلًا من الأفعال قلبٌ ذكي للمنطق، ومحاكاةٌ مضبوطة تُدخل حالات حدّية نادرًا ما تظهرها البيئات الحقيقية هي فعلًا مفيدة. لكن خطر فرط التخصيص حقيقي — التدريب الاصطناعي ينبغي أن يكمّل التعلّم المعزز في البيئات الحقيقية لا أن يحل محلّه."
-    },
-    "tags": [
-      "world-models",
-      "agent-training",
-      "simulation"
-    ]
-  },
-  {
     "id": "kimi-k3-open-weights-largest-open-model",
     "date": "2026-07-27",
     "category": "ai",
@@ -104,31 +52,6 @@
     ]
   },
   {
-    "id": "vercel-agent-plan-to-permission",
-    "date": "2026-07-21",
-    "category": "agentic",
-    "headline": {
-      "en": "Introducing the new Vercel Agent",
-      "de": "Der neue Vercel Agent vorgestellt",
-      "fr": "Présentation du nouveau Vercel Agent",
-      "es": "Presentamos el nuevo Vercel Agent",
-      "ar": "تقديم Vercel Agent الجديد"
-    },
-    "source": "Vercel",
-    "url": "https://vercel.com/blog/vercel-agent",
-    "take": {
-      "en": "Vercel's plan-to-permission model — read-only by default, scoped short-lived capabilities per approved plan, generated code in a Firecracker sandbox — is the right architecture for letting autonomous agents touch production safely. Their framing is exactly right: a non-deterministic system can't earn trust by being right, so the trust has to live in the infrastructure, and a mistake's blast radius is the metric that counts.",
-      "de": "Vercels Plan-to-Permission-Modell — standardmäßig read-only, kurzlebige, pro genehmigtem Plan abgegrenzte Capabilities, generierter Code in einem Firecracker-Sandbox — ist die richtige Architektur, damit autonome Agenten Produktion sicher berühren. Die Rahmung stimmt exakt: Ein nichtdeterministisches System kann Vertrauen nicht durch Recht-Haben verdienen, das Vertrauen muss in der Infrastruktur liegen — und der Blast Radius eines Fehlers ist die Kennzahl, die zählt.",
-      "fr": "Le modèle plan-à-permissions de Vercel — lecture seule par défaut, capacités de courte durée attribuées par plan approuvé, code généré dans un bac à sable Firecracker — est la bonne architecture pour laisser des agents autonomes toucher la production en sécurité. Leur cadrage est juste : un système non déterministe ne peut pas mériter la confiance en ayant raison, donc la confiance doit vivre dans l'infrastructure, et le rayon d'impact d'une erreur est la métrique qui compte.",
-      "es": "El modelo de plan-a-permisos de Vercel — solo lectura por defecto, capacidades efímeras y acotadas por plan aprobado, código generado en un sandbox Firecracker — es la arquitectura correcta para que agentes autónomos toquen producción con seguridad. Su enfoque es exacto: un sistema no determinista no puede ganarse la confianza acertando, así que la confianza debe vivir en la infraestructura, y el radio de impacto de un error es la métrica que cuenta.",
-      "ar": "نموذج الخطة-إلى-أذونات لدى Vercel — قراءة فقط افتراضيًا، وقدرات قصيرة العمر محدودة النطاق لكل خطة معتمدة، وشيفرة مولّدة داخل عازل Firecracker — هو المعمارية الصحيحة لتمكين الوكلاء المستقلين من لمس الإنتاج بأمان. وصياغتهم دقيقة تمامًا: النظام غير الحتمي لا يكسب الثقة بأن يكون مصيبًا، لذا يجب أن تسكن الثقة في البنية التحتية، ونطاق انفجار الخطأ هو المقياس الذي يهم."
-    },
-    "tags": [
-      "agent-safety",
-      "production"
-    ]
-  },
-  {
     "id": "flux-3-multimodal-flow-model",
     "date": "2026-07-23",
     "category": "ai",
@@ -177,32 +100,6 @@
       "models",
       "reasoning",
       "evaluation"
-    ]
-  },
-  {
-    "id": "cursor-agent-swarm-model-economics",
-    "date": "2026-07-20",
-    "category": "agentic",
-    "headline": {
-      "en": "Agent swarms and the new model economics",
-      "de": "Agenten-Schwärme und die neue Modell-Ökonomie",
-      "fr": "Les essaims d'agents et la nouvelle économie des modèles",
-      "es": "Enjambres de agentes y la nueva economía de los modelos",
-      "ar": "أسراب الوكلاء والاقتصاد الجديد للنماذج"
-    },
-    "source": "Cursor",
-    "url": "https://cursor.com/blog/agent-swarm-model-economics",
-    "take": {
-      "en": "Cursor's planner/worker swarm rebuilding SQLite from the manual for $1,339 versus $10,565 all-frontier is the cleanest evidence yet that most coding work belongs to cheap workers steered by one frontier planner. The economics are real, but it is a closed-book stress test — and the 68%-of-agents-stall-within-ten-steps stat Cursor itself cites is the caveat that matters: orchestration savings never show up until agents can run long enough to use them.",
-      "de": "Der Planer/Worker-Schwarm von Cursor, der SQLite für 1.339 $ aus dem Handbuch neu baut — statt 10.565 $ rein mit Frontier-Modellen —, ist der bisher klarste Beleg, dass die meiste Code-Arbeit billigen Workern gehört, die ein Frontier-Planer steuert. Die Ökonomie stimmt, aber es ist ein Closed-Book-Stresstest — und die Statistik, die Cursor selbst zitiert, dass 68 % der Agenten innerhalb von zehn Schritten stecken bleiben, ist der Vorbehalt, der zählt: Orchestrierungs-Ersparnisse zeigen sich erst, wenn Agenten lange genug laufen, um sie zu nutzen.",
-      "fr": "L'essaim planificateur/exécutants de Cursor qui reconstruit SQLite à partir du manuel pour 1,339 $ contre 10,565 $ en tout-frontière, c'est la preuve la plus nette à ce jour que l'essentiel du travail de code revient à des exécutants bon marché pilotés par un planificateur de pointe. L'économie est réelle, mais c'est un test en livre fermé — et la stat que Cursor lui-même cite, 68 % des agents bloqués en dix étapes, est la réserve qui compte : les économies d'orchestration n'apparaissent que si les agents tiennent assez la durée pour en profiter.",
-      "es": "El enjambre planificador/trabajadores de Cursor reconstruyendo SQLite desde el manual por 1.339 $ frente a 10.565 $ con solo modelos frontier es la evidencia más limpia hasta hoy de que la mayoría del trabajo de código corresponde a trabajadores baratos dirigidos por un planificador frontier. La economía es real, pero es una prueba de libro cerrado — y el dato que el propio Cursor cita, que el 68 % de los agentes se atascan en diez pasos, es la pega que importa: el ahorro de orquestación nunca aparece hasta que los agentes pueden correr lo suficiente para usarlo.",
-      "ar": "سرب المنسّق/العمّال لدى Cursor وهو يعيد بناء SQLite من الدليل بتكلفة 1,339 دولارًا مقابل 10,565 دولارًا بالنماذج الحدودية وحدها هو أوضح دليل حتى الآن على أن معظم أعمال البرمجة تخص عمّالًا رخيصين يقودهم منسّق حدودي واحد. الاقتصاد حقيقي، لكنه اختبار إجهاد بكتاب مغلق — وإحصائية أن 68% من الوكلاء يتعثرون خلال عشر خطوات، والتي يقتسبها Cursor نفسه، هي التحفّظ الجوهري: وفورات التنسيق لا تظهر أبدًا إلا عندما يعمل الوكلاء طويلًا بما يكفي لاستخدامها."
-    },
-    "tags": [
-      "agentic-coding",
-      "multi-agent",
-      "model-routing"
     ]
   },
   {
@@ -5058,6 +4955,108 @@
       "benchmarks",
       "hallucination",
       "frontier-models"
+    ]
+  },
+  {
+    "id": "openai-biobasicsbench-wet-lab-agents",
+    "date": "2026-11-06",
+    "category": "agentic",
+    "headline": {
+      "en": "Measuring how AI agents handle everyday wet-lab science",
+      "de": "Vermessen, wie KI-Agenten mit alltäglicher Nasslaborarbeit zurechtkommen",
+      "fr": "Mesurer comment les agents IA gèrent la science de laboratoire au quotidien",
+      "es": "Medir cómo los agentes de IA manejan la ciencia cotidiana del laboratorio húmedo",
+      "ar": "قياس مدى تعامل وكلاء الذكاء الاصطناعي مع أعمال المختبر الرطب اليومية"
+    },
+    "source": "OpenAI",
+    "url": "https://openai.com/index/measuring-how-ai-agents-handle-wet-lab-science/",
+    "take": {
+      "en": "GPT-6 Astra scraping 66.7% on routine bench work is the reality check agent evaluation needed: raw gels and failed controls, not curated paper figures. Benchmarks built on ambiguous, unedited data are the only ones that tell you what an agent will actually do in a real lab.",
+      "de": "Dass GPT-6 Astra bei routinemäßiger Laborarbeit nur auf 66.7% kommt, ist die Realitätsprüfung, die die Agenten-Evaluation gebraucht hat: rohe Gele und fehlgeschlagene Kontrollen statt kuratierter Abbildungen aus Papers. Nur Benchmarks auf Basis mehrdeutiger, unbearbeiteter Daten verraten, was ein Agent im echten Labor tatsächlich tun wird.",
+      "fr": "À 66.7% sur le travail de paillasse routinier, GPT-6 Astra offre la piqûre de rappel dont l'évaluation des agents avait besoin : gels bruts et contrôles ratés, et non figures soignées d'articles. Seuls les benchmarks construits sur des données ambiguës et non retouchées disent ce qu'un agent fera réellement dans un vrai laboratoire.",
+      "es": "Que GPT-6 Astra apenas llegue al 66.7% en trabajo de laboratorio rutinario es el baño de realidad que necesitaba la evaluación de agentes: geles sin retocar y controles fallidos, no figuras curadas de papers. Solo los benchmarks construidos sobre datos ambiguos y sin editar dicen lo que un agente hará de verdad en un laboratorio real.",
+      "ar": "حصول GPT-6 Astra على 66.7% فقط في أعمال المختبر الروتينية هو جرعة الواقع التي احتاجتها تقييمات الوكلاء: صور جِل خاممة وضوابط فاشلة، لا أشكال منقّحة من الأوراق العلمية. المعايير المبنية على بيانات غامضة وغير مُعدّلة هي وحدها التي تخبرك بما سيفعله الوكيل فعلًا في مختبر حقيقي."
+    },
+    "tags": [
+      "benchmarks",
+      "evaluation",
+      "scientific-discovery"
+    ]
+  },
+  {
+    "id": "harness-adapters-safe-rl-agents",
+    "date": "2026-11-06",
+    "category": "agentic",
+    "headline": {
+      "en": "Harness adapters: Safe RL for efficient agentic development",
+      "de": "Harness-Adapter: Safe RL für effiziente Entwicklung von Agenten",
+      "fr": "Adaptateurs de harness : RL sûr pour un développement agentique efficace",
+      "es": "Adaptadores de harness: RL seguro para un desarrollo agéntico eficiente",
+      "ar": "محوّلات الهارنس: تعلّم معزّز آمن لتطوير وكلاء أكفاء"
+    },
+    "source": "Hugging Face",
+    "url": "https://huggingface.co/blog/harness-hub/harness-adapters",
+    "take": {
+      "en": "Training a small LoRA adapter per harness instead of one monolithic agent model is the pragmatic route — the harness is part of the policy whether we admit it or not. Putting safeagents in front of every tool call so reward hacking scores zero is exactly the kind of cheap, deterministic guardrail production RL has been missing.",
+      "de": "Pro Harness einen kleinen LoRA-Adapter zu trainieren, statt ein monolithisches Agentenmodell, ist der pragmatische Weg — der Harness ist Teil der Policy, ob wir es zugeben oder nicht. safeagents vor jeden Tool-Call zu schalten, damit Reward-Hacking null Punkte bringt, ist genau die günstige, deterministische Absicherung, die dem RL für Produktionssysteme gefehlt hat.",
+      "fr": "Entraîner un petit adaptateur LoRA par harness plutôt qu'un modèle d'agent monolithique est la voie pragmatique — le harness fait partie de la politique, qu'on l'admette ou non. Placer safeagents devant chaque appel d'outil pour que le reward hacking rapporte zéro est exactement le garde-fou bon marché et déterministe qui manquait au RL de production.",
+      "es": "Entrenar un pequeño adaptador LoRA por harness en lugar de un modelo de agente monolítico es el camino pragmático: el harness es parte de la política, lo admitamos o no. Poner safeagents delante de cada llamada a herramientas para que el reward hacking puntúe cero es justo la protección barata y determinista que le faltaba al RL de producción.",
+      "ar": "تدريب محوّل LoRA صغير لكل هارنس بدلًا من نموذج وكيل ضخم واحد هو الطريق العملي — فالهارنس جزء من السياسة سواء اعترفنا بذلك أم لا. وضع safeagents أمام كل استدعاء أداة بحيث يحصل تلاعب المكافأة على صفر هو بالضبط الحاجز الرخيص والحتمي الذي كان ينقص تعلّم التعزيز في بيئات الإنتاج."
+    },
+    "tags": [
+      "agent-harness",
+      "reward-hacking",
+      "reinforcement-learning"
+    ]
+  },
+  {
+    "id": "langchain-async-subagents",
+    "date": "2026-11-05",
+    "category": "agentic",
+    "headline": {
+      "en": "Agents Are Going Async",
+      "de": "Agenten werden asynchron",
+      "fr": "Les agents passent à l'asynchrone",
+      "es": "Los agentes se vuelven asíncronos",
+      "ar": "الوكلاء يتحوّلون إلى العمل غير المتزامن"
+    },
+    "source": "LangChain",
+    "url": "https://www.langchain.com/blog/agents-are-going-async",
+    "take": {
+      "en": "The blocking ReAct loop is finally dying — an orchestrator that stays reachable while background workers grind is how you scale agent throughput without scaling latency. The next battle is failure handling: cancellations, stale results and partial completions are where these architectures will be judged in production.",
+      "de": "Der blockierende ReAct-Loop stirbt endlich — ein Orchestrator, der erreichbar bleibt, während Background-Worker arbeiten, ist der Weg, Agenten-Durchsatz zu skalieren, ohne die Latenz zu skalieren. Die nächste Schlacht ist die Fehlerbehandlung: Abbrüche, veraltete Ergebnisse und unvollständige Abschlüsse entscheiden, ob diese Architekturen in der Produktion bestehen.",
+      "fr": "La boucle ReAct bloquante est enfin en train de mourir — un orchestrateur qui reste joignable pendant que des workers d'arrière-plan travaillent, c'est ainsi qu'on met à l'échelle le débit des agents sans mettre à l'échelle la latence. La prochaine bataille, c'est la gestion des échecs : annulations, résultats périmés et tâches partiellement terminées sont là où ces architectures seront jugées en production.",
+      "es": "El bucle ReAct bloqueante por fin está muriendo: un orquestador que sigue siendo accesible mientras los workers en segundo plano trabajan es como se escala el rendimiento de los agentes sin escalar la latencia. La próxima batalla es la gestión de fallos: cancelaciones, resultados obsoletos y tareas a medias decidirán si estas arquitecturas aguantan en producción.",
+      "ar": "حلقة ReAct الحاجِبة تموت أخيرًا — منسّق يبقى متاحًا بينما تعمل العمال في الخلفية هو الكيفية التي نوسّع بها إنتاجية الوكلاء دون توسيع زمن الاستجابة. المعركة القادمة هي معالجة الإخفاق: الإلغاءات والنتائج القديمة والإنجازات الجزئية هي حيث ستُحاكَم هذه البنى في بيئات الإنتاج."
+    },
+    "tags": [
+      "multi-agent",
+      "orchestration"
+    ]
+  },
+  {
+    "id": "meta-muse-specialized-models-active-memory",
+    "date": "2026-11-06",
+    "category": "agentic",
+    "headline": {
+      "en": "Bringing Specialized Models to Muse and Meta AI",
+      "de": "Spezialisierte Modelle kommen zu Muse und Meta AI",
+      "fr": "Des modèles spécialisés arrivent sur Muse et Meta AI",
+      "es": "Modelos especializados llegan a Muse y Meta AI",
+      "ar": "نماذج متخصصة تصل إلى Muse وMeta AI"
+    },
+    "source": "Meta",
+    "url": "https://research.meta.ai/blog/specialized-models-for-muse-and-metaai",
+    "take": {
+      "en": "A 2.4x reduction in forgetting critical details is the kind of reliability metric I actually rate — memory, not chat polish, is where personal agents will be won. The 67% gain on tasks that hit unexpected problems matters even more, because production lives entirely in those failure paths.",
+      "de": "Ein 2.4x selteneres Vergessen kritischer Informationen ist genau die Art Zuverlässigkeitsmetrik, der ich vertraue — Memory, nicht Chat-Politur, entscheidet bei persönlichen Agenten. Der 67%-Gewinn bei Aufgaben mit unerwarteten Problemen wiegt sogar schwerer, denn die Produktion spielt sich vollständig in diesen Fehlerpfaden ab.",
+      "fr": "Une réduction de 2.4x de l'oubli d'informations critiques est le type de métrique de fiabilité auquel je crois vraiment — c'est la mémoire, pas le vernis conversationnel, qui décidera du sort des agents personnels. Le gain de 67% sur les tâches qui rencontrent des imprévus compte encore plus, car la production vit entièrement dans ces chemins d'échec.",
+      "es": "Una reducción de 2.4x en el olvido de información crítica es el tipo de métrica de fiabilidad que sí me convence: la memoria, no el pulido de la conversación, decidirá la batalla de los agentes personales. La mejora del 67% en tareas que chocan con problemas inesperados pesa aún más, porque la producción vive por completo en esos caminos de fallo.",
+      "ar": "خفض نسيان المعلومات الحاسمة بمقدار 2.4x هو نوع مقاييس الموثوقية الذي أثق به فعلًا — فالذاكرة، لا صقل المحادثة، هي ما سيحسم السباق بين الوكلاء الشخصيين. وتحسّن بنسبة 67% في المهام التي تصطدم بمشكلات غير متوقعة أهم حتى من ذلك، لأن بيئة الإنتاج تعيش كليًا في مسارات الإخفاق هذه."
+    },
+    "tags": [
+      "personal-agents",
+      "agent-reliability"
     ]
   }
 ]
