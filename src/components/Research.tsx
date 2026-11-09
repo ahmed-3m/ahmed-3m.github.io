@@ -306,7 +306,7 @@ const copy = {
 } satisfies Record<string, TranslationMap>
 
 const publications = [
-  { title: 'Motor Imagery Classification Based Brain-Computer Interface for Rehabilitation', venue: 'Karunya University - 2023', href: 'https://ahmed-3m.github.io/Motor%20Imagery%20classification%20Based%20Brain%20Computer.pdf' },
+  { title: 'Motor Imagery Classification Based Brain-Computer Interface for Rehabilitation', venue: 'Karunya Institute of Technology and Sciences - 2023', href: 'https://ahmed-3m.github.io/Motor%20Imagery%20classification%20Based%20Brain%20Computer.pdf' },
   { title: 'Reading Thoughts Using GANs', venue: 'Project Report - JKU Linz - 2023', href: 'https://ahmed-3m.github.io/Reading%20Thoughts%20Using%20GANs.pdf' },
 ]
 

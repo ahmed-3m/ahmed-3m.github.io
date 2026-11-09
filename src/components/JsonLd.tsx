@@ -282,7 +282,7 @@ export function ProjectsSchema() {
         item: {
           '@type': 'SoftwareApplication',
           name: 'EEG Signal Classification — Brain-Computer Interface',
-          description: 'Deep RNN architectures (LSTM, Bi-LSTM, GRU) for EEG motor imagery classification in brain-computer interface applications. Hyperparameter optimization across multiple architectures. Karunya University, 2023.',
+          description: 'Deep RNN architectures (LSTM, Bi-LSTM, GRU) for EEG motor imagery classification in brain-computer interface applications. Hyperparameter optimization across multiple architectures. Karunya Institute of Technology and Sciences, 2023.',
           url: 'https://github.com/ahmed-3m/Motor-Imagery-classification',
           author: { '@type': 'Person', name: 'Ahmed Mohammed' },
         },

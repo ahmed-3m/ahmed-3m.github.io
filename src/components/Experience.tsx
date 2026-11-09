@@ -47,7 +47,7 @@ const experiences: Array<{
   {
     date: 'Aug 2023\nOct 2023',
     role: { en: 'AI Research Intern', de: 'KI-Forschungspraktikant', fr: 'Stagiaire recherche IA', es: 'Practicante de investigación IA', ar: 'متدرب بحث ذكاء اصطناعي' },
-    company: 'Karunya University · Coimbatore, India',
+    company: 'Karunya Institute of Technology and Sciences · Coimbatore, India',
     desc: {
       en: 'RNN/CNN architectures for EEG motor imagery classification with hyperparameter optimization.',
       de: 'RNN/CNN-Architekturen für EEG-Motor-Imagery-Klassifikation mit Hyperparameteroptimierung.',
@@ -58,8 +58,8 @@ const experiences: Array<{
     active: false,
   },
   {
-    date: '2018\nOct 2020',
-    role: { en: 'Technical Staff, Electronics', de: 'Techniker, Elektronik', fr: 'Technicien, électronique', es: 'Técnico de electrónica', ar: 'فني إلكترونيات' },
+    date: 'Sep 2018\nOct 2020',
+    role: { en: 'Electronics Technician', de: 'Elektroniker', fr: 'Technicien en électronique', es: 'Técnico de electrónica', ar: 'فني إلكترونيات' },
     company: 'Ledzone · Karaköy, Istanbul, Turkey',
     desc: {
       en: 'PCB assembly and soldering, LED and motor-driver circuit build-up, reading schematics and layouts, and functional test, fault finding and final inspection with multimeter, oscilloscope and function generator.',

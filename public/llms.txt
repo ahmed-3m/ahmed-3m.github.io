@@ -2,7 +2,7 @@
 
 > AI/ML Engineer based in Linz, Austria. M.Sc. in Artificial Intelligence from Johannes Kepler University Linz (Oct 2020 - Sep 2026; Defensio 25 Sep 2026, thesis graded 1, supervised by Prof. Sepp Hochreiter). Builder of Sihem (LLM assistant), Faultrix (AI QC platform), and mergeproof (deterministic merge-safety gate for AI-agent pull requests). Specializing in computer vision, diffusion models, out-of-distribution detection, industrial defect detection, LLM products, and agent tooling.
 
-Last updated: 2026-11-08
+Last updated: 2026-11-09
 
 ## Identity
 
@@ -11,7 +11,7 @@ Last updated: 2026-11-08
 - **Email:** ahmed.mo.0595@gmail.com
 - **Portfolio:** https://ahmed-3m.github.io
 - **Current work:** Sihem — LLM personal-mentor side project in the tech2b incubator, live beta (https://t.me/sihem_ai_bot)
-- **Availability:** Full time from October 2026; eligible for the Rot-Weiß-Rot Karte für Studienabsolventen (no labour-market test, no quota)
+- **Availability:** Available now; eligible for the Rot-Weiß-Rot Karte für Studienabsolventen (no labour-market test, no quota)
 - **Open to:** AI/ML engineering roles · Research collaborations · Enterprise partnerships
 
 ## Key Achievements
@@ -29,7 +29,7 @@ Last updated: 2026-11-08
 - [OOD Detection Framework](https://github.com/ahmed-3m/DiffusionOOD): Novel use of conditional diffusion models as generative classifiers for out-of-distribution detection. 99.03% ± 0.07% average AUROC on CIFAR-10 airplane-vs-rest (binary, single ID class, 3-seed mean). Introduced class-conditional separation loss. Applied to industrial quality control with multi-head conditioning on the public FTI_Zer0P benchmark (0.8673 ± 0.0230 AUROC; thesis-documented).
 - Thesis PDF erratum: the PDF says YOLOv8n in five places; the trained artifact yolo_best.pt is YOLOv8m (25.86M params, verified from train_args). Reported production metrics come from the v8m artifact.
 - [Industrial Anomaly Detection](https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf): Early 2024 YOLO + diffusion model pipeline for industrial defect detection — a negative-result technical report that motivated the later thesis approach. (The FTI_Zer0P 0.8673 ± 0.0230 AUROC baseline is reported in the [Master's thesis](https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf), not this report.)
-- [EEG Signal Classification](https://github.com/ahmed-3m/Motor-Imagery-classification): LSTM, Bi-LSTM, GRU architectures for EEG motor imagery classification in brain-computer interface applications. Hyperparameter optimization across architectures (Karunya University, 2023).
+- [EEG Signal Classification](https://github.com/ahmed-3m/Motor-Imagery-classification): LSTM, Bi-LSTM, GRU architectures for EEG motor imagery classification in brain-computer interface applications. Hyperparameter optimization across architectures (Karunya Institute of Technology and Sciences, 2023).
 - [Elbostan Pazar bot](https://github.com/ahmed-3m/Elbostan-Pazar-bot): Messenger bot that answers a real shop's customers about prices, hours and delivery.
 - [brainstorm2idea](https://github.com/ahmed-3m/brainstorm2idea) + [idea2prototype](https://github.com/ahmed-3m/idea2prototype): zero-dependency tools that take a fuzzy idea to a linted brief, then to a tested prototype, with any coding agent.
 
@@ -37,7 +37,7 @@ Last updated: 2026-11-08
 
 - **Master's Thesis (2026):** "Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control" — Johannes Kepler University Linz, supervised by Prof. Sepp Hochreiter and Claus Hofmann, MSc. [PDF](https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf)
 - **Industrial Technical Report (2024):** "Diffusion-Based Multi-class Defect Detection: A Generative Approach to Industrial QC" — PROFACTOR GmbH, Zer0P project. An early negative-result report that motivated the later thesis approach. [PDF](https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf)
-- **Conference Paper (2023):** "Motor Imagery Classification Based Brain-Computer Interface for Rehabilitation" — Karunya University. [PDF](https://ahmed-3m.github.io/Motor%20Imagery%20classification%20Based%20Brain%20Computer.pdf)
+- **Conference Paper (2023):** "Motor Imagery Classification Based Brain-Computer Interface for Rehabilitation" — Karunya Institute of Technology and Sciences. [PDF](https://ahmed-3m.github.io/Motor%20Imagery%20classification%20Based%20Brain%20Computer.pdf)
 - **Project Report (2023):** "Reading Thoughts Using GANs" — JKU Linz. [PDF](https://ahmed-3m.github.io/Reading%20Thoughts%20Using%20GANs.pdf)
 
 ## Education
@@ -49,8 +49,8 @@ Last updated: 2026-11-08
 
 - **Solo Developer & Project Lead, Sihem** (May 2026 – Present, personal side project, accepted into the tech2b incubator, Linz): Designs and runs the full cloud stack behind a habits and daily-routine assistant (Telegram bot + installable web app): Supabase Postgres with row-level security, Deno/TypeScript serverless functions, scheduled jobs, pgvector memory, GitHub Actions deploys, multi-provider LLM routing with escalation and failover. In live beta at @sihem_ai_bot.
 - **M.Sc. Thesis Researcher, Machine Vision — JKU Institute for Machine Learning with PROFACTOR GmbH** (Apr 2024 – Jul 2026): Thesis on conditional diffusion models as generative classifiers for OOD detection under Prof. Sepp Hochreiter, graded 1. A class-conditional separation loss cut seed-to-seed std from 11.07 to 0.07 points and raised mean CIFAR-10 airplane-vs-rest AUROC from 92.52% to 99.03% (3 seeds). Applied in project Zer0P (Government of Upper Austria) as a two-stage YOLOv8 + conditional-diffusion pipeline; eight-method 5-fold comparison with a 0.8673 ± 0.0230 AUROC baseline on the public FTI_Zer0P dataset.
-- **AI Research Intern, Karunya University** (Aug 2023 – Oct 2023, Coimbatore, India): RNN/CNN architectures for EEG motor imagery classification.
-- **Technical Staff, Electronics, Ledzone** (2018 – Oct 2020, Karaköy, Istanbul): PCB assembly, soldering, LED and motor-driver circuits, functional test and fault finding.
+- **AI Research Intern, Karunya Institute of Technology and Sciences** (Aug 2023 – Oct 2023, Coimbatore, India): RNN/CNN architectures for EEG motor imagery classification.
+- **Electronics Technician, Ledzone** (Sep 2018 – Oct 2020, Karaköy, Istanbul): IoT prototypes on Arduino-based boards (wiring sensors/actuators, board programming, bench testing); PCB assembly, soldering, LED and motor-driver circuits, functional test and fault finding.
 
 ## Technical Skills
 

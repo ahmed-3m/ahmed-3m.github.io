@@ -199,7 +199,7 @@ export default function Projects() {
           </article>
 
           <article className="cd-project-card cd-project-card--full reveal">
-            <div className="cd-pc-eyebrow">Karunya University · BCI Research</div>
+            <div className="cd-pc-eyebrow">Karunya Institute of Technology and Sciences · BCI Research</div>
             <div className="cd-pc-title">{t(copy.eegTitle)}</div>
             <div className="cd-pc-desc">{t(copy.eegDesc)}</div>
             <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
