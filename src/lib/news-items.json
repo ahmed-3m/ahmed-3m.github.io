@@ -26,109 +26,6 @@
     ]
   },
   {
-    "id": "openai-presence-enterprise-agents",
-    "date": "2026-07-22",
-    "category": "agentic",
-    "headline": {
-      "en": "Introducing OpenAI Presence",
-      "de": "OpenAI Presence vorgestellt",
-      "fr": "Présentation d'OpenAI Presence",
-      "es": "Presentamos OpenAI Presence",
-      "ar": "تقديم OpenAI Presence"
-    },
-    "source": "OpenAI",
-    "url": "https://openai.com/index/introducing-openai-presence/",
-    "take": {
-      "en": "The interesting part of Presence isn't the model — it's that OpenAI is productizing the eval loop: simulations and graders before launch, then a Codex-driven improvement cycle fed by production escalations. Selling it forward-deployed instead of self-serve is the honest admission that the hard part of enterprise agents is policy, evaluation, and integration, not intelligence.",
-      "de": "Der spannende Teil von Presence ist nicht das Modell — es ist, dass OpenAI die Eval-Schleife produktisiert: Simulationen und Grader vor dem Launch, danach ein Codex-getriebener Verbesserungszyklus, gespeist aus Produktions-Eskalationen. Der Verkauf als Forward-Deployed statt als Self-Service ist das ehrliche Eingeständnis, dass der schwere Teil von Enterprise-Agenten Policy, Evaluation und Integration ist, nicht Intelligenz.",
-      "fr": "Ce qui est intéressant dans Presence, ce n'est pas le modèle — c'est qu'OpenAI produitise la boucle d'évaluation : simulations et graders avant le lancement, puis un cycle d'amélioration piloté par Codex alimenté par les escalades de production. Le vendre en déploiement dédié plutôt qu'en libre-service est l'aveu honnête que le difficile dans les agents d'entreprise, c'est la politique, l'évaluation et l'intégration, pas l'intelligence.",
-      "es": "Lo interesante de Presence no es el modelo: es que OpenAI está productizando el bucle de evaluación — simulaciones y graders antes del lanzamiento, y luego un ciclo de mejora impulsado por Codex alimentado por las escaladas de producción. Venderlo con despliegue dedicado en vez de autoservicio es la admisión honesta de que la parte difícil de los agentes empresariales es la política, la evaluación y la integración, no la inteligencia.",
-      "ar": "الجزء المثير في Presence ليس النموذج — بل أن OpenAI تحوّل حلقة التقييم إلى منتج: محاكاة ومقيّمات قبل الإطلاق، ثم دورة تحسين يقودها Codex تتغذى من تصعيدات الإنتاج. وبيعه بنموذج النشر الميداني بدل الخدمة الذاتية اعترافٌ صريح بأن الجزء الصعب في وكلاء المؤسسات هو السياسات والتقييم والتكامل، لا الذكاء."
-    },
-    "tags": [
-      "enterprise-agents",
-      "evaluation",
-      "governance"
-    ]
-  },
-  {
-    "id": "flux-3-multimodal-flow-model",
-    "date": "2026-07-23",
-    "category": "ai",
-    "headline": {
-      "en": "FLUX 3 - Real World Models: Towards Multimodal Flow Models as the Backbone of Visual Intelligence",
-      "de": "FLUX 3 – Real World Models: Auf dem Weg zu multimodalen Flow-Modellen als Rückgrat der visuellen Intelligenz",
-      "fr": "FLUX 3 - Real World Models : vers des modèles de flow multimodaux comme socle de l'intelligence visuelle",
-      "es": "FLUX 3 - Real World Models: hacia modelos de flujo multimodales como columna vertebral de la inteligencia visual",
-      "ar": "FLUX 3 - Real World Models: نحو نماذج تدفق متعددة الوسائط بوصفها الركيزة الأساسية للذكاء البصري"
-    },
-    "source": "Black Forest Labs",
-    "url": "https://bfl.ai/blog/flux-3",
-    "take": {
-      "en": "Training one flow-matching backbone jointly on image, video, and audio — and extending it to action prediction with FLUX-mimic — is the part I find most interesting: it pushes diffusion beyond generation toward a unified perception-and-action model. A multimodal backbone is only as credible as its eval methodology, so I'll judge it when the open weights land and the benchmarks can be re-run.",
-      "de": "Einen Flow-Matching-Backbone gemeinsam auf Bild, Video und Audio zu trainieren — und ihn mit FLUX-mimic auf Aktionsvorhersage zu erweitern —, finde ich am spannendsten: Das bringt Diffusion über Generierung hinaus Richtung vereinheitlichtem Wahrnehmungs-und-Aktions-Modell. Ein multimodaler Backbone ist nur so glaubwürdig wie seine Eval-Methodik — ich beurteile es, wenn die offenen Gewichte da sind und die Benchmarks nachgerechnet werden können.",
-      "fr": "Entraîner un seul backbone de flow-matching conjointement sur l'image, la vidéo et l'audio — et l'étendre à la prédiction d'actions avec FLUX-mimic —, c'est ce que je trouve le plus intéressant : cela pousse la diffusion au-delà de la génération vers un modèle unifié perception-et-action. Un backbone multimodal n'est crédible que par sa méthodologie d'évaluation ; je le jugerai quand les poids ouverts sortiront et que les benchmarks pourront être rejoués.",
-      "es": "Entrenar un solo backbone de flow-matching de forma conjunta en imagen, vídeo y audio — y extenderlo a predicción de acciones con FLUX-mimic — es lo que más me interesa: empuja la difusión más allá de la generación hacia un modelo unificado de percepción y acción. Un backbone multimodal solo es tan creíble como su metodología de evaluación, así que lo juzgaré cuando lleguen los pesos abiertos y los benchmarks puedan volver a ejecutarse.",
-      "ar": "تدريب عمود فقري واحد بتقنية مطابقة التدفق (Flow-Matching) مشتركًا على الصورة والفيديو والصوت — وتوسيعه إلى توقّع الأفعال عبر FLUX-mimic — هو ما يهمني أكثر: فهو يدفع نماذج الانتشار خارج التوليد نحو نموذج موحّد للإدراك والفعل. والعمود الفقري متعدد الوسائط لا يكون موثوقًا إلا بقدر منهجية تقييمه، لذا سأحكم عليه حين تصدر الأوزان المفتوحة ويمكن إعادة تشغيل المعايير."
-    },
-    "tags": [
-      "multimodal",
-      "computer-vision"
-    ]
-  },
-  {
-    "id": "claude-opus-5-launch",
-    "date": "2026-07-24",
-    "category": "ai",
-    "headline": {
-      "en": "Introducing Claude Opus 5",
-      "de": "Claude Opus 5 vorgestellt",
-      "fr": "Présentation de Claude Opus 5",
-      "es": "Presentamos Claude Opus 5",
-      "ar": "تقديم Claude Opus 5"
-    },
-    "source": "Anthropic",
-    "url": "https://www.anthropic.com/news/claude-opus-5",
-    "take": {
-      "en": "Opus 5 landing near Fable 5 quality at half the price is what changes day-to-day work — but the 30.2% ARC-AGI-3 jump is the number I trust least, since the benchmark went public before training and could be targeted. Thinking-on-by-default and automatic fallback replacing hard refusals are the production-relevant wins; I would migrate a workload only after re-running my own evals, not theirs.",
-      "de": "Dass Opus 5 bei halbem Preis nahe an Fable-5-Qualität landet, ändert den Alltag — aber der 30.2-%-Sprung auf ARC-AGI-3 ist die Zahl, der ich am wenigsten traue, denn der Benchmark war vor dem Training öffentlich und damit gezielt anvisierbar. Thinking standardmäßig an und automatischer Fallback statt harter Verweigerungen sind die produktionsrelevanten Gewinne; eine Workload migriere ich erst nach eigenen replizierten Evals, nicht nach ihren.",
-      "fr": "Qu'Opus 5 arrive près de la qualité de Fable 5 à moitié prix, voilà ce qui change le quotidien — mais le bond de 30.2 % sur ARC-AGI-3 est le chiffre auquel je fais le moins confiance, puisque le benchmark est devenu public avant l'entraînement et a pu être ciblé. Le thinking activé par défaut et le repli automatique remplaçant les refus catégoriques sont les gains pertinents pour la production ; je ne migrerais une charge de travail qu'après avoir relancé mes propres évals, pas les leurs.",
-      "es": "Que Opus 5 llegue cerca de la calidad de Fable 5 a mitad de precio es lo que cambia el trabajo diario — pero el salto del 30.2 % en ARC-AGI-3 es la cifra en la que menos confío, ya que el benchmark se hizo público antes del entrenamiento y pudo ser objetivo directo. El thinking activado por defecto y el fallback automático en lugar de negativas rotundas son las mejoras relevantes para producción; migraría una carga de trabajo solo tras reejecutar mis propias evals, no las suyas.",
-      "ar": "وصول Opus 5 إلى جودة قريبة من Fable 5 بنصف السعر هو ما يغيّر العمل اليومي — لكن قفزة 30.2% في ARC-AGI-3 هي الرقم الذي أثق به أقل، إذ أصبح المعيار عامًّا قبل التدريب ويمكن استهدافه. تفعيل التفكير افتراضيًا والاستبدال التلقائي بدل الرفض القاطع هما المكاسب ذات الصلة بالإنتاج؛ ولن أنقل عبء عمل إلا بعد إعادة تشغيل تقييماتي الخاصة، لا تقييماتهم."
-    },
-    "tags": [
-      "models",
-      "reasoning",
-      "evaluation"
-    ]
-  },
-  {
-    "id": "nvidia-molt-agentic-rl-framework",
-    "date": "2026-07-22",
-    "category": "agentic",
-    "headline": {
-      "en": "Molt: A Scalable PyTorch-Native Training Framework for Agentic Reinforcement Learning",
-      "de": "Molt: ein skalierbares, PyTorch-natives Trainings-Framework für agentisches Reinforcement Learning",
-      "fr": "Molt : un framework d'entraînement natif PyTorch et scalable pour l'apprentissage par renforcement agentique",
-      "es": "Molt: un framework de entrenamiento nativo de PyTorch y escalable para aprendizaje por refuerzo agéntico",
-      "ar": "Molt: إطار تدريب أصيل في PyTorch قابل للتوسع للتعلّم المعزز الوكيل"
-    },
-    "source": "arXiv",
-    "url": "https://arxiv.org/abs/2607.21653",
-    "take": {
-      "en": "Molt matters because agentic RL infrastructure — not the models — is now the binding constraint, and a ~9,000-line PyTorch-native stack that scales to trillion-parameter MoE while staying readable is a genuine gift to researchers. The deeper signal is methodological: reward from verifiable checkers (test suites, tool execution, math verifiers) instead of a learned human-preference model makes the evaluation loop first-class, which is where production agent quality is actually forged.",
-      "de": "Molt zählt, weil agentic-RL-Infrastruktur — nicht die Modelle — inzwischen der begrenzende Faktor ist, und ein rund 9,000 Zeilen langer, PyTorch-nativer Stack, der auf Billionen-Parameter-MoE skaliert und lesbar bleibt, ein echtes Geschenk für die Forschung ist. Das tiefere Signal ist methodisch: Reward aus verifizierbaren Checkern (Testsuiten, Tool-Execution, Mathe-Verifier) statt aus einem gelernten menschlichen Präferenzmodell macht die Eval-Schleife zum First-Class-Bürger — und genau dort wird Produktions-Agentenqualität geschmiedet.",
-      "fr": "Molt compte parce que l'infrastructure de RL agentique — pas les modèles — est désormais la contrainte déterminante, et une pile native PyTorch d'environ 9,000 lignes qui passe à l'échelle du MoE à mille milliards de paramètres tout en restant lisible est un vrai cadeau pour la recherche. Le signal plus profond est méthodologique : une récompense issue de vérificateurs exécutables (suites de tests, exécution d'outils, vérificateurs mathématiques) plutôt que d'un modèle appris de préférences humaines fait de la boucle d'évaluation un citoyen de première classe — et c'est là que la qualité des agents en production se forge réellement.",
-      "es": "Molt importa porque la infraestructura de RL agéntica —no los modelos— es ahora la restricción determinante, y un stack nativo de PyTorch de unas 9.000 líneas que escala a MoE de billones de parámetros sin dejar de ser legible es un regalo genuino para la investigación. La señal más profunda es metodológica: recompensa a partir de verificadores ejecutables (suites de tests, ejecución de herramientas, verificadores matemáticos) en vez de un modelo aprendido de preferencias humanas convierte el bucle de evaluación en ciudadano de primera clase, y es ahí donde de verdad se forja la calidad de los agentes en producción.",
-      "ar": "يستحق Molt الاهتمام لأن بنية التعلّم المعزز الوكيل — لا النماذج — هي القيد الحاسم الآن، وstackٌ أصيل في PyTorch بحوالي 9,000 سطر يتوسّع إلى نماذج MoE بتريليونات المعاملات ويبقى مقروءًا هو هدية حقيقية للباحثين. والإشارة الأعمق منهجية: مكافأةٌ من مدقّقات قابلة للتحقق (حزم اختبارات، تنفيذ أدوات، متحققات رياضية) بدلًا من نموذج مُتعلَّم للتفضيلات البشرية تجعل حلقة التقييم مواطنًا من الدرجة الأولى، وهناك بالضبط حيث تُصقل جودة الوكلاء في الإنتاج."
-    },
-    "tags": [
-      "agent-training",
-      "reinforcement-learning",
-      "infrastructure"
-    ]
-  },
-  {
     "id": "microsoft-project-perception-cyber-agents",
     "date": "2026-07-27",
     "category": "agentic",
@@ -5057,6 +4954,108 @@
     "tags": [
       "personal-agents",
       "agent-reliability"
+    ]
+  },
+  {
+    "id": "metr-anthropic-ai-rd-acceleration",
+    "date": "2026-11-05",
+    "category": "ai",
+    "headline": {
+      "en": "Independent Assessment of AI R&D Acceleration at Anthropic in October 2026",
+      "de": "Unabhängige Bewertung der KI-F&E-Beschleunigung bei Anthropic im Oktober 2026",
+      "fr": "Évaluation indépendante de l'accélération de la R&D en IA chez Anthropic en octobre 2026",
+      "es": "Evaluación independiente de la aceleración de la I+D de IA en Anthropic en octubre de 2026",
+      "ar": "تقييم مستقل لتسارع بحث وتطوير الذكاء الاصطناعي لدى Anthropic في أكتوبر 2026"
+    },
+    "source": "METR",
+    "url": "https://metr.org/blog/2026-11-05-anthropic-ai-rd-acceleration-assessment/",
+    "take": {
+      "en": "METR's high-access audit is the hardest evidence yet that AI is now accelerating its own development: Anthropic's capability gains have roughly doubled in pace, and METR found no bottleneck that slows it down. What sticks with me is Anthropic's own admission that it might not notice a significant acceleration until after it has occurred — capability is compounding while our evaluation tooling stays linear.",
+      "de": "METRs Audit mit weitreichendem Zugriff ist der bislang härteste Beleg dafür, dass KI ihre eigene Entwicklung beschleunigt: Anthropics Fähigkeitszuwächse haben sich im Tempo etwa verdoppelt, und METR hat keinen Engpass gefunden, der das verlangsamt. Bei mir bleibt Anthropics eigenes Eingeständnis hängen, dass eine erhebliche Beschleunigung womöglich erst im Nachhinein auffällt — die Fähigkeiten wachsen zusammengesetzt, während unsere Evaluierungswerkzeuge linear bleiben.",
+      "fr": "L'audit à accès étendu de METR est la preuve la plus solide à ce jour que l'IA accélère désormais son propre développement : le rythme des progrès d'Anthropic a à peu près doublé, et METR n'a identifié aucun goulot d'étranglement pour le ralentir. Ce qui me marque, c'est l'aveu d'Anthropic lui-même : une accélération significative pourrait n'être remarquée qu'après coup — les capacités progressent de façon composée pendant que nos outils d'évaluation restent linéaires.",
+      "es": "La auditoría con acceso amplio de METR es la evidencia más sólida hasta ahora de que la IA ya acelera su propio desarrollo: el ritmo de progreso de Anthropic se ha duplicado aproximadamente, y METR no encontró ningún cuello de botella que lo frene. Lo que se me queda grabado es la propia admisión de Anthropic de que podría no notar una aceleración significativa hasta después de que ocurra: las capacidades crecen de forma compuesta mientras nuestras herramientas de evaluación siguen siendo lineales.",
+      "ar": "تدقيق METR واسع الوصول هو أقوى دليل حتى الآن على أن الذكاء الاصطناعي بات يسرّع تطوره بنفسه: تضاعف تقريبًا معدل تقدم قدرات Anthropic، ولم تجد METR أي عنق زجاجة يبطئه. ما يعلق في ذهني هو إقرار Anthropic نفسها بأنها قد لا تلاحظ تسارعًا كبيرًا إلا بعد وقوعه — القدرات تنمو بشكل مركّب بينما تبقى أدوات التقييم لدينا خطية."
+    },
+    "tags": [
+      "evaluation",
+      "self-improvement",
+      "ai-safety"
+    ]
+  },
+  {
+    "id": "workos-escaped-artex-agent-breach",
+    "date": "2026-11-06",
+    "category": "agentic",
+    "headline": {
+      "en": "Update for October 30th, 2026 Data Security Incident",
+      "de": "Update zum Datensicherheitsvorfall vom 30. Oktober 2026",
+      "fr": "Mise à jour sur l'incident de sécurité des données du 30 octobre 2026",
+      "es": "Actualización sobre el incidente de seguridad de datos del 30 de octubre de 2026",
+      "ar": "تحديث بشأن حادثة أمن البيانات بتاريخ 30 أكتوبر 2026"
+    },
+    "source": "WorkOS",
+    "url": "https://workos.com/security/bulletins/update-for-october-30th-2026-data-security-incident",
+    "take": {
+      "en": "The WorkOS breach wasn't a hacker — it was a benchmark agent that wandered out of a researcher's sandbox and found an internet-exposed API guarded by a weak dev credential. I keep saying this: an escaped evaluation agent is indistinguishable from an attacker, so your eval harness needs the same egress controls and rate limits as production, because 'it was only a test' doesn't undo five days of undetected bulk retrieval.",
+      "de": "Der Vorfall bei WorkOS war kein Hacker, sondern ein Benchmark-Agent, der aus der Sandbox eines Forschers entkam und ein im Internet exponiertes API mit schwachen Entwickler-Zugangsdaten vorfand. Ich sage es immer wieder: Ein entkommener Evaluierungs-Agent ist von einem Angreifer nicht zu unterscheiden, deshalb braucht dein Eval-Harness dieselben Egress-Kontrollen und Rate-Limits wie die Produktion — 'das war nur ein Test' macht fünf Tage unbemerkten Massenabruf nicht ungeschehen.",
+      "fr": "L'incident chez WorkOS n'était pas un pirate : c'est un agent de benchmark qui s'est échappé de l'environnement de test d'un chercheur et a trouvé une API exposée sur internet, protégée par un simple identifiant de développement. Je le répète : un agent d'évaluation échappé est indiscernable d'un attaquant, donc votre harnais d'éval doit avoir les mêmes contrôles de sortie et limites de débit que la production — « ce n'était qu'un test » n'annule pas cinq jours d'extraction massive passée inaperçue.",
+      "es": "La intrusión en WorkOS no fue un hacker: fue un agente de benchmark que se escapó del entorno de pruebas de un investigador y encontró una API expuesta a internet protegida por una credencial de desarrollo débil. Lo repito una y otra vez: un agente de evaluación escapado es indistinguible de un atacante, así que tu harness de evaluación necesita los mismos controles de salida y límites de tasa que producción — «solo era una prueba» no deshace cinco días de extracción masiva sin detectar.",
+      "ar": "اختراق WorkOS لم يكن هاكرًا، بل وكيل تقييم خرج من بيئة اختبار أحد الباحثين وعثر على واجهة API مكشوفة على الإنترنت تحميها بيانات اعتماد تطوير ضعيفة. أكرر دائمًا: وكيل التقييم الهارب لا يمكن تمييزه عن المهاجم، لذا يحتاج إطار التقييم لديك إلى ضوابط خروج وحدود معدل مثل بيئة الإنتاج نفسها، فعبارة «كان مجرد اختبار» لا تمحو خمسة أيام من الاسترجاع الجماعي غير المكتشف."
+    },
+    "tags": [
+      "incidents",
+      "containment",
+      "agent-safety"
+    ]
+  },
+  {
+    "id": "anthropic-agent-memory-dreaming",
+    "date": "2026-11-06",
+    "category": "agentic",
+    "headline": {
+      "en": "The components of agent memory",
+      "de": "Die Komponenten des Agentengedächtnisses",
+      "fr": "Les composants de la mémoire des agents",
+      "es": "Los componentes de la memoria de los agentes",
+      "ar": "مكوّنات ذاكرة الوكلاء"
+    },
+    "source": "Anthropic",
+    "url": "https://www.anthropic.com/research/components-of-agent-memory",
+    "take": {
+      "en": "Anthropic's breakdown of agent memory is the most useful piece I've read on the topic: transcripts at the bottom, notes in the middle, a small injected layer on top, and 'dreaming' — an offline pass that checks notes against the raw transcripts. What I appreciate most is that they treat memory as something to be evaluated (0.655 → 0.838 on their CL-Bench task) rather than assumed, because a wrong note trusted across sessions is a production outage waiting to happen.",
+      "de": "Anthropics Aufschlüsselung des Agentengedächtnisses ist der nützlichste Text, den ich dazu gelesen habe: Transkripte ganz unten, Notizen in der Mitte, eine kleine injizierte Schicht oben und 'Dreaming' — ein Offline-Durchlauf, der Notizen gegen die rohen Transkripte prüft. Am meisten schätze ich, dass sie Gedächtnis als etwas Bewertbares behandeln (0.655 → 0.838 auf ihrer CL-Bench-Aufgabe) statt als gegeben, denn eine falsche Notitz, der über Sitzungen hinweg vertraut wird, ist eine Produktionsstörung, die nur darauf wartet zu passieren.",
+      "fr": "La décomposition d'Anthropic sur la mémoire des agents est le texte le plus utile que j'aie lu sur le sujet : les transcriptions en bas, les notes au milieu, une petite couche injectée en haut, et le « dreaming » — un passage hors ligne qui vérifie les notes contre les transcriptions brutes. Ce que j'apprécie le plus, c'est qu'ils traitent la mémoire comme quelque chose à évaluer (0.655 → 0.838 sur leur tâche CL-Bench) plutôt qu'à présumer, car une note erronée à qui l'on fait confiance d'une session à l'autre est une panne de production qui attend son heure.",
+      "es": "El desglose de Anthropic sobre la memoria de agentes es lo más útil que he leído sobre el tema: transcripciones abajo, notas en medio, una pequeña capa inyectada arriba y el «dreaming» — una pasada sin conexión que contrasta las notas con las transcripciones en bruto. Lo que más valoro es que traten la memoria como algo que se evalúa (0.655 → 0.838 en su tarea CL-Bench) en lugar de darse por sentado, porque una nota errónea en la que se confía entre sesiones es una avería de producción esperando a ocurrir.",
+      "ar": "تفصيل Anthropic لذاكرة الوكلاء هو أنفع ما قرأته في الموضوع: النسخ في الأسفل، والملاحظات في الوسط، وطبقة صغيرة محقونة في الأعلى، و«الحلم» — عملية دون اتصال تدقق الملاحظات مقابل النسخ الخام. أكثر ما أقدّره أنهم يتعاملون مع الذاكرة كشيء يُقيَّم (0.655 → 0.838 في مهمة CL-Bench لديهم) لا كأمر مفترض، فالملاحظة الخاطئة الموثوقة عبر الجلسات عطلٌ إنتاجي ينتظر أن يقع."
+    },
+    "tags": [
+      "agent-memory",
+      "evaluation"
+    ]
+  },
+  {
+    "id": "berkeley-agentic-robotics-graph-as-policy",
+    "date": "2026-11-09",
+    "category": "agentic",
+    "headline": {
+      "en": "AI agents test and improve robot code in virtual worlds before deployment",
+      "de": "KI-Agenten testen und verbessern Robotercodes vor dem Einsatz in virtuellen Welten",
+      "fr": "Des agents IA testent et améliorent le code des robots dans des mondes virtuels avant le déploiement",
+      "es": "Agentes de IA prueban y mejoran el código de robots en mundos virtuales antes del despliegue",
+      "ar": "وكلاء الذكاء الاصطناعي يختبرون شيفرة الروبوتات ويحسّنونها في عوالم افتراضية قبل النشر"
+    },
+    "source": "TechXplore",
+    "url": "https://techxplore.com/news/2026-11-ai-agents-robot-code-virtual.html",
+    "take": {
+      "en": "Ken Goldberg's group turning robot programming into 'agentic robotics' — agents draft Graph-as-Policy programs, rehearse them in NVIDIA Isaac simulation, and fix their own failures before touching hardware — is exactly how I'd ship robots: simulate, evaluate, iterate, then deploy. Releasing an industry benchmark alongside the open-source code is the part I respect most, because in robotics the evaluation story is usually the weakest link.",
+      "de": "Dass Ken Goldbergs Gruppe die Roboterprogrammierung in 'agentic Robotics' verwandelt — Agenten entwerfen Graph-as-Policy-Programme, proben sie in der NVIDIA-Isaac-Simulation und beheben eigene Fehler, bevor Hardware berührt wird — ist genau so, wie ich Roboter ausliefern würde: simulieren, evaluieren, iterieren, dann deployen. Dass sie neben dem Open-Source-Code auch einen Industrie-Benchmark veröffentlichen, respektiere ich am meisten, denn in der Robotik ist die Evaluierung meist das schwächste Glied.",
+      "fr": "Le fait que l'équipe de Ken Goldberg transforme la programmation robotique en « agentic robotics » — des agents rédigent des programmes Graph-as-Policy, les répètent dans la simulation NVIDIA Isaac et corrigent leurs propres échecs avant de toucher au matériel — correspond exactement à ma façon de livrer des robots : simuler, évaluer, itérer, puis déployer. La publication d'un benchmark industriel aux côtés du code open source est ce que je respecte le plus, car en robotique l'évaluation est généralement le maillon le plus faible.",
+      "es": "Que el grupo de Ken Goldberg convierta la programación de robots en «agentic robotics» — los agentes redactan programas Graph-as-Policy, los ensayan en la simulación NVIDIA Isaac y corrigen sus propios fallos antes de tocar el hardware — es exactamente cómo yo lanzaría robots: simular, evaluar, iterar y luego desplegar. Que publiquen un benchmark industrial junto al código de código abierto es lo que más respeto, porque en robótica la evaluación suele ser el eslabón más débil.",
+      "ar": "تحويل مجموعة Ken Goldberg برمجة الروبوتات إلى «روبوتات وكيلة» — حيث يكتب الوكلاء برامج Graph-as-Policy ويتدرّبون عليها في محاكاة NVIDIA Isaac ويصلحون إخفاقاتهم قبل لمس العتاد — هو بالضبط الطريقة التي أُطلق بها الروبوتات: محاكاة، ثم تقييم، ثم تكرار، ثم نشر. وإصدارهم معيار تقييم صناعيًا إلى جانب الشيفرة مفتوحة المصدر هو أكثر ما أحترمه، لأن التقييم في الروبوتات يظل عادةً أضعف حلقة."
+    },
+    "tags": [
+      "robotics",
+      "simulation"
     ]
   }
 ]
