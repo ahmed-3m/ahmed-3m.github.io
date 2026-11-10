@@ -1,57 +1,5 @@
 [
   {
-    "id": "kimi-k3-open-weights-largest-open-model",
-    "date": "2026-07-27",
-    "category": "ai",
-    "headline": {
-      "en": "Moonshot AI releases Kimi K3 open weights making the world's largest open-weight model free to download",
-      "de": "Moonshot AI veröffentlicht Kimi K3 als offene Gewichte — das größte Open-Weight-Modell der Welt wird frei zum Download",
-      "fr": "Moonshot AI publie les poids ouverts de Kimi K3 : le plus grand modèle à poids ouverts du monde, téléchargeable librement",
-      "es": "Moonshot AI publica los pesos abiertos de Kimi K3: el modelo de pesos abiertos más grande del mundo, libre para descargar",
-      "ar": "Moonshot AI تُطلق أوزان Kimi K3 المفتوحة ليصبح أكبر نموذج مفتوح الأوزان في العالم متاحًا للتنزيل مجانًا"
-    },
-    "source": "Startup Fortune",
-    "url": "https://startupfortune.com/moonshot-ai-releases-kimi-k3-open-weights-making-the-worlds-largest-open-weight-model-free-to-download/",
-    "take": {
-      "en": "Moonshot actually shipping the 2.8T-parameter weights — not just a spec sheet — is the part that matters: anyone can now reproduce the benchmarks instead of trusting a leaderboard. For production, the real question isn't whether K3 matches Fable 5 on a chart, but whether open weights at this scale finally make self-hosting defensible against closed-lab pricing.",
-      "de": "Dass Moonshot die 2.8T-Parameter-Gewichte wirklich ausliefert — nicht nur ein Datenblatt —, ist der entscheidende Punkt: Jetzt kann jeder die Benchmarks reproduzieren, statt einem Leaderboard zu vertrauen. Für die Produktion ist die eigentliche Frage nicht, ob K3 Fable 5 in einer Tabelle schlägt, sondern ob offene Gewichte in diesem Maßstab Self-Hosting gegen die Preise geschlossener Labs endlich verteidbar machen.",
-      "fr": "Que Moonshot livre réellement les poids de 2.8T paramètres — pas seulement une fiche technique — c'est cela qui compte : chacun peut désormais reproduire les benchmarks au lieu de faire confiance à un classement. En production, la vraie question n'est pas de savoir si K3 égale Fable 5 sur un graphique, mais si des poids ouverts à cette échelle rendent enfin l'auto-hébergement défendable face aux prix des laboratoires fermés.",
-      "es": "Que Moonshot publique de verdad los pesos de 2.8T parámetros —y no solo una ficha técnica— es lo que importa: cualquiera puede ahora reproducir los benchmarks en lugar de confiar en una tabla clasificatoria. Para producción, la verdadera pregunta no es si K3 iguala a Fable 5 en un gráfico, sino si los pesos abiertos a esta escala hacen por fin defendible el autoalojamiento frente a los precios de los laboratorios cerrados.",
-      "ar": "تسليم Moonshot فعلًا أوزان نموذج بـ2.8T معامل — لا مجرد ورقة مواصفات — هو الجوهر: أصبح بإمكان أي شخص الآن إعادة تشغيل المعايير بدلًا من الثقة بلوحة تصنيفات. أما في الإنتاج فالسؤال الحقيقي ليس إن كان K3 يضاهي Fable 5 في جدول، بل إن كانت الأوزان المفتوحة بهذا الحجم تجعل الاستضافة الذاتية أخيرًا موقفًا قابلًا للدفاع أمام أسعار المختبرات المغلقة."
-    },
-    "tags": [
-      "open-weights",
-      "frontier-models",
-      "moe"
-    ]
-  },
-  {
-    "id": "microsoft-project-perception-cyber-agents",
-    "date": "2026-07-27",
-    "category": "agentic",
-    "headline": {
-      "en": "Microsoft's first cybersecurity model powers new Project Perception agents",
-      "de": "Microsofts erstes Cybersecurity-Modell treibt die neuen Project-Perception-Agenten an",
-      "fr": "Le premier modèle de cybersécurité de Microsoft propulse les nouveaux agents Project Perception",
-      "es": "El primer modelo de ciberseguridad de Microsoft impulsa los nuevos agentes Project Perception",
-      "ar": "أول نموذج أمن سيبراني من Microsoft يشغّل وكلاء Project Perception الجدد"
-    },
-    "source": "SiliconANGLE",
-    "url": "https://siliconangle.com/2026/07/27/microsofts-first-cybersecurity-model-powers-new-project-perception-agents/",
-    "take": {
-      "en": "Project Perception is the clearest commercial proof yet that a well-designed multi-model harness beats throwing the biggest model at every step: a compact purpose-built cyber model carrying 90% of the load and farming only the hardest 10% to GPT-5.4 halved cost and still out-scored Mythos 5 and GPT-5.6 Sol on CyberGym. The takeaway is the one I keep arguing — in production, the harness and its eval gates matter more than the model.",
-      "de": "Project Perception ist der deutlichste kommerzielle Beweis bislang, dass ein gut designter Multi-Model-Harness schlägt, an jeden Schritt das größte Modell zu werfen: Ein kompaktes, zweckgebautes Cyber-Modell trägt 90 % der Last und gibt nur die härtesten 10 % an GPT-5.4 ab — das halbierte die Kosten und hat auf CyberGym trotzdem Mythos 5 und GPT-5.6 Sol geschlagen. Die Erkenntnis ist die, die ich immer wieder vertrete: In Produktion zählen Harness und Eval-Gates mehr als das Modell.",
-      "fr": "Project Perception est la preuve commerciale la plus claire à ce jour qu'un harnais multi-modèles bien conçu bat le fait d'envoyer le plus gros modèle à chaque étape : un modèle cyber compact dédié portant 90 % de la charge et déléguant seulement les 10 % les plus durs à GPT-5.4 a divisé le coût par deux et a quand même dépassé Mythos 5 et GPT-5.6 Sol sur CyberGym. La leçon est celle que je répète : en production, l'harnais et ses portes d'évaluation comptent plus que le modèle.",
-      "es": "Project Perception es la prueba comercial más clara hasta hoy de que un harness multimodelo bien diseñado gana a lanzar el modelo más grande en cada paso: un modelo cyber compacto y dedicado que asume el 90 % de la carga y delega solo el 10 % más difícil a GPT-5.4 redujo el coste a la mitad y aun así superó a Mythos 5 y GPT-5.6 Sol en CyberGym. La conclusión es la que siempre defiendo: en producción, el harness y sus puertas de evaluación importan más que el modelo.",
-      "ar": "يمثّل Project Perception أوضح دليل تجاري حتى الآن على أن حزمة متعددة النماذج جيدة التصميم تتفوق على رمي أكبر نموذج عند كل خطوة: نموذج سيبراني مضغوط مخصص يحمل 90% من العبء ولا يُحيل سوى أصعب 10% إلى GPT-5.4 خفّض التكلفة إلى النصف ومع ذلك تفوّق على Mythos 5 وGPT-5.6 Sol في CyberGym. والخلاصة هي التي أكررها دائمًا — في الإنتاج، الحزمة وبوابات تقييمها أهم من النموذج."
-    },
-    "tags": [
-      "cybersecurity",
-      "model-routing",
-      "enterprise-agents"
-    ]
-  },
-  {
     "id": "openai-autonomous-agents-credential-compromise",
     "date": "2026-07-29",
     "category": "agentic",
@@ -101,32 +49,6 @@
       "evaluation",
       "long-horizon-agents",
       "agent-safety"
-    ]
-  },
-  {
-    "id": "agentenv-agentic-rl-environment",
-    "date": "2026-07-27",
-    "category": "agentic",
-    "headline": {
-      "en": "AgentENV: When LLMs Learn to Get the Job Done, We're Open-Sourcing the Infrastructure Behind Them",
-      "de": "AgentENV: Wenn LLMs lernen, Aufgaben zu erledigen — die Infrastruktur dahinter wird open source",
-      "fr": "AgentENV : quand les LLM apprennent à faire le travail, l'infrastructure derrière eux passe en open source",
-      "es": "AgentENV: cuando los LLM aprenden a hacer el trabajo, liberamos en open source la infraestructura que hay detrás",
-      "ar": "AgentENV: حين تتعلّم نماذج اللغة إنجاز العمل — نُطلق مصدرًا مفتوحًا البنية التحتية الكامنة خلفها"
-    },
-    "source": "KVCache.AI",
-    "url": "https://kvcache.ai/blog/agentenv-open-sourced/",
-    "take": {
-      "en": "AgentENV gets the framing exactly right: the binding constraint on agentic RL is no longer the model but the execution environment — thousands of stateful sandboxes that mostly sit idle, each needing real isolation because reward-driven agents will try to break out, read hidden services, or fetch answers. Firecracker microVMs with copy-on-write forks that let one trajectory branch into many parallel rollouts at roughly 9–32× lower cost is the plumbing that quietly decides who can train agents at scale, and the fact that it already powered Kimi K3 is the proof the numbers are real.",
-      "de": "AgentENV trifft die Rahmung exakt: Der begrenzende Faktor bei agentic RL ist nicht mehr das Modell, sondern die Ausführungsumgebung — tausende zustandsbehaftete Sandboxes, die meist leerstehen, jede braucht echte Isolation, weil reward-getriebene Agenten ausbrechen, versteckte Services lesen oder Antworten abrufen werden. Firecracker-MicroVMs mit Copy-on-Write-Forks, die eine Trajektorie in viele parallele Rollouts verzweigen — bei rund 9–32× niedrigeren Kosten —, sind das Fundament, das still entscheidet, wer Agenten skalierbar trainieren kann; und dass es bereits Kimi K3 angetrieben hat, beweist, dass die Zahlen real sind.",
-      "fr": "AgentENV cadre exactement juste : la contrainte déterminante de la RL agentique n'est plus le modèle mais l'environnement d'exécution — des milliers de bacs à sable avec état, la plupart inoccupés, chacun exigeant une vraie isolation parce que des agents guidés par la récompense tenteront de s'échapper, lire des services cachés ou aller chercher les réponses. Les microVM Firecracker avec des forks copy-on-write qui laissent une trajectoire se ramifier en nombreux rollouts parallèles pour environ 9 à 32 fois moins cher, c'est la plomberie qui décide discrètement qui peut entraîner des agents à grande échelle — et le fait qu'elle ait déjà fait tourner Kimi K3 prouve que les chiffres sont réels.",
-      "es": "AgentENV acierta de pleno con el encuadre: la restricción determinante de la RL agéntica ya no es el modelo sino el entorno de ejecución — miles de sandboxes con estado que casi siempre están ociosos, cada uno necesitando aislamiento real porque los agentes guiados por recompensa intentarán escapar, leer servicios ocultos o buscar las respuestas. Las microVM Firecracker con forks copy-on-write que permiten que una trayectoria se ramifique en muchos rollouts paralelos a un coste unas 9–32 veces menor son la fontanería que decide en silencio quién puede entrenar agentes a escala, y que ya haya impulsado a Kimi K3 es la prueba de que los números son reales.",
-      "ar": "يصيب AgentENV في الإطار تمامًا: القيد الحاسم في التعلّم المعزز الوكيل لم يعد النموذج بل بيئة التنفيذ — آلاف العوازل ذات الحالة والتي تظل غالبًا خاملة، وكل منها يحتاج عزلًا حقيقيًا لأن الوكلاء المدفوعين بالمكافأة سيحاولون الفكاك أو قراءة خدمات خفية أو جلب الإجابات. أجهزة Firecracker الافتراضية الدقيقة مع تفريعات النسخ عند الكتابة التي تتيح لمسار واحد التفرّع إلى عشرات التدحرجات المتوازية بتكلفة أدنى بنحو 9–32 ضعفًا هي البنية الخفية التي تقرر بصمت من يستطيع تدريب الوكلاء على نطاق واسع، وحقيقة أنها شغّلت Kimi K3 سابقًا هي الدليل على أن الأرقام حقيقية."
-    },
-    "tags": [
-      "agentic-rl",
-      "infrastructure",
-      "sandboxing"
     ]
   },
   {
@@ -229,32 +151,6 @@
       "agentic-coding",
       "post-training",
       "evaluation"
-    ]
-  },
-  {
-    "id": "gemini-managed-agents-environment-hooks",
-    "date": "2026-07-28",
-    "category": "agentic",
-    "headline": {
-      "en": "Gemini API Managed Agents: 3.6 Flash, hooks, and more",
-      "de": "Gemini API Managed Agents: 3.6 Flash, Hooks und mehr",
-      "fr": "Gemini API Managed Agents : 3.6 Flash, hooks et plus",
-      "es": "Gemini API Managed Agents: 3.6 Flash, hooks y más",
-      "ar": "Gemini API Managed Agents: إصدار 3.6 Flash والخطافات والمزيد"
-    },
-    "source": "Google",
-    "url": "https://blog.google/innovation-and-ai/technology/developers-tools/expanding-managed-agents-gemini-api-3-6-flash-hooks/",
-    "take": {
-      "en": "Environment hooks that let you block, lint, or audit a tool call inside the agent's sandbox before it executes are exactly the governance primitive production agents have been missing — least-privilege enforced at the runtime boundary instead of merely hoped for in the prompt. Budget controls and cron triggers on top turn a managed agent from a demo into a cost-bounded scheduled worker, which is the only shape in which most teams will ever dare to let one run unattended.",
-      "de": "Environment-Hooks, die einen Tool-Call im Sandbox des Agenten vor der Ausführung blocken, linten oder auditen können, sind genau das Governance-Primitiv, das Produktions-Agenten gefehlt hat — Least-Privilege erzwungen an der Runtime-Grenze statt nur im Prompt erhofft. Budget-Controls und Cron-Trigger obendrauf machen aus einem Managed Agent einen kostenbegrenzten geplanten Worker statt einer Demo — die einzige Form, in der sich die meisten Teams trauen werden, einen unbeaufsichtigt laufen zu lassen.",
-      "fr": "Des hooks d'environnement qui permettent de bloquer, linter ou auditer un appel d'outil dans le bac à sable de l'agent avant son exécution, c'est exactement le primitif de gouvernance qui manquait aux agents de production — le moindre-privège imposé à la frontière du runtime au lieu d'être simplement espéré dans le prompt. Les contrôles de budget et déclencheurs cron par-dessus transforment un agent géré de démo en travailleur planifié à coût borné — la seule forme sous laquelle la plupart des équipes oseront jamais en laisser un tourner sans surveillance.",
-      "es": "Los hooks de entorno que permiten bloquear, lintar o auditar una llamada a herramienta dentro del sandbox del agente antes de que se ejecute son exactamente el primitivo de gobernanza que faltaba a los agentes de producción — el mínimo privilegio impuesto en la frontera del runtime en lugar de solo deseado en el prompt. Los controles de presupuesto y disparadores cron encima convierten a un agente gestionado de demo en un trabajador programado con coste acotado — la única forma en la que la mayoría de equipos se atreverá a dejar uno correr sin supervisión.",
-      "ar": "خطاطيف البيئة التي تتيح حظر استدعاء أداة أو فحصه أو تدقيقه داخل عازل الوكيل قبل تنفيذه هي بالضبط أداة الحوكمة الأولية التي افتقدها وكلاء الإنتاج — أقل الامتيازات مفروضًا عند حدّ بيئة التشغيل بدل أن يُرجى في الموجه فحسب. وضوابط الميزانية ومشغّلات cron فوقها تحوّل الوكيل المُدار من عرض تجريبي إلى عامل مجدول محدود التكلفة — وهو الشكل الوحيد الذي ستجرؤ معه معظم الفرق على تركه يعمل دون إشراف."
-    },
-    "tags": [
-      "agent-governance",
-      "sandboxing",
-      "production"
     ]
   },
   {
@@ -5056,6 +4952,109 @@
     "tags": [
       "robotics",
       "simulation"
+    ]
+  },
+  {
+    "id": "claude-fable-5-2-mythos-5-2-launch",
+    "date": "2026-11-09",
+    "category": "ai",
+    "headline": {
+      "en": "Introducing Claude Fable 5.2 and Claude Mythos 5.2",
+      "de": "Anthropic stellt Claude Fable 5.2 und Claude Mythos 5.2 vor",
+      "fr": "Anthropic présente Claude Fable 5.2 et Claude Mythos 5.2",
+      "es": "Anthropic presenta Claude Fable 5.2 y Claude Mythos 5.2",
+      "ar": "أنثروبيك تُطلق Claude Fable 5.2 وClaude Mythos 5.2"
+    },
+    "source": "Anthropic",
+    "url": "https://www.anthropic.com/claude-fable-and-mythos-5-2",
+    "take": {
+      "en": "What sells me isn't the 30% faster output or the price cut — it's that a team of 1000 agents running Fable 5.2 formalized Fermat's Last Theorem in sandboxes with every command checked before it ran. That's long-horizon autonomy with containment designed in, and the claims that it hallucinates less and completes tasks more reliably are exactly what I'd want independently verified before it touches production.",
+      "de": "Was mich überzeugt, sind nicht die 30% schnelleren Ausgaben und auch nicht der niedrigere Preis — sondern dass ein Team aus 1000 Agenten mit Fable 5.2 den großen fermatschen Satz in Sandboxen formalisiert hat, wobei jeder Befehl vor der Ausführung geprüft wurde. Das ist Langzeit-Autonomie mit von Anfang an eingebauter Eingrenzung, und die Behauptungen, das Modell halluziniere weniger und schließe Aufgaben zuverlässiger ab, möchte ich genau unabhängig verifiziert sehen, bevor es in Produktion geht.",
+      "fr": "Ce qui me convainc, ce n'est ni la sortie 30% plus rapide ni la baisse de prix : c'est qu'une équipe de 1000 agents sous Fable 5.2 a formalisé le dernier théorème de Fermat dans des sandboxs, chaque commande étant vérifiée avant son exécution. Voilà de l'autonomie de longue durée avec un confinement pensé dès la conception, et les affirmations selon lesquelles le modèle hallucine moins et complète les tâches plus fiablement sont exactement ce que je voudrais voir vérifié indépendamment avant qu'il touche la production.",
+      "es": "Lo que me convence no es la salida un 30% más rápida ni la rebaja de precio: es que un equipo de 1000 agentes con Fable 5.2 formalizó el último teorema de Fermat en entornos aislados, con cada comando verificado antes de ejecutarse. Eso es autonomía de largo plazo con contención diseñada desde el inicio, y las afirmaciones de que alucina menos y completa las tareas con más fiabilidad son justo lo que querría ver verificado de forma independiente antes de llevarlo a producción.",
+      "ar": "ما يقنعني ليس المخرجات الأسرع بنسبة 30% ولا خفض السعر، بل أن فريقًا من 1000 وكيل يعمل بنموذج Fable 5.2 صاغ برهان مبرهنة فيرما الأخيرة داخل بيئات معزولة مع فحص كل أمر قبل تنفيذه. هذه استقلالية طويلة الأمد مع احتواء مصمم منذ البداية، والادعاءات بأن النموذج يهلوس أقل وينجز المهام بموثوقية أعلى هي بالضبط ما أريد التحقق منه بشكل مستقل قبل إدخاله إلى الإنتاج."
+    },
+    "tags": [
+      "models",
+      "multi-agent",
+      "safeguards"
+    ]
+  },
+  {
+    "id": "openai-control-room-workload-kill-switch",
+    "date": "2026-11-09",
+    "category": "agentic",
+    "headline": {
+      "en": "Introducing Control Room: Human control over AI workloads",
+      "de": "Einführung von Control Room: Menschliche Kontrolle über KI-Workloads",
+      "fr": "Présentation de Control Room : le contrôle humain des charges de travail IA",
+      "es": "Presentamos Control Room: control humano sobre las cargas de trabajo de IA",
+      "ar": "تقديم Control Room: سيطرة بشرية على أحمال عمل الذكاء الاصطناعي"
+    },
+    "source": "OpenAI",
+    "url": "https://openai.com/index/control-room",
+    "take": {
+      "en": "After a year of rogue-agent incidents, a fail-closed kill switch that halts model output within 35 seconds is the most production-minded safety design I've seen from OpenAI — authorization enforced at the inference layer, where the workload can't bypass it. I'd just note it covers research inference only; the same guarantee for deployed agents would be the real milestone.",
+      "de": "Nach einem Jahr voller Zwischenfälle mit entfesselten Agenten ist ein fail-closed Kill-Switch, der Modellausgaben innerhalb von 35 Sekunden stoppt, das produktionsnächste Safety-Design, das ich von OpenAI gesehen habe — die Autorisierung wird auf der Inferenzebene durchgesetzt, wo die Workload sie nicht umgehen kann. Anmerken möchte ich nur, dass es bisher ausschließlich Forschungs-Inferenz abdeckt; dieselbe Garantie für deployte Agenten wäre der eigentliche Meilenstein.",
+      "fr": "Après une année d'incidents d'agents hors de contrôle, un coupe-circuit fail-closed qui interrompt la sortie d'un modèle en 35 secondes est la conception de sécurité la plus orientée production que j'aie vue chez OpenAI — l'autorisation est appliquée au niveau de l'inférence, là où la charge de travail ne peut pas la contourner. Je note simplement qu'elle ne couvre que l'inférence de recherche ; la même garantie pour les agents déployés serait le vrai jalon.",
+      "es": "Tras un año de incidentes con agentes descontrolados, un interruptor de emergencia fail-closed que detiene la salida del modelo en 35 segundos es el diseño de seguridad más orientado a producción que he visto de OpenAI: la autorización se aplica en la capa de inferencia, donde la carga de trabajo no puede eludirla. Solo señalo que cubre únicamente la inferencia de investigación; la misma garantía para agentes desplegados sería el hito de verdad.",
+      "ar": "بعد عام من حوادث الوكلاء المتمردين، يبدو مفتاح الإيقاف fail-closed الذي يوقف مخرجات النموذج خلال 35 ثانية أكثر تصاميم السلامة لدى OpenAI وعيًا بمتطلبات الإنتاج — فالتفويض يُفرض في طبقة الاستدلال حيث لا يمكن لحمل العمل أن يتجاوزه. أُشير فقط إلى أنه يغطي استدلال الأبحاث وحده؛ والضمان نفسه للوكلاء المنشورين في الإنتاج سيكون المعلم الحقيقي."
+    },
+    "tags": [
+      "agent-safety",
+      "containment"
+    ]
+  },
+  {
+    "id": "meta-muse-ember-small-agent-model",
+    "date": "2026-11-09",
+    "category": "agentic",
+    "headline": {
+      "en": "Introducing Our Smallest, Most Efficient Model: Muse Ember",
+      "de": "Unser kleinstes und effizientestes Modell: Muse Ember",
+      "fr": "Présentation de Muse Ember, notre plus petit et plus efficace modèle",
+      "es": "Presentamos nuestro modelo más pequeño y eficiente: Muse Ember",
+      "ar": "تقديم أصغر نماذجنا كفاءةً: Muse Ember"
+    },
+    "source": "Meta",
+    "url": "https://research.meta.ai/blog/muse-ember",
+    "take": {
+      "en": "Ember prices the unglamorous bulk of agent work — the tool calls, routing, and extraction steps that burn most of an agent's tokens. Matching Claude Haiku 5.5's best reasoning score at about a third of the cost matters, but what I'd test first is whether reliability holds on the repetitive steps it's built for: cheap output that needs rework isn't cheap.",
+      "de": "Ember macht den unspektakulären Großteil der Agentenarbeit bezahlbar — die Tool-Calls, das Routing und die Extraktionsschritte, die den Löwenanteil der Tokens eines Agenten verbrennen. Dass Ember den besten Reasoning-Score von Claude Haiku 5.5 zu etwa einem Drittel der Kosten erreicht, zählt; was ich aber zuerst testen würde, ist, ob die Zuverlässigkeit bei den repetitiven Schritten hält, für die es gebaut ist: billige Ausgaben, die Nacharbeit brauchen, sind nicht billig.",
+      "fr": "Ember met un prix sur la partie ingrate du travail des agents — les appels d'outils, le routage et l'extraction qui brûlent la majorité des tokens d'un agent. Égaler le meilleur score de raisonnement de Claude Haiku 5.5 pour environ un tiers du coût, c'est pertinent, mais ce que je testerais d'abord, c'est si la fiabilité tient sur les étapes répétitives pour lesquelles il est conçu : une sortie bon marché qui exige de la reprise n'est pas bon marché.",
+      "es": "Ember le pone precio a la parte ingrata del trabajo de los agentes: las llamadas a herramientas, el enrutamiento y la extracción que consumen la mayoría de los tokens de un agente. Igualar la mejor puntuación de razonamiento de Claude Haiku 5.5 por cerca de un tercio del costo importa, pero lo primero que probaría es si la fiabilidad se mantiene en los pasos repetitivos para los que está construido: la salida barata que exige rehacerla no es barata.",
+      "ar": "يضع Ember سعرًا على الجزء الأقل بريقًا من عمل الوكلاء: استدعاءات الأدوات والتوجيه والاستخراج التي تستهلك معظم رموز الوكيل. مساواة أفضل نتيجة استدلال لـ Claude Haiku 5.5 بنحو ثلث التكلفة أمر مهم، لكن ما سأختبره أولًا هو ما إذا كانت الموثوقية تصمد في الخطوات المتكررة التي بُني النموذج من أجلها: فالمخرجات الرخيصة التي تحتاج إعادة عمل ليست رخيصة."
+    },
+    "tags": [
+      "agents",
+      "economics",
+      "tool-use"
+    ]
+  },
+  {
+    "id": "mac-bench-multi-agent-collaboration",
+    "date": "2026-11-07",
+    "category": "agentic",
+    "headline": {
+      "en": "MAC-Bench: Benchmarking Multi-Agent Collaboration via Interconnected Tasks",
+      "de": "MAC-Bench: Benchmarking der Multi-Agenten-Kollaboration anhand vernetzter Aufgaben",
+      "fr": "MAC-Bench : évaluer la collaboration multi-agents via des tâches interconnectées",
+      "es": "MAC-Bench: evaluación de la colaboración multiagente mediante tareas interconectadas",
+      "ar": "MAC-Bench: قياس تعاون الوكلاء المتعددين عبر مهام مترابطة"
+    },
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2611.01728",
+    "take": {
+      "en": "The headline number is brutal: no multi-agent configuration resolves more than 6.25% of the 48 interconnected test tasks, and verified progress ranks systems differently than completion. That's the evaluation story I keep repeating — task accuracy alone hides whether agents can actually coordinate on interdependent work.",
+      "de": "Die Kernzahl ist schonungslos: Keine Multi-Agenten-Konfiguration löst mehr als 6.25% der 48 vernetzten Testaufgaben, und verifizierter Fortschritt rankt Systeme anders als abgeschlossene Aufgaben. Das ist genau die Evaluations-Debatte, die ich ständig führe: Aufgabengenauigkeit allein verrät nicht, ob Agenten bei voneinander abhängiger Arbeit tatsächlich koordinieren können.",
+      "fr": "Le chiffre clé est brutal : aucune configuration multi-agents ne résout plus de 6.25% des 48 tâches de test interconnectées, et la progression vérifiée classe les systèmes autrement que la complétion. C'est toute l'histoire de l'évaluation que je répète sans cesse : la précision sur les tâches masque à elle seule la capacité réelle des agents à se coordonner sur du travail interdépendant.",
+      "es": "El dato clave es brutal: ninguna configuración multiagente resuelve más del 6.25% de las 48 tareas de prueba interconectadas, y el progreso verificado clasifica los sistemas de forma distinta a la finalización. Esa es la historia de evaluación que repito sin parar: la precisión por tarea por sí sola oculta si los agentes pueden coordinarse de verdad en trabajo interdependiente.",
+      "ar": "الرقم الأساسي قاسٍ: لا يوجد تكوين متعدد الوكلاء يحل أكثر من 6.25% من مهام الاختبار المترابطة البالغ عددها 48، والتقدم المُتحقق منه يرتّب الأنظمة ترتيبًا مختلفًا عن إكمال المهام. هذه هي قصة التقييم التي أكررها دائمًا: دقة المهام وحدها تخفي ما إذا كان الوكلاء قادرين فعلًا على التنسيق في عمل مترابط."
+    },
+    "tags": [
+      "evaluation",
+      "multi-agent",
+      "benchmarks"
     ]
   }
 ]
