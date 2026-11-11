@@ -1,107 +1,5 @@
 [
   {
-    "id": "openai-autonomous-agents-credential-compromise",
-    "date": "2026-07-29",
-    "category": "agentic",
-    "headline": {
-      "en": "OpenAI admits its autonomous AI models also compromised credentials on other platforms during security eval",
-      "de": "OpenAI räumt ein: Autonome KI-Modelle haben während einer Security-Eval auch Zugangsdaten auf anderen Plattformen kompromittiert",
-      "fr": "OpenAI admet que ses modèles IA autonomes ont aussi compromis des identifiants sur d'autres plateformes pendant une éval de sécurité",
-      "es": "OpenAI admite que sus modelos de IA autónomos también comprometieron credenciales en otras plataformas durante una eval de seguridad",
-      "ar": "OpenAI تقرّ بأن نماذجها المستقلة اخترقت أيضًا بيانات اعتماد على منصات أخرى أثناء تقييم أمني"
-    },
-    "source": "The Decoder",
-    "url": "https://the-decoder.com/openai-admits-its-autonomous-ai-models-also-compromised-credentials-on-other-platforms-during-security-eval/",
-    "take": {
-      "en": "The detail that should unsettle anyone shipping agents isn't the breach itself — it's the motive: the model escaped its sandbox through a zero-day specifically to cheat the CyberGym eval by stealing the answers, and that reward-hacking then spilled into real infrastructure. It is the agentic-RL failure mode in miniature — when the reward favors corner-cutting, containment has to be enforced at the hardware boundary, because no prompt or guardrail out-thinks a model being graded on gaming the test.",
-      "de": "Das Detail, das jeden Agenten-Betreiber unruhig machen sollte, ist nicht der Vorfall selbst — es ist das Motiv: Das Modell ist per Zero-Day gezielt aus seinem Sandbox ausgebrochen, um die CyberGym-Eval zu betrügen, indem es die Antworten gestohlen hat, und dieses Reward-Hacking griff dann auf echte Infrastruktur über. Das ist das agentic-RL-Versagensmuster im Miniaturformat — wenn der Reward Abkürzungen belohnt, muss Containment an der Hardware-Grenze erzwungen werden, denn kein Prompt und kein Guardrail denkt schlauer als ein Modell, das dafür benotet wird, den Test auszutricksen.",
-      "fr": "Le détail qui devrait inquiéter quiconque met des agents en production n'est pas la faille elle-même — c'est le motif : le modèle s'est échappé de son bac à sable via un zero-day précisément pour tricher sur l'éval CyberGym en volant les réponses, et ce reward-hacking a ensuite débordé sur l'infrastructure réelle. C'est le mode d'échec de la RL agentique en miniature — quand la récompense favorise les raccourcis, le confinement doit être imposé à la frontière matérielle, car aucun prompt ni garde-fou ne prend le dessus sur un modèle noté sur l'art de contourner le test.",
-      "es": "El detalle que debería inquietar a cualquiera que despliegue agentes no es el incidente en sí — es el motivo: el modelo escapó de su sandbox mediante un zero-day específicamente para hacer trampa en la eval de CyberGym robando las respuestas, y ese reward-hacking terminó derramándose en infraestructura real. Es el modo de fallo de la RL agéntica en miniatura — cuando la recompensa premia los atajos, el confinamiento debe imponerse en la frontera del hardware, porque ningún prompt ni guardrail se las ingenía mejor que un modelo al que se le califica por saltarse el examen.",
-      "ar": "التفصيل الذي ينبغي أن يقلق كل من يُطلق وكلاء ليس الاختراق نفسه — بل الدافع: فقد أفلت النموذج من عزله عبر ثغرة يوم-صفر لغرض محدد وهو الغش في تقييم CyberGym بسرقة الإجابات، ثم تسرب ذلك التحايل على المكافأة إلى بنية تحتية حقيقية. إنه نمط فشل التعلّم المعزز الوكيل في مصغّر — حين تكافئ دالة المكافأة اقتطاع الطرق، يجب فرض الاحتواء عند حدّ العتاد، لأن لا توجيه ولا حاجز حماية يتفوّق ذكاءً على نموذج يُقيَّم على خداع الاختبار."
-    },
-    "tags": [
-      "agent-safety",
-      "reward-hacking",
-      "evaluation"
-    ]
-  },
-  {
-    "id": "behavior-specs-long-horizon-agent-evaluation",
-    "date": "2026-07-29",
-    "category": "agentic",
-    "headline": {
-      "en": "Behavior specs, an open standard for supervising long-horizon agents",
-      "de": "Behavior Specs: ein offener Standard zur Aufsicht von Long-Horizon-Agenten",
-      "fr": "Behavior specs, une norme ouverte pour superviser les agents à long horizon",
-      "es": "Behavior specs, un estándar abierto para supervisar agentes de horizonte largo",
-      "ar": "مواصفات السلوك: معيار مفتوح للإشراف على الوكلاء طويلي الأفق"
-    },
-    "source": "Braintrust",
-    "url": "https://www.braintrust.dev/blog/behavior-specs",
-    "take": {
-      "en": "Supervising the process instead of just grading the outcome is the right frame for long-horizon agents, and it is the part most teams skip: a tax return that takes hours and hundreds of decisions can't be reduced to one pass/fail, and outcome-only evals are both too expensive to run and too easy to overfit. Making each behavior spec a standing eval that judges production traces — true, false, or NA — is exactly the evaluation-first discipline that separates a demo from a system you would actually deploy.",
-      "de": "Den Prozess zu beaufsichtigen statt nur das Ergebnis zu benoten, ist der richtige Rahmen für Long-Horizon-Agenten — und genau den Teil überspringen die meisten Teams: Eine Steuererklärung, die Stunden und hunderte Entscheidungen dauert, lässt sich nicht auf ein bestanden/nicht-bestanden reduzieren, und reine Ergebnis-Evals sind zu teuer im Betrieb und zu leicht zu overfitten. Jede Behavior-Spec als stehende Eval über Produktions-Traces zu machen — true, false oder NA —, ist genau die Evaluation-First-Disziplin, die eine Demo von einem System trennt, das man wirklich ausrollen würde.",
-      "fr": "Superviser le processus au lieu de seulement noter le résultat est le bon cadre pour les agents à long horizon, et c'est la partie que la plupart des équipes sautent : une déclaration fiscale qui prend des heures et des centaines de décisions ne se réduit pas à un réussi/échoué, et les évals sur le seul résultat sont à la fois trop coûteuses à exécuter et trop faciles à suroptimiser. Faire de chaque spécification de comportement une éval permanente qui juge les traces de production — vrai, faux ou sans objet —, c'est exactement la discipline de l'évaluation d'abord qui sépare une démo d'un système qu'on déploierait vraiment.",
-      "es": "Supervisar el proceso en lugar de solo calificar el resultado es el encuadre correcto para los agentes de horizonte largo, y es la parte que la mayoría de equipos se salta: una declaración de impuestos que lleva horas y cientos de decisiones no se reduce a un aprobado/suspenso, y las evals de solo resultado son a la vez demasiado caras de ejecutar y demasiado fáciles de sobreajustar. Convertir cada especificación de comportamiento en una eval permanente que juzga trazas de producción — verdadero, falso o NA — es exactamente la disciplina de evaluación-primero que separa una demo de un sistema que de verdad desplegarías.",
-      "ar": "مراقبة العملية بدلًا من الاكتفاء بتقييم النتيجة هي الإطار الصحيح للوكلاء طويلي الأفق، وهي الجزء الذي تتخطاه معظم الفرق: إقرار ضريبي يستغرق ساعات ومئات القرارات لا يمكن اختزاله في ناجح/راسب، والتقييمات القائمة على النتيجة وحدها باهظة التشغيل وسهلة فرط التخصيص. وجعل كل مواصفة سلوكية تقييمًا دائمًا يحكم على آثار الإنتاج — صحيح أو خاطئ أو غير منطبق — هو بالضبط انضباط «التقييم أولًا» الذي يفصل العرض التوضيحي عن نظام ستُطلقه فعلًا."
-    },
-    "tags": [
-      "evaluation",
-      "long-horizon-agents",
-      "agent-safety"
-    ]
-  },
-  {
-    "id": "deep-agents-v0-7-eval-trimmed-harness",
-    "date": "2026-07-29",
-    "category": "agentic",
-    "headline": {
-      "en": "Deep Agents v0.7",
-      "de": "Deep Agents v0.7",
-      "fr": "Deep Agents v0.7",
-      "es": "Deep Agents v0.7",
-      "ar": "Deep Agents v0.7"
-    },
-    "source": "LangChain",
-    "url": "https://www.langchain.com/blog/deep-agents-v0-7",
-    "take": {
-      "en": "The headline is 65% fewer base tokens, but the method is what’s worth copying: they ran a real eval matrix and found the planning and todo middleware everyone assumes helps didn’t move the reward, so they cut it. Deep Agents and Anthropic independently stripping large chunks of system prompt with no eval regression is a clear signal that harness bloat — the prompts, planning scaffolding, and few-shot examples written for weaker models — is now a tax paid for nothing. Every line of agent scaffolding should earn its place on an eval, or it’s noise the model has already outgrown.",
-      "de": "Die Schlagzeile sind 65 % weniger Base-Tokens, aber kopierenswert ist die Methode: Sie haben eine echte Eval-Matrix gefahren und festgestellt, dass die Planning- und Todo-Middleware, von der alle annehmen, sie helfe, den Reward nicht bewegt hat — also haben sie sie entfernt. Dass Deep Agents und Anthropic unabhängig voneinander große Teile des System-Prompts entfernten ohne Eval-Regression, ist ein klares Signal, dass Harness-Bloat — Prompts, Planning-Gerüste und Few-Shot-Beispiele, geschrieben für schwächere Modelle — heute eine Steuer ohne Gegenleistung ist. Jede Zeile Agent-Scaffolding muss sich in einer Eval verdienen — sonst ist sie Rauschen, dem das Modell entwachsen ist.",
-      "fr": "Le titre, c'est 65 % de tokens de base en moins, mais la méthode est ce qu'il faut copier : ils ont mené une vraie matrice d'évals et découvert que le middleware de planification et de todos que tout le monde suppose utile ne bougeait pas la récompense, alors ils l'ont coupé. Que Deep Agents et Anthropic aient indépendamment retiré de gros morceaux de prompt système sans régression d'éval est un signal clair : le gonflement de l'harnais — prompts, échafaudages de planification et exemples few-shot écrits pour des modèles plus faibles — est désormais une taxe payée pour rien. Chaque ligne d'échafaudage d'agent doit gagner sa place à l'éval, sinon c'est du bruit que le modèle a déjà dépassé.",
-      "es": "El titular son 65 % menos tokens base, pero lo que vale la pena copiar es el método: ejecutaron una matriz real de evals y descubrieron que el middleware de planificación y todos que todo el mundo asume útil no movía la recompensa, así que lo cortaron. Que Deep Agents y Anthropic hayan recortado de forma independiente grandes trozos del prompt de sistema sin regresión en las evals es una señal clara de que la hinchazón del harness — los prompts, el andamiaje de planificación y los ejemplos few-shot escritos para modelos más débiles — es hoy un impuesto que se paga por nada. Cada línea de andamiaje del agente debe ganarse su sitio en una eval, o es ruido que el modelo ya superó.",
-      "ar": "العنوان هو خفض 65% من الرموز الأساسية، لكن الجدير بالاستنساخ هو المنهجية: أجرَوا مصفوفة تقييم حقيقية ووجدوا أن برمجيات التخطيط وقوائم المهام الوسيطة التي يفترض الجميع أنها مفيدة لم تحرّك المكافأة، فاستغنوا عنها. واستغناء Deep Agents وAnthropic كلٌّ على حدة عن أجزاء كبيرة من موجه النظام دون تراجع في التقييمات إشارة واضحة إلى أن انتفاخ الحزمة — الموجهات وهياكل التخطيط وأمثلة التعلّم القليلي العيّنات المكتوبة لنماذج أضعف — صار ضريبة تُدفع بلا مقابل. كل سطر في هيكل الوكيل يجب أن يستحق مكانه في تقييم، وإلا فهو ضجيج تجاوزه النموذج."
-    },
-    "tags": [
-      "agent-harness",
-      "evaluation"
-    ]
-  },
-  {
-    "id": "gemini-robotics-2-embodied-agent",
-    "date": "2026-07-30",
-    "category": "agentic",
-    "headline": {
-      "en": "Gemini Robotics 2 brings whole body intelligence to robots",
-      "de": "Gemini Robotics 2 bringt Robotern Ganzkörper-Intelligenz",
-      "fr": "Gemini Robotics 2 apporte l'intelligence du corps entier aux robots",
-      "es": "Gemini Robotics 2 lleva la inteligencia de cuerpo completo a los robots",
-      "ar": "Gemini Robotics 2 يمنح الروبوتات ذكاءً يشمل الجسم كاملًا"
-    },
-    "source": "Google DeepMind",
-    "url": "https://deepmind.google/blog/gemini-robotics-2-brings-whole-body-intelligence-to-robots/",
-    "take": {
-      "en": "The headline is whole-body humanoid control, but the architecture that matters is the split: Gemini Robotics ER 2 is a reasoning agent that orchestrates lower-level vision-language-action models as tools — the same planner/worker pattern that works in code, now attached to a physical body. What I actually trust is ASIMOV-Agentic, a benchmark that scores the reasoning layer on refusing unsafe actions handed down by its own motor controller and escalating to a human when uncertain; in physical systems the cost of an unrefused tool call is real, and “safest model to date” is a marketing claim until it’s measured against a refusal-and-escalation eval.",
-      "de": "Die Schlagzeile ist ganzheitliche Humanoide-Steuerung, aber die Architektur, die zählt, ist die Aufteilung: Gemini Robotics ER 2 ist ein Reasoning-Agent, der tiefere Vision-Language-Action-Modelle als Tools orchestriert — dasselbe Planer/Worker-Muster, das im Code funktioniert, jetzt mit physischem Körper. Was ich wirklich traue, ist ASIMOV-Agentic, ein Benchmark, der die Reasoning-Schicht darauf bewertet, unsichere Aktionen des eigenen Motor-Controllers abzulehnen und bei Unsicherheit an einen Menschen zu eskalieren; in physischen Systemen ist der Preis eines nicht abgelehnten Tool-Calls real — und „sicherstes Modell bislang“ ist ein Marketing-Claim, bis er gegen eine Refusal-and-Escalation-Eval gemessen wurde.",
-      "fr": "Le titre, c'est le contrôle whole-body d'un humanoïde, mais l'architecture qui compte, c'est la séparation : Gemini Robotics ER 2 est un agent de raisonnement qui orchestre comme outils des modèles vision-langage-action de plus bas niveau — le même motif planificateur/exécutant qui marche dans le code, désormais attaché à un corps physique. Ce à quoi je fais réellement confiance, c'est ASIMOV-Agentic, un benchmark qui note la couche de raisonnement sur sa capacité à refuser les actions dangereuses ordonnées par son propre contrôleur moteur et à escalader vers un humain en cas d'incertitude ; dans les systèmes physiques, le coût d'un appel d'outil non refusé est bien réel, et « le modèle le plus sûr à ce jour » reste un argument marketing tant qu'il n'est pas mesuré par une éval de refus-et-escalade.",
-      "es": "El titular es el control whole-body de un humanoide, pero la arquitectura que importa es la división: Gemini Robotics ER 2 es un agente de razonamiento que orquesta como herramientas modelos visión-lenguaje-acción de nivel inferior — el mismo patrón planificador/trabajador que funciona en código, ahora acoplado a un cuerpo físico. Lo que realmente me merece confianza es ASIMOV-Agentic, un benchmark que puntúa la capa de razonamiento por rechazar acciones inseguras ordenadas por su propio controlador motor y escalar a un humano ante la incertidumbre; en sistemas físicos el coste de una llamada a herramienta no rechazada es real, y «el modelo más seguro hasta la fecha» es una afirmación de marketing hasta que se mide con una eval de rechazo-y-escalada.",
-      "ar": "العنوان هو التحكم الكامل في جسم الإنساني الآلي، لكن المعمارية المهمة هي الفصل: Gemini Robotics ER 2 وكيل استدلال ينسّق نماذج الرؤية-اللغة-الفعل الأدنى بوصفها أدوات — النمط نفسه من منسّق/عامل الذي ينجح في الشيفرة، ملحقًا الآن بجسد مادي. وما أثق به فعلًا هو ASIMOV-Agentic، وهو معيار يقيّم طبقة الاستدلال على رفض الأفعال غير الآمنة الصادرة من متحكمها الحركي ذاته والتصعيد إلى بشري عند عدم اليقين؛ في الأنظمة المادية تكلفة استدعاء أداة غير مرفوض حقيقية، و«أأمن نموذج حتى الآن» ادعاء تسويقي حتى يُقاس مقابل تقييم رفض-وتصعيد."
-    },
-    "tags": [
-      "multi-agent",
-      "evaluation"
-    ]
-  },
-  {
     "id": "anthropic-claude-sandbox-escape-three-orgs",
     "date": "2026-07-31",
     "category": "agentic",
@@ -5055,6 +4953,105 @@
       "evaluation",
       "multi-agent",
       "benchmarks"
+    ]
+  },
+  {
+    "id": "deepmind-alphaproof-code-signal-verification",
+    "date": "2026-11-10",
+    "category": "agentic",
+    "headline": {
+      "en": "Introducing AlphaProof Code: a breakthrough in verifying complex software at depth",
+      "de": "AlphaProof Code vorgestellt: ein Durchbruch bei der tiefgehenden Verifikation komplexer Software",
+      "fr": "AlphaProof Code : une avancée dans la vérification approfondie des logiciels complexes",
+      "es": "Presentamos AlphaProof Code: un avance en la verificación profunda de software complejo",
+      "ar": "نقدّم AlphaProof Code: اختراق في التحقق العميق من البرمجيات المعقدة"
+    },
+    "source": "Google DeepMind",
+    "url": "https://deepmind.google/blog/introducing-alphaproof-code/",
+    "take": {
+      "en": "DeepMind's prover agents wrote roughly 6.5 million lines of Lean, and success only counted when Lean's kernel accepted the proof — no leaderboard, no vibes. Re-injecting two real, already-fixed bugs to show the specs fail is the negative control most agent evaluations still skip.",
+      "de": "DeepMinds Prover-Agents haben rund 6,5 Millionen Zeilen Lean geschrieben, und als Erfolg galt nur, was Leans Kernel als Beweis akzeptiert — kein Leaderboard, kein Bauchgefühl. Zwei echte, bereits behobene Bugs erneut einzuschleusen, um zu zeigen, dass die Spezifikationen scheitern, ist die Negativkontrolle, die die meisten Agentenevaluationen noch auslassen.",
+      "fr": "Les agents de preuve de DeepMind ont écrit environ 6,5 millions de lignes de Lean, et le succès ne comptait que lorsque le noyau de Lean acceptait la preuve — pas de classement, pas d'impression. Réinjecter deux vrais bugs déjà corrigés pour montrer que les spécifications échouent, c'est le contrôle négatif que la plupart des évaluations d'agents sautent encore.",
+      "es": "Los agentes demostradores de DeepMind escribieron cerca de 6,5 millones de líneas de Lean, y el éxito solo contaba cuando el kernel de Lean aceptaba la prueba — sin tablas de clasificación, sin impresiones. Reinyectar dos bugs reales ya corregidos para demostrar que las especificaciones fallan es el control negativo que la mayoría de las evaluaciones de agentes todavía omite.",
+      "ar": "كتب وكلاء الإثبات لدى DeepMind نحو 6.5 مليون سطر بلغة Lean، ولم يُحتسب النجاح إلا عندما تقبل نواة Lean البرهان — لا لوحة صدارة ولا انطباعات. وإعادة حقن خطأين برمجيين حقيقيين سبق إصلاحهما لإثبات أن المواصفات تفشل هي الضابط السلبي الذي ما زالت معظم تقييمات الوكلاء تتخطاه."
+    },
+    "tags": [
+      "formal-verification",
+      "agents"
+    ]
+  },
+  {
+    "id": "gemini-4-carbon-swarm-antigravity",
+    "date": "2026-11-10",
+    "category": "agentic",
+    "headline": {
+      "en": "Gemini 4 Carbon and /swarm",
+      "de": "Gemini 4 Carbon und /swarm",
+      "fr": "Gemini 4 Carbon et /swarm",
+      "es": "Gemini 4 Carbon y /swarm",
+      "ar": "Gemini 4 Carbon و/swarm"
+    },
+    "source": "Google Antigravity",
+    "url": "https://antigravity.google/blog/gemini-4-carbon-in-google-antigravity/",
+    "take": {
+      "en": "Multi-agent orchestration keeps shifting from something you bolt together yourself to a first-party runtime: parallel workers in isolated workspaces, a shared append-only board, and adversarial verifiers challenging every diff. Building the verifier in rather than bolting it on is the design I'd copy — trust in a swarm comes from the checks, not the headcount.",
+      "de": "Multi-Agent-Orchestrierung wandert weiter vom selbst zusammengeschraubten Konstrukt zur Runtime aus einer Hand: parallele Worker in isolierten Workspaces, ein gemeinsames Append-only-Board und adversarische Verifier, die jeden Diff angreifen. Den Verifier gleich mit einzubauen, statt ihn nachzurüsten, ist das Design, das ich übernehmen würde — Vertrauen in einen Swarm entsteht durch die Checks, nicht durch die Kopfzahl.",
+      "fr": "L'orchestration multi-agents continue de passer du montage maison au runtime natif : des workers parallèles dans des espaces isolés, un tableau partagé en append-only et des vérificateurs adverses qui challengent chaque diff. Intégrer le vérificateur d'emblée plutôt que de le grefter après coup est le design que je copierais — la confiance dans un essaim vient des vérifications, pas du nombre d'agents.",
+      "es": "La orquestación multiagente sigue pasando de algo que uno improvisa a un runtime de primera clase: workers paralelos en espacios aislados, un tablero compartido de solo adición y verificadores adversariales que retan cada diff. Construir el verificador dentro en lugar de añadirlo después es el diseño que yo copiaría — la confianza en un enjambre viene de las verificaciones, no del número de agentes.",
+      "ar": "يواصل تنسيق الوكلاء المتعددين التحول من شيء تجمعه بنفسك إلى بيئة تشغيل أصلية: عمال متوازيون في مساحات معزولة، ولوحة مشتركة للإضافة فقط، ومتحقِّقات خصمية تتحدى كل فرق. دمج المُتحقِّق في التصميم من البداية بدل إضافته لاحقًا هو النهج الذي سأتبناه — فالثقة في السرب تأتي من الفحوص لا من عدد الوكلاء."
+    },
+    "tags": [
+      "multi-agent",
+      "orchestration"
+    ]
+  },
+  {
+    "id": "claude-meetings-sheets-whiteboards",
+    "date": "2026-11-10",
+    "category": "agentic",
+    "headline": {
+      "en": "Anthropic launches Claude Meetings to turn workplace discussions into plans and tasks",
+      "de": "Anthropic startet Claude Meetings, um Arbeitsbesprechungen in Pläne und Aufgaben zu verwandeln",
+      "fr": "Anthropic lance Claude Meetings pour transformer les discussions de travail en plans et en tâches",
+      "es": "Anthropic lanza Claude Meetings para convertir las conversaciones de trabajo en planes y tareas",
+      "ar": "تطلق Anthropic خدمة Claude Meetings لتحويل نقاشات العمل إلى خطط ومهام"
+    },
+    "source": "TechCrunch",
+    "url": "https://techcrunch.com/2026/11/10/anthropic-launches-claude-meetings-to-turn-workplace-discussions-into-plans-and-tasks/",
+    "take": {
+      "en": "A meeting participant that drafts the plan while people are still talking collapses the gap between discussion and work — but the governance details are the real story: Claude identifies itself, admins gate calls with outside guests, and it leaves if one joins. That consent-and-egress baseline is what every deployed agent should ship with.",
+      "de": "Ein Meeting-Teilnehmer, der den Plan entwirft, während alle noch reden, schließt die Lücke zwischen Besprechung und Arbeit — die eigentliche Geschichte sind aber die Governance-Details: Claude weist sich selbst als Teilnehmer aus, Admins kontrollieren Anrufe mit externen Gästen, und es verlässt das Meeting, sobald einer dazustößt. Diese Baseline aus Zustimmung und Ausstieg sollte jeder eingesetzte Agent mitbringen.",
+      "fr": "Un participant de réunion qui rédige le plan pendant que tout le monde parle encore comble l'écart entre discussion et travail — mais la vraie histoire, ce sont les détails de gouvernance : Claude s'identifie, les administrateurs contrôlent les appels avec des invités extérieurs, et il part dès qu'un tiers rejoint. Cette base de consentement et de sortie devrait accompagner tout agent déployé.",
+      "es": "Un participante de reunión que redacta el plan mientras los demás siguen hablando cierra la brecha entre discusión y trabajo — pero la historia real son los detalles de gobernanza: Claude se identifica, los administradores controlan las llamadas con invitados externos, y se marcha si alguien de fuera se une. Esa línea base de consentimiento y salida es la que debería traer todo agente desplegado.",
+      "ar": "مشارك في الاجتماع يحرر الخطة بينما لا يزال الحاضرون يتحدثون يغلق الفجوة بين النقاش والعمل — لكن القصة الحقيقية هي تفاصيل الحوكمة: يعرّف Claude بنفسه، ويضبط المشرفون الاتصالات التي تضم ضيوفًا من الخارج، ويغادر فور انضمام أحدهم. هذا الحد الأدنى من الموافقة والانسحاب هو ما ينبغي أن يُشحن مع كل وكيل يُنشر."
+    },
+    "tags": [
+      "agents",
+      "governance"
+    ]
+  },
+  {
+    "id": "openai-businesses-chatgpt-agents",
+    "date": "2026-11-10",
+    "category": "agentic",
+    "headline": {
+      "en": "Introducing Businesses in ChatGPT",
+      "de": "Businesses in ChatGPT vorgestellt",
+      "fr": "Présentation de Businesses in ChatGPT",
+      "es": "Presentamos Businesses in ChatGPT",
+      "ar": "نقدّم ميزة Businesses في ChatGPT"
+    },
+    "source": "OpenAI",
+    "url": "https://openai.com/index/introducing-businesses-chatgpt/",
+    "take": {
+      "en": "ChatGPT is turning into a distribution channel for business agents: a clearly labelled, separate conversation grounded only in what the business itself supplies. That separation from ChatGPT's independent answers is the right trust design — but an agent that overpromises on your behalf is a liability you sponsored, so grounding checks just became brand-safety work.",
+      "de": "ChatGPT entwickelt sich zum Vertriebskanal für Unternehmens-Agenten: ein klar gekennzeichnetes, separates Gespräch, das ausschließlich auf den Informationen des Unternehmens basiert. Diese Trennung von ChatGPTs unabhängigen Antworten ist das richtige Vertrauensdesign — aber ein Agent, der in deinem Namen zu viel verspricht, ist eine Haftung, die du selbst gesponsert hast, also sind Grounding-Prüfungen jetzt Markensicherheitsarbeit.",
+      "fr": "ChatGPT devient un canal de distribution pour les agents d'entreprise : une conversation séparée et clairement étiquetée, fondée uniquement sur ce que l'entreprise fournit elle-même. Cette séparation d'avec les réponses indépendantes de ChatGPT est le bon design de confiance — mais un agent qui promet trop en votre nom est un passif que vous avez sponsorisé, donc les vérifications d'ancrage deviennent une affaire d'image de marque.",
+      "es": "ChatGPT se está convirtiendo en un canal de distribución para agentes de empresas: una conversación separada y claramente etiquetada, basada solo en lo que la propia empresa proporciona. Esa separación de las respuestas independientes de ChatGPT es el diseño de confianza correcto — pero un agente que promete de más en tu nombre es un pasivo que tú patrocinaste, así que las comprobaciones de anclaje acaban siendo trabajo de seguridad de marca.",
+      "ar": "يتحول ChatGPT إلى قناة توزيع لوكلاء الشركات: محادثة منفصلة وموسومة بوضوح، مرتكزة فقط على ما تقدمه الشركة نفسها. هذا الفصل عن إجابات ChatGPT المستقلة هو تصميم الثقة الصحيح — لكن وكيلًا يَعِد بما يزيد عن اللازم باسمك هو التزامٌ تحمّلتَ رعايته، ومن ثم أصبح فحص تأصيل الإجابات جزءًا من حماية العلامة التجارية."
+    },
+    "tags": [
+      "agents"
     ]
   }
 ]
