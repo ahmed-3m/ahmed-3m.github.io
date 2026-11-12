@@ -1,7 +1,7 @@
 import { type TranslationMap } from '@/lib/i18n-config'
 
 export type CaseStudy = {
-  slug: 'diffusion-ood' | 'inkjet-ood' | 'faultrix' | 'sihem'
+  slug: 'diffusion-ood' | 'inkjet-ood' | 'sihem'
   // Update this stored date whenever this case study changes.
   lastModified: string
   title: TranslationMap
@@ -35,11 +35,11 @@ export const caseStudies: CaseStudy[] = [
       ar: 'نماذج انتشار شرطية استُخدمت كمصنفات توليدية لكشف OOD مع 99.03% ± 0.07% AUROC على تقسيم ثنائي airplane-vs-rest ضمن CIFAR-10 (فئة ID واحدة).',
     },
     problem: {
-      en: 'Standard neural classifiers exhibit dangerous overconfidence on out-of-distribution samples. Generative classifiers offer principled reconstruction error scoring, but suffer from catastrophic variance across random seeds and ambiguous boundary decisions.',
-      de: 'Klassische neuronale Klassifikatoren neigen zu gefährlicher Überkonfidenz bei OOD-Daten. Generative Klassifikatoren bieten prinzipielle Rekonstruktionsfehler, leiden aber unter starker Varianz über Seeds und uneindeutigen Entscheidungsgrenzen.',
-      fr: "Les classificateurs neuronaux standards affichent une surconfiance dangereuse sur les échantillons hors distribution. Les classificateurs génératifs offrent une erreur de reconstruction principielle mais souffrent d'une forte variance entre seeds.",
-      es: 'Los clasificadores neuronales estándar muestran un exceso de confianza peligroso en muestras OOD. Los clasificadores generativos ofrecen una señal de error de reconstrucción pero sufren de alta varianza entre semillas.',
-      ar: 'تظهر المصنفات العصبية التقليدية ثقة مفرطة وخطيرة في العينات الخارجة عن التوزيع. تقدم المصنفات التوليدية تقييماً منهجياً عبر أخطاء إعادة البناء، لكنها تعاني من تشتت هائل عبر البذور العشوائية وحدود قرار ملتبسة.',
+      en: 'Standard neural classifiers exhibit dangerous overconfidence on out-of-distribution samples. Generative classifiers offer principled reconstruction error scoring, but suffer from high standard deviation across random seeds and ambiguous boundary decisions.',
+      de: 'Klassische neuronale Klassifikatoren neigen zu gefährlicher Überkonfidenz bei OOD-Daten. Generative Klassifikatoren bieten prinzipielle Rekonstruktionsfehler, leiden aber unter hoher Standardabweichung über Seeds und uneindeutigen Entscheidungsgrenzen.',
+      fr: "Les classificateurs neuronaux standards affichent une surconfiance dangereuse sur les échantillons hors distribution. Les classificateurs génératifs offrent une erreur de reconstruction principielle mais souffrent d'un écart-type élevé entre seeds.",
+      es: 'Los clasificadores neuronales estándar muestran un exceso de confianza peligroso en muestras OOD. Los clasificadores generativos ofrecen una señal de error de reconstrucción pero sufren una alta desviación estándar entre semillas.',
+      ar: 'تظهر المصنفات العصبية التقليدية ثقة مفرطة وخطيرة في العينات الخارجة عن التوزيع. تقدم المصنفات التوليدية تقييماً منهجياً عبر أخطاء إعادة البناء، لكنها تعاني من انحراف معياري مرتفع عبر البذور العشوائية وحدود قرار ملتبسة.',
     },
     role: {
       en: 'Master thesis author: novel separation loss objective formulation, PyTorch Lightning & Hydra infrastructure, multi-seed statistical evaluation, and benchmark analysis.',
@@ -118,11 +118,11 @@ export const caseStudies: CaseStudy[] = [
         ar: 'الثبات عبر البذور العشوائية يوازي في أهميته النتيجة القصوى في التطبيقات الحرجة.',
       },
       {
-        en: 'A scientific finding becomes significantly more useful when variance and error bars are reported honestly.',
-        de: 'Eine wissenschaftliche Erkenntnis wird deutlich verlässlicher, wenn Varianz und Fehlerbalken ehrlich berichtet werden.',
-        fr: "Une conclusion scientifique devient bien plus utile lorsque la variance et les barres d'erreur sont rapportées honnêtement.",
-        es: 'Un hallazgo científico es mucho más útil cuando la varianza y las barras de error se comunican con honestidad.',
-        ar: 'تصبح النتيجة العلمية أكثر موثوقية وفائدة عندما يُذكر التباين وأشرطة الخطأ بأمانة وشفافية.',
+        en: 'A scientific finding becomes significantly more useful when standard deviation and error bars are reported honestly.',
+        de: 'Eine wissenschaftliche Erkenntnis wird deutlich verlässlicher, wenn Standardabweichung und Fehlerbalken ehrlich berichtet werden.',
+        fr: "Une conclusion scientifique devient bien plus utile lorsque l'écart-type et les barres d'erreur sont rapportés honnêtement.",
+        es: 'Un hallazgo científico es mucho más útil cuando la desviación estándar y las barras de error se comunican con honestidad.',
+        ar: 'تصبح النتيجة العلمية أكثر موثوقية وفائدة عندما يُذكر الانحراف المعياري وأشرطة الخطأ بأمانة وشفافية.',
       },
       {
         en: 'Cross-domain transfer should be tested empirically, not assumed from synthetic benchmarks.',
@@ -257,126 +257,6 @@ export const caseStudies: CaseStudy[] = [
       { label: { en: 'Early technical report (2024)', de: 'Frühzeitiger Technischer Bericht (2024)', fr: 'Rapport technique précoce (2024)', es: 'Informe técnico temprano (2024)', ar: 'تقرير تقني مبكر (2024)' }, href: '/Diffusion-Based Multi-class Defect Detection.pdf' },
       { label: { en: 'InkjetOOD repository', de: 'InkjetOOD Repository', fr: 'Dépôt InkjetOOD', es: 'Repositorio InkjetOOD', ar: 'مستودع InkjetOOD' }, href: 'https://github.com/ahmed-3m/InkjetOOD', external: true },
       { label: { en: 'Model weights', de: 'Modellgewichte', fr: 'Poids du modèle', es: 'Pesos del modelo', ar: 'أوزان النموذج' }, href: 'https://huggingface.co/ahmed-3m/InkjetOOD', external: true },
-    ],
-  },
-  {
-    slug: 'faultrix',
-    lastModified: '2026-11-07',
-    title: {
-      en: 'Faultrix: AI-Powered Construction Quality Control & Automated Report Generation',
-      de: 'Faultrix: KI-gestützte Bauqualitätskontrolle & automatisierte Berichterstellung',
-      fr: 'Faultrix : Contrôle qualité construction par IA & génération automatisée de rapports',
-      es: 'Faultrix: Control de calidad en construcción con IA y generación automatizada de informes',
-      ar: 'Faultrix: مراقبة جودة البناء بالذكاء الاصطناعي وتوليد التقارير المؤتمتة',
-    },
-    summary: {
-      en: 'An AI-powered construction quality-control SaaS built solo from zero to production.',
-      de: 'Ein KI-gestütztes SaaS für Bauqualitätskontrolle, solo von null bis Produktion gebaut.',
-      fr: 'Un SaaS de contrôle qualité construction par IA construit en solo de zéro à la production.',
-      es: 'Un SaaS de control de calidad en construcción con IA construido en solitario de cero a producción.',
-      ar: 'منصة SaaS لمراقبة جودة البناء بالذكاء الاصطناعي بُنيت بشكل فردي من الصفر إلى الإنتاج.',
-    },
-    problem: {
-      en: 'Site inspectors in Austria and Germany spend up to 4 hours daily compiling construction defect reports under ÖNORM B 2110 standards, facing slow turnaround, missing evidence trails, and disputed liability.',
-      de: 'Bauleiter in Österreich und Deutschland verbringen bis zu 4 Stunden täglich mit der Erstellung von Mängelberichten nach ÖNORM B 2110 — mit langsamen Durchlaufzeiten und strittigen Beweisketten.',
-      fr: 'Les inspecteurs de chantier en Autriche et en Allemagne passent jusqu à 4 heures par jour à rédiger des rapports selon la norme ÖNORM B 2110, avec des délais lents et des chaînes de preuve fragiles.',
-      es: 'Los inspectores de obra en Austria y Alemania pasan hasta 4 horas al día elaborando informes según la norma ÖNORM B 2110, con procesos lentos y cadenas de evidencia discutidas.',
-      ar: 'يقضي مفتشو المواقع في النمسا وألمانيا ما يصل إلى 4 ساعات يومياً في إعداد تقارير عيوب البناء وفق معايير ÖNORM B 2110، مع بطء في الإنجاز وسلاسل أدلة معرضة للنزاع.',
-    },
-    role: {
-      en: 'Sole engineer and product builder: complete architecture, Next.js frontend, Convex backend, vision pipeline, Stripe billing, and DSGVO / ÖNORM compliance.',
-      de: 'Alleiniger Entwickler & Produktbauer: Gesamte Architektur, Next.js-Frontend, Convex-Backend, Vision-Pipeline, Stripe-Billing und DSGVO / ÖNORM Compliance.',
-      fr: 'Développeur et créateur unique : architecture globale, frontend Next.js, backend Convex, pipeline de vision, facturation Stripe et conformité DSGVO / ÖNORM.',
-      es: 'Desarrollador y creador único: arquitectura completa, frontend en Next.js, backend en Convex, pipeline de visión, pagos con Stripe y cumplimiento DSGVO / ÖNORM.',
-      ar: 'المطور المنفرد للمنتج: المعمارية الكاملة، واجهة Next.js، خادم Convex، خط معالجة الرؤية الحاسوبية، مدفوعات Stripe، والامتثال لمعايير DSGVO وÖNORM.',
-    },
-    stack: ['Next.js', 'Convex', 'OpenAI', 'Clerk', 'Cloudflare R2', 'Stripe', 'Docker', 'Python'],
-    pipelineStages: [
-      {
-        title: { en: '1. Photo Capture & Upload', de: '1. Fotoerfassung & Upload', fr: '1. Capture photo & téléversement', es: '1. Captura de fotos y subida', ar: '1. التقاط الصور والرفع' },
-        desc: { en: 'Inspectors upload site photos with EXIF timestamps, GPS metadata, and inspection notes.', de: 'Inspektoren laden Baustellenfotos mit EXIF-Zeitstempeln, GPS-Metadaten und Inspektionsnotizen hoch.', fr: 'Les inspecteurs téléversent les photos de chantier avec horodatages EXIF, métadonnées GPS et notes.', es: 'Los inspectores suben fotos de obra con marcas de tiempo EXIF, metadatos GPS y notas de inspección.', ar: 'يقوم المفتشون برفع صور الموقع مع الطوابع الزمنية وبيانات GPS وملاحظات الفحص.' },
-      },
-      {
-        title: { en: '2. Multi-Modal Defect Analysis', de: '2. Multimodale Defektanalyse', fr: '2. Analyse multimodale des défauts', es: '2. Análisis multimodal de defectos', ar: '2. تحليل العيوب متعدد الوسائط' },
-        desc: { en: 'OpenAI vision models analyze visual anomalies against construction defect taxonomies and ÖNORM standards.', de: 'OpenAI-Vision-Modelle analysieren visuelle Anomalien anhand von Baufehler-Taxonomien und ÖNORM-Standards.', fr: 'Les modèles de vision OpenAI analysent les anomalies visuelles selon les taxonomies de défauts et les normes ÖNORM.', es: 'Los modelos de visión de OpenAI analizan anomalías visuales según taxonomías de defectos de construcción y normas ÖNORM.', ar: 'تحلل نماذج الرؤية من OpenAI العيوب البصرية وفق تصنيفات عيوب البناء ومعايير ÖNORM.' },
-      },
-      {
-        title: { en: '3. Evidence Chain & Report Assembly', de: '3. Beweiskette & Berichterstellung', fr: '3. Chaîne de preuve & assemblage du rapport', es: '3. Cadena de evidencia y ensamblaje de informes', ar: '3. سلسلة الأدلة وإنشاء التقرير' },
-        desc: { en: 'Generates ÖNORM B 2110-compliant audit reports in under 1 minute with SHA-256 evidence verification.', de: 'Erstellt ÖNORM B 2110-konforme Auditberichte in unter 1 Minute mit SHA-256 Beweisverifizierung.', fr: "Génère des rapports d'audit conformes à l'ÖNORM B 2110 en moins d'une minute avec vérification SHA-256.", es: 'Genera informes de auditoría compatibles con ÖNORM B 2110 en menos de 1 minuto con verificación SHA-256.', ar: 'إنشاء تقارير تدقيق متوافقة مع ÖNORM B 2110 في أقل من دقيقة مع التحقق من الأدلة عبر SHA-256.' },
-      },
-    ],
-    approach: [
-      {
-        en: 'Design a tight upload-to-report workflow around real construction site documentation workflows.',
-        de: 'Einen schlanken Upload-zu-Bericht-Workflow für reale Baustellendokumentationen entwickeln.',
-        fr: 'Concevoir un flux rapide du téléversement au rapport adapté aux chantiers réels.',
-        es: 'Diseñar un flujo ágil de subida a informe adaptado a casos de obra reales.',
-        ar: 'تصميم سير عمل سريع من رفع الصور إلى التقرير يلائم بيئة العمل الميداني في مواقع البناء.',
-      },
-      {
-        en: 'Use OpenAI vision models with strict schema enforcement, structured output extraction, and cryptographic evidence hashes.',
-        de: 'OpenAI-Vision-Modelle mit strikter Schemavalidierung, strukturierter Ausgabe und kryptografischen Beweis-Hashes einsetzen.',
-        fr: 'Utiliser les modèles de vision OpenAI avec validation stricte de schéma et hachage cryptographique des preuves.',
-        es: 'Usar modelos de visión de OpenAI con esquemas estrictos y hashes criptográficos de evidencia.',
-        ar: 'استخدام نماذج الرؤية من OpenAI مع فرض صارم للمخطط، واستخراج مخرجات منظمة، وتشفير أدلة الإثبات.',
-      },
-      {
-        en: 'Architect a serverless, compliant stack: Next.js, Convex, Clerk, Cloudflare R2, Stripe, Docker, and Python services.',
-        de: 'Einen serverlosen, DSGVO-konformen Stack aufbauen: Next.js, Convex, Clerk, Cloudflare R2, Stripe, Docker und Python-Services.',
-        fr: 'Bâtir une stack serverless et conforme : Next.js, Convex, Clerk, Cloudflare R2, Stripe, Docker et services Python.',
-        es: 'Crear un stack serverless y conforme: Next.js, Convex, Clerk, Cloudflare R2, Stripe, Docker y servicios Python.',
-        ar: 'بناء منظومة سحابية بدون خوادم ومتوافقة قانونياً: Next.js وConvex وClerk وCloudflare R2 وStripe وDocker وخدمات بايثون.',
-      },
-    ],
-    results: [
-      {
-        en: 'Generated ÖNORM B 2110-compliant audit reports in under 1 minute from photo uploads.',
-        de: 'Erstellte ÖNORM B 2110-konforme Auditberichte in unter 1 Minute aus hochgeladenen Fotos.',
-        fr: "Rapports d'audit conformes ÖNORM B 2110 générés en moins d'une minute à partir des photos.",
-        es: 'Generación de informes conformes con ÖNORM B 2110 en menos de 1 minuto tras subir fotos.',
-        ar: 'توليد تقارير تدقيق متوافقة مع ÖNORM B 2110 في أقل من دقيقة من رفع الصور.',
-      },
-      {
-        en: 'Achieved 98.4% industrial defect detection accuracy (threshold-dependent internal operational metric).',
-        de: 'Erreichte 98.4% Genauigkeit bei industrieller Fehlererkennung (schwellenwertabhängige interne Betriebsmetrik).',
-        fr: '98.4% de précision en détection de défauts industriels (métrique opérationnelle interne dépendante du seuil).',
-        es: '98.4% de precisión en detección de defectos industriales (métrica operativa interna según umbral).',
-        ar: 'تحقيق دقة 98.4% في كشف العيوب الصناعية (مقياس تشغيلي داخلي يعتمد على حد العتبة).',
-      },
-      {
-        en: 'Took an AI SaaS solo from concept to paying customer production with SHA-256 tamper-evident integrity.',
-        de: 'Ein KI-SaaS solo vom Konzept bis zur zahlenden Kundenproduktion mit manipulationssicherer SHA-256-Integrität geführt.',
-        fr: "SaaS IA mené seul du concept à la production client avec intégrité SHA-256 infalsifiable.",
-        es: 'Llevó un SaaS de IA en solitario del concepto a producción con integridad SHA-256.',
-        ar: 'نقل منصة SaaS بالذكاء الاصطناعي بمفردي من الفكرة إلى الإنتاج لعملاء فعليين مع سلسلة سلامة أدلة غير قابلة للتلاعب عبر SHA-256.',
-      },
-    ],
-    lessons: [
-      {
-        en: 'User experience and workflow speed matter more to field inspectors than model size.',
-        de: 'Nutzererlebnis und Workflow-Geschwindigkeit zählen für Bauinspektoren mehr als Modellgröße.',
-        fr: "L'expérience utilisateur et la vitesse comptent plus pour les inspecteurs que la taille du modèle.",
-        es: 'La experiencia de usuario y la velocidad importan más a los inspectores que el tamaño del modelo.',
-        ar: 'تجربة المستخدم وسرعة سير العمل تهم مفتشي الموقع أكثر من حجم النموذج.',
-      },
-      {
-        en: 'Regulatory compliance (ÖNORM, DSGVO) and cryptographic evidence chains shape institutional trust.',
-        de: 'Rechtskonformität (ÖNORM, DSGVO) und kryptografische Beweisketten schaffen institutionelles Vertrauen.',
-        fr: 'La conformité réglementaire (ÖNORM, DSGVO) et les chaînes de preuve fondent la confiance.',
-        es: 'El cumplimiento normativo (ÖNORM, DSGVO) y las cadenas de evidencia generan confianza.',
-        ar: 'الامتثال التنظيمي (ÖNORM وDSGVO) وسلاسل الأدلة المشفرة تبني الثقة المؤسسية.',
-      },
-      {
-        en: 'Shipping reliable AI requires rigorous fallback pathways for API rate limits and hallucinated outputs.',
-        de: 'Zuverlässige KI in Produktion erfordert robuste Fallbacks für Rate-Limits und Halluzinationen.',
-        fr: "Livrer une IA fiable nécessite des solutions de secours pour les limites d'API et les hallucinations.",
-        es: 'Publicar IA fiable exige alternativas ante límites de API y alucinaciones de salida.',
-        ar: 'إطلاق ذكاء اصطناعي موثوق يتطلب مسارات بديلة صارمة لمواجهة حدود الطلبات والهلوسة.',
-      },
-    ],
-    artifacts: [
-      { label: { en: 'Product site', de: 'Produkt-Website', fr: 'Site du produit', es: 'Sitio del producto', ar: 'موقع المنتج' }, href: 'https://faultrix.com', external: true },
-      { label: { en: 'Blog post: 5-month journey', de: 'Blogbeitrag: 5-Monate-Erfahrung', fr: 'Article de blog : retour 5 mois', es: 'Artículo de blog: aventura de 5 meses', ar: 'مقال المدونة: تجربة 5 أشهر' }, href: '/blog/5-month-llm-adventure/' },
     ],
   },
   {

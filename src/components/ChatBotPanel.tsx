@@ -10,13 +10,6 @@ import { CHAT_COPY, GENIE_NAME } from './chatbot-dictionaries'
 
 export type ChatRole = 'user' | 'assistant'
 export type PromptId =
-  | 'faultrix_intro'
-  | 'faultrix_overview'
-  | 'faultrix_stack'
-  | 'faultrix_build'
-  | 'faultrix_story'
-  | 'faultrix_speed'
-  | 'faultrix_compliance'
   | 'thesis_summary'
   | 'thesis_innovation'
   | 'thesis_loss'
@@ -32,7 +25,6 @@ export type PromptId =
   | 'tech_stack'
   | 'industrial_pipeline'
   | 'industrial_result'
-  | 'product_story'
   | 'sihem_overview'
   | 'sihem_tech'
 
@@ -90,18 +82,15 @@ Facts you can rely on:
 - He holds an M.Sc. in Artificial Intelligence from JKU Linz under Prof. Sepp Hochreiter (Oct 2020 - Sep 2026; Defensio and graduation on 25 September 2026). His thesis was graded 1, the top mark.
 - His thesis used conditional diffusion models as generative classifiers for OOD detection and reached 99.03% +/- 0.07% average AUROC on a within-CIFAR airplane-vs-rest binary split (single ID class; not comparable to multi-class CIFAR-10 OOD benchmarks) with separation loss.
 - Seed-42 achieved 98.98% AUROC within-CIFAR and generalized zero-shot to CIFAR-100, Places365, FashionMNIST, Textures, and SVHN.
-- The non-separated baseline was 92.52% +/- 11.07%, so separation loss added about +6.5 percentage points and dramatically reduced variance.
-- Ahmed also worked on industrial defect detection at PROFACTOR GmbH / JKU Linz using a YOLO + conditional diffusion pipeline on the public FTI_Zer0P benchmark, reaching a 0.8673 +/- 0.0230 AUROC baseline under strict 5-fold cross-validation.
-- The thesis PDF says YOLOv8n in five places (erratum pending upstream); the trained artifact yolo_best.pt is YOLOv8m (25.86M params, verified from train_args). Production metrics come from the v8m artifact.
-- Ahmed built Faultrix, an AI-powered construction quality-control SaaS that analyzed construction photos and generated ONORM-aligned reports in under 1 minute.
-- Faultrix is a completed, discontinued project — always describe it in the past tense, in every language.
+- The non-separated baseline was 92.52% +/- 11.07%, so separation loss added about +6.5 percentage points and dramatically reduced seed-to-seed standard deviation.
+- Ahmed also worked on industrial defect detection at PROFACTOR GmbH / JKU Linz (Linz / Steyr, remote / home office) using a YOLO + conditional diffusion pipeline on the public FTI_Zer0P benchmark, reaching a 0.8673 +/- 0.0230 AUROC baseline under strict 5-fold cross-validation.
+- The thesis PDF says YOLOv8n in five places (erratum pending upstream); the trained artifact yolo_best.pt is YOLOv8m (25.86M params, verified from train_args).
 - Ahmed also builds Sihem (since May 2026), an LLM-driven personal-mentor assistant (Telegram bot @sihem_ai_bot + installable PWA at https://sihem-pwa.pages.dev/) with a deterministic generators->arbiter->composer decision engine, proactive cron-driven check-ins, pgvector long-term memory with RAG, multi-provider LLM routing (GLM/Gemini/Groq), Cloudflare MeloTTS voice reminders, and Google Calendar sync. It is his personal side project, accepted into the tech2b incubator in Linz.
 - Ahmed builds mergeproof (https://github.com/ahmed-3m/mergeproof), a deterministic tool that decides whether a pull request written by an AI agent is safe to merge. It is plain deterministic code and never calls an LLM, so the agent being judged cannot talk its way past it.
 - Ahmed also ships brainstorm2idea and idea2prototype — zero-dependency tools that take a fuzzy idea to a linted brief, then to a tested prototype, with any coding agent — and the Elbostan Pazar bot, a Messenger bot that answers a real shop's customers about prices, hours and delivery.
-- Experience timeline: Solo Developer & Project Lead at Sihem (side project · tech2b incubator, Linz, May 2026–Present); M.Sc. Thesis Researcher, Machine Vision at the JKU Institute for Machine Learning with PROFACTOR GmbH (Apr 2024 - Jul 2026, project Zer0P); AI Research Intern at Karunya Institute of Technology and Sciences, India (Aug - Oct 2023, EEG motor imagery); Electronics Technician at Ledzone, Istanbul (Sep 2018 - Oct 2020). Faultrix was a past side project, not employment.
+- Experience timeline: Solo Developer & Project Lead at Sihem (side project · tech2b incubator, Linz, May 2026–Present); M.Sc. Thesis Researcher, Machine Vision at the JKU Institute for Machine Learning with PROFACTOR GmbH (Apr 2024 - Jul 2026, project Zer0P, Linz / Steyr, remote / home office); AI Research Intern at Karunya Institute of Technology and Sciences, India (Aug - Oct 2023, EEG motor imagery); Electronics Technician at Ledzone, Istanbul (Sep 2018 - Oct 2020).
 - Before AI he earned a B.Sc. in Mechatronics Engineering at Eastern Mediterranean University, Cyprus (2015 - 2018).
 - Availability: open to AI/ML engineering roles, available full time, and eligible for the Austrian Rot-Weiss-Rot Karte for graduates (no labour-market test, no quota, no sponsorship cost for the employer).
-- The Faultrix stack included Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2, and Stripe.
 - Contact: ahmed.mo.0595@gmail.com
 - LinkedIn: https://www.linkedin.com/in/ahmed-3m/
 - GitHub: https://github.com/ahmed-3m
@@ -122,55 +111,6 @@ export const PROMPT_LIBRARY: Record<PromptId, TranslationMap> = {
     fr: 'Comment fonctionnent le moteur générateurs→arbitre→compositeur, la mémoire pgvector et le routage LLM multi-fournisseurs de Sihem ?',
     es: '¿Cómo funcionan el motor generadores→árbitro→compositor, la memoria pgvector y el enrutamiento LLM multiproveedor de Sihem?',
     ar: 'كيف يعمل محرك المولدات←المحكم←المؤلف وذاكرة pgvector وتوجيه LLM متعدد المزودين في Sihem؟',
-  },
-  faultrix_intro: {
-    en: 'What was Faultrix?',
-    de: 'Was war Faultrix?',
-    fr: 'Qu’était Faultrix ?',
-    es: '¿Qué era Faultrix?',
-    ar: 'ماذا كان Faultrix؟',
-  },
-  faultrix_overview: {
-    en: 'Tell me about Faultrix',
-    de: 'Erzähl mir von Faultrix',
-    fr: 'Parlez-moi de Faultrix',
-    es: 'Cuéntame sobre Faultrix',
-    ar: 'حدثني عن Faultrix',
-  },
-  faultrix_stack: {
-    en: 'What was the Faultrix tech stack?',
-    de: 'Wie sah der Faultrix Tech-Stack aus?',
-    fr: 'Quel était le stack technique de Faultrix ?',
-    es: '¿Cuál era el stack técnico de Faultrix?',
-    ar: 'ماذا كان الـ stack التقني في Faultrix؟',
-  },
-  faultrix_build: {
-    en: 'How was Faultrix built?',
-    de: 'Wie wurde Faultrix gebaut?',
-    fr: 'Comment Faultrix a-t-il été construit ?',
-    es: '¿Cómo se construyó Faultrix?',
-    ar: 'كيف تم بناء Faultrix؟',
-  },
-  faultrix_story: {
-    en: 'Can I see the product story?',
-    de: 'Kann ich die Produktgeschichte sehen?',
-    fr: 'Puis-je voir l’histoire du produit ?',
-    es: '¿Puedo ver la historia del producto?',
-    ar: 'هل يمكنني رؤية قصة المنتج؟',
-  },
-  faultrix_speed: {
-    en: 'How long did a report take?',
-    de: 'Wie lange dauerte ein Bericht?',
-    fr: 'Combien de temps prenait un rapport ?',
-    es: '¿Cuánto tardaba un informe?',
-    ar: 'كم كان يستغرق التقرير؟',
-  },
-  faultrix_compliance: {
-    en: 'Was Faultrix DSGVO compliant?',
-    de: 'War Faultrix DSGVO-konform?',
-    fr: 'Faultrix était-il conforme à la DSGVO ?',
-    es: '¿Faultrix cumplía con la DSGVO?',
-    ar: 'هل كان Faultrix متوافق مع DSGVO؟',
   },
   thesis_summary: {
     en: 'Tell me about the thesis',
@@ -277,21 +217,14 @@ export const PROMPT_LIBRARY: Record<PromptId, TranslationMap> = {
     es: '¿Qué resultado logró el sistema industrial?',
     ar: 'ما النتيجة التي حققها النظام الصناعي؟',
   },
-  product_story: {
-    en: 'What did he learn from building Faultrix?',
-    de: 'Was hat er beim Bau von Faultrix gelernt?',
-    fr: 'Qu’a-t-il appris en construisant Faultrix ?',
-    es: '¿Qué aprendió construyendo Faultrix?',
-    ar: 'ماذا تعلم من بناء Faultrix؟',
-  },
 }
 
 export const PROMPTS = PROMPT_LIBRARY
 
 export const STARTER_PROMPT_IDS: PromptId[] = [
   'thesis_summary',
+  'industrial_result',
   'sihem_overview',
-  'faultrix_overview',
   'hire_summary',
 ]
 
@@ -309,13 +242,6 @@ export const LOCAL_REPLIES = {
     fr: `Le mémoire d'Ahmed utilise des modèles de diffusion conditionnels comme classificateurs génératifs pour la détection out-of-distribution. La contribution principale est une class-conditional separation loss, atteignant 99,03 % ± 0,07 % d'AUROC sur un split binaire within-CIFAR (+6,5 points par rapport à la baseline). Supervisé par le Prof. Sepp Hochreiter à JKU Linz.`,
     es: `La tesis de Ahmed usó modelos de difusión condicional como clasificadores generativos para detección out-of-distribution. La contribución principal fue una class-conditional separation loss, alcanzando 99.03% ± 0.07% AUROC en un split binario within-CIFAR (+6.5 pp sobre la línea base). Supervisada por el Prof. Sepp Hochreiter en JKU Linz.`,
     ar: `استخدمت رسالة أحمد نماذج الانتشار الشرطية كمصنفات توليدية لكشف OOD. والمساهمة الأساسية كانت دالة الفقد الطبقي الشرطي (separation loss) محققة 99.03% ± 0.07% AUROC على تقسيم ثنائي within-CIFAR (+6.5 نقطة فوق الأساس). تحت إشراف البروفيسور سيب هوخريتر في جامعة JKU لينز.`,
-  },
-  faultrix: {
-    en: `Faultrix was Ahmed's AI-powered construction quality control SaaS. It analyzed site photos and generated ÖNORM B 2110-compliant technical reports in under 1 minute with SHA-256 evidence chain and DSGVO compliance. Stack: Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2, Stripe.`,
-    de: `Faultrix war Ahmeds KI-gestütztes SaaS für Bauqualitätskontrolle. Es analysierte Baustellenfotos und erstellte ÖNORM B 2110-konforme Berichte in unter 1 Minute mit SHA-256-Beweiskette und DSGVO-Konformität. Stack: Python, Next.js, Convex, OpenAI API, Docker, Clerk, Cloudflare R2, Stripe.`,
-    fr: `Faultrix était le SaaS de contrôle qualité construction basé sur l'IA d'Ahmed. Il analysait les photos de chantier et générait des rapports conformes ÖNORM B 2110 en moins d'une minute avec chaîne de preuves SHA-256 et conformité RGPD.`,
-    es: `Faultrix fue el SaaS de control de calidad para construcción con IA de Ahmed. Analizaba fotos de obra y generaba informes según ÖNORM B 2110 en menos de 1 minuto con cadena de custodia SHA-256 y cumplimiento RGPD.`,
-    ar: `كان Faultrix منصة SaaS للتحكم بجودة البناء بالذكاء الاصطناعي من تطوير أحمد. يقوم بتحليل صور الموقع وتوليد تقارير متوافقة مع معيار ÖNORM B 2110 في أقل من دقيقة مع سلسلة توثيق SHA-256 وتوافق DSGVO.`,
   },
   contact: {
     en: `Ahmed Mohammed's contact details:\n- Email: ahmed.mo.0595@gmail.com\n- LinkedIn: https://www.linkedin.com/in/ahmed-3m/\n- GitHub: https://github.com/ahmed-3m\n- Website: https://ahmed-3m.github.io`,
@@ -339,11 +265,11 @@ export const LOCAL_REPLIES = {
     ar: `يشمل الـ stack الخاص بأحمد أبحاث الذكاء الاصطناعي وهندسة الإنتاج:\n- تعلم الآلة: PyTorch وPython ونماذج الانتشار وYOLO وOpenCV وكشف الشذوذ\n- المنتج والبنية: Next.js وReact وTypeScript وConvex وDocker وPostgreSQL وCloudflare\n- الأدوات: Git وWeights & Biases وHugging Face وLinux`,
   },
   achievements: {
-    en: `Key proof points:\n- 99.03% ± 0.07% AUROC on within-CIFAR airplane-vs-rest binary OOD split with novel class-conditional separation loss (M.Sc. thesis under Prof. Sepp Hochreiter, graded 1)\n- 98.4% industrial defect detection accuracy in production at PROFACTOR GmbH (FTI_Zer0P benchmark, 0.8673 ± 0.0230 AUROC baseline under 5-fold CV)\n- Solo Developer & Project Lead at Sihem (tech2b incubator Linz, proactive AI personal-mentor assistant)\n- Built and launched Faultrix (ÖNORM construction compliance SaaS)`,
-    de: `Wichtige Meilensteine:\n- 99,03 % ± 0,07 % AUROC auf Within-CIFAR Airplane-vs-Rest Binary OOD Split mit class-conditional separation loss (Masterarbeit bei Prof. Sepp Hochreiter, Note 1)\n- 98,4 % industrielle Defekterkennungsgenauigkeit in der Produktion bei PROFACTOR GmbH (0,8673 ± 0,0230 AUROC)\n- Solo-Entwickler & Projektleiter bei Sihem (tech2b Inkubator Linz, proaktiver KI-Mentor-Assistent)\n- Gründer von Faultrix (ÖNORM-Bau-Compliance SaaS)`,
-    fr: `Principaux résultats :\n- 99,03 % ± 0,07 % AUROC sur split binaire within-CIFAR avec separation loss (mémoire dirigé par Prof. Sepp Hochreiter, note 1)\n- 98,4 % de précision en détection de défauts industriels en production chez PROFACTOR GmbH\n- Développeur solo & chef de projet chez Sihem (incubateur tech2b Linz, assistant mentor IA proactif)\n- Fondateur de Faultrix (SaaS de conformité ÖNORM)`,
-    es: `Logros destacados:\n- 99.03% ± 0.07% AUROC en split binario within-CIFAR con separation loss (tesis con Prof. Sepp Hochreiter, nota 1)\n- 98.4% de precisión en detección de defectos industriales en PROFACTOR GmbH\n- Desarrollador en solitario y líder de proyecto en Sihem (incubadora tech2b Linz, asistente mentor IA proactivo)\n- Creador de Faultrix (SaaS de cumplimiento ÖNORM)`,
-    ar: `أبرز الإنجازات:\n- 99.03% ± 0.07% AUROC في كشف OOD على تقسيم within-CIFAR الثنائي مع separation loss (رسالة الماجستير بإشراف Prof. Sepp Hochreiter، تقدير ممتاز 1)\n- دقة 98.4% في كشف العيوب الصناعية في الإنتاج لدى PROFACTOR GmbH (خط أساس 0.8673 ± 0.0230 AUROC)\n- مطور منفرد وقائد مشروع في Sihem (حاضنة tech2b لينز، مساعد موجه بالذكاء الاصطناعي استباقي)\n- مؤسس Faultrix (منصة SaaS للامتثال لمعيار ÖNORM)`,
+    en: `Key proof points:\n- 99.03% ± 0.07% AUROC (3-seed mean) on within-CIFAR airplane-vs-rest binary OOD split with novel class-conditional separation loss (+6.5pp over 92.52% ± 11.07% baseline; M.Sc. thesis under Prof. Sepp Hochreiter, graded 1)\n- 0.8673 ± 0.0230 AUROC baseline under strict 5-fold CV on the public FTI_Zer0P industrial dataset at PROFACTOR GmbH (internal deployment also tracked 98.4% threshold-dependent binary accuracy, distinct from public AUROC benchmarks)\n- Solo Developer & Project Lead at Sihem (tech2b incubator Linz, proactive AI personal-mentor assistant)\n- Creator of mergeproof (deterministic LLM-free PR merge gate for coding agents)`,
+    de: `Wichtige Meilensteine:\n- 99,03 % ± 0,07 % AUROC (3-Seed-Mittel) auf Within-CIFAR Airplane-vs-Rest Binary OOD Split mit class-conditional separation loss (Masterarbeit bei Prof. Sepp Hochreiter, Note 1)\n- 0,8673 ± 0,0230 AUROC auf dem öffentlichen Datensatz FTI_Zer0P (strenge 5-fache Kreuzvalidierung bei PROFACTOR GmbH; betrieblich zudem 98,4 % schwellenwertabhängige binäre Genauigkeit, nicht mit AUROC gleichzusetzen)\n- Solo-Entwickler & Projektleiter bei Sihem (tech2b Inkubator Linz, proaktiver KI-Mentor-Assistent)\n- Entwickler von mergeproof (deterministisches LLM-freies Merge-Gate für KI-Agents)`,
+    fr: `Principaux résultats :\n- 99,03 % ± 0,07 % AUROC (moyenne 3 seeds) sur split binaire within-CIFAR avec separation loss (mémoire dirigé par Prof. Sepp Hochreiter, note 1)\n- 0,8673 ± 0,0230 AUROC sur le jeu public FTI_Zer0P en validation croisée 5 plis chez PROFACTOR GmbH (métrique opérationnelle interne de 98,4 % dépendante du seuil en déploiement, distincte de l'AUROC)\n- Développeur solo & chef de projet chez Sihem (incubateur tech2b Linz, assistant mentor IA proactif)\n- Créateur de mergeproof (merge-gate déterministe sans LLM pour agents de code)`,
+    es: `Logros destacados:\n- 99.03% ± 0.07% AUROC (media 3 seeds) en split binario within-CIFAR con separation loss (tesis con Prof. Sepp Hochreiter, nota 1)\n- 0.8673 ± 0.0230 AUROC en el dataset público FTI_Zer0P con validación cruzada 5-fold en PROFACTOR GmbH (en operación también se midió 98.4% de precisión binaria dependiente de umbral, distinta al AUROC público)\n- Desarrollador en solitario y líder de proyecto en Sihem (incubadora tech2b Linz, asistente mentor IA proactivo)\n- Creador de mergeproof (compuerta determinista sin LLM para PRs de agentes)`,
+    ar: `أبرز الإنجازات:\n- 99.03% ± 0.07% AUROC (متوسط 3 بذور) في كشف OOD على تقسيم within-CIFAR الثنائي مع separation loss (رسالة الماجستير بإشراف Prof. Sepp Hochreiter، تقدير 1)\n- 0.8673 ± 0.0230 AUROC على مجموعة FTI_Zer0P العامة بتحقق تقاطعي 5-fold لدى PROFACTOR GmbH (كما سُجّل مقياس تشغيلي داخلي بنسبة 98.4% يعتمد على العتبة، وهو منفصل عن مقياس AUROC العام)\n- مطور منفرد وقائد مشروع في Sihem (حاضنة tech2b لينز، مساعد موجه بالذكاء الاصطناعي استباقي)\n- مطوّر mergeproof (بوابة دمج حتمية بدون LLM لوكلاء البرمجة)`,
   },
 } satisfies Record<string, TranslationMap>
 
@@ -354,9 +280,6 @@ export function getLocalReply(prompt: string, lang: Language): string | null {
   }
   if (/\b(thesis|separation loss|ood|out.?of.?distribution|cifar|auroc)\b/i.test(text)) {
     return translateValue(lang, LOCAL_REPLIES.thesis)
-  }
-  if (/(faultrix|construction|onorm|dsgvo|report)/i.test(text)) {
-    return translateValue(lang, LOCAL_REPLIES.faultrix)
   }
   if (/(contact|email|linkedin|github|website|reach|talk to|connect)/i.test(text)) {
     return translateValue(lang, LOCAL_REPLIES.contact)
@@ -376,11 +299,7 @@ export function getLocalReply(prompt: string, lang: Language): string | null {
 const FOLLOWUP_RULES: Array<{ pattern: RegExp; prompts: PromptId[] }> = [
   {
     pattern: /\b(sihem|mentor|habit|routine|telegram|tech2b|pgvector)\b/i,
-    prompts: ['sihem_tech', 'faultrix_overview', 'hire_fit'],
-  },
-  {
-    pattern: /faultrix|construction|report|onorm|dsgvo|sha|aes/i,
-    prompts: ['faultrix_stack', 'faultrix_speed', 'faultrix_compliance', 'faultrix_build', 'faultrix_story', 'product_story'],
+    prompts: ['sihem_tech', 'industrial_result', 'hire_fit'],
   },
   {
     pattern: /thesis|ood|out.?of.?distribution|diffusion|auroc|cifar|separation loss/i,
@@ -922,7 +841,7 @@ export function getStarterPrompts(section: string): PromptId[] {
     return ['thesis_summary', 'thesis_loss', 'thesis_results', 'industrial_result', 'achievements', 'contact']
   }
   if (section === 'projects') {
-    return ['sihem_overview', 'faultrix_intro', 'projects_best', 'tech_stack', 'faultrix_build', 'contact']
+    return ['projects_best', 'industrial_result', 'thesis_summary', 'sihem_overview', 'tech_stack', 'contact']
   }
   if (section === 'contact') {
     return ['open_to_work', 'hire_summary', 'contact', 'achievements', 'tech_stack', 'sihem_overview']

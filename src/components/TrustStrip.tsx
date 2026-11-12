@@ -10,12 +10,12 @@ const copy = {
     es: 'Supervisado por el Prof. Sepp Hochreiter',
     ar: 'بإشراف Prof. Sepp Hochreiter',
   },
-  shipped: {
-    en: 'AI QC platform shipped to production',
-    de: 'KI-Qualitätskontrolle in Produktion ausgeliefert',
-    fr: 'Plateforme IA de contrôle qualité en production',
-    es: 'Plataforma de control de calidad con IA en producción',
-    ar: 'منصة ذكاء اصطناعي لضبط الجودة في الإنتاج',
+  grade: {
+    en: 'M.Sc. thesis graded 1 (top mark)',
+    de: 'Masterarbeit mit 1 (Sehr gut) bewertet',
+    fr: 'Mémoire M.Sc. noté 1 (meilleure note)',
+    es: 'Tesis M.Sc. calificada con 1 (nota máxima)',
+    ar: 'رسالة الماجستير بتقدير 1 (أعلى درجة)',
   },
   industrial: {
     en: 'PROFACTOR / FTI_Zer0P',
@@ -25,15 +25,15 @@ const copy = {
     ar: 'PROFACTOR / FTI_Zer0P',
   },
   result: {
-    en: '99.03% AUROC thesis result (binary, single-class)',
-    de: '99.03% AUROC Thesis-Ergebnis (binär, Einzelklasse)',
-    fr: '99.03% AUROC sur le mémoire (binaire, classe unique)',
-    es: '99.03% AUROC en la tesis (binario, clase única)',
-    ar: 'نتيجة الرسالة 99.03% AUROC (ثنائي، فئة واحدة)',
+    en: '99.03% ± 0.07% AUROC (binary, 3-seed mean)',
+    de: '99.03% ± 0.07% AUROC (binär, 3-Seed-Mittel)',
+    fr: '99.03% ± 0.07% AUROC (binaire, moy. 3 seeds)',
+    es: '99.03% ± 0.07% AUROC (binario, media 3 seeds)',
+    ar: '99.03% ± 0.07% AUROC (ثنائي، متوسط 3 بذور)',
   },
   location: {
     en: 'JKU Linz, Austria',
-    de: 'JKU Linz, Oesterreich',
+    de: 'JKU Linz, Österreich',
     fr: 'JKU Linz, Autriche',
     es: 'JKU Linz, Austria',
     ar: 'JKU Linz، النمسا',
@@ -42,7 +42,7 @@ const copy = {
 
 export default function TrustStrip() {
   const { t } = useI18n()
-  const items = [t(copy.location), t(copy.supervision), t(copy.industrial), t(copy.result), t(copy.shipped)]
+  const items = [t(copy.location), t(copy.supervision), t(copy.grade), t(copy.industrial), t(copy.result)]
 
   return (
     <section className="cd-section" style={{ padding: '18px 0', borderTop: '1px solid var(--cd-b0)', borderBottom: '1px solid var(--cd-b0)' }}>
