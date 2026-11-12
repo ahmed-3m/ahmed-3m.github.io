@@ -7,9 +7,11 @@ import { useReveal } from '@/lib/useReveal'
 
 const OodDemo = dynamic(() => import('@/components/OodDemo'))
 
-const cifarCharts: Array<{ src: string; alt: TranslationMap; caption: TranslationMap }> = [
+const cifarCharts: Array<{ src: string; width: number; height: number; alt: TranslationMap; caption: TranslationMap }> = [
   {
     src: '/fig_lambda_sweep.png',
+    width: 2499,
+    height: 1024,
     alt: {
       en: 'Separation Loss Weight Sweep',
       de: 'Separation Loss Gewichtungs-Sweep',
@@ -27,6 +29,8 @@ const cifarCharts: Array<{ src: string; alt: TranslationMap; caption: Translatio
   },
   {
     src: '/fig_calibration.png',
+    width: 1824,
+    height: 1072,
     alt: {
       en: 'Operating Threshold Calibration',
       de: 'Kalibrierung des Betriebsschwellenwerts',
@@ -44,6 +48,8 @@ const cifarCharts: Array<{ src: string; alt: TranslationMap; caption: Translatio
   },
   {
     src: '/fig_per_timestep_error.png',
+    width: 2176,
+    height: 1292,
     alt: {
       en: 'Per-Timestep Reconstruction Error',
       de: 'Rekonstruktionsfehler pro Zeitschritt',
@@ -61,9 +67,11 @@ const cifarCharts: Array<{ src: string; alt: TranslationMap; caption: Translatio
   },
 ]
 
-const industrialCharts: Array<{ src: string; alt: TranslationMap; caption: TranslationMap }> = [
+const industrialCharts: Array<{ src: string; width: number; height: number; alt: TranslationMap; caption: TranslationMap }> = [
   {
     src: '/fig_cross_domain_comparison.png',
+    width: 1905,
+    height: 1027,
     alt: {
       en: 'Cross-Domain Impact of Separation Loss',
       de: 'Domänenübergreifender Einfluss der Separation Loss',
@@ -72,15 +80,17 @@ const industrialCharts: Array<{ src: string; alt: TranslationMap; caption: Trans
       ar: 'تأثير خسارة الفصل عبر المجالات',
     },
     caption: {
-      en: 'Cross-domain impact: CIFAR-10 gain vs. Inkjet QC variance',
-      de: 'Cross-Domain-Einfluss: CIFAR-10-Gewinn vs. Inkjet-QC-Varianz',
-      fr: 'Impact cross-domain : gain CIFAR-10 vs variance Inkjet QC',
-      es: 'Impacto entre dominios: ganancia en CIFAR-10 frente a varianza en Inkjet QC',
-      ar: 'التأثير عبر المجالات: تحسن CIFAR-10 مقابل تباين مراقبة جودة الطباعة',
+      en: 'Cross-domain impact: CIFAR-10 gain vs. Inkjet QC fold spread',
+      de: 'Cross-Domain-Einfluss: CIFAR-10-Gewinn vs. Inkjet-QC-Streuung',
+      fr: 'Impact cross-domain : gain CIFAR-10 vs dispersion Inkjet QC',
+      es: 'Impacto entre dominios: ganancia en CIFAR-10 frente a dispersión en Inkjet QC',
+      ar: 'التأثير عبر المجالات: تحسن CIFAR-10 مقابل تشتت مراقبة جودة الطباعة',
     },
   },
   {
     src: '/fig_inkjet_lambda.png',
+    width: 2577,
+    height: 978,
     alt: {
       en: 'Per-Feature AUROC Sweep',
       de: 'AUROC-Sweep pro Merkmal',
@@ -98,56 +108,65 @@ const industrialCharts: Array<{ src: string; alt: TranslationMap; caption: Trans
   },
 ]
 
-const formulaVisuals: Array<{ src: string; alt: TranslationMap; caption: TranslationMap }> = [
+const formulaVisuals: Array<{ previewSrc: string; src: string; width: number; height: number; alt: TranslationMap; caption: TranslationMap }> = [
   {
+    previewSrc: '/research/separation-denoise-preview.webp',
     src: '/research/separation-denoise-clean.png',
+    width: 800,
+    height: 450,
     alt: {
-      en: 'Noisy image becoming clean through denoising',
-      de: 'Verrauschtes Bild wird durch Entrauschen klar',
-      fr: 'Image bruitée devenant nette par débruitage',
-      es: 'Imagen ruidosa volviéndose limpia mediante reducción de ruido',
-      ar: 'صورة مشوشة تصبح نقية عبر إزالة الضوضاء',
+      en: 'Noisy image becoming clean through denoising under c=0 and c=1',
+      de: 'Verrauschtes Bild wird durch Entrauschen unter c=0 und c=1 klar',
+      fr: 'Image bruitée devenant nette par débruitage sous c=0 et c=1',
+      es: 'Imagen ruidosa volviéndose limpia mediante reducción de ruido bajo c=0 y c=1',
+      ar: 'صورة مشوشة تصبح نقية عبر إزالة الضوضاء تحت الشرطين c=0 وc=1',
     },
     caption: {
-      en: 'Step 1: reconstruct images under each class condition',
-      de: 'Schritt 1: Bilder unter jeder Klassenbedingung rekonstruieren',
-      fr: 'Étape 1 : reconstruire les images sous chaque condition de classe',
-      es: 'Paso 1: reconstruir imágenes bajo cada condición de clase',
-      ar: 'الخطوة 1: إعادة بناء الصور تحت شرط كل فئة',
+      en: 'Step 1: denoise the image under both class conditions (c=0 normal vs. c=1 other)',
+      de: 'Schritt 1: Bild unter beiden Klassenbedingungen entrauschen (c=0 normal vs. c=1 andere)',
+      fr: 'Étape 1 : débruiter l image sous les deux conditions (c=0 normal vs c=1 autre)',
+      es: 'Paso 1: reducir ruido bajo ambas condiciones de clase (c=0 normal vs. c=1 otras)',
+      ar: 'الخطوة 1: إزالة الضوضاء تحت كلا الشرطين (c=0 طبيعي مقابل c=1 آخر)',
     },
   },
   {
+    previewSrc: '/research/separation-apart-preview.webp',
     src: '/research/separation-apart-clean.png',
+    width: 800,
+    height: 450,
     alt: {
-      en: 'Two model explanations being pushed apart',
-      de: 'Zwei Modellerklärungen werden auseinandergedrückt',
-      fr: 'Deux explications du modèle poussées à s éloigner',
-      es: 'Dos explicaciones del modelo siendo separadas',
-      ar: 'دفع تفسيري النموذج للابتعاد عن بعضهما',
+      en: 'Training loss L_sep pushing c=0 and c=1 noise predictions apart',
+      de: 'Trainingsverlust L_sep drückt Rauschvorhersagen c=0 und c=1 auseinander',
+      fr: 'La perte d entraînement L_sep éloigne les prédictions de bruit c=0 et c=1',
+      es: 'La pérdida de entrenamiento L_sep separa las predicciones de ruido c=0 y c=1',
+      ar: 'دالة خسارة التدريب L_sep تبعد تنبؤات الضوضاء بين c=0 وc=1',
     },
     caption: {
-      en: 'Step 2: push the conditional explanations apart',
-      de: 'Schritt 2: die konditionalen Erklärungen trennen',
-      fr: 'Étape 2 : éloigner les explications conditionnelles',
-      es: 'Paso 2: separar las explicaciones condicionales',
-      ar: 'الخطوة 2: إبعاد التفسيرات الشرطية عن بعضها',
+      en: 'Step 2: training loss L_sep pushes conditional noise predictions apart',
+      de: 'Schritt 2: L_sep drückt konditionale Rauschvorhersagen im Training auseinander',
+      fr: 'Étape 2 : L_sep éloigne les prédictions conditionnelles pendant l entraînement',
+      es: 'Paso 2: L_sep separa las predicciones condicionales durante el entrenamiento',
+      ar: 'الخطوة 2: خسارة التدريب L_sep تبعد التنبؤات الشرطية عن بعضها',
     },
   },
   {
-    src: '/research/separation-gap-clean.png',
+    previewSrc: '/research/separation-gap-preview.webp',
+    src: '/research/separation-gap-score.png',
+    width: 800,
+    height: 450,
     alt: {
-      en: 'Difference between reconstruction errors becoming an OOD signal',
-      de: 'Differenz der Rekonstruktionsfehler wird zum OOD-Signal',
-      fr: "La différence entre erreurs de reconstruction devient un signal OOD",
-      es: 'La diferencia entre errores de reconstrucción se convierte en señal OOD',
-      ar: 'الفرق بين أخطاء إعادة البناء يصبح إشارة لكشف الخارج عن التوزيع',
+      en: 'Inference score diagram s_OOD(x) = e_0(x) - e_1(x) comparing c=0 and c=1 reconstruction error',
+      de: 'Inferenz-Score-Diagramm s_OOD(x) = e_0(x) - e_1(x) aus dem Rekonstruktionsfehler-Vergleich',
+      fr: 'Diagramme du score d inférence s_OOD(x) = e_0(x) - e_1(x) comparant les erreurs c=0 et c=1',
+      es: 'Diagrama de puntuación s_OOD(x) = e_0(x) - e_1(x) comparando errores de reconstrucción',
+      ar: 'مخطط درجة الاستدلال s_OOD(x) = e_0(x) - e_1(x) لمقارنة أخطاء إعادة البناء',
     },
     caption: {
-      en: 'Step 3: score the reconstruction gap as the OOD signal',
-      de: 'Schritt 3: die Rekonstruktionslücke als OOD-Signal bewerten',
-      fr: "Étape 3 : mesurer l'écart de reconstruction comme signal OOD",
-      es: 'Paso 3: puntuar la brecha de reconstrucción como signal OOD',
-      ar: 'الخطوة 3: قياس فجوة إعادة البناء كإشارة OOD',
+      en: 'Step 3: inference score s_OOD(x) = e_0(x) - e_1(x) flags OOD when >= threshold tau',
+      de: 'Schritt 3: Inferenz-Score s_OOD(x) = e_0(x) - e_1(x) erkennt OOD ab Schwelle tau',
+      fr: 'Étape 3 : le score s_OOD(x) = e_0(x) - e_1(x) signale OOD lorsque >= seuil tau',
+      es: 'Paso 3: la puntuación s_OOD(x) = e_0(x) - e_1(x) detecta OOD si >= umbral tau',
+      ar: 'الخطوة 3: درجة الاستدلال s_OOD(x) = e_0(x) - e_1(x) تكشف OOD عند تجاوز العتبة tau',
     },
   },
 ]
@@ -193,7 +212,7 @@ const copy = {
   supervisor: { en: 'Supervisor', de: 'Betreuer', fr: 'Superviseur', es: 'Supervisor', ar: 'المشرف' },
   assistant: { en: 'Assistant', de: 'Assistent', fr: 'Assistant', es: 'Asistente', ar: 'المساعد' },
   metricLabel: { en: 'AUROC - CIFAR-10 Average', de: 'AUROC - CIFAR-10 Durchschnitt', fr: 'AUROC - moyenne CIFAR-10', es: 'AUROC - promedio CIFAR-10', ar: 'AUROC - متوسط CIFAR-10' },
-  variance: { en: '+/-0.07% variance (3 seeds)', de: '+/-0.07% Varianz (3 Seeds)', fr: '+/-0.07% variance (3 seeds)', es: '+/-0.07% varianza (3 semillas)', ar: '+/-0.07% تباين (3 بذور)' },
+  variance: { en: '+/-0.07% std dev (3 seeds)', de: '+/-0.07% Std.-Abw. (3 Seeds)', fr: '+/-0.07% ecart-type (3 seeds)', es: '+/-0.07% desv. est. (3 semillas)', ar: '+/-0.07% انحراف معياري (3 بذور)' },
   chartHeading: {
     en: 'Separation-weight sweep · Threshold calibration · Reconstruction error',
     de: 'Variation des Separationsgewichts · Schwellenwertkalibrierung · Rekonstruktionsfehler',
@@ -209,16 +228,22 @@ const copy = {
     ar: 'فتح الرسم البياني {chart} في العارض.',
   },
   formulaLabel: { en: 'Novel contribution - separation loss', de: 'Neuer Beitrag - Separation Loss', fr: 'Contribution nouvelle - separation loss', es: 'Contribución nueva - separation loss', ar: 'المساهمة الجديدة - خسارة الفصل' },
-  plainIdea: { en: 'Plain idea: train the model to make its two explanations visibly different. The gap becomes the anomaly signal.', de: 'Einfache Idee: Das Modell soll zwei Erklärungen sichtbar unterscheiden. Der Abstand wird zum Anomalie-Signal.', fr: "Idee simple : le modèle apprend à rendre deux explications clairement différentes. L'écart devient le signal anomalie.", es: 'Idea simple: el modelo aprende a hacer distintas sus dos explicaciones. La brecha se vuelve la señal de anomalía.', ar: 'الفكرة ببساطة: ندرب النموذج كي يجعل تفسيرين مختلفين بوضوح. الفجوة بينهما تصبح إشارة الشذوذ.' },
+  plainIdea: {
+    en: 'Plain idea: train with L_sep so c=0 ("normal") and c=1 ("other") disagree, then score s_OOD(x) = e_0(x) - e_1(x). ID inputs reconstruct better under c=0 (negative score); OOD inputs have higher e_0 than e_1 (score >= tau).',
+    de: 'Grundidee: Training mit L_sep trennt c=0 („normal“) und c=1 („andere“); bei Inferenz misst s_OOD(x) = e_0(x) - e_1(x) die Differenz. ID liefert e_0 < e_1 (negativ); OOD liefert e_0 > e_1 (>= tau).',
+    fr: 'Idée clé : L_sep sépare c=0 (« normal ») et c=1 (« autre ») à l entraînement ; à l inférence, s_OOD(x) = e_0(x) - e_1(x) compare les erreurs. ID donne e_0 < e_1 (négatif) ; OOD donne e_0 > e_1 (>= tau).',
+    es: 'Idea clave: L_sep separa c=0 («normal») y c=1 («otras») al entrenar; en inferencia s_OOD(x) = e_0(x) - e_1(x) compara los errores. En ID resulta negativo; en OOD e_0 > e_1 (>= tau).',
+    ar: 'الفكرة باختصار: تفصل خسارة التدريب L_sep بين c=0 (طبيعي) وc=1 (غيره)، وعند الاستدلال تقيس s_OOD(x) = e_0(x) - e_1(x) الفرق. للبيانات الطبيعية e_0 < e_1 (سالب)، وللشاذة e_0 > e_1 (>= tau).',
+  },
   step1: { en: 'Learn to denoise', de: 'Entrauschen lernen', fr: 'Apprendre à dénoiser', es: 'Aprender a limpiar ruido', ar: 'تعلم إزالة الضوضاء' },
-  step1Text: { en: 'Reconstruct images under each class condition.', de: 'Bilder unter jeder Klassenbedingung rekonstruieren.', fr: 'Reconstruire les images sous chaque condition de classe.', es: 'Reconstruir imágenes bajo cada condición de classe.', ar: 'إعادة بناء الصور تحت كل شرط فئة.' },
+  step1Text: { en: 'Denoise x under c=0 (normal) and c=1 (other).', de: 'Entrausche x unter c=0 (normal) und c=1 (andere).', fr: 'Débruiter x sous c=0 (normal) et c=1 (autre).', es: 'Limpiar ruido de x bajo c=0 (normal) y c=1 (otras).', ar: 'إزالة الضوضاء تحت الشرطين c=0 وc=1.' },
   step2: { en: 'Push explanations apart', de: 'Erklärungen trennen', fr: 'Éloigner les explications', es: 'Separar explicaciones', ar: 'إبعاد التفسيرات' },
-  step2Text: { en: 'Increase the distance between conditional predictions.', de: 'Den Abstand zwischen konditionalen Vorhersagen erhöhen.', fr: 'Augmenter la distance entre prédictions conditionnelles.', es: 'Aumentar la distancia entre predicciones condicionales.', ar: 'زيادة المسافة بين التنبؤات الشرطية.' },
-  step3: { en: 'Score the gap', de: 'Abstand bewerten', fr: "Mesurer l'écart", es: 'Medir la brecha', ar: 'قياس الفجوة' },
-  step3Text: { en: 'Use the reconstruction-error difference as the OOD signal.', de: 'Die Rekonstruktionsfehler-Differenz als OOD-Signal nutzen.', fr: "Utiliser la différence d'erreur de reconstruction comme signal OOD.", es: 'Usar la diferencia del error de reconstrucción como señal OOD.', ar: 'استخدام فرق خطأ إعادة البناء كإشارة OOD.' },
-  totalLoss: { en: 'Total loss', de: 'Gesamtverlust', fr: 'Perte totale', es: 'Pérdida total', ar: 'الخسارة الكلية' },
-  denoiseLoss: { en: 'denoising loss', de: 'Entrauschungsverlust', fr: 'perte de denoising', es: 'pérdida de limpieza', ar: 'خسارة إزالة الضوضاء' },
-  sepLoss: { en: 'lambda * separation loss', de: 'lambda * Separation Loss', fr: 'lambda * separation loss', es: 'lambda * separation loss', ar: 'لامبدا * خسارة الفصل' },
+  step2Text: { en: 'Maximize distance between c=0 and c=1 noise predictions during training (L_sep).', de: 'Maximiere im Training den Abstand zwischen den Vorhersagen c=0 und c=1 (L_sep).', fr: 'Maximiser l écart entre les prédictions c=0 et c=1 à l entraînement (L_sep).', es: 'Maximizar la distancia entre predicciones c=0 y c=1 al entrenar (L_sep).', ar: 'زيادة المسافة بين تنبؤات الضوضاء لـ c=0 وc=1 أثناء التدريب (L_sep).' },
+  step3: { en: 'Score s_OOD(x) = e_0 - e_1', de: 'Score s_OOD(x) = e_0 - e_1', fr: 'Score s_OOD(x) = e_0 - e_1', es: 'Score s_OOD(x) = e_0 - e_1', ar: 'الدرجة s_OOD(x) = e_0 - e_1' },
+  step3Text: { en: 'Flag OOD when e_0(x) exceeds e_1(x): s_OOD(x) = e_0(x) - e_1(x) >= tau.', de: 'Erkenne OOD wenn e_0(x) größer als e_1(x) ist: s_OOD(x) = e_0(x) - e_1(x) >= tau.', fr: 'Signaler OOD quand e_0(x) dépasse e_1(x) : s_OOD(x) = e_0(x) - e_1(x) >= tau.', es: 'Detectar OOD cuando e_0(x) supera a e_1(x): s_OOD(x) = e_0(x) - e_1(x) >= tau.', ar: 'كشف OOD عندما يتجاوز e_0(x) قيمة e_1(x): s_OOD(x) = e_0(x) - e_1(x) >= tau.' },
+  totalLoss: { en: 'Training loss L_total', de: 'Trainingsverlust L_total', fr: 'Perte d entraînement L_total', es: 'Pérdida de entrenamiento L_total', ar: 'خسارة التدريب L_total' },
+  denoiseLoss: { en: 'L_denoise (MSE)', de: 'L_denoise (MSE)', fr: 'L_denoise (MSE)', es: 'L_denoise (MSE)', ar: 'L_denoise (MSE)' },
+  sepLoss: { en: 'lambda * L_sep  |  Inference: s_OOD(x) = e_0(x) - e_1(x)', de: 'lambda * L_sep  |  Inferenz: s_OOD(x) = e_0(x) - e_1(x)', fr: 'lambda * L_sep  |  Inférence : s_OOD(x) = e_0(x) - e_1(x)', es: 'lambda * L_sep  |  Inferencia: s_OOD(x) = e_0(x) - e_1(x)', ar: 'lambda * L_sep  |  الاستدلال: s_OOD(x) = e_0(x) - e_1(x)' },
   latest: { en: 'Latest thesis result: lambda = 0.02 reached 99.03% +/- 0.07% AUROC, a +6.5pp gain over no separation loss.', de: 'Aktuelles Thesis-Ergebnis: lambda = 0.02 erreicht 99.03% +/- 0.07% AUROC, +6.5pp gegenüber ohne Separation Loss.', fr: 'Résultat thèse récent : lambda = 0.02 atteint 99.03% +/- 0.07% AUROC, +6.5pp vs sans separation loss.', es: 'Resultado reciente: lambda = 0.02 alcanzó 99.03% +/- 0.07% AUROC, +6.5pp frente a sin separation loss.', ar: 'آخر نتيجة في الرسالة: lambda = 0.02 حققت 99.03% +/- 0.07% AUROC، بزيادة +6.5pp مقارنة بدون خسارة الفصل.' },
   thesisPdf: { en: 'View Full Thesis (PDF) ->', de: 'Vollständige Thesis ansehen (PDF) ->', fr: 'Voir le mémoire complet (PDF) ->', es: 'Ver tesis completa (PDF) ->', ar: 'عرض الرسالة كاملة (PDF) ->' },
   track2: { en: "Master's Thesis (Track 2) - JKU Linz - 2026", de: 'Masterarbeit (Track 2) - JKU Linz - 2026', fr: 'Mémoire de master (Track 2) - JKU Linz - 2026', es: 'Tesis de master (Track 2) - JKU Linz - 2026', ar: 'رسالة ماجستير (المسار 2) - JKU Linz - 2026' },
@@ -355,7 +380,16 @@ export default function Research() {
     const timer = window.setTimeout(() => {
       lightboxRef.current?.focus()
     }, 0)
-    return () => window.clearTimeout(timer)
+    const onEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setLightbox(null)
+      }
+    }
+    window.addEventListener('keydown', onEscape)
+    return () => {
+      window.clearTimeout(timer)
+      window.removeEventListener('keydown', onEscape)
+    }
   }, [lightbox])
 
   return (
@@ -413,7 +447,7 @@ export default function Research() {
           </div>
 
           <div className="cd-rf-charts">
-            {cifarCharts.map(({ src, alt, caption }, index) => (
+            {cifarCharts.map(({ src, width, height, alt, caption }, index) => (
               <div
                 key={src}
                 className="cd-rf-chart cd-rf-chart--zoom"
@@ -433,7 +467,15 @@ export default function Research() {
                   }
                 }}
               >
-                <img src={src} alt={t(alt)} style={{ width: '100%', height: '260px', objectFit: 'contain', borderRadius: '8px' }} />
+                <img
+                  src={src}
+                  width={width}
+                  height={height}
+                  loading="lazy"
+                  decoding="async"
+                  alt={t(alt)}
+                  style={{ width: '100%', height: 'auto', maxHeight: '260px', objectFit: 'contain', borderRadius: '8px' }}
+                />
                 <div className="cd-rf-chart-caption">{t(caption)}</div>
               </div>
             ))}
@@ -445,7 +487,15 @@ export default function Research() {
             <div className="cd-rfc-flow" aria-label="Separation loss workflow">
               <div>
                 <button type="button" className="cd-rfc-visual-button" onClick={(event) => { lastFocusedRef.current = event.currentTarget; setLightbox({ type: 'formula', index: 0 }) }} title="Click to expand">
-                  <img src={formulaVisuals[0].src} alt={t(formulaVisuals[0].alt)} className="cd-rfc-visual cd-rf-chart--zoom" />
+                  <img
+                    src={formulaVisuals[0].previewSrc}
+                    width={formulaVisuals[0].width}
+                    height={formulaVisuals[0].height}
+                    loading="lazy"
+                    decoding="async"
+                    alt={t(formulaVisuals[0].alt)}
+                    className="cd-rfc-visual cd-rf-chart--zoom"
+                  />
                 </button>
                 <span className="cd-rfc-step">1</span>
                 <strong>{t(copy.step1)}</strong>
@@ -453,7 +503,15 @@ export default function Research() {
               </div>
               <div>
                 <button type="button" className="cd-rfc-visual-button" onClick={(event) => { lastFocusedRef.current = event.currentTarget; setLightbox({ type: 'formula', index: 1 }) }} title="Click to expand">
-                  <img src={formulaVisuals[1].src} alt={t(formulaVisuals[1].alt)} className="cd-rfc-visual cd-rf-chart--zoom" />
+                  <img
+                    src={formulaVisuals[1].previewSrc}
+                    width={formulaVisuals[1].width}
+                    height={formulaVisuals[1].height}
+                    loading="lazy"
+                    decoding="async"
+                    alt={t(formulaVisuals[1].alt)}
+                    className="cd-rfc-visual cd-rf-chart--zoom"
+                  />
                 </button>
                 <span className="cd-rfc-step">2</span>
                 <strong>{t(copy.step2)}</strong>
@@ -461,7 +519,15 @@ export default function Research() {
               </div>
               <div>
                 <button type="button" className="cd-rfc-visual-button" onClick={(event) => { lastFocusedRef.current = event.currentTarget; setLightbox({ type: 'formula', index: 2 }) }} title="Click to expand">
-                  <img src={formulaVisuals[2].src} alt={t(formulaVisuals[2].alt)} className="cd-rfc-visual cd-rf-chart--zoom" />
+                  <img
+                    src={formulaVisuals[2].previewSrc}
+                    width={formulaVisuals[2].width}
+                    height={formulaVisuals[2].height}
+                    loading="lazy"
+                    decoding="async"
+                    alt={t(formulaVisuals[2].alt)}
+                    className="cd-rfc-visual cd-rf-chart--zoom"
+                  />
                 </button>
                 <span className="cd-rfc-step">3</span>
                 <strong>{t(copy.step3)}</strong>
@@ -486,8 +552,8 @@ export default function Research() {
                   style={{
                     padding: '10px 18px',
                     borderRadius: 10,
-                    border: '1px solid var(--cd-border)',
-                    background: 'var(--cd-surface)',
+                    border: '1px solid var(--cd-b1)',
+                    background: 'var(--cd-surf)',
                     cursor: 'pointer',
                   }}
                 >
@@ -501,13 +567,13 @@ export default function Research() {
             <a href="https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf" target="_blank" rel="noopener noreferrer" className="cd-proj-link">
               {t(copy.thesisPdf)}
             </a>
-            <Link href="/case-studies/diffusion-ood/" className="cd-proj-link" style={{ opacity: 0.85 }}>
+            <Link href="/case-studies/diffusion-ood/" className="cd-proj-link">
               {t(copy.diffusionCaseStudy)}
             </Link>
-            <a href="https://github.com/ahmed-3m/DiffusionOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ opacity: 0.8 }}>
+            <a href="https://github.com/ahmed-3m/DiffusionOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link">
               {t(copy.diffusionCode)}
             </a>
-            <a href="https://huggingface.co/ahmed-3m/DiffusionOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ opacity: 0.8 }}>
+            <a href="https://huggingface.co/ahmed-3m/DiffusionOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link">
               {t(copy.diffusionHf)}
             </a>
           </div>
@@ -533,7 +599,7 @@ export default function Research() {
           </div>
 
           <div className="cd-rf-charts" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
-            {industrialCharts.map(({ src, alt, caption }, index) => (
+            {industrialCharts.map(({ src, width, height, alt, caption }, index) => (
               <div
                 key={src}
                 className="cd-rf-chart cd-rf-chart--zoom"
@@ -553,7 +619,15 @@ export default function Research() {
                   }
                 }}
               >
-                <img src={src} alt={t(alt)} style={{ width: '100%', height: '260px', objectFit: 'contain', borderRadius: '8px' }} />
+                <img
+                  src={src}
+                  width={width}
+                  height={height}
+                  loading="lazy"
+                  decoding="async"
+                  alt={t(alt)}
+                  style={{ width: '100%', height: 'auto', maxHeight: '260px', objectFit: 'contain', borderRadius: '8px' }}
+                />
                 <div className="cd-rf-chart-caption">{t(caption)}</div>
               </div>
             ))}
@@ -561,9 +635,8 @@ export default function Research() {
 
           <div className="cd-rf-footer" style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center' }}>
             <a href="https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf" target="_blank" rel="noopener noreferrer" className="cd-proj-link">{t(copy.industrialReport)}</a>
-            <a href="https://github.com/ahmed-3m/InkjetOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ opacity: 0.8 }}>Code: InkjetOOD -&gt;</a>
-            <a href="https://huggingface.co/ahmed-3m/InkjetOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ opacity: 0.8 }}>HF: Model Weights -&gt;</a>
-            <a href="https://github.com/ahmed-3m/zer0p_notebooks" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ opacity: 0.7 }}>R&amp;D Notebooks -&gt;</a>
+            <a href="https://github.com/ahmed-3m/InkjetOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link">Code: InkjetOOD -&gt;</a>
+            <a href="https://huggingface.co/ahmed-3m/InkjetOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link">HF: Model Weights -&gt;</a>
           </div>
         </div>
 
