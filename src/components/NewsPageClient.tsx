@@ -89,7 +89,7 @@ export default function NewsPageClient() {
                   color: active ? 'var(--cd-bg)' : 'var(--cd-fg2)',
                 }}
               >
-                {t(label)} <span style={{ opacity: 0.7 }}>({count})</span>
+                {t(label)} <span>({count})</span>
               </button>
             )
           })}
