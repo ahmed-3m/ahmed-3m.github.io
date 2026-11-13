@@ -21,7 +21,7 @@ const MONO = "'Consolas', 'Courier New', monospace"
 const SANS = "'Segoe UI', 'Arial', sans-serif"
 
 // Histogram-style signal bars (echoes the HeroSignal panel motif).
-function signalBars(x, y, { count = 28, barWidth = 14, gap = 8, maxH = 120, seed = 42 } = {}) {
+function signalBars(x, y, { count = 16, barWidth = 12, gap = 8, maxH = 110, seed = 42 } = {}) {
   let s = ''
   let r = seed
   const rand = () => {
@@ -30,7 +30,7 @@ function signalBars(x, y, { count = 28, barWidth = 14, gap = 8, maxH = 120, seed
     return r / 2147483648
   }
   for (let i = 0; i < count; i++) {
-    const h = Math.round(maxH * (0.15 + 0.85 * rand()))
+    const h = Math.round(maxH * (0.18 + 0.82 * rand()))
     const barY = y - h
     const fill = i === Math.floor(count * 0.72) ? ACCENT : '#1c2536'
     const opacity = i === Math.floor(count * 0.72) ? '0.95' : '0.8'
@@ -48,8 +48,11 @@ function grid() {
 
 function card({ eyebrow, title, sub, stat }) {
   const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+  const rawTitleLen = title.length
+  const rawStatLen = stat.length
   eyebrow = esc(eyebrow); title = esc(title); sub = esc(sub); stat = esc(stat)
-  const titleSize = title.length > 26 ? 58 : 68
+  const titleSize = rawTitleLen > 32 ? 48 : rawTitleLen > 24 ? 56 : 66
+  const pillWidth = Math.min(1056, Math.max(360, rawStatLen * 16 + 56))
   return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630">
   <rect width="1200" height="630" fill="${BG}"/>
   ${grid()}
@@ -60,29 +63,35 @@ function card({ eyebrow, title, sub, stat }) {
       <stop offset="45%" stop-color="#00d4ff" stop-opacity="0"/>
     </radialGradient>
   </defs>
-  ${signalBars(830, 560)}
+  ${signalBars(816, 560)}
   <text x="72" y="96" font-family="${MONO}" font-size="22" fill="${DIM}">${eyebrow}</text>
   <rect x="72" y="128" width="64" height="6" fill="${ACCENT}"/>
-  <text x="72" y="${titleSize === 68 ? 232 : 224}" font-family="${SANS}" font-size="${titleSize}" font-weight="700" fill="${FG}">${title}</text>
-  <text x="72" y="308" font-family="${SANS}" font-size="30" fill="${DIM}">${sub}</text>
-  <rect x="72" y="368" width="${Math.max(340, stat.length * 19 + 56)}" height="64" rx="10" fill="#0d1017" stroke="#1c2536"/>
-  <text x="100" y="408" font-family="${MONO}" font-size="26" fill="${ACCENT}">${stat}</text>
-  <text x="72" y="560" font-family="${MONO}" font-size="22" fill="${DIM}">Ahmed Mohammed · AI/ML Engineer</text>
+  <text x="72" y="226" font-family="${SANS}" font-size="${titleSize}" font-weight="700" fill="${FG}">${title}</text>
+  <text x="72" y="302" font-family="${SANS}" font-size="29" fill="${DIM}">${sub}</text>
+  <rect x="72" y="366" width="${pillWidth}" height="64" rx="10" fill="#0d1017" stroke="#1c2536"/>
+  <text x="100" y="406" font-family="${MONO}" font-size="25" fill="${ACCENT}">${stat}</text>
+  <text x="72" y="560" font-family="${MONO}" font-size="22" fill="${DIM}">Ahmed Mohammed · AI/ML &amp; CV Engineer</text>
 </svg>`
 }
 
 const CARDS = {
+  'og-image.png': {
+    eyebrow: 'ahmed-3m.github.io',
+    title: 'Ahmed Mohammed',
+    sub: 'AI/ML & Computer Vision Engineer · M.Sc. Thesis Graded 1',
+    stat: 'Computer vision · Industrial ML · Diffusion research',
+  },
   'og-news.png': {
     eyebrow: 'ahmed-3m.github.io/news',
     title: 'AI & Agentic AI News',
     sub: 'Curated daily · every item with a take',
     stat: 'updated by an automated agent pipeline',
   },
-  'og-faultrix.png': {
-    eyebrow: 'ahmed-3m.github.io/case-studies/faultrix',
-    title: 'Faultrix — Case Study',
-    sub: 'AI construction quality control · zero → production, solo',
-    stat: 'ONORM reports in under 1 minute',
+  'og-diffusion-ood.png': {
+    eyebrow: 'ahmed-3m.github.io/case-studies/diffusion-ood',
+    title: 'Diffusion OOD Detection',
+    sub: 'Within-CIFAR airplane-vs-rest · binary, single ID class',
+    stat: '99.03% ± 0.07% AUROC · 3-seed mean',
   },
   'og-inkjet-ood.png': {
     eyebrow: 'ahmed-3m.github.io/case-studies/inkjet-ood',
@@ -93,8 +102,20 @@ const CARDS = {
   'og-sihem.png': {
     eyebrow: 'ahmed-3m.github.io/case-studies/sihem',
     title: 'Sihem — Case Study',
-    sub: 'LLM personal-mentor assistant · Telegram + PWA',
+    sub: 'Personal AI assistant · Telegram + PWA',
     stat: 'tech2b incubator · live beta',
+  },
+  'og-diffusion-models-anomaly-detection.png': {
+    eyebrow: 'ahmed-3m.github.io/blog/diffusion-models-anomaly-detection',
+    title: 'Diffusion Anomaly Detection',
+    sub: 'From CIFAR-10 separation loss to FTI_Zer0P QC',
+    stat: '0.8673 ± 0.0230 AUROC · 5-fold CV',
+  },
+  'og-computer-vision-yolo-mastery.png': {
+    eyebrow: 'ahmed-3m.github.io/blog/computer-vision-yolo-mastery',
+    title: 'Industrial Vision with YOLO',
+    sub: 'Print defects, small crops, and lighting variance',
+    stat: 'YOLO + Diffusion · Production Pipelines',
   },
 }
 

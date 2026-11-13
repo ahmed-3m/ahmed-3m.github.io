@@ -26,11 +26,11 @@ const copy = {
     ar: 'يمتد عملي عبر كامل السلسلة: من خسارة الفصل الشرطية لكشف الخارج عن التوزيع بنماذج الانتشار إلى خطوط رؤية حاسوبية صناعية بتقييم صارم. كما أُطلق منتجات نماذج لغة وأدوات حتمية تُبقي وكلاء البرمجة على المسار الصحيح.',
   },
   p3: {
-    en: 'I also build and ship — most recently Sihem, an LLM personal-mentor side project accepted into the tech2b incubator, and before that Faultrix, an AI quality-control platform I took from zero to production on my own. Both taught me that production reliability is its own kind of rigor.',
-    de: 'Ich baue und liefere auch aus — zuletzt Sihem, ein LLM-gestütztes Mentor-Nebenprojekt, das in den tech2b-Inkubator aufgenommen wurde, davor Faultrix, eine KI-Plattform für Qualitätskontrolle, die ich allein von null bis in die Produktion gebracht habe. Beides hat mich gelehrt, dass Zuverlässigkeit im Betrieb eine eigene Form von Sorgfalt ist.',
-    fr: "Je construis et je livre aussi — récemment Sihem, un projet personnel d'assistant-mentor fondé sur les LLM, accepté dans l'incubateur tech2b, et avant cela Faultrix, une plateforme IA de contrôle qualité que j'ai menée seul de zéro à la production. Les deux m'ont appris que la fiabilité en production est une rigueur à part entière.",
-    es: 'También construyo y publico: hace poco Sihem, un proyecto personal de asistente-mentor basado en LLM aceptado en la incubadora tech2b, y antes Faultrix, una plataforma de control de calidad con IA que llevé yo solo de cero a producción. Ambos me enseñaron que la fiabilidad en producción es su propio tipo de rigor.',
-    ar: 'أبني وأُطلق أيضًا — مؤخرًا Sihem، مشروع جانبي لمساعد ومرشد شخصي قائم على نماذج اللغة قُبل في حاضنة tech2b، وقبله Faultrix، منصة ذكاء اصطناعي لضبط الجودة نقلتها بمفردي من الصفر إلى الإنتاج. علّمني كلاهما أن الموثوقية في الإنتاج نوع خاص من الدقة.',
+    en: 'Outside research, I build and ship reliable software — including Sihem, a proactive LLM personal-mentor side project accepted into the tech2b incubator, alongside deterministic tooling such as mergeproof. Supporting work in production taught me that operational reliability is its own kind of rigor.',
+    de: 'Abseits der Forschung entwickle und betreibe ich zuverlässige Software — darunter Sihem, ein proaktives LLM-Mentor-Nebenprojekt im tech2b-Inkubator, sowie deterministisches Tooling wie mergeproof. Produktive Systeme haben mir gezeigt, dass Betriebszuverlässigkeit eine eigene Form von Sorgfalt ist.',
+    fr: "En parallèle de la recherche, je conçois et déploie des systèmes fiables — notamment Sihem, un projet personnel de mentor IA proactif accepté dans l'incubateur tech2b, ainsi que des outils déterministes comme mergeproof. Porter un système en production demande une rigueur complémentaire à celle du laboratoire.",
+    es: 'Además de la investigación, construyo y pongo en producción software fiable, incluido Sihem, un proyecto personal de mentor proactivo basado en LLM aceptado en la incubadora tech2b, junto con herramientas deterministas como mergeproof. Llevar sistemas a producción exige su propio tipo de rigor.',
+    ar: 'وإلى جانب البحث، أبني وأُطلق برمجيات موثوقة — بما في ذلك Sihem، وهو مشروع جانبي لمساعد ومرشد شخصي استباقي قائم على نماذج اللغة قُبل في حاضنة tech2b، إلى جانب أدوات حتمية مثل mergeproof. وقد علمني تشغيل الأنظمة في الإنتاج أن الموثوقية التشغيلية نوع مستقل من الدقة.',
   },
   path: {
     en: 'Transitioned from mechatronics engineering to AI/ML - bringing a hardware and systems perspective to computer vision and production ML.',
@@ -167,7 +167,7 @@ export default function About() {
             <p style={{ color: 'var(--cd-fg2)', fontSize: 15, marginBottom: 20 }}>{t(copy.path)}</p>
             <div className="cd-about-text" data-speakable>
               <p>{t(copy.p1)}</p>
-              <p>{t(copy.p2)} <strong>99.03% +/- 0.07% AUROC</strong> (binary airplane-vs-rest, 3-seed mean) · <strong>0.8673 AUROC</strong> (FTI_Zer0P 5-fold).</p>
+              <p>{t(copy.p2)} <strong>99.03% +/- 0.07% AUROC</strong> (binary airplane-vs-rest, 3-seed mean) · <strong>0.8673 +/- 0.0230 AUROC</strong> (FTI_Zer0P 5-fold CV).</p>
               <p>{t(copy.p3)}</p>
             </div>
           </div>
