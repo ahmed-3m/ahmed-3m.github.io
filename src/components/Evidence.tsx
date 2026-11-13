@@ -99,13 +99,6 @@ const evidenceItems = [
     href: 'https://t.me/sihem_ai_bot',
     label: 'Proof',
   },
-  {
-    id: 'faultrix-case-study',
-    title: { en: 'Faultrix case study', de: 'Faultrix Case Study', fr: 'Étude de cas Faultrix', es: 'Caso de estudio Faultrix', ar: 'دراسة حالة Faultrix' },
-    meta: { en: 'Research-to-product build story', de: 'Geschichte vom Research zum Produkt', fr: 'Histoire du passage recherche-produit', es: 'Historia del paso de investigación a producto', ar: 'قصة الانتقال من البحث إلى المنتج' },
-    href: '/case-studies/faultrix/',
-    label: 'Case study',
-  },
 ]
 
 export default function Evidence() {
