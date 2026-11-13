@@ -33,8 +33,8 @@ const blogPosts: BlogPost[] = [
   {
     slug: 'ood-diffusion-thesis',
     date: '2026-07-12',
-    ogImage: '/og-diffusion-models-anomaly-detection.png',
-    lastModified: '2026-04-25',
+    ogImage: '/og-diffusion-ood.png',
+    lastModified: '2026-11-13',
     citation: {
       title:
         'Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control',
@@ -94,7 +94,7 @@ The best setting was **λ = 0.02**. Averaged across three independent seeds, it 
 
 - **99.03% +/- 0.07% AUROC** on CIFAR-10
 - **+6.5 percentage points** over the non-separated baseline
-- much lower variance than the baseline
+- much lower cross-seed standard deviation than the baseline
 
 For a concrete reproducible run, seed-42 achieved:
 
@@ -103,7 +103,7 @@ For a concrete reproducible run, seed-42 achieved:
 
 ## Why I Care About This Result
 
-The important part is not only that the score went up. The important part is that the variance collapsed. Moving from a fragile 92.52% +/- 11.07% to a stable 99.03% +/- 0.07% is the difference between "interesting research result" and "plausible building block for a real safety system."
+The important part is not only that the score went up. The important part is that the cross-seed standard deviation collapsed. Moving from a fragile 92.52% +/- 11.07% to a stable 99.03% +/- 0.07% is the difference between "interesting research result" and "plausible building block for a real safety system."
 
 ## Cross-Domain Reality Check
 
@@ -177,7 +177,7 @@ Die beste Einstellung war **λ = 0.02**. Über drei unabhängige Seeds ergab sic
 
 - **99.03% +/- 0.07% AUROC** auf CIFAR-10
 - **+6.5 Prozentpunkte** gegenüber der Basis ohne Separation
-- deutlich geringere Varianz
+- deutlich geringere Standardabweichung über Seeds
 
 Ein reproduzierbarer Seed-42 Lauf erreichte:
 
@@ -186,7 +186,7 @@ Ein reproduzierbarer Seed-42 Lauf erreichte:
 
 ## Warum dieses Ergebnis wichtig ist
 
-Entscheidend ist nicht nur der höhere Score. Entscheidend ist der starke Rückgang der Varianz. Der Schritt von 92.52% +/- 11.07% zu 99.03% +/- 0.07% trennt eine interessante Idee von einer deutlich glaubwürdigeren Sicherheitskomponente.
+Entscheidend ist nicht nur der höhere Score. Entscheidend ist der starke Rückgang der Standardabweichung. Der Schritt von 92.52% +/- 11.07% zu 99.03% +/- 0.07% trennt eine interessante Idee von einer deutlich glaubwürdigeren Sicherheitskomponente.
 
 ## Transfer in die Industrie
 
@@ -260,7 +260,7 @@ Le meilleur réglage était **λ = 0.02**. Sur trois seeds indépendants :
 
 - **99.03% +/- 0.07% AUROC** sur CIFAR-10
 - **+6.5 points** face à la baseline sans séparation
-- une variance très fortement réduite
+- un écart-type très fortement réduit entre seeds
 
 Le seed-42 a atteint :
 
@@ -269,7 +269,7 @@ Le seed-42 a atteint :
 
 ## Pourquoi ce résultat est fort
 
-Le point clé n'est pas seulement l'augmentation du score. C'est surtout l'effondrement de la variance. Passer de 92.52% +/- 11.07% à 99.03% +/- 0.07% signifie passer d'une méthode fragile à une approche bien plus crédible pour une utilisation réelle.
+Le point clé n'est pas seulement l'augmentation du score. C'est surtout l'effondrement de l'écart-type. Passer de 92.52% +/- 11.07% à 99.03% +/- 0.07% signifie passer d'une méthode fragile à une approche bien plus crédible pour une utilisation réelle.
 
 ## Transfert vers l'industrie
 
@@ -343,7 +343,7 @@ La mejor configuración fue **λ = 0.02**. En tres semillas independientes:
 
 - **99.03% +/- 0.07% AUROC** en CIFAR-10
 - **+6.5 puntos porcentuales** sobre la base sin separación
-- una varianza mucho menor
+- una desviación estándar mucho menor entre semillas
 
 La seed-42 logró:
 
@@ -352,7 +352,7 @@ La seed-42 logró:
 
 ## Por qué este resultado es importante
 
-Lo importante no es solo subir el puntaje. Lo importante es reducir drásticamente la varianza. Pasar de 92.52% +/- 11.07% a 99.03% +/- 0.07% significa pasar de una heurística frágil a un componente de seguridad mucho más creíble.
+Lo importante no es solo subir el puntaje. Lo importante es reducir drásticamente la desviación estándar. Pasar de 92.52% +/- 11.07% a 99.03% +/- 0.07% significa pasar de una heurística frágil a un componente de seguridad mucho más creíble.
 
 ## Transferencia industrial
 
@@ -426,7 +426,7 @@ loss = L_diffusion + lambda * L_separation
 
 - **99.03% +/- 0.07% AUROC** على CIFAR-10
 - **+6.5 نقطة مئوية** فوق الخط الأساسي بدون فصل
-- انخفاض كبير جداً في التباين
+- انخفاض كبير جداً في الانحراف المعياري بين البذور
 
 أما seed-42 فحقق:
 
@@ -435,7 +435,7 @@ loss = L_diffusion + lambda * L_separation
 
 ## لماذا هذه النتيجة مهمة
 
-الأهم ليس فقط ارتفاع الدرجة، بل انهيار التباين. الانتقال من 92.52% +/- 11.07% إلى 99.03% +/- 0.07% يعني الانتقال من فكرة بحثية هشة إلى مكون أكثر مصداقية كنظام أمان.
+الأهم ليس فقط ارتفاع الدرجة، بل انهيار الانحراف المعياري. الانتقال من 92.52% +/- 11.07% إلى 99.03% +/- 0.07% يعني الانتقال من فكرة بحثية هشة إلى مكون أكثر مصداقية كنظام أمان.
 
 ## الاختبار عبر المجال الصناعي
 
@@ -463,7 +463,7 @@ loss = L_diffusion + lambda * L_separation
     slug: 'diffusion-models-anomaly-detection',
     date: '2024-11-20',
     ogImage: '/og-diffusion-models-anomaly-detection.png',
-    lastModified: '2026-04-25',
+    lastModified: '2026-11-13',
     translations: {
       en: {
         title: 'Diffusion Models for Industrial Defect Detection at PROFACTOR GmbH',
@@ -475,7 +475,7 @@ loss = L_diffusion + lambda * L_separation
           {
             question: 'What result did the industrial system achieve?',
             answer:
-              'On the public benchmark, the strict 5-fold CV baseline reached 0.8673 +/- 0.0230 AUROC. In the production setting, the deployed decision pipeline reached 98.4% defect-classification accuracy.',
+              'On the public FTI_Zer0P benchmark, the strict 5-fold CV baseline reached 0.8673 +/- 0.0230 AUROC. Separately, an internal production deployment tracked 98.4% threshold-dependent binary classification accuracy (operational deployment metric, not comparable to public AUROC).',
           },
           {
             question: 'What was the architecture?',
@@ -520,14 +520,14 @@ The public crop-based baseline at λ = 0.0 reached:
 
 - **0.8673 +/- 0.0230 AUROC**
 
-In the production thresholded deployment, the system reached:
+In an internal threshold-dependent production deployment evaluation, the system reached:
 
-- **98.4% defect classification accuracy**
+- **98.4% defect classification accuracy** (threshold-dependent operational metric; not comparable to public AUROC)
 
 Those numbers describe two different realities:
 
-- AUROC describes threshold-independent ranking quality under rigorous evaluation
-- the 98.4% number describes an operational decision threshold in deployment
+- AUROC (0.8673 +/- 0.0230 across 5-fold CV) describes threshold-independent ranking quality on the public FTI_Zer0P benchmark
+- the 98.4% number describes an internal operational decision threshold in deployment rather than a public AUROC benchmark
 
 ## What I Learned About Transfer
 
@@ -558,7 +558,7 @@ Artifacts:
           {
             question: 'Welches Ergebnis erreichte das industrielle System?',
             answer:
-              'Auf dem öffentlichen Benchmark lag die strenge 5-fold-CV Baseline bei 0.8673 +/- 0.0230 AUROC. Im produktionsnahen Betrieb erreichte das Entscheidungssetup 98.4% Defektklassifikationsgenauigkeit.',
+              'Auf dem öffentlichen FTI_Zer0P Benchmark lag die strenge 5-fold-CV Baseline bei 0.8673 +/- 0.0230 AUROC. Davon getrennt erreichte das interne Produktions-Setup schwellenwertabhängig 98.4% binäre Defektklassifikationsgenauigkeit (keine öffentliche AUROC-Metrik).',
           },
           {
             question: 'Wie sah die Architektur aus?',
@@ -603,14 +603,14 @@ Die öffentliche crop-basierte Baseline bei λ = 0.0 erreichte:
 
 - **0.8673 +/- 0.0230 AUROC**
 
-Im produktionsnahen Schwellwertbetrieb erreichte das System:
+In einer internen schwellwertabhängigen Produktivbewertung erreichte das System:
 
-- **98.4% Defektklassifikationsgenauigkeit**
+- **98.4% Defektklassifikationsgenauigkeit** (interne, schwellwertabhängige Betriebsmetrik; nicht mit öffentlichem AUROC vergleichbar)
 
 Diese Werte beschreiben zwei verschiedene Ebenen:
 
-- AUROC misst die threshold-unabhängige Rangqualität
-- 98.4% beschreibt eine betriebliche Entscheidungsschwelle
+- AUROC (0.8673 +/- 0.0230 in 5-facher CV) misst die schwellwertunabhängige Rangqualität auf dem öffentlichen Benchmark FTI_Zer0P
+- 98.4% beschreibt eine interne betriebliche Entscheidungsschwelle im Deployment und keinen öffentlichen AUROC-Benchmark
 
 ## Was ich über Transfer gelernt habe
 
@@ -641,7 +641,7 @@ Artefakte:
           {
             question: 'Quel résultat le système industriel a-t-il obtenu ?',
             answer:
-              'Sur le benchmark public, la baseline en validation croisée stricte à 5 plis a atteint 0.8673 +/- 0.0230 AUROC. En exploitation, le pipeline de décision a atteint 98.4% de précision de classification des défauts.',
+              "Sur le benchmark public FTI_Zer0P, la baseline en validation croisée stricte à 5 plis a atteint 0.8673 +/- 0.0230 AUROC. Séparément, le déploiement interne a mesuré 98.4% de précision binaire dépendante du seuil (métrique opérationnelle, non comparable à l'AUROC public).",
           },
           {
             question: "Quelle était l'architecture ?",
@@ -686,14 +686,14 @@ La baseline publique par crops à λ = 0.0 a atteint :
 
 - **0.8673 +/- 0.0230 AUROC**
 
-En mode décision en production, le système a atteint :
+Dans une évaluation interne en déploiement à seuil fixe, le système a atteint :
 
-- **98.4% de précision de classification des défauts**
+- **98.4% de précision de classification des défauts** (métrique opérationnelle interne dépendante du seuil ; non comparable à l'AUROC public)
 
-Ces deux nombres décrivent deux choses différentes :
+Ces deux nombres décrivent deux réalités différentes :
 
-- AUROC mesure la qualité de classement indépendamment du seuil
-- 98.4% mesure une décision opérationnelle avec seuil
+- AUROC (0.8673 +/- 0.0230 en CV à 5 plis) mesure la qualité de classement indépendante du seuil sur le benchmark public FTI_Zer0P
+- 98.4% mesure une décision opérationnelle interne à seuil fixe, et non un score AUROC public
 
 ## Ce que j'ai appris sur le transfert
 
@@ -724,7 +724,7 @@ Artefacts :
           {
             question: '¿Qué resultado logró el sistema industrial?',
             answer:
-              'En el benchmark público, la base con validación cruzada estricta de 5 folds alcanzó 0.8673 +/- 0.0230 AUROC. En producción, el pipeline de decisión alcanzó 98.4% de precisión de clasificación de defectos.',
+              'En el benchmark público FTI_Zer0P, la base con validación cruzada estricta de 5 folds alcanzó 0.8673 +/- 0.0230 AUROC. Por separado, en producción interna se registró 98.4% de precisión binaria dependiente del umbral (métrica operativa, no comparable al AUROC público).',
           },
           {
             question: '¿Cuál era la arquitectura?',
@@ -769,14 +769,14 @@ La base pública por crops con λ = 0.0 alcanzó:
 
 - **0.8673 +/- 0.0230 AUROC**
 
-En el modo de decisión de producción, el sistema alcanzó:
+En una evaluación operativa interna con umbral fijo en despliegue, el sistema alcanzó:
 
-- **98.4% de precisión de clasificación de defectos**
+- **98.4% de precisión de clasificación de defectos** (métrica operativa interna dependiente del umbral; no comparable con el AUROC público)
 
-Estos dos números describen dos cosas distintas:
+Estos dos números describen dos realidades distintas:
 
-- AUROC mide calidad de ranking sin depender del umbral
-- 98.4% describe una decisión operativa con umbral
+- AUROC (0.8673 +/- 0.0230 en CV de 5 folds) mide calidad de ranking independiente del umbral sobre el benchmark público FTI_Zer0P
+- 98.4% describe un umbral de decisión operativo interno en despliegue, no un benchmark público de AUROC
 
 ## Lo que aprendí sobre transferencia
 
@@ -807,7 +807,7 @@ Artefactos:
           {
             question: 'ما النتيجة التي حققها النظام الصناعي؟',
             answer:
-              'على benchmark العام وصلت baseline مع تحقق تقاطعي صارم من 5 طيات إلى 0.8673 +/- 0.0230 AUROC. وفي وضع التشغيل وصل خط القرار إلى 98.4% دقة في تصنيف العيوب.',
+              'على معيار FTI_Zer0P العام وصلت baseline مع تحقق تقاطعي صارم من 5 طيات إلى 0.8673 +/- 0.0230 AUROC. وبشكل منفصل، سجّل التشغيل الداخلي دقة تصنيف ثنائية 98.4% تعتمد على العتبة (مقياس تشغيلي داخلي غير قابل للمقارنة مع AUROC العام).',
           },
           {
             question: 'ما هي البنية المستخدمة؟',
@@ -852,14 +852,14 @@ Artefactos:
 
 - **0.8673 +/- 0.0230 AUROC**
 
-وفي وضع القرار التشغيلي وصل النظام إلى:
+وفي تقييم تشغيلي داخلي يعتمد على عتبة قرار محددة في بيئة الإنتاج وصل النظام إلى:
 
-- **98.4% دقة في تصنيف العيوب**
+- **98.4% دقة في تصنيف العيوب** (مقياس تشغيلي داخلي يعتمد على العتبة؛ غير قابل للمقارنة مع AUROC العام)
 
 هاتان النتيجتان تصفان مستويين مختلفين:
 
-- AUROC يقيس جودة الترتيب من دون الاعتماد على threshold
-- 98.4% تصف قراراً تشغيلياً عند threshold محدد
+- AUROC (0.8673 +/- 0.0230 عبر تحقق تقاطعي من 5 طيات) يقيس جودة الترتيب مستقلة عن العتبة على معيار FTI_Zer0P العام
+- 98.4% تصف عتبة قرار تشغيلية داخلية في الإنتاج وليست نتيجة AUROC على معيار عام
 
 ## ما تعلمته عن النقل بين المجالات
 
@@ -1256,384 +1256,6 @@ config = {
 - حلقة تقييم منضبطة
 - التعامل مع أنواع الميزات كمشكلات فرعية مختلفة
 - تحسين النظام من أجل استدلال موثوق
-        `,
-      },
-    },
-  },
-  {
-    slug: '5-month-llm-adventure',
-    date: '2025-11-15',
-    ogImage: '/og-5-month-llm-adventure.png',
-    lastModified: '2026-04-25',
-    translations: {
-      en: {
-        title: 'Shipping Faultrix: What I Learned Building an AI SaaS From Zero',
-        excerpt:
-          'What changed when I moved from research into product building: Faultrix, an AI SaaS for construction quality control that generated ONORM-aligned reports in under a minute.',
-        tags: ['LLM', 'SaaS', 'Next.js', 'OpenAI', 'Production AI', 'Faultrix'],
-        readingTime: '9 min read',
-        faq: [
-          {
-            question: 'What was Faultrix?',
-            answer:
-              'Faultrix was an AI-powered construction quality-control SaaS. Users uploaded site photos and received a structured ONORM-aligned report with evidence handling and security-minded storage.',
-          },
-          {
-            question: 'What stack powered it?',
-            answer:
-              'Next.js, Convex, OpenAI API, Clerk, Cloudflare R2, Stripe, Docker, and a Python-heavy AI workflow behind the scenes.',
-          },
-          {
-            question: 'What was hardest?',
-            answer:
-              'Not the AI itself. The hardest part was making the product fit real workflows, legal formatting expectations, and a low-friction user experience.',
-          },
-        ],
-        content: `
-## From Research to Product
-
-Faultrix was an AI-powered construction quality-control SaaS. A user uploaded site photos, the system analyzed them, and the platform generated an ONORM-aligned report in under a minute.
-
-Building it taught me that the jump from research to product is not mostly about choosing another model. It is about making the whole system useful.
-
-## The Product Stack
-
-Faultrix was built with:
-
-- Next.js
-- Convex
-- OpenAI API
-- Clerk
-- Cloudflare R2
-- Stripe
-- Docker
-
-The stack was chosen for speed of iteration and operational clarity. I wanted to spend time on product flow, reliability, and reporting quality, not on boilerplate infrastructure.
-
-## The Hardest Part Was Not the Model
-
-The AI side was important, but it was not the hardest part. The hardest part was product fit:
-
-- shaping outputs so they matched real reporting expectations
-- keeping the user flow short and clear
-- handling evidence and storage in a way that felt trustworthy
-
-That is where research instincts help and fail at the same time. Rigor transfers well. Product intuition has to be earned in the field.
-
-## What Research Helped With
-
-- structured experimentation
-- testing output quality before shipping
-- understanding where the model should ask for human review
-
-## What Research Did Not Automatically Teach Me
-
-- pricing
-- friction in onboarding
-- how fast users lose patience
-- how much UX can matter more than raw model capability
-
-## The Main Lesson
-
-The first version of Faultrix had strong AI and too much workflow friction. That taught me the key product lesson: users experience value through the path, not through the architecture diagram.
-
-If the path to value is too long, the sophistication underneath barely matters.
-        `,
-      },
-      de: {
-        title: 'Faultrix ausliefern: Was ich beim Bau eines AI-SaaS von null gelernt habe',
-        excerpt:
-          'Was sich verändert hat, als ich von Forschung in Produktbau gewechselt bin: Faultrix, ein AI-SaaS für Bauqualitätskontrolle mit ÖNORM-orientierten Berichten in unter einer Minute.',
-        tags: ['LLM', 'SaaS', 'Next.js', 'OpenAI', 'Production AI', 'Faultrix'],
-        readingTime: '9 Min. Lesezeit',
-        faq: [
-          {
-            question: 'Was war Faultrix?',
-            answer:
-              'Faultrix war ein KI-basiertes SaaS für Bauqualitätskontrolle. Nutzer luden Baustellenfotos hoch und erhielten einen strukturierten ÖNORM-orientierten Bericht mit Evidenzkette und sicherheitsbewusster Speicherung.',
-          },
-          {
-            question: 'Welcher Stack steckte dahinter?',
-            answer:
-              'Next.js, Convex, OpenAI API, Clerk, Cloudflare R2, Stripe, Docker und ein Python-lastiger AI-Workflow im Hintergrund.',
-          },
-          {
-            question: 'Was war am schwierigsten?',
-            answer:
-              'Nicht die KI selbst. Schwieriger war, das Produkt an echte Arbeitsabläufe, Formatvorgaben und eine reibungsarme UX anzupassen.',
-          },
-        ],
-        content: `
-## Von Forschung zu Produkt
-
-Faultrix war ein KI-basiertes SaaS für Bauqualitätskontrolle. Nutzer luden Fotos hoch, das System analysierte sie, und in weniger als einer Minute entstand ein ÖNORM-orientierter Bericht.
-
-Beim Bauen wurde mir klar: Der Schritt von Forschung zu Produkt besteht nicht primär aus einem anderen Modell, sondern daraus, das ganze System nützlich zu machen.
-
-## Der Produkt-Stack
-
-Faultrix wurde gebaut mit:
-
-- Next.js
-- Convex
-- OpenAI API
-- Clerk
-- Cloudflare R2
-- Stripe
-- Docker
-
-Ich habe den Stack so gewählt, dass schnelle Iteration möglich ist und der operative Aufbau klar bleibt.
-
-## Das Schwierigste war nicht das Modell
-
-Die KI war wichtig, aber nicht der härteste Teil. Schwieriger waren:
-
-- Ausgaben so formen, dass sie zu realen Berichtsabläufen passen
-- den Nutzerpfad kurz und klar halten
-- Evidenz und Speicherung vertrauenswürdig präsentieren
-
-Genau hier helfen Forschungsinstinkte teilweise und teilweise nicht. Strenge überträgt sich gut. Produktintuition muss man sich in der Praxis erarbeiten.
-
-## Was die Forschung übertragen hat
-
-- systematisches Experimentieren
-- Qualitätstests vor dem Release
-- gutes Gespür dafür, wann menschliche Prüfung nötig ist
-
-## Was die Forschung nicht automatisch lehrt
-
-- Pricing
-- Reibung beim Onboarding
-- wie schnell Nutzer Geduld verlieren
-- wie oft UX wichtiger ist als reine Modellstärke
-
-## Die wichtigste Lektion
-
-Die erste Version von Faultrix hatte starke KI, aber zu viel Reibung im Ablauf. Daraus entstand die wichtigste Produktlektion: Nutzer erleben Wert über den Weg, nicht über das Architekturdiagramm.
-
-Wenn der Weg zum Nutzen zu lang ist, spielt die darunterliegende Raffinesse kaum noch eine Rolle.
-        `,
-      },
-      fr: {
-        title: "Livrer Faultrix : ce que j'ai appris en construisant un SaaS IA de zéro",
-        excerpt:
-          "Ce qui a changé lorsque je suis passé de la recherche au produit : Faultrix, un SaaS IA pour le contrôle qualité construction qui générait des rapports alignés ÖNORM en moins d'une minute.",
-        tags: ['LLM', 'SaaS', 'Next.js', 'OpenAI', 'IA en production', 'Faultrix'],
-        readingTime: '9 min de lecture',
-        faq: [
-          {
-            question: "Qu'était Faultrix ?",
-            answer:
-              "Faultrix était un SaaS de contrôle qualité construction piloté par IA. Les utilisateurs chargeaient des photos de chantier et recevaient un rapport structuré aligné ÖNORM avec gestion des preuves et stockage sécurisé.",
-          },
-          {
-            question: 'Quel stack utilisait-il ?',
-            answer:
-              'Next.js, Convex, OpenAI API, Clerk, Cloudflare R2, Stripe, Docker, plus un workflow IA fortement centré sur Python.',
-          },
-          {
-            question: "Qu'est-ce qui a été le plus difficile ?",
-            answer:
-              "Pas l'IA en elle-même. Le plus difficile a été d'adapter le produit aux vrais usages, aux attentes de format et à une UX sans friction.",
-          },
-        ],
-        content: `
-## De la recherche au produit
-
-Faultrix était un SaaS de contrôle qualité construction alimenté par IA. L'utilisateur chargeait des photos de chantier, le système les analysait, puis générait un rapport aligné ÖNORM en moins d'une minute.
-
-Le vrai saut entre recherche et produit n'est pas seulement une question de modèle. C'est la capacité à rendre tout le système utile.
-
-## Le stack produit
-
-Faultrix a été construit avec :
-
-- Next.js
-- Convex
-- OpenAI API
-- Clerk
-- Cloudflare R2
-- Stripe
-- Docker
-
-Ce stack a été choisi pour itérer vite et garder un système simple à faire évoluer.
-
-## Le plus dur n'était pas le modèle
-
-La partie IA comptait, mais ce n'était pas le plus dur. Le plus dur était :
-
-- adapter la sortie aux attentes réelles de reporting
-- garder le parcours utilisateur court et clair
-- rendre la gestion des preuves et du stockage digne de confiance
-
-La rigueur de recherche aide beaucoup. L'intuition produit, elle, se construit au contact du terrain.
-
-## Ce que la recherche m'a apporté
-
-- expérimentation structurée
-- tests de qualité avant livraison
-- bonne compréhension des limites du modèle
-
-## Ce que la recherche ne m'a pas donné automatiquement
-
-- la logique de pricing
-- la gestion de la friction d'onboarding
-- la vitesse à laquelle un utilisateur perd patience
-- le fait que l'UX peut compter plus que la sophistication du modèle
-
-## La leçon principale
-
-La première version de Faultrix avait une IA solide mais trop de friction. La leçon a été simple : la valeur est ressentie à travers le parcours utilisateur, pas à travers le schéma technique.
-
-Si le chemin vers la valeur est trop long, la sophistication du dessous ne compense pas.
-        `,
-      },
-      es: {
-        title: 'Lanzando Faultrix: lo que aprendí construyendo un SaaS de IA de cero',
-        excerpt:
-          'Lo que cambió cuando pasé de investigación a producto: Faultrix, un SaaS de IA para control de calidad en construcción que generaba informes alineados con ÖNORM en menos de un minuto.',
-        tags: ['LLM', 'SaaS', 'Next.js', 'OpenAI', 'IA en producción', 'Faultrix'],
-        readingTime: '9 min de lectura',
-        faq: [
-          {
-            question: '¿Qué era Faultrix?',
-            answer:
-              'Faultrix era un SaaS de control de calidad en construcción impulsado por IA. Los usuarios subían fotos de obra y recibían un informe estructurado alineado con ÖNORM, con manejo de evidencia y almacenamiento seguro.',
-          },
-          {
-            question: '¿Qué stack usaba?',
-            answer:
-              'Next.js, Convex, OpenAI API, Clerk, Cloudflare R2, Stripe, Docker y un flujo de IA muy apoyado en Python.',
-          },
-          {
-            question: '¿Qué fue lo más difícil?',
-            answer:
-              'No la IA en sí. Lo más difícil fue adaptar el producto a flujos reales, expectativas de formato y una UX con poca fricción.',
-          },
-        ],
-        content: `
-## De investigación a producto
-
-Faultrix era un SaaS de control de calidad en construcción impulsado por IA. El usuario subía fotos de obra, el sistema las analizaba y generaba un informe alineado con ÖNORM en menos de un minuto.
-
-El salto real entre investigación y producto no es solo elegir otro modelo. Es lograr que todo el sistema sea útil.
-
-## El stack del producto
-
-Faultrix fue construido con:
-
-- Next.js
-- Convex
-- OpenAI API
-- Clerk
-- Cloudflare R2
-- Stripe
-- Docker
-
-El stack se eligió para iterar rápido y mantener una base operativa clara.
-
-## Lo más difícil no fue el modelo
-
-La parte de IA importaba, pero no fue lo más duro. Lo más difícil fue:
-
-- ajustar la salida a expectativas reales de reporte
-- mantener el flujo del usuario corto y claro
-- presentar evidencia y almacenamiento de forma confiable
-
-La disciplina de investigación ayuda mucho. La intuición de producto hay que ganársela en el campo.
-
-## Lo que sí me dio la investigación
-
-- experimentación estructurada
-- pruebas de calidad antes de lanzar
-- comprensión de cuándo pedir revisión humana
-
-## Lo que la investigación no me dio automáticamente
-
-- pricing
-- fricción de onboarding
-- cuán rápido el usuario pierde paciencia
-- cuánto puede importar más la UX que la potencia del modelo
-
-## La lección principal
-
-La primera versión de Faultrix tenía una IA fuerte pero demasiada fricción. La lección fue clara: el usuario siente el valor a través del camino, no del diagrama de arquitectura.
-
-Si el camino hacia el valor es largo, la sofisticación técnica deja de importar.
-        `,
-      },
-      ar: {
-        title: 'إطلاق Faultrix: ما الذي تعلمته من بناء SaaS بالذكاء الاصطناعي من الصفر',
-        excerpt:
-          'ما الذي تغير عندما انتقلت من البحث إلى المنتج: Faultrix، منصة SaaS للذكاء الاصطناعي في مراقبة جودة البناء، كانت تولد تقارير متوافقة مع ONORM في أقل من دقيقة.',
-        tags: ['LLM', 'SaaS', 'Next.js', 'OpenAI', 'ذكاء اصطناعي في الإنتاج', 'Faultrix'],
-        readingTime: '9 دقائق قراءة',
-        faq: [
-          {
-            question: 'ماذا كان Faultrix؟',
-            answer:
-              'Faultrix كان SaaS لمراقبة جودة البناء مدعوم بالذكاء الاصطناعي. كان يرفع المستخدم صور الموقع ويحصل على تقرير منظم متوافق مع ONORM مع إدارة للأدلة وتخزين آمن.',
-          },
-          {
-            question: 'ما هو الـ stack المستخدم؟',
-            answer:
-              'Next.js وConvex وOpenAI API وClerk وCloudflare R2 وStripe وDocker، مع workflow كان يعتمد كثيراً على Python في طبقة الذكاء الاصطناعي.',
-          },
-          {
-            question: 'ما أصعب جزء؟',
-            answer:
-              'ليس الذكاء الاصطناعي نفسه. الأصعب كان جعل المنتج مناسباً لسير العمل الحقيقي وتوقعات التنسيق وتجربة استخدام منخفضة الاحتكاك.',
-          },
-        ],
-        content: `
-## من البحث إلى المنتج
-
-Faultrix كان SaaS لمراقبة جودة البناء بالذكاء الاصطناعي. كان يرفع المستخدم صور الموقع، ثم يحللها النظام ويولد تقريراً متوافقاً مع ONORM في أقل من دقيقة.
-
-الانتقال الحقيقي من البحث إلى المنتج لا يعني فقط اختيار نموذج آخر، بل يعني جعل النظام كله مفيداً فعلاً.
-
-## stack المنتج
-
-تم بناء Faultrix باستخدام:
-
-- Next.js
-- Convex
-- OpenAI API
-- Clerk
-- Cloudflare R2
-- Stripe
-- Docker
-
-تم اختيار هذا stack من أجل سرعة التطوير ووضوح البنية التشغيلية.
-
-## أصعب جزء لم يكن النموذج
-
-طبقة الذكاء الاصطناعي كانت مهمة، لكنها لم تكن الأصعب. الأصعب كان:
-
-- تشكيل المخرجات بحيث تناسب توقعات التقارير الحقيقية
-- إبقاء مسار المستخدم قصيراً وواضحاً
-- تقديم الأدلة والتخزين بطريقة موثوقة
-
-صرامة البحث تساعد كثيراً، لكن حدس المنتج لا يأتي تلقائياً، بل يُكتسب من الاحتكاك الحقيقي مع المستخدمين.
-
-## ما الذي نقلته معي من البحث
-
-- التجريب المنظم
-- اختبار جودة المخرجات قبل الإطلاق
-- فهم متى يجب طلب مراجعة بشرية
-
-## ما الذي لم يعلمنيه البحث تلقائياً
-
-- التسعير
-- احتكاك onboarding
-- مدى سرعة فقدان المستخدم للصبر
-- كيف يمكن أن تتفوق UX على قوة النموذج نفسها
-
-## الدرس الأساسي
-
-كانت النسخة الأولى من Faultrix قوية من ناحية الذكاء الاصطناعي، لكنها احتوت على احتكاك كبير في سير الاستخدام. والدرس كان واضحاً: المستخدم يشعر بالقيمة عبر المسار الذي يسلكه، لا عبر مخطط البنية.
-
-إذا كان الطريق إلى القيمة طويلاً، فلن تنقذ التعقيدات التقنية التجربة.
         `,
       },
     },
