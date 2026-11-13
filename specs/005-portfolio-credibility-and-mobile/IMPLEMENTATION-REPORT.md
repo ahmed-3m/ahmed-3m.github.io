@@ -49,11 +49,10 @@
 
 ### Priority 4 — Research Previews & Verified Score Convention
 - **Verified thesis score convention**:
-  - Confirmed in `public/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf` (Eq. 3.3, pp. 44–45, 57–59) and `src/lib/ood-explorer-data.ts` that `s_OOD(x) = ê₀(x) - ê₁(x)` with `c=0` (`normal`/`airplane`) and `c=1` (`other`/`rest`). ID samples yield lower `ê₀` than `ê₁` (negative score); OOD samples yield higher `ê₀` than `ê₁` (`s_OOD(x) >= τ` predicts OOD, `τ = 0.000612` at 95% TPR on CIFAR-10 seed-42).
+  - Confirmed in `public/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf` (Eq. 3.3, pp. 44–45, 57–59) and `src/lib/ood-explorer-data.ts` that `s_OOD(x) = ê₀(x) - ê₁(x)` with `c=0` (`normal`/`airplane`) and `c=1` (`other`/`rest`). Training with `L_sep` shifts ID scores lower and OOD scores higher with real distribution overlap (`4.7%` FPR at `95%` TPR on Within-CIFAR-10 seed 42; `14.8%`–`30.1%` across external benchmarks). Inference classifies OOD when `s_OOD(x) >= τ`, where the calibrated threshold `τ` may be positive or negative (`+0.000612` on Within-CIFAR-10, `-0.000052` on CIFAR-100, `-0.000072` on Places365, `-0.000290` on FashionMNIST, `-0.000625` on Textures, `-0.000527` on SVHN at `95%` TPR). Also aligned `src/components/OodDemo.tsx` (`>= τ` rule and signed cohort means on Tab 2).
 - **Accurate Step 3 graphic & lightweight previews**:
-  - Generated `public/research/separation-gap-score.png` (`1672×941`, `67,830` bytes) replacing the inaccurate direction in the prior Step 3 asset (`separation-gap-clean.png` retained untouched in `public/research/`).
-  - Generated `800×450` WebP inline previews (`separation-denoise-preview.webp` `27,286` B, `separation-apart-preview.webp` `15,368` B, `separation-gap-preview.webp` `28,452` B; `71,106` bytes combined vs. `4.22 MB` original inline PNGs).
-  - Updated `src/components/Research.tsx` with `loading="lazy"`, `decoding="async"`, explicit intrinsic `width`/`height`, inline `previewSrc` tiles, full-resolution lightbox `src` loaded only on click, and updated 5-locale copy for `plainIdea`, `step1Text`, `step2Text`, `step3`, `step3Text`, and `sepLoss`.
+  - Updated `public/research/separation-gap-score.png` (`1672×941`) and `public/research/separation-gap-preview.webp` (`800×450`) to plot the empirical CIFAR-10 seed-42 ID/OOD histograms, highlight distribution overlap, distinguish `s = 0` from calibrated `τ`, and show both `+τ` and `−τ` operating points (`separation-gap-clean.png` retained untouched in `public/research/`).
+  - Updated `src/components/Research.tsx` with `loading="lazy"`, `decoding="async"`, explicit intrinsic `width`/`height`, inline `previewSrc` tiles (`separation-denoise-preview.webp`, `separation-apart-preview.webp`, `separation-gap-preview.webp`), full-resolution lightbox `src` loaded only on click, and updated 5-locale copy for `alt`, `caption`, `plainIdea`, and `step3Text`.
 
 ### Priority 5 — Recruiter Positioning & `1200×630` Share Cards
 - **Recruiter positioning**:
@@ -87,26 +86,26 @@
   - `0` horizontal overflows, expected per-route `og:image`/`twitter:image`, mobile hamburger drawer open cleanly (`overflowX: false`), Chatbot starter chips free of Faultrix (`0` Faultrix hits), and interactive `#ood-explorer` 3-tab check (`check-ood-explorer.mjs` at `375px` light theme) with `0` horizontal overflow.
 - Lazy image & lightbox behavior:
   - Initial load requested only `/headshot.jpg` and `/icon.svg`.
-  - Scrolling to `#research` requested only the 3 `.webp` previews (`71,106` B total) and CIFAR charts; **0** full-resolution formula PNGs loaded prior to interaction.
-  - Clicking Step 3 opened `.cd-lightbox-inner` and loaded `/research/separation-gap-score.png` (`1672×941`, `67,830` B); pressing `Escape` closed the lightbox and returned focus to `.cd-rfc-visual-button`.
-- Reduced motion (`prefers-reduced-motion: reduce`): `hiddenCount: 0` across all 35 `.reveal` elements.
+  - Scrolling to `#research` requested only the 3 `.webp` previews (`27,286` B + `15,368` B + `48,100` B = `90,754` B total) and CIFAR charts; **0** full-resolution formula PNGs loaded prior to interaction.
+  - Clicking Step 3 opened `.cd-lightbox-inner` and loaded `/research/separation-gap-score.png` (`1672×941`, `238,587` B); pressing `Escape` closed the lightbox and returned focus to `.cd-rfc-visual-button`.
+- Reduced motion (`prefers-reduced-motion: reduce`): `hiddenCount: 0` on `.reveal` elements.
 - No-JS (`setScriptExecutionDisabled(true)`): Contact section and all 8 Contact links rendered with `opacity: 1` (`hiddenLinkCount: 0`) and `<noscript>` `.reveal` fallback stylesheet present.
 - Console / runtime errors: **0** (note: static `out/` crawl logs expected 404s on client-side Next.js RSC prefetch `__next.*.txt` probes when served without rewrite; 0 broken CSS/JS/font/image assets).
 - Visual inspection of screenshots verified crisp dark/light contrast, desktop & 375px hero wrapping, Arabic RTL timeline alignment & `Ahmed.` brand isolation, interactive `#ood-explorer` light-mode contrast, and the Step 3 lightbox diagram.
 
 ### Mobile Lighthouse Comparison (Comparable Runs on `http://127.0.0.1:4173/`)
 
-| Metric / Audit | Before (Baseline) | After RFC 005 (Run 1) | After RFC 005 (Run 2) |
+| Metric / Audit | Before (Baseline) | After RFC 005 (Prior Runs 1/2) | After Step 3 Diagram Update |
 | --- | --- | --- | --- |
-| Performance | 67 | 99 | 99 |
-| Accessibility | 93 | 100 | 100 |
-| Best Practices | 96 | 100 | 100 |
-| SEO | 100 | 100 | 100 |
-| FCP | 1.4 s | 1.5 s | 1.5 s |
-| LCP | 10.2 s | 1.5 s | 1.5 s |
-| CLS | 0 | 0 | 0 |
-| TBT | 0 ms | 20 ms | 10 ms |
-| Total Byte Weight | 5,526,168 B | 1,721,668 B | 1,721,668 B |
+| Performance | 67 | 99 / 99 | 99 |
+| Accessibility | 93 | 100 / 100 | 100 |
+| Best Practices | 96 | 100 / 100 | 100 |
+| SEO | 100 | 100 / 100 | 100 |
+| FCP | 1.4 s | 1.5 s / 1.5 s | 1.5 s |
+| LCP | 10.2 s | 1.5 s / 1.5 s | 1.5 s |
+| CLS | 0 | 0 / 0 | 0 |
+| TBT | 0 ms | 20 ms / 10 ms | 20 ms |
+| Total Byte Weight | 5,526,168 B | 1,721,668 B / 1,721,668 B | 1,723,182 B |
 | `color-contrast` violations | 139 items (score 0) | 0 items (score 1) | 0 items (score 1) |
 
 ## 3. Unresolved Items & Owner Decisions Needed

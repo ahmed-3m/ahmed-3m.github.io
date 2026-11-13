@@ -380,7 +380,7 @@ export default function OodDemo() {
           </div>
           <div>
             <strong style={{ color: 'var(--cd-success)' }}>Eq. 3.3 (OOD Score):</strong>{' '}
-            s_OOD(x) = ê₀(x) − ê₁(x) &gt; τ ⇒ OOD
+            s_OOD(x) = ê₀(x) − ê₁(x) ≥ τ ⇒ OOD
           </div>
         </div>
       </div>
@@ -886,7 +886,10 @@ export default function OodDemo() {
                   c=0: <strong>{activeTimestep.idC0Mean.toFixed(4)}</strong> · c=1: <strong>{activeTimestep.idC1Mean.toFixed(4)}</strong>
                 </div>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-success)', marginTop: 2 }}>
-                  ê₀ − ê₁ = {(activeTimestep.idC0Mean - activeTimestep.idC1Mean).toFixed(5)} (ID &lt; 0)
+                  Mean ê₀ − ê₁ = {(() => {
+                    const diff = activeTimestep.idC0Mean - activeTimestep.idC1Mean
+                    return `${diff >= 0 ? '+' : ''}${diff.toFixed(5)}`
+                  })()}
                 </div>
               </div>
 
@@ -895,8 +898,11 @@ export default function OodDemo() {
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--cd-fg)', marginTop: 4 }}>
                   c=0: <strong>{activeTimestep.oodC0Mean.toFixed(4)}</strong> · c=1: <strong>{activeTimestep.oodC1Mean.toFixed(4)}</strong>
                 </div>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: '#f97316', marginTop: 2 }}>
-                  ê₀ − ê₁ = +{(activeTimestep.oodC0Mean - activeTimestep.oodC1Mean).toFixed(5)} (OOD &gt; 0)
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-warn)', marginTop: 2 }}>
+                  Mean ê₀ − ê₁ = {(() => {
+                    const diff = activeTimestep.oodC0Mean - activeTimestep.oodC1Mean
+                    return `${diff >= 0 ? '+' : ''}${diff.toFixed(5)}`
+                  })()}
                 </div>
               </div>
 
