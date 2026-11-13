@@ -3,6 +3,8 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import CaseStudyPage from '@/components/CaseStudyPage'
 
+import { ogImage } from '@/lib/seo'
+
 export const metadata: Metadata = {
   title: 'Diffusion OOD Detection — 99.03% AUROC (Case Study)',
   description:
@@ -11,17 +13,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Diffusion OOD Detection — 99.03% AUROC (Case Study)',
     description:
-      'Conditional diffusion models as generative OOD classifiers with a novel separation loss: 99.03% ± 0.07% AUROC, +6.5pp over baseline, high seed stability.',
+      'Conditional diffusion models as generative OOD classifiers with a novel separation loss: 99.03% ± 0.07% AUROC, +6.5pp over baseline, low seed standard deviation.',
     type: 'article',
     url: 'https://ahmed-3m.github.io/case-studies/diffusion-ood/',
-    images: [
-      {
-        url: '/og-diffusion-models-anomaly-detection.png',
-        width: 1200,
-        height: 630,
-        alt: 'Diffusion OOD detection case study',
-      },
-    ],
+    images: ogImage('Diffusion OOD detection case study', '/og-diffusion-ood.png'),
   },
 }
 
