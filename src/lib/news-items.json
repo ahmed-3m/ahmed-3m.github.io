@@ -1,83 +1,5 @@
 [
   {
-    "id": "yc-qm-agent-harness-open-source",
-    "date": "2026-08-01",
-    "category": "agentic",
-    "headline": {
-      "en": "Y Combinator Open-Sources QM, the AI Agent Harness It Uses to Run Itself",
-      "de": "Y Combinator open-sourct QM, den KI-Agenten-Harness, mit dem es sich selbst betreibt",
-      "fr": "Y Combinator publie en open source QM, l'harnais d'agents IA avec lequel il se gère lui-même",
-      "es": "Y Combinator libera como open source QM, el harness de agentes de IA con el que se gestiona a sí mismo",
-      "ar": "Y Combinator تُطلق مصدر QM المفتوح، حزمة وكلاء الذكاء الاصطناعي التي تُشغّل بها نفسها"
-    },
-    "source": "Startup Fortune",
-    "url": "https://startupfortune.com/y-combinator-open-sources-qm-the-ai-agent-harness-it-uses-to-run-itself/",
-    "take": {
-      "en": "YC releasing the harness it actually runs its own accounting, legal, and engineering teams on is the strongest signal yet that the hard part of agents is infrastructure — scoped identity and permissions, durable sandboxes, and scheduled crons — not the model. The design choices are the production-correct ones: blast radius scoped per person and per Slack room, a model-agnostic core so you aren’t betting on one provider, and an MIT license that lets you audit the policy instead of trusting a demo.",
-      "de": "Dass YC den Harness open-sourced, auf dem es seine eigenen Buchhaltungs-, Rechts- und Engineering-Teams tatsächlich laufen lässt, ist das stärkste Signal bisher, dass der schwere Teil von Agenten Infrastruktur ist — abgegrenzte Identitäten und Berechtigungen, dauerhafte Sandboxes, geplante Crons —, nicht das Modell. Die Designentscheidungen sind produktionskorrekt: Blast Radius pro Person und pro Slack-Raum begrenzt, ein modellagnostischer Kern, damit man nicht auf einen Provider wetten muss, und eine MIT-Lizenz, die Policy-Audits erlaubt, statt einer Demo zu vertrauen.",
-      "fr": "Que YC publie en open source l'harnais sur lequel il fait réellement tourner ses propres équipes comptable, juridique et ingénierie est le signal le plus fort à ce jour que le difficile dans les agents, c'est l'infrastructure — identités et permissions cloisonnées, bacs à sable durables, crons planifiés —, pas le modèle. Les choix de conception sont les bons pour la production : rayon d'impact limité par personne et par salon Slack, un noyau agnostique du modèle pour ne pas parier sur un seul fournisseur, et une licence MIT qui permet d'auditer la politique au lieu de faire confiance à une démo.",
-      "es": "Que YC libere el harness sobre el que de verdad hacen funcionar a sus propios equipos de contabilidad, legal e ingeniería es la señal más fuerte hasta hoy de que la parte difícil de los agentes es la infraestructura — identidad y permisos acotados, sandboxes duraderos y crons programados —, no el modelo. Las decisiones de diseño son las correctas para producción: radio de impacto acotado por persona y por sala de Slack, un núcleo agnóstico del modelo para no apostar por un único proveedor, y una licencia MIT que permite auditar la política en lugar de confiar en una demo.",
-      "ar": "إطلاق YC حزمةً يُشغّل عليها فعلًا فرق المحاسبة والشؤون القانونية والهندسة لديه هو أقوى إشارة حتى الآن إلى أن الجزء الصعب في الوكلاء هو البنية التحتية — هويات وأذونات محدودة النطاق وعوازل دائمة ومهام cron مجدولة — لا النموذج. وخيارات التصميم صحيحة إنتاجيًا: نطاق انفجار محدود لكل شخص ولكل غرفة Slack، ونواة غير مرتبطة بنموذج محدد حتى لا تراهن على مورّد واحد، ورخصة MIT تتيح تدقيق السياسة بدلًا من الوثوق بعرض توضيحي."
-    },
-    "tags": [
-      "agent-harness",
-      "agent-governance",
-      "open-source"
-    ]
-  },
-  {
-    "id": "minimax-m21-multilanguage-programming",
-    "date": "2026-08-02",
-    "category": "ai",
-    "headline": {
-      "en": "MiniMax M2.1: Significantly Enhanced Multi-Language Programming, Built for Real-World Complex Tasks",
-      "de": "MiniMax M2.1: deutlich verbesserte Mehrsprachen-Programmierung, gebaut für komplexe Aufgaben in der echten Welt",
-      "fr": "MiniMax M2.1 : programmation multilingue nettement améliorée, conçu pour les tâches complexes du monde réel",
-      "es": "MiniMax M2.1: programación multilenguaje significativamente mejorada, pensado para tareas complejas del mundo real",
-      "ar": "MiniMax M2.1: برمجة متعددة اللغات محسّنة بشكل كبير ومصمم للمهام المعقدة الواقعية"
-    },
-    "source": "MiniMax",
-    "url": "https://www.minimax.io/news/minimax-m21",
-    "take": {
-      "en": "A model refresh pitched around real-world complex tasks and multi-language programming — with the weights open-sourced and a MiniMax Agent product shipping on top — is another data point that agent quality is being won in post-training and scaffolding, not new architectures. But “best level” claims measured on internal benchmarks are exactly the vendor-reported numbers I’d re-run on my own evals before routing any production work here, the way I would for any leaderboard chart.",
-      "de": "Ein Model-Refresh, das um echte komplexe Aufgaben und Mehrsprachen-Programmierung positioniert ist — mit offenen Gewichten und einem MiniMax-Agent-Produkt obendrauf —, ist ein weiterer Datenpunkt, dass Agentenqualität in Post-Training und Scaffolding gewonnen wird, nicht in neuen Architekturen. Aber „Best-Level“-Behauptungen auf internen Benchmarks sind genau die herstellerberichteten Zahlen, die ich in eigenen Evals nachrechnen würde, bevor ich hier Produktionsarbeit hinschicke — wie bei jedem Leaderboard-Chart.",
-      "fr": "Un rafraîchissement de modèle positionné sur les tâches complexes du monde réel et la programmation multilingue — avec les poids open-sourcés et un produit MiniMax Agent livré par-dessus —, c'est un point de données de plus que la qualité des agents se gagne dans le post-entraînement et l'échafaudage, pas dans les nouvelles architectures. Mais les affirmations de « meilleur niveau » mesurées sur des benchmarks internes sont exactement les chiffres déclarés par le fournisseur que je relancerais sur mes propres évals avant d'y router du travail en production, comme pour n'importe quel classement.",
-      "es": "Una actualización de modelo planteada en torno a tareas complejas del mundo real y programación multilenguaje — con los pesos open-source y un producto MiniMax Agent lanzado encima — es otro dato de que la calidad de los agentes se gana en post-entrenamiento y andamiaje, no en nuevas arquitecturas. Pero las afirmaciones de «mejor nivel» medidas en benchmarks internos son exactamente los números declarados por el proveedor que reejecutaría en mis propias evals antes de enrutar trabajo de producción aquí, como haría con cualquier tabla clasificatoria.",
-      "ar": "تحديث نموذج يُسوَّق حول المهام المعقدة الواقعية والبرمجة متعددة اللغات — مع أوزان مفتوحة المصدر ومنتج MiniMax Agent يُطلق فوقه — هو نقطة بيانات إضافية على أن جودة الوكلاء تُكسب في ما بعد التدريب والهياكل المساندة لا في المعماريات الجديدة. لكن ادعاءات «أفضل مستوى» المقيسة على معايير داخلية هي بالضبط الأرقام المورّدية التي سأعيد تشغيلها على تقييماتي قبل توجيه أي عمل إنتاجي إلى هنا، كما أفعل مع أي لوحة تصنيفات."
-    },
-    "tags": [
-      "models",
-      "agentic-coding",
-      "open-weights"
-    ]
-  },
-  {
-    "id": "openai-astra-ten-math-proofs-lean",
-    "date": "2026-08-01",
-    "category": "ai",
-    "headline": {
-      "en": "Ten advances in mathematics and theoretical computer science",
-      "de": "Zehn Fortschritte in Mathematik und theoretischer Informatik",
-      "fr": "Dix avancées en mathématiques et en informatique théorique",
-      "es": "Diez avances en matemáticas y ciencias de la computación teórica",
-      "ar": "عشرة تقدّمات في الرياضيات وعلوم الحاسوب النظرية"
-    },
-    "source": "OpenAI",
-    "url": "https://openai.com/index/ten-advances-in-mathematics/",
-    "take": {
-      "en": "The detail worth taking seriously isn't that an internal version of Astra cracked ten open math problems — it's that every result ships a Lean certificate anyone can re-check against roughly $2,000 of reproducible compute, which is the verification-first way frontier-reasoning claims ought to be announced instead of a vendor chart. The architecture to watch is OpenAI describing Astra as coordinating multiple agents over long horizons — the planner/worker pattern that wins in code, pointed at research — but I'll judge the reasoning when the weights and harness are public, not on a blog post.",
-      "de": "Das Detail, das man ernst nehmen sollte, ist nicht, dass eine interne Astra-Version zehn offene Mathe-Probleme geknackt hat — sondern dass jedes Ergebnis mit einem Lean-Zertifikat kommt, das jeder für rund 2.000 $ reproduzierbarer Rechenleistung nachprüfen kann: Verification-First, so sollten Frontier-Reasoning-Claims angekündigt werden, nicht per Vendor-Chart. Die Architektur zum Beobachten ist OpenAIs Beschreibung von Astra als Koordinator mehrerer Agenten über lange Horizonte — das Planer/Worker-Muster, das im Code gewinnt, jetzt auf Forschung gerichtet —, aber das Reasoning beurteile ich, wenn Gewichte und Harness öffentlich sind, nicht nach einem Blogpost.",
-      "fr": "Le détail à prendre au sérieux n'est pas qu'une version interne d'Astra ait résolu dix problèmes mathématiques ouverts — c'est que chaque résultat s'accompagne d'un certificat Lean que chacun peut revérifier pour environ 2,000 $ de calcul reproductible : le mode vérification-d'abord dont les annonces de raisonnement de pointe devraient s'accompagner, au lieu d'un graphique de fournisseur. L'architecture à surveiller, c'est OpenAI décrivant Astra comme coordonnant plusieurs agents sur de longs horizons — le motif planificateur/exécutants qui gagne dans le code, appliqué à la recherche — mais je jugerai le raisonnement quand les poids et l'harnais seront publics, pas sur un billet de blog.",
-      "es": "El detalle que merece tomarse en serio no es que una versión interna de Astra resolviera diez problemas matemáticos abiertos — es que cada resultado incluye un certificado Lean que cualquiera puede reverificar con unos 2.000 $ de cómputo reproducible: la manera de verificación-primero en la que deberían anunciarse las afirmaciones de razonamiento frontier, en lugar de un gráfico de proveedor. La arquitectura a vigilar es OpenAI describiendo a Astra como coordinador de múltiples agentes en horizontes largos — el patrón planificador/trabajadores que gana en código, apuntado a la investigación — pero juzgaré el razonamiento cuando los pesos y el harness sean públicos, no por una entrada de blog.",
-      "ar": "التفصيل الجدير بالأخذ بجدية ليس أن نسخة داخلية من Astra حلّت عشرة مسائل رياضية مفتوحة — بل أن كل نتيجة تأتي مع شهادة Lean يمكن لأي شخص إعادة التحقق منها بنحو 2,000 دولار من الحوسبة القابلة للاستنساخ: هذا هو نهج «التحقق أولًا» الذي ينبغي أن تُعلن به ادعاءات الاستدلال الحدودي بدلًا من مخطط مورّد. والمعمارية التي تستحق المراقبة هي وصف OpenAI لـ Astra بمنسّق عدة وكلاء عبر آفاق طويلة — نمط منسّق/عمّال الذي يفوز في الشيفرة موجّهًا نحو البحث — لكنني سأحكم على الاستدلال عندما تصبح الأوزان والحزمة عامة، لا بمقالة مدونة."
-    },
-    "tags": [
-      "reasoning",
-      "verification",
-      "multi-agent"
-    ]
-  },
-  {
     "id": "qwen-3-8-max-2-4t-open-weights",
     "date": "2026-08-03",
     "category": "ai",
@@ -127,32 +49,6 @@
       "open-weights",
       "evaluation",
       "hallucination"
-    ]
-  },
-  {
-    "id": "agents4d-runtime-safety-completion-gap",
-    "date": "2026-07-31",
-    "category": "agentic",
-    "headline": {
-      "en": "AgentS4D: Benchmarking Runtime Risks across the Execution Lifecycle of LLM-Based Workspace Agents",
-      "de": "AgentS4D: Runtime-Risiken über den gesamten Ausführungslebenszyklus LLM-basierter Workspace-Agenten gemessen",
-      "fr": "AgentS4D : mesurer les risques d'exécution sur tout le cycle de vie des agents de travail basés sur des LLM",
-      "es": "AgentS4D: riesgos en runtime a lo largo del ciclo de vida de ejecución de agentes de trabajo basados en LLM",
-      "ar": "AgentS4D: قياس مخاطر التشغيل عبر دورة حياة تنفيذ وكلاء بيئات العمل القائمين على نماذج اللغة"
-    },
-    "source": "arXiv",
-    "url": "https://arxiv.org/abs/2607.27294",
-    "take": {
-      "en": "AgentS4D's blunt finding — 66% of 6,560 sandboxed agent runs were unsafe yet still satisfied their completion check, and 97% of unsafe runs finished the task anyway — is the number every team shipping agents should internalize: a green build says nothing about runtime safety, so pass-rate marketing on agentic benchmarks is measuring the wrong thing. The second result is the one I'd act on: safety varies with the harness-model pairing and with how a risk is introduced, so you have to test complete configurations across diverse risk conditions, because neither the model identity nor a clean final output tells you whether the agent stayed inside its boundaries.",
-      "de": "AgentS4Ds nüchternes Ergebnis — 66 % von 6.560 Sandbox-Agenten-Läufen waren unsicher und bestanden trotzdem ihren Completion-Check, 97 % der unsicheren Läufe haben die Aufgabe dennoch beendet —, ist die Zahl, die jedes Agenten-Team verinnerlichen sollte: Ein grüner Build sagt nichts über Laufzeitsicherheit, Pass-Rate-Marketing auf Agentic-Benchmarks misst also das Falsche. Das zweite Resultat ist das, wonach ich handeln würde: Sicherheit variiert mit der Harness-Modell-Kombination und damit, wie ein Risiko eingeschleust wird — man muss komplette Konfigurationen über verschiedene Risikobedingungen hinweg testen, denn weder die Modellidentität noch ein sauberes Endergebnis sagen dir, ob der Agent in seinen Grenzen blieb.",
-      "fr": "Le constat brutal d'AgentS4D — 66 % des 6,560 exécutions d'agents en bac à sable étaient dangereuses tout en satisfaisant leur contrôle d'achèvement, et 97 % des exécutions dangereuses ont quand même terminé la tâche —, c'est le chiffre que chaque équipe qui met des agents en production devrait intégrer : un build vert ne dit rien de la sécurité à l'exécution, alors le marketing de taux de réussite sur les benchmarks agentiques mesure la mauvaise chose. Le second résultat est celui sur lequel j'agirais : la sécurité varie selon le couple harnais-modèle et selon la façon dont un risque est introduit ; il faut donc tester des configurations complètes sous des conditions de risque diverses, car ni l'identité du modèle ni une sortie finale propre ne disent si l'agent est resté dans ses limites.",
-      "es": "El hallazgo crudo de AgentS4D — el 66 % de 6.560 ejecuciones de agentes en sandbox fueron inseguras y aun así satisfacían su verificación de finalización, y el 97 % de las ejecuciones inseguras terminaron la tarea de todos modos — es la cifra que todo equipo que despliega agentes debería interiorizar: un build verde no dice nada de la seguridad en runtime, así que el marketing de tasas de acierto en benchmarks agénticos mide lo incorrecto. El segundo resultado es el que pondría en práctica: la seguridad varía con el emparejamiento harness-modelo y con cómo se introduce un riesgo, así que hay que probar configuraciones completas en condiciones de riesgo diversas, porque ni la identidad del modelo ni una salida final limpia te dicen si el agente se quedó dentro de sus límites.",
-      "ar": "نتيجة AgentS4D الصريحة — 66% من 6,560 تشغيلًا لوكلاء داخل عوازل كانت غير آمنة ومع ذلك نجحت في فحص الإتمام، و97% من التشغيلات غير الآمنة أنهت المهمة رغم ذلك — هي الرقم الذي ينبغي لكل فريق يُطلق وكلاء أن يستبطنه: البناء الأخضر لا يقول شيئًا عن أمان التشغيل، ولذا فتسويق معدلات النجاح على معايير الوكالة يقيس الشيء الخطأ. والنتيجة الثانية هي ما سأتصرف بناءً عليه: الأمان يتفاوت تبعًا لاقتران الحزمة-النموذج ولكيفية إدخال الخطر، فيجب اختبار تكوينات كاملة عبر ظروف خطرة متنوعة، فلا هوية النموذج ولا مخرَج نهائي نظيف يخبرك إن بقي الوكيل داخل حدوده."
-    },
-    "tags": [
-      "agent-safety",
-      "evaluation",
-      "benchmarks"
     ]
   },
   {
@@ -5047,6 +4943,108 @@
     },
     "tags": [
       "self-improvement",
+      "evaluation"
+    ]
+  },
+  {
+    "id": "gemini-4-hydrogen-agentic-workflows",
+    "date": "2026-11-12",
+    "category": "agentic",
+    "headline": {
+      "en": "Introducing Gemini 4 Hydrogen for Agentic Workflows",
+      "de": "Gemini 4 Hydrogen für agentische Workflows vorgestellt",
+      "fr": "Présentation de Gemini 4 Hydrogen pour les workflows agentiques",
+      "es": "Presentamos Gemini 4 Hydrogen para flujos de trabajo agénticos",
+      "ar": "إطلاق Gemini 4 Hydrogen لسير عمل الوكلاء"
+    },
+    "source": "Google",
+    "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-hydrogen/",
+    "take": {
+      "en": "The model is fine, but Orchestrator is the real story: dynamically switching between Carbon and Hydrogen within a single session hit near-Carbon success on Terminal-Bench 4.0 while using 24% less quota — that coordinator-plus-cheap-executor split is how production agent stacks should be built. Flat $1.50/$7.50 pricing across the full 1M-token context also kills the long-context surcharge excuse for skipping end-to-end evals.",
+      "de": "Das Modell ist in Ordnung, aber Orchestrator ist die eigentliche Geschichte: Der dynamische Wechsel zwischen Carbon und Hydrogen innerhalb einer einzigen Session erreichte nahezu Carbon-Erfolgsraten auf Terminal-Bench 4.0 bei 24% weniger Quota — diese Aufteilung in Koordinator und günstigen Executor ist genau so, wie Produktions-Stacks für Agenten aussehen sollten. Der flache Preis von $1.50/$7.50 über das gesamte 1M-Token-Kontextfenster beseitigt zudem die Ausrede, lange Kontexte machten End-to-Evals zu teuer.",
+      "fr": "Le modèle est correct, mais Orchestrator est la vraie nouvelle : la bascule dynamique entre Carbon et Hydrogen au sein d'une seule session a atteint un taux de réussite proche de Carbon sur Terminal-Bench 4.0 avec 24% de quota en moins — cette répartition entre coordinateur et exécuteur économique est exactement la façon dont les stacks d'agents en production devraient être construites. Le tarif plat de $1.50/$7.50 sur tout le contexte de 1M tokens fait aussi tomber l'excuse du surcoût des longs contextes pour esquiver les évaluations de bout en bout.",
+      "es": "El modelo está bien, pero Orchestrator es la verdadera historia: alternar dinámicamente entre Carbon y Hydrogen dentro de una sola sesión logró una tasa de éxito cercana a la de Carbon en Terminal-Bench 4.0 usando 24% menos cuota — esa división entre coordinador y ejecutor económico es exactamente como deberían construirse los stacks de agentes en producción. El precio plano de $1.50/$7.50 en todo el contexto de 1M tokens elimina además la excusa del recargo por contexto largo para saltarse las evaluaciones de extremo a extremo.",
+      "ar": "النموذج جيد، لكن القصة الحقيقية هي Orchestrator: التبديل الديناميكي بين Carbon وHydrogen داخل جلسة واحدة حقق معدل نجاح يقارب Carbon على Terminal-Bench 4.0 مع استهلاك 24% أقل من الحصة — وهذا الفصل بين منسّق ومنفّذ رخيص هو بالضبط كيف ينبغي بناء منظومات الوكلاء في الإنتاج. كما أن التسعير الموحد $1.50/$7.50 على كامل سياق 1M من الرموز يُسقط حجة «رسوم السياق الطويل» للتملّص من التقييمات الشاملة."
+    },
+    "tags": [
+      "gemini",
+      "orchestration",
+      "model-economics"
+    ]
+  },
+  {
+    "id": "anthropic-self-hosted-claude-managed-agents",
+    "date": "2026-11-12",
+    "category": "agentic",
+    "headline": {
+      "en": "Operate Claude Managed Agents inside your security perimeter",
+      "de": "Claude Managed Agents innerhalb Ihres Sicherheitsperimeters betreiben",
+      "fr": "Faire tourner Claude Managed Agents à l'intérieur de votre périmètre de sécurité",
+      "es": "Opere Claude Managed Agents dentro de su perímetro de seguridad",
+      "ar": "تشغيل Claude Managed Agents داخل محيطك الأمني"
+    },
+    "source": "Anthropic",
+    "url": "https://claude.com/resources/articles/self-hosted-claude-managed-agents",
+    "take": {
+      "en": "Running the entire control plane — harness, sandboxes, credentials, session history — inside your own perimeter is the right decomposition, because residency anxiety is mostly about where the control plane and history live, not where the weights are served. I'd still export every self-hosted session over OpenTelemetry; 'it runs in our cloud' is not an audit.",
+      "de": "Die gesamte Control Plane — Harness, Sandboxes, Credentials, Sitzungshistorie — im eigenen Perimeter zu betreiben ist die richtige Zerlegung, denn Sorgen um Datenresidenz drehen sich meist darum, wo Control Plane und Historie liegen, nicht wo die Gewichte ausgeliefert werden. Ich würde trotzdem jede selbst gehostete Session über OpenTelemetry exportieren; „läuft in unserer Cloud“ ist kein Audit.",
+      "fr": "Faire tourner tout le plan de contrôle — harness, sandboxes, identifiants, historique de session — dans votre propre périmètre est la bonne décomposition, car l'inquiétude de résidence porte surtout sur l'endroit où vivent le plan de contrôle et l'historique, pas sur celui où les poids sont servis. J'exporterais quand même chaque session auto-hébergée via OpenTelemetry ; « ça tourne dans notre cloud » n'est pas un audit.",
+      "es": "Ejecutar todo el plano de control — harness, sandboxes, credenciales, historial de sesiones — dentro de tu propio perímetro es la descomposición correcta, porque la preocupación por la residencia gira sobre todo en torno a dónde viven el plano de control y el historial, no dónde se sirven los pesos. Aun así exportaría cada sesión autoalojada por OpenTelemetry; «corre en nuestra nube» no es una auditoría.",
+      "ar": "تشغيل مستوى التحكم بأكمله — الهيكل وصناديق العزل وبيانات الاعتماد وسجل الجلسات — داخل محيطك الخاص هو التقسيم الصحيح، فالقلق بشأن إقامة البيانات يتعلق أساسًا بمكان مستوى التحكم والسجل، لا بمكان تقديم الأوزان. ومع ذلك سأصدّر كل جلسة مستضافة ذاتيًا عبر OpenTelemetry؛ فعبارة «يعمل في سحابتنا» ليست تدقيقًا."
+    },
+    "tags": [
+      "agent-security",
+      "production"
+    ]
+  },
+  {
+    "id": "aws-agentcore-runtime-next-generation",
+    "date": "2026-11-12",
+    "category": "agentic",
+    "headline": {
+      "en": "Run agents securely and efficiently with the next generation AgentCore runtime",
+      "de": "Agenten sicher und effizient mit der AgentCore-Runtime der nächsten Generation betreiben",
+      "fr": "Exécuter les agents de façon sécurisée et efficace avec le runtime AgentCore de nouvelle génération",
+      "es": "Ejecute agentes de forma segura y eficiente con el runtime AgentCore de nueva generación",
+      "ar": "تشغيل الوكلاء بأمان وكفاءة مع بيئة تشغيل AgentCore من الجيل التالي"
+    },
+    "source": "AWS",
+    "url": "https://aws.amazon.com/blogs/machine-learning/run-agents-securely-and-efficiently-with-the-next-generation-agentcore-runtime/",
+    "take": {
+      "en": "The headline numbers (sub-2-second session starts, 4x compute, 68% less memory) matter less than the boundary: per-session Firecracker MicroVMs plus FUSE-mounted workspaces keep data inside one trust zone under one policy, which is what agent infrastructure needs once agents touch real files. Cold starts were the last excuse for shared, weakly isolated agent runtimes — that excuse is gone.",
+      "de": "Die Schlagzeilenzahlen (Sitzungsstarts unter 2 Sekunden, 4x Compute, 68% weniger Speicher) sind weniger wichtig als die Grenze: Firecracker-MicroVMs pro Session plus FUSE-gemountete Workspaces halten Daten in einer einzigen Trust-Zone unter einer Richtlinie — genau das braucht Agenten-Infrastruktur, sobald Agenten echte Dateien anfassen. Cold Starts waren die letzte Ausrede für gemeinsame, schwach isolierte Agenten-Runtimes — diese Ausrede ist weg.",
+      "fr": "Les chiffres en vedette (démarrage de session en moins de 2 secondes, 4x de calcul, 68% de mémoire en moins) comptent moins que la frontière : des MicroVM Firecracker par session et des workspaces montés via FUSE gardent les données dans une seule zone de confiance sous une seule politique — c'est ce dont l'infrastructure d'agents a besoin dès qu'ils touchent de vrais fichiers. Les cold starts étaient la dernière excuse pour des runtimes d'agents partagés et faiblement isolés — cette excuse a disparu.",
+      "es": "Las cifras de portada (sesiones que arrancan en menos de 2 segundos, 4x de cómputo, 68% menos memoria) importan menos que la frontera: MicroVMs Firecracker por sesión y workspaces montados vía FUSE mantienen los datos en una sola zona de confianza bajo una sola política — eso es lo que necesita la infraestructura de agentes en cuanto tocan archivos reales. Los arranques en frío eran la última excusa para runtimes de agentes compartidos y débilmente aislados — esa excusa ya no existe.",
+      "ar": "الأرقام اللامعة (بدء الجلسات في أقل من 2 ثانية، وحوسبة أعلى بـ4x، وذاكرة أقل بنسبة 68%) أقل أهمية من الحد الفاصل: جهاز Firecracker المصغّر لكل جلسة مع مساحات عمل مُدارة عبر FUSE يُبقي البيانات في منطقة ثقة واحدة تحت سياسة واحدة، وهذا ما تحتاجه بنية الوكلاء فور أن تلمس ملفات حقيقية. كانت أوقات التشغيل البارد آخر عذر لبيئات تشغيل وكلاء مشتركة وضعيفة العزل، وقد زال هذا العذر."
+    },
+    "tags": [
+      "sandboxing",
+      "production"
+    ]
+  },
+  {
+    "id": "multiloop-multi-agent-harness-optimization",
+    "date": "2026-11-11",
+    "category": "agentic",
+    "headline": {
+      "en": "MultiLoop: Evolving Multi-Agent Harnesses for Complex Information-Seeking Tasks",
+      "de": "MultiLoop: Entwicklung von Multi-Agenten-Harnesses für komplexe Informationssuch-Aufgaben",
+      "fr": "MultiLoop : faire évoluer les harness multi-agents pour des tâches complexes de recherche d'information",
+      "es": "MultiLoop: evolución de harnesses multiagente para tareas complejas de búsqueda de información",
+      "ar": "MultiLoop: تطوير هياكل تشغيل متعددة الوكلاء لمهام البحث المعقدة عن المعلومات"
+    },
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2611.15754",
+    "take": {
+      "en": "A useful negative result from Google Research: automated harness optimization does transfer to multi-agent systems, but the gains came from prompt tweaks and one new tool — the orchestration failures that define multi-agent setups largely persisted. If your fix doesn't change how agents delegate and share information, you're polishing the wrong layer.",
+      "de": "Ein nützliches negatives Ergebnis von Google Research: Automatisierte Harness-Optimierung lässt sich tatsächlich auf Multi-Agenten-Systeme übertragen, aber die Gewinne kamen aus Prompt-Feinschliff und einem neuen Tool — die Orchestrierungsfehler, die Multi-Agenten-Setups ausmachen, blieben weitgehend bestehen. Wenn dein Fix nicht ändert, wie Agenten delegieren und Informationen teilen, polierst du die falsche Schicht.",
+      "fr": "Un résultat négatif utile de Google Research : l'optimisation automatisée du harness se transfère bien aux systèmes multi-agents, mais les gains venaient d'affinages de prompts et d'un nouvel outil — les défaillances d'orchestration qui caractérisent les setups multi-agents ont largement persisté. Si votre correctif ne change pas la manière dont les agents délèguent et partagent l'information, vous polissez la mauvaise couche.",
+      "es": "Un resultado negativo útil de Google Research: la optimización automatizada del harness sí se transfiere a los sistemas multiagente, pero las ganancias vinieron de afinar prompts y de una herramienta nueva — los fallos de orquestación que definen los setups multiagente persistieron en gran medida. Si tu arreglo no cambia cómo los agentes delegan y comparten información, estás puliendo la capa equivocada.",
+      "ar": "نتيجة سلبية مفيدة من Google Research: تحسين الهياكل المؤتمت ينتقل فعلًا إلى الأنظمة متعددة الوكلاء، لكن المكاسب جاءت من صقل الـprompts ومن أداة واحدة جديدة — بينما بقيت أعطال التنسيق التي تُميّز المنظومات متعددة الوكلاء قائمة إلى حد كبير. إن لم يكن حلّك يغيّر طريقة تفويض الوكلاء للمهام وتقاسمهم المعلومات، فأنت تصقل الطبقة الخطأ."
+    },
+    "tags": [
+      "agent-harness",
+      "multi-agent",
       "evaluation"
     ]
   }
