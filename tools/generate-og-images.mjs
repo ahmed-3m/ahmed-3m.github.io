@@ -79,7 +79,7 @@ const CARDS = {
     eyebrow: 'ahmed-3m.github.io',
     title: 'Ahmed Mohammed',
     sub: 'AI/ML & Computer Vision Engineer · M.Sc. Thesis Graded 1',
-    stat: 'Diffusion OOD (99.03% AUROC) · Industrial QC',
+    stat: 'Computer vision · Industrial ML · Diffusion research',
   },
   'og-news.png': {
     eyebrow: 'ahmed-3m.github.io/news',
@@ -90,7 +90,7 @@ const CARDS = {
   'og-diffusion-ood.png': {
     eyebrow: 'ahmed-3m.github.io/case-studies/diffusion-ood',
     title: 'Diffusion OOD Detection',
-    sub: 'Separation loss on conditional diffusion · CIFAR-10',
+    sub: 'Within-CIFAR airplane-vs-rest · binary, single ID class',
     stat: '99.03% ± 0.07% AUROC · 3-seed mean',
   },
   'og-inkjet-ood.png': {

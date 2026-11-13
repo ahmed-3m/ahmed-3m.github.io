@@ -11,6 +11,20 @@ const copy = {
   caseStudyLink: { en: 'Case study', de: 'Fallstudie', fr: 'Étude de cas', es: 'Caso de estudio', ar: 'دراسة حالة' },
   thesisPdf: { en: 'Thesis PDF', de: 'Thesis PDF', fr: 'PDF mémoire', es: 'PDF tesis', ar: 'PDF الرسالة' },
   code: { en: 'Code', de: 'Code', fr: 'Code', es: 'Código', ar: 'الكود' },
+  oodMetric: {
+    en: ' ± 0.07% mean AUROC (3 seeds)',
+    de: ' ± 0.07% mittlerer AUROC (3 Seeds)',
+    fr: ' ± 0.07% AUROC moyenne (3 graines)',
+    es: ' ± 0.07% AUROC media (3 semillas)',
+    ar: ' ± 0.07% متوسط AUROC (3 بذور)',
+  },
+  inkjetMetric: {
+    en: ' ± 0.0230 AUROC (5-fold CV)',
+    de: ' ± 0.0230 AUROC (5-fache Kreuzvalidierung)',
+    fr: ' ± 0.0230 AUROC (validation croisée en 5 plis)',
+    es: ' ± 0.0230 AUROC (validación cruzada de 5 particiones)',
+    ar: ' ± 0.0230 AUROC (تحقق تقاطعي من 5 طيات)',
+  },
   thesis: { en: "Master's Thesis · JKU Linz · Graded 1", de: 'Masterarbeit · JKU Linz · Note 1', fr: 'Mémoire M.Sc. · JKU Linz · Note 1', es: 'Tesis M.Sc. · JKU Linz · Nota 1', ar: 'رسالة الماجستير · JKU لينز · تقدير 1' },
   track2Eyebrow: { en: "Master's Thesis Track 2 · Industrial CV", de: 'Masterarbeit Track 2 · Industrial CV', fr: 'Mémoire Track 2 · Vision industrielle', es: 'Tesis Track 2 · Visión industrial', ar: 'المسار 2 للرسالة · رؤية صناعية' },
   oodTitle: { en: 'DiffusionOOD — OOD Detection Framework', de: 'DiffusionOOD — OOD-Erkennungsframework', fr: 'DiffusionOOD — Détection OOD', es: 'DiffusionOOD — Detección OOD', ar: 'DiffusionOOD — إطار كشف الخارج عن التوزيع' },
@@ -126,7 +140,7 @@ export default function Projects() {
               </div>
             </div>
             <div className="cd-proj-metric-big">
-              <div className="cd-pc-metric" style={{ marginTop: 0 }}>99.03%<span> ± 0.07% Avg AUROC (3 seeds)</span></div>
+              <div className="cd-pc-metric" style={{ marginTop: 0 }}>99.03%<span>{t(copy.oodMetric)}</span></div>
               <div className="cd-proj-actions" style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
                 <Link href="/case-studies/diffusion-ood/" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.caseStudyLink)} &rarr;</Link>
                 <a href="https://github.com/ahmed-3m/DiffusionOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.code)} &rarr;</a>
@@ -139,7 +153,7 @@ export default function Projects() {
             <div className="cd-pc-eyebrow">{t(copy.track2Eyebrow)}</div>
             <div className="cd-pc-title">{t(copy.inkjetTitle)}</div>
             <div className="cd-pc-desc">{t(copy.inkjetDesc)}</div>
-            <div className="cd-pc-metric">0.8673<span> ± 0.0230 AUROC (5-Fold CV)</span></div>
+            <div className="cd-pc-metric">0.8673<span>{t(copy.inkjetMetric)}</span></div>
             <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
               <a href="https://github.com/ahmed-3m/InkjetOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.code)} &rarr;</a>
               <Link href="/case-studies/inkjet-ood/" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.caseStudy)} &rarr;</Link>

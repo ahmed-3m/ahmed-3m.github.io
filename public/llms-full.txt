@@ -18,7 +18,7 @@ Last updated: 2026-11-12
 
 - 99.03% ± 0.07% average AUROC on CIFAR-10 airplane-vs-rest (binary, single ID class, 3-seed mean; not comparable to multi-class CIFAR-10 OOD leaderboards) — Master's Thesis, JKU Linz (graded 1), 2026
 - Introduced class-conditional separation loss improving OOD AUROC to 99.03% ± 0.07% (+6.5 percentage points over 92.52% ± 11.07% baseline, dramatically reducing cross-seed standard deviation)
-- 0.8673 ± 0.0230 AUROC baseline on the public FTI_Zer0P industrial defect benchmark under strict 5-fold CV (PROFACTOR GmbH / JKU Linz, Zer0P; operational deployment separately tracked 98.4% threshold-dependent binary classification accuracy — internal deployment metric, not a public AUROC benchmark)
+- 0.8673 ± 0.0230 AUROC baseline on the public FTI_Zer0P industrial defect benchmark under strict 5-fold CV (PROFACTOR GmbH / JKU Linz, Zer0P)
 
 ## Projects
 
@@ -121,11 +121,13 @@ Working with PROFACTOR GmbH (Steyr, Austria; remote / home office) through the J
 
 Architecture: YOLOv8 as feature backbone (not detector) → feature maps fed into conditional diffusion model as generative classifier. Multi-head conditioning: one learned embedding per feature type (8 types: angle, dist1, dist6, dots, edge1-4), all sharing the same U-Net backbone.
 
-Results by feature type under 5-fold CV baseline: dots 0.9557 ± 0.0353 AUROC, dist6 0.9362 ± 0.0666. Overall baseline AUROC is 0.8673 ± 0.0230 under strict 5-fold CV. Separation loss weights (λ ∈ {0.01, 0.02, 0.05}) produce AUROC scores within the cross-fold standard deviation (e.g. 0.8670 ± 0.0256 at λ = 0.05), which are statistically non-significant after Holm correction (adjusted p > 0.05). Operational deployment separately tracked an internal threshold-dependent binary classification accuracy of 98.4% (not a public AUROC benchmark).
+Results by feature type under 5-fold CV baseline: dots 0.9557 ± 0.0353 AUROC, dist6 0.9362 ± 0.0666. Overall baseline AUROC is 0.8673 ± 0.0230 under strict 5-fold CV. Separation loss weights (λ ∈ {0.01, 0.02, 0.05}) produce AUROC scores within the cross-fold standard deviation (e.g. 0.8670 ± 0.0256 at λ = 0.05), which are statistically non-significant after Holm correction (adjusted p > 0.05).
 
 Key lessons: (1) Generative models vs discriminative baselines in scarce-defect settings, (2) Feature type heterogeneity matters more than architecture, (3) Statistical rigor with 5-fold CV + Holm correction is non-negotiable, (4) Deployment conditions require explicit qualification separate from benchmark AUROC.
 
-Full technical report: ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf
+Benchmark source (M.Sc. thesis): https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf
+
+Early technical report (2024, negative result): https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf
 
 Industrial dataset: https://zenodo.org/records/11444566 (FTI_Zer0P Dataset 2023, Profactor GmbH, CC-BY-4.0)
 
@@ -136,7 +138,7 @@ URL: https://ahmed-3m.github.io/blog/computer-vision-yolo-mastery/
 Date: 2024-10-20
 Tags: Computer Vision, YOLOv8, Deep Learning, Industrial AI, PyTorch, Production ML
 
-Engineering notes on feature extraction, data splits, and deployment trade-offs from the industrial inkjet quality-control evaluation (0.8673 ± 0.0230 AUROC under 5-fold CV on FTI_Zer0P; internal deployment also tracked a threshold-dependent 98.4% operational accuracy metric).
+Engineering notes on feature extraction, data splits, and deployment trade-offs from the industrial inkjet quality-control evaluation (0.8673 ± 0.0230 AUROC under 5-fold CV on FTI_Zer0P).
 
 Key decisions:
 1. YOLOv8 as feature extractor (not detector) — extracted bottleneck features after layer 9, before detection head

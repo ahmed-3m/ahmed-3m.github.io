@@ -66,6 +66,27 @@ const DATASET_LABELS: Record<OodDatasetKey, TranslationMap> = {
 }
 
 const copy = {
+  separationEquationLabel: {
+    en: 'Eq. 3.23 (separation loss):',
+    de: 'Gl. 3.23 (Separationsverlust):',
+    fr: 'Éq. 3.23 (perte de séparation) :',
+    es: 'Ec. 3.23 (pérdida de separación):',
+    ar: 'المعادلة 3.23 (خسارة الفصل):',
+  },
+  scoreEquationLabel: {
+    en: 'Eq. 3.3 (OOD score):',
+    de: 'Gl. 3.3 (OOD-Score):',
+    fr: 'Éq. 3.3 (score OOD) :',
+    es: 'Ec. 3.3 (puntuación OOD):',
+    ar: 'المعادلة 3.3 (درجة OOD):',
+  },
+  meanErrorDifference: {
+    en: 'Mean error difference',
+    de: 'Mittlere Fehlerdifferenz',
+    fr: "Différence moyenne d’erreur",
+    es: 'Diferencia media del error',
+    ar: 'متوسط فرق الخطأ',
+  },
   eyebrow: {
     en: '// INTERACTIVE THESIS LAB · JKU LINZ (GRADE 1.0)',
     de: '// INTERAKTIVES THESIS-LABOR · JKU LINZ (NOTE 1,0)',
@@ -375,12 +396,12 @@ export default function OodDemo() {
           }}
         >
           <div>
-            <strong style={{ color: 'var(--cd-accent)' }}>Eq. 3.23 (Sep. Loss):</strong>{' '}
-            L_sep = −‖ε_θ(x_t, t, c=0) − ε_θ(x_t, t, c=1)‖²
+            <strong style={{ color: 'var(--cd-accent)' }}>{t(copy.separationEquationLabel)}</strong>{' '}
+            <bdi dir="ltr">L_sep = −‖ε_θ(x_t, t, c=0) − ε_θ(x_t, t, c=1)‖²</bdi>
           </div>
           <div>
-            <strong style={{ color: 'var(--cd-success)' }}>Eq. 3.3 (OOD Score):</strong>{' '}
-            s_OOD(x) = ê₀(x) − ê₁(x) ≥ τ ⇒ OOD
+            <strong style={{ color: 'var(--cd-success)' }}>{t(copy.scoreEquationLabel)}</strong>{' '}
+            <bdi dir="ltr">s_OOD(x) = ê₀(x) − ê₁(x) ≥ τ ⇒ OOD</bdi>
           </div>
         </div>
       </div>
@@ -886,10 +907,10 @@ export default function OodDemo() {
                   c=0: <strong>{activeTimestep.idC0Mean.toFixed(4)}</strong> · c=1: <strong>{activeTimestep.idC1Mean.toFixed(4)}</strong>
                 </div>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-success)', marginTop: 2 }}>
-                  Mean ê₀ − ê₁ = {(() => {
+                  {t(copy.meanErrorDifference)}: <bdi dir="ltr">ê₀ − ê₁ = {(() => {
                     const diff = activeTimestep.idC0Mean - activeTimestep.idC1Mean
                     return `${diff >= 0 ? '+' : ''}${diff.toFixed(5)}`
-                  })()}
+                  })()}</bdi>
                 </div>
               </div>
 
@@ -899,10 +920,10 @@ export default function OodDemo() {
                   c=0: <strong>{activeTimestep.oodC0Mean.toFixed(4)}</strong> · c=1: <strong>{activeTimestep.oodC1Mean.toFixed(4)}</strong>
                 </div>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-warn)', marginTop: 2 }}>
-                  Mean ê₀ − ê₁ = {(() => {
+                  {t(copy.meanErrorDifference)}: <bdi dir="ltr">ê₀ − ê₁ = {(() => {
                     const diff = activeTimestep.oodC0Mean - activeTimestep.oodC1Mean
                     return `${diff >= 0 ? '+' : ''}${diff.toFixed(5)}`
-                  })()}
+                  })()}</bdi>
                 </div>
               </div>
 

@@ -25,11 +25,11 @@ const copy = {
     ar: 'PROFACTOR / FTI_Zer0P',
   },
   result: {
-    en: '99.03% ± 0.07% AUROC (binary, 3-seed mean)',
-    de: '99.03% ± 0.07% AUROC (binär, 3-Seed-Mittel)',
-    fr: '99.03% ± 0.07% AUROC (binaire, moy. 3 seeds)',
-    es: '99.03% ± 0.07% AUROC (binario, media 3 seeds)',
-    ar: '99.03% ± 0.07% AUROC (ثنائي، متوسط 3 بذور)',
+    en: '99.03% ± 0.07% AUROC (CIFAR-10 airplane-vs-rest, single ID class, 3-seed mean)',
+    de: '99.03% ± 0.07% AUROC (CIFAR-10 Flugzeug-vs-Rest, eine ID-Klasse, 3-Seed-Mittel)',
+    fr: '99.03% ± 0.07% AUROC (CIFAR-10 avion-vs-reste, une classe ID, moyenne sur 3 graines)',
+    es: '99.03% ± 0.07% AUROC (CIFAR-10 avión-vs-resto, una clase ID, media de 3 semillas)',
+    ar: '99.03% ± 0.07% AUROC (CIFAR-10 طائرة مقابل البقية، فئة ID واحدة، متوسط 3 بذور)',
   },
   location: {
     en: 'JKU Linz, Austria',

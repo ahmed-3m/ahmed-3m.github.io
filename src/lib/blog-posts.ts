@@ -34,7 +34,7 @@ const blogPosts: BlogPost[] = [
     slug: 'ood-diffusion-thesis',
     date: '2026-07-12',
     ogImage: '/og-diffusion-ood.png',
-    lastModified: '2026-04-25',
+    lastModified: '2026-11-13',
     citation: {
       title:
         'Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control',
@@ -463,7 +463,7 @@ loss = L_diffusion + lambda * L_separation
     slug: 'diffusion-models-anomaly-detection',
     date: '2024-11-20',
     ogImage: '/og-diffusion-models-anomaly-detection.png',
-    lastModified: '2026-04-25',
+    lastModified: '2026-11-13',
     translations: {
       en: {
         title: 'Diffusion Models for Industrial Defect Detection at PROFACTOR GmbH',

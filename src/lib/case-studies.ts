@@ -19,7 +19,7 @@ export type CaseStudy = {
 export const caseStudies: CaseStudy[] = [
   {
     slug: 'diffusion-ood',
-    lastModified: '2026-11-07',
+    lastModified: '2026-11-13',
     title: {
       en: 'DiffusionOOD: Class-Conditional Separation Loss for Out-of-Distribution Detection',
       de: 'DiffusionOOD: Klassenkonditionale Separation Loss für OOD-Erkennung',

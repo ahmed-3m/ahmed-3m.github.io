@@ -41,7 +41,7 @@ export const blogPostsMeta: BlogPostMeta[] = [
     "slug": "ood-diffusion-thesis",
     "date": "2026-07-12",
     "ogImage": "/og-diffusion-ood.png",
-    "lastModified": "2026-04-25",
+    "lastModified": "2026-11-13",
     "citation": {
       "title": "Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control",
       "date": "2026-07-12",
@@ -189,7 +189,7 @@ export const blogPostsMeta: BlogPostMeta[] = [
     "slug": "diffusion-models-anomaly-detection",
     "date": "2024-11-20",
     "ogImage": "/og-diffusion-models-anomaly-detection.png",
-    "lastModified": "2026-04-25",
+    "lastModified": "2026-11-13",
     "translations": {
       "en": {
         "title": "Diffusion Models for Industrial Defect Detection at PROFACTOR GmbH",
@@ -205,7 +205,7 @@ export const blogPostsMeta: BlogPostMeta[] = [
         "faq": [
           {
             "question": "What result did the industrial system achieve?",
-            "answer": "On the public FTI_Zer0P benchmark, the strict 5-fold CV baseline reached 0.8673 +/- 0.0230 AUROC. Separately, an internal production deployment tracked 98.4% threshold-dependent binary classification accuracy (operational deployment metric, not comparable to public AUROC)."
+            "answer": "On the public FTI_Zer0P benchmark, the strict 5-fold CV baseline reached 0.8673 +/- 0.0230 AUROC."
           },
           {
             "question": "What was the architecture?",
@@ -231,7 +231,7 @@ export const blogPostsMeta: BlogPostMeta[] = [
         "faq": [
           {
             "question": "Welches Ergebnis erreichte das industrielle System?",
-            "answer": "Auf dem öffentlichen FTI_Zer0P Benchmark lag die strenge 5-fold-CV Baseline bei 0.8673 +/- 0.0230 AUROC. Davon getrennt erreichte das interne Produktions-Setup schwellenwertabhängig 98.4% binäre Defektklassifikationsgenauigkeit (keine öffentliche AUROC-Metrik)."
+            "answer": "Auf dem öffentlichen FTI_Zer0P Benchmark lag die strenge 5-fold-CV Baseline bei 0.8673 +/- 0.0230 AUROC."
           },
           {
             "question": "Wie sah die Architektur aus?",
@@ -257,7 +257,7 @@ export const blogPostsMeta: BlogPostMeta[] = [
         "faq": [
           {
             "question": "Quel résultat le système industriel a-t-il obtenu ?",
-            "answer": "Sur le benchmark public FTI_Zer0P, la baseline en validation croisée stricte à 5 plis a atteint 0.8673 +/- 0.0230 AUROC. Séparément, le déploiement interne a mesuré 98.4% de précision binaire dépendante du seuil (métrique opérationnelle, non comparable à l'AUROC public)."
+            "answer": "Sur le benchmark public FTI_Zer0P, la baseline en validation croisée stricte à 5 plis a atteint 0.8673 +/- 0.0230 AUROC."
           },
           {
             "question": "Quelle était l'architecture ?",
@@ -283,7 +283,7 @@ export const blogPostsMeta: BlogPostMeta[] = [
         "faq": [
           {
             "question": "¿Qué resultado logró el sistema industrial?",
-            "answer": "En el benchmark público FTI_Zer0P, la base con validación cruzada estricta de 5 folds alcanzó 0.8673 +/- 0.0230 AUROC. Por separado, en producción interna se registró 98.4% de precisión binaria dependiente del umbral (métrica operativa, no comparable al AUROC público)."
+            "answer": "En el benchmark público FTI_Zer0P, la base con validación cruzada estricta de 5 folds alcanzó 0.8673 +/- 0.0230 AUROC."
           },
           {
             "question": "¿Cuál era la arquitectura?",
@@ -309,7 +309,7 @@ export const blogPostsMeta: BlogPostMeta[] = [
         "faq": [
           {
             "question": "ما النتيجة التي حققها النظام الصناعي؟",
-            "answer": "على معيار FTI_Zer0P العام وصلت baseline مع تحقق تقاطعي صارم من 5 طيات إلى 0.8673 +/- 0.0230 AUROC. وبشكل منفصل، سجّل التشغيل الداخلي دقة تصنيف ثنائية 98.4% تعتمد على العتبة (مقياس تشغيلي داخلي غير قابل للمقارنة مع AUROC العام)."
+            "answer": "على معيار FTI_Zer0P العام وصلت baseline مع تحقق تقاطعي صارم من 5 طيات إلى 0.8673 +/- 0.0230 AUROC."
           },
           {
             "question": "ما هي البنية المستخدمة؟",
