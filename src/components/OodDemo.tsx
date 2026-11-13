@@ -66,6 +66,27 @@ const DATASET_LABELS: Record<OodDatasetKey, TranslationMap> = {
 }
 
 const copy = {
+  separationEquationLabel: {
+    en: 'Eq. 3.23 (separation loss):',
+    de: 'Gl. 3.23 (Separationsverlust):',
+    fr: 'Éq. 3.23 (perte de séparation) :',
+    es: 'Ec. 3.23 (pérdida de separación):',
+    ar: 'المعادلة 3.23 (خسارة الفصل):',
+  },
+  scoreEquationLabel: {
+    en: 'Eq. 3.3 (OOD score):',
+    de: 'Gl. 3.3 (OOD-Score):',
+    fr: 'Éq. 3.3 (score OOD) :',
+    es: 'Ec. 3.3 (puntuación OOD):',
+    ar: 'المعادلة 3.3 (درجة OOD):',
+  },
+  meanErrorDifference: {
+    en: 'Mean error difference',
+    de: 'Mittlere Fehlerdifferenz',
+    fr: "Différence moyenne d’erreur",
+    es: 'Diferencia media del error',
+    ar: 'متوسط فرق الخطأ',
+  },
   eyebrow: {
     en: '// INTERACTIVE THESIS LAB · JKU LINZ (GRADE 1.0)',
     de: '// INTERAKTIVES THESIS-LABOR · JKU LINZ (NOTE 1,0)',
@@ -375,12 +396,12 @@ export default function OodDemo() {
           }}
         >
           <div>
-            <strong style={{ color: 'var(--cd-accent)' }}>Eq. 3.23 (Sep. Loss):</strong>{' '}
-            L_sep = −‖ε_θ(x_t, t, c=0) − ε_θ(x_t, t, c=1)‖²
+            <strong style={{ color: 'var(--cd-accent)' }}>{t(copy.separationEquationLabel)}</strong>{' '}
+            <bdi dir="ltr">L_sep = −‖ε_θ(x_t, t, c=0) − ε_θ(x_t, t, c=1)‖²</bdi>
           </div>
           <div>
-            <strong style={{ color: '#10b981' }}>Eq. 3.3 (OOD Score):</strong>{' '}
-            s_OOD(x) = ê₀(x) − ê₁(x) &gt; τ ⇒ OOD
+            <strong style={{ color: 'var(--cd-success)' }}>{t(copy.scoreEquationLabel)}</strong>{' '}
+            <bdi dir="ltr">s_OOD(x) = ê₀(x) − ê₁(x) ≥ τ ⇒ OOD</bdi>
           </div>
         </div>
       </div>
@@ -459,7 +480,7 @@ export default function OodDemo() {
                   style={{
                     padding: '9px 12px',
                     borderRadius: 8,
-                    border: regime === 'sep' ? '1px solid #10b981' : '1px solid var(--cd-border)',
+                    border: regime === 'sep' ? '1px solid var(--cd-success)' : '1px solid var(--cd-border)',
                     background: regime === 'sep' ? 'rgba(16, 185, 129, 0.12)' : 'transparent',
                     color: 'var(--cd-fg)',
                     fontSize: 12,
@@ -476,7 +497,7 @@ export default function OodDemo() {
                   style={{
                     padding: '9px 12px',
                     borderRadius: 8,
-                    border: regime === 'base' ? '1px solid #f59e0b' : '1px solid var(--cd-border)',
+                    border: regime === 'base' ? '1px solid var(--cd-warn)' : '1px solid var(--cd-border)',
                     background: regime === 'base' ? 'rgba(245, 158, 11, 0.12)' : 'transparent',
                     color: 'var(--cd-fg)',
                     fontSize: 12,
@@ -635,7 +656,7 @@ export default function OodDemo() {
 
               <div style={{ padding: '10px 12px', borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-fg3)' }}>Live TPR(τ) · Sensitivity</div>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 18, fontWeight: 700, color: '#10b981' }}>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 18, fontWeight: 700, color: 'var(--cd-success)' }}>
                   {liveDiagnostics.tpr.toFixed(1)}%
                 </div>
                 <div style={{ fontSize: 11, color: 'var(--cd-fg3)' }}>
@@ -645,7 +666,7 @@ export default function OodDemo() {
 
               <div style={{ padding: '10px 12px', borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-fg3)' }}>Live FPR(τ) · False Alarms</div>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 18, fontWeight: 700, color: liveDiagnostics.fpr <= 15 ? '#38bdf8' : '#ef4444' }}>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 18, fontWeight: 700, color: liveDiagnostics.fpr <= 15 ? 'var(--cd-accent)' : 'var(--cd-danger)' }}>
                   {liveDiagnostics.fpr.toFixed(1)}%
                 </div>
                 <div style={{ fontSize: 11, color: 'var(--cd-fg3)' }}>
@@ -731,8 +752,8 @@ export default function OodDemo() {
                 </text>
               </svg>
               <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--cd-fg2)', marginTop: 6 }}>
-                <span><strong style={{ color: '#38bdf8' }}>■</strong> ID: CIFAR-10 Airplane (N={activeHist.n_id.toLocaleString()})</span>
-                <span><strong style={{ color: '#ef4444' }}>■</strong> OOD Cohort (N={activeHist.n_ood.toLocaleString()})</span>
+                <span><strong style={{ color: 'var(--cd-accent)' }}>■</strong> ID: CIFAR-10 Airplane (N={activeHist.n_id.toLocaleString()})</span>
+                <span><strong style={{ color: 'var(--cd-danger)' }}>■</strong> OOD Cohort (N={activeHist.n_ood.toLocaleString()})</span>
                 <span><strong style={{ color: '#f97316' }}>┆</strong> Threshold τ</span>
               </div>
             </div>
@@ -823,7 +844,7 @@ export default function OodDemo() {
               {/* OOD c=0 curve (red) */}
               <polyline
                 fill="none"
-                stroke="#ef4444"
+                stroke="var(--cd-danger)"
                 strokeWidth="2.2"
                 points={PER_TIMESTEP_ERRORS.map((pt, i) => {
                   const x = 45 + (i / (PER_TIMESTEP_ERRORS.length - 1)) * 530
@@ -846,7 +867,7 @@ export default function OodDemo() {
               {/* ID c=0 curve (blue) */}
               <polyline
                 fill="none"
-                stroke="#38bdf8"
+                stroke="var(--cd-accent)"
                 strokeWidth="2.2"
                 points={PER_TIMESTEP_ERRORS.map((pt, i) => {
                   const x = 45 + (i / (PER_TIMESTEP_ERRORS.length - 1)) * 530
@@ -881,22 +902,28 @@ export default function OodDemo() {
             {/* Live Timestep Metrics */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 10, marginTop: 12 }}>
               <div style={{ padding: 10, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: '#38bdf8' }}>ID (Airplane) MSE @ t={activeTimestep.t}</div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-accent)' }}>ID (Airplane) MSE @ t={activeTimestep.t}</div>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--cd-fg)', marginTop: 4 }}>
                   c=0: <strong>{activeTimestep.idC0Mean.toFixed(4)}</strong> · c=1: <strong>{activeTimestep.idC1Mean.toFixed(4)}</strong>
                 </div>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: '#10b981', marginTop: 2 }}>
-                  ê₀ − ê₁ = {(activeTimestep.idC0Mean - activeTimestep.idC1Mean).toFixed(5)} (ID &lt; 0)
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-success)', marginTop: 2 }}>
+                  {t(copy.meanErrorDifference)}: <bdi dir="ltr">ê₀ − ê₁ = {(() => {
+                    const diff = activeTimestep.idC0Mean - activeTimestep.idC1Mean
+                    return `${diff >= 0 ? '+' : ''}${diff.toFixed(5)}`
+                  })()}</bdi>
                 </div>
               </div>
 
               <div style={{ padding: 10, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: '#ef4444' }}>OOD Cohort MSE @ t={activeTimestep.t}</div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-danger)' }}>OOD Cohort MSE @ t={activeTimestep.t}</div>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--cd-fg)', marginTop: 4 }}>
                   c=0: <strong>{activeTimestep.oodC0Mean.toFixed(4)}</strong> · c=1: <strong>{activeTimestep.oodC1Mean.toFixed(4)}</strong>
                 </div>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: '#f97316', marginTop: 2 }}>
-                  ê₀ − ê₁ = +{(activeTimestep.oodC0Mean - activeTimestep.oodC1Mean).toFixed(5)} (OOD &gt; 0)
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-warn)', marginTop: 2 }}>
+                  {t(copy.meanErrorDifference)}: <bdi dir="ltr">ê₀ − ê₁ = {(() => {
+                    const diff = activeTimestep.oodC0Mean - activeTimestep.oodC1Mean
+                    return `${diff >= 0 ? '+' : ''}${diff.toFixed(5)}`
+                  })()}</bdi>
                 </div>
               </div>
 
@@ -949,7 +976,7 @@ export default function OodDemo() {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
                 <div style={{ padding: 12, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
                   <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-fg3)' }}>Within-CIFAR AUROC</div>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 20, fontWeight: 700, color: activeScoring.cifarAuroc > 90 ? '#10b981' : '#f59e0b' }}>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 20, fontWeight: 700, color: activeScoring.cifarAuroc > 90 ? 'var(--cd-success)' : 'var(--cd-warn)' }}>
                     {activeScoring.cifarAuroc.toFixed(2)}%
                   </div>
                   <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-fg3)' }}>
@@ -958,7 +985,7 @@ export default function OodDemo() {
                 </div>
                 <div style={{ padding: 12, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
                   <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-fg3)' }}>External SVHN AUROC</div>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 20, fontWeight: 700, color: activeScoring.svhnAuroc > 90 ? '#10b981' : '#ef4444' }}>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 20, fontWeight: 700, color: activeScoring.svhnAuroc > 90 ? 'var(--cd-success)' : 'var(--cd-danger)' }}>
                     {activeScoring.svhnAuroc.toFixed(2)}%
                   </div>
                   <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-fg3)' }}>
@@ -1047,7 +1074,7 @@ export default function OodDemo() {
               <div style={{ padding: 12, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 12 }}>
                   <span>Within-CIFAR AUROC:</span>
-                  <strong style={{ color: '#10b981' }}>
+                  <strong style={{ color: 'var(--cd-success)' }}>
                     {activeLambda.withinCifarMean.toFixed(2)}%
                     {activeLambda.withinCifarStd !== null ? ` ± ${activeLambda.withinCifarStd.toFixed(2)}%` : ' (seed 42)'}
                   </strong>
@@ -1182,7 +1209,7 @@ export default function OodDemo() {
                   >
                     <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5 }}>
                       <strong style={{ color: 'var(--cd-fg)' }}>{feat.feature}</strong>
-                      <span style={{ color: pct >= 90 ? '#10b981' : pct >= 80 ? 'var(--cd-accent)' : '#f59e0b', fontWeight: 700 }}>
+                      <span style={{ color: pct >= 90 ? 'var(--cd-success)' : pct >= 80 ? 'var(--cd-accent)' : 'var(--cd-warn)', fontWeight: 700 }}>
                         {stats.mean.toFixed(4)} ± {stats.std.toFixed(4)}
                       </span>
                     </div>
@@ -1191,7 +1218,7 @@ export default function OodDemo() {
                         style={{
                           width: `${Math.max(0, Math.min(100, (stats.mean - 0.5) * 200))}%`,
                           height: '100%',
-                          background: pct >= 90 ? '#10b981' : pct >= 80 ? 'var(--cd-accent)' : '#f59e0b',
+                          background: pct >= 90 ? 'var(--cd-success)' : pct >= 80 ? 'var(--cd-accent)' : 'var(--cd-warn)',
                         }}
                       />
                     </div>

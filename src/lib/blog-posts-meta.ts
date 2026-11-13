@@ -40,8 +40,8 @@ export const blogPostsMeta: BlogPostMeta[] = [
   {
     "slug": "ood-diffusion-thesis",
     "date": "2026-07-12",
-    "ogImage": "/og-diffusion-models-anomaly-detection.png",
-    "lastModified": "2026-04-25",
+    "ogImage": "/og-diffusion-ood.png",
+    "lastModified": "2026-11-13",
     "citation": {
       "title": "Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control",
       "date": "2026-07-12",
@@ -186,153 +186,10 @@ export const blogPostsMeta: BlogPostMeta[] = [
     }
   },
   {
-    "slug": "5-month-llm-adventure",
-    "date": "2025-11-15",
-    "ogImage": "/og-5-month-llm-adventure.png",
-    "lastModified": "2026-04-25",
-    "translations": {
-      "en": {
-        "title": "Shipping Faultrix: What I Learned Building an AI SaaS From Zero",
-        "excerpt": "What changed when I moved from research into product building: Faultrix, an AI SaaS for construction quality control that generated ONORM-aligned reports in under a minute.",
-        "tags": [
-          "LLM",
-          "SaaS",
-          "Next.js",
-          "OpenAI",
-          "Production AI",
-          "Faultrix"
-        ],
-        "readingTime": "9 min read",
-        "faq": [
-          {
-            "question": "What was Faultrix?",
-            "answer": "Faultrix was an AI-powered construction quality-control SaaS. Users uploaded site photos and received a structured ONORM-aligned report with evidence handling and security-minded storage."
-          },
-          {
-            "question": "What stack powered it?",
-            "answer": "Next.js, Convex, OpenAI API, Clerk, Cloudflare R2, Stripe, Docker, and a Python-heavy AI workflow behind the scenes."
-          },
-          {
-            "question": "What was hardest?",
-            "answer": "Not the AI itself. The hardest part was making the product fit real workflows, legal formatting expectations, and a low-friction user experience."
-          }
-        ]
-      },
-      "de": {
-        "title": "Faultrix ausliefern: Was ich beim Bau eines AI-SaaS von null gelernt habe",
-        "excerpt": "Was sich verändert hat, als ich von Forschung in Produktbau gewechselt bin: Faultrix, ein AI-SaaS für Bauqualitätskontrolle mit ÖNORM-orientierten Berichten in unter einer Minute.",
-        "tags": [
-          "LLM",
-          "SaaS",
-          "Next.js",
-          "OpenAI",
-          "Production AI",
-          "Faultrix"
-        ],
-        "readingTime": "9 Min. Lesezeit",
-        "faq": [
-          {
-            "question": "Was war Faultrix?",
-            "answer": "Faultrix war ein KI-basiertes SaaS für Bauqualitätskontrolle. Nutzer luden Baustellenfotos hoch und erhielten einen strukturierten ÖNORM-orientierten Bericht mit Evidenzkette und sicherheitsbewusster Speicherung."
-          },
-          {
-            "question": "Welcher Stack steckte dahinter?",
-            "answer": "Next.js, Convex, OpenAI API, Clerk, Cloudflare R2, Stripe, Docker und ein Python-lastiger AI-Workflow im Hintergrund."
-          },
-          {
-            "question": "Was war am schwierigsten?",
-            "answer": "Nicht die KI selbst. Schwieriger war, das Produkt an echte Arbeitsabläufe, Formatvorgaben und eine reibungsarme UX anzupassen."
-          }
-        ]
-      },
-      "fr": {
-        "title": "Livrer Faultrix : ce que j'ai appris en construisant un SaaS IA de zéro",
-        "excerpt": "Ce qui a changé lorsque je suis passé de la recherche au produit : Faultrix, un SaaS IA pour le contrôle qualité construction qui générait des rapports alignés ÖNORM en moins d'une minute.",
-        "tags": [
-          "LLM",
-          "SaaS",
-          "Next.js",
-          "OpenAI",
-          "IA en production",
-          "Faultrix"
-        ],
-        "readingTime": "9 min de lecture",
-        "faq": [
-          {
-            "question": "Qu'était Faultrix ?",
-            "answer": "Faultrix était un SaaS de contrôle qualité construction piloté par IA. Les utilisateurs chargeaient des photos de chantier et recevaient un rapport structuré aligné ÖNORM avec gestion des preuves et stockage sécurisé."
-          },
-          {
-            "question": "Quel stack utilisait-il ?",
-            "answer": "Next.js, Convex, OpenAI API, Clerk, Cloudflare R2, Stripe, Docker, plus un workflow IA fortement centré sur Python."
-          },
-          {
-            "question": "Qu'est-ce qui a été le plus difficile ?",
-            "answer": "Pas l'IA en elle-même. Le plus difficile a été d'adapter le produit aux vrais usages, aux attentes de format et à une UX sans friction."
-          }
-        ]
-      },
-      "es": {
-        "title": "Lanzando Faultrix: lo que aprendí construyendo un SaaS de IA de cero",
-        "excerpt": "Lo que cambió cuando pasé de investigación a producto: Faultrix, un SaaS de IA para control de calidad en construcción que generaba informes alineados con ÖNORM en menos de un minuto.",
-        "tags": [
-          "LLM",
-          "SaaS",
-          "Next.js",
-          "OpenAI",
-          "IA en producción",
-          "Faultrix"
-        ],
-        "readingTime": "9 min de lectura",
-        "faq": [
-          {
-            "question": "¿Qué era Faultrix?",
-            "answer": "Faultrix era un SaaS de control de calidad en construcción impulsado por IA. Los usuarios subían fotos de obra y recibían un informe estructurado alineado con ÖNORM, con manejo de evidencia y almacenamiento seguro."
-          },
-          {
-            "question": "¿Qué stack usaba?",
-            "answer": "Next.js, Convex, OpenAI API, Clerk, Cloudflare R2, Stripe, Docker y un flujo de IA muy apoyado en Python."
-          },
-          {
-            "question": "¿Qué fue lo más difícil?",
-            "answer": "No la IA en sí. Lo más difícil fue adaptar el producto a flujos reales, expectativas de formato y una UX con poca fricción."
-          }
-        ]
-      },
-      "ar": {
-        "title": "إطلاق Faultrix: ما الذي تعلمته من بناء SaaS بالذكاء الاصطناعي من الصفر",
-        "excerpt": "ما الذي تغير عندما انتقلت من البحث إلى المنتج: Faultrix، منصة SaaS للذكاء الاصطناعي في مراقبة جودة البناء، كانت تولد تقارير متوافقة مع ONORM في أقل من دقيقة.",
-        "tags": [
-          "LLM",
-          "SaaS",
-          "Next.js",
-          "OpenAI",
-          "ذكاء اصطناعي في الإنتاج",
-          "Faultrix"
-        ],
-        "readingTime": "9 دقائق قراءة",
-        "faq": [
-          {
-            "question": "ماذا كان Faultrix؟",
-            "answer": "Faultrix كان SaaS لمراقبة جودة البناء مدعوم بالذكاء الاصطناعي. كان يرفع المستخدم صور الموقع ويحصل على تقرير منظم متوافق مع ONORM مع إدارة للأدلة وتخزين آمن."
-          },
-          {
-            "question": "ما هو الـ stack المستخدم؟",
-            "answer": "Next.js وConvex وOpenAI API وClerk وCloudflare R2 وStripe وDocker، مع workflow كان يعتمد كثيراً على Python في طبقة الذكاء الاصطناعي."
-          },
-          {
-            "question": "ما أصعب جزء؟",
-            "answer": "ليس الذكاء الاصطناعي نفسه. الأصعب كان جعل المنتج مناسباً لسير العمل الحقيقي وتوقعات التنسيق وتجربة استخدام منخفضة الاحتكاك."
-          }
-        ]
-      }
-    }
-  },
-  {
     "slug": "diffusion-models-anomaly-detection",
     "date": "2024-11-20",
     "ogImage": "/og-diffusion-models-anomaly-detection.png",
-    "lastModified": "2026-04-25",
+    "lastModified": "2026-11-13",
     "translations": {
       "en": {
         "title": "Diffusion Models for Industrial Defect Detection at PROFACTOR GmbH",
@@ -348,7 +205,7 @@ export const blogPostsMeta: BlogPostMeta[] = [
         "faq": [
           {
             "question": "What result did the industrial system achieve?",
-            "answer": "On the public benchmark, the strict 5-fold CV baseline reached 0.8673 +/- 0.0230 AUROC. In the production setting, the deployed decision pipeline reached 98.4% defect-classification accuracy."
+            "answer": "On the public FTI_Zer0P benchmark, the strict 5-fold CV baseline reached 0.8673 +/- 0.0230 AUROC."
           },
           {
             "question": "What was the architecture?",
@@ -374,7 +231,7 @@ export const blogPostsMeta: BlogPostMeta[] = [
         "faq": [
           {
             "question": "Welches Ergebnis erreichte das industrielle System?",
-            "answer": "Auf dem öffentlichen Benchmark lag die strenge 5-fold-CV Baseline bei 0.8673 +/- 0.0230 AUROC. Im produktionsnahen Betrieb erreichte das Entscheidungssetup 98.4% Defektklassifikationsgenauigkeit."
+            "answer": "Auf dem öffentlichen FTI_Zer0P Benchmark lag die strenge 5-fold-CV Baseline bei 0.8673 +/- 0.0230 AUROC."
           },
           {
             "question": "Wie sah die Architektur aus?",
@@ -400,7 +257,7 @@ export const blogPostsMeta: BlogPostMeta[] = [
         "faq": [
           {
             "question": "Quel résultat le système industriel a-t-il obtenu ?",
-            "answer": "Sur le benchmark public, la baseline en validation croisée stricte à 5 plis a atteint 0.8673 +/- 0.0230 AUROC. En exploitation, le pipeline de décision a atteint 98.4% de précision de classification des défauts."
+            "answer": "Sur le benchmark public FTI_Zer0P, la baseline en validation croisée stricte à 5 plis a atteint 0.8673 +/- 0.0230 AUROC."
           },
           {
             "question": "Quelle était l'architecture ?",
@@ -426,7 +283,7 @@ export const blogPostsMeta: BlogPostMeta[] = [
         "faq": [
           {
             "question": "¿Qué resultado logró el sistema industrial?",
-            "answer": "En el benchmark público, la base con validación cruzada estricta de 5 folds alcanzó 0.8673 +/- 0.0230 AUROC. En producción, el pipeline de decisión alcanzó 98.4% de precisión de clasificación de defectos."
+            "answer": "En el benchmark público FTI_Zer0P, la base con validación cruzada estricta de 5 folds alcanzó 0.8673 +/- 0.0230 AUROC."
           },
           {
             "question": "¿Cuál era la arquitectura?",
@@ -452,7 +309,7 @@ export const blogPostsMeta: BlogPostMeta[] = [
         "faq": [
           {
             "question": "ما النتيجة التي حققها النظام الصناعي؟",
-            "answer": "على benchmark العام وصلت baseline مع تحقق تقاطعي صارم من 5 طيات إلى 0.8673 +/- 0.0230 AUROC. وفي وضع التشغيل وصل خط القرار إلى 98.4% دقة في تصنيف العيوب."
+            "answer": "على معيار FTI_Zer0P العام وصلت baseline مع تحقق تقاطعي صارم من 5 طيات إلى 0.8673 +/- 0.0230 AUROC."
           },
           {
             "question": "ما هي البنية المستخدمة؟",

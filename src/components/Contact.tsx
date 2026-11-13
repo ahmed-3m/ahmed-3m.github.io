@@ -3,7 +3,6 @@
 import RequestCvButton from '@/components/RequestCvButton'
 import ScheduleMeetingButton from '@/components/ScheduleMeetingButton'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
-import { useReveal } from '@/lib/useReveal'
 
 const socials = [
   { label: 'GitHub', href: 'https://github.com/ahmed-3m' },
@@ -30,7 +29,6 @@ const copy = {
 } satisfies Record<string, TranslationMap>
 
 export default function Contact() {
-  useReveal()
   const { t } = useI18n()
 
   return (
@@ -40,13 +38,13 @@ export default function Contact() {
           {t(copy.eyebrow)}
         </div>
 
-        <h2 className="cd-contact-heading reveal">
+        <h2 className="cd-contact-heading">
           {t(copy.titleA)} <span className="outline">{t(copy.titleB)}</span> {t(copy.titleC)}
         </h2>
 
-        <p className="cd-contact-sub reveal">{t(copy.sub)}</p>
+        <p className="cd-contact-sub">{t(copy.sub)}</p>
 
-        <div className="cd-contact-links reveal">
+        <div className="cd-contact-links">
           {socials.map((social) => (
             <a key={social.href} href={social.href} target="_blank" rel="noopener noreferrer" className="cd-contact-link">
               {social.label} &rarr;
@@ -56,7 +54,7 @@ export default function Contact() {
           <RequestCvButton variant="link" />
         </div>
 
-        <a href="mailto:ahmed.mo.0595@gmail.com" className="cd-contact-email reveal">
+        <a href="mailto:ahmed.mo.0595@gmail.com" className="cd-contact-email">
           ahmed.mo.0595@gmail.com
         </a>
       </div>

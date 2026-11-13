@@ -10,7 +10,7 @@ const copy = {
 const experiences: Array<{
   date: string
   role: TranslationMap
-  company: string
+  company: string | TranslationMap
   desc: TranslationMap
   badge?: TranslationMap
   active: boolean
@@ -33,7 +33,13 @@ const experiences: Array<{
   {
     date: 'Apr 2024\nJul 2026',
     role: { en: 'M.Sc. Thesis Researcher, Machine Vision', de: 'Masterarbeits-Forscher, Machine Vision', fr: 'Chercheur de mémoire M.Sc., vision industrielle', es: 'Investigador de tesis de máster, visión artificial', ar: 'باحث رسالة ماجستير، رؤية آلية' },
-    company: 'JKU Institute for Machine Learning with PROFACTOR GmbH · Linz / Steyr',
+    company: {
+      en: 'JKU Institute for Machine Learning with PROFACTOR GmbH · Linz / Steyr (Remote / Home Office)',
+      de: 'JKU Institute for Machine Learning mit PROFACTOR GmbH · Linz / Steyr (Remote / Homeoffice)',
+      fr: 'JKU Institute for Machine Learning avec PROFACTOR GmbH · Linz / Steyr (Télétravail / À distance)',
+      es: 'JKU Institute for Machine Learning con PROFACTOR GmbH · Linz / Steyr (Remoto / Teletrabajo)',
+      ar: 'معهد JKU لتعلم الآلة مع PROFACTOR GmbH · لينز / شتاير (عن بُعد / العمل من المنزل)',
+    },
     desc: {
       en: 'Conditional diffusion models as generative classifiers for OOD detection under Prof. Sepp Hochreiter. A class-conditional separation loss cut seed-to-seed std from 11.07 to 0.07 points while raising CIFAR-10 AUROC from 92.52% to 99.03%. Applied in project Zer0P (zero-defect inkjet printing on building components) as a two-stage YOLOv8 + conditional-diffusion pipeline, with an eight-method 5-fold comparison.',
       de: 'Konditionale Diffusionsmodelle als generative Klassifikatoren für OOD-Erkennung bei Prof. Sepp Hochreiter. Ein klassenkonditionaler Separation Loss senkte die Seed-Standardabweichung von 11,07 auf 0,07 Punkte und hob die CIFAR-10-AUROC von 92,52% auf 99,03%. Angewandt im Projekt Zer0P (Zero-Defect-Inkjetdruck auf Bauteilen) als zweistufige YOLOv8- + Diffusionspipeline mit einem 5-fachen Vergleich von acht Methoden.',
@@ -93,7 +99,7 @@ export default function Experience() {
               </div>
               <div className="cd-tl-content">
                 <div className="cd-tl-role">{t(exp.role)}</div>
-                <div className="cd-tl-company">{exp.company}</div>
+                <div className="cd-tl-company">{typeof exp.company === 'string' ? exp.company : t(exp.company)}</div>
                 <div className="cd-tl-desc">{t(exp.desc)}</div>
                 {exp.badge && <div className="cd-tl-badge">{t(exp.badge)}</div>}
               </div>
