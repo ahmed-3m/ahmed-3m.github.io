@@ -59,7 +59,7 @@ export const caseStudies: CaseStudy[] = [
         desc: { en: 'Explicitly penalize similarity between competing noise predictions with calibrated weight lambda=0.02.', de: 'Ähnlichkeit zwischen konkurrierenden Rauschvorhersagen mit kalibriertem Gewicht lambda=0.02 bestrafen.', fr: 'Pénaliser explicitement la similarité entre prédictions de bruit concurrentes avec un poids lambda=0.02.', es: 'Penalizar la similitud entre predicciones de ruido rivales con peso calibrado lambda=0.02.', ar: 'معاقبة التشابه صراحة بين توقعات الضوضاء المتنافسة بوزن معاير lambda=0.02.' },
       },
       {
-        title: { en: '3. Statistical Anomaly Scoring', de: '3. Statistische Anomaliebewertung', fr: '3. Score statistique d anomalie', es: '3. Puntuación estadística de anomalía', ar: '3. قياس الشذوذ الإحصائي' },
+        title: { en: '3. Statistical Anomaly Scoring', de: '3. Statistische Anomaliebewertung', fr: "3. Score statistique d'anomalie", es: '3. Puntuación estadística de anomalía', ar: '3. قياس الشذوذ الإحصائي' },
         desc: { en: 'Compute difference-of-reconstruction error as a calibrated OOD score tested over 3 random seeds.', de: 'Differenz-Rekonstruktionsfehler als kalibrierten OOD-Score über 3 Zufalls-Seeds berechnen.', fr: "Calculer la différence d'erreur de reconstruction comme score OOD calibré testé sur 3 seeds.", es: 'Calcular la diferencia de error de reconstrucción como puntuación OOD evaluada en 3 semillas.', ar: 'حساب فرق خطأ إعادة البناء كدرجة شذوذ معايرة تم اختبارها على 3 بذور عشوائية.' },
       },
     ],
@@ -172,11 +172,11 @@ export const caseStudies: CaseStudy[] = [
     pipelineStages: [
       {
         title: { en: '1. Industrial Surface Imaging', de: '1. Industrielle Oberflächenerfassung', fr: '1. Imagerie de surface industrielle', es: '1. Captura de superficies industriales', ar: '1. تصوير الأسطح الصناعية' },
-        desc: { en: 'High-resolution thermographic and optical frame capture of composite building components.', de: 'Hochauflösende thermografische und optische Einzelbilder von Verbundbauelementen erfassen.', fr: 'Capture d images thermographiques et optiques haute résolution de panneaux de construction.', es: 'Captura de imágenes termográficas y ópticas de alta resolución de paneles compuestos.', ar: 'التقاط صور حرارية وبصرية عالية الدقة لمكونات البناء المركبة.' },
+        desc: { en: 'High-resolution thermographic and optical frame capture of composite building components.', de: 'Hochauflösende thermografische und optische Einzelbilder von Verbundbauelementen erfassen.', fr: "Capture d'images thermographiques et optiques haute résolution de panneaux de construction.", es: 'Captura de imágenes termográficas y ópticas de alta resolución de paneles compuestos.', ar: 'التقاط صور حرارية وبصرية عالية الدقة لمكونات البناء المركبة.' },
       },
       {
         title: { en: '2. YOLOv8 Feature Extraction', de: '2. YOLOv8 Merkmalsextraktion', fr: '2. Extraction de caractéristiques YOLOv8', es: '2. Extracción de características con YOLOv8', ar: '2. استخراج الميزات بواسطة YOLOv8' },
-        desc: { en: 'Localizing regions of interest and extracting structured defect feature representations.', de: 'Interessante Regionen lokalisieren und strukturierte Fehler-Merkmale extrahieren.', fr: 'Localisation des régions d intérêt et extraction de représentations structurées de défauts.', es: 'Localización de regiones de interés y extracción de representaciones estructuradas de defectos.', ar: 'تحديد مناطق الاهتمام واستخراج تمثيلات منظمة لميزات العيوب.' },
+        desc: { en: 'Localizing regions of interest and extracting structured defect feature representations.', de: 'Interessante Regionen lokalisieren und strukturierte Fehler-Merkmale extrahieren.', fr: "Localisation des régions d'intérêt et extraction de représentations structurées de défauts.", es: 'Localización de regiones de interés y extracción de representaciones estructuradas de defectos.', ar: 'تحديد مناطق الاهتمام واستخراج تمثيلات منظمة لميزات العيوب.' },
       },
       {
         title: { en: '3. 5-Fold Cross-Validation', de: '3. 5-fache Kreuzvalidierung', fr: '3. Validation croisée en 5 plis', es: '3. Validación cruzada de 5 folds', ar: '3. تحقق تقاطعي خماسي صارم' },
@@ -247,7 +247,7 @@ export const caseStudies: CaseStudy[] = [
       {
         en: 'A rigorously documented null result is a valuable scientific contribution that prevents wasted engineering time.',
         de: 'Ein sorgfältig dokumentiertes Null-Ergebnis ist ein wertvoller wissenschaftlicher Beitrag, der Fehlaufwand verhindert.',
-        fr: 'Un résultat nul documenté avec rigueur est une contribution scientifique précieuse évitant le gaspillage de temps d ingénierie.',
+        fr: "Un résultat nul documenté avec rigueur est une contribution scientifique précieuse évitant le gaspillage de temps d'ingénierie.",
         es: 'Un resultado nulo documentado con rigor es una contribución científica valiosa que evita pérdida de tiempo.',
         ar: 'تعتبر النتيجة المحايدة الموثقة بدقة مساهمة علمية قيّمة تمنع إهدار أوقات التطوير الهندسي.',
       },

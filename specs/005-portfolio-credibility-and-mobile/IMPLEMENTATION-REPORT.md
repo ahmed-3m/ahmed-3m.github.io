@@ -24,7 +24,7 @@
 - **PROFACTOR remote/home-office clarification**:
   - Extended `ExperienceItem['company']` in `src/components/Experience.tsx` to support localized strings and added explicit remote/home-office wording across all 5 languages (`en`: `(Remote / Home Office)`, `de`: `(Remote / Homeoffice)`, `fr`: `(Télétravail / À distance)`, `es`: `(Remoto / Teletrabajo)`, `ar`: `(عن بُعد / العمل من المنزل)`), mirrored in `src/components/ChatBotPanel.tsx`, `public/llms.txt`, and `public/llms-full.txt`.
 - **Standard deviation vs. variance terminology**:
-  - Corrected `"variance"` / `"Varianz"` / `"varianza"` / `"تباين"` to standard deviation / fold spread (`std dev`, `Std.-Abw.`, `ecart-type`, `desv. est.`, `انحراف معياري`) across all 5 locales in `src/components/Research.tsx`, `src/lib/case-studies.ts`, `src/lib/blog-posts.ts`, `src/app/case-studies/diffusion-ood/page.tsx`, `src/components/JsonLd.tsx`, and `src/components/ChatBotPanel.tsx`.
+  - Corrected `"variance"` / `"Varianz"` / `"varianza"` / `"تباين"` to standard deviation / fold spread (`std dev`, `Std.-Abw.`, `écart-type`, `desv. est.`, `انحراف معياري`) across all 5 locales in `src/components/Research.tsx`, `src/lib/case-studies.ts`, `src/lib/blog-posts.ts`, `src/app/case-studies/diffusion-ood/page.tsx`, `src/components/JsonLd.tsx`, and `src/components/ChatBotPanel.tsx`, and fixed missing French apostrophes/accents in `src/components/Research.tsx` and `src/lib/case-studies.ts`.
 - **Dead link removal**:
   - Removed the 404 link `https://github.com/ahmed-3m/zer0p_notebooks` from `src/components/Research.tsx`.
 - **`98.4%` metric qualification**:
@@ -79,33 +79,35 @@
 - `node worker/chat-proxy.selftest.mjs`: **PASSED** (all worker proxy self-tests passed).
 - Static export verification (`out/`): **0 matches** for `faultrix`, `zer0p_notebooks`, or `5-month-llm-adventure` across `.html`, `.xml`, `.txt`, `.json`, and `.js`; `out/case-studies/faultrix` and `out/blog/5-month-llm-adventure` absent.
 
-### Headless Chrome CDP Matrix (`out/` over `127.0.0.1:4174`)
-- Viewports & states checked: `1440-en-dark`, `1440-ar-light`, `375-en-dark`, `375-en-light`, `375-ar-dark`, `375-ar-light`:
+### Headless Chrome CDP Matrix & Multi-Route Audit (`out/` over `127.0.0.1:4174` / `127.0.0.1:4175`)
+- Homepage viewports & states checked (`verify-browser.mjs`): `1440-en-dark`, `1440-ar-light`, `375-en-dark`, `375-en-light`, `375-ar-dark`, `375-ar-light`:
   - `overflowX: false` (`scrollWidth === clientWidth`) and `overflowCount: 0` across all 6 configurations.
   - Mobile menu button visible without clipping (`375-en-*`: `left: 311, right: 355, width: 44`; `375-ar-*`: `left: 20, right: 64, width: 44`).
+- Full static route matrix (`double-review.mjs`): all 10 routes (`/`, `/blog/`, `/blog/ood-diffusion-thesis/`, `/blog/diffusion-models-anomaly-detection/`, `/blog/computer-vision-yolo-mastery/`, `/case-studies/diffusion-ood/`, `/case-studies/inkjet-ood/`, `/case-studies/sihem/`, `/news/`, `/404.html`) checked at `1440-en-dark`, `375-en-light`, and `375-ar-dark` (30 route/config passes):
+  - `0` horizontal overflows, expected per-route `og:image`/`twitter:image`, mobile hamburger drawer open cleanly (`overflowX: false`), Chatbot starter chips free of Faultrix (`0` Faultrix hits), and interactive `#ood-explorer` 3-tab check (`check-ood-explorer.mjs` at `375px` light theme) with `0` horizontal overflow.
 - Lazy image & lightbox behavior:
   - Initial load requested only `/headshot.jpg` and `/icon.svg`.
   - Scrolling to `#research` requested only the 3 `.webp` previews (`71,106` B total) and CIFAR charts; **0** full-resolution formula PNGs loaded prior to interaction.
   - Clicking Step 3 opened `.cd-lightbox-inner` and loaded `/research/separation-gap-score.png` (`1672×941`, `67,830` B); pressing `Escape` closed the lightbox and returned focus to `.cd-rfc-visual-button`.
 - Reduced motion (`prefers-reduced-motion: reduce`): `hiddenCount: 0` across all 35 `.reveal` elements.
 - No-JS (`setScriptExecutionDisabled(true)`): Contact section and all 8 Contact links rendered with `opacity: 1` (`hiddenLinkCount: 0`) and `<noscript>` `.reveal` fallback stylesheet present.
-- Console / runtime errors: **0**.
-- Visual inspection of screenshots verified crisp dark/light contrast, desktop & 375px hero wrapping, Arabic RTL timeline alignment & `Ahmed.` brand isolation, and the Step 3 lightbox diagram.
+- Console / runtime errors: **0** (note: static `out/` crawl logs expected 404s on client-side Next.js RSC prefetch `__next.*.txt` probes when served without rewrite; 0 broken CSS/JS/font/image assets).
+- Visual inspection of screenshots verified crisp dark/light contrast, desktop & 375px hero wrapping, Arabic RTL timeline alignment & `Ahmed.` brand isolation, interactive `#ood-explorer` light-mode contrast, and the Step 3 lightbox diagram.
 
 ### Mobile Lighthouse Comparison (Comparable Runs on `http://127.0.0.1:4173/`)
 
-| Metric / Audit | Before (Baseline) | After RFC 005 |
-| --- | --- | --- |
-| Performance | 67 | 99 |
-| Accessibility | 93 | 100 |
-| Best Practices | 96 | 100 |
-| SEO | 100 | 100 |
-| FCP | 1.4 s | 1.5 s |
-| LCP | 10.2 s | 1.5 s |
-| CLS | 0 | 0 |
-| TBT | 0 ms | 20 ms |
-| Total Byte Weight | 5,526,168 B | 1,721,638 B |
-| `color-contrast` violations | 139 items (score 0) | 0 items (score 1) |
+| Metric / Audit | Before (Baseline) | After RFC 005 (Run 1) | After RFC 005 (Run 2) |
+| --- | --- | --- | --- |
+| Performance | 67 | 99 | 99 |
+| Accessibility | 93 | 100 | 100 |
+| Best Practices | 96 | 100 | 100 |
+| SEO | 100 | 100 | 100 |
+| FCP | 1.4 s | 1.5 s | 1.5 s |
+| LCP | 10.2 s | 1.5 s | 1.5 s |
+| CLS | 0 | 0 | 0 |
+| TBT | 0 ms | 20 ms | 10 ms |
+| Total Byte Weight | 5,526,168 B | 1,721,668 B | 1,721,668 B |
+| `color-contrast` violations | 139 items (score 0) | 0 items (score 1) | 0 items (score 1) |
 
 ## 3. Unresolved Items & Owner Decisions Needed
 1. **Work authorization phrasing**: The portfolio retains eligibility wording (`Rot-Weiß-Rot Karte` eligible as an Austrian STEM graduate) and does not assert approved permit status without owner confirmation.
