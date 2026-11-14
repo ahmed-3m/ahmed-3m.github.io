@@ -1,109 +1,5 @@
 [
   {
-    "id": "qwen-3-8-max-2-4t-open-weights",
-    "date": "2026-08-03",
-    "category": "ai",
-    "headline": {
-      "en": "Alibaba releases Qwen3.8-Max, challenging GPT-5.6 Sol and Claude Fable 5 on AI benchmarks",
-      "de": "Alibaba veröffentlicht Qwen3.8-Max und fordert GPT-5.6 Sol und Claude Fable 5 bei KI-Benchmarks heraus",
-      "fr": "Alibaba publie Qwen3.8-Max et défie GPT-5.6 Sol et Claude Fable 5 sur les benchmarks d'IA",
-      "es": "Alibaba publica Qwen3.8-Max y desafía a GPT-5.6 Sol y Claude Fable 5 en benchmarks de IA",
-      "ar": "Alibaba تُطلق Qwen3.8-Max لتتحدى GPT-5.6 Sol وClaude Fable 5 في معايير الذكاء الاصطناعي"
-    },
-    "source": "Neowin",
-    "url": "https://www.neowin.net/news/alibaba-releases-qwen38-max-challenging-gpt-56-sol-and-claude-fable-5-on-ai-benchmarks/",
-    "take": {
-      "en": "Another trillion-class open-weight frontier model — 2.4T total, 95B active, multimodal, one-million-token context — is good news for self-hosting economics, and shipping the weights next week is the part that matters, because it lets anyone re-run the benchmarks instead of trusting Alibaba's chart. For deployment the number I care about is active parameters, not total, and \"trails only Fable 5\" measured on internal tests is exactly the vendor-reported claim I'd verify on my own evals before routing work here.",
-      "de": "Ein weiteres Open-Weight-Frontier-Modell der Billionenklasse — 2.4T gesamt, 95B aktiv, multimodal, Eine-Million-Token-Kontext — ist gute Nachricht für die Self-Hosting-Ökonomie, und die Auslieferung der Gewichte nächste Woche ist der Teil, der zählt: Dann kann jeder die Benchmarks nachrechnen statt Alibabas Chart zu glauben. Fürs Deployment ist die Zahl, die mich interessiert, die aktiven Parameter, nicht die gesamten — und „nur hinter Fable 5“, gemessen auf internen Tests, ist genau die herstellerberichtete Behauptung, die ich in eigenen Evals verifizieren würde, bevor ich Arbeit hierher route.",
-      "fr": "Un autre modèle de pointe à poids ouverts de classe mille milliards — 2.4T au total, 95B actifs, multimodal, contexte d'un million de tokens —, c'est une bonne nouvelle pour l'économie de l'auto-hébergement, et la livraison des poids la semaine prochaine est ce qui compte, car elle permettra à chacun de rejouer les benchmarks au lieu de croire le graphique d'Alibaba. Pour le déploiement, le chiffre qui m'importe, ce sont les paramètres actifs, pas le total — et « ne cédant qu'à Fable 5 », mesuré sur des tests internes, est exactement l'affirmation fournisseur que je vérifierais sur mes propres évals avant d'y router du travail.",
-      "es": "Otro modelo frontier de pesos abiertos de clase billón — 2.4T en total, 95B activos, multimodal, contexto de un millón de tokens — es una buena noticia para la economía del autoalojamiento, y que los pesos lleguen la semana que viene es la parte que importa, porque permite a cualquiera reejecutar los benchmarks en lugar de confiar en el gráfico de Alibaba. Para despliegue, la cifra que me importa son los parámetros activos, no el total, y «solo por detrás de Fable 5» medido en tests internos es exactamente la afirmación de proveedor que verificaría con mis propias evals antes de enrutar trabajo aquí.",
-      "ar": "نموذج حدودي آخر بأوزان مفتوحة من فئة التريليون — 2.4T إجمالًا و95B نشط ومتعدد الوسائط بسياق مليون رمز — خبر جيد لاقتصاديات الاستضافة الذاتية، وتسليم الأوزان الأسبوع القادم هو الجزء الجوهري، لأنه يتيح لأي شخص إعادة تشغيل المعايير بدلًا من الثقة بمخطط Alibaba. وفي النشر، الرقم الذي يهمني هو المعاملات النشطة لا الإجمالية، و«لا يسبقه سوى Fable 5» مقيسًا على اختبارات داخلية هو بالضبط ادعاء المورّد الذي سأتحقق منه بتقييماتي قبل توجيه عمل إلى هنا."
-    },
-    "tags": [
-      "open-weights",
-      "frontier-models",
-      "moe"
-    ]
-  },
-  {
-    "id": "thinking-machines-inkling-small-open-weights",
-    "date": "2026-08-02",
-    "category": "ai",
-    "headline": {
-      "en": "Thinking Machines Lab Releases Inkling-Small: A 276B Total, 12B Active Open Weights Multimodal MoE Model",
-      "de": "Thinking Machines Lab veröffentlicht Inkling-Small: ein multimodales MoE-Modell mit offenen Gewichten, 276B gesamt, 12B aktiv",
-      "fr": "Thinking Machines Lab publie Inkling-Small : un modèle MoE multimodal à poids ouverts, 276B au total, 12B actifs",
-      "es": "Thinking Machines Lab publica Inkling-Small: un modelo MoE multimodal de pesos abiertos, 276B en total y 12B activos",
-      "ar": "Thinking Machines Lab تُطلق Inkling-Small: نموذج MoE متعدد الوسائط بأوزان مفتوحة، 276B إجمالًا و12B نشطة"
-    },
-    "source": "MarkTechPost",
-    "url": "https://www.marktechpost.com/2026/08/02/thinking-machines-lab-releases-inkling-small-276b-open-weights-multimodal-moe-model/",
-    "take": {
-      "en": "Inkling-Small beating its 975B sibling on HLE, SWE-bench Verified and Terminal-Bench while regressing on factual recall — SimpleQA Verified 20.6% versus 43.9% — is the trade-off that matters and the one vendor summaries bury: agentic-benchmark gains do not mean a model is uniformly better, and a frontier model that hallucinates facts more often is a real liability inside an agent that grounds decisions on them. A 276B/12B MoE under Apache 2.0 that runs on a single B300 makes it cheaply testable, which is the right answer — run your own evals on both axes before swapping it in.",
-      "de": "Dass Inkling-Small sein 975B-Geschwister auf HLE, SWE-bench Verified und Terminal-Bench schlägt, während es beim faktischen Abruf zurückfällt — SimpleQA Verified 20.6 % gegenüber 43.9 % —, ist der Trade-off, der zählt und den Vendor-Zusammenfassungen vergraben: Agentic-Benchmark-Gewinne bedeuten kein gleichmäßig besseres Modell, und ein Frontier-Modell, das häufiger Fakten halluziniert, ist eine echte Haftungsfrage in einem Agenten, der Entscheidungen auf diese Fakten stützt. Ein 276B/12B-MoE unter Apache 2.0, das auf einer einzigen B300 läuft, ist günstig testbar — die richtige Antwort: eigene Evals auf beiden Achsen fahren, bevor man es einsetzt.",
-      "fr": "Qu'Inkling-Small batte son frère de 975B sur HLE, SWE-bench Verified et Terminal-Bench tout en régressant sur le rappel factuel — SimpleQA Verified 20.6 % contre 43.9 % —, c'est le compromis qui compte et celui que les résumés des fournisseurs enterrent : des gains sur les benchmarks agentiques ne signifient pas un modèle uniformément meilleur, et un modèle de pointe qui hallucine des faits plus souvent est un vrai passif dans un agent qui fonde ses décisions dessus. Un MoE 276B/12B sous Apache 2.0 qui tient sur un seul B300 le rend bon marché à tester — la bonne réponse : lancez vos propres évals sur les deux axes avant de l'intégrer.",
-      "es": "Que Inkling-Small supere a su hermano de 975B en HLE, SWE-bench Verified y Terminal-Bench mientras retrocede en recuerdo factual — SimpleQA Verified 20.6 % frente a 43.9 % — es el compromiso que importa y el que los resúmenes del proveedor entierran: las ganancias en benchmarks agénticos no significan un modelo uniformemente mejor, y un modelo frontier que alucina hechos más a menudo es un pasivo real dentro de un agente que fundamenta decisiones en ellos. Un MoE de 276B/12B bajo Apache 2.0 que cabe en una sola B300 lo hace barato de probar, que es la respuesta correcta: ejecuta tus propias evals en ambos ejes antes de intercambiarlo.",
-      "ar": "تفوّق Inkling-Small على شقيقه الأكبر 975B في HLE وSWE-bench Verified وTerminal-Bench مع تراجعه في التذكّر الواقعي — SimpleQA Verified بنسبة 20.6% مقابل 43.9% — هو المقايضة الجوهرية والتي تدفنها ملخصات المورّدين: مكاسب معايير الوكالة لا تعني نموذجًا أفضل بشكل موحّد، والنموذج الحدودي الذي يهلوس الحقائق أكثر يمثّل مسؤولية حقيقية داخل وكيل يبني قراراته عليها. ونموذج MoE بمعاملات 276B/12B ضمن Apache 2.0 يعمل على معالج B300 واحد يجعله رخيص الاختبار، وهذا هو الجواب الصحيح — أجرِ تقييماتك على المحورين قبل إحلاله."
-    },
-    "tags": [
-      "open-weights",
-      "evaluation",
-      "hallucination"
-    ]
-  },
-  {
-    "id": "microsoft-orchard-scalable-agentic-framework",
-    "date": "2026-08-03",
-    "category": "agentic",
-    "headline": {
-      "en": "Orchard: An open framework for scalable agentic AI",
-      "de": "Orchard: ein offenes Framework für skalierbare agentische KI",
-      "fr": "Orchard : un framework ouvert pour l'IA agentique à grande échelle",
-      "es": "Orchard: un framework abierto para IA agéntica escalable",
-      "ar": "Orchard: إطار عمل مفتوح للذكاء الاصطناعي الوكيل القابل للتوسع"
-    },
-    "source": "Microsoft Research",
-    "url": "https://www.microsoft.com/en-us/research/blog/orchard-an-open-framework-for-scalable-agentic-ai/",
-    "take": {
-      "en": "Orchard Env — one reusable Kubernetes environment service that handles data collection, RL rollouts, and evaluation for software-engineering, web, and personal-assistant agents through a single stack — reinforces the pattern I keep seeing: the environment layer, not the model, is the binding constraint on agentic AI. Training inside real deployment harnesses like Codex instead of toy sandboxes is the methodologically honest move, and Orchard-GUI's data efficiency hints that web agents may not need the oceans of hand-labeled trajectories everyone assumed.",
-      "de": "Orchard Env — ein wiederverwendbarer Kubernetes-Umgebungsdienst, der Datensammlung, RL-Rollouts und Evaluation für Software-Engineering-, Web- und Assistenten-Agenten über einen einzigen Stack abwickelt —, bestätigt das Muster, das ich ständig sehe: Die Umgebungsschicht, nicht das Modell, ist der begrenzende Faktor für agentische KI. In echten Deployment-Harnesses wie Codex statt in Spielzeug-Sandboxes zu trainieren ist der methodisch ehrliche Zug, und Orchard-GUIs Dateneffizienz deutet an, dass Web-Agenten die Ozeane handgelabelter Trajektorien, die alle annahmen, gar nicht brauchen.",
-      "fr": "Orchard Env — un service d'environnement Kubernetes réutilisable qui couvre collecte de données, rollouts RL et évaluation pour les agents d'ingénierie logicielle, web et assistants personnels via une seule pile —, renforce le motif que je ne cesse de voir : la couche d'environnement, pas le modèle, est la contrainte déterminante de l'IA agentique. S'entraîner dans de vrais harnais de déploiement comme Codex plutôt que dans des bacs à sable jouets est le choix méthodologiquement honnête, et l'efficacité en données d'Orchard-GUI suggère que les agents web n'auront peut-être pas besoin des océans de trajectoires annotées à la main que tout le monde présumait.",
-      "es": "Orchard Env — un servicio reutilizable de entornos Kubernetes que cubre recolección de datos, rollouts de RL y evaluación para agentes de ingeniería de software, web y asistentes personales en un solo stack — refuerza el patrón que sigo viendo: la capa de entorno, no el modelo, es la restricción determinante de la IA agéntica. Entrenar dentro de harnesses de despliegue reales como Codex en vez de sandboxes de juguete es la jugada metodológicamente honesta, y la eficiencia de datos de Orchard-GUI sugiere que los agentes web quizá no necesiten los océanos de trayectorias etiquetadas a mano que todo el mundo asumía.",
-      "ar": "Orchard Env — خدمة بيئات Kubernetes قابلة لإعادة الاستخدام تتولى جمع البيانات وتدحرجات التعلّم المعزز والتقييم لوكلاء هندسة البرمجيات والويب والمساعدين الشخصيين عبر منظومة واحدة — يعزّز النمط الذي أراه باستمرار: طبقة البيئة لا النموذج هي القيد الحاسم في الذكاء الاصطناعي الوكيل. والتدريب داخل حزم نشر حقيقية مثل Codex بدلًا من عوازل لعوب هو الخطوة الأمينة منهجيًا، وكفاءة Orchard-GUI في البيانات توحي بأن وكلاء الويب قد لا يحتاجون إلى محيطات المسارات الموسومة يدويًا التي افترضها الجميع."
-    },
-    "tags": [
-      "agentic-rl",
-      "infrastructure",
-      "open-source"
-    ]
-  },
-  {
-    "id": "cogent-vr-1-cyber-reasoning-model",
-    "date": "2026-08-03",
-    "category": "agentic",
-    "headline": {
-      "en": "Cogent AI Team Releases VR-1: A Frontier Cyber Reasoning Model That Composes and Verifies Enterprise Attack Paths",
-      "de": "Cogent AI Team veröffentlicht VR-1: ein Frontier-Modell für Cyber-Reasoning, das Enterprise-Angriffspfade komponiert und verifiziert",
-      "fr": "L'équipe Cogent AI publie VR-1 : un modèle de raisonnement cyber de pointe qui compose et vérifie des chemins d'attaque d'entreprise",
-      "es": "El equipo de Cogent AI publica VR-1: un modelo frontier de razonamiento ciber que compone y verifica rutas de ataque empresariales",
-      "ar": "فريق Cogent AI يُطلق VR-1: نموذج استدلال سيبراني حدودي يؤلّف مسارات هجوم المؤسسات ويتحقق منها"
-    },
-    "source": "MarkTechPost",
-    "url": "https://www.marktechpost.com/2026/08/03/ogent-ai-team-releases-vr-1/",
-    "take": {
-      "en": "VR-1 is the defender-side answer to the sandbox-escape incidents of the last month: a model post-trained specifically to compose and verify full enterprise attack chains, shipped with IntrusionBench to score agents on completed intrusions and a governed runtime instead of raw weights. What makes it worth taking seriously is the self-honest framing — Cogent calls its 2× claim preliminary and admits the gap nearly closes once baselines run on a matched harness, which is exactly the eval rigor you'd demand before letting any cyber-capable agent near production.",
-      "de": "VR-1 ist die Antwort der Verteidigerseite auf die Sandbox-Escapes des letzten Monats: ein Modell, gezielt post-trainiert, komplette Enterprise-Angriffsketten zu komponieren und zu verifizieren, geliefert mit IntrusionBench, um Agenten nach vollendeten Intrusionen zu scoren, und einer geregelten Runtime statt roher Gewichte. Ernsthaft nehmen kann man es wegen der selbstehrlichen Rahmung — Cogent nennt den 2×-Claim vorläufig und räumt ein, dass der Abstand fast schrumpft, sobald Baselines auf einem angepassten Harness laufen: genau die Eval-Strenge, die man verlangen würde, bevor ein cyberfähiger Agent in die Nähe von Produktion kommt.",
-      "fr": "VR-1 est la réponse des défenseurs aux évasions de bac à sable du mois dernier : un modèle post-entraîné spécifiquement pour composer et vérifier des chaînes d'attaque d'entreprise complètes, livré avec IntrusionBench pour noter les agents sur les intrusions menées à terme et un runtime gouverné plutôt que des poids bruts. Ce qui le rend digne d'attention, c'est le cadrage honnête envers soi-même — Cogent qualifie son affirmation de 2× de préliminaire et admet que l'écart se referme presque dès que les baselines tournent sur un harnais comparable : exactement la rigueur d'éval qu'on exigerait avant d'approcher un agent cyber-capable de la production.",
-      "es": "VR-1 es la respuesta del lado defensor a los incidentes de escape de sandbox del último mes: un modelo post-entrenado específicamente para componer y verificar cadenas de ataque empresariales completas, entregado con IntrusionBench para puntuar a los agentes por intrusiones completadas y un runtime gobernado en lugar de pesos en bruto. Lo que lo hace digno de tomarse en serio es el encuadre honesto consigo mismo: Cogent califica su afirmación de 2× de preliminar y admite que la brecha casi se cierra cuando las baselines corren en un harness comparable, que es exactamente el rigor de eval que exigirías antes de acercar un agente con capacidad ciber a producción.",
-      "ar": "VR-1 هو ردّ جانب المدافعين على حوادث الفلات من العوازل الشهر الماضي: نموذج مُدرَّب لاحقًا على نحو مخصص لتأليف سلاسل هجوم المؤسسات كاملة والتحقق منها، ويأتي مع IntrusionBench لتقييم الوكلاء على الاختراقات المكتملة ومع بيئة تشغيل مُحكمة بدلًا من أوزان خام. وما يجعله جديرًا بالأخذ بجدية هو الإطار الصادق مع الذات — فـ Cogent تصف ادعاء الضعفين بأنه أولي وتقرّ بأن الفجوة تكاد تُغلق عندما تعمل الخطوط الأساسية على حزمة مكافئة، وهذا بالضبط صرامة التقييم التي ستطالب بها قبل تقريب أي وكيل ذي قدرة سيبرانية من الإنتاج."
-    },
-    "tags": [
-      "cybersecurity",
-      "evaluation",
-      "agent-governance"
-    ]
-  },
-  {
     "id": "minimax-m2-open-weights-agent-coding",
     "date": "2026-08-04",
     "category": "agentic",
@@ -5046,6 +4942,107 @@
       "agent-harness",
       "multi-agent",
       "evaluation"
+    ]
+  },
+  {
+    "id": "openai-chatgpt-wallet-agent-payments",
+    "date": "2026-11-13",
+    "category": "agentic",
+    "headline": {
+      "en": "Introducing ChatGPT Wallet",
+      "de": "OpenAI stellt ChatGPT Wallet vor",
+      "fr": "OpenAI lance ChatGPT Wallet",
+      "es": "OpenAI lanza ChatGPT Wallet",
+      "ar": "OpenAI تطلق ChatGPT Wallet"
+    },
+    "source": "OpenAI",
+    "url": "https://openai.com/index/introducing-chatgpt-wallet/",
+    "take": {
+      "en": "OpenAI got the security model right: biometric approval on every purchase and network-issued tokens mean the agent never touches your actual card details. The real test comes when purchases are delegated under spending limits — a policy layer is only as reliable as its enforcement, and that's exactly where I'd want independent evaluation.",
+      "de": "OpenAI hat das Sicherheitsmodell richtig gemacht: biometrische Freigabe bei jedem Kauf und von den Kartennetzwerken ausgestellte Token bedeuten, dass der Agent nie die echten Kartendaten berührt. Der eigentliche Test kommt, wenn Käufe unter Ausgabelimits delegiert werden — eine Richtlinienebene ist nur so zuverlässig wie ihre Durchsetzung, und genau dort würde ich eine unabhängige Evaluation fordern.",
+      "fr": "OpenAI a le bon modèle de sécurité : une approbation biométrique à chaque achat et des jetons émis par les réseaux de paiement, si bien que l'agent ne touche jamais à vos vraies données bancaires. Le vrai test viendra quand les achats seront délégués sous plafonds de dépense — une couche de politique n'est fiable que dans la mesure où elle est appliquée, et c'est précisément là que je voudrais une évaluation indépendante.",
+      "es": "OpenAI acertó con el modelo de seguridad: aprobación biométrica en cada compra y tokens emitidos por las redes de pago, de modo que el agente nunca toca los datos reales de tu tarjeta. La prueba real llegará cuando las compras se deleguen bajo límites de gasto: una capa de políticas es tan fiable como su aplicación, y ahí es donde yo querría una evaluación independiente.",
+      "ar": "أصابت OpenAI في نموذج الأمان: موافقة بيومترية على كل عملية شراء ورموز صادرة عن شبكات الدفع تعني أن الوكيل لا يلامس بيانات بطاقتك الحقيقية أبدًا. الاختبار الحقيقي سيأتي عند تفويض المشتريات ضمن حدود للإنفاق — فطبقة السياسات لا يمكن الاعتماد عليها إلا بقدر ما تُطبَّق فعليًا، وهنا تحديدًا أريد تقييمًا مستقلًا."
+    },
+    "tags": [
+      "personal-agents",
+      "agent-safety"
+    ]
+  },
+  {
+    "id": "google-teamwork-multi-agent-science-results",
+    "date": "2026-11-13",
+    "category": "agentic",
+    "headline": {
+      "en": "Advancing science & engineering with Antigravity's /teamwork",
+      "de": "Wissenschaft und Technik mit Antigravitys /teamwork voranbringen",
+      "fr": "Faire avancer la science et l'ingénierie avec /teamwork d'Antigravity",
+      "es": "Impulsar la ciencia y la ingeniería con /teamwork de Antigravity",
+      "ar": "دفع العلم والهندسة إلى الأمام عبر /teamwork في Antigravity"
+    },
+    "source": "Google Research",
+    "url": "https://research.google/blog/advancing-science-engineering-with-antigravitys-teamwork-feature/",
+    "take": {
+      "en": "The results that impress me are the ones a machine can check: 1.8 million lines of Lean formalizing the Weil conjectures, and a Rust rewrite of an AV1 decoder that ends up 20–30% faster than the C++ original. Generator agents paired with independent verifiers is the architecture I trust — in research and in production, self-graded work isn't evidence.",
+      "de": "Die Ergebnisse, die mich überzeugen, sind die, die eine Maschine prüfen kann: 1.8 Millionen Zeilen Lean zur Formalisierung der Weil-Vermutungen und eine Rust-Neuimplementierung eines AV1-Decoders, die am Ende 20–30% schneller läuft als das C++-Original. Generator-Agenten mit unabhängigen Prüfern sind die Architektur, der ich vertraue — in der Forschung wie im Betrieb ist selbst bewertete Arbeit kein Beleg.",
+      "fr": "Les résultats qui m'impressionnent sont ceux qu'une machine peut vérifier : 1.8 million de lignes de Lean formalisant les conjectures de Weil, et une réécriture en Rust d'un décodeur AV1 qui finit 20–30% plus rapide que l'original en C++. Des agents générateurs associés à des vérificateurs indépendants, voilà l'architecture à laquelle je fais confiance — en recherche comme en production, un travail auto-évalué n'est pas une preuve.",
+      "es": "Los resultados que me impresionan son los que una máquina puede comprobar: 1.8 millones de líneas de Lean que formalizan las conjeturas de Weil, y una reescritura en Rust de un decodificador AV1 que termina siendo 20–30% más rápida que el original en C++. Agentes generadores emparejados con verificadores independientes es la arquitectura en la que confío: en investigación como en producción, el trabajo autoevaluado no es evidencia.",
+      "ar": "النتائج التي تبهرني هي تلك التي يمكن لآلة التحقق منها: 1.8 مليون سطر بلغة Lean لصياغة تخمينات Weil رسميًا، وإعادة كتابة فك ترميز AV1 بلغة Rust لتصبح في النهاية أسرع بنسبة 20–30% من الأصل المكتوب بـ C++. اقتران الوكلاء المولّدين بمدقّقين مستقلين هو البنية التي أثق بها — ففي البحث كما في الإنتاج، العمل الذي يقيّم نفسه ليس دليلًا."
+    },
+    "tags": [
+      "multi-agent",
+      "verification",
+      "scientific-discovery"
+    ]
+  },
+  {
+    "id": "sierra-poppy-personal-agent-protocol-1-0",
+    "date": "2026-11-13",
+    "category": "agentic",
+    "headline": {
+      "en": "Releasing Personal Agent Protocol 1.0",
+      "de": "Personal Agent Protocol 1.0 wird veröffentlicht",
+      "fr": "Publication de la version 1.0 du Personal Agent Protocol",
+      "es": "Lanzamiento de Personal Agent Protocol 1.0",
+      "ar": "إطلاق الإصدار 1.0 من بروتوكول الوكلاء الشخصيين Personal Agent Protocol"
+    },
+    "source": "Sierra",
+    "url": "https://sierra.ai/blog/releasing-poppy",
+    "take": {
+      "en": "A personal-agent protocol stops being a whitepaper the moment Shopify enables it for every merchant and Muse checks for it by default — Poppy 1.0 has crossed that line with more than 100 design partners. The OAuth-scoped consent model is the part I care about: agents acting on my behalf only work if permissions are explicit, revocable, and standard across every business they touch.",
+      "de": "Ein Protokoll für persönliche Agenten hört auf, ein Diskussionspapier zu sein, sobald Shopify es für jeden Händler aktiviert und Muse standardmäßig danach sucht — Poppy 1.0 hat diese Schwelle mit mehr als 100 Designpartnern überschritten. Das OAuth-basierte Einwilligungsmodell ist der Teil, der mich interessiert: Agenten, die in meinem Namen handeln, funktionieren nur, wenn Berechtigungen explizit, widerrufbar und bei jedem berührten Unternehmen standardisiert sind.",
+      "fr": "Un protocole d'agents personnels cesse d'être une simple ébauche quand Shopify l'active pour chaque marchand et que Muse le recherche par défaut — Poppy 1.0 a franchi ce cap avec plus de 100 partenaires de conception. Le modèle de consentement calqué sur OAuth est ce qui m'intéresse : des agents qui agissent en mon nom ne fonctionnent que si les permissions sont explicites, révocables et standardisées auprès de chaque entreprise qu'ils touchent.",
+      "es": "Un protocolo de agentes personales deja de ser un documento de intenciones cuando Shopify lo activa para todos los comercios y Muse lo busca por defecto — Poppy 1.0 ha cruzado esa línea con más de 100 socios de diseño. El modelo de consentimiento basado en OAuth es lo que me importa: los agentes que actúan en mi nombre solo funcionan si los permisos son explícitos, revocables y estándar en cada negocio con el que interactúan.",
+      "ar": "يتوقف بروتوكول الوكلاء الشخصيين عن كونه مجرد وثيقة نظرية عندما تفعّله Shopify لكل تجارها ويصبح Muse يتحقق منه افتراضيًا — وقد تجاوز Poppy 1.0 هذا الخط بمشاركة أكثر من 100 شريك تصميم. نموذج الموافقة القائم على OAuth هو ما يهمّني: الوكلاء الذين يتصرفون نيابة عني لا ينجحون إلا إذا كانت الأذونات صريحة وقابلة للإلغاء وموحّدة لدى كل جهة يتعاملون معها."
+    },
+    "tags": [
+      "personal-agents",
+      "governance"
+    ]
+  },
+  {
+    "id": "openai-daybreak-red-team-defense-factory",
+    "date": "2026-11-13",
+    "category": "agentic",
+    "headline": {
+      "en": "OpenAI Unveils Daybreak Red Team, Defense Factory Security Tools",
+      "de": "OpenAI stellt die Sicherheitstools Daybreak Red Team und Defense Factory vor",
+      "fr": "OpenAI dévoile les outils de sécurité Daybreak Red Team et Defense Factory",
+      "es": "OpenAI presenta las herramientas de seguridad Daybreak Red Team y Defense Factory",
+      "ar": "OpenAI تكشف عن أدوات الأمان Daybreak Red Team وDefense Factory"
+    },
+    "source": "SecurityWeek",
+    "url": "https://www.securityweek.com/openai-unveils-daybreak-red-team-defense-factory-security-tools/",
+    "take": {
+      "en": "Agent fleets that pentest my applications and draft patches are the direction security has to move — attackers are automating too. The design details matter: findings get validated before they reach anyone, patches stop for human review, and fixes are retested after merge. Continuous verification rather than one-shot scanning is the only defensible posture.",
+      "de": "Agenten-Flotten, die meine Anwendungen pentesten und Patches entwerfen, sind die Richtung, in die sich Sicherheit bewegen muss — Angreifer automatisieren ebenfalls. Die Details des Designs zählen: Befunde werden validiert, bevor sie jemand erreicht, Patches stoppen zur menschlichen Prüfung, und Fixes werden nach dem Merge erneut getestet. Kontinuierliche Verifikation statt einmaligem Scannen ist die einzige vertretbare Haltung.",
+      "fr": "Des flottes d'agents qui testent mes applications en intrusion et rédigent des correctifs, c'est la direction que doit prendre la sécurité — les attaquants s'automatisent aussi. Les détails de conception comptent : les constats sont validés avant d'atteindre quiconque, les correctifs s'arrêtent pour revue humaine, et les correctifs sont retestés après la fusion. La vérification continue plutôt que le scan unique est la seule posture défendable.",
+      "es": "Flotas de agentes que hacen pentesting a mis aplicaciones y redactan parches son la dirección en la que debe moverse la seguridad — los atacantes también se están automatizando. Los detalles de diseño importan: los hallazgos se validan antes de llegar a cualquiera, los parches se detienen para revisión humana y las correcciones se vuelven a probar tras la fusión. La verificación continua en lugar del escaneo puntual es la única postura defendible.",
+      "ar": "أسراب الوكلاء التي تختبر اختراق تطبيقاتي وتصيغ الرقع الأمنية هي الاتجاه الذي يجب أن يسير إليه الأمن السيبراني — فالمهاجمون يؤتمتون أيضًا. تفاصيل التصميم مهمة: النتائج تُتحقق منها قبل أن تصل إلى أي أحد، والرقع تتوقف لمراجعة بشرية، والإصلاحات يعاد اختبارها بعد الدمج. التحقق المستمر بدلًا من الفحص لمرة واحدة هو الموقف الوحيد القابل للدفاع عنه."
+    },
+    "tags": [
+      "agent-security",
+      "red-teaming"
     ]
   }
 ]
