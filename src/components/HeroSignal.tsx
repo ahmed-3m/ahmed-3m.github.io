@@ -16,11 +16,11 @@ const SWEEP_002 = CIFAR_LAMBDA_SWEEP.find((e) => e.lambda === '0.02')
 
 const copy = {
   kicker: {
-    en: 'Thesis · live data',
-    de: 'Thesis · echte Daten',
-    fr: 'Thèse · données réelles',
-    es: 'Tesis · datos reales',
-    ar: 'الرسالة · بيانات حقيقية',
+    en: "Thesis · recorded results",
+    de: "Thesis · aufgezeichnete Ergebnisse",
+    fr: "Thèse · résultats enregistrés",
+    es: "Tesis · resultados registrados",
+    ar: "الرسالة · نتائج مسجلة",
   },
   title: {
     en: 'Diffusion anomaly scores separate ID from OOD',
@@ -166,3 +166,4 @@ export default function HeroSignal() {
     </figure>
   )
 }
+

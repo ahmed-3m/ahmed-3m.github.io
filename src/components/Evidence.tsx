@@ -4,7 +4,7 @@ import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { useReveal } from '@/lib/useReveal'
 
 const copy = {
-  eyebrow: { en: '// 03 - Proof', de: '// 03 - Nachweise', fr: '// 03 - Preuves', es: '// 03 - Evidencia', ar: '// 03 - أدلة' },
+  eyebrow: { en: '// Proof', de: '// Nachweise', fr: '// Preuves', es: '// Evidencia', ar: '// أدلة' },
   title: {
     en: 'Selected evidence.',
     de: 'Ausgewählte Nachweise.',
@@ -134,7 +134,7 @@ export default function Evidence() {
               <div className="cd-evidence-card-title">{t(item.title)}</div>
               <div className="cd-evidence-card-meta">{t(item.meta)}</div>
               <div className="cd-proj-link" style={{ marginTop: 2 }}>
-                Open &rarr;
+                {t({ en: "Open", de: "Öffnen", fr: "Ouvrir", es: "Abrir", ar: "فتح" })} &rarr;
               </div>
             </a>
           ))}
@@ -143,3 +143,4 @@ export default function Evidence() {
     </section>
   )
 }
+

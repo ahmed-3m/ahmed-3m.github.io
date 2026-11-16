@@ -172,7 +172,7 @@ const formulaVisuals: Array<{ previewSrc: string; src: string; width: number; he
 ]
 
 const copy = {
-  eyebrow: { en: '// 05 - Research', de: '// 05 - Forschung', fr: '// 05 - Recherche', es: '// 05 - Investigación', ar: '// 05 - الأبحاث' },
+  eyebrow: { en: '// Research', de: '// Forschung', fr: '// Recherche', es: '// Investigación', ar: '// الأبحاث' },
   title: { en: 'Reports & Thesis', de: 'Berichte & Thesis', fr: 'Rapports & mémoire', es: 'Informes y tesis', ar: 'التقارير والرسالة' },
   summaryProblemLabel: { en: 'Problem', de: 'Problem', fr: 'Problème', es: 'Problema', ar: 'المشكلة' },
   summaryProblemText: {
@@ -717,3 +717,4 @@ export default function Research() {
     </section>
   )
 }
+

@@ -1054,7 +1054,7 @@ body::before {
 
 /* ── REVEAL ── */
 .reveal {
-  opacity: 0; transform: translateY(20px);
+  opacity: 1; transform: none;
   transition: opacity 500ms var(--cd-ease), transform 500ms var(--cd-ease);
 }
 .reveal.visible { opacity: 1; transform: none; }
@@ -1471,3 +1471,19 @@ body::before {
   .reveal { opacity: 1; transform: none; }
   .glass-card:hover, .glass-card:focus-within { transform: none; }
 }
+
+
+.cd-edu-header { flex-wrap: wrap; }
+.cd-education-card, .cd-edu-degree, .cd-stat { min-width: 0; overflow-wrap: anywhere; }
+.cd-edu-date { white-space: normal; max-width: 100%; }
+.cd-stat-label { line-height: 1.5; }
+
+@media (max-width: 480px) {
+  .cd-hero-stats { grid-template-columns: 1fr; }
+  .cd-stat { border-right: 0; border-bottom: 1px solid var(--cd-b0); }
+  .cd-stat:last-child { border-bottom: 0; }
+}
+
+.cd-additional-projects { grid-column: 1 / -1; min-width: 0; }
+.cd-additional-projects summary { cursor: pointer; padding: 16px; color: var(--cd-accent); border: 1px solid var(--cd-b0); border-radius: 10px; }
+.cd-additional-projects summary:focus-visible { outline: 2px solid var(--cd-accent); outline-offset: 4px; }

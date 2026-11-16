@@ -3,7 +3,7 @@ import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { useReveal } from '@/lib/useReveal'
 
 const copy = {
-  eyebrow: { en: '// 01 - About', de: '// 01 - Profil', fr: '// 01 - Profil', es: '// 01 - Perfil', ar: '// 01 - نبذة' },
+  eyebrow: { en: '// About', de: '// Profil', fr: '// Profil', es: '// Perfil', ar: '// نبذة' },
   title: {
     en: 'AI/ML Engineer - research that ships.',
     de: 'AI/ML Engineer - Forschung, die produktiv wird.',
@@ -227,3 +227,4 @@ export default function About() {
     </section>
   )
 }
+

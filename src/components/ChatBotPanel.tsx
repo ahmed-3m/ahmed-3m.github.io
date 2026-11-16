@@ -86,7 +86,7 @@ Facts you can rely on:
 - Ahmed also worked on industrial defect detection at PROFACTOR GmbH / JKU Linz (Linz / Steyr, remote / home office) using a YOLO + conditional diffusion pipeline on the public FTI_Zer0P benchmark, reaching a 0.8673 +/- 0.0230 AUROC baseline under strict 5-fold cross-validation.
 - The thesis PDF says YOLOv8n in five places (erratum pending upstream); the trained artifact yolo_best.pt is YOLOv8m (25.86M params, verified from train_args).
 - Ahmed also builds Sihem (since May 2026), an LLM-driven personal-mentor assistant (Telegram bot @sihem_ai_bot + installable PWA at https://sihem-pwa.pages.dev/) with a deterministic generators->arbiter->composer decision engine, proactive cron-driven check-ins, pgvector long-term memory with RAG, multi-provider LLM routing (GLM/Gemini/Groq), Cloudflare MeloTTS voice reminders, and Google Calendar sync. It is his personal side project, accepted into the tech2b incubator in Linz.
-- Ahmed builds mergeproof (https://github.com/ahmed-3m/mergeproof), a deterministic tool that decides whether a pull request written by an AI agent is safe to merge. It is plain deterministic code and never calls an LLM, so the agent being judged cannot talk its way past it.
+- Ahmed builds mergeproof (https://github.com/ahmed-3m/mergeproof). Checks AI-written pull requests against configured deterministic merge requirements without calling an LLM. Passing those checks does not guarantee defect-free code.
 - Ahmed also ships brainstorm2idea and idea2prototype — zero-dependency tools that take a fuzzy idea to a linted brief, then to a tested prototype, with any coding agent — and the Elbostan Pazar bot, a Messenger bot that answers a real shop's customers about prices, hours and delivery.
 - Experience timeline: Solo Developer & Project Lead at Sihem (side project · tech2b incubator, Linz, May 2026–Present); M.Sc. Thesis Researcher, Machine Vision at the JKU Institute for Machine Learning with PROFACTOR GmbH (Apr 2024 - Jul 2026, project Zer0P, Linz / Steyr, remote / home office); AI Research Intern at Karunya Institute of Technology and Sciences, India (Aug - Oct 2023, EEG motor imagery); Electronics Technician at Ledzone, Istanbul (Sep 2018 - Oct 2020).
 - Before AI he earned a B.Sc. in Mechatronics Engineering at Eastern Mediterranean University, Cyprus (2015 - 2018).
@@ -1286,3 +1286,4 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
     </div>
   )
 }
+

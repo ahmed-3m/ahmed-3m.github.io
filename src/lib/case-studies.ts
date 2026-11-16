@@ -398,11 +398,11 @@ export const caseStudies: CaseStudy[] = [
     ],
     lessons: [
       {
-        en: 'Deterministic generators and arbiters prevent LLM hallucination and notification fatigue far better than open-ended prompt loops.',
-        de: 'Deterministische Generatoren und Arbiter verhindern Halluzinationen und Benachrichtigungsmüdigkeit weitaus effektiver als offene Prompt-Schleifen.',
-        fr: 'Des générateurs et arbitres déterministes évitent les hallucinations et la fatigue des notifications bien plus sûrement que des boucles de prompts ouvertes.',
-        es: 'Los generadores y árbitros deterministas evitan alucinaciones y fatiga de notificaciones mucho mejor que bucles de prompts abiertos.',
-        ar: 'المولدات والمحكمات الحتمية تمنع هلوسة النماذج وإرهاق الإشعارات بكفاءة أعلى بكثير من حلقات التوجيه المفتوحة.',
+        en: "Scheduling decisions use deterministic rules; generated text still requires validation and may contain errors.",
+        de: "Zeitplanentscheidungen nutzen deterministische Regeln; generierter Text muss validiert werden und kann Fehler enthalten.",
+        fr: "La planification utilise des règles déterministes ; le texte généré reste à valider et peut contenir des erreurs.",
+        es: "La planificación utiliza reglas deterministas; el texto generado requiere validación y puede contener errores.",
+        ar: "تستخدم قرارات الجدولة قواعد حتمية؛ يظل النص المولد بحاجة إلى التحقق وقد يحتوي على أخطاء.",
       },
       {
         en: 'A unified, generic activity schema eliminates database migrations when introducing new habits, routines, or tracking types.',
@@ -459,3 +459,4 @@ export const caseStudies: CaseStudy[] = [
 export function getCaseStudy(slug: string) {
   return caseStudies.find((item) => item.slug === slug)
 }
+

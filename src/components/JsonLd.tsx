@@ -279,7 +279,7 @@ export function ProjectsSchema() {
         item: {
           '@type': 'SoftwareApplication',
           name: 'mergeproof — AI-Agent PR Merge Gate',
-          description: 'Deterministic checks that decide whether a pull request written by an AI agent is safe to merge. Plain deterministic code that never calls an LLM, so the agent being judged cannot talk its way past it. Zero dependencies, MIT, npm package @ahmed-3m/mergeproof.',
+          description: 'Checks AI-written pull requests against configured deterministic merge requirements without calling an LLM. Passing those checks does not guarantee defect-free code. Zero dependencies, MIT, npm package @ahmed-3m/mergeproof.',
           applicationCategory: 'DeveloperApplication',
           url: 'https://github.com/ahmed-3m/mergeproof',
           author: { '@type': 'Person', name: 'Ahmed Mohammed' },
@@ -437,3 +437,4 @@ export function BreadcrumbSchema({
     />
   );
 }
+

@@ -5,7 +5,7 @@ import { getHomepageNews, homepageCategoryLabels } from '@/lib/news-homepage'
 import { useReveal } from '@/lib/useReveal'
 
 const copy = {
-  eyebrow: { en: '// 07 - News', de: '// 07 - News', fr: '// 07 - Actualités', es: '// 07 - Noticias', ar: '// 07 - الأخبار' },
+  eyebrow: { en: '// News', de: '// News', fr: '// Actualités', es: '// Noticias', ar: '// الأخبار' },
   title: { en: 'Tracking the field.', de: 'Das Feld im Blick.', fr: 'Suivre le domaine.', es: 'Siguiendo el campo.', ar: 'متابعة المجال.' },
   intro: {
     en: 'Curated AI news with a short take on each — with a bias toward agentic AI, where I spend most of my attention.',
@@ -68,3 +68,4 @@ export default function News() {
     </section>
   )
 }
+

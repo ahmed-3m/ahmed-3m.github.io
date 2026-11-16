@@ -43,11 +43,11 @@ const copy = {
     ar: 'أنظمة ذكاء اصطناعي إنتاجية',
   },
   body: {
-    en: 'AI/ML engineer (M.Sc. JKU Linz, thesis graded 1). I build computer vision, industrial ML, and diffusion OOD systems with verified error bars in research and deterministic evals in production.',
-    de: 'AI/ML Engineer (M.Sc. JKU Linz, Masterarbeit mit Note 1). Ich entwickle Computer-Vision-, Industrial-ML- und Diffusions-OOD-Systeme mit belegten Fehlerbalken in der Forschung und deterministischer Evaluation in der Produktion.',
-    fr: "Ingénieur IA/ML (M.Sc. JKU Linz, mémoire noté 1). Je conçois des systèmes de vision par ordinateur, ML industriel et détection OOD par diffusion avec barres d'erreur vérifiées et évaluation déterministe en production.",
-    es: 'Ingeniero IA/ML (M.Sc. JKU Linz, tesis calificada con 1). Desarrollo sistemas de visión artificial, ML industrial y difusión para OOD con barras de error verificadas y evaluación determinista en producción.',
-    ar: 'مهندس ذكاء اصطناعي وتعلم آلي (ماجستير من JKU لينز، الرسالة بتقدير 1). أبني أنظمة رؤية حاسوبية وتعلم آلي صناعي وكشف OOD بنماذج الانتشار مع أشرطة خطأ موثقة وتقييم حتمي في الإنتاج.',
+    en: "AI/ML engineer building systems that inspect images, support daily routines, and check AI-written code. I combine carefully evaluated research with hands-on product development.",
+    de: "AI/ML Engineer für Systeme, die Bilder prüfen, Alltagsroutinen unterstützen und KI-generierten Code kontrollieren. Ich verbinde sorgfältig evaluierte Forschung mit praktischer Produktentwicklung.",
+    fr: "Ingénieur IA/ML : je construis des systèmes pour inspecter des images, accompagner les routines et vérifier le code généré par IA. Je combine recherche évaluée et développement de produits.",
+    es: "Ingeniero de IA/ML. Creo sistemas para inspeccionar imágenes, apoyar rutinas y verificar código generado por IA. Combino investigación evaluada con desarrollo de productos.",
+    ar: "مهندس ذكاء اصطناعي وتعلم آلي. أبني أنظمة لفحص الصور ودعم الروتين اليومي والتحقق من الشيفرة التي يولدها الذكاء الاصطناعي، وأجمع بين البحث المُقيّم بعناية وتطوير المنتجات.",
   },
   viewWork: { en: 'View work', de: 'Arbeiten ansehen', fr: 'Voir les projets', es: 'Ver trabajos', ar: 'عرض الأعمال' },
   contact: { en: 'Get in touch', de: 'Kontakt', fr: 'Contact', es: 'Contacto', ar: 'تواصل' },
@@ -105,15 +105,15 @@ export default function Hero() {
             </div>
             <div className="cd-hero-stats">
               <div className="cd-stat">
-                <div className="cd-stat-num">4<span className="a">+</span></div>
-                <div className="cd-stat-label">{t(copy.years)}</div>
+                <div className="cd-stat-num" dir="ltr">M.Sc.</div>
+                <div className="cd-stat-label">{t({ en: "AI · JKU Linz", de: "KI · JKU Linz", fr: "IA · JKU Linz", es: "IA · JKU Linz", ar: "ذكاء اصطناعي · JKU Linz" })}</div>
               </div>
               <div className="cd-stat">
-                <div className="cd-stat-num">99<span className="a">.</span>03<span className="u">%</span></div>
+                <div className="cd-stat-num" dir="ltr">99<span className="a">.</span>03<span className="u">% ± 0.07</span></div>
                 <div className="cd-stat-label">{t(copy.auroc)}</div>
               </div>
               <div className="cd-stat">
-                <div className="cd-stat-num">+6.5<span className="g u">pp</span></div>
+                <div className="cd-stat-num" dir="ltr">+6.5<span className="g u">pp</span></div>
                 <div className="cd-stat-label">{t(copy.gain)}</div>
               </div>
             </div>
@@ -127,3 +127,4 @@ export default function Hero() {
     </section>
   )
 }
+
