@@ -89,7 +89,9 @@ I'm an AI/ML engineer in **Linz, Austria**. I build systems that inspect images,
 
 ## The thesis in one table.
 
-The model scores an image by how well a class-conditional diffusion model reconstructs it under competing class hypotheses. Training adds a separation term, $\mathcal{L} = \mathcal{L}_{\text{diffusion}} + \lambda \cdot \mathcal{L}_{\text{sep}}$, and at $\lambda = 0.02$ the spread across seeds drops from ±11.07 to ±0.07 points.
+The model scores an image by how well a class-conditional diffusion model reconstructs it under competing class hypotheses. Training adds a separation term, $`\mathcal{L} = \mathcal{L}_{\text{diffusion}} + \lambda \cdot \mathcal{L}_{\text{sep}}`$, and at $`\lambda = 0.02`$ the spread across seeds drops from ±11.07 to ±0.07 points.
+
+<div align="center">
 
 | Test set | AUROC | Setting |
 | :--- | ---: | :--- |
@@ -100,6 +102,8 @@ The model scores an image by how well a class-conditional diffusion model recons
 | FashionMNIST | 94.03% | seed 42, K = 100 (thesis Table 6.1) |
 | Textures | 92.84% | seed 42, K = 100 (thesis Table 6.1) |
 | SVHN | 90.50% | seed 42, K = 100 (thesis Table 6.1) |
+
+</div>
 
 <sub>The task is binary with a single in-distribution class, so these numbers are not comparable to multi-class CIFAR-10 OOD leaderboards. All figures come from the thesis and are mirrored in <a href="src/lib/ood-explorer-data.ts"><code>src/lib/ood-explorer-data.ts</code></a>. You can drag the threshold yourself in the <a href="https://ahmed-3m.github.io/case-studies/diffusion-ood/">interactive explorer</a>.</sub>
 
