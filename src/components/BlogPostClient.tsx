@@ -88,14 +88,14 @@ function formatContent(content: string | undefined) {
           .split('\n')
           .map((item) => `<li>${inline(item.replace(/^- /, ''))}</li>`)
           .join('')
-        return `<ul class="mb-4 list-disc space-y-2 pl-6 text-[var(--cd-fg2)]">${items}</ul>`
+        return `<ul class="mb-4 list-disc space-y-2 ps-6 text-[var(--cd-fg2)]">${items}</ul>`
       }
       if (/^\d+\./.test(block)) {
         const items = block
           .split('\n')
           .map((item) => `<li>${inline(item.replace(/^\d+\.\s*/, ''))}</li>`)
           .join('')
-        return `<ol class="mb-4 list-decimal space-y-2 pl-6 text-[var(--cd-fg2)]">${items}</ol>`
+        return `<ol class="mb-4 list-decimal space-y-2 ps-6 text-[var(--cd-fg2)]">${items}</ol>`
       }
 
       return `<p class="mb-4 leading-relaxed text-[var(--cd-fg2)]">${inline(block)}</p>`
@@ -254,7 +254,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
         </nav>
 
         <Link href="/blog/" className="mb-8 inline-flex items-center gap-2 text-[var(--cd-accent)]">
-          <ArrowLeft size={18} />
+          <ArrowLeft size={18} className="rtl:rotate-180" />
           {t(copy.backBlog)}
         </Link>
 

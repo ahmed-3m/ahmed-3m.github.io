@@ -1193,7 +1193,7 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
                   type="button"
                   onClick={() => handlePrompt(promptId)}
                   disabled={isLoading}
-                  className="rounded-full border px-3 py-2 text-left text-xs transition-all disabled:cursor-not-allowed disabled:opacity-60"
+                  className="max-w-full break-words rounded-full border px-3 py-2 text-start text-xs transition-all disabled:cursor-not-allowed disabled:opacity-60"
                   style={chipStyle}
                 >
                   {labelForPrompt(promptId)}
@@ -1211,7 +1211,7 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
               <div key={`${message.role}-${index}`} className="space-y-2">
                 <div className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div
-                    className={`max-w-[88%] rounded-2xl border px-3 py-2.5 text-sm leading-6 shadow-[0_12px_32px_rgba(0,0,0,0.14)]${
+                    className={`max-w-[88%] min-w-0 break-words rounded-2xl border px-3 py-2.5 text-sm leading-6 shadow-[0_12px_32px_rgba(0,0,0,0.14)]${
                       message.role === 'user' ? ' whitespace-pre-wrap' : ''
                     }`}
                     style={bubbleStyles[message.role]}
@@ -1221,14 +1221,14 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
                 </div>
 
                 {isLastAssistant && !isLoading && message.followUps && message.followUps.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 pl-1">
+                  <div className="flex flex-wrap gap-1.5 ps-1">
                     {message.followUps.map((promptId) => (
                       <button
                         key={promptId}
                         type="button"
                         onClick={() => handlePrompt(promptId)}
                         disabled={isLoading}
-                        className="rounded-full border px-3 py-1.5 text-left text-xs transition-all disabled:cursor-not-allowed disabled:opacity-60"
+                        className="max-w-full break-words rounded-full border px-3 py-1.5 text-start text-xs transition-all disabled:cursor-not-allowed disabled:opacity-60"
                         style={chipStyle}
                       >
                         {labelForPrompt(promptId)}
@@ -1260,7 +1260,7 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
             value={input}
             onChange={(event) => setInput(event.target.value)}
             placeholder={t(CHAT_COPY.placeholder)}
-            className="h-12 flex-1 rounded-2xl border px-4 text-sm outline-none transition-colors"
+            className="h-12 min-w-0 flex-1 rounded-2xl border px-4 text-base outline-none transition-colors md:text-sm"
             style={{
               borderColor: 'var(--cd-b0)',
               background: 'color-mix(in srgb, var(--cd-surf) 70%, var(--cd-bg) 30%)',

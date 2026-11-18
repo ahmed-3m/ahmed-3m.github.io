@@ -65,7 +65,7 @@ export default function NewsPageClient() {
       />
       <div className="mx-auto max-w-4xl px-5">
         <Link href="/" className="mb-8 inline-flex items-center gap-2 text-[var(--cd-accent)]">
-          <ArrowLeft size={18} />
+          <ArrowLeft size={18} className="rtl:rotate-180" />
           {t(copy.backHome)}
         </Link>
 

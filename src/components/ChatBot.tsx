@@ -185,7 +185,7 @@ export default function ChatBot() {
     <>
       <div
         id="chatbot-dialog"
-        className={`fixed bottom-20 right-4 z-[9998] w-[min(400px,calc(100vw-2rem))] transition-all duration-300 ease-out sm:bottom-24 sm:right-6 ${
+        className={`fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom))] end-4 z-[9998] w-[min(400px,calc(100vw-2rem))] transition-all duration-300 ease-out sm:bottom-24 sm:end-6 ${
           isOpen ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none translate-y-6 opacity-0'
         }`}
         aria-hidden={!isOpen}
@@ -194,7 +194,7 @@ export default function ChatBot() {
       >
         <div
           id="ahmed-chatbot-panel"
-          className="flex h-[min(560px,calc(100vh-7rem))] flex-col overflow-hidden rounded-[28px] border"
+          className="flex h-[min(560px,calc(100vh-7rem))] max-h-[calc(100dvh-6.5rem)] flex-col overflow-hidden rounded-[28px] border"
           style={panelStyle}
           role="dialog"
           aria-modal="true"
@@ -212,7 +212,11 @@ export default function ChatBot() {
         ref={launcherRef}
         type="button"
         onClick={() => setIsOpen((value) => !value)}
-        className="group fixed bottom-6 right-6 z-[9999] inline-flex h-14 items-center gap-2 overflow-hidden rounded-full border pl-1.5 pr-4 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:pr-5 focus-visible:pr-5"
+        className={`group fixed bottom-[max(1rem,env(safe-area-inset-bottom))] end-4 z-[9999] inline-flex h-14 items-center overflow-hidden rounded-full border transition-all duration-300 ease-out sm:bottom-6 sm:end-6 ${
+          isOpen
+            ? 'gap-2 ps-1.5 pe-2'
+            : 'gap-0 p-1.5 focus-visible:gap-2 focus-visible:pe-5 [@media(hover:hover)]:hover:-translate-y-0.5 [@media(hover:hover)]:hover:gap-2 [@media(hover:hover)]:hover:pe-5'
+        }`}
         style={{
           background: 'linear-gradient(135deg, rgba(22, 26, 36, 0.96) 0%, rgba(49, 44, 40, 0.98) 100%)',
           borderColor: 'rgba(205, 189, 145, 0.28)',
@@ -226,7 +230,9 @@ export default function ChatBot() {
         <GenieOrb />
         <span
           className={`cd-chatbot-launcher-text whitespace-nowrap text-sm font-semibold tracking-[0.01em] transition-all duration-300 ${
-            isOpen ? 'max-w-0 opacity-0' : 'max-w-0 opacity-0 group-hover:max-w-32 group-hover:opacity-100 group-focus-visible:max-w-32 group-focus-visible:opacity-100'
+            isOpen
+              ? 'max-w-0 opacity-0'
+              : 'max-w-0 opacity-0 group-focus-visible:max-w-32 group-focus-visible:opacity-100 [@media(hover:hover)]:group-hover:max-w-32 [@media(hover:hover)]:group-hover:opacity-100'
           }`}
         >
           {t(CHAT_COPY.open)}

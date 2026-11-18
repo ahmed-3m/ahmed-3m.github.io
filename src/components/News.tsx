@@ -61,7 +61,7 @@ export default function News() {
 
         <div style={{ textAlign: 'center', marginTop: 32 }}>
           <Link href="/news/" className="cd-btn-ghost" style={{ fontSize: 13 }}>
-            {t(copy.all)} &rarr;
+            {t(copy.all)} <span className="inline-block rtl:rotate-180" aria-hidden="true">&rarr;</span>
           </Link>
         </div>
       </div>

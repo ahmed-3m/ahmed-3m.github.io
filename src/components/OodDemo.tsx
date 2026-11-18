@@ -351,16 +351,18 @@ export default function OodDemo() {
       style={{
         marginTop: 28,
         marginBottom: 28,
-        padding: '28px 24px',
+        padding: 'clamp(16px, 3vw, 28px)',
         borderRadius: 16,
         border: '1px solid var(--cd-border)',
         background: 'var(--cd-surface)',
         boxShadow: '0 16px 40px -20px rgba(0, 0, 0, 0.45)',
+        maxWidth: '100%',
+        minWidth: 0,
       }}
     >
       {/* Header */}
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: 16, marginBottom: 20 }}>
-        <div style={{ maxWidth: 780 }}>
+        <div style={{ maxWidth: 780, minWidth: 0, flex: '1 1 280px' }}>
           <div
             style={{
               fontFamily: 'var(--font-mono)',
@@ -393,6 +395,9 @@ export default function OodDemo() {
             lineHeight: 1.7,
             color: 'var(--cd-fg2)',
             alignSelf: 'flex-start',
+            maxWidth: '100%',
+            minWidth: 0,
+            overflowX: 'auto',
           }}
         >
           <div>
@@ -412,7 +417,7 @@ export default function OodDemo() {
         aria-label={t(copy.tabsAria)}
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))',
           gap: 10,
           marginBottom: 24,
         }}
@@ -442,7 +447,7 @@ export default function OodDemo() {
                 fontSize: 12,
                 fontWeight: isSelected ? 700 : 500,
                 cursor: 'pointer',
-                textAlign: 'left',
+                textAlign: 'start',
                 transition: 'all 0.15s ease',
               }}
             >
@@ -461,7 +466,7 @@ export default function OodDemo() {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 290px), 1fr))',
               gap: 16,
               padding: 16,
               borderRadius: 12,
@@ -469,7 +474,7 @@ export default function OodDemo() {
               background: 'var(--cd-bg)',
             }}
           >
-            <div>
+            <div style={{ minWidth: 0 }}>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-fg3)', marginBottom: 8 }}>
                 {t(copy.regimeHeading)}
               </div>
@@ -485,7 +490,7 @@ export default function OodDemo() {
                     color: 'var(--cd-fg)',
                     fontSize: 12,
                     fontFamily: 'var(--font-mono)',
-                    textAlign: 'left',
+                    textAlign: 'start',
                     cursor: 'pointer',
                   }}
                 >
@@ -502,7 +507,7 @@ export default function OodDemo() {
                     color: 'var(--cd-fg)',
                     fontSize: 12,
                     fontFamily: 'var(--font-mono)',
-                    textAlign: 'left',
+                    textAlign: 'start',
                     cursor: 'pointer',
                   }}
                 >
@@ -511,11 +516,11 @@ export default function OodDemo() {
               </div>
             </div>
 
-            <div>
+            <div style={{ minWidth: 0 }}>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-fg3)', marginBottom: 8 }}>
                 {t(copy.datasetHeading)}
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(175px, 1fr))', gap: 6 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 175px), 1fr))', gap: 6 }}>
                 {(Object.keys(BENCHMARK_DATASETS) as OodDatasetKey[]).map((key) => {
                   const meta = BENCHMARK_DATASETS[key]
                   const selected = regime === 'sep' && datasetKey === key
@@ -640,7 +645,7 @@ export default function OodDemo() {
               dir="ltr"
               style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 150px), 1fr))',
                 gap: 10,
                 marginTop: 14,
               }}
@@ -688,9 +693,9 @@ export default function OodDemo() {
           </div>
 
           {/* Side-by-Side Empirical Histogram SVG & ROC Curve SVG */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(310px, 1fr))', gap: 16 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 310px), 1fr))', gap: 16 }}>
             {/* 48-Bin Empirical Histogram */}
-            <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)' }}>
+            <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)', minWidth: 0 }}>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--cd-fg)', marginBottom: 10 }}>
                 {t(copy.histTitle)}
               </div>
@@ -760,7 +765,7 @@ export default function OodDemo() {
             </div>
 
             {/* Empirical ROC Curve */}
-            <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)' }}>
+            <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)', minWidth: 0 }}>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--cd-fg)', marginBottom: 10 }}>
                 {t(copy.rocTitle)}
               </div>
@@ -901,7 +906,7 @@ export default function OodDemo() {
             </svg>
 
             {/* Live Timestep Metrics */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 10, marginTop: 12 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 180px), 1fr))', gap: 10, marginTop: 12 }}>
               <div style={{ padding: 10, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-accent)' }}>ID (Airplane) MSE @ t={activeTimestep.t}</div>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--cd-fg)', marginTop: 4 }}>
@@ -941,8 +946,8 @@ export default function OodDemo() {
           </div>
 
           {/* Contrastive Scoring Comparison (Table 6.5 & D.3) + Timestep Strategy (Table 6.4) */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: 16 }}>
-            <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 290px), 1fr))', gap: 16 }}>
+            <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)', minWidth: 0 }}>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--cd-fg)', marginBottom: 10 }}>
                 {t(copy.scoringHeading)}
               </div>
@@ -974,8 +979,8 @@ export default function OodDemo() {
                 ))}
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-                <div style={{ padding: 12, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 155px), 1fr))', gap: 10 }}>
+                <div style={{ padding: 12, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)', minWidth: 0 }}>
                   <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-fg3)' }}>Within-CIFAR AUROC</div>
                   <div style={{ fontFamily: 'var(--font-mono)', fontSize: 20, fontWeight: 700, color: activeScoring.cifarAuroc > 90 ? 'var(--cd-success)' : 'var(--cd-warn)' }}>
                     {activeScoring.cifarAuroc.toFixed(2)}%
@@ -984,7 +989,7 @@ export default function OodDemo() {
                     FPR95: {activeScoring.cifarFpr95.toFixed(1)}%
                   </div>
                 </div>
-                <div style={{ padding: 12, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
+                <div style={{ padding: 12, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)', minWidth: 0 }}>
                   <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-fg3)' }}>External SVHN AUROC</div>
                   <div style={{ fontFamily: 'var(--font-mono)', fontSize: 20, fontWeight: 700, color: activeScoring.svhnAuroc > 90 ? 'var(--cd-success)' : 'var(--cd-danger)' }}>
                     {activeScoring.svhnAuroc.toFixed(2)}%
@@ -1002,7 +1007,7 @@ export default function OodDemo() {
             </div>
 
             {/* Table 6.4 Timestep Sampling Strategies */}
-            <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)' }}>
+            <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)', minWidth: 0 }}>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--cd-fg)', marginBottom: 10 }}>
                 Timestep Sampling Strategy Ablation (Table 6.4 · K = 50, λ = 0.01)
               </div>
@@ -1016,17 +1021,19 @@ export default function OodDemo() {
                       border: '1px solid var(--cd-border)',
                       background: 'var(--cd-surface)',
                       display: 'flex',
+                      flexWrap: 'wrap',
+                      gap: 8,
                       justifyContent: 'space-between',
                       alignItems: 'center',
                       fontFamily: 'var(--font-mono)',
                       fontSize: 11.5,
                     }}
                   >
-                    <div>
+                    <div style={{ minWidth: 0 }}>
                       <strong style={{ color: 'var(--cd-fg)', textTransform: 'capitalize' }}>{strat.key.replace('_', '-')}</strong>
                       <div style={{ fontSize: 10.5, color: 'var(--cd-fg3)' }}>{strat.distribution}</div>
                     </div>
-                    <div style={{ textAlign: 'right' }}>
+                    <div style={{ textAlign: 'end' }}>
                       <div style={{ color: 'var(--cd-accent)', fontWeight: 700 }}>CIFAR: {strat.cifarAuroc.toFixed(1)}%</div>
                       <div style={{ color: 'var(--cd-fg2)', fontSize: 11 }}>SVHN: {strat.svhnAuroc.toFixed(1)}%</div>
                     </div>
@@ -1043,9 +1050,9 @@ export default function OodDemo() {
          ===================================================================== */}
       {activeTab === 'ablations' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 16 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: 16 }}>
             {/* Separation Loss Lambda Sweep (Table 6.6) */}
-            <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)' }}>
+            <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)', minWidth: 0 }}>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--cd-fg)', marginBottom: 10 }}>
                 {t(copy.lambdaSweepHeading)}
               </div>
@@ -1073,22 +1080,22 @@ export default function OodDemo() {
               </div>
 
               <div style={{ padding: 12, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 12 }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 12 }}>
                   <span>Within-CIFAR AUROC:</span>
                   <strong style={{ color: 'var(--cd-success)' }}>
                     {activeLambda.withinCifarMean.toFixed(2)}%
                     {activeLambda.withinCifarStd !== null ? ` ± ${activeLambda.withinCifarStd.toFixed(2)}%` : ' (seed 42)'}
                   </strong>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
                   <span>Seed runs (42 / 123 / 456):</span>
                   <span>{activeLambda.seeds.map((s) => `${s.toFixed(2)}%`).join(' · ')}</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
                   <span>Best Convergence Epoch (seed 42):</span>
                   <span>Epoch {activeLambda.bestEpochSeed42}</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
                   <span>SVHN External AUROC (seed 42):</span>
                   <span>
                     {activeLambda.svhnAuroc.toFixed(1)}%{activeLambda.svhnArtefact ? '† (artefact)' : ''}
@@ -1098,7 +1105,7 @@ export default function OodDemo() {
             </div>
 
             {/* Monte Carlo Trials K Sweep (Table 6.3 & D.2) */}
-            <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)' }}>
+            <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)', minWidth: 0 }}>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--cd-fg)', marginBottom: 10 }}>
                 {t(copy.kSweepHeading)}
               </div>
@@ -1126,19 +1133,19 @@ export default function OodDemo() {
               </div>
 
               <div style={{ padding: 12, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 12 }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 12 }}>
                   <span>Within-CIFAR AUROC (λ=0.01, seed 42):</span>
                   <strong style={{ color: 'var(--cd-accent)' }}>{activeK.auroc.toFixed(2)}%</strong>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
                   <span>FPR@95%TPR:</span>
                   <span>{activeK.fpr95.toFixed(1)}%</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
                   <span>RTX 2080 Ti Time (per 10K images):</span>
                   <span>{activeK.timeSeconds10k.toFixed(1)} s ({activeK.msPerSample.toFixed(1)} ms / img)</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
                   <span>Cost vs. ResNet-18 Forward Pass:</span>
                   <span>{activeK.resnetMultiple}</span>
                 </div>
@@ -1147,9 +1154,9 @@ export default function OodDemo() {
           </div>
 
           {/* Inkjet Print QC Per-Feature & Lambda Explorer (Tables 6.7, 6.8, 6.9) */}
-          <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)' }}>
+          <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)', minWidth: 0 }}>
             <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: 12, marginBottom: 12 }}>
-              <div>
+              <div style={{ minWidth: 0 }}>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--cd-fg)' }}>
                   {t(copy.inkjetHeading)}
                 </div>
@@ -1158,7 +1165,7 @@ export default function OodDemo() {
                 </div>
               </div>
 
-              <div style={{ display: 'flex', gap: 6 }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                 {(['0.0', '0.01', '0.02', '0.05'] as const).map((lKey) => (
                   <button
                     key={lKey}
@@ -1194,7 +1201,7 @@ export default function OodDemo() {
               </span>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: 8 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 210px), 1fr))', gap: 8 }}>
               {INKJET_PER_FEATURE.map((feat) => {
                 const stats = feat.byLambda[inkjetLambda]
                 const pct = stats.mean * 100
@@ -1206,9 +1213,10 @@ export default function OodDemo() {
                       borderRadius: 8,
                       border: '1px solid var(--cd-border)',
                       background: 'var(--cd-surface)',
+                      minWidth: 0,
                     }}
                   >
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5 }}>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5 }}>
                       <strong style={{ color: 'var(--cd-fg)' }}>{feat.feature}</strong>
                       <span style={{ color: pct >= 90 ? 'var(--cd-success)' : pct >= 80 ? 'var(--cd-accent)' : 'var(--cd-warn)', fontWeight: 700 }}>
                         {stats.mean.toFixed(4)} ± {stats.std.toFixed(4)}
