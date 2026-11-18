@@ -280,11 +280,11 @@ export const LOCAL_REPLIES = {
     ar: `Sihem مساعد طوّره أحمد لتنظيم الأسبوع والروتين اليومي. يرسل متابعات مجدولة عبر تيليجرام ويتيح تطبيق ويب قابلًا للتثبيت. النسخة التجريبية متاحة بالدعوة فقط. [اقرأ دراسة الحالة العامة](${SIHEM_URL}).`,
   },
   sihem: {
-    en: `Sihem (Telegram @sihem_ai_bot, PWA: https://sihem-pwa.pages.dev/, invitation-only beta) is Ahmed's proactive AI personal-mentor and habits/daily-routine assistant, accepted into the tech2b incubator in Linz (May 2026–Present). Built on Supabase Edge Functions (Deno/TypeScript) and PostgreSQL with RLS, it features a deterministic generators→arbiter→composer decision engine for scheduling check-ins, pgvector long-term memory with RAG, multi-provider LLM routing (GLM/Gemini/Groq) with automated failover, Cloudflare MeloTTS voice reminders, and Google Calendar sync.`,
-    de: `Sihem (Telegram @sihem_ai_bot, PWA: https://sihem-pwa.pages.dev/, Beta mit Einladung) ist Ahmeds proaktiver KI-Mentor-Assistent für Gewohnheiten und Tagesroutinen, aufgenommen in den tech2b-Inkubator in Linz (Mai 2026–heute). Entwickelt auf Supabase Edge Functions (Deno/TypeScript) und PostgreSQL mit RLS, nutzt das System eine deterministische Generatoren→Arbiter→Komponist-Entscheidungsmaschine für Check-Ins, pgvector-Langzeitgedächtnis mit RAG, Multi-Provider-LLM-Routing (GLM/Gemini/Groq) mit Failover, Cloudflare MeloTTS-Spracherinnerungen und Google-Kalender-Synchronisation.`,
-    fr: `Sihem (Telegram @sihem_ai_bot, PWA : https://sihem-pwa.pages.dev/, bêta sur invitation) est l'assistant personnel mentor proactif d'Ahmed pour les habitudes et routines quotidiennes, incubé chez tech2b à Linz (mai 2026–présent). Développé sur Supabase Edge Functions (Deno/TypeScript) et PostgreSQL avec RLS, il intègre un moteur décisionnel générateurs→arbitre→compositeur pour la planification des rappels, une mémoire long terme pgvector avec RAG, un routage LLM multi-fournisseurs (GLM/Gemini/Groq) avec basculement automatique, des rappels vocaux Cloudflare MeloTTS et la synchronisation Google Calendar.`,
-    es: `Sihem (Telegram @sihem_ai_bot, PWA: https://sihem-pwa.pages.dev/, beta por invitación) es el asistente mentor personal proactivo de Ahmed para hábitos y rutinas diarias, aceptado en la incubadora tech2b de Linz (mayo 2026–presente). Desarrollado con Supabase Edge Functions (Deno/TypeScript) y PostgreSQL con RLS, cuenta con un motor de decisiones generadores→árbitro→compositor para programar recordatorios, memoria a largo plazo pgvector con RAG, enrutamiento LLM multiproveedor (GLM/Gemini/Groq) con failover, avisos de voz Cloudflare MeloTTS y sincronización con Google Calendar.`,
-    ar: `مشروع Sihem (تيليجرام @sihem_ai_bot، وتطبيق الويب: https://sihem-pwa.pages.dev/، نسخة تجريبية بدعوة) هو مساعد شخصي موجه واستباقي للعادات والروتين اليومي من تطوير أحمد، ومقبول في حاضنة الأعمال tech2b في لينز (مايو 2026 – الآن). مبني على Supabase Edge Functions (Deno/TypeScript) وPostgreSQL مع RLS، ويتميز بمحرك قرار حتمي (مولدات←محكم←مؤلف) لجدولة التنبيهات، وذاكرة pgvector طويلة المدى مع RAG، وتوجيه LLM متعدد المزودين (GLM/Gemini/Groq) مع تبديل تلقائي، وتذكيرات صوتية بـ Cloudflare MeloTTS، ومزامنة Google Calendar.`,
+    en: `Sihem (Telegram @sihem_ai_bot, PWA: https://sihem-pwa.pages.dev/, invitation-only beta) is Ahmed's proactive AI personal-mentor and habits/daily-routine assistant, accepted into the tech2b incubator in Linz (May 2026–Present). Built on Supabase Edge Functions (Deno/TypeScript) and PostgreSQL with RLS, it features a deterministic generators→arbiter→composer decision engine for scheduling check-ins, pgvector long-term memory with RAG, multi-provider LLM routing (GLM/Gemini/Groq) with automated failover, Cloudflare MeloTTS voice reminders, and Google Calendar sync. [Read the public case study](${SIHEM_URL}).`,
+    de: `Sihem (Telegram @sihem_ai_bot, PWA: https://sihem-pwa.pages.dev/, Beta mit Einladung) ist Ahmeds proaktiver KI-Mentor-Assistent für Gewohnheiten und Tagesroutinen, aufgenommen in den tech2b-Inkubator in Linz (Mai 2026–heute). Entwickelt auf Supabase Edge Functions (Deno/TypeScript) und PostgreSQL mit RLS, nutzt das System eine deterministische Generatoren→Arbiter→Komponist-Entscheidungsmaschine für Check-Ins, pgvector-Langzeitgedächtnis mit RAG, Multi-Provider-LLM-Routing (GLM/Gemini/Groq) mit Failover, Cloudflare MeloTTS-Spracherinnerungen und Google-Kalender-Synchronisation. [Zur öffentlichen Fallstudie](${SIHEM_URL}).`,
+    fr: `Sihem (Telegram @sihem_ai_bot, PWA : https://sihem-pwa.pages.dev/, bêta sur invitation) est l'assistant personnel mentor proactif d'Ahmed pour les habitudes et routines quotidiennes, incubé chez tech2b à Linz (mai 2026–présent). Développé sur Supabase Edge Functions (Deno/TypeScript) et PostgreSQL avec RLS, il intègre un moteur décisionnel générateurs→arbitre→compositeur pour la planification des rappels, une mémoire long terme pgvector avec RAG, un routage LLM multi-fournisseurs (GLM/Gemini/Groq) avec basculement automatique, des rappels vocaux Cloudflare MeloTTS et la synchronisation Google Calendar. [Lire l’étude de cas publique](${SIHEM_URL}).`,
+    es: `Sihem (Telegram @sihem_ai_bot, PWA: https://sihem-pwa.pages.dev/, beta por invitación) es el asistente mentor personal proactivo de Ahmed para hábitos y rutinas diarias, aceptado en la incubadora tech2b de Linz (mayo 2026–presente). Desarrollado con Supabase Edge Functions (Deno/TypeScript) y PostgreSQL con RLS, cuenta con un motor de decisiones generadores→árbitro→compositor para programar recordatorios, memoria a largo plazo pgvector con RAG, enrutamiento LLM multiproveedor (GLM/Gemini/Groq) con failover, avisos de voz Cloudflare MeloTTS y sincronización con Google Calendar. [Leer el caso de estudio público](${SIHEM_URL}).`,
+    ar: `مشروع Sihem (تيليجرام @sihem_ai_bot، وتطبيق الويب: https://sihem-pwa.pages.dev/، نسخة تجريبية بدعوة) هو مساعد شخصي موجه واستباقي للعادات والروتين اليومي من تطوير أحمد، ومقبول في حاضنة الأعمال tech2b في لينز (مايو 2026 – الآن). مبني على Supabase Edge Functions (Deno/TypeScript) وPostgreSQL مع RLS، ويتميز بمحرك قرار حتمي (مولدات←محكم←مؤلف) لجدولة التنبيهات، وذاكرة pgvector طويلة المدى مع RAG، وتوجيه LLM متعدد المزودين (GLM/Gemini/Groq) مع تبديل تلقائي، وتذكيرات صوتية بـ Cloudflare MeloTTS، ومزامنة Google Calendar. [اقرأ دراسة الحالة العامة](${SIHEM_URL}).`,
   },
   thesis: {
     en: `Ahmed’s thesis tested whether a diffusion model could recognize unfamiliar images. Separation loss improved mean AUROC from 92.52% ± 11.07% to 99.03% ± 0.07% across three seeds on a binary CIFAR-10 airplane-vs-rest split. [See the findings and limits](${DIFFUSION_URL}).`,
@@ -308,18 +308,18 @@ export const LOCAL_REPLIES = {
     ar: `يقيم أحمد في لينز وهو متاح لوظائف بدوام كامل في الذكاء الاصطناعي وتعلّم الآلة، خاصة في الرؤية الحاسوبية وتعلّم الآلة التطبيقي. [تواصل مع أحمد](${CONTACT_URL}) لمناقشة فرصة عمل أو تأكيد توافره الحالي.`,
   },
   tech_stack: {
-    en: `Ahmed's stack spans AI research and production engineering:\n- ML: PyTorch, Python, Diffusion Models, YOLO, OpenCV, Anomaly Detection\n- Product/Infra: Next.js, React, TypeScript, Convex, Docker, PostgreSQL, Cloudflare\n- Tools: Git, Weights & Biases, Hugging Face, Linux`,
-    de: `Ahmeds Stack umfasst KI-Forschung und Produktionsentwicklung:\n- ML: PyTorch, Python, Diffusionsmodelle, YOLO, OpenCV, Anomalieerkennung\n- Produkt/Infra: Next.js, React, TypeScript, Convex, Docker, PostgreSQL, Cloudflare\n- Tools: Git, Weights & Biases, Hugging Face, Linux`,
-    fr: `Le stack d'Ahmed couvre la recherche IA et la production :\n- ML : PyTorch, Python, Modèles de diffusion, YOLO, OpenCV, Détection d'anomalies\n- Produit/Infra : Next.js, React, TypeScript, Convex, Docker, PostgreSQL, Cloudflare\n- Outils : Git, Weights & Biases, Hugging Face, Linux`,
-    es: `El stack de Ahmed abarca investigación en IA e ingeniería de producción:\n- ML: PyTorch, Python, Modelos de difusión, YOLO, OpenCV, Detección de anomalías\n- Producto/Infra: Next.js, React, TypeScript, Convex, Docker, PostgreSQL, Cloudflare\n- Herramientas: Git, Weights & Biases, Hugging Face, Linux`,
-    ar: `يشمل الـ stack الخاص بأحمد أبحاث الذكاء الاصطناعي وهندسة الإنتاج:\n- تعلم الآلة: PyTorch وPython ونماذج الانتشار وYOLO وOpenCV وكشف الشذوذ\n- المنتج والبنية: Next.js وReact وTypeScript وConvex وDocker وPostgreSQL وCloudflare\n- الأدوات: Git وWeights & Biases وHugging Face وLinux`,
+    en: `Ahmed's stack spans AI research and production engineering:\n- ML: PyTorch, Python, Diffusion Models, YOLO, OpenCV, Anomaly Detection\n- Product/Infra: Next.js, React, TypeScript, Convex, Docker, PostgreSQL, Cloudflare\n- Tools: Git, Weights & Biases, Hugging Face, Linux\n[Skills and background](${BACKGROUND_URL}) · [Inkjet inspection](${INDUSTRIAL_URL}) · [Sihem](${SIHEM_URL})`,
+    de: `Ahmeds Stack umfasst KI-Forschung und Produktionsentwicklung:\n- ML: PyTorch, Python, Diffusionsmodelle, YOLO, OpenCV, Anomalieerkennung\n- Produkt/Infra: Next.js, React, TypeScript, Convex, Docker, PostgreSQL, Cloudflare\n- Tools: Git, Weights & Biases, Hugging Face, Linux\n[Skills und Hintergrund](${BACKGROUND_URL}) · [Inkjet-Prüfung](${INDUSTRIAL_URL}) · [Sihem](${SIHEM_URL})`,
+    fr: `Le stack d'Ahmed couvre la recherche IA et la production :\n- ML : PyTorch, Python, Modèles de diffusion, YOLO, OpenCV, Détection d'anomalies\n- Produit/Infra : Next.js, React, TypeScript, Convex, Docker, PostgreSQL, Cloudflare\n- Outils : Git, Weights & Biases, Hugging Face, Linux\n[Compétences et parcours](${BACKGROUND_URL}) · [Inspection jet d’encre](${INDUSTRIAL_URL}) · [Sihem](${SIHEM_URL})`,
+    es: `El stack de Ahmed abarca investigación en IA e ingeniería de producción:\n- ML: PyTorch, Python, Modelos de difusión, YOLO, OpenCV, Detección de anomalías\n- Producto/Infra: Next.js, React, TypeScript, Convex, Docker, PostgreSQL, Cloudflare\n- Herramientas: Git, Weights & Biases, Hugging Face, Linux\n[Habilidades y trayectoria](${BACKGROUND_URL}) · [Inspección inkjet](${INDUSTRIAL_URL}) · [Sihem](${SIHEM_URL})`,
+    ar: `يشمل الـ stack الخاص بأحمد أبحاث الذكاء الاصطناعي وهندسة الإنتاج:\n- تعلم الآلة: PyTorch وPython ونماذج الانتشار وYOLO وOpenCV وكشف الشذوذ\n- المنتج والبنية: Next.js وReact وTypeScript وConvex وDocker وPostgreSQL وCloudflare\n- الأدوات: Git وWeights & Biases وHugging Face وLinux\n[المهارات والخلفية](${BACKGROUND_URL}) · [فحص الطباعة](${INDUSTRIAL_URL}) · [Sihem](${SIHEM_URL})`,
   },
   achievements: {
-    en: `Key proof points:\n- 99.03% ± 0.07% AUROC (3-seed mean) on within-CIFAR airplane-vs-rest binary OOD split with novel class-conditional separation loss (+6.5pp over 92.52% ± 11.07% baseline; M.Sc. thesis under Prof. Sepp Hochreiter, graded 1)\n- 0.8673 ± 0.0230 AUROC baseline under strict 5-fold CV on the public FTI_Zer0P industrial dataset at PROFACTOR GmbH \n- Solo Developer & Project Lead at Sihem (tech2b incubator Linz, invitation-only beta personal-mentor assistant)\n- Creator of mergeproof (checks AI-written pull requests against configured deterministic merge requirements without calling an LLM; passing those checks does not guarantee defect-free code)`,
-    de: `Wichtige Meilensteine:\n- 99,03 % ± 0,07 % AUROC (3-Seed-Mittel) auf Within-CIFAR Airplane-vs-Rest Binary OOD Split mit class-conditional separation loss (Masterarbeit bei Prof. Sepp Hochreiter, Note 1)\n- 0,8673 ± 0,0230 AUROC auf dem öffentlichen Datensatz FTI_Zer0P (strenge 5-fache Kreuzvalidierung bei PROFACTOR GmbH)\n- Solo-Entwickler & Projektleiter bei Sihem (tech2b Inkubator Linz, KI-Mentor-Assistent in Beta mit Einladung)\n- Entwickler von mergeproof (prüft KI-generierte PRs anhand konfigurierter deterministischer Merge-Anforderungen ohne LLM-Aufruf. Bestandene Prüfungen garantieren keine Fehlerfreiheit)`,
-    fr: `Principaux résultats :\n- 99,03 % ± 0,07 % AUROC (moyenne 3 seeds) sur split binaire within-CIFAR avec separation loss (mémoire dirigé par Prof. Sepp Hochreiter, note 1)\n- 0,8673 ± 0,0230 AUROC sur le jeu public FTI_Zer0P en validation croisée 5 plis chez PROFACTOR GmbH \n- Développeur solo & chef de projet chez Sihem (incubateur tech2b Linz, assistant mentor IA en bêta sur invitation)\n- Créateur de mergeproof (vérifie les PR générées par IA selon des exigences déterministes configurées sans appel LLM. La réussite des contrôles ne garantit pas un code sans défaut)`,
-    es: `Logros destacados:\n- 99.03% ± 0.07% AUROC (media 3 seeds) en split binario within-CIFAR con separation loss (tesis con Prof. Sepp Hochreiter, nota 1)\n- 0.8673 ± 0.0230 AUROC en el dataset público FTI_Zer0P con validación cruzada 5-fold en PROFACTOR GmbH \n- Desarrollador en solitario y líder de proyecto en Sihem (incubadora tech2b Linz, asistente mentor IA en beta por invitación)\n- Creador de mergeproof (verifica PRs generadas por IA según requisitos deterministas configurados sin llamadas a un LLM. Superar las comprobaciones no garantiza que el código esté libre de errores)`,
-    ar: `أبرز الإنجازات:\n- 99.03% ± 0.07% AUROC (متوسط 3 بذور) في كشف OOD على تقسيم within-CIFAR الثنائي مع separation loss (رسالة الماجستير بإشراف Prof. Sepp Hochreiter، تقدير 1)\n- 0.8673 ± 0.0230 AUROC على مجموعة FTI_Zer0P العامة بتحقق تقاطعي 5-fold لدى PROFACTOR GmbH \n- مطور منفرد وقائد مشروع في Sihem (حاضنة tech2b لينز، مساعد موجه بالذكاء الاصطناعي في نسخة تجريبية بدعوة)\n- مطوّر mergeproof (يتحقق من طلبات الدمج المكتوبة بالذكاء الاصطناعي وفق متطلبات حتمية محددة دون استدعاء نموذج لغوي. اجتياز الفحوص لا يضمن خلو الشيفرة من الأخطاء)`,
+    en: `Key proof points:\n- [DiffusionOOD](${DIFFUSION_URL}): 99.03% ± 0.07% AUROC (3-seed mean) on within-CIFAR airplane-vs-rest binary OOD split with novel class-conditional separation loss (+6.5pp over 92.52% ± 11.07% baseline; M.Sc. thesis under Prof. Sepp Hochreiter, graded 1)\n- [InkjetOOD](${INDUSTRIAL_URL}): 0.8673 ± 0.0230 AUROC baseline under strict 5-fold CV on the public FTI_Zer0P industrial dataset at PROFACTOR GmbH\n- [Sihem](${SIHEM_URL}): Solo Developer & Project Lead (tech2b incubator Linz, invitation-only beta personal-mentor assistant)\n- [mergeproof](https://github.com/ahmed-3m/mergeproof): checks AI-written pull requests against configured deterministic merge requirements without calling an LLM (passing those checks does not guarantee defect-free code)`,
+    de: `Wichtige Meilensteine:\n- [DiffusionOOD](${DIFFUSION_URL}): 99,03 % ± 0,07 % AUROC (3-Seed-Mittel) auf dem binären Within-CIFAR-Split Flugzeuge gegen den Rest mit neuartiger class-conditional separation loss (+6,5 Prozentpunkte gegenüber 92,52 % ± 11,07 % Baseline; Masterarbeit bei Prof. Sepp Hochreiter, Note 1)\n- [InkjetOOD](${INDUSTRIAL_URL}): 0,8673 ± 0,0230 AUROC-Baseline auf dem öffentlichen Datensatz FTI_Zer0P unter strenger 5-facher Kreuzvalidierung bei PROFACTOR GmbH\n- [Sihem](${SIHEM_URL}): Solo-Entwickler & Projektleiter (tech2b Inkubator Linz, KI-Mentor-Assistent in Beta mit Einladung)\n- [mergeproof](https://github.com/ahmed-3m/mergeproof): prüft KI-generierte PRs anhand konfigurierter deterministischer Merge-Anforderungen ohne LLM-Aufruf (bestandene Prüfungen garantieren keine Fehlerfreiheit)`,
+    fr: `Principaux résultats :\n- [DiffusionOOD](${DIFFUSION_URL}) : 99,03 % ± 0,07 % AUROC (moyenne sur 3 seeds) sur le split binaire within-CIFAR avions contre le reste avec separation loss conditionnelle (+6,5 points par rapport à la référence de 92,52 % ± 11,07 % ; mémoire dirigé par Prof. Sepp Hochreiter, note 1)\n- [InkjetOOD](${INDUSTRIAL_URL}) : référence à 0,8673 ± 0,0230 AUROC sur le jeu public FTI_Zer0P en validation croisée 5 plis chez PROFACTOR GmbH\n- [Sihem](${SIHEM_URL}) : Développeur solo & chef de projet (incubateur tech2b Linz, assistant mentor IA en bêta sur invitation)\n- [mergeproof](https://github.com/ahmed-3m/mergeproof) : vérifie les PR générées par IA selon des exigences déterministes configurées sans appel LLM (la réussite des contrôles ne garantit pas un code sans défaut)`,
+    es: `Logros destacados:\n- [DiffusionOOD](${DIFFUSION_URL}): 99.03% ± 0.07% AUROC (media de 3 seeds) en el split binario within-CIFAR aviones contra el resto con separation loss condicional (+6.5 puntos porcentuales frente al 92.52% ± 11.07% de referencia; tesis con Prof. Sepp Hochreiter, nota 1)\n- [InkjetOOD](${INDUSTRIAL_URL}): referencia de 0.8673 ± 0.0230 AUROC en el dataset público FTI_Zer0P con validación cruzada 5-fold en PROFACTOR GmbH\n- [Sihem](${SIHEM_URL}): Desarrollador en solitario y líder de proyecto (incubadora tech2b Linz, asistente mentor IA en beta por invitación)\n- [mergeproof](https://github.com/ahmed-3m/mergeproof): verifica PRs generadas por IA según requisitos deterministas configurados sin llamadas a un LLM (superar las comprobaciones no garantiza que el código esté libre de errores)`,
+    ar: `أبرز الإنجازات:\n- [DiffusionOOD](${DIFFUSION_URL}): 99.03% ± 0.07% AUROC (متوسط 3 بذور) على تقسيم within-CIFAR الثنائي للطائرات مقابل البقية مع separation loss الشرطية (+6.5 نقطة مئوية مقارنةً بالأساس 92.52% ± 11.07%؛ رسالة الماجستير بإشراف Prof. Sepp Hochreiter، تقدير 1)\n- [InkjetOOD](${INDUSTRIAL_URL}): خط أساس 0.8673 ± 0.0230 AUROC على مجموعة FTI_Zer0P العامة بتحقق تقاطعي 5-fold لدى PROFACTOR GmbH\n- [Sihem](${SIHEM_URL}): مطور منفرد وقائد مشروع (حاضنة tech2b لينز، مساعد موجه بالذكاء الاصطناعي في نسخة تجريبية بدعوة)\n- [mergeproof](https://github.com/ahmed-3m/mergeproof): يتحقق من طلبات الدمج المكتوبة بالذكاء الاصطناعي وفق متطلبات حتمية محددة دون استدعاء نموذج لغوي (اجتياز الفحوص لا يضمن خلو الشيفرة من الأخطاء)`,
   },
 } satisfies Record<string, TranslationMap>
 
@@ -358,7 +358,7 @@ function inferReplyId(text: string): ReplyId | undefined {
   if (/industrial|industriell|industriel|inkjet|profactor|fti[_-]?zer0p|الصناعي/i.test(text)) return 'industrial'
   if (/\b(sihem|mentor|habit|routine|telegram|tech2b|pgvector)\b/i.test(text)) return 'sihem'
   if (/\b(thesis|separation loss|ood|out.?of.?distribution|cifar|auroc)\b|masterarbeit|mémoire|tesis|رسالة/i.test(text)) return 'thesis'
-  if (/^(?:cv|résumé|resume)[?!. ]*$|\b(download|his|public|find|see|link|send|read|son|descargar|su)\b[^.?!]{0,35}\bcv\b|curr[ií]culum|lebenslauf|سير(?:ة|ته) الذاتية/i.test(text)) return 'cv'
+  if (/^\s*(?:his|the|a)?\s*(?:cv|r[eé]sum[eé])(?:\s+please)?\s*[?!. ]*$|\b(?:download|get|find|see|show|share|send|read|open|view|access|check|need|want|have|where(?:'s|\s+is)|link(?:\s+to)?|copy\s+of|his|public|pdf|son|télécharger|descargar|su|ver|obtener)\b[^.?!]{0,35}\b(?:cv|r[eé]sum[eé])\b|\b(?:cv|r[eé]sum[eé])\b[^.?!]{0,20}\b(?:link|pdf|file|download|url|please|available)\b|curr[ií]culum|lebenslauf|سير(?:ة|ته)\s*الذاتية/i.test(text)) return 'cv'
   if (/(contact|email|linkedin|reach|talk to|connect|تواصل)/i.test(text)) return 'contact'
   if (/(open to work|available|hire|job|role|opportunit|وظائف)/i.test(text)) return 'open_to_work'
   if (/(tech stack|stack|tools|technolog)/i.test(text)) return 'tech_stack'
@@ -730,10 +730,35 @@ async function fetchGroq({
   }
 }
 
+/**
+ * Normalizes same-site portfolio links to relative paths and marks only external
+ * URLs and PDF downloads to open in a new tab.
+ */
+function resolveLinkProps(rawHref: string, isEmail: boolean): { href: string; external: boolean } {
+  if (isEmail) return { href: rawHref, external: false }
+  if (rawHref.startsWith('/')) {
+    const pathname = rawHref.split(/[?#]/, 1)[0]
+    return { href: rawHref, external: pathname.toLowerCase().endsWith('.pdf') }
+  }
+  try {
+    const parsed = new URL(rawHref)
+    if (parsed.origin === PORTFOLIO) {
+      const isPdf = parsed.pathname.toLowerCase().endsWith('.pdf')
+      return {
+        href: `${parsed.pathname}${parsed.search}${parsed.hash}`,
+        external: isPdf,
+      }
+    }
+  } catch {
+    // Fall through to treating unparseable URLs as external links.
+  }
+  return { href: rawHref, external: true }
+}
+
 function renderInline(text: string, keyPrefix: string): ReactNode[] {
   const renderLinkedText = (value: string, segmentKey: string): ReactNode[] => {
     const linkPattern =
-      /\[([^\]\n]+)\]\((https?:\/\/[^\s)]+)\)|((?:https?:\/\/|www\.)[^\s]+|(?:[a-z0-9-]+\.)+[a-z]{2,}(?:\/[^\s]*)?|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/gi
+      /\[([^\]\n]+)\]\(((?:https?:\/\/|\/(?!\/))[^\s)]+)\)|((?:https?:\/\/|www\.)[^\s]+|(?:[a-z0-9-]+\.)+[a-z]{2,}(?:\/[^\s]*)?|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/gi
     const nodes: ReactNode[] = []
     let lastIndex = 0
     let matchIndex = 0
@@ -751,14 +776,15 @@ function renderInline(text: string, keyPrefix: string): ReactNode[] {
       const display = raw.replace(/[),.;!?،؛؟]+$/, '')
       const [, label, namedUrl] = match
       const trailing = namedUrl ? '' : raw.slice(display.length)
-      const href = namedUrl ?? (isEmail ? `mailto:${display}` : /^https?:\/\//i.test(display) ? display : `https://${display}`)
+      const rawHref = namedUrl ?? (isEmail ? `mailto:${display}` : /^https?:\/\//i.test(display) ? display : `https://${display}`)
+      const { href, external } = resolveLinkProps(rawHref, isEmail)
 
       nodes.push(
         <a
           key={`${segmentKey}-link-${matchIndex++}`}
           href={href}
-          target={isEmail ? undefined : '_blank'}
-          rel={isEmail ? undefined : 'noopener noreferrer'}
+          target={external ? '_blank' : undefined}
+          rel={external ? 'noopener noreferrer' : undefined}
           style={{
             color: 'inherit',
             textDecoration: 'underline',
