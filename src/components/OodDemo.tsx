@@ -247,7 +247,7 @@ const copy = {
  * Interactive 3-tab thesis explorer backed by empirical raw PyTorch score histograms
  * (seed42_*.pt) and ablation JSON artefacts from ahmed-3m/DiffusionOOD.
  */
-export default function OodDemo() {
+export default function OodDemo({ id }: { id?: string }) {
   const { t, lang } = useI18n()
   const sliderId = useId()
   const timestepSliderId = useId()
@@ -346,7 +346,7 @@ export default function OodDemo() {
 
   return (
     <section
-      id="ood-explorer"
+      id={id}
       dir={lang === 'ar' ? 'rtl' : 'ltr'}
       style={{
         marginTop: 28,

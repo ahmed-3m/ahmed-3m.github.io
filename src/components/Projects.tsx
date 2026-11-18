@@ -12,28 +12,29 @@ const copy = {
   thesisPdf: { en: 'Thesis PDF', de: 'Thesis PDF', fr: 'PDF mémoire', es: 'PDF tesis', ar: 'PDF الرسالة' },
   code: { en: 'Code', de: 'Code', fr: 'Code', es: 'Código', ar: 'الكود' },
   oodMetric: {
-    en: ' ± 0.07% mean AUROC (3 seeds)',
-    de: ' ± 0.07% mittlerer AUROC (3 Seeds)',
-    fr: ' ± 0.07% AUROC moyenne (3 graines)',
-    es: ' ± 0.07% AUROC media (3 semillas)',
-    ar: ' ± 0.07% متوسط AUROC (3 بذور)',
+    en: 'AUROC · CIFAR-10 airplanes vs. other classes · 3-run mean ± SD',
+    de: 'AUROC · CIFAR-10: Flugzeuge gegen andere Klassen · Mittelwert ± Standardabweichung (3 Läufe)',
+    fr: 'AUROC · CIFAR-10 : avions contre les autres classes · moyenne ± écart-type (3 essais)',
+    es: 'AUROC · CIFAR-10: aviones frente a otras clases · media ± desviación estándar (3 pruebas)',
+    ar: 'AUROC · CIFAR-10: الطائرات مقابل الفئات الأخرى · المتوسط ± الانحراف المعياري (3 تجارب)',
   },
   inkjetMetric: {
-    en: ' ± 0.0230 AUROC (5-fold CV)',
-    de: ' ± 0.0230 AUROC (5-fache Kreuzvalidierung)',
-    fr: ' ± 0.0230 AUROC (validation croisée en 5 plis)',
-    es: ' ± 0.0230 AUROC (validación cruzada de 5 particiones)',
-    ar: ' ± 0.0230 AUROC (تحقق تقاطعي من 5 طيات)',
+    en: 'AUROC (5-fold CV)',
+    de: 'AUROC (5-fache Kreuzvalidierung)',
+    fr: 'AUROC (validation croisée en 5 plis)',
+    es: 'AUROC (validación cruzada de 5 particiones)',
+    ar: 'AUROC (تحقق تقاطعي من 5 طيات)',
   },
+  diffusionTag: { en: 'Diffusion models', de: 'Diffusionsmodelle', fr: 'Modèles de diffusion', es: 'Modelos de difusión', ar: 'نماذج الانتشار' },
   thesis: { en: "Master's Thesis · JKU Linz · Graded 1", de: 'Masterarbeit · JKU Linz · Note 1', fr: 'Mémoire M.Sc. · JKU Linz · Note 1', es: 'Tesis M.Sc. · JKU Linz · Nota 1', ar: 'رسالة الماجستير · JKU لينز · تقدير 1' },
   track2Eyebrow: { en: "Master's Thesis Track 2 · Industrial CV", de: 'Masterarbeit Track 2 · Industrial CV', fr: 'Mémoire Track 2 · Vision industrielle', es: 'Tesis Track 2 · Visión industrial', ar: 'المسار 2 للرسالة · رؤية صناعية' },
   oodTitle: { en: 'DiffusionOOD — OOD Detection Framework', de: 'DiffusionOOD — OOD-Erkennungsframework', fr: 'DiffusionOOD — Détection OOD', es: 'DiffusionOOD — Detección OOD', ar: 'DiffusionOOD — إطار كشف الخارج عن التوزيع' },
   oodDesc: {
     en: "I trained an image model to flag pictures outside a familiar category. In my thesis experiment, I tested whether a new training method could better separate airplane photos from other images. It improved the average score across three runs. The case study explains the benchmark and its limits.",
-    de: "Ich trainierte ein Bildmodell, das Bilder außerhalb einer vertrauten Kategorie erkennt. In meiner Masterarbeit trennte eine neue Trainingsmethode Flugzeugbilder in drei Testläufen besser von anderen Bildern.",
-    fr: "J’ai entraîné un modèle à repérer les images hors d’une catégorie connue. Dans mon mémoire, une nouvelle méthode d’entraînement a amélioré la séparation entre les images d’avions et les autres sur trois essais.",
-    es: "Entrené un modelo para detectar imágenes fuera de una categoría conocida. En mi tesis, un nuevo método de entrenamiento mejoró la separación entre fotos de aviones y otras imágenes en tres pruebas.",
-    ar: "درّبت نموذجًا لرصد الصور التي لا تنتمي إلى فئة مألوفة. في رسالتي حسّنت طريقة تدريب جديدة الفصل بين صور الطائرات والصور الأخرى عبر ثلاث تجارب.",
+    de: "Ich trainierte ein Bildmodell, das Bilder außerhalb einer vertrauten Kategorie erkennt. In meiner Masterarbeit verbesserte eine neue Trainingsmethode den Durchschnittswert für die Trennung von Flugzeugbildern und anderen Bildern über drei Läufe.",
+    fr: "J’ai entraîné un modèle à repérer les images hors d’une catégorie connue. Dans mon mémoire, une nouvelle méthode d’entraînement a amélioré le score moyen de séparation entre les images d’avions et les autres images sur trois essais.",
+    es: "Entrené un modelo para detectar imágenes fuera de una categoría conocida. En mi tesis, un nuevo método de entrenamiento mejoró la puntuación media al separar fotos de aviones de otras imágenes en tres pruebas.",
+    ar: "درّبت نموذجًا لرصد الصور التي لا تنتمي إلى فئة مألوفة. في رسالتي رفعت طريقة تدريب جديدة متوسط نتيجة الفصل بين صور الطائرات والصور الأخرى عبر ثلاث تجارب.",
   },
   inkjetTitle: { en: 'InkjetOOD Defect Detection', de: 'InkjetOOD Defekterkennung', fr: 'Détection de défauts InkjetOOD', es: 'Detección de defectos InkjetOOD', ar: 'كشف العيوب InkjetOOD' },
   inkjetDesc: {
@@ -134,13 +135,13 @@ export default function Projects() {
               <div className="cd-proj-title">{t(copy.oodTitle)}</div>
               <div className="cd-proj-desc">{t(copy.oodDesc)}</div>
               <div className="cd-proj-tags">
-                {['PyTorch', 'Diffusion Models'].map(tag => (
+                {['PyTorch', t(copy.diffusionTag)].map(tag => (
                   <span key={tag} className="cd-proj-tag">{tag}</span>
                 ))}
               </div>
             </div>
             <div className="cd-proj-metric-big">
-              <div className="cd-pc-metric" style={{ marginTop: 0 }}>99.03%<span>{t(copy.oodMetric)}</span></div>
+              <div className="cd-pc-metric" style={{ marginTop: 0 }}><bdi dir="ltr">99.03% <span>± 0.07%</span></bdi><br /><span>{t(copy.oodMetric)}</span></div>
               <div className="cd-proj-actions" style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
                 <Link href="/case-studies/diffusion-ood/" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.caseStudyLink)} &rarr;</Link>
                 <a href="https://github.com/ahmed-3m/DiffusionOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.code)} &rarr;</a>
@@ -153,7 +154,7 @@ export default function Projects() {
             <div className="cd-pc-eyebrow">{t(copy.track2Eyebrow)}</div>
             <div className="cd-pc-title">{t(copy.inkjetTitle)}</div>
             <div className="cd-pc-desc">{t(copy.inkjetDesc)}</div>
-            <div className="cd-pc-metric">0.8673<span>{t(copy.inkjetMetric)}</span></div>
+            <div className="cd-pc-metric"><bdi dir="ltr">0.8673 <span>± 0.0230</span></bdi><br /><span>{t(copy.inkjetMetric)}</span></div>
             <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
               <a href="https://github.com/ahmed-3m/InkjetOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.code)} &rarr;</a>
               <Link href="/case-studies/inkjet-ood/" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.caseStudy)} &rarr;</Link>

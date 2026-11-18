@@ -43,13 +43,20 @@ function LanguageSelector() {
   }, [open])
 
   return (
-    <div className="cd-lang-menu" ref={menuRef} onKeyDown={event => {
-      if (open && event.key === 'Escape') {
-        event.stopPropagation()
-        setOpen(false)
-        triggerRef.current?.focus()
-      }
-    }}>
+    <div
+      className="cd-lang-menu"
+      ref={menuRef}
+      onBlur={event => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false)
+      }}
+      onKeyDown={event => {
+        if (open && event.key === 'Escape') {
+          event.stopPropagation()
+          setOpen(false)
+          triggerRef.current?.focus()
+        }
+      }}
+    >
       <button
         type="button"
         className="cd-lang-trigger" ref={triggerRef}
@@ -76,8 +83,8 @@ function LanguageSelector() {
                 triggerRef.current?.focus()
               }}
             >
-              <span className="cd-lang-option-code">{short}</span>
-              <span className="cd-lang-option-name">{label}</span>
+              <span className="cd-lang-option-code" aria-hidden="true">{short}</span>
+              <span className="cd-lang-option-name" lang={code}>{label}</span>
               {lang === code && <Check size={14} strokeWidth={2.2} />}
             </button>
           ))}
