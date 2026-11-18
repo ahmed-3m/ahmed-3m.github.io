@@ -1,166 +1,156 @@
-<h1 align="center">Ahmed Mohammed</h1>
-<p align="center">
-  <strong>AI / Machine Learning Engineer &middot; Linz, Austria</strong><br>
-  <em>M.Sc. Artificial Intelligence, Johannes Kepler University Linz </em>
-</p>
+<a href="https://ahmed-3m.github.io">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset=".github/readme/hero-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset=".github/readme/hero-light.svg">
+    <img alt="Ahmed Mohammed — AI/ML engineer in Linz. Computer vision, diffusion and OOD research, production AI systems. 99.03% ± 0.07% AUROC (binary CIFAR-10 airplane-vs-rest, 3-seed mean), +6.5 pp over baseline." src=".github/readme/hero-dark.svg" width="100%">
+  </picture>
+</a>
 
 <p align="center">
-  <a href="https://ahmed-3m.github.io"><img src="https://img.shields.io/badge/Portfolio-ahmed--3m.github.io-00d4ff?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Portfolio"></a>
-  <a href="https://www.linkedin.com/in/ahmed-3m/"><img src="https://img.shields.io/badge/LinkedIn-ahmed--3m-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
-  <a href="https://huggingface.co/ahmed-3m"><img src="https://img.shields.io/badge/Hugging_Face-ahmed--3m-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black" alt="Hugging Face"></a>
-  <a href="https://t.me/sihem_ai_bot"><img src="https://img.shields.io/badge/Sihem_AI-Invitation--Only_Beta-00ff88?style=for-the-badge&logo=telegram&logoColor=black" alt="Sihem Telegram (Invitation-Only Beta)"></a>
-  <a href="https://github.com/ahmed-3m/ahmed-3m.github.io/actions/workflows/deploy.yml"><img src="https://img.shields.io/github/actions/workflow/status/ahmed-3m/ahmed-3m.github.io/deploy.yml?branch=main&style=for-the-badge&label=Static%20Export" alt="Build Status"></a>
+  <a href="https://ahmed-3m.github.io"><img src="https://img.shields.io/badge/Portfolio-ahmed--3m.github.io-00d4ff?style=flat-square&labelColor=08090d&logo=googlechrome&logoColor=00d4ff" alt="Portfolio"></a>
+  <a href="https://ahmed-3m.github.io/cv.pdf"><img src="https://img.shields.io/badge/CV-PDF-00d4ff?style=flat-square&labelColor=08090d&logo=readdotcv&logoColor=00d4ff" alt="CV (PDF)"></a>
+  <a href="https://www.linkedin.com/in/ahmed-3m/"><img src="https://img.shields.io/badge/LinkedIn-ahmed--3m-00d4ff?style=flat-square&labelColor=08090d&logo=linkedin&logoColor=00d4ff" alt="LinkedIn"></a>
+  <a href="https://huggingface.co/ahmed-3m"><img src="https://img.shields.io/badge/Hugging_Face-ahmed--3m-00d4ff?style=flat-square&labelColor=08090d&logo=huggingface&logoColor=00d4ff" alt="Hugging Face"></a>
+  <a href="mailto:ahmed.mo.0595@gmail.com"><img src="https://img.shields.io/badge/Email-ahmed.mo.0595%40gmail.com-00d4ff?style=flat-square&labelColor=08090d&logo=gmail&logoColor=00d4ff" alt="Email"></a>
+  <a href="https://github.com/ahmed-3m/ahmed-3m.github.io/actions/workflows/deploy.yml"><img src="https://img.shields.io/github/actions/workflow/status/ahmed-3m/ahmed-3m.github.io/deploy.yml?branch=main&style=flat-square&labelColor=08090d&color=00ff88&label=deploy" alt="Deploy status"></a>
 </p>
 
----
+<sub><code>// About</code></sub>
 
-> I build machine learning systems designed to withstand real data — verified error bars in empirical research, hardened evaluation harnesses and defensive proxies in production.
+## AI/ML engineer — research that ships.
 
-This repository powers my personal engineering portfolio at [ahmed-3m.github.io](https://ahmed-3m.github.io): an evidence-first record of generative classifiers, diffusion-based out-of-distribution (OOD) detection, industrial surface defect inspection, and LLM-driven mentoring systems.
+I'm an AI/ML engineer in **Linz, Austria**. I build systems that inspect images, support daily routines, and check AI-written code, and I combine carefully evaluated research with hands-on product work.
 
----
+- **M.Sc. in Artificial Intelligence, JKU Linz** — graduated September 2026 (Defensio 25 Sep 2026). Thesis on conditional diffusion models for out-of-distribution (OOD) detection, supervised by **Prof. Sepp Hochreiter**, **graded 1** (top mark).
+- **Background:** mechatronics and electronics before AI, so I bring a hardware and systems view to computer vision and production ML.
+- **Open to:** AI/ML engineering roles and research collaborations. Available full time now.
 
-## Empirical Signal at a Glance
+<sub><code>// Experience</code></sub>
 
-Every headline metric in my work is backed by seed sweeps, cross-validation, or open-access model weights.
+## Experience & independent work.
 
-| Domain | Scope & Methodology | Benchmark Result | Verification Artefact |
-| :--- | :--- | :--- | :--- |
-| **M.Sc. Thesis**<br>(JKU Linz) | Conditional Diffusion Models with class-conditional separation loss ($\lambda = 0.02$) | **99.03% &plusmn; 0.07% AUROC**<br>*(3-seed mean on within-CIFAR airplane vs. rest; vs. 92.52% &plusmn; 11.07% baseline)* | [Thesis PDF](https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf) &bull; [Model Weights](https://huggingface.co/ahmed-3m/DiffusionOOD) |
-| **Zero-Shot External OOD** | Seed-42 generative classifier tested across five disparate vision distributions | **90.50% &ndash; 96.97% AUROC**<br>*(94.17% mean across CIFAR-100, Places365, FashionMNIST, Textures, SVHN)* | [Interactive Explorer](https://ahmed-3m.github.io/case-studies/diffusion-ood) &bull; [Raw Tensors](https://huggingface.co/ahmed-3m/DiffusionOOD) |
-| **Industrial Inspection**<br>(PROFACTOR GmbH) | Multi-class inkjet defect detection combining YOLOv8 bounding boxes + CDM verification | **0.8673 &plusmn; 0.0230 AUROC**<br>*(5-fold cross-validation on FTI_Zer0P at &lambda; = 0; negative transfer documented)* | [Thesis PDF](https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf) &bull; [InkjetOOD Code](https://github.com/ahmed-3m/InkjetOOD) &bull; [Case Study](https://ahmed-3m.github.io/case-studies/inkjet-ood) |
-| **AI-Agent Merge Gate**<br>(mergeproof) | Deterministic gate that checks configured PR conditions (CI, diff scope, review threads, secrets) — plain code, zero LLM calls | **LLM-free by design**<br>*(design property, not a benchmark; verdicts MERGE/RETRY/HUMAN)* | [mergeproof](https://github.com/ahmed-3m/mergeproof) |
-| **LLM Mentoring System**<br>(tech2b Incubator) | Multi-turn personalized mentoring agent with persistent long-term memory and proactive check-ins | **Invitation-Only Beta**<br>*(Access by invitation via Telegram Bot & Progressive Web App)* | [Sihem Case Study](https://ahmed-3m.github.io/case-studies/sihem) &bull; [Telegram Bot (Invitation-Only)](https://t.me/sihem_ai_bot) |
+| When | Role | Where |
+| :--- | :--- | :--- |
+| May 2026 – now | **Solo developer & project lead**: Sihem, a habits and daily-routine assistant (Telegram bot + web app), invitation-only beta | tech2b incubator, Linz |
+| Apr 2024 – Jul 2026 | **M.Sc. thesis researcher, machine vision**: diffusion-based OOD detection and industrial inkjet defect inspection | JKU Institute for Machine Learning with PROFACTOR GmbH |
+| Aug – Oct 2023 | **AI research intern**: RNN/CNN models for EEG motor-imagery classification | Karunya Institute of Technology and Sciences, India |
+| Sep 2018 – Oct 2020 | **Electronics technician**: PCB assembly, circuit build-up, fault finding and test | Ledzone, Istanbul |
 
----
+<sub><code>// Projects</code></sub>
 
-## Core Research: Conditional Diffusion for OOD Detection
+## Research that ships.
 
-Supervised under **Prof. Sepp Hochreiter** and **Claus Hofmann** at Johannes Kepler University Linz (*Graduated Sep 25, 2026; Thesis graded 1*).
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <sub><code>MASTER'S THESIS · JKU LINZ · GRADED 1</code></sub>
+      <h3>DiffusionOOD</h3>
+      Trains an image model to flag pictures from outside a familiar category. A class-conditional separation loss made results stable across random seeds.<br><br>
+      <b>99.03% ± 0.07% AUROC</b><br>
+      <sub>CIFAR-10 airplane vs. the other 9 classes (binary) · 3-seed mean · +6.5 pp over 92.52% ± 11.07%</sub><br><br>
+      <a href="https://ahmed-3m.github.io/case-studies/diffusion-ood/">Case study</a> ·
+      <a href="https://github.com/ahmed-3m/DiffusionOOD">Code</a> ·
+      <a href="https://huggingface.co/ahmed-3m/DiffusionOOD">Weights</a> ·
+      <a href="https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf">Thesis PDF</a>
+    </td>
+    <td width="50%" valign="top">
+      <sub><code>THESIS TRACK 2 · INDUSTRIAL CV · PROFACTOR</code></sub>
+      <h3>InkjetOOD</h3>
+      A two-stage system for defects in industrial inkjet printing: find printed features, then check each one for unusual patterns.<br><br>
+      <b>0.8673 ± 0.0230 AUROC</b><br>
+      <sub>Public FTI_Zer0P dataset · 5-fold cross-validation · λ = 0 baseline; the separation loss did not transfer here (documented in the thesis)</sub><br><br>
+      <a href="https://ahmed-3m.github.io/case-studies/inkjet-ood/">Case study</a> ·
+      <a href="https://github.com/ahmed-3m/InkjetOOD">Code</a> ·
+      <a href="https://huggingface.co/ahmed-3m/InkjetOOD">Weights</a>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <sub><code>LLM PRODUCT · TECH2B INCUBATOR · INVITATION-ONLY BETA</code></sub>
+      <h3>Sihem</h3>
+      A personal assistant for weekly planning and daily routines through Telegram and a web app: scheduling, long-term memory, morning briefings, evening reviews and adaptive check-ins.<br><br>
+      <a href="https://ahmed-3m.github.io/case-studies/sihem/">Case study</a> ·
+      <a href="https://t.me/sihem_ai_bot">Telegram (invite only)</a> ·
+      <a href="https://sihem-pwa.pages.dev/">Web app (invite only)</a>
+    </td>
+    <td width="50%" valign="top">
+      <sub><code>DEVELOPER TOOL · OPEN SOURCE</code></sub>
+      <h3>mergeproof</h3>
+      A deterministic merge gate for AI-agent pull requests. It checks CI, diff scope, review threads and secrets in plain code, with no LLM calls, and returns MERGE, RETRY or HUMAN.<br><br>
+      <a href="https://github.com/ahmed-3m/mergeproof">Code</a> ·
+      <a href="https://www.npmjs.com/package/@ahmed-3m/mergeproof">npm</a>
+    </td>
+  </tr>
+</table>
 
-### The Mathematical Formulation
-Standard discriminative classifiers assign overconfident probabilities to inputs lying completely outside the training distribution. Generative classifiers instead score sample likelihood. We reframe a conditional diffusion model into an exact anomaly detector by evaluating reconstruction error under competing class hypotheses:
+<sub>Also: <a href="https://github.com/ahmed-3m/Motor-Imagery-classification">EEG motor-imagery classification</a> · <a href="https://github.com/ahmed-3m/brainstorm2idea">brainstorm2idea</a> · <a href="https://github.com/ahmed-3m/idea2prototype">idea2prototype</a> · <a href="https://github.com/ahmed-3m/Elbostan-Pazar-bot">Elbostan Pazar bot</a></sub>
 
+<sub><code>// Research</code></sub>
+
+## The thesis in one table.
+
+The model scores an image by how well a class-conditional diffusion model reconstructs it under competing class hypotheses. Training adds a separation term, $\mathcal{L} = \mathcal{L}_{\text{diffusion}} + \lambda \cdot \mathcal{L}_{\text{sep}}$, and at $\lambda = 0.02$ the spread across seeds drops from ±11.07 to ±0.07 points.
+
+| Test set | AUROC | Setting |
+| :--- | ---: | :--- |
+| **CIFAR-10 airplane vs. rest** | **99.03% ± 0.07%** | 3-seed mean, λ = 0.02 (headline) |
+| CIFAR-10 airplane vs. rest | 92.52% ± 11.07% | 3-seed mean, λ = 0 baseline |
+| CIFAR-100 | 96.97% | seed 42, K = 100 (thesis Table 6.1) |
+| Places365 | 96.50% | seed 42, K = 100 (thesis Table 6.1) |
+| FashionMNIST | 94.03% | seed 42, K = 100 (thesis Table 6.1) |
+| Textures | 92.84% | seed 42, K = 100 (thesis Table 6.1) |
+| SVHN | 90.50% | seed 42, K = 100 (thesis Table 6.1) |
+
+<sub>The task is binary with a single in-distribution class, so these numbers are not comparable to multi-class CIFAR-10 OOD leaderboards. All figures come from the thesis and are mirrored in <a href="src/lib/ood-explorer-data.ts"><code>src/lib/ood-explorer-data.ts</code></a>. You can drag the threshold yourself in the <a href="https://ahmed-3m.github.io/case-studies/diffusion-ood/">interactive explorer</a>.</sub>
+
+<sub><code>// Stack</code></sub>
+
+## What I work with.
+
+| | |
+| :--- | :--- |
+| **ML & vision** | PyTorch, PyTorch Lightning, diffusion models (DDPM, UNet), YOLOv8, anomaly / OOD detection, Hugging Face |
+| **Evaluation** | AUROC, FPR95, cross-validation, seed sweeps, Hydra, Weights & Biases, CUDA |
+| **Product** | TypeScript, React, Next.js, PostgreSQL / Supabase, Deno, Cloudflare Workers, Telegram bots |
+| **Ops** | Docker, Linux, GitHub Actions CI/CD |
+
+<sub><code>// This repo</code></sub>
+
+## How this site is built.
+
+<table>
+  <tr>
+    <td valign="top" width="50%">
+      <b>Stack</b><br>
+      Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4, statically exported and deployed to GitHub Pages by <a href=".github/workflows/deploy.yml">GitHub Actions</a>.
+    </td>
+    <td valign="top" width="50%">
+      <b>Design</b><br>
+      One token set (<code>--cd-*</code> in <a href="src/app/globals.css"><code>globals.css</code></a>) drives a dark theme and a warm light theme. Space Grotesk, Inter and JetBrains Mono.
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <b>Languages</b><br>
+      English, German, French, Spanish and Arabic, including a full right-to-left layout for Arabic.
+    </td>
+    <td valign="top">
+      <b>Live pieces</b><br>
+      Thesis explorer built from recorded scores, a chat assistant behind a Cloudflare Worker proxy, and a daily AI-news feed added by an agent through reviewed PRs.
+    </td>
+  </tr>
+</table>
+
+```bash
+npm ci          # install
+npm run dev     # http://localhost:3000
+npm run build   # static export to out/
 ```
-                      +-----------------------------+
-                      | Input Query Sample: x in X  |
-                      +--------------+--------------+
-                                     |
-               +---------------------+---------------------+
-               |                                           |
-               v                                           v
-     [ Condition c_target ]                      [ Condition c_competing ]
-     +---------------------+                     +-----------------------+
-     | Diffusion Denoiser  |                     |  Diffusion Denoiser   |
-     | eps_theta(x_t, t, c)|                     |  eps_theta(x_t, t, c) |
-     +----------+----------+                     +-----------+-----------+
-                |                                            |
-                v                                            v
-         Recon Error E_target                          Recon Error E_competing
-                \                                           /
-                 \                                         /
-                  v                                       v
-               +---------------------------------------------------+
-               | Anomaly Score: S(x) = E_target(x) - E_competing(x) |
-               | Decision: S(x) >= Threshold tau => OOD             |
-               +---------------------------------------------------+
-```
 
-To eliminate seed sensitivity and guarantee separation, we train with a joint objective:
-$$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{diffusion}} + \lambda \cdot \mathcal{L}_{\text{sep}}$$
-
-* **Denoising Loss ($\mathcal{L}_{\text{diffusion}}$)** preserves high-fidelity image distribution reconstruction.
-* **Separation Loss ($\mathcal{L}_{\text{sep}}$)** actively penalizes overlap between target-class and competing-class predictions.
-* **Result**: Setting $\lambda = 0.02$ causes the standard deviation across random seeds to collapse from $\pm 11.07\%$ to $\pm 0.07\%$ AUROC.
-
----
-
-## Live In-Browser Thesis Explorer
-
-The portfolio mounts an authentic interactive laboratory built directly from precomputed PyTorch score tensors and ablation runs from Hugging Face [`ahmed-3m/DiffusionOOD`](https://huggingface.co/ahmed-3m/DiffusionOOD). There is zero synthetic data and zero client-side inference lag.
-
-You can interact with it directly in the [Research section of the Homepage](https://ahmed-3m.github.io/#research) or on the [DiffusionOOD Case Study](https://ahmed-3m.github.io/case-studies/diffusion-ood):
-
-```
-+-----------------------------------------------------------------------------------------+
-| [ Tab 1: Distributions & Threshold ]  [ Tab 2: Timesteps & Rules ]  [ Tab 3: Ablations ]|
-+-----------------------------------------------------------------------------------------+
-|  Histogram & ROC Curve                   Reconstruction Dynamics      Ablation Analysis |
-|  ---------------------                   -----------------------      ----------------- |
-|  * 6 benchmark distributions             * Sweep t = 50..950          * Lambda sweep    |
-|  * Lambda = 0.02 vs 0 ablation           * Difference vs Ratio vs ID  * Budget K sweep  |
-|  * Live draggable threshold tau          * Failure mode: ID-only      * Inkjet transfer |
-|  * Real-time TPR, FPR, Youden's J          drops to 20.23% on SVHN      defect breakdown|
-+-----------------------------------------------------------------------------------------+
-```
-
-1. **Empirical Score Distributions & Interactive Thresholding**: Examine real ID vs. OOD histograms across six benchmark datasets (CIFAR-100, Places365, FashionMNIST, Textures, SVHN). Drag the decision threshold to calculate empirical True Positive Rate (TPR), False Positive Rate (FPR), and Youden's J statistic in real time.
-2. **Diffusion Timestep Dynamics & Scoring Rules**: Inspect reconstruction error trajectories across timesteps $t \in [50, 950]$. Compare the difference score against ratio and ID-only baselines (revealing why ID-only reconstruction fails catastrophically on SVHN at 20.23% AUROC).
-3. **Hyperparameter Ablations & Negative Industrial Transfer**: Explore the exact sensitivity curves for the separation weight $\lambda$, the Monte Carlo sample budget $K$, and five-fold cross-validation defect breakdowns on industrial inkjet print surfaces.
-
----
-
-## Featured Systems & Engineering Portfolio
-
-```
-========================================================================================
-[ Research & Models ]
-----------------------------------------------------------------------------------------
-* DiffusionOOD       Conditional diffusion generative classifier for out-of-distribution
-                     detection. PyTorch Lightning, Hydra, Weights & Biases.
-                     [Code](https://github.com/ahmed-3m/DiffusionOOD) | [Weights](https://huggingface.co/ahmed-3m/DiffusionOOD) | [Thesis](https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf)
-
-* InkjetOOD          Industrial quality control benchmark on print surfaces at PROFACTOR.
-                     YOLOv8 + generative verification pipeline under 5-fold CV.
-                     [Code](https://github.com/ahmed-3m/InkjetOOD) | [Weights](https://huggingface.co/ahmed-3m/InkjetOOD) | [Report](https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf)
-----------------------------------------------------------------------------------------
-[ Applied Products ]
-----------------------------------------------------------------------------------------
-* Sihem              Personalized LLM mentoring agent (tech2b incubator, Linz — invitation-only beta).
-                     Built with proactive follow-ups, memory retention, and multilingual UI.
-                     [Telegram (Invitation-Only)](https://t.me/sihem_ai_bot) | [PWA (Invitation-Only)](https://sihem-pwa.pages.dev/) | [Case Study](https://ahmed-3m.github.io/case-studies/sihem)
-
-* mergeproof         Deterministic gate checking configured PR conditions for AI-agent pull requests (LLM-free).
-                     [Code](https://github.com/ahmed-3m/mergeproof) | [npm](https://www.npmjs.com/package/@ahmed-3m/mergeproof)
-========================================================================================
-```
-
----
-
-## Technical Competencies
-
-```
-Machine Learning & AI  ::  PyTorch, PyTorch Lightning, Diffusion Models (DDPM), UNet, YOLOv8,
-                           Anomaly Detection, Contrastive & Generative Classifiers, Hugging Face
-Evaluation & Tooling   ::  AUROC, FPR95, Youden's J, Cross-Validation, Hydra, Weights & Biases, CUDA
-Production Fullstack   ::  Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS v4,
-                           Cloudflare Workers (Edge Proxies), Supabase, Deno, REST APIs
-Systems & Practices    ::  Static Web Export, Docker, Linux, CI/CD Actions, Strict i18n (5 Locales),
-                           Machine-Readable Specs (llms.txt, JSON-LD)
-```
-
----
-
-## Portfolio Architecture & Design Philosophy
-
-This site is statically exported to GitHub Pages with high performance, strict accessibility, and deterministic reproduction:
-
-* **Engine**: Next.js 16.4 + React 19 + TypeScript + Tailwind CSS v4.
-* **Resilience**: Hardened Cloudflare Worker edge proxy (`worker/chat-proxy.js`) with origin enforcement, payload validation, hourly rate limiting, and instant deterministic local fallbacks.
-* **Internationalization**: Native support for 5 languages (`en`, `de`, `fr`, `es`, `ar`) including full bidirectional RTL layout mechanics for Arabic.
-* **Machine Accessibility**: `llms.txt` / `llms-full.txt`, JSON-LD schemas, sitemap, and RSS feed.
-* **Daily Autonomous News**: Automated agentic pipeline collecting, verifying, and publishing curated AI and agentic breakthroughs daily via GitHub Actions.
+<sub>Contributor and agent rules, including the claim-integrity rules for every number on the site, live in <a href="AGENTS.md"><code>AGENTS.md</code></a>.</sub>
 
 ---
 
-## Direct Contacts & Research Profiles
-
-<p align="left">
-  <a href="https://ahmed-3m.github.io"><img src="https://img.shields.io/badge/Web-ahmed--3m.github.io-00d4ff?style=flat-square&logo=google-chrome&logoColor=white" alt="Web"></a>
-  <a href="https://www.linkedin.com/in/ahmed-3m/"><img src="https://img.shields.io/badge/LinkedIn-Ahmed%20Mohammed-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
-  <a href="mailto:ahmed.mo.0595@gmail.com"><img src="https://img.shields.io/badge/Email-ahmed.mo.0595%40gmail.com-EA4335?style=flat-square&logo=gmail&logoColor=white" alt="Email"></a>
-  <a href="https://www.researchgate.net/profile/Ahmed-Mohammed-114"><img src="https://img.shields.io/badge/ResearchGate-Ahmed%20Mohammed-00CCBB?style=flat-square&logo=researchgate&logoColor=white" alt="ResearchGate"></a>
-  <a href="https://t.me/sihem_ai_bot"><img src="https://img.shields.io/badge/Telegram-@sihem__ai__bot-26A5E4?style=flat-square&logo=telegram&logoColor=white" alt="Telegram"></a>
+<p align="center">
+  <b>Let's talk.</b> <a href="mailto:ahmed.mo.0595@gmail.com">ahmed.mo.0595@gmail.com</a> · <a href="https://www.linkedin.com/in/ahmed-3m/">LinkedIn</a> · <a href="https://www.researchgate.net/profile/Ahmed-Mohammed-114">ResearchGate</a> · <a href="https://ahmed-3m.github.io/#contact">Book a call</a>
 </p>
-
-*Open to senior AI/ML engineering roles, applied research positions, and high-impact industrial machine learning systems where reliability and rigor are non-negotiable.*
