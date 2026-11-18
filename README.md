@@ -8,7 +8,7 @@
   <a href="https://ahmed-3m.github.io"><img src="https://img.shields.io/badge/Portfolio-ahmed--3m.github.io-00d4ff?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Portfolio"></a>
   <a href="https://www.linkedin.com/in/ahmed-3m/"><img src="https://img.shields.io/badge/LinkedIn-ahmed--3m-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
   <a href="https://huggingface.co/ahmed-3m"><img src="https://img.shields.io/badge/Hugging_Face-ahmed--3m-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black" alt="Hugging Face"></a>
-  <a href="https://t.me/sihem_ai_bot"><img src="https://img.shields.io/badge/Sihem_AI-Live_Beta-00ff88?style=for-the-badge&logo=telegram&logoColor=black" alt="Sihem Telegram"></a>
+  <a href="https://t.me/sihem_ai_bot"><img src="https://img.shields.io/badge/Sihem_AI-Invitation--Only_Beta-00ff88?style=for-the-badge&logo=telegram&logoColor=black" alt="Sihem Telegram (Invitation-Only Beta)"></a>
   <a href="https://github.com/ahmed-3m/ahmed-3m.github.io/actions/workflows/deploy.yml"><img src="https://img.shields.io/github/actions/workflow/status/ahmed-3m/ahmed-3m.github.io/deploy.yml?branch=main&style=for-the-badge&label=Static%20Export" alt="Build Status"></a>
 </p>
 
@@ -28,10 +28,9 @@ Every headline metric in my work is backed by seed sweeps, cross-validation, or 
 | :--- | :--- | :--- | :--- |
 | **M.Sc. Thesis**<br>(JKU Linz) | Conditional Diffusion Models with class-conditional separation loss ($\lambda = 0.02$) | **99.03% &plusmn; 0.07% AUROC**<br>*(3-seed mean on within-CIFAR airplane vs. rest; vs. 92.52% &plusmn; 11.07% baseline)* | [Thesis PDF](https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf) &bull; [Model Weights](https://huggingface.co/ahmed-3m/DiffusionOOD) |
 | **Zero-Shot External OOD** | Seed-42 generative classifier tested across five disparate vision distributions | **90.50% &ndash; 96.97% AUROC**<br>*(94.17% mean across CIFAR-100, Places365, FashionMNIST, Textures, SVHN)* | [Interactive Explorer](https://ahmed-3m.github.io/case-studies/diffusion-ood) &bull; [Raw Tensors](https://huggingface.co/ahmed-3m/DiffusionOOD) |
-| **Industrial Inspection**<br>(PROFACTOR GmbH) | Multi-class inkjet defect detection combining YOLOv8 bounding boxes + CDM verification | **86.73% &plusmn; 2.30% AUROC**<br>*(5-fold cross-validation on FTI_Zer0P; negative transfer documented)* | [Industrial Report](https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf) &bull; [InkjetOOD Code](https://github.com/ahmed-3m/InkjetOOD) |
-| **AI-Agent Merge Gate**<br>(mergeproof) | Deterministic gate that decides whether an AI agent's PR is safe to merge — plain code, zero LLM calls | **LLM-free by design**<br>*(design property, not a benchmark; verdicts MERGE/RETRY/HUMAN)* | [mergeproof](https://github.com/ahmed-3m/mergeproof) |
-| **LLM Mentoring System**<br>(tech2b Incubator) | Multi-turn personalized mentoring agent with persistent long-term memory and proactive check-ins | **Live Beta Stage**<br>*(Active testing via Telegram Bot & Progressive Web App)* | [Sihem Case Study](https://ahmed-3m.github.io/case-studies/sihem) &bull; [Bot Demo](https://t.me/sihem_ai_bot) |
-| **Computer Vision SaaS**<br>(Faultrix Solo Build) | Construction defect detection pipeline: on-site capture to automated DSGVO-compliant audit | **Production Shipped**<br>*(12-month lifecycle: mobile capture &rarr; OpenAI vision audit)* | [Faultrix Case Study](https://ahmed-3m.github.io/case-studies/faultrix) |
+| **Industrial Inspection**<br>(PROFACTOR GmbH) | Multi-class inkjet defect detection combining YOLOv8 bounding boxes + CDM verification | **0.8673 &plusmn; 0.0230 AUROC**<br>*(5-fold cross-validation on FTI_Zer0P at &lambda; = 0; negative transfer documented)* | [Thesis PDF](https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf) &bull; [InkjetOOD Code](https://github.com/ahmed-3m/InkjetOOD) &bull; [Case Study](https://ahmed-3m.github.io/case-studies/inkjet-ood) |
+| **AI-Agent Merge Gate**<br>(mergeproof) | Deterministic gate that checks configured PR conditions (CI, diff scope, review threads, secrets) — plain code, zero LLM calls | **LLM-free by design**<br>*(design property, not a benchmark; verdicts MERGE/RETRY/HUMAN)* | [mergeproof](https://github.com/ahmed-3m/mergeproof) |
+| **LLM Mentoring System**<br>(tech2b Incubator) | Multi-turn personalized mentoring agent with persistent long-term memory and proactive check-ins | **Invitation-Only Beta**<br>*(Access by invitation via Telegram Bot & Progressive Web App)* | [Sihem Case Study](https://ahmed-3m.github.io/case-studies/sihem) &bull; [Telegram Bot (Invitation-Only)](https://t.me/sihem_ai_bot) |
 
 ---
 
@@ -63,7 +62,7 @@ Standard discriminative classifiers assign overconfident probabilities to inputs
                   v                                       v
                +---------------------------------------------------+
                | Anomaly Score: S(x) = E_target(x) - E_competing(x) |
-               | Decision: S(x) > Threshold tau => OOD              |
+               | Decision: S(x) >= Threshold tau => OOD             |
                +---------------------------------------------------+
 ```
 
@@ -117,16 +116,12 @@ You can interact with it directly in the [Research section of the Homepage](http
 ----------------------------------------------------------------------------------------
 [ Applied Products ]
 ----------------------------------------------------------------------------------------
-* Sihem              Personalized LLM mentoring agent (tech2b incubator, Linz).
+* Sihem              Personalized LLM mentoring agent (tech2b incubator, Linz — invitation-only beta).
                      Built with proactive follow-ups, memory retention, and multilingual UI.
-                     [Live Telegram](https://t.me/sihem_ai_bot) | [PWA App](https://sihem-pwa.pages.dev/) | [Case Study](https://ahmed-3m.github.io/case-studies/sihem)
+                     [Telegram (Invitation-Only)](https://t.me/sihem_ai_bot) | [PWA (Invitation-Only)](https://sihem-pwa.pages.dev/) | [Case Study](https://ahmed-3m.github.io/case-studies/sihem)
 
-* mergeproof         Deterministic merge gate for AI-agent pull requests (LLM-free).
+* mergeproof         Deterministic gate checking configured PR conditions for AI-agent pull requests (LLM-free).
                      [Code](https://github.com/ahmed-3m/mergeproof) | [npm](https://www.npmjs.com/package/@ahmed-3m/mergeproof)
-
-* Faultrix           AI-powered construction defect documentation SaaS (Solo builder).
-                     Architected DSGVO-compliant storage, photo analysis, and automated PDF audit.
-                     [Case Study](https://ahmed-3m.github.io/case-studies/faultrix) | [Demo Site](https://faultrix.com)
 ========================================================================================
 ```
 
