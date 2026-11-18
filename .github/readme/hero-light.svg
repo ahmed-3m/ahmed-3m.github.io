@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 600" width="1280" height="600" role="img" aria-labelledby="t d">
+  <title id="t">Ahmed Mohammed — AI/ML Engineer, Linz</title>
+  <desc id="d">Computer vision, diffusion and OOD research, production AI systems. M.Sc. AI, JKU Linz. Thesis: 99.03% ± 0.07% AUROC (binary CIFAR-10 airplane-vs-rest, 3-seed mean), +6.5 pp over a 92.52% ± 11.07% baseline. Panel shows the seed-42 anomaly-score histogram (AUROC 98.98%).</desc>
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#1d2430" stroke-opacity="0.06" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="glow" cx="0.78" cy="0.2" r="0.6">
+      <stop offset="0" stop-color="#006680" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#006680" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="frame"><rect width="1280" height="600" rx="24"/></clipPath>
+  </defs>
+  <g clip-path="url(#frame)">
+    <rect width="1280" height="600" fill="#f3eadc"/>
+    <rect width="1280" height="600" fill="url(#grid)"/>
+    <rect width="1280" height="600" fill="url(#glow)"/>
+  </g>
+  <rect x="0.5" y="0.5" width="1279" height="599" rx="24" fill="none" stroke="#dccfbf"/>
+
+  <!-- status row -->
+  <rect x="64" y="52" width="396" height="36" rx="18" fill="#fff8ee" stroke="#cbbca8"/>
+  <circle cx="86" cy="70" r="5" fill="#006b45"/>
+  <circle cx="86" cy="70" r="9" fill="#006b45" fill-opacity="0.18"/>
+  <text x="102" y="75.5" font-family="'Space Grotesk','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="15" font-weight="500" fill="#1d2430">Open to AI/ML roles · available full time now</text>
+  <text x="64" y="120" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="14" letter-spacing="1.5" fill="#645546">BASED IN LINZ, AUSTRIA</text>
+
+  <!-- name -->
+  <text font-family="'Space Grotesk','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="92" font-weight="700" letter-spacing="-3" fill="#1d2430">
+    <tspan x="60" y="214">Ahmed</tspan>
+    <tspan x="60" y="304">Mohammed<tspan fill="#006680">.</tspan></tspan>
+  </text>
+
+  <!-- titles -->
+  <rect x="64" y="332" width="3" height="82" rx="1.5" fill="#006680"/>
+  <text font-family="'Space Grotesk','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="21" font-weight="500" fill="#475365">
+    <tspan x="84" y="352">Computer Vision</tspan>
+    <tspan x="84" y="380">Diffusion &amp; OOD Research</tspan>
+    <tspan x="84" y="408">Production AI Systems</tspan>
+  </text>
+
+  <!-- signal panel -->
+  <rect x="704" y="48" width="528" height="372" rx="16" fill="#fff8ee" stroke="#dccfbf"/>
+  <text x="736" y="88" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12" letter-spacing="1.6" fill="#006680">THESIS · RECORDED RESULTS</text>
+  <text x="736" y="118" font-family="'Space Grotesk','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="19" font-weight="600" fill="#1d2430">Diffusion anomaly scores separate ID from OOD</text>
+  <rect x="958.0" y="166" width="242.0" height="162" fill="#8c4d00" fill-opacity="0.06"/>
+  <path d="M736,328 L736.0,328.0 L745.7,328.0 L745.7,328.0 L755.3,328.0 L755.3,328.0 L765.0,328.0 L765.0,328.0 L774.7,328.0 L774.7,328.0 L784.3,328.0 L784.3,328.0 L794.0,328.0 L794.0,328.0 L803.7,328.0 L803.7,328.0 L813.3,328.0 L813.3,328.0 L823.0,328.0 L823.0,328.0 L832.7,328.0 L832.7,328.0 L842.3,328.0 L842.3,328.0 L852.0,328.0 L852.0,328.0 L861.7,328.0 L861.7,328.0 L871.3,328.0 L871.3,328.0 L881.0,328.0 L881.0,328.0 L890.7,328.0 L890.7,328.0 L900.3,328.0 L900.3,328.0 L910.0,328.0 L910.0,327.6 L919.7,327.6 L919.7,325.4 L929.3,325.4 L929.3,322.7 L939.0,322.7 L939.0,311.3 L948.7,311.3 L948.7,292.7 L958.3,292.7 L958.3,264.5 L968.0,264.5 L968.0,239.9 L977.7,239.9 L977.7,207.3 L987.3,207.3 L987.3,201.4 L997.0,201.4 L997.0,204.8 L1006.7,204.8 L1006.7,211.9 L1016.3,211.9 L1016.3,227.2 L1026.0,227.2 L1026.0,247.9 L1035.7,247.9 L1035.7,256.4 L1045.3,256.4 L1045.3,269.5 L1055.0,269.5 L1055.0,285.3 L1064.7,285.3 L1064.7,295.1 L1074.3,295.1 L1074.3,302.2 L1084.0,302.2 L1084.0,310.0 L1093.7,310.0 L1093.7,318.4 L1103.3,318.4 L1103.3,317.7 L1113.0,317.7 L1113.0,320.6 L1122.7,320.6 L1122.7,323.1 L1132.3,323.1 L1132.3,324.5 L1142.0,324.5 L1142.0,325.9 L1151.7,325.9 L1151.7,326.0 L1161.3,326.0 L1161.3,327.1 L1171.0,327.1 L1171.0,327.0 L1180.7,327.0 L1180.7,327.3 L1190.3,327.3 L1190.3,327.5 L1200.0,327.5 L1200,328 Z" fill="#8c4d00" fill-opacity="0.18" stroke="#8c4d00" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M736,328 L736.0,324.5 L745.7,324.5 L745.7,328.0 L755.3,328.0 L755.3,324.5 L765.0,324.5 L765.0,325.7 L774.7,325.7 L774.7,322.1 L784.3,322.1 L784.3,322.1 L794.0,322.1 L794.0,321.0 L803.7,321.0 L803.7,321.0 L813.3,321.0 L813.3,319.8 L823.0,319.8 L823.0,306.9 L832.7,306.9 L832.7,306.9 L842.3,306.9 L842.3,299.9 L852.0,299.9 L852.0,301.0 L861.7,301.0 L861.7,290.5 L871.3,290.5 L871.3,271.8 L881.0,271.8 L881.0,238.9 L890.7,238.9 L890.7,213.2 L900.3,213.2 L900.3,187.4 L910.0,187.4 L910.0,178.0 L919.7,178.0 L919.7,192.1 L929.3,192.1 L929.3,214.3 L939.0,214.3 L939.0,247.1 L948.7,247.1 L948.7,270.6 L958.3,270.6 L958.3,302.2 L968.0,302.2 L968.0,316.3 L977.7,316.3 L977.7,313.9 L987.3,313.9 L987.3,326.8 L997.0,326.8 L997.0,328.0 L1006.7,328.0 L1006.7,326.8 L1016.3,326.8 L1016.3,328.0 L1026.0,328.0 L1026.0,326.8 L1035.7,326.8 L1035.7,328.0 L1045.3,328.0 L1045.3,328.0 L1055.0,328.0 L1055.0,328.0 L1064.7,328.0 L1064.7,328.0 L1074.3,328.0 L1074.3,328.0 L1084.0,328.0 L1084.0,328.0 L1093.7,328.0 L1093.7,328.0 L1103.3,328.0 L1103.3,328.0 L1113.0,328.0 L1113.0,328.0 L1122.7,328.0 L1122.7,328.0 L1132.3,328.0 L1132.3,328.0 L1142.0,328.0 L1142.0,328.0 L1151.7,328.0 L1151.7,328.0 L1161.3,328.0 L1161.3,328.0 L1171.0,328.0 L1171.0,328.0 L1180.7,328.0 L1180.7,328.0 L1190.3,328.0 L1190.3,328.0 L1200.0,328.0 L1200,328 Z" fill="#006680" fill-opacity="0.24" stroke="#006680" stroke-width="1.5" stroke-linejoin="round"/>
+  <line x1="958.0" x2="958.0" y1="166" y2="328" stroke="#1d2430" stroke-opacity="0.7" stroke-dasharray="3 3"/>
+  <text x="958.0" y="160" text-anchor="middle" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="11" fill="#1d2430">τ @ TPR 95</text>
+  <line x1="736" x2="1200" y1="328" y2="328" stroke="#cbbca8"/>
+  <rect x="736" y="350" width="12" height="12" rx="2" fill="#006680" fill-opacity="0.5" stroke="#006680"/>
+  <text x="756" y="360.5" font-family="'Space Grotesk','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" fill="#475365">In-distribution · airplane</text>
+  <rect x="736" y="372" width="12" height="12" rx="2" fill="#8c4d00" fill-opacity="0.45" stroke="#8c4d00"/>
+  <text x="756" y="382.5" font-family="'Space Grotesk','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" fill="#475365">Out-of-distribution · 9 other classes</text>
+  <text x="736" y="410" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#645546">seed 42 · λ = 0.02 · AUROC 98.98% · FPR95 4.7%</text>
+
+  <!-- stats -->
+  <line x1="64" x2="1216" y1="452" y2="452" stroke="#dccfbf"/>
+  <g font-family="'Space Grotesk','Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif">
+    <text x="64" y="504" font-size="40" font-weight="700" letter-spacing="-1" fill="#1d2430">M.Sc.</text>
+    <text x="64" y="530" font-size="14" fill="#645546">AI · JKU Linz · thesis graded 1</text>
+
+    <text x="420" y="504" font-size="40" font-weight="700" letter-spacing="-1" fill="#1d2430">99<tspan fill="#006680">.</tspan>03<tspan font-size="24" font-weight="500" fill="#475365">% ± 0.07%</tspan></text>
+    <text x="420" y="530" font-size="14" fill="#645546">OOD detection AUROC · 3-seed mean</text>
+
+    <text x="840" y="504" font-size="40" font-weight="700" letter-spacing="-1" fill="#1d2430">+6.5<tspan font-size="24" font-weight="500" fill="#006b45">pp</tspan></text>
+    <text x="840" y="530" font-size="14" fill="#645546">Gain over 92.52% ± 11.07% baseline (λ = 0)</text>
+  </g>
+  <text x="64" y="568" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#645546">99.03% ± 0.07% = CIFAR-10 thesis benchmark, binary airplane-vs-rest, 3 seeds at λ = 0.02 · histogram = single seed-42 run (98.98%)</text>
+</svg>
