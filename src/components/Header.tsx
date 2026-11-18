@@ -36,19 +36,20 @@ function LanguageSelector() {
     const closeOnOutside = (event: MouseEvent) => {
       if (!menuRef.current?.contains(event.target as Node)) setOpen(false)
     }
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') { setOpen(false); triggerRef.current?.focus() }
-    }
     document.addEventListener('mousedown', closeOnOutside)
-    document.addEventListener('keydown', closeOnEscape)
     return () => {
       document.removeEventListener('mousedown', closeOnOutside)
-      document.removeEventListener('keydown', closeOnEscape)
     }
   }, [open])
 
   return (
-    <div className="cd-lang-menu" ref={menuRef}>
+    <div className="cd-lang-menu" ref={menuRef} onKeyDown={event => {
+      if (open && event.key === 'Escape') {
+        event.stopPropagation()
+        setOpen(false)
+        triggerRef.current?.focus()
+      }
+    }}>
       <button
         type="button"
         className="cd-lang-trigger" ref={triggerRef}

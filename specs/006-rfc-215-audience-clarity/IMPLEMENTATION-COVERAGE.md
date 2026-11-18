@@ -73,3 +73,29 @@ The starting workspace was 42 commits behind main. This change preserves the new
 
 ## Completion rule
 This report does not mark RFC 215 fully complete. Keep the RFC open until remaining evidence, exhaustive browser/performance checks, successful CI and owner-reviewed deployment verification are recorded.
+
+## Follow-up to the deployed review
+
+The implementation PR and TypeScript compatibility fix merged, and the latest
+Pages run on f3f3fe3 passed quality, build and deployment. The live homepage,
+public CV, three featured case studies and checked research PDFs responded.
+The follow-up branch fixes the outstanding navigation, Arabic URL, translated
+mergeproof caveat, case-study dates and Sihem evidence-link findings.
+
+Remaining acceptance work:
+
+- [ ] Reconstruct a pre-change performance comparison using the RFC base and
+  current export under matching browser, viewport, cache and throttling conditions.
+- [ ] Record mobile and desktop checks across English/Arabic and both themes,
+  including keyboard focus, contrast, touch targets, reduced motion and JavaScript
+  disabled. Include native WebKit and Firefox where available.
+- [ ] Audit all prominent external artifacts and confirm the production analytics
+  configuration and consent behavior if enabled.
+- [ ] Run recruiter and nontechnical visitor walkthroughs. Continue simplifying
+  the dense skills inventory and translating remaining English research labels.
+- [ ] Add a public Sihem screenshot or walkthrough once a publishable artifact
+  is available. The public case study explains the work and the demo remains gated.
+- [ ] Verify the final deployed build and key flows after the follow-up merges.
+
+Faultrix remains retired per PR #205. This is a deviation from the original RFC
+proposal to feature it under additional work.

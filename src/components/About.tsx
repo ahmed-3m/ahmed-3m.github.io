@@ -167,7 +167,7 @@ export default function About() {
             <p style={{ color: 'var(--cd-fg2)', fontSize: 15, marginBottom: 20 }}>{t(copy.path)}</p>
             <div className="cd-about-text" data-speakable>
               <p>{t(copy.p1)}</p>
-              <p>{t(copy.p2)} <strong>99.03% +/- 0.07% AUROC</strong> (binary airplane-vs-rest, 3-seed mean) · <strong>0.8673 +/- 0.0230 AUROC</strong> (FTI_Zer0P 5-fold CV).</p>
+              <p>{t(copy.p2)}</p>
               <p>{t(copy.p3)}</p>
             </div>
           </div>
