@@ -211,7 +211,7 @@ const copy = {
   thesisDesc: { en: 'A diffusion model compares how well different class explanations reconstruct an image. The new separation loss pushes those explanations apart, making the anomaly score clearer and more stable.', de: 'Ein Diffusionsmodell vergleicht, wie gut verschiedene Klassenerklärungen ein Bild rekonstruieren. Die neue Separation Loss trennt diese Erklärungen und macht den Anomalie-Score klarer und stabiler.', fr: "Un modèle de diffusion compare la reconstruction selon différentes explications de classe. La separation loss les éloigne et rend le score d'anomalie plus clair et stable.", es: 'Un modelo de difusión compara reconstrucciones bajo distintas explicaciones de clase. La separation loss las separa y hace el score de anomalía más claro y estable.', ar: 'يقارن نموذج الانتشار مدى قدرة تفسيرات الفئات المختلفة على إعادة بناء الصورة. خسارة الفصل تبعد هذه التفسيرات وتجعل درجة الشذوذ أوضح وأكثر ثباتاً.' },
   supervisor: { en: 'Supervisor', de: 'Betreuer', fr: 'Superviseur', es: 'Supervisor', ar: 'المشرف' },
   assistant: { en: 'Assistant', de: 'Assistent', fr: 'Assistant', es: 'Asistente', ar: 'المساعد' },
-  metricLabel: { en: 'AUROC · CIFAR-10 airplanes vs. other classes', de: 'AUROC · CIFAR-10: Flugzeuge gegen andere Klassen', fr: 'AUROC · CIFAR-10 : avions contre les autres classes', es: 'AUROC · CIFAR-10: aviones frente a otras clases', ar: 'AUROC · CIFAR-10: الطائرات مقابل الفئات الأخرى' },
+  metricLabel: { en: 'Mean AUROC · CIFAR-10 airplanes vs. other classes', de: 'Mittlere AUROC · CIFAR-10: Flugzeuge gegen andere Klassen', fr: 'AUROC moyenne · CIFAR-10 : avions contre les autres classes', es: 'AUROC media · CIFAR-10: aviones frente a otras clases', ar: 'متوسط AUROC · CIFAR-10: الطائرات مقابل الفئات الأخرى' },
   variance: { en: '+/-0.07% std dev (3 seeds)', de: '+/-0.07% Std.-Abw. (3 Seeds)', fr: '+/-0.07% écart-type (3 seeds)', es: '+/-0.07% desv. est. (3 semillas)', ar: '+/-0.07% انحراف معياري (3 بذور)' },
   chartHeading: {
     en: 'Separation-weight sweep · Threshold calibration · Reconstruction error',
@@ -236,6 +236,7 @@ const copy = {
     es: 'Idea clave: L_sep separa c=0 («normal») y c=1 («otras»), desplazando los puntajes ID e_0(x) - e_1(x) hacia abajo y los OOD hacia arriba, con cierto solapamiento. En inferencia se clasifica como OOD cuando s_OOD(x) = e_0(x) - e_1(x) >= tau (el umbral calibrado tau puede ser positivo o negativo).',
     ar: 'الفكرة باختصار: تدريب L_sep يفصل بين c=0 (طبيعي) وc=1 (غيره)، فتنزاح درجات البيانات الطبيعية e_0(x) - e_1(x) نحو قيم أقل ودرجات OOD نحو قيم أعلى مع بقاء بعض التداخل. عند الاستدلال، تُصنَّف العينة كـ OOD إذا كان s_OOD(x) = e_0(x) - e_1(x) >= tau (وقد تكون العتبة المعايرة tau موجبة أو سالبة).',
   },
+  workflow: { en: 'Separation loss workflow', de: 'Ablauf der Separation Loss', fr: 'Étapes de la perte de séparation', es: 'Flujo de la pérdida de separación', ar: 'خطوات تطبيق خسارة الفصل' },
   step1: { en: 'Learn to denoise', de: 'Entrauschen lernen', fr: 'Apprendre à dénoiser', es: 'Aprender a limpiar ruido', ar: 'تعلم إزالة الضوضاء' },
   step1Text: { en: 'Denoise x under c=0 (normal) and c=1 (other).', de: 'Entrausche x unter c=0 (normal) und c=1 (andere).', fr: 'Débruiter x sous c=0 (normal) et c=1 (autre).', es: 'Limpiar ruido de x bajo c=0 (normal) y c=1 (otras).', ar: 'إزالة الضوضاء تحت الشرطين c=0 وc=1.' },
   step2: { en: 'Push explanations apart', de: 'Erklärungen trennen', fr: 'Éloigner les explications', es: 'Separar explicaciones', ar: 'إبعاد التفسيرات' },
@@ -491,7 +492,7 @@ export default function Research() {
           <div className="cd-rf-formula-box">
             <div className="cd-rfc-simple-label">{t(copy.formulaLabel)}</div>
             <div className="cd-rfc-summary">{t(copy.plainIdea)}</div>
-            <div className="cd-rfc-flow" aria-label="Separation loss workflow">
+            <div className="cd-rfc-flow" role="group" aria-label={t(copy.workflow)}>
               <div>
                 <button type="button" className="cd-rfc-visual-button" onClick={(event) => { lastFocusedRef.current = event.currentTarget; setLightbox({ type: 'formula', index: 0 }) }} title={t(copy.expandChart)}>
                   <img
