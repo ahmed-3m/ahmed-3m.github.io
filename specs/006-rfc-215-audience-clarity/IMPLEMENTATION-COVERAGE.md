@@ -1,6 +1,6 @@
 # RFC 215 implementation coverage
 
-Date: 2026-11-16
+Date: 2026-11-18
 Base: ebd8765cd5a2dd34c83c8b9d91dd96adc6e2c163 (current main when branch created).
 
 ## Reconciliation
@@ -53,12 +53,20 @@ The starting workspace was 42 commits behind main. This change preserves the new
 - Full automated contrast audit, reduced-motion/no-JS browser matrix, and exhaustive focus/touch-target coverage remain open.
 
 ## Phase 5: checks and release
-- Lint: no errors, existing image warnings.
-- Typecheck and news/chat-proxy self-tests were run; see PR for final results.
-- An export attempt compiled and generated all 16 routes, then hit EPERM creating an existing out directory; generated output was cleared and export retried.
-- Local tests use the installed workspace dependencies; GitHub CI must verify current main's newer dependency lockfile.
-- Build, CI and post-merge deploy results must be checked before declaring release complete.
-- Owner merge and post-merge deployment verification are pending.
+- **Pre-merge review follow-up (2026-11-18):**
+  - Reconciled Sihem invitation-only beta disclosure across `Evidence.tsx`, `Projects.tsx`, `Experience.tsx`, `src/lib/case-studies.ts`, `ChatBotPanel.tsx` (`SYSTEM_PROMPT` and all 5-locale `LOCAL_REPLIES`), `JsonLd.tsx`, and `public/llms.txt` / `public/llms-full.txt` (preserving `main`'s Faultrix removal and Karunya/Ledzone/0.8673 entries).
+  - Updated `JsonLd.tsx` and `llms*.txt` `mergeproof` descriptions to reflect scoped deterministic checks.
+  - Replaced physical `border-right` in stacked mobile stats with logical `border-inline-end: 0` (widened stacking threshold from 480px to 600px with `minmax(0, 1fr)`), removed duplicate mobile `.cd-edu-*` rules, added RTL back-arrow flip on `CaseStudyPage.tsx`, and fixed Arabic RTL bidi isolation/arrow orientation in `Hero.tsx`, `Evidence.tsx`, and `OodDemo.tsx`.
+  - Fixed header link ordering (`Projects` before `About` matching homepage order), added outside-click menu dismissal in `Header.tsx`, moved inline mobile-panel styles into `globals.css`, collapsed desktop nav cleanly at `<= 960px` to prevent tablet crowding, and added bottom clearance on `.cd-footer` above the floating `Ask Genie` button.
+- **Verification after final edits:**
+  - `npm run typecheck`: passed.
+  - `npm run build` (`npx npm@11.19.1 ci` lockfile install): passed static export of all 15 routes (`out/`); transient generated `src/lib/news-homepage.json` discarded cleanly.
+  - `node .github/news/news-selftest.mjs` (200 items) and `node worker/chat-proxy.selftest.mjs`: passed.
+  - `npm run lint` on unmodified branch currently fails on GitHub `main`'s `typescript@^7` (`7.0.2`) dependency (`Error: typescript-eslint does not support TS 7.0.`); resolved in separate PR #221 (`fix/typescript-eslint-compat`, pinning `typescript@^6.0.3`). Running this branch's `eslint src` against `typescript@6.0.3` produces 0 errors and the 9 pre-existing `@next/next/no-img-element` warnings.
+  - Browser check (`http://localhost:3000/` at the fixed `862x790` host webview viewport, plus `/case-studies/sihem/` and `/case-studies/diffusion-ood/`): 0 HUD console errors across English & Arabic (`dir="rtl"`), dark & light themes; verified hamburger menu Escape/outside-click close, `<details>` toggle, RTL arrows/bidi fixes, and footer FAB clearance. Viewport resize (`375px` mobile and `> 960px` desktop) timed out on the host webview runner and could not be interactively resized in that session.
+- **Pending release gates:**
+  - Merge PR #221 (`fix/typescript-eslint-compat`) into `main` (and rebase/re-run PR #218 CI) so GitHub `quality` + `build` lanes pass cleanly without polluting PR #218 with dependency changes.
+  - Owner merge and post-merge deployment verification remain pending.
 
 ## Completion rule
 This report does not mark RFC 215 fully complete. Keep the RFC open until remaining evidence, exhaustive browser/performance checks, successful CI and owner-reviewed deployment verification are recorded.

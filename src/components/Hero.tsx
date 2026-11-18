@@ -52,7 +52,7 @@ const copy = {
   viewWork: { en: 'View work', de: 'Arbeiten ansehen', fr: 'Voir les projets', es: 'Ver trabajos', ar: 'عرض الأعمال' },
   contact: { en: 'Get in touch', de: 'Kontakt', fr: 'Contact', es: 'Contacto', ar: 'تواصل' },
   or: { en: 'or', de: 'oder', fr: 'ou', es: 'o', ar: 'أو' },
-  years: { en: 'Years in AI/ML', de: 'Jahre in AI/ML', fr: 'Années en IA/ML', es: 'Años en IA/ML', ar: 'سنوات في الذكاء الاصطناعي' },
+  degree: { en: 'AI · JKU Linz', de: 'KI · JKU Linz', fr: 'IA · JKU Linz', es: 'IA · JKU Linz', ar: 'ذكاء اصطناعي · JKU Linz' },
   auroc: { en: 'OOD Detection AUROC', de: 'OOD-Erkennung AUROC', fr: 'Détection OOD AUROC', es: 'Detección OOD AUROC', ar: 'مقياس AUROC لكشف الخارج عن التوزيع' },
   gain: { en: 'Gain over baseline (stable)', de: 'Gewinn gegenüber Baseline (stabil)', fr: 'Gain face au baseline (stable)', es: 'Mejora sobre la base (estable)', ar: 'تحسن على خط الأساس (مستقر)' },
   legend: {
@@ -60,7 +60,7 @@ const copy = {
     de: '99,03% ± 0,07% AUROC = CIFAR-10 Thesis (binär, Einzelklasse Flugzeug-vs-Rest, 3-Seed-Mittel) · 0,8673 ± 0,0230 AUROC = industrielle FTI_Zer0P 5-fach Baseline · +6,5pp = Gewinn über 92,52% ± 11,07% Baseline',
     fr: '99,03% ± 0,07% AUROC = thèse CIFAR-10 (binaire, classe unique avion-vs-reste, moyenne 3 seeds) · 0,8673 ± 0,0230 AUROC = baseline industrielle FTI_Zer0P 5-fold · +6,5pp = gain sur baseline 92,52% ± 11,07%',
     es: '99,03% ± 0,07% AUROC = tesis CIFAR-10 (binaria, clase única avión-vs-resto, media de 3 seeds) · 0,8673 ± 0,0230 AUROC = baseline industrial FTI_Zer0P 5-fold · +6,5pp = ganancia sobre base 92,52% ± 11,07%',
-    ar: '99.03% ± 0.07% AUROC = رسالة CIFAR-10 (ثنائي، فئة واحدة طائرة مقابل الباقي، متوسط 3 تجارب) · 0.8673 ± 0.0230 AUROC = خط أساس صناعي FTI_Zer0P 5-fold · +6.5pp = تحسن على الأساس 92.52% ± 11.07%',
+    ar: '\u206699.03%\u00A0±\u00A00.07% AUROC\u2069 = رسالة CIFAR-10 (ثنائي، فئة واحدة طائرة مقابل الباقي، متوسط 3 تجارب) · \u20660.8673\u00A0±\u00A00.0230 AUROC\u2069 = خط أساس صناعي FTI_Zer0P 5-fold · \u2066+6.5pp\u2069 = تحسن على الأساس \u206692.52%\u00A0±\u00A011.07%\u2069',
   },
 } satisfies Record<string, TranslationMap>
 
@@ -94,7 +94,7 @@ export default function Hero() {
             </div>
             <p className="cd-hero-body" data-speakable>{t(copy.body)}</p>
             <div className="cd-hero-ctas">
-              <a href="#projects" className="cd-btn-primary">{t(copy.viewWork)} <span aria-hidden="true">&rarr;</span></a>
+              <a href="#projects" className="cd-btn-primary">{t(copy.viewWork)} <span className="inline-block rtl:rotate-180" aria-hidden="true">&rarr;</span></a>
               <RequestCvButton />
             </div>
             <div className="cd-hero-secondary">
@@ -106,10 +106,10 @@ export default function Hero() {
             <div className="cd-hero-stats">
               <div className="cd-stat">
                 <div className="cd-stat-num" dir="ltr">M.Sc.</div>
-                <div className="cd-stat-label">{t({ en: "AI · JKU Linz", de: "KI · JKU Linz", fr: "IA · JKU Linz", es: "IA · JKU Linz", ar: "ذكاء اصطناعي · JKU Linz" })}</div>
+                <div className="cd-stat-label">{t(copy.degree)}</div>
               </div>
               <div className="cd-stat">
-                <div className="cd-stat-num" dir="ltr">99<span className="a">.</span>03<span className="u">% ± 0.07</span></div>
+                <div className="cd-stat-num" dir="ltr">99<span className="a">.</span>03<span className="u">% ± 0.07%</span></div>
                 <div className="cd-stat-label">{t(copy.auroc)}</div>
               </div>
               <div className="cd-stat">
@@ -127,4 +127,3 @@ export default function Hero() {
     </section>
   )
 }
-

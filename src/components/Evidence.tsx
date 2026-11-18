@@ -27,7 +27,7 @@ const evidenceItems = [
   {
     id: 'thesis-pdf',
     title: { en: 'Master thesis PDF', de: 'Masterarbeit PDF', fr: 'PDF du mémoire', es: 'PDF de la tesis', ar: 'PDF الرسالة' },
-    meta: { en: '99.03% +/- 0.07% AUROC', de: '99.03% +/- 0.07% AUROC', fr: '99.03% +/- 0.07% AUROC', es: '99.03% +/- 0.07% AUROC', ar: '99.03% +/- 0.07% AUROC' },
+    meta: { en: '99.03% +/- 0.07% AUROC', de: '99.03% +/- 0.07% AUROC', fr: '99.03% +/- 0.07% AUROC', es: '99.03% +/- 0.07% AUROC', ar: '\u206699.03%\u00A0+/-\u00A00.07% AUROC\u2069' },
     href: '/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf',
     label: 'Proof',
   },
@@ -39,7 +39,7 @@ const evidenceItems = [
     // all, which is why spec 001 repointed this card here. Keep the two cards keyed by
     // `id`, not `href`.
     title: { en: 'Industrial OOD baseline (thesis)', de: 'Industrielle OOD-Baseline (Thesis)', fr: 'Baseline OOD industrielle (mémoire)', es: 'Baseline OOD industrial (tesis)', ar: 'خط الأساس OOD الصناعي (الرسالة)' },
-    meta: { en: '0.8673 +/- 0.0230 AUROC · FTI_Zer0P 5-fold', de: '0.8673 +/- 0.0230 AUROC · FTI_Zer0P 5-fach', fr: '0.8673 +/- 0.0230 AUROC · FTI_Zer0P 5-plis', es: '0.8673 +/- 0.0230 AUROC · FTI_Zer0P 5-folds', ar: '0.8673 +/- 0.0230 AUROC · FTI_Zer0P 5 طيات' },
+    meta: { en: '0.8673 +/- 0.0230 AUROC · FTI_Zer0P 5-fold', de: '0.8673 +/- 0.0230 AUROC · FTI_Zer0P 5-fach', fr: '0.8673 +/- 0.0230 AUROC · FTI_Zer0P 5-plis', es: '0.8673 +/- 0.0230 AUROC · FTI_Zer0P 5-folds', ar: '\u20660.8673\u00A0+/-\u00A00.0230 AUROC\u2069 · FTI_Zer0P 5 طيات' },
     href: '/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf',
     label: 'Proof',
   },
@@ -94,8 +94,8 @@ const evidenceItems = [
   },
   {
     id: 'sihem-live-beta',
-    title: { en: 'Sihem — live beta', de: 'Sihem — Live-Beta', fr: 'Sihem — bêta en ligne', es: 'Sihem — beta en vivo', ar: 'Sihem — نسخة تجريبية مباشرة' },
-    meta: { en: 'Running system — Telegram bot and PWA, open to try', de: 'Laufendes System — Telegram-Bot und PWA, frei testbar', fr: 'Système en production — bot Telegram et PWA, libre à essayer', es: 'Sistema en marcha — bot de Telegram y PWA, libre para probar', ar: 'نظام يعمل — بوت تيليجرام وتطبيق PWA، متاح للتجربة' },
+    title: { en: 'Sihem — invitation-only beta', de: 'Sihem — Beta mit Einladung', fr: 'Sihem — bêta sur invitation', es: 'Sihem — beta por invitación', ar: 'Sihem — نسخة تجريبية بدعوة' },
+    meta: { en: 'Telegram bot and PWA — access by invitation', de: 'Telegram-Bot und PWA — Zugang mit Einladung', fr: 'Bot Telegram et PWA — accès sur invitation', es: 'Bot de Telegram y PWA — acceso por invitación', ar: 'بوت تيليجرام وتطبيق PWA — الوصول بدعوة' },
     href: 'https://t.me/sihem_ai_bot',
     label: 'Proof',
   },
@@ -134,7 +134,7 @@ export default function Evidence() {
               <div className="cd-evidence-card-title">{t(item.title)}</div>
               <div className="cd-evidence-card-meta">{t(item.meta)}</div>
               <div className="cd-proj-link" style={{ marginTop: 2 }}>
-                {t({ en: "Open", de: "Öffnen", fr: "Ouvrir", es: "Abrir", ar: "فتح" })} &rarr;
+                {t({ en: "Open", de: "Öffnen", fr: "Ouvrir", es: "Abrir", ar: "فتح" })} <span className="inline-block rtl:rotate-180" aria-hidden="true">&rarr;</span>
               </div>
             </a>
           ))}
@@ -143,4 +143,3 @@ export default function Evidence() {
     </section>
   )
 }
-

@@ -637,6 +637,7 @@ export default function OodDemo() {
 
             {/* Live KPI Strip */}
             <div
+              dir="ltr"
               style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',

@@ -7,8 +7,8 @@ import { useTheme } from '@/lib/ThemeContext'
 import { languageOptions, useI18n, type TranslationMap, isLanguage } from '@/lib/i18n'
 
 const links = [
-  { href: '/#about', label: { en: 'About', de: 'Profil', fr: 'Profil', es: 'Perfil', ar: 'نبذة' } },
   { href: '/#projects', label: { en: 'Projects', de: 'Projekte', fr: 'Projets', es: 'Proyectos', ar: 'المشاريع' } },
+  { href: '/#about', label: { en: 'About', de: 'Profil', fr: 'Profil', es: 'Perfil', ar: 'نبذة' } },
   { href: '/#experience', label: { en: 'Experience', de: 'Erfahrung', fr: 'Expérience', es: 'Experiencia', ar: 'الخبرة' } },
   { href: '/#research', label: { en: 'Research', de: 'Forschung', fr: 'Recherche', es: 'Investigación', ar: 'الأبحاث' } },
   { href: '/#writing', label: { en: 'Blog', de: 'Blog', fr: 'Blog', es: 'Blog', ar: 'المدونة' } },
@@ -118,6 +118,7 @@ const themeLabels = {
 
 export default function Header() {
   const [open, setOpen] = useState(false)
+  const navRef = useRef<HTMLElement>(null)
   const menuToggleRef = useRef<HTMLButtonElement>(null)
   const { theme, toggleTheme } = useTheme()
   const { t } = useI18n()
@@ -127,18 +128,25 @@ export default function Header() {
 
   useEffect(() => {
     if (!open) return
+    const closeOnOutside = (event: MouseEvent) => {
+      if (!navRef.current?.contains(event.target as Node)) setOpen(false)
+    }
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setOpen(false)
         menuToggleRef.current?.focus()
       }
     }
+    document.addEventListener('mousedown', closeOnOutside)
     document.addEventListener('keydown', closeOnEscape)
-    return () => document.removeEventListener('keydown', closeOnEscape)
+    return () => {
+      document.removeEventListener('mousedown', closeOnOutside)
+      document.removeEventListener('keydown', closeOnEscape)
+    }
   }, [open])
 
   return (
-    <nav className="cd-nav">
+    <nav className="cd-nav" ref={navRef}>
       <div className="cd-nav-inner">
         <a href={isHome ? '#hero' : '/'} className="cd-nav-logo" aria-label="Ahmed Mohammed — home">Ahmed<span>.</span></a>
 
@@ -185,7 +193,6 @@ export default function Header() {
         id="cd-mobile-menu"
         className="cd-nav-mobile-panel"
         hidden={!open}
-        style={{ borderTop: '1px solid var(--cd-b0)', background: 'var(--cd-bg)', padding: '8px 20px 16px', display: 'flex', flexDirection: 'column', gap: '8px' }}
       >
         {links.map(l => (
           <NavLink key={l.href} href={l.href} label={l.label} onClick={() => setOpen(false)} />
@@ -195,4 +202,3 @@ export default function Header() {
     </nav>
   )
 }
-

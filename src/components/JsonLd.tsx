@@ -19,7 +19,7 @@ export function PersonSchema() {
     givenName: 'Ahmed',
     familyName: 'Mohammed',
     jobTitle: 'AI/ML Engineer',
-    description: 'AI/ML Engineer building AI systems end to end: computer vision, industrial ML, anomaly detection, diffusion models, LLM products, and deterministic agent tooling. Builder of Sihem (LLM assistant) and mergeproof (deterministic merge-safety gate for AI-agent pull requests). M.Sc. Artificial Intelligence (thesis submitted Jun 2026, degree completed 25 Sep 2026; thesis graded 1) from Johannes Kepler University Linz, supervised by Prof. Sepp Hochreiter. Achieved 99.03% ± 0.07% AUROC (3-seed mean) on a within-CIFAR airplane-vs-rest binary OOD split (single ID class; not comparable to multi-class CIFAR-10 OOD benchmarks) and 0.8673 ± 0.0230 AUROC (5-fold CV) on the public FTI_Zer0P industrial benchmark.',
+    description: 'AI/ML Engineer building AI systems end to end: computer vision, industrial ML, anomaly detection, diffusion models, LLM products, and deterministic agent tooling. Builder of Sihem (LLM assistant in invitation-only beta) and mergeproof (checks AI-written pull requests against configured deterministic merge requirements without calling an LLM; passing those checks does not guarantee defect-free code). M.Sc. Artificial Intelligence (thesis submitted Jun 2026, degree completed 25 Sep 2026; thesis graded 1) from Johannes Kepler University Linz, supervised by Prof. Sepp Hochreiter. Achieved 99.03% ± 0.07% AUROC (3-seed mean) on a within-CIFAR airplane-vs-rest binary OOD split (single ID class; not comparable to multi-class CIFAR-10 OOD benchmarks) and 0.8673 ± 0.0230 AUROC (5-fold CV) on the public FTI_Zer0P industrial benchmark.',
     url: 'https://ahmed-3m.github.io',
     image: 'https://ahmed-3m.github.io/headshot.jpg',
     email: 'ahmed.mo.0595@gmail.com',
@@ -267,7 +267,7 @@ export function ProjectsSchema() {
         item: {
           '@type': 'SoftwareApplication',
           name: 'Sihem — AI Mentor Assistant',
-          description: 'Proactive personal-mentor assistant on Telegram and PWA with a deterministic generators→arbiter→composer decision engine, pgvector RAG memory, and multi-provider LLM routing with failover. In beta at @sihem_ai_bot (tech2b incubator, Linz).',
+          description: 'Proactive personal-mentor assistant on Telegram and PWA with a deterministic generators→arbiter→composer decision engine, pgvector RAG memory, and multi-provider LLM routing with failover. In invitation-only beta at @sihem_ai_bot (tech2b incubator, Linz).',
           applicationCategory: 'BusinessApplication',
           url: 'https://t.me/sihem_ai_bot',
           author: { '@type': 'Person', name: 'Ahmed Mohammed' },
@@ -437,4 +437,3 @@ export function BreadcrumbSchema({
     />
   );
 }
-

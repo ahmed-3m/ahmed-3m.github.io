@@ -27,7 +27,7 @@ const experiences: Array<{
       es: 'Diseño y opero todo el stack en la nube de un asistente de hábitos y rutinas diarias, entregado como bot de Telegram y aplicación web instalable: PostgreSQL gestionado con row-level security, funciones serverless en Deno/TypeScript, tareas programadas, memoria pgvector y despliegues con GitHub Actions. Las llamadas LLM se enrutan entre varios proveedores con escalado y failover.',
       ar: 'أصمم وأشغّل كامل البنية السحابية لمساعد للعادات والروتين اليومي، يُقدَّم كبوت على تيليجرام وتطبيق ويب قابل للتثبيت: PostgreSQL مُدار مع أمان على مستوى الصفوف، ودوال serverless بلغة Deno/TypeScript، ومهام مجدولة، وذاكرة pgvector، ونشر عبر GitHub Actions. تُوجَّه استدعاءات LLM عبر عدة مزودين مع تصعيد وتبديل تلقائي.',
     },
-    badge: { en: 'Live beta - @sihem_ai_bot', de: 'Live-Beta - @sihem_ai_bot', fr: 'Bêta en ligne - @sihem_ai_bot', es: 'Beta en vivo - @sihem_ai_bot', ar: 'نسخة تجريبية - @sihem_ai_bot' },
+    badge: { en: 'Invitation-only beta - @sihem_ai_bot', de: 'Beta mit Einladung - @sihem_ai_bot', fr: 'Bêta sur invitation - @sihem_ai_bot', es: 'Beta por invitación - @sihem_ai_bot', ar: 'نسخة تجريبية بدعوة - @sihem_ai_bot' },
     active: true,
   },
   {
@@ -110,4 +110,3 @@ export default function Experience() {
     </section>
   )
 }
-

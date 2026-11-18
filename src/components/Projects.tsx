@@ -6,7 +6,7 @@ import { useReveal } from '@/lib/useReveal'
 const copy = {
   eyebrow: { en: '// Projects', de: '// Projekte', fr: '// Projets', es: '// Proyectos', ar: '// المشاريع' },
   title: { en: 'Research that ships.', de: 'Forschung, die produktiv wird.', fr: 'La recherche qui devient produit.', es: 'Investigación que llega a producción.', ar: 'بحث يتحول إلى منتج.' },
-  supporting: { en: 'Supporting proof · Live beta (tech2b)', de: 'Weiterer Nachweis · Live-Beta (tech2b)', fr: 'Preuve complémentaire · Bêta (tech2b)', es: 'Prueba adicional · Beta en vivo (tech2b)', ar: 'دليل إضافي · نسخة تجريبية (tech2b)' },
+  supporting: { en: 'Supporting proof · Invitation-only beta (tech2b)', de: 'Weiterer Nachweis · Beta mit Einladung (tech2b)', fr: 'Preuve complémentaire · Bêta sur invitation (tech2b)', es: 'Prueba adicional · Beta por invitación (tech2b)', ar: 'دليل إضافي · نسخة تجريبية بدعوة (tech2b)' },
   caseStudy: { en: 'Case study', de: 'Fallstudie', fr: 'Étude de cas', es: 'Caso de estudio', ar: 'دراسة حالة' },
   caseStudyLink: { en: 'Case study', de: 'Fallstudie', fr: 'Étude de cas', es: 'Caso de estudio', ar: 'دراسة حالة' },
   thesisPdf: { en: 'Thesis PDF', de: 'Thesis PDF', fr: 'PDF mémoire', es: 'PDF tesis', ar: 'PDF الرسالة' },
@@ -224,4 +224,3 @@ export default function Projects() {
     </section>
   )
 }
-

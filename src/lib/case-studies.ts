@@ -261,7 +261,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: 'sihem',
-    lastModified: '2026-11-07',
+    lastModified: '2026-11-18',
     title: {
       en: 'Sihem: Proactive AI Personal-Mentor & Routine Assistant',
       de: 'Sihem: Proaktiver KI-Mentor & Routine-Assistent',
@@ -270,11 +270,11 @@ export const caseStudies: CaseStudy[] = [
       ar: 'Sihem: مساعد موجه شخصي وروتين يومي استباقي بالذكاء الاصطناعي',
     },
     summary: {
-      en: 'Proactive personal-mentor assistant on Telegram (@sihem_ai_bot) and installable PWA (sihem-pwa.pages.dev), accepted into the tech2b incubator in Linz.',
-      de: 'Proaktiver persönlicher Mentor-Assistent auf Telegram (@sihem_ai_bot) und installierbare PWA (sihem-pwa.pages.dev), aufgenommen in den tech2b-Inkubator in Linz.',
-      fr: 'Assistant mentor personnel proactif sur Telegram (@sihem_ai_bot) et PWA installable (sihem-pwa.pages.dev), incubé chez tech2b à Linz.',
-      es: 'Asistente mentor personal proactivo en Telegram (@sihem_ai_bot) y PWA instalable (sihem-pwa.pages.dev), aceptado en la incubadora tech2b de Linz.',
-      ar: 'مساعد موجه شخصي استباقي على تيليجرام (@sihem_ai_bot) وتطبيق ويب قابل للتثبيت (sihem-pwa.pages.dev)، ومقبول في حاضنة tech2b في لينز.',
+      en: 'Proactive personal-mentor assistant on Telegram (@sihem_ai_bot) and installable PWA (sihem-pwa.pages.dev) in an invitation-only beta, accepted into the tech2b incubator in Linz.',
+      de: 'Proaktiver persönlicher Mentor-Assistent auf Telegram (@sihem_ai_bot) und installierbare PWA (sihem-pwa.pages.dev) in einer Beta mit Einladung, aufgenommen in den tech2b-Inkubator in Linz.',
+      fr: 'Assistant mentor personnel proactif sur Telegram (@sihem_ai_bot) et PWA installable (sihem-pwa.pages.dev) en bêta sur invitation, incubé chez tech2b à Linz.',
+      es: 'Asistente mentor personal proactivo en Telegram (@sihem_ai_bot) y PWA instalable (sihem-pwa.pages.dev) en beta por invitación, aceptado en la incubadora tech2b de Linz.',
+      ar: 'مساعد موجه شخصي استباقي على تيليجرام (@sihem_ai_bot) وتطبيق ويب قابل للتثبيت (sihem-pwa.pages.dev) في نسخة تجريبية بدعوة، ومقبول في حاضنة tech2b في لينز.',
     },
     problem: {
       en: "Most habit trackers and todo apps are passive — they wait for manual input and break down as soon as a user's schedule shifts, while raw LLM chats lack persistent structured state, proactive scheduling, and cost-controlled multi-provider reliability.",
@@ -375,11 +375,11 @@ export const caseStudies: CaseStudy[] = [
     ],
     results: [
       {
-        en: 'Live proactive beta running on Telegram (@sihem_ai_bot) and installable PWA (sihem-pwa.pages.dev) with automated morning briefings and evening reviews.',
-        de: 'Aktive proaktive Beta auf Telegram (@sihem_ai_bot) und als installierbare PWA (sihem-pwa.pages.dev) mit automatischen Morgenbriefings und Abendreviews.',
-        fr: 'Bêta proactive en direct sur Telegram (@sihem_ai_bot) et PWA installable (sihem-pwa.pages.dev) avec briefings matinaux et bilans du soir automatisés.',
-        es: 'Beta proactiva en vivo en Telegram (@sihem_ai_bot) y PWA instalable (sihem-pwa.pages.dev) con resúmenes matutinos y revisiones nocturnas automatizadas.',
-        ar: 'نسخة تجريبية استباقية تعمل على تيليجرام (@sihem_ai_bot) وتطبيق ويب قابل للتثبيت (sihem-pwa.pages.dev) مع موجزات صباحية ومراجعات مسائية مؤتمتة.',
+        en: 'Invitation-only proactive beta running on Telegram (@sihem_ai_bot) and installable PWA (sihem-pwa.pages.dev) with automated morning briefings and evening reviews.',
+        de: 'Proaktive Beta mit Einladung auf Telegram (@sihem_ai_bot) und als installierbare PWA (sihem-pwa.pages.dev) mit automatischen Morgenbriefings und Abendreviews.',
+        fr: 'Bêta proactive sur invitation sur Telegram (@sihem_ai_bot) et PWA installable (sihem-pwa.pages.dev) avec briefings matinaux et bilans du soir automatisés.',
+        es: 'Beta proactiva por invitación en Telegram (@sihem_ai_bot) y PWA instalable (sihem-pwa.pages.dev) con resúmenes matutinos y revisiones nocturnas automatizadas.',
+        ar: 'نسخة تجريبية استباقية بدعوة تعمل على تيليجرام (@sihem_ai_bot) وتطبيق ويب قابل للتثبيت (sihem-pwa.pages.dev) مع موجزات صباحية ومراجعات مسائية مؤتمتة.',
       },
       {
         en: 'Multi-provider routing with automatic failover across GLM, Gemini, and Groq, coupled with granular token cost tracking per user interaction.',
@@ -422,22 +422,22 @@ export const caseStudies: CaseStudy[] = [
     artifacts: [
       {
         label: {
-          en: 'Telegram Bot (@sihem_ai_bot)',
-          de: 'Telegram Bot (@sihem_ai_bot)',
-          fr: 'Bot Telegram (@sihem_ai_bot)',
-          es: 'Bot de Telegram (@sihem_ai_bot)',
-          ar: 'بوت تيليجرام (@sihem_ai_bot)',
+          en: 'Telegram Bot (@sihem_ai_bot, invitation-only)',
+          de: 'Telegram Bot (@sihem_ai_bot, mit Einladung)',
+          fr: 'Bot Telegram (@sihem_ai_bot, sur invitation)',
+          es: 'Bot de Telegram (@sihem_ai_bot, por invitación)',
+          ar: 'بوت تيليجرام (@sihem_ai_bot، بدعوة)',
         },
         href: 'https://t.me/sihem_ai_bot',
         external: true,
       },
       {
         label: {
-          en: 'Web App (PWA)',
-          de: 'Web-App (PWA)',
-          fr: 'Application Web (PWA)',
-          es: 'Aplicación Web (PWA)',
-          ar: 'تطبيق الويب (PWA)',
+          en: 'Web App (PWA, invitation-only)',
+          de: 'Web-App (PWA, mit Einladung)',
+          fr: 'Application Web (PWA, sur invitation)',
+          es: 'Aplicación Web (PWA, por invitación)',
+          ar: 'تطبيق الويب (PWA، بدعوة)',
         },
         href: 'https://sihem-pwa.pages.dev/',
         external: true,
@@ -459,4 +459,3 @@ export const caseStudies: CaseStudy[] = [
 export function getCaseStudy(slug: string) {
   return caseStudies.find((item) => item.slug === slug)
 }
-

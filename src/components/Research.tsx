@@ -717,4 +717,3 @@ export default function Research() {
     </section>
   )
 }
-
