@@ -7,8 +7,8 @@ import { useTheme } from '@/lib/ThemeContext'
 import { languageOptions, useI18n, type TranslationMap, isLanguage } from '@/lib/i18n'
 
 const links = [
-  { href: '/#about', label: { en: 'About', de: 'Profil', fr: 'Profil', es: 'Perfil', ar: 'نبذة' } },
   { href: '/#projects', label: { en: 'Projects', de: 'Projekte', fr: 'Projets', es: 'Proyectos', ar: 'المشاريع' } },
+  { href: '/#about', label: { en: 'About', de: 'Profil', fr: 'Profil', es: 'Perfil', ar: 'نبذة' } },
   { href: '/#experience', label: { en: 'Experience', de: 'Erfahrung', fr: 'Expérience', es: 'Experiencia', ar: 'الخبرة' } },
   { href: '/#research', label: { en: 'Research', de: 'Forschung', fr: 'Recherche', es: 'Investigación', ar: 'الأبحاث' } },
   { href: '/#writing', label: { en: 'Blog', de: 'Blog', fr: 'Blog', es: 'Blog', ar: 'المدونة' } },
@@ -25,7 +25,8 @@ const ctaLabel: TranslationMap = {
 }
 
 function LanguageSelector() {
-  const { lang, setLanguage } = useI18n()
+  const { lang, setLanguage, t } = useI18n()
+  const triggerRef = useRef<HTMLButtonElement>(null)
   const [open, setOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
   const current = languageOptions.find(({ code }) => code === lang) ?? languageOptions[0]
@@ -36,7 +37,7 @@ function LanguageSelector() {
       if (!menuRef.current?.contains(event.target as Node)) setOpen(false)
     }
     const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setOpen(false)
+      if (event.key === 'Escape') { setOpen(false); triggerRef.current?.focus() }
     }
     document.addEventListener('mousedown', closeOnOutside)
     document.addEventListener('keydown', closeOnEscape)
@@ -50,8 +51,8 @@ function LanguageSelector() {
     <div className="cd-lang-menu" ref={menuRef}>
       <button
         type="button"
-        className="cd-lang-trigger"
-        aria-label="Change language"
+        className="cd-lang-trigger" ref={triggerRef}
+        aria-label={t({ en: "Change language", de: "Sprache ändern", fr: "Changer de langue", es: "Cambiar idioma", ar: "تغيير اللغة" })}
         aria-expanded={open}
         onClick={() => setOpen((value) => !value)}
       >
@@ -61,17 +62,17 @@ function LanguageSelector() {
       </button>
 
       {open && (
-        <div className="cd-lang-popover" role="menu" aria-label="Language">
+        <div className="cd-lang-popover" >
           {languageOptions.map(({ code, short, label }) => (
             <button
               key={code}
               type="button"
-              role="menuitemradio"
-              aria-checked={lang === code}
+              aria-pressed={lang === code}
               className={`cd-lang-option${lang === code ? ' active' : ''}`}
               onClick={() => {
                 if (isLanguage(code)) setLanguage(code)
                 setOpen(false)
+                triggerRef.current?.focus()
               }}
             >
               <span className="cd-lang-option-code">{short}</span>
@@ -117,6 +118,7 @@ const themeLabels = {
 
 export default function Header() {
   const [open, setOpen] = useState(false)
+  const navRef = useRef<HTMLElement>(null)
   const menuToggleRef = useRef<HTMLButtonElement>(null)
   const { theme, toggleTheme } = useTheme()
   const { t } = useI18n()
@@ -126,18 +128,25 @@ export default function Header() {
 
   useEffect(() => {
     if (!open) return
+    const closeOnOutside = (event: MouseEvent) => {
+      if (!navRef.current?.contains(event.target as Node)) setOpen(false)
+    }
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setOpen(false)
         menuToggleRef.current?.focus()
       }
     }
+    document.addEventListener('mousedown', closeOnOutside)
     document.addEventListener('keydown', closeOnEscape)
-    return () => document.removeEventListener('keydown', closeOnEscape)
+    return () => {
+      document.removeEventListener('mousedown', closeOnOutside)
+      document.removeEventListener('keydown', closeOnEscape)
+    }
   }, [open])
 
   return (
-    <nav className="cd-nav">
+    <nav className="cd-nav" ref={navRef}>
       <div className="cd-nav-inner">
         <a href={isHome ? '#hero' : '/'} className="cd-nav-logo" aria-label="Ahmed Mohammed — home">Ahmed<span>.</span></a>
 
@@ -156,7 +165,7 @@ export default function Header() {
             className="cd-theme-toggle"
             onClick={toggleTheme}
             aria-label={isDark ? t(themeLabels.cream) : t(themeLabels.dark)}
-            title={isDark ? 'Cream mode' : 'Dark mode'}
+            title={isDark ? t(themeLabels.cream) : t(themeLabels.dark)}
           >
             {isDark ? <Sun size={16} strokeWidth={2.1} /> : <Moon size={16} strokeWidth={2.1} />}
           </button>
@@ -184,7 +193,6 @@ export default function Header() {
         id="cd-mobile-menu"
         className="cd-nav-mobile-panel"
         hidden={!open}
-        style={{ borderTop: '1px solid var(--cd-b0)', background: 'var(--cd-bg)', padding: '8px 20px 16px', display: 'flex', flexDirection: 'column', gap: '8px' }}
       >
         {links.map(l => (
           <NavLink key={l.href} href={l.href} label={l.label} onClick={() => setOpen(false)} />

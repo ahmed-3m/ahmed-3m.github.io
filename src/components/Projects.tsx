@@ -4,9 +4,9 @@ import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { useReveal } from '@/lib/useReveal'
 
 const copy = {
-  eyebrow: { en: '// 02 - Projects', de: '// 02 - Projekte', fr: '// 02 - Projets', es: '// 02 - Proyectos', ar: '// 02 - المشاريع' },
+  eyebrow: { en: '// Projects', de: '// Projekte', fr: '// Projets', es: '// Proyectos', ar: '// المشاريع' },
   title: { en: 'Research that ships.', de: 'Forschung, die produktiv wird.', fr: 'La recherche qui devient produit.', es: 'Investigación que llega a producción.', ar: 'بحث يتحول إلى منتج.' },
-  supporting: { en: 'Supporting proof · Live beta (tech2b)', de: 'Weiterer Nachweis · Live-Beta (tech2b)', fr: 'Preuve complémentaire · Bêta (tech2b)', es: 'Prueba adicional · Beta en vivo (tech2b)', ar: 'دليل إضافي · نسخة تجريبية (tech2b)' },
+  supporting: { en: 'Supporting proof · Invitation-only beta (tech2b)', de: 'Weiterer Nachweis · Beta mit Einladung (tech2b)', fr: 'Preuve complémentaire · Bêta sur invitation (tech2b)', es: 'Prueba adicional · Beta por invitación (tech2b)', ar: 'دليل إضافي · نسخة تجريبية بدعوة (tech2b)' },
   caseStudy: { en: 'Case study', de: 'Fallstudie', fr: 'Étude de cas', es: 'Caso de estudio', ar: 'دراسة حالة' },
   caseStudyLink: { en: 'Case study', de: 'Fallstudie', fr: 'Étude de cas', es: 'Caso de estudio', ar: 'دراسة حالة' },
   thesisPdf: { en: 'Thesis PDF', de: 'Thesis PDF', fr: 'PDF mémoire', es: 'PDF tesis', ar: 'PDF الرسالة' },
@@ -53,11 +53,11 @@ const copy = {
   },
   mentoTitle: { en: 'Sihem — AI Mentor Assistant', de: 'Sihem — KI-Mentor-Assistent', fr: 'Sihem — Assistant mentor IA', es: 'Sihem — Asistente mentor con IA', ar: 'Sihem — مساعد موجه بالذكاء الاصطناعي' },
   mentoDesc: {
-    en: 'Proactive personal-mentor assistant (Telegram @sihem_ai_bot & installable PWA). Built on Supabase Edge Functions (Deno/TS), deterministic generators→arbiter→composer nudging, pgvector RAG memory, and multi-provider LLM routing (GLM/Gemini/Groq) with failover.',
-    de: 'Proaktiver persönlicher Mentor-Assistent (Telegram @sihem_ai_bot & PWA). Gebaut auf Supabase Edge Functions (Deno/TS) mit deterministischer Generatoren→Arbiter→Komponist-Engine, pgvector-RAG-Gedächtnis und Multi-Provider-LLM-Routing (GLM/Gemini/Groq) mit Failover.',
-    fr: 'Assistant mentor personnel proactif (Telegram @sihem_ai_bot & PWA). Construit sur Supabase Edge Functions (Deno/TS) avec moteur déterministe générateurs→arbitre→compositeur, mémoire RAG pgvector et routage LLM multi-fournisseurs avec failover.',
-    es: 'Asistente mentor personal proactivo (Telegram @sihem_ai_bot y PWA). Construido sobre Supabase Edge Functions (Deno/TS) con motor determinista generadores→árbitro→compositor, memoria RAG pgvector y enrutamiento LLM multiproveedor con failover.',
-    ar: 'مساعد موجه شخصي استباقي (تيليجرام @sihem_ai_bot وتطبيق PWA). مبني على Supabase Edge Functions (Deno/TS) مع محرك قرار حتمي، وذاكرة RAG بـ pgvector، وتوجيه LLM متعدد المزودين مع تبديل تلقائي.',
+    en: "A personal assistant for weekly planning and daily routines through Telegram and a web app. I built its scheduling, long-term memory, and multi-provider AI integration. Morning briefings, evening reviews, and adaptive check-ins are available in an invitation-only beta.",
+    de: "Ein persönlicher Assistent für Wochenplanung und tägliche Routinen per Telegram und Web-App. Ich entwickelte Zeitplanung, Langzeitgedächtnis und die Anbindung mehrerer KI-Anbieter. Morgenbriefings, Abendreviews und adaptive Check-ins sind in einer Beta mit Einladung verfügbar.",
+    fr: "Un assistant personnel pour organiser la semaine et les routines via Telegram et une application web. J’ai développé la planification, la mémoire à long terme et l’intégration de plusieurs fournisseurs IA. Briefings matinaux, bilans du soir et suivis adaptatifs sont disponibles en bêta sur invitation.",
+    es: "Un asistente para organizar la semana y las rutinas mediante Telegram y una aplicación web. Desarrollé la planificación, la memoria a largo plazo y la integración de varios proveedores de IA. Ofrece resúmenes matutinos, revisiones nocturnas y seguimientos adaptativos en una beta por invitación.",
+    ar: "مساعد شخصي لتنظيم الأسبوع والروتين اليومي عبر تيليجرام وتطبيق ويب. طورت الجدولة والذاكرة طويلة المدى والتكامل مع عدة مزودي ذكاء اصطناعي. تتوفر الملخصات الصباحية والمراجعات المسائية والمتابعات التكيفية في نسخة تجريبية تتطلب دعوة.",
   },
   mergeproofEyebrow: {
     en: 'Open source · Agent tooling',
@@ -67,11 +67,11 @@ const copy = {
     ar: 'مصدر مفتوح · أدوات الوكلاء',
   },
   mergeproofDesc: {
-    en: 'Decides whether a pull request written by an AI agent is safe to merge. Plain deterministic code that never calls an LLM, so the agent being judged cannot talk its way past it.',
-    de: 'Entscheidet, ob ein von einem KI-Agenten geschriebener Pull Request sicher gemergt werden kann. Reiner deterministischer Code, der niemals ein LLM aufruft — der beurteilte Agent kann sich nicht mit Worten daran vorbeimogeln.',
-    fr: "Décide si une pull request écrite par un agent IA est sûre à fusionner. Du code déterministe pur qui n'appelle jamais de LLM — l'agent évalué ne peut pas convaincre le verdict par la parole.",
-    es: 'Decide si un pull request escrito por un agente de IA es seguro para fusionar. Código determinista puro que nunca llama a un LLM — el agente evaluado no puede convencer al veredicto con palabras.',
-    ar: 'يقرر ما إذا كان طلب الدمج المكتوب بواسطة وكيل ذكاء اصطناعي آمنًا للدمج. شيفرة حتمية خالصة لا تستدعي أي نموذج لغة — فلا يمكن للوكيل المُقيَّم الإفلات من الحكم بالكلام.',
+    en: "Checks AI-written pull requests against configured deterministic merge requirements without calling an LLM. Passing those checks does not guarantee defect-free code.",
+    de: "Prüft KI-generierte Pull Requests anhand konfigurierter deterministischer Merge-Anforderungen ohne LLM-Aufruf. Bestandene Prüfungen garantieren keine Fehlerfreiheit.",
+    fr: "Vérifie les pull requests générées par IA selon des exigences déterministes configurées, sans appel LLM. La réussite des contrôles ne garantit pas l’absence de défauts.",
+    es: "Verifica pull requests generadas por IA según requisitos deterministas configurados, sin llamadas a un LLM. Superar las comprobaciones no garantiza la ausencia de errores.",
+    ar: "يتحقق من طلبات الدمج المكتوبة بالذكاء الاصطناعي وفق متطلبات حتمية محددة دون استدعاء نموذج لغوي. اجتياز هذه الفحوص لا يضمن خلو الشيفرة من الأخطاء.",
   },
   tagZeroDeps: {
     en: 'Zero dependencies',
@@ -176,6 +176,9 @@ export default function Projects() {
             </div>
           </article>
 
+          <details className="cd-additional-projects">
+            <summary>{t({ en: 'More projects and open source', de: 'Weitere Projekte und Open Source', fr: 'Autres projets et open source', es: 'Más proyectos y código abierto', ar: 'مشاريع أخرى ومصادر مفتوحة' })}</summary>
+            <div className="cd-projects-grid" style={{ marginTop: 20 }}>
           <article className="cd-project-card reveal">
             <div className="cd-pc-eyebrow">{t(copy.mergeproofEyebrow)}</div>
             <div className="cd-pc-title">mergeproof</div>
@@ -214,6 +217,8 @@ export default function Projects() {
               {t(copy.moreOss2)}
             </div>
           </article>
+            </div>
+          </details>
         </div>
       </div>
     </section>

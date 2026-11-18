@@ -43,16 +43,16 @@ const copy = {
     ar: 'أنظمة ذكاء اصطناعي إنتاجية',
   },
   body: {
-    en: 'AI/ML engineer (M.Sc. JKU Linz, thesis graded 1). I build computer vision, industrial ML, and diffusion OOD systems with verified error bars in research and deterministic evals in production.',
-    de: 'AI/ML Engineer (M.Sc. JKU Linz, Masterarbeit mit Note 1). Ich entwickle Computer-Vision-, Industrial-ML- und Diffusions-OOD-Systeme mit belegten Fehlerbalken in der Forschung und deterministischer Evaluation in der Produktion.',
-    fr: "Ingénieur IA/ML (M.Sc. JKU Linz, mémoire noté 1). Je conçois des systèmes de vision par ordinateur, ML industriel et détection OOD par diffusion avec barres d'erreur vérifiées et évaluation déterministe en production.",
-    es: 'Ingeniero IA/ML (M.Sc. JKU Linz, tesis calificada con 1). Desarrollo sistemas de visión artificial, ML industrial y difusión para OOD con barras de error verificadas y evaluación determinista en producción.',
-    ar: 'مهندس ذكاء اصطناعي وتعلم آلي (ماجستير من JKU لينز، الرسالة بتقدير 1). أبني أنظمة رؤية حاسوبية وتعلم آلي صناعي وكشف OOD بنماذج الانتشار مع أشرطة خطأ موثقة وتقييم حتمي في الإنتاج.',
+    en: "AI/ML engineer building systems that inspect images, support daily routines, and check AI-written code. I combine carefully evaluated research with hands-on product development.",
+    de: "AI/ML Engineer für Systeme, die Bilder prüfen, Alltagsroutinen unterstützen und KI-generierten Code kontrollieren. Ich verbinde sorgfältig evaluierte Forschung mit praktischer Produktentwicklung.",
+    fr: "Ingénieur IA/ML : je construis des systèmes pour inspecter des images, accompagner les routines et vérifier le code généré par IA. Je combine recherche évaluée et développement de produits.",
+    es: "Ingeniero de IA/ML. Creo sistemas para inspeccionar imágenes, apoyar rutinas y verificar código generado por IA. Combino investigación evaluada con desarrollo de productos.",
+    ar: "مهندس ذكاء اصطناعي وتعلم آلي. أبني أنظمة لفحص الصور ودعم الروتين اليومي والتحقق من الشيفرة التي يولدها الذكاء الاصطناعي، وأجمع بين البحث المُقيّم بعناية وتطوير المنتجات.",
   },
   viewWork: { en: 'View work', de: 'Arbeiten ansehen', fr: 'Voir les projets', es: 'Ver trabajos', ar: 'عرض الأعمال' },
   contact: { en: 'Get in touch', de: 'Kontakt', fr: 'Contact', es: 'Contacto', ar: 'تواصل' },
   or: { en: 'or', de: 'oder', fr: 'ou', es: 'o', ar: 'أو' },
-  years: { en: 'Years in AI/ML', de: 'Jahre in AI/ML', fr: 'Années en IA/ML', es: 'Años en IA/ML', ar: 'سنوات في الذكاء الاصطناعي' },
+  degree: { en: 'AI · JKU Linz', de: 'KI · JKU Linz', fr: 'IA · JKU Linz', es: 'IA · JKU Linz', ar: 'ذكاء اصطناعي · JKU Linz' },
   auroc: { en: 'OOD Detection AUROC', de: 'OOD-Erkennung AUROC', fr: 'Détection OOD AUROC', es: 'Detección OOD AUROC', ar: 'مقياس AUROC لكشف الخارج عن التوزيع' },
   gain: { en: 'Gain over baseline (stable)', de: 'Gewinn gegenüber Baseline (stabil)', fr: 'Gain face au baseline (stable)', es: 'Mejora sobre la base (estable)', ar: 'تحسن على خط الأساس (مستقر)' },
   legend: {
@@ -60,7 +60,7 @@ const copy = {
     de: '99,03% ± 0,07% AUROC = CIFAR-10 Thesis (binär, Einzelklasse Flugzeug-vs-Rest, 3-Seed-Mittel) · 0,8673 ± 0,0230 AUROC = industrielle FTI_Zer0P 5-fach Baseline · +6,5pp = Gewinn über 92,52% ± 11,07% Baseline',
     fr: '99,03% ± 0,07% AUROC = thèse CIFAR-10 (binaire, classe unique avion-vs-reste, moyenne 3 seeds) · 0,8673 ± 0,0230 AUROC = baseline industrielle FTI_Zer0P 5-fold · +6,5pp = gain sur baseline 92,52% ± 11,07%',
     es: '99,03% ± 0,07% AUROC = tesis CIFAR-10 (binaria, clase única avión-vs-resto, media de 3 seeds) · 0,8673 ± 0,0230 AUROC = baseline industrial FTI_Zer0P 5-fold · +6,5pp = ganancia sobre base 92,52% ± 11,07%',
-    ar: '99.03% ± 0.07% AUROC = رسالة CIFAR-10 (ثنائي، فئة واحدة طائرة مقابل الباقي، متوسط 3 تجارب) · 0.8673 ± 0.0230 AUROC = خط أساس صناعي FTI_Zer0P 5-fold · +6.5pp = تحسن على الأساس 92.52% ± 11.07%',
+    ar: '\u206699.03%\u00A0±\u00A00.07% AUROC\u2069 = رسالة CIFAR-10 (ثنائي، فئة واحدة طائرة مقابل الباقي، متوسط 3 تجارب) · \u20660.8673\u00A0±\u00A00.0230 AUROC\u2069 = خط أساس صناعي FTI_Zer0P 5-fold · \u2066+6.5pp\u2069 = تحسن على الأساس \u206692.52%\u00A0±\u00A011.07%\u2069',
   },
 } satisfies Record<string, TranslationMap>
 
@@ -94,7 +94,7 @@ export default function Hero() {
             </div>
             <p className="cd-hero-body" data-speakable>{t(copy.body)}</p>
             <div className="cd-hero-ctas">
-              <a href="#projects" className="cd-btn-primary">{t(copy.viewWork)} <span aria-hidden="true">&rarr;</span></a>
+              <a href="#projects" className="cd-btn-primary">{t(copy.viewWork)} <span className="inline-block rtl:rotate-180" aria-hidden="true">&rarr;</span></a>
               <RequestCvButton />
             </div>
             <div className="cd-hero-secondary">
@@ -105,15 +105,15 @@ export default function Hero() {
             </div>
             <div className="cd-hero-stats">
               <div className="cd-stat">
-                <div className="cd-stat-num">4<span className="a">+</span></div>
-                <div className="cd-stat-label">{t(copy.years)}</div>
+                <div className="cd-stat-num" dir="ltr">M.Sc.</div>
+                <div className="cd-stat-label">{t(copy.degree)}</div>
               </div>
               <div className="cd-stat">
-                <div className="cd-stat-num">99<span className="a">.</span>03<span className="u">%</span></div>
+                <div className="cd-stat-num" dir="ltr">99<span className="a">.</span>03<span className="u">% ± 0.07%</span></div>
                 <div className="cd-stat-label">{t(copy.auroc)}</div>
               </div>
               <div className="cd-stat">
-                <div className="cd-stat-num">+6.5<span className="g u">pp</span></div>
+                <div className="cd-stat-num" dir="ltr">+6.5<span className="g u">pp</span></div>
                 <div className="cd-stat-label">{t(copy.gain)}</div>
               </div>
             </div>

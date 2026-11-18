@@ -34,11 +34,11 @@ export default function Home() {
       <main id="main" tabIndex={-1}>
         <Hero />
         <TrustStrip />
-        <About />
         <Projects />
-        <Evidence />
+        <About />
         <Experience />
         <Research />
+        <Evidence />
         <Writing />
         <News />
         <Contact />

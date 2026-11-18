@@ -172,7 +172,7 @@ const formulaVisuals: Array<{ previewSrc: string; src: string; width: number; he
 ]
 
 const copy = {
-  eyebrow: { en: '// 05 - Research', de: '// 05 - Forschung', fr: '// 05 - Recherche', es: '// 05 - Investigación', ar: '// 05 - الأبحاث' },
+  eyebrow: { en: '// Research', de: '// Forschung', fr: '// Recherche', es: '// Investigación', ar: '// الأبحاث' },
   title: { en: 'Reports & Thesis', de: 'Berichte & Thesis', fr: 'Rapports & mémoire', es: 'Informes y tesis', ar: 'التقارير والرسالة' },
   summaryProblemLabel: { en: 'Problem', de: 'Problem', fr: 'Problème', es: 'Problema', ar: 'المشكلة' },
   summaryProblemText: {
@@ -408,7 +408,7 @@ export default function Research() {
           className="reveal"
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))',
             gap: 14,
             marginBottom: 24,
           }}
@@ -604,7 +604,7 @@ export default function Research() {
             {t(copy.datasetOverview)}: {t(copy.thermographicFrames)} · {t(copy.zeroDefectSamples)} · {t(copy.defectCategories)} · {t(copy.fiveFoldCv)}
           </div>
 
-          <div className="cd-rf-charts" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
+          <div className="cd-rf-charts" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))' }}>
             {industrialCharts.map(({ src, width, height, alt, caption }, index) => (
               <div
                 key={src}
