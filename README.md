@@ -141,12 +141,6 @@ The model scores an image by how well a class-conditional diffusion model recons
   </tr>
 </table>
 
-```bash
-npm ci          # install
-npm run dev     # http://localhost:3000
-npm run build   # static export to out/
-```
-
 <sub>Contributor and agent rules, including the claim-integrity rules for every number on the site, live in <a href="AGENTS.md"><code>AGENTS.md</code></a>.</sub>
 
 ---
