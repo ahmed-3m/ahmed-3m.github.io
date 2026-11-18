@@ -19,7 +19,7 @@ export type CaseStudy = {
 export const caseStudies: CaseStudy[] = [
   {
     slug: 'diffusion-ood',
-    lastModified: '2026-11-13',
+    lastModified: '2026-11-18',
     title: {
       en: 'DiffusionOOD: Class-Conditional Separation Loss for Out-of-Distribution Detection',
       de: 'DiffusionOOD: Klassenkonditionale Separation Loss für OOD-Erkennung',
@@ -139,7 +139,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: 'inkjet-ood',
-    lastModified: '2026-11-07',
+    lastModified: '2026-11-18',
     title: {
       en: 'InkjetOOD: Transferring Generative OOD Detection to Industrial Print Quality Control',
       de: 'InkjetOOD: Transfer generativer OOD-Erkennung auf industrielle Druckqualitätskontrolle',

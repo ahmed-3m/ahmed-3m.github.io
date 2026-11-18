@@ -32,6 +32,17 @@ const decisions = {
   },
 } as const
 
+const sihemExample = {
+  title: { en: 'Example: A change of plans', de: 'Beispiel: Eine Planänderung', fr: 'Exemple : un changement de programme', es: 'Ejemplo: un cambio de planes', ar: 'مثال: تغيير في الخطة' },
+  context: {
+    en: 'Imagine a study session moves on your calendar. Sihem checks the updated schedule and your routines before deciding whether to send a Telegram check-in. If the rules trigger one, the language model writes the message.',
+    de: 'Angenommen, eine Lerneinheit wird in deinem Kalender verschoben. Sihem prüft den neuen Zeitplan und deine Routinen. Wenn die Regeln eine Nachfrage auslösen, schreibt das Sprachmodell die Nachricht für Telegram.',
+    fr: 'Imaginez qu’une séance d’étude soit déplacée dans votre calendrier. Sihem vérifie le nouvel horaire et vos habitudes. Si ses règles déclenchent un suivi, le modèle de langage rédige le message pour Telegram.',
+    es: 'Imagina que una sesión de estudio cambia de hora en tu calendario. Sihem comprueba el nuevo horario y tus rutinas. Si sus reglas activan un seguimiento, el modelo de lenguaje redacta el mensaje para Telegram.',
+    ar: 'تخيّل أن موعد جلسة مذاكرة تغيّر في تقويمك. يراجع Sihem الموعد الجديد وروتينك قبل أن يقرر إرسال رسالة متابعة على تيليجرام. إذا أشارت القواعد إلى الحاجة للمتابعة، يصوغ نموذج اللغة الرسالة.',
+  },
+} as const
+
 const OodDemo = dynamic(() => import('./OodDemo'))
 
 const labels = {
@@ -135,6 +146,13 @@ export default function CaseStudyPage({ slug }: { slug: string }) {
           <p className="text-[var(--cd-fg2)]">{t(decisions[study.slug])}</p>
         </section>
 
+        {study.slug === 'sihem' && (
+          <section className="glass-surface glass-subtle mt-6 p-5">
+            <h2 className="mb-3 text-lg font-semibold">{t(sihemExample.title)}</h2>
+            <p className="text-[var(--cd-fg2)]">{t(sihemExample.context)}</p>
+          </section>
+        )}
+
         {(['approach', 'results', 'lessons'] as const).map((key) => (
           <Fragment key={key}>
             <section className="glass-surface glass-subtle mt-6 p-5">
@@ -145,7 +163,7 @@ export default function CaseStudyPage({ slug }: { slug: string }) {
                 ))}
               </ul>
             </section>
-            {key === 'results' && study.slug === 'diffusion-ood' && <OodDemo />}
+            {key === 'results' && study.slug === 'diffusion-ood' && <OodDemo id="ood-explorer" />}
           </Fragment>
         ))}
 

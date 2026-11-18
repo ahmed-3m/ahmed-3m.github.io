@@ -50,7 +50,9 @@ const copy = {
   currentWork: { en: 'Sihem — LLM side project (tech2b incubator)', de: 'Sihem — LLM-Nebenprojekt (tech2b-Inkubator)', fr: 'Sihem — projet LLM personnel (incubateur tech2b)', es: 'Sihem — proyecto LLM personal (incubadora tech2b)', ar: 'Sihem — مشروع LLM جانبي (حاضنة tech2b)' },
   degree1: { en: 'M.Sc. in Artificial Intelligence', de: 'M.Sc. Artificial Intelligence', fr: 'M.Sc. en intelligence artificielle', es: 'M.Sc. en Inteligencia Artificial', ar: 'ماجستير في الذكاء الاصطناعي' },
   degree2: { en: 'B.Sc. in Mechatronics Engineering', de: 'B.Sc. Mechatronik', fr: 'B.Sc. en génie mécatronique', es: 'B.Sc. en Ingeniería Mecatrónica', ar: 'بكالوريوس في هندسة الميكاترونكس' },
-  desc1: { en: 'Thesis (graded 1): conditional diffusion models for OOD detection - 99.03% +/- 0.07% average AUROC (binary airplane-vs-rest, 3-seed mean).', de: 'Masterarbeit (Note 1): konditionale Diffusionsmodelle für OOD-Erkennung – 99.03% +/- 0.07% AUROC (binär airplane-vs-rest, 3-Seed-Mittel).', fr: 'Mémoire (note 1) : modèles de diffusion conditionnels pour détection OOD – 99.03% +/- 0.07% AUROC (binaire airplane-vs-rest, moyenne 3 seeds).', es: 'Tesis (nota 1): modelos de difusión condicional para detección OOD – 99.03% +/- 0.07% AUROC (binaria airplane-vs-rest, media de 3 seeds).', ar: 'الرسالة (تقدير 1): نماذج انتشار شرطية لكشف OOD - 99.03% +/- 0.07% AUROC (ثنائي airplane-vs-rest، متوسط 3 بذور).' },
+  desc1: { en: 'Thesis (grade 1): using diffusion models to detect unfamiliar images.', de: 'Masterarbeit (Note 1): Erkennung unbekannter Bilder mit Diffusionsmodellen.', fr: 'Mémoire (note 1) : détecter les images inconnues à l’aide de modèles de diffusion.', es: 'Tesis (nota 1): detección de imágenes desconocidas con modelos de difusión.', ar: 'الرسالة (تقدير 1): كشف الصور غير المألوفة باستخدام نماذج الانتشار.' },
+  mastersDates: { en: 'Oct 2020 to Sep 2026', de: 'Okt. 2020 bis Sept. 2026', fr: 'Oct. 2020 à sept. 2026', es: 'Oct. 2020 a sept. 2026', ar: 'أكتوبر 2020 إلى سبتمبر 2026' },
+  bachelorsDates: { en: 'Feb 2015 to Jan 2018', de: 'Feb. 2015 bis Jan. 2018', fr: 'Févr. 2015 à janv. 2018', es: 'Feb. 2015 a ene. 2018', ar: 'فبراير 2015 إلى يناير 2018' },
   desc2: { en: 'Thesis: SCARA robotic system for dynamic object tracking.', de: 'Thesis: SCARA-Robotersystem für dynamische Objektverfolgung.', fr: 'Mémoire : système robotique SCARA pour suivi dynamique d\'objets.', es: 'Tesis: sistema robótico SCARA para seguimiento dinámico de objetos.', ar: 'المشروع: نظام روبوت SCARA لتتبع الأجسام المتحركة.' },
 } satisfies Record<string, TranslationMap>
 
@@ -63,7 +65,7 @@ const skillCategories: { title: TranslationMap; skills: (string | TranslationMap
       es: 'Deep Learning y Visión por Computador',
       ar: 'التعلم العميق والرؤية الحاسوبية',
     },
-    skills: ['PyTorch', 'PyTorch Lightning', { en: "Diffusion Models (DDPM, UNet)", de: "Diffusionsmodelle (DDPM, UNet)", fr: "Modèles de diffusion (DDPM, UNet)", es: "Modelos de difusión (DDPM, UNet)", ar: "نماذج الانتشار (DDPM, UNet)" }, 'CNNs', 'Transformers', { en: "OOD Detection", de: "OOD-Erkennung", fr: "Détection OOD", es: "Detección OOD", ar: "كشف OOD" }, 'YOLOv8', { en: "Defect Inspection", de: "Fehlerprüfung", fr: "Inspection des défauts", es: "Inspección de defectos", ar: "فحص العيوب" }],
+    skills: ['Python', 'PyTorch', { en: "Diffusion Models (DDPM, UNet)", de: "Diffusionsmodelle (DDPM, UNet)", fr: "Modèles de diffusion (DDPM, UNet)", es: "Modelos de difusión (DDPM, UNet)", ar: "نماذج الانتشار (DDPM, UNet)" }, { en: "OOD Detection", de: "OOD-Erkennung", fr: "Détection OOD", es: "Detección OOD", ar: "كشف OOD" }, 'YOLOv8', { en: "Defect Inspection", de: "Fehlerprüfung", fr: "Inspection des défauts", es: "Inspección de defectos", ar: "فحص العيوب" }],
   },
   {
     title: {
@@ -73,7 +75,7 @@ const skillCategories: { title: TranslationMap; skills: (string | TranslationMap
       es: 'IA generativa y agéntica',
       ar: 'الذكاء الاصطناعي التوليدي والوكيلي',
     },
-    skills: [{ en: "LLM API Integration", de: "LLM-API-Integration", fr: "Intégration d’API LLM", es: "Integración de API LLM", ar: "تكامل واجهات LLM" }, { en: "Multi-Provider Routing & Failover", de: "Routing und Ausfallsicherung über mehrere Anbieter", fr: "Routage et basculement entre fournisseurs", es: "Enrutamiento y conmutación entre proveedores", ar: "التوجيه بين مزودين متعددين وتجاوز الأعطال" }, { en: "Prompt Engineering", de: "Prompt-Entwicklung", fr: "Ingénierie des prompts", es: "Ingeniería de instrucciones", ar: "هندسة التعليمات" }, { en: "Structured Output Validation", de: "Validierung strukturierter Ausgaben", fr: "Validation des sorties structurées", es: "Validación de salidas estructuradas", ar: "التحقق من المخرجات المنظمة" }, { en: "pgvector Retrieval", de: "Abruf mit pgvector", fr: "Recherche avec pgvector", es: "Recuperación con pgvector", ar: "الاسترجاع باستخدام pgvector" }],
+    skills: [{ en: "LLM API Integration", de: "LLM-API-Integration", fr: "Intégration d’API LLM", es: "Integración de API LLM", ar: "تكامل واجهات LLM" }, { en: "Multi-Provider Routing & Failover", de: "Routing und Ausfallsicherung über mehrere Anbieter", fr: "Routage et basculement entre fournisseurs", es: "Enrutamiento y conmutación entre proveedores", ar: "التوجيه بين مزودين متعددين وتجاوز الأعطال" }, { en: "pgvector Retrieval", de: "Abruf mit pgvector", fr: "Recherche avec pgvector", es: "Recuperación con pgvector", ar: "الاسترجاع باستخدام pgvector" }],
   },
   {
     title: {
@@ -83,7 +85,7 @@ const skillCategories: { title: TranslationMap; skills: (string | TranslationMap
       es: 'ML y Ciencia de Datos',
       ar: 'تعلم الآلة وعلوم البيانات',
     },
-    skills: ['Hydra', { en: "Ablation Studies", de: "Ablationsstudien", fr: "Études d’ablation", es: "Estudios de ablación", ar: "دراسات الاستئصال" }, 'AUROC/FPR95', { en: "Cross-Validation", de: "Kreuzvalidierung", fr: "Validation croisée", es: "Validación cruzada", ar: "التحقق المتقاطع" }, { en: "Multi-Seed Runs", de: "Läufe mit mehreren Zufallsseeds", fr: "Exécutions avec plusieurs graines aléatoires", es: "Ejecuciones con múltiples semillas", ar: "تجارب ببذور عشوائية متعددة" }, 'Roboflow'],
+    skills: [{ en: "Ablation Studies", de: "Ablationsstudien", fr: "Études d’ablation", es: "Estudios de ablación", ar: "دراسات الاستئصال" }, { en: "Cross-Validation", de: "Kreuzvalidierung", fr: "Validation croisée", es: "Validación cruzada", ar: "التحقق المتقاطع" }],
   },
   {
     title: {
@@ -93,7 +95,7 @@ const skillCategories: { title: TranslationMap; skills: (string | TranslationMap
       es: 'Despliegue y MLOps',
       ar: 'النشر وعمليات تعلم الآلة (MLOps)',
     },
-    skills: ['Python', 'Git', 'Linux', 'Docker', { en: "REST APIs", de: "REST-APIs", fr: "API REST", es: "API REST", ar: "واجهات REST" }, { en: "GitHub Actions CI/CD", de: "CI/CD mit GitHub Actions", fr: "CI/CD avec GitHub Actions", es: "CI/CD con GitHub Actions", ar: "التكامل والتسليم المستمران باستخدام GitHub Actions" }, 'Supabase', 'TypeScript', 'React'],
+    skills: ['Docker', { en: "GitHub Actions CI/CD", de: "CI/CD mit GitHub Actions", fr: "CI/CD avec GitHub Actions", es: "CI/CD con GitHub Actions", ar: "التكامل والتسليم المستمران باستخدام GitHub Actions" }, 'Supabase', 'TypeScript', 'React'],
   },
   {
     title: {
@@ -103,7 +105,7 @@ const skillCategories: { title: TranslationMap; skills: (string | TranslationMap
       es: 'Herramientas para agentes',
       ar: 'أدوات الوكلاء',
     },
-    skills: ['mergeproof', 'Claude Code', 'GitHub Copilot', { en: "Deterministic checks", de: "Deterministische Prüfungen", fr: "Vérifications déterministes", es: "Comprobaciones deterministas", ar: "فحوصات حتمية" }],
+    skills: ['mergeproof', { en: "Deterministic checks", de: "Deterministische Prüfungen", fr: "Vérifications déterministes", es: "Comprobaciones deterministas", ar: "فحوصات حتمية" }],
   },
 
 ]
@@ -113,8 +115,8 @@ export default function About() {
   const { t } = useI18n()
 
   const education = [
-    { degree: t(copy.degree1), school: 'Johannes Kepler University Linz', date: 'Oct 2020 – Sep 2026 (graduated 25 Sep 2026)', desc: t(copy.desc1) },
-    { degree: t(copy.degree2), school: 'Eastern Mediterranean University, Famagusta, Cyprus', date: 'Feb 2015 - Jan 2018', desc: t(copy.desc2) },
+    { degree: t(copy.degree1), school: 'Johannes Kepler University Linz', date: t(copy.mastersDates), desc: t(copy.desc1) },
+    { degree: t(copy.degree2), school: 'Eastern Mediterranean University, Famagusta, Cyprus', date: t(copy.bachelorsDates), desc: t(copy.desc2) },
   ]
 
   const infoRows = [
@@ -167,7 +169,7 @@ export default function About() {
             <p style={{ color: 'var(--cd-fg2)', fontSize: 15, marginBottom: 20 }}>{t(copy.path)}</p>
             <div className="cd-about-text" data-speakable>
               <p>{t(copy.p1)}</p>
-              <p>{t(copy.p2)} <strong>99.03% +/- 0.07% AUROC</strong> (binary airplane-vs-rest, 3-seed mean) · <strong>0.8673 +/- 0.0230 AUROC</strong> (FTI_Zer0P 5-fold CV).</p>
+              <p>{t(copy.p2)}</p>
               <p>{t(copy.p3)}</p>
             </div>
           </div>

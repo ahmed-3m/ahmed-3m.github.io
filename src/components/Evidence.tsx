@@ -93,11 +93,11 @@ const evidenceItems = [
     label: 'Case study',
   },
   {
-    id: 'sihem-live-beta',
+    id: 'sihem-case-study',
     title: { en: 'Sihem — invitation-only beta', de: 'Sihem — Beta mit Einladung', fr: 'Sihem — bêta sur invitation', es: 'Sihem — beta por invitación', ar: 'Sihem — نسخة تجريبية بدعوة' },
     meta: { en: 'Telegram bot and PWA — access by invitation', de: 'Telegram-Bot und PWA — Zugang mit Einladung', fr: 'Bot Telegram et PWA — accès sur invitation', es: 'Bot de Telegram y PWA — acceso por invitación', ar: 'بوت تيليجرام وتطبيق PWA — الوصول بدعوة' },
-    href: 'https://t.me/sihem_ai_bot',
-    label: 'Proof',
+    href: '/case-studies/sihem/',
+    label: 'Case study',
   },
 ]
 

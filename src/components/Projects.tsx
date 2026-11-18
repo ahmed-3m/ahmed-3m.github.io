@@ -12,36 +12,37 @@ const copy = {
   thesisPdf: { en: 'Thesis PDF', de: 'Thesis PDF', fr: 'PDF mémoire', es: 'PDF tesis', ar: 'PDF الرسالة' },
   code: { en: 'Code', de: 'Code', fr: 'Code', es: 'Código', ar: 'الكود' },
   oodMetric: {
-    en: ' ± 0.07% mean AUROC (3 seeds)',
-    de: ' ± 0.07% mittlerer AUROC (3 Seeds)',
-    fr: ' ± 0.07% AUROC moyenne (3 graines)',
-    es: ' ± 0.07% AUROC media (3 semillas)',
-    ar: ' ± 0.07% متوسط AUROC (3 بذور)',
+    en: 'AUROC · CIFAR-10 airplanes vs. other classes · 3-run mean ± SD',
+    de: 'AUROC · CIFAR-10: Flugzeuge gegen andere Klassen · Mittelwert ± Standardabweichung (3 Läufe)',
+    fr: 'AUROC · CIFAR-10 : avions contre les autres classes · moyenne ± écart-type (3 essais)',
+    es: 'AUROC · CIFAR-10: aviones frente a otras clases · media ± desviación estándar (3 pruebas)',
+    ar: 'AUROC · CIFAR-10: الطائرات مقابل الفئات الأخرى · المتوسط ± الانحراف المعياري (3 تجارب)',
   },
   inkjetMetric: {
-    en: ' ± 0.0230 AUROC (5-fold CV)',
-    de: ' ± 0.0230 AUROC (5-fache Kreuzvalidierung)',
-    fr: ' ± 0.0230 AUROC (validation croisée en 5 plis)',
-    es: ' ± 0.0230 AUROC (validación cruzada de 5 particiones)',
-    ar: ' ± 0.0230 AUROC (تحقق تقاطعي من 5 طيات)',
+    en: 'AUROC (5-fold CV)',
+    de: 'AUROC (5-fache Kreuzvalidierung)',
+    fr: 'AUROC (validation croisée en 5 plis)',
+    es: 'AUROC (validación cruzada de 5 particiones)',
+    ar: 'AUROC (تحقق تقاطعي من 5 طيات)',
   },
+  diffusionTag: { en: 'Diffusion models', de: 'Diffusionsmodelle', fr: 'Modèles de diffusion', es: 'Modelos de difusión', ar: 'نماذج الانتشار' },
   thesis: { en: "Master's Thesis · JKU Linz · Graded 1", de: 'Masterarbeit · JKU Linz · Note 1', fr: 'Mémoire M.Sc. · JKU Linz · Note 1', es: 'Tesis M.Sc. · JKU Linz · Nota 1', ar: 'رسالة الماجستير · JKU لينز · تقدير 1' },
   track2Eyebrow: { en: "Master's Thesis Track 2 · Industrial CV", de: 'Masterarbeit Track 2 · Industrial CV', fr: 'Mémoire Track 2 · Vision industrielle', es: 'Tesis Track 2 · Visión industrial', ar: 'المسار 2 للرسالة · رؤية صناعية' },
   oodTitle: { en: 'DiffusionOOD — OOD Detection Framework', de: 'DiffusionOOD — OOD-Erkennungsframework', fr: 'DiffusionOOD — Détection OOD', es: 'DiffusionOOD — Detección OOD', ar: 'DiffusionOOD — إطار كشف الخارج عن التوزيع' },
   oodDesc: {
-    en: 'Conditional diffusion models as generative classifiers achieving 99.03% ± 0.07% average AUROC (3-seed mean) on a within-CIFAR airplane-vs-rest binary split (single ID class; not comparable to multi-class CIFAR-10 OOD benchmarks). Class-conditional separation loss added +6.5pp over the 92.52% ± 11.07% baseline while cutting cross-seed standard deviation.',
-    de: 'Konditionale Diffusionsmodelle als generative Klassifikatoren mit 99,03% ± 0,07% durchschnittlichem AUROC (3-Seed-Mittel) auf einem Within-CIFAR Airplane-vs-Rest Binary-Split (einzelne ID-Klasse). Die Separation Loss liefert +6,5 Prozentpunkte über der 92,52% ± 11,07% Baseline und senkt die Seed-Standardabweichung drastisch.',
-    fr: "Modèles de diffusion conditionnels comme classificateurs génératifs atteignant 99,03% ± 0,07% d'AUROC moyen (moyenne 3 seeds) sur un split binaire airplane-vs-rest within-CIFAR (classe ID unique). La separation loss ajoute +6,5 points sur la baseline 92,52% ± 11,07% et réduit fortement l'écart-type.",
-    es: 'Modelos de difusión condicional como clasificadores generativos con 99,03% ± 0,07% de AUROC medio (media de 3 seeds) en un split binario airplane-vs-rest within-CIFAR (clase ID única). La separation loss suma +6,5 pp sobre la base 92,52% ± 11,07% y reduce drásticamente la desviación estándar.',
-    ar: 'نماذج انتشار شرطية كمصنفات توليدية حققت 99.03% ± 0.07% متوسط AUROC (عبر 3 بذور) على تقسيم ثنائي airplane-vs-rest ضمن CIFAR-10 (فئة ID واحدة). خفّضت خسارة الفصل الشرطية الانحراف المعياري بشكل حاد وأضافت +6.5 نقطة فوق الأساس 92.52% ± 11.07%.',
+    en: "I trained an image model to flag pictures outside a familiar category. In my thesis experiment, I tested whether a new training method could better separate airplane photos from other images. It improved the average score across three runs. The case study explains the benchmark and its limits.",
+    de: "Ich trainierte ein Bildmodell, das Bilder außerhalb einer vertrauten Kategorie erkennt. In meiner Masterarbeit verbesserte eine neue Trainingsmethode den Durchschnittswert für die Trennung von Flugzeugbildern und anderen Bildern über drei Läufe.",
+    fr: "J’ai entraîné un modèle à repérer les images hors d’une catégorie connue. Dans mon mémoire, une nouvelle méthode d’entraînement a amélioré le score moyen de séparation entre les images d’avions et les autres images sur trois essais.",
+    es: "Entrené un modelo para detectar imágenes fuera de una categoría conocida. En mi tesis, un nuevo método de entrenamiento mejoró la puntuación media al separar fotos de aviones de otras imágenes en tres pruebas.",
+    ar: "درّبت نموذجًا لرصد الصور التي لا تنتمي إلى فئة مألوفة. في رسالتي رفعت طريقة تدريب جديدة متوسط نتيجة الفصل بين صور الطائرات والصور الأخرى عبر ثلاث تجارب.",
   },
   inkjetTitle: { en: 'InkjetOOD Defect Detection', de: 'InkjetOOD Defekterkennung', fr: 'Détection de défauts InkjetOOD', es: 'Detección de defectos InkjetOOD', ar: 'كشف العيوب InkjetOOD' },
   inkjetDesc: {
-    en: 'YOLOv8 + conditional diffusion quality classification pipeline evaluated on the public FTI_Zer0P benchmark under strict 5-fold cross-validation.',
-    de: 'YOLOv8 + konditionale Diffusions-Pipeline für Qualitätsklassifikation, evaluiert auf dem öffentlichen FTI_Zer0P Benchmark mit strenger 5-facher Kreuzvalidierung.',
-    fr: 'Pipeline YOLOv8 + diffusion conditionnelle pour la qualité industrielle, évaluée sur le benchmark public FTI_Zer0P avec validation croisée stricte en 5 plis.',
-    es: 'Pipeline YOLOv8 + difusión condicional para clasificación de calidad, evaluado en el benchmark público FTI_Zer0P con validación cruzada estricta de 5 folds.',
-    ar: 'خط معالجة YOLOv8 + انتشار شرطي لتصنيف الجودة الصناعية، تم تقييمه على معيار FTI_Zer0P العام بتحقق تقاطعي صارم من 5 طيات.',
+    en: "I built and evaluated a two-stage system to spot defects in industrial inkjet printing. It finds printed features in an image, then checks each feature for unusual patterns. I tested it on the public FTI_Zer0P dataset across five splits.",
+    de: "Ich entwickelte und prüfte ein zweistufiges System für Druckfehler. Es findet gedruckte Merkmale im Bild und prüft sie auf Auffälligkeiten. Der öffentliche Datensatz FTI_Zer0P wurde unter fünf Aufteilungen ausgewertet.",
+    fr: "J’ai construit et évalué un système qui repère les éléments imprimés puis recherche des défauts. Je l’ai testé sur le jeu public FTI_Zer0P en cinq partitions.",
+    es: "Construí y evalué un sistema que localiza elementos impresos y busca defectos. Lo probé con el conjunto público FTI_Zer0P en cinco particiones.",
+    ar: "طوّرت وقيّمت نظامًا يحدد العناصر المطبوعة في الصور ثم يبحث فيها عن العيوب. اختبرته على مجموعة FTI_Zer0P العامة باستخدام خمسة تقسيمات.",
   },
   eegTitle: { en: 'EEG Signal Classification', de: 'EEG-Signalklassifikation', fr: 'Classification de signaux EEG', es: 'Clasificación de señales EEG', ar: 'تصنيف إشارات EEG' },
   eegDesc: {
@@ -134,13 +135,13 @@ export default function Projects() {
               <div className="cd-proj-title">{t(copy.oodTitle)}</div>
               <div className="cd-proj-desc">{t(copy.oodDesc)}</div>
               <div className="cd-proj-tags">
-                {['PyTorch', 'DDPM / UNet', 'Separation Loss', 'Hydra', 'W&B'].map(tag => (
+                {['PyTorch', t(copy.diffusionTag)].map(tag => (
                   <span key={tag} className="cd-proj-tag">{tag}</span>
                 ))}
               </div>
             </div>
             <div className="cd-proj-metric-big">
-              <div className="cd-pc-metric" style={{ marginTop: 0 }}>99.03%<span>{t(copy.oodMetric)}</span></div>
+              <div className="cd-pc-metric" style={{ marginTop: 0 }}><bdi dir="ltr">99.03% <span>± 0.07%</span></bdi><br /><span>{t(copy.oodMetric)}</span></div>
               <div className="cd-proj-actions" style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
                 <Link href="/case-studies/diffusion-ood/" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.caseStudyLink)} &rarr;</Link>
                 <a href="https://github.com/ahmed-3m/DiffusionOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.code)} &rarr;</a>
@@ -153,7 +154,7 @@ export default function Projects() {
             <div className="cd-pc-eyebrow">{t(copy.track2Eyebrow)}</div>
             <div className="cd-pc-title">{t(copy.inkjetTitle)}</div>
             <div className="cd-pc-desc">{t(copy.inkjetDesc)}</div>
-            <div className="cd-pc-metric">0.8673<span>{t(copy.inkjetMetric)}</span></div>
+            <div className="cd-pc-metric"><bdi dir="ltr">0.8673 <span>± 0.0230</span></bdi><br /><span>{t(copy.inkjetMetric)}</span></div>
             <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
               <a href="https://github.com/ahmed-3m/InkjetOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.code)} &rarr;</a>
               <Link href="/case-studies/inkjet-ood/" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.caseStudy)} &rarr;</Link>
@@ -165,7 +166,7 @@ export default function Projects() {
             <div className="cd-pc-title">{t(copy.mentoTitle)}</div>
             <div className="cd-pc-desc">{t(copy.mentoDesc)}</div>
             <div className="cd-proj-tags" style={{ marginTop: 12 }}>
-              {['Deno / TS', 'Supabase', 'pgvector RAG', 'LLM Routing'].map(tag => (
+              {['Deno / TypeScript', 'Supabase'].map(tag => (
                 <span key={tag} className="cd-proj-tag">{tag}</span>
               ))}
             </div>

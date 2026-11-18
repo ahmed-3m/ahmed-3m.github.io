@@ -6,7 +6,7 @@ let sharedObserver: IntersectionObserver | null = null;
 let activeCount = 0;
 
 function getSharedObserver(): IntersectionObserver | null {
-  if (typeof window === 'undefined') return null;
+  if (typeof IntersectionObserver === 'undefined') return null;
   if (!sharedObserver) {
     sharedObserver = new IntersectionObserver(
       (entries) => {

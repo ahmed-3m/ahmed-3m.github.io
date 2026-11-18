@@ -388,7 +388,7 @@ body::before {
   .cd-nav-cta { display: none; }
   .cd-lang-trigger { min-height: 44px; min-width: 72px; }
 }
-@media (min-width: 961px) {
+@media (width > 960px) {
   .cd-nav-mobile-panel { display: none; }
 }
 .cd-nav-mobile-panel .cd-nav-link {

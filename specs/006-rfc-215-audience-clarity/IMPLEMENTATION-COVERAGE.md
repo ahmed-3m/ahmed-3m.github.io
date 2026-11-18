@@ -73,3 +73,49 @@ The starting workspace was 42 commits behind main. This change preserves the new
 
 ## Completion rule
 This report does not mark RFC 215 fully complete. Keep the RFC open until remaining evidence, exhaustive browser/performance checks, successful CI and owner-reviewed deployment verification are recorded.
+
+## Follow-up to the deployed review
+
+The implementation PR and TypeScript compatibility fix merged, and the latest
+Pages run on f3f3fe3 passed quality, build and deployment. The live homepage,
+public CV, three featured case studies and checked research PDFs responded.
+The follow-up branch fixes the outstanding navigation, Arabic URL, translated
+mergeproof caveat, case-study dates and Sihem evidence-link findings.
+
+The next PR revision aligns the three-run mean across all five locales, adds
+benchmark scope beside the scores, shortens the skills list and localizes
+education dates and chart tooltips. The language menu now dismisses when focus
+leaves it. The homepage explorer link targets a static anchor so it works
+before hydration. The Sihem case study includes an illustrative workflow based
+on the documented beta, which visitors can read without signing in.
+
+Local validation passed: lint (nine existing image warnings), typecheck, static
+export (15 routes), and the news and chat-proxy self-tests. The exported homepage
+and three case studies passed 63 internal link and anchor checks. Of 17 external
+targets checked, 16 returned HTTP 200. LinkedIn returned HTTP 999 to the audit
+client, so its destination remains unverified. The live homepage source had no
+Google Analytics consent or tag markup in this check.
+
+Against the f3f3fe3 production export, the revised homepage references the
+same 13 initial JS/CSS assets by count. Gzipping each file locally gives
+516,383 → 516,687 bytes for those assets and 20,910 → 20,875 bytes for HTML.
+The combined increase is 269 bytes (about 0.05%). This excludes fonts, images,
+and dynamically loaded chunks.
+
+Remaining acceptance work:
+
+- [ ] Measure pre/post page performance under matching browser, viewport,
+  cache and throttling conditions. Static build sizes do not measure loading speed.
+- [ ] Run a browser check of the revised build across English and Arabic, mobile
+  and desktop, and both themes. Include keyboard focus, contrast, touch targets,
+  reduced motion and JavaScript disabled, and native WebKit and Firefox where
+  available. Local Chromium could not start because the sandbox blocks its socket.
+- [ ] Verify the LinkedIn link in an ordinary browser. Verify consent behavior if
+  Google Analytics is enabled in another deployment.
+- [ ] Run walkthroughs with actual recruiters and nontechnical visitors.
+- [ ] Add a screenshot or recorded beta walkthrough when a publishable capture is
+  available. The existing public example is illustrative.
+- [ ] Verify the final deployed build and key flows after the follow-up merges.
+
+Faultrix remains retired per PR #205. This is a deviation from the original RFC
+proposal to feature it under additional work.
