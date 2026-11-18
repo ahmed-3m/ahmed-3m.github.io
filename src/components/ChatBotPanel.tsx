@@ -2,9 +2,10 @@
 
 import type { CSSProperties, FormEvent, ReactNode } from 'react'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { ArrowUp, X } from 'lucide-react'
+import { ArrowUp, ChevronRight, X } from 'lucide-react'
+import { usePathname } from 'next/navigation'
 import { useI18n } from '@/lib/i18n'
-import { translateValue, type Language, type TranslationMap } from '@/lib/i18n-config'
+import { languageName, translateValue, type Language, type TranslationMap } from '@/lib/i18n-config'
 import { buildChatMessages, createRequestTimers } from '@/lib/chat-request'
 import { CHAT_COPY, GENIE_NAME } from './chatbot-dictionaries'
 
@@ -22,6 +23,8 @@ export type PromptId =
   | 'hire_summary'
   | 'hire_fit'
   | 'contact'
+  | 'cv'
+  | 'background'
   | 'tech_stack'
   | 'industrial_pipeline'
   | 'industrial_result'
@@ -62,40 +65,31 @@ const MAX_REPLY_CHARS = 1600
 const ROUTER_TIMEOUT_MS = 1500
 const TTFB_TIMEOUT_MS = 20000
 
-const SYSTEM_PROMPT = `You are ${GENIE_NAME}, Ahmed Mohammed's personal assistant.
+const PORTFOLIO = 'https://ahmed-3m.github.io'
+const CV_URL = `${PORTFOLIO}/cv.pdf`
+const CONTACT_URL = `${PORTFOLIO}/#contact`
+const BACKGROUND_URL = `${PORTFOLIO}/#about`
+const INDUSTRIAL_URL = `${PORTFOLIO}/case-studies/inkjet-ood/`
+const DIFFUSION_URL = `${PORTFOLIO}/case-studies/diffusion-ood/`
+const SIHEM_URL = `${PORTFOLIO}/case-studies/sihem/`
+const THESIS_URL = `${PORTFOLIO}/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf`
 
-Only introduce yourself as ${GENIE_NAME} on your first reply in a chat or when the user explicitly asks who you are. Skip even that introduction when the user asked for a constrained format (e.g. one sentence).
+function systemPrompt(lang: Language) {
+  return `You are ${GENIE_NAME}, a guide to Ahmed Mohammed’s public portfolio. Speak about Ahmed in the third person. Answer only about his public work, background, and professional contact options. If a detail is unavailable, say so and point to a relevant public page. Never guess personal information, hiring commitments, dates, results, or legal eligibility. Do not claim to have opened links, sent messages, or performed actions.
 
-Only answer questions about Ahmed Mohammed's work, research, products, projects, education, experience, and contact details.
+Answer in the language of the latest question. If unclear, use ${languageName[lang]}, the portfolio language. Start with the answer in everyday language. Default to 2–4 short sentences and give one relevant public link when useful. Offer technical detail when asked. Follow explicit format and length constraints. Do not add a greeting unless the visitor asks who you are. Use the public facts and links below as evidence, and keep technical names and numbers accurate.
 
-Response rules:
-- Reply in the language of the user's latest message. When the message mixes languages or its language is ambiguous, use the selected UI language.
-- Keep metrics, equations, dataset names, product names, repository names, and links unchanged.
-- When the user asks for a specific length or format (one sentence, brief, short, bullets, detailed), follow it EXACTLY and never exceed it. "One sentence" means exactly one sentence — no preamble, no greeting, no closing remark. A brief/short answer is at most 2-3 sentences.
-- Otherwise default to a medium-full answer of roughly 120-220 words.
-- Lead with the direct answer, then give the most useful context.
-- Use short paragraphs or compact bullets.
-- If the user asks something unrelated, politely redirect to Ahmed's work and background.
+Profile: AI/ML engineer in Linz, Austria, open to full-time AI/ML roles. M.Sc. in Artificial Intelligence at JKU Linz, supervised by Prof. Sepp Hochreiter, with thesis grade 1. B.Sc. in Mechatronics Engineering at Eastern Mediterranean University, with an Excellent grade on the SCARA robot capstone for tracking moving objects. Relevant experience includes the JKU–PROFACTOR industrial vision research collaboration, an EEG motor imagery research internship at Karunya Institute, and electronics technician work at Ledzone. Describe work authorization as something to confirm directly with Ahmed.
 
-Facts you can rely on:
-- Ahmed Mohammed is an AI/ML Engineer based in Linz, Austria.
-- He holds an M.Sc. in Artificial Intelligence from JKU Linz under Prof. Sepp Hochreiter (Oct 2020 - Sep 2026; Defensio and graduation on 25 September 2026). His thesis was graded 1, the top mark.
-- His thesis used conditional diffusion models as generative classifiers for OOD detection and reached 99.03% +/- 0.07% average AUROC on a within-CIFAR airplane-vs-rest binary split (single ID class; not comparable to multi-class CIFAR-10 OOD benchmarks) with separation loss.
-- Seed-42 achieved 98.98% AUROC within-CIFAR and generalized zero-shot to CIFAR-100, Places365, FashionMNIST, Textures, and SVHN.
-- The non-separated baseline was 92.52% +/- 11.07%, so separation loss added about +6.5 percentage points and dramatically reduced seed-to-seed standard deviation.
-- Ahmed also worked on industrial defect detection at PROFACTOR GmbH / JKU Linz (Linz / Steyr, remote / home office) using a YOLO + conditional diffusion pipeline on the public FTI_Zer0P benchmark, reaching a 0.8673 +/- 0.0230 AUROC baseline under strict 5-fold cross-validation.
-- The thesis PDF says YOLOv8n in five places (erratum pending upstream); the trained artifact yolo_best.pt is YOLOv8m (25.86M params, verified from train_args).
-- Ahmed also builds Sihem (since May 2026), an LLM-driven personal-mentor assistant (Telegram bot @sihem_ai_bot + installable PWA at https://sihem-pwa.pages.dev/) with a deterministic generators->arbiter->composer decision engine, proactive cron-driven check-ins, pgvector long-term memory with RAG, multi-provider LLM routing (GLM/Gemini/Groq), Cloudflare MeloTTS voice reminders, and Google Calendar sync. It is his personal side project in an invitation-only beta, accepted into the tech2b incubator in Linz.
-- Ahmed builds mergeproof (https://github.com/ahmed-3m/mergeproof). Checks AI-written pull requests against configured deterministic merge requirements without calling an LLM. Passing those checks does not guarantee defect-free code.
-- Ahmed also ships brainstorm2idea and idea2prototype — zero-dependency tools that take a fuzzy idea to a linted brief, then to a tested prototype, with any coding agent — and the Elbostan Pazar bot, a Messenger bot that answers a real shop's customers about prices, hours and delivery.
-- Experience timeline: Solo Developer & Project Lead at Sihem (side project · tech2b incubator, Linz, May 2026–Present); M.Sc. Thesis Researcher, Machine Vision at the JKU Institute for Machine Learning with PROFACTOR GmbH (Apr 2024 - Jul 2026, project Zer0P, Linz / Steyr, remote / home office); AI Research Intern at Karunya Institute of Technology and Sciences, India (Aug - Oct 2023, EEG motor imagery); Electronics Technician at Ledzone, Istanbul (Sep 2018 - Oct 2020).
-- Before AI he earned a B.Sc. in Mechatronics Engineering at Eastern Mediterranean University, Cyprus (2015 - 2018).
-- Availability: open to AI/ML engineering roles, available full time, and eligible for the Austrian Rot-Weiss-Rot Karte for graduates (no labour-market test, no quota, no sponsorship cost for the employer).
-- Contact: ahmed.mo.0595@gmail.com
-- LinkedIn: https://www.linkedin.com/in/ahmed-3m/
-- GitHub: https://github.com/ahmed-3m
-- Website: https://ahmed-3m.github.io
+Featured work:
+- Industrial inkjet inspection: a two-stage YOLO and conditional diffusion pipeline for locating print features and scoring anomalies. The diffusion baseline reached 0.8673 ± 0.0230 AUROC under five-fold cross-validation on the public FTI_Zer0P benchmark. Adding separation loss did not significantly improve the industrial result after Holm correction. This is a benchmark result, not production accuracy. Case study: ${INDUSTRIAL_URL}
+- Diffusion research: the thesis compared conditional reconstruction errors to flag unfamiliar images. With separation loss, the three-seed mean was 99.03% ± 0.07% AUROC on the within-CIFAR-10 binary airplane-vs-rest split, against 92.52% ± 11.07% without it. This is not general CIFAR-10 accuracy or a multi-class benchmark. If asked about the single seed-42 run, its within-CIFAR AUROC was 98.98%. Case study: ${DIFFUSION_URL} Thesis PDF: ${THESIS_URL}
+- Sihem: Ahmed leads and builds this invitation-only personal planning and routines beta. It uses Telegram and an installable web app, with scheduled check-ins, retrieval-based memory, and model routing. The case study is public; beta access is by invitation. Case study: ${SIHEM_URL}
+- mergeproof checks AI-written pull requests against configured deterministic merge requirements without calling a language model. Passing its checks does not guarantee defect-free code. Repository: https://github.com/ahmed-3m/mergeproof
+
+Public links: CV ${CV_URL} · About ${BACKGROUND_URL} · Contact ${CONTACT_URL} · GitHub https://github.com/ahmed-3m · LinkedIn https://www.linkedin.com/in/ahmed-3m/
 `
+}
 
 export const PROMPT_LIBRARY: Record<PromptId, TranslationMap> = {
   sihem_overview: {
@@ -107,17 +101,17 @@ export const PROMPT_LIBRARY: Record<PromptId, TranslationMap> = {
   },
   sihem_tech: {
     en: "How does Sihem's generators→arbiter→composer engine, pgvector memory, and multi-provider LLM routing work?",
-    de: 'Wie funktionieren Sihems Generatoren→Arbiter→Komponor-Engine, pgvector-Gedächtnis und Multi-Provider-LLM-Routing?',
+    de: 'Wie funktionieren Sihems Generatoren→Arbiter→Komponist-Engine, pgvector-Gedächtnis und Multi-Provider-LLM-Routing?',
     fr: 'Comment fonctionnent le moteur générateurs→arbitre→compositeur, la mémoire pgvector et le routage LLM multi-fournisseurs de Sihem ?',
     es: '¿Cómo funcionan el motor generadores→árbitro→compositor, la memoria pgvector y el enrutamiento LLM multiproveedor de Sihem?',
     ar: 'كيف يعمل محرك المولدات←المحكم←المؤلف وذاكرة pgvector وتوجيه LLM متعدد المزودين في Sihem؟',
   },
   thesis_summary: {
-    en: 'Tell me about the thesis',
-    de: 'Erzähl mir von der Thesis',
-    fr: 'Parlez-moi du mémoire',
-    es: 'Cuéntame sobre la tesis',
-    ar: 'حدثني عن الرسالة',
+    en: 'What did the thesis find?',
+    de: 'Was hat die Masterarbeit gezeigt?',
+    fr: 'Quels sont les résultats du mémoire ?',
+    es: '¿Qué resultados obtuvo la tesis?',
+    ar: 'ما نتائج رسالة الماجستير؟',
   },
   thesis_innovation: {
     en: "What's the key innovation in the thesis?",
@@ -155,11 +149,25 @@ export const PROMPT_LIBRARY: Record<PromptId, TranslationMap> = {
     ar: 'لماذا استخدام نماذج الانتشار في OOD؟',
   },
   projects_best: {
-    en: 'What projects should I see?',
-    de: 'Welche Projekte sollte ich mir ansehen?',
-    fr: 'Quels projets devrais-je voir ?',
-    es: '¿Qué proyectos debería ver?',
-    ar: 'ما المشاريع التي يجب أن أراها؟',
+    en: 'What has Ahmed built?',
+    de: 'Was hat Ahmed entwickelt?',
+    fr: 'Qu’a développé Ahmed ?',
+    es: '¿Qué ha desarrollado Ahmed?',
+    ar: 'ما المشاريع التي طوّرها أحمد؟',
+  },
+  background: {
+    en: 'What is Ahmed’s background?',
+    de: 'Was ist Ahmeds beruflicher und akademischer Hintergrund?',
+    fr: 'Quel est le parcours d’Ahmed ?',
+    es: '¿Cuál es la trayectoria de Ahmed?',
+    ar: 'ما خلفية أحمد الأكاديمية والمهنية؟',
+  },
+  cv: {
+    en: 'Where can I download his CV?',
+    de: 'Wo kann ich seinen Lebenslauf herunterladen?',
+    fr: 'Où télécharger son CV ?',
+    es: '¿Dónde puedo descargar su CV?',
+    ar: 'أين يمكنني تنزيل سيرته الذاتية؟',
   },
   achievements: {
     en: 'Show key achievements',
@@ -204,37 +212,72 @@ export const PROMPT_LIBRARY: Record<PromptId, TranslationMap> = {
     ar: 'ما هو الـ stack التقني الخاص به؟',
   },
   industrial_pipeline: {
-    en: 'How does the industrial YOLO + diffusion pipeline work?',
-    de: 'Wie funktioniert die industrielle YOLO + Diffusion Pipeline?',
-    fr: 'Comment fonctionne la pipeline industrielle YOLO + diffusion ?',
-    es: '¿Cómo funciona la pipeline industrial de YOLO + difusión?',
-    ar: 'كيف يعمل خط YOLO + diffusion الصناعي؟',
+    en: 'How does the print inspection system work?',
+    de: 'Wie funktioniert das System zur Druckprüfung?',
+    fr: 'Comment fonctionne le système d’inspection des impressions ?',
+    es: '¿Cómo funciona el sistema de inspección de impresión?',
+    ar: 'كيف يعمل نظام فحص جودة الطباعة؟',
   },
   industrial_result: {
-    en: 'What result did the industrial system achieve?',
-    de: 'Welches Ergebnis erreichte das Industriesystem?',
-    fr: 'Quel résultat le système industriel a-t-il atteint ?',
-    es: '¿Qué resultado logró el sistema industrial?',
-    ar: 'ما النتيجة التي حققها النظام الصناعي؟',
+    en: 'How was the print inspection system tested?',
+    de: 'Wie wurde das System zur Druckprüfung getestet?',
+    fr: 'Comment le système d’inspection des impressions a-t-il été testé ?',
+    es: '¿Cómo se evaluó el sistema de inspección de impresión?',
+    ar: 'كيف جرى تقييم نظام فحص جودة الطباعة؟',
   },
 }
 
 export const PROMPTS = PROMPT_LIBRARY
 
 export const STARTER_PROMPT_IDS: PromptId[] = [
+  'projects_best',
   'thesis_summary',
-  'industrial_result',
-  'sihem_overview',
-  'hire_summary',
+  'background',
+  'cv',
 ]
 
 export const LOCAL_REPLIES = {
+  projects: {
+    en: `Start with [inkjet print inspection](${INDUSTRIAL_URL}), where Ahmed built and evaluated a system to find defects. His [diffusion thesis](${DIFFUSION_URL}) explores how models recognize unfamiliar images. [Sihem](${SIHEM_URL}) is his planning assistant in an invitation-only beta.`,
+    de: `Beginnen Sie mit der [Inkjet-Druckprüfung](${INDUSTRIAL_URL}): Ahmed entwickelte und prüfte ein System zur Fehlererkennung. Seine [Masterarbeit](${DIFFUSION_URL}) untersucht, wie Modelle unbekannte Bilder erkennen. [Sihem](${SIHEM_URL}) ist sein Planungsassistent in einer Beta mit Einladung.`,
+    fr: `Commencez par [l’inspection des impressions jet d’encre](${INDUSTRIAL_URL}), où Ahmed a développé et évalué un système de détection des défauts. Son [mémoire](${DIFFUSION_URL}) étudie la reconnaissance d’images inconnues. [Sihem](${SIHEM_URL}) est son assistant de planification, en bêta sur invitation.`,
+    es: `Empieza por la [inspección de impresión de inyección de tinta](${INDUSTRIAL_URL}), donde Ahmed desarrolló y evaluó un sistema para detectar defectos. Su [tesis](${DIFFUSION_URL}) estudia cómo reconocer imágenes desconocidas. [Sihem](${SIHEM_URL}) es su asistente de planificación en beta por invitación.`,
+    ar: `ابدأ بمشروع [فحص الطباعة النافثة للحبر](${INDUSTRIAL_URL})، حيث طوّر أحمد نظامًا لاكتشاف العيوب وقيّمه. وتبحث [رسالته](${DIFFUSION_URL}) في كيفية تعرّف النماذج على الصور غير المألوفة. أما [Sihem](${SIHEM_URL}) فهو مساعد للتخطيط متاح حاليًا في نسخة تجريبية بالدعوة.`,
+  },
+  background: {
+    en: `Ahmed is an AI/ML engineer in Linz with an M.Sc. in AI from JKU and a B.Sc. in Mechatronics Engineering. He moved from electronics and robotics into industrial computer vision and AI research. His SCARA capstone earned an Excellent grade. [Education and background](${BACKGROUND_URL})`,
+    de: `Ahmed ist AI/ML Engineer in Linz mit einem Master in KI von der JKU und einem Bachelor in Mechatronik. Sein Weg führte von Elektronik und Robotik zur industriellen Bildverarbeitung und KI-Forschung. Sein SCARA-Abschlussprojekt erhielt die Note Excellent. [Ausbildung und Hintergrund](${BACKGROUND_URL})`,
+    fr: `Ahmed est ingénieur IA/ML à Linz, diplômé d’un master en IA à la JKU et d’un bachelor en mécatronique. Il est passé de l’électronique et de la robotique à la vision industrielle et à la recherche en IA. Son projet SCARA a reçu la mention Excellent. [Formation et parcours](${BACKGROUND_URL})`,
+    es: `Ahmed es ingeniero de IA/ML en Linz, con un máster en IA por la JKU y un grado en Mecatrónica. Pasó de la electrónica y la robótica a la visión industrial y la investigación en IA. Su proyecto SCARA recibió la calificación Excelente. [Formación y trayectoria](${BACKGROUND_URL})`,
+    ar: `أحمد مهندس ذكاء اصطناعي وتعلّم آلي في لينز، حاصل على ماجستير في الذكاء الاصطناعي من JKU وبكالوريوس في الميكاترونكس. انتقل من الإلكترونيات والروبوتات إلى الرؤية الحاسوبية الصناعية وأبحاث الذكاء الاصطناعي. حصل مشروعه SCARA على تقدير ممتاز. [التعليم والخبرة](${BACKGROUND_URL})`,
+  },
+  cv: {
+    en: `[Download Ahmed’s public CV (PDF)](${CV_URL})`,
+    de: `[Ahmeds öffentlichen Lebenslauf herunterladen (PDF)](${CV_URL})`,
+    fr: `[Télécharger le CV public d’Ahmed (PDF)](${CV_URL})`,
+    es: `[Descargar el CV público de Ahmed (PDF)](${CV_URL})`,
+    ar: `[تنزيل السيرة الذاتية العامة لأحمد (PDF)](${CV_URL})`,
+  },
   industrial: {
-    en: 'The industrial YOLO + conditional diffusion pipeline reached 0.8673 ± 0.0230 AUROC on the public FTI_Zer0P dataset under strict 5-fold cross-validation. Separation loss did not provide a statistically significant improvement after Holm correction. Source: https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf',
-    de: 'Die industrielle Pipeline aus YOLO und konditionaler Diffusion erreichte 0.8673 ± 0.0230 AUROC auf dem öffentlichen FTI_Zer0P-Datensatz mit strenger 5-facher Kreuzvalidierung. Die Separation Loss brachte nach Holm-Korrektur keine statistisch signifikante Verbesserung. Quelle: https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf',
-    fr: 'La pipeline industrielle YOLO + diffusion conditionnelle a atteint 0.8673 ± 0.0230 AUROC sur le jeu public FTI_Zer0P, avec validation croisée stricte en 5 plis. La perte de séparation n’a pas apporté d’amélioration statistiquement significative après correction de Holm. Source : https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf',
-    es: 'El sistema industrial YOLO + difusión condicional alcanzó 0.8673 ± 0.0230 AUROC en el conjunto público FTI_Zer0P con validación cruzada estricta de 5 particiones. La pérdida de separación no produjo una mejora estadísticamente significativa tras la corrección de Holm. Fuente: https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf',
-    ar: 'حقق خط YOLO والانتشار الشرطي الصناعي 0.8673 ± 0.0230 AUROC على مجموعة FTI_Zer0P العامة بتحقق تقاطعي صارم من 5 طيات. لم تقدم خسارة الفصل تحسنًا ذا دلالة إحصائية بعد تصحيح Holm. المصدر: https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf',
+    en: `Ahmed evaluated the system using five-fold cross-validation on the public FTI_Zer0P dataset. The baseline reached 0.8673 ± 0.0230 AUROC. Adding separation loss did not significantly improve this result after Holm correction. [Read the industrial evaluation](${INDUSTRIAL_URL}).`,
+    de: `Ahmed prüfte das System mit fünffacher Kreuzvalidierung auf dem öffentlichen FTI_Zer0P-Datensatz. Die Baseline erreichte 0.8673 ± 0.0230 AUROC. Nach Holm-Korrektur brachte die Separation Loss keine signifikante Verbesserung. [Zur industriellen Auswertung](${INDUSTRIAL_URL}).`,
+    fr: `Ahmed a évalué le système par validation croisée à cinq plis sur le jeu public FTI_Zer0P. La référence a atteint 0.8673 ± 0.0230 AUROC. La perte de séparation n’a apporté aucun gain significatif après correction de Holm. [Lire l’évaluation industrielle](${INDUSTRIAL_URL}).`,
+    es: `Ahmed evaluó el sistema mediante validación cruzada de cinco pliegues con el conjunto público FTI_Zer0P. La referencia alcanzó 0.8673 ± 0.0230 AUROC. La pérdida de separación no aportó una mejora significativa tras la corrección de Holm. [Leer la evaluación industrial](${INDUSTRIAL_URL}).`,
+    ar: `قيّم أحمد النظام بالتحقق المتقاطع عبر خمسة أجزاء على مجموعة FTI_Zer0P العامة. سجّل النموذج المرجعي 0.8673 ± 0.0230 AUROC، ولم تحقق خسارة الفصل تحسنًا ذا دلالة إحصائية بعد تصحيح Holm. [اقرأ التقييم الصناعي](${INDUSTRIAL_URL}).`,
+  },
+  inspection: {
+    en: `YOLO locates printed features in an image. A conditional diffusion model then scores each region for signs of a defect. [See the pipeline and evidence](${INDUSTRIAL_URL}).`,
+    de: `YOLO lokalisiert gedruckte Merkmale im Bild. Ein konditionales Diffusionsmodell bewertet anschließend jede Region auf Hinweise auf Druckfehler. [Zur Pipeline und Auswertung](${INDUSTRIAL_URL}).`,
+    fr: `YOLO localise les éléments imprimés dans une image. Un modèle de diffusion conditionnel évalue ensuite chaque région pour y repérer des signes de défaut. [Voir la méthode et les résultats](${INDUSTRIAL_URL}).`,
+    es: `YOLO localiza los elementos impresos en una imagen. Después, un modelo de difusión condicional evalúa cada región en busca de defectos. [Ver el método y los resultados](${INDUSTRIAL_URL}).`,
+    ar: `يحدّد YOLO العناصر المطبوعة في الصورة، ثم يقيّم نموذج انتشار شرطي كل منطقة بحثًا عن مؤشرات على وجود عيوب. [اطّلع على خطوات النظام ونتائجه](${INDUSTRIAL_URL}).`,
+  },
+  sihem_intro: {
+    en: `Sihem is a planning assistant Ahmed built for weekly plans and daily routines. It sends scheduled check-ins through Telegram and has an installable web app. The beta is invitation-only. [Read the public case study](${SIHEM_URL}).`,
+    de: `Sihem ist ein Planungsassistent, den Ahmed für Wochenplanung und Alltagsroutinen entwickelt hat. Er sendet geplante Nachrichten über Telegram und bietet eine installierbare Web-App. Die Beta ist nur mit Einladung zugänglich. [Zur öffentlichen Fallstudie](${SIHEM_URL}).`,
+    fr: `Sihem est un assistant qu’Ahmed a conçu pour planifier la semaine et les routines quotidiennes. Il envoie des suivis programmés sur Telegram et propose une application web installable. La bêta est sur invitation. [Lire l’étude de cas publique](${SIHEM_URL}).`,
+    es: `Sihem es un asistente que Ahmed creó para planificar la semana y las rutinas diarias. Envía seguimientos programados por Telegram y tiene una aplicación web instalable. La beta es por invitación. [Leer el caso de estudio público](${SIHEM_URL}).`,
+    ar: `Sihem مساعد طوّره أحمد لتنظيم الأسبوع والروتين اليومي. يرسل متابعات مجدولة عبر تيليجرام ويتيح تطبيق ويب قابلًا للتثبيت. النسخة التجريبية متاحة بالدعوة فقط. [اقرأ دراسة الحالة العامة](${SIHEM_URL}).`,
   },
   sihem: {
     en: `Sihem (Telegram @sihem_ai_bot, PWA: https://sihem-pwa.pages.dev/, invitation-only beta) is Ahmed's proactive AI personal-mentor and habits/daily-routine assistant, accepted into the tech2b incubator in Linz (May 2026–Present). Built on Supabase Edge Functions (Deno/TypeScript) and PostgreSQL with RLS, it features a deterministic generators→arbiter→composer decision engine for scheduling check-ins, pgvector long-term memory with RAG, multi-provider LLM routing (GLM/Gemini/Groq) with automated failover, Cloudflare MeloTTS voice reminders, and Google Calendar sync.`,
@@ -244,25 +287,25 @@ export const LOCAL_REPLIES = {
     ar: `مشروع Sihem (تيليجرام @sihem_ai_bot، وتطبيق الويب: https://sihem-pwa.pages.dev/، نسخة تجريبية بدعوة) هو مساعد شخصي موجه واستباقي للعادات والروتين اليومي من تطوير أحمد، ومقبول في حاضنة الأعمال tech2b في لينز (مايو 2026 – الآن). مبني على Supabase Edge Functions (Deno/TypeScript) وPostgreSQL مع RLS، ويتميز بمحرك قرار حتمي (مولدات←محكم←مؤلف) لجدولة التنبيهات، وذاكرة pgvector طويلة المدى مع RAG، وتوجيه LLM متعدد المزودين (GLM/Gemini/Groq) مع تبديل تلقائي، وتذكيرات صوتية بـ Cloudflare MeloTTS، ومزامنة Google Calendar.`,
   },
   thesis: {
-    en: `Ahmed's thesis used conditional diffusion models as generative classifiers for out-of-distribution detection. The key idea was to compare class-conditional reconstruction behavior and use the gap as the anomaly signal. The main contribution was a class-conditional separation loss that pushed competing explanations apart, achieving 99.03% ± 0.07% AUROC on a within-CIFAR airplane-vs-rest binary split (+6.5 pp over non-separated baseline). Supervised by Prof. Sepp Hochreiter at JKU Linz.`,
-    de: `Ahmeds Thesis nutzte konditionale Diffusionsmodelle als generative Klassifikatoren für Out-of-Distribution-Erkennung. Kernbeitrag war eine class-conditional separation loss, die 99,03 % ± 0,07 % AUROC auf einem Within-CIFAR Airplane-vs-Rest Binary-Split erzielte (+6,5 Prozentpunkte über der Baseline ohne Separation). Betreut von Prof. Sepp Hochreiter an der JKU Linz.`,
-    fr: `Le mémoire d'Ahmed utilise des modèles de diffusion conditionnels comme classificateurs génératifs pour la détection out-of-distribution. La contribution principale est une class-conditional separation loss, atteignant 99,03 % ± 0,07 % d'AUROC sur un split binaire within-CIFAR (+6,5 points par rapport à la baseline). Supervisé par le Prof. Sepp Hochreiter à JKU Linz.`,
-    es: `La tesis de Ahmed usó modelos de difusión condicional como clasificadores generativos para detección out-of-distribution. La contribución principal fue una class-conditional separation loss, alcanzando 99.03% ± 0.07% AUROC en un split binario within-CIFAR (+6.5 pp sobre la línea base). Supervisada por el Prof. Sepp Hochreiter en JKU Linz.`,
-    ar: `استخدمت رسالة أحمد نماذج الانتشار الشرطية كمصنفات توليدية لكشف OOD. والمساهمة الأساسية كانت دالة الفقد الطبقي الشرطي (separation loss) محققة 99.03% ± 0.07% AUROC على تقسيم ثنائي within-CIFAR (+6.5 نقطة فوق الأساس). تحت إشراف البروفيسور سيب هوخريتر في جامعة JKU لينز.`,
+    en: `Ahmed’s thesis tested whether a diffusion model could recognize unfamiliar images. Separation loss improved mean AUROC from 92.52% ± 11.07% to 99.03% ± 0.07% across three seeds on a binary CIFAR-10 airplane-vs-rest split. [See the findings and limits](${DIFFUSION_URL}).`,
+    de: `Ahmed untersuchte, ob ein Diffusionsmodell unbekannte Bilder erkennt. Mit Separation Loss stieg die mittlere AUROC von 92.52% ± 11.07% auf 99.03% ± 0.07% über drei Läufe im binären CIFAR-10-Vergleich Flugzeuge gegen alle anderen Klassen. [Ergebnisse und Grenzen](${DIFFUSION_URL}).`,
+    fr: `Ahmed a étudié la reconnaissance d’images inconnues par un modèle de diffusion. Sur trois essais du test binaire CIFAR-10 avions contre toutes les autres classes, la perte de séparation a fait passer l’AUROC moyenne de 92.52% ± 11.07% à 99.03% ± 0.07%. [Résultats et limites](${DIFFUSION_URL}).`,
+    es: `Ahmed estudió si un modelo de difusión podía reconocer imágenes desconocidas. En tres ejecuciones de la prueba binaria CIFAR-10 aviones contra el resto, la pérdida de separación elevó la AUROC media de 92.52% ± 11.07% a 99.03% ± 0.07%. [Resultados y límites](${DIFFUSION_URL}).`,
+    ar: `درس أحمد قدرة نموذج انتشار على التعرّف على الصور غير المألوفة. رفعت خسارة الفصل متوسط AUROC من 92.52% ± 11.07% إلى 99.03% ± 0.07% عبر ثلاث تجارب في اختبار CIFAR-10 الثنائي للطائرات مقابل بقية الفئات. [النتائج وحدودها](${DIFFUSION_URL}).`,
   },
   contact: {
-    en: `Ahmed Mohammed's contact details:\n- Email: ahmed.mo.0595@gmail.com\n- LinkedIn: https://www.linkedin.com/in/ahmed-3m/\n- GitHub: https://github.com/ahmed-3m\n- Website: https://ahmed-3m.github.io`,
-    de: `Kontaktdaten von Ahmed Mohammed:\n- E-Mail: ahmed.mo.0595@gmail.com\n- LinkedIn: https://www.linkedin.com/in/ahmed-3m/\n- GitHub: https://github.com/ahmed-3m\n- Website: https://ahmed-3m.github.io`,
-    fr: `Coordonnées d'Ahmed Mohammed :\n- Email : ahmed.mo.0595@gmail.com\n- LinkedIn : https://www.linkedin.com/in/ahmed-3m/\n- GitHub : https://github.com/ahmed-3m\n- Site : https://ahmed-3m.github.io`,
-    es: `Datos de contacto de Ahmed Mohammed:\n- Correo: ahmed.mo.0595@gmail.com\n- LinkedIn: https://www.linkedin.com/in/ahmed-3m/\n- GitHub: https://github.com/ahmed-3m\n- Sitio web: https://ahmed-3m.github.io`,
-    ar: `بيانات التواصل مع أحمد محمد:\n- البريد: ahmed.mo.0595@gmail.com\n- LinkedIn: https://www.linkedin.com/in/ahmed-3m/\n- GitHub: https://github.com/ahmed-3m\n- الموقع: https://ahmed-3m.github.io`,
+    en: `You can email Ahmed at ahmed.mo.0595@gmail.com or find his professional profiles on the [contact page](${CONTACT_URL}).`,
+    de: `Sie erreichen Ahmed per E-Mail unter ahmed.mo.0595@gmail.com. Seine beruflichen Profile finden Sie im [Kontaktbereich](${CONTACT_URL}).`,
+    fr: `Vous pouvez écrire à Ahmed à ahmed.mo.0595@gmail.com ou consulter ses profils professionnels dans la [rubrique contact](${CONTACT_URL}).`,
+    es: `Puedes escribir a Ahmed a ahmed.mo.0595@gmail.com o consultar sus perfiles profesionales en la [sección de contacto](${CONTACT_URL}).`,
+    ar: `يمكنك مراسلة أحمد على ahmed.mo.0595@gmail.com أو الاطّلاع على ملفاته المهنية في [قسم التواصل](${CONTACT_URL}).`,
   },
   open_to_work: {
-    en: `Yes, Ahmed is open to AI/ML engineering roles and research collaborations. Based in Linz, Austria, he is eligible for the Austrian Rot-Weiß-Rot Karte for graduates (no quota, no labour-market test). Contact: ahmed.mo.0595@gmail.com.`,
-    de: `Ja, Ahmed ist offen für AI/ML-Positionen und Forschungskooperationen. Ansässig in Linz, Österreich, qualifiziert für die Rot-Weiß-Rot-Karte für Hochschulabsolventen (keine Quote, keine Arbeitsmarktprüfung). Kontakt: ahmed.mo.0595@gmail.com.`,
-    fr: `Oui, Ahmed est ouvert aux postes d'ingénieur IA/ML et collaborations de recherche. Basé à Linz (Autriche), éligible à la carte Rot-Weiß-Rot pour diplômés. Contact : ahmed.mo.0595@gmail.com.`,
-    es: `Sí, Ahmed está disponible para roles de ingeniería IA/ML y colaboraciones de investigación. Radicado en Linz, Austria, elegible para la tarjeta Rot-Weiß-Rot para graduados. Contacto: ahmed.mo.0595@gmail.com.`,
-    ar: `نعم، أحمد متاح لوظائف هندسة الذكاء الاصطناعي (AI/ML) والتعاون البحثي. يقيم في لينز، النمسا، ومؤهل لبطاقة Rot-Weiß-Rot Karte للخريجين. للتواصل: ahmed.mo.0595@gmail.com.`,
+    en: `Ahmed is based in Linz and open to full-time AI/ML roles, especially computer vision and applied ML. [Contact Ahmed](${CONTACT_URL}) to discuss a role or confirm current availability.`,
+    de: `Ahmed lebt in Linz und sucht Vollzeitstellen in AI/ML, insbesondere in der Bildverarbeitung und im angewandten ML. [Kontaktieren Sie Ahmed](${CONTACT_URL}), um eine Stelle und seine aktuelle Verfügbarkeit zu besprechen.`,
+    fr: `Ahmed est basé à Linz et ouvert aux postes à temps plein en IA/ML, notamment en vision par ordinateur et en ML appliqué. [Contactez Ahmed](${CONTACT_URL}) pour parler d’un poste ou confirmer ses disponibilités.`,
+    es: `Ahmed vive en Linz y busca puestos a tiempo completo en IA/ML, especialmente en visión por computador y ML aplicado. [Contacta con Ahmed](${CONTACT_URL}) para hablar de un puesto o confirmar su disponibilidad.`,
+    ar: `يقيم أحمد في لينز وهو متاح لوظائف بدوام كامل في الذكاء الاصطناعي وتعلّم الآلة، خاصة في الرؤية الحاسوبية وتعلّم الآلة التطبيقي. [تواصل مع أحمد](${CONTACT_URL}) لمناقشة فرصة عمل أو تأكيد توافره الحالي.`,
   },
   tech_stack: {
     en: `Ahmed's stack spans AI research and production engineering:\n- ML: PyTorch, Python, Diffusion Models, YOLO, OpenCV, Anomaly Detection\n- Product/Infra: Next.js, React, TypeScript, Convex, Docker, PostgreSQL, Cloudflare\n- Tools: Git, Weights & Biases, Hugging Face, Linux`,
@@ -280,57 +323,68 @@ export const LOCAL_REPLIES = {
   },
 } satisfies Record<string, TranslationMap>
 
-export function getLocalReply(prompt: string, lang: Language): string | null {
-  const text = prompt.trim().toLowerCase()
-  const isIndustrialStarter = Object.values(PROMPT_LIBRARY.industrial_result).some(
-    (starter) => starter.toLowerCase() === text,
+type ReplyId = keyof typeof LOCAL_REPLIES
+
+const REPLY_FOR_PROMPT = {
+  projects_best: 'projects',
+  background: 'background',
+  cv: 'cv',
+  industrial_pipeline: 'inspection',
+  industrial_result: 'industrial',
+  thesis_summary: 'thesis',
+  thesis_innovation: 'thesis',
+  thesis_loss: 'thesis',
+  thesis_results: 'thesis',
+  thesis_datasets: 'thesis',
+  thesis_diffusion: 'thesis',
+  sihem_overview: 'sihem_intro',
+  sihem_tech: 'sihem',
+  hire_summary: 'open_to_work',
+  hire_fit: 'open_to_work',
+  open_to_work: 'open_to_work',
+  contact: 'contact',
+  tech_stack: 'tech_stack',
+  achievements: 'achievements',
+} satisfies Record<PromptId, ReplyId>
+
+function findPromptId(question: string): PromptId | undefined {
+  const text = question.trim().toLowerCase()
+  return (Object.keys(PROMPT_LIBRARY) as PromptId[]).find(id =>
+    Object.values(PROMPT_LIBRARY[id]).some(label => label.toLowerCase() === text),
   )
-  if (isIndustrialStarter || /industrial|industriell|industriel|inkjet|profactor|fti[_-]?zer0p|الصناعي/i.test(text)) {
-    return translateValue(lang, LOCAL_REPLIES.industrial)
-  }
-  if (/\b(sihem|mentor|habit|routine|telegram|tech2b|pgvector)\b/i.test(text)) {
-    return translateValue(lang, LOCAL_REPLIES.sihem)
-  }
-  if (/\b(thesis|separation loss|ood|out.?of.?distribution|cifar|auroc)\b/i.test(text)) {
-    return translateValue(lang, LOCAL_REPLIES.thesis)
-  }
-  if (/(contact|email|linkedin|github|website|reach|talk to|connect)/i.test(text)) {
-    return translateValue(lang, LOCAL_REPLIES.contact)
-  }
-  if (/(open to work|available|hire|job|role|opportunit)/i.test(text)) {
-    return translateValue(lang, LOCAL_REPLIES.open_to_work)
-  }
-  if (/(tech stack|stack|tools|technolog)/i.test(text)) {
-    return translateValue(lang, LOCAL_REPLIES.tech_stack)
-  }
-  if (/(achievement|accomplishment|highlights|best result|proof points)/i.test(text)) {
-    return translateValue(lang, LOCAL_REPLIES.achievements)
-  }
-  return null
 }
 
-const FOLLOWUP_RULES: Array<{ pattern: RegExp; prompts: PromptId[] }> = [
-  {
-    pattern: /\b(sihem|mentor|habit|routine|telegram|tech2b|pgvector)\b/i,
-    prompts: ['sihem_tech', 'industrial_result', 'hire_fit'],
-  },
-  {
-    pattern: /thesis|ood|out.?of.?distribution|diffusion|auroc|cifar|separation loss/i,
-    prompts: ['thesis_innovation', 'thesis_loss', 'thesis_datasets', 'thesis_results', 'thesis_diffusion', 'industrial_result'],
-  },
-  {
-    pattern: /industrial|profactor|inkjet|yolo|zer0p|benchmark/i,
-    prompts: ['industrial_pipeline', 'industrial_result', 'thesis_loss', 'projects_best'],
-  },
-  {
-    pattern: /project|github|work|portfolio/i,
-    prompts: ['projects_best', 'achievements', 'thesis_summary', 'sihem_overview'],
-  },
-  {
-    pattern: /job|role|hire|available|open to work|contact|email|linkedin/i,
-    prompts: ['open_to_work', 'contact', 'achievements', 'tech_stack'],
-  },
-]
+function inferReplyId(text: string): ReplyId | undefined {
+  if (/industrial|industriell|industriel|inkjet|profactor|fti[_-]?zer0p|الصناعي/i.test(text)) return 'industrial'
+  if (/\b(sihem|mentor|habit|routine|telegram|tech2b|pgvector)\b/i.test(text)) return 'sihem'
+  if (/\b(thesis|separation loss|ood|out.?of.?distribution|cifar|auroc)\b|masterarbeit|mémoire|tesis|رسالة/i.test(text)) return 'thesis'
+  if (/^(?:cv|résumé|resume)[?!. ]*$|\b(download|his|public|find|see|link|send|read|son|descargar|su)\b[^.?!]{0,35}\bcv\b|curr[ií]culum|lebenslauf|سير(?:ة|ته) الذاتية/i.test(text)) return 'cv'
+  if (/(contact|email|linkedin|reach|talk to|connect|تواصل)/i.test(text)) return 'contact'
+  if (/(open to work|available|hire|job|role|opportunit|وظائف)/i.test(text)) return 'open_to_work'
+  if (/(tech stack|stack|tools|technolog)/i.test(text)) return 'tech_stack'
+  if (/(achievement|accomplishment|highlights|best result|proof points)/i.test(text)) return 'achievements'
+  if (/(background|education|mechatronics|ausbildung|parcours|trayectoria|خلفية)/i.test(text)) return 'background'
+  if (/(projects|projekte|projets|proyectos|مشاريع|portfolio|github)/i.test(text)) return 'projects'
+}
+
+export function getLocalReply(question: string, lang: Language): string | null {
+  const id = findPromptId(question)
+  const topic = id ? REPLY_FOR_PROMPT[id] : inferReplyId(question)
+  return topic ? translateValue(lang, LOCAL_REPLIES[topic]) : null
+}
+
+const FOLLOWUP_PROMPTS: Partial<Record<ReplyId, PromptId[]>> = {
+  projects: ['industrial_result', 'thesis_summary', 'sihem_overview'],
+  inspection: ['industrial_result', 'thesis_summary', 'projects_best'],
+  industrial: ['industrial_pipeline', 'thesis_summary', 'projects_best'],
+  thesis: ['industrial_result', 'background', 'cv'],
+  sihem_intro: ['sihem_tech', 'projects_best', 'contact'],
+  sihem: ['sihem_overview', 'projects_best', 'contact'],
+  cv: ['background', 'open_to_work', 'contact'],
+  background: ['projects_best', 'cv', 'contact'],
+  open_to_work: ['cv', 'contact', 'projects_best'],
+  contact: ['cv', 'projects_best', 'background'],
+}
 
 function isConfiguredToken(token: string | undefined): token is string {
   return Boolean(token && token !== 'your_groq_token_here' && token !== 'your_zai_token_here')
@@ -426,18 +480,20 @@ type ProviderAuth = { token: string; url: string; useProxy: boolean }
 
 async function fetchBigModel({
   messages,
+  lang,
   auth,
   lane,
   onDelta,
 }: {
   messages: readonly ChatMessage[]
+  lang: Language
   auth: ProviderAuth
   lane: ChatLane
   onDelta?: StreamDelta
 }): Promise<string> {
   const model = lane === 'fast' ? ZAI_FAST_MODEL : ZAI_MODEL
   const maxTokens = lane === 'fast' ? 380 : 1200
-  const payloadMessages = buildChatMessages(SYSTEM_PROMPT, messages)
+  const payloadMessages = buildChatMessages(systemPrompt(lang), messages)
 
   const headers: Record<string, string> = { 'Content-Type': 'application/json' }
   if (auth.token && !auth.useProxy) {
@@ -550,14 +606,16 @@ async function fetchBigModel({
 
 async function fetchGroq({
   messages,
+  lang,
   auth,
   onDelta,
 }: {
   messages: readonly ChatMessage[]
+  lang: Language
   auth: ProviderAuth
   onDelta?: StreamDelta
 }): Promise<string> {
-  const payloadMessages = buildChatMessages(SYSTEM_PROMPT, messages)
+  const payloadMessages = buildChatMessages(systemPrompt(lang), messages)
 
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
@@ -675,7 +733,7 @@ async function fetchGroq({
 function renderInline(text: string, keyPrefix: string): ReactNode[] {
   const renderLinkedText = (value: string, segmentKey: string): ReactNode[] => {
     const linkPattern =
-      /((?:https?:\/\/|www\.)[^\s]+|(?:[a-z0-9-]+\.)+[a-z]{2,}(?:\/[^\s]*)?|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/gi
+      /\[([^\]\n]+)\]\((https?:\/\/[^\s)]+)\)|((?:https?:\/\/|www\.)[^\s]+|(?:[a-z0-9-]+\.)+[a-z]{2,}(?:\/[^\s]*)?|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/gi
     const nodes: ReactNode[] = []
     let lastIndex = 0
     let matchIndex = 0
@@ -691,12 +749,14 @@ function renderInline(text: string, keyPrefix: string): ReactNode[] {
 
       const isEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(raw)
       const display = raw.replace(/[),.;!?،؛؟]+$/, '')
-      const trailing = raw.slice(display.length)
+      const [, label, namedUrl] = match
+      const trailing = namedUrl ? '' : raw.slice(display.length)
+      const href = namedUrl ?? (isEmail ? `mailto:${display}` : /^https?:\/\//i.test(display) ? display : `https://${display}`)
 
       nodes.push(
         <a
           key={`${segmentKey}-link-${matchIndex++}`}
-          href={isEmail ? `mailto:${display}` : display.startsWith('http') ? display : `https://${display}`}
+          href={href}
           target={isEmail ? undefined : '_blank'}
           rel={isEmail ? undefined : 'noopener noreferrer'}
           style={{
@@ -706,7 +766,7 @@ function renderInline(text: string, keyPrefix: string): ReactNode[] {
             textDecorationColor: 'color-mix(in srgb, currentColor 55%, transparent)',
           }}
         >
-          {display}
+          {label ?? display}
         </a>
       )
 
@@ -751,7 +811,7 @@ function renderMarkdown(text: string): ReactNode {
     if (pending.length === 0) return
     const key = `ul-${keyIndex++}`
     result.push(
-      <ul key={key} style={{ paddingLeft: '1.1em', margin: '0.25em 0', listStyleType: 'disc' }}>
+      <ul key={key} style={{ paddingInlineStart: '1.1em', margin: '0.25em 0', listStyleType: 'disc' }}>
         {pending.map((item, index) => (
           <li key={`${key}-${index}`} style={{ margin: '0.1em 0' }}>
             {renderInline(item, `${key}-${index}`)}
@@ -805,19 +865,23 @@ function trackChatEvent() {
   }
 }
 
+const CASE_STUDY_SECTIONS: Partial<Record<string, string>> = {
+  '/case-studies/inkjet-ood': 'inkjet',
+  '/case-studies/diffusion-ood': 'research',
+  '/case-studies/sihem': 'sihem',
+}
+
 function useCurrentSection() {
-  const [section, setSection] = useState('research')
+  const pathname = usePathname()
+  const caseStudy = CASE_STUDY_SECTIONS[pathname.replace(/\/$/, '')]
+  const [section, setSection] = useState('hero')
 
   useEffect(() => {
-    const sections = ['hero', 'about', 'projects', 'experience', 'research', 'writing', 'contact']
+    if (caseStudy) return
+    const sections = ['hero', 'about', 'projects', 'experience', 'research', 'evidence', 'ood-explorer', 'writing', 'contact']
 
     const pickFromViewport = () => {
-      if (window.location.hash) {
-        setSection(window.location.hash.replace('#', ''))
-        return
-      }
-
-      let best = 'research'
+      let best = 'hero'
       let bestDistance = Number.POSITIVE_INFINITY
 
       for (const id of sections) {
@@ -844,36 +908,40 @@ function useCurrentSection() {
       window.removeEventListener('scroll', pickFromViewport)
       window.removeEventListener('resize', pickFromViewport)
     }
-  }, [])
+  }, [pathname, caseStudy])
 
-  return section
+  return caseStudy ?? section
 }
 
 export function getStarterPrompts(section: string): PromptId[] {
-  if (section === 'research') {
-    return ['thesis_summary', 'thesis_loss', 'thesis_results', 'industrial_result', 'achievements', 'contact']
+  if (section === 'inkjet') {
+    return ['industrial_pipeline', 'industrial_result', 'thesis_summary', 'projects_best']
   }
-  if (section === 'projects') {
-    return ['projects_best', 'industrial_result', 'thesis_summary', 'sihem_overview', 'tech_stack', 'contact']
+  if (section === 'sihem') {
+    return ['sihem_overview', 'sihem_tech', 'projects_best', 'contact']
+  }
+  if (section === 'research' || section === 'ood-explorer') {
+    return ['thesis_summary', 'industrial_result', 'industrial_pipeline', 'projects_best']
+  }
+  if (section === 'projects' || section === 'evidence') {
+    return ['projects_best', 'industrial_pipeline', 'thesis_summary', 'sihem_overview']
+  }
+  if (section === 'about' || section === 'experience') {
+    return ['background', 'projects_best', 'open_to_work', 'cv']
   }
   if (section === 'contact') {
-    return ['open_to_work', 'hire_summary', 'contact', 'achievements', 'tech_stack', 'sihem_overview']
+    return ['contact', 'cv', 'open_to_work', 'projects_best']
   }
   return STARTER_PROMPT_IDS
 }
 
 export const DEFAULT_PROMPTS = STARTER_PROMPT_IDS
 
-function uniquePromptIds(items: PromptId[]): PromptId[] {
-  return [...new Set(items)]
-}
-
 export function pickFollowUpIds(reply: string, question: string, section: string): PromptId[] {
-  const context = `${section} ${question} ${reply}`
-  for (const rule of FOLLOWUP_RULES) {
-    if (rule.pattern.test(context)) return uniquePromptIds(rule.prompts).slice(0, 4)
-  }
-  return uniquePromptIds(getStarterPrompts(section)).slice(0, 4)
+  const requested = findPromptId(question)
+  const topic = requested ? REPLY_FOR_PROMPT[requested] : inferReplyId(question) ?? inferReplyId(reply)
+  const followUps = (topic && FOLLOWUP_PROMPTS[topic]) || getStarterPrompts(section)
+  return followUps.filter(id => id !== requested && REPLY_FOR_PROMPT[id] !== topic).slice(0, 3)
 }
 
 export const generateFollowUps = pickFollowUpIds
@@ -892,11 +960,32 @@ const bubbleStyles = {
   },
 } satisfies Record<ChatRole, CSSProperties>
 
-const chipStyle = {
-  borderColor: 'var(--cd-b0)',
-  background: 'color-mix(in srgb, var(--cd-surf) 70%, var(--cd-bg) 30%)',
-  color: 'var(--cd-fg2)',
-} satisfies CSSProperties
+function SuggestedQuestions({ label, prompts, labelForPrompt, onSelect }: {
+  label: string
+  prompts: PromptId[]
+  labelForPrompt: (id: PromptId) => string
+  onSelect: (id: PromptId, keyboard: boolean) => void
+}) {
+  return (
+    <div role="group" aria-label={label} className="space-y-2">
+      <p aria-hidden="true" className="text-xs font-semibold text-[var(--cd-fg2)]">{label}</p>
+      <ul className="grid list-none gap-2 p-0">
+        {prompts.map(id => (
+          <li key={id}>
+            <button
+              type="button"
+              onClick={event => onSelect(id, event.detail === 0)}
+              className="flex min-h-11 w-full items-center justify-between gap-3 rounded-xl border border-[var(--cd-b1)] bg-[var(--cd-surf)] px-3 py-2 text-start text-sm leading-5 text-[var(--cd-fg1)] hover:border-[var(--cd-accent)]"
+            >
+              <span className="min-w-0 break-words">{labelForPrompt(id)}</span>
+              <ChevronRight aria-hidden="true" size={14} className="shrink-0 text-[var(--cd-fg2)] rtl:rotate-180" />
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
 
 function LoadingDots({ label }: { label: string }) {
   return (
@@ -942,13 +1031,14 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
   const messagesRef = useRef<HTMLDivElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
 
   const starterPrompts = useMemo(() => getStarterPrompts(currentSection), [currentSection])
 
   useEffect(() => {
     if (!isOpen) return
     const panel = panelRef.current
-    inputRef.current?.focus()
+    closeButtonRef.current?.focus({ preventScroll: true })
 
     function handleKeyDown(event: KeyboardEvent) {
       // Escape is handled by the shell (ChatBot.tsx) so it works before this
@@ -991,7 +1081,7 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
     return translateValue(lang, PROMPTS[promptId])
   }
 
-  async function sendMessage(messageText: string) {
+  async function sendMessage(messageText: string, promptId?: PromptId) {
     const content = messageText.trim()
     if (!content || isLoading) return
 
@@ -1009,9 +1099,10 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
     setError(null)
     trackChatEvent()
 
-    // If no external model tokens or proxy are available, check local reply first
-    if (!hasGroqToken && !hasZaiToken && !hasProxy) {
-      const local = getLocalReply(content, lang)
+    // Suggested questions point to public facts and can answer immediately.
+    const curatedReply = promptId ? translateValue(lang, LOCAL_REPLIES[REPLY_FOR_PROMPT[promptId]]) : null
+    if (curatedReply || (!hasGroqToken && !hasZaiToken && !hasProxy)) {
+      const local = curatedReply ?? getLocalReply(content, lang)
       if (local) {
         setMessages((prev) => [
           ...prev,
@@ -1023,7 +1114,7 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
         ])
         return
       }
-      setError(t(CHAT_COPY.missingToken))
+      setError(t(CHAT_COPY.limitedAnswers))
       return
     }
 
@@ -1069,6 +1160,7 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
           streamStarted = false
           rawReply = await fetchBigModel({
             messages: nextMessages,
+            lang,
             auth: zaiAuth,
             lane,
             onDelta: emitDelta,
@@ -1093,6 +1185,7 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
           streamStarted = false
           rawReply = await fetchGroq({
             messages: nextMessages,
+            lang,
             auth: groqAuth,
             onDelta: emitDelta,
           })
@@ -1149,8 +1242,9 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
     void sendMessage(input)
   }
 
-  function handlePrompt(promptId: PromptId) {
-    void sendMessage(labelForPrompt(promptId))
+  function handlePrompt(promptId: PromptId, keyboard: boolean) {
+    if (keyboard) inputRef.current?.focus({ preventScroll: true })
+    void sendMessage(labelForPrompt(promptId), promptId)
   }
 
   return (
@@ -1165,6 +1259,7 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
         <button
           type="button"
           onClick={onClose}
+          ref={closeButtonRef}
           className="inline-flex h-11 w-11 items-center justify-center rounded-full border transition-colors"
           style={{
             borderColor: 'var(--cd-b0)',
@@ -1186,20 +1281,12 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
             >
               {t(CHAT_COPY.welcome)}
             </div>
-            <div className="flex flex-wrap gap-2">
-              {starterPrompts.map((promptId) => (
-                <button
-                  key={promptId}
-                  type="button"
-                  onClick={() => handlePrompt(promptId)}
-                  disabled={isLoading}
-                  className="max-w-full break-words rounded-full border px-3 py-2 text-start text-xs transition-all disabled:cursor-not-allowed disabled:opacity-60"
-                  style={chipStyle}
-                >
-                  {labelForPrompt(promptId)}
-                </button>
-              ))}
-            </div>
+            <SuggestedQuestions
+              label={t(CHAT_COPY.suggestions)}
+              prompts={starterPrompts}
+              labelForPrompt={labelForPrompt}
+              onSelect={handlePrompt}
+            />
           </div>
         ) : (
           messages.map((message, index) => {
@@ -1221,20 +1308,12 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
                 </div>
 
                 {isLastAssistant && !isLoading && message.followUps && message.followUps.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 ps-1">
-                    {message.followUps.map((promptId) => (
-                      <button
-                        key={promptId}
-                        type="button"
-                        onClick={() => handlePrompt(promptId)}
-                        disabled={isLoading}
-                        className="max-w-full break-words rounded-full border px-3 py-1.5 text-start text-xs transition-all disabled:cursor-not-allowed disabled:opacity-60"
-                        style={chipStyle}
-                      >
-                        {labelForPrompt(promptId)}
-                      </button>
-                    ))}
-                  </div>
+                  <SuggestedQuestions
+                    label={t(CHAT_COPY.followUps)}
+                    prompts={message.followUps}
+                    labelForPrompt={labelForPrompt}
+                    onSelect={handlePrompt}
+                  />
                 )}
               </div>
             )
