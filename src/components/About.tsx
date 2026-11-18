@@ -53,7 +53,13 @@ const copy = {
   desc1: { en: 'Thesis (grade 1): using diffusion models to detect unfamiliar images.', de: 'Masterarbeit (Note 1): Erkennung unbekannter Bilder mit Diffusionsmodellen.', fr: 'Mémoire (note 1) : détecter les images inconnues à l’aide de modèles de diffusion.', es: 'Tesis (nota 1): detección de imágenes desconocidas con modelos de difusión.', ar: 'الرسالة (تقدير 1): كشف الصور غير المألوفة باستخدام نماذج الانتشار.' },
   mastersDates: { en: 'Oct 2020 to Sep 2026', de: 'Okt. 2020 bis Sept. 2026', fr: 'Oct. 2020 à sept. 2026', es: 'Oct. 2020 a sept. 2026', ar: 'أكتوبر 2020 إلى سبتمبر 2026' },
   bachelorsDates: { en: 'Feb 2015 to Jan 2018', de: 'Feb. 2015 bis Jan. 2018', fr: 'Févr. 2015 à janv. 2018', es: 'Feb. 2015 a ene. 2018', ar: 'فبراير 2015 إلى يناير 2018' },
-  desc2: { en: 'Thesis: SCARA robotic system for dynamic object tracking.', de: 'Thesis: SCARA-Robotersystem für dynamische Objektverfolgung.', fr: 'Mémoire : système robotique SCARA pour suivi dynamique d\'objets.', es: 'Tesis: sistema robótico SCARA para seguimiento dinámico de objetos.', ar: 'المشروع: نظام روبوت SCARA لتتبع الأجسام المتحركة.' },
+  desc2: {
+    en: 'Capstone project (grade: Excellent): SCARA robot for tracking moving objects.',
+    de: 'Abschlussprojekt (Note: Excellent): SCARA-Roboter zur Verfolgung bewegter Objekte.',
+    fr: 'Projet de fin d’études (note : Excellent) : robot SCARA pour le suivi d’objets en mouvement.',
+    es: 'Proyecto de fin de grado (calificación: Excelente): robot SCARA para el seguimiento de objetos en movimiento.',
+    ar: 'مشروع التخرج (التقدير: ممتاز): روبوت SCARA لتتبّع الأجسام المتحركة.',
+  },
 } satisfies Record<string, TranslationMap>
 
 const skillCategories: { title: TranslationMap; skills: (string | TranslationMap)[] }[] = [

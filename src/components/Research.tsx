@@ -482,7 +482,7 @@ export default function Research() {
                   loading="lazy"
                   decoding="async"
                   alt={t(alt)}
-                  style={{ width: '100%', height: 'auto', maxHeight: '260px', objectFit: 'contain', borderRadius: '8px' }}
+                  className="cd-rf-chart-preview"
                 />
                 <div className="cd-rf-chart-caption">{t(caption)}</div>
               </div>
@@ -634,7 +634,7 @@ export default function Research() {
                   loading="lazy"
                   decoding="async"
                   alt={t(alt)}
-                  style={{ width: '100%', height: 'auto', maxHeight: '260px', objectFit: 'contain', borderRadius: '8px' }}
+                  className="cd-rf-chart-preview"
                 />
                 <div className="cd-rf-chart-caption">{t(caption)}</div>
               </div>

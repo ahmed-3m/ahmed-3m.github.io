@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import TrustStrip from "@/components/TrustStrip";
 import About from "@/components/About";
 import Projects from "@/components/Projects";
 import Evidence from "@/components/Evidence";
@@ -33,7 +32,6 @@ export default function Home() {
       <Header />
       <main id="main" tabIndex={-1}>
         <Hero />
-        <TrustStrip />
         <Projects />
         <About />
         <Experience />
