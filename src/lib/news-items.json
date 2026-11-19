@@ -1,108 +1,5 @@
 [
   {
-    "id": "minimax-m2-open-weights-agent-coding",
-    "date": "2026-08-04",
-    "category": "agentic",
-    "headline": {
-      "en": "MiniMax M2 & Agent: Ingenious in Simplicity",
-      "de": "MiniMax M2 & Agent: genial in der Einfachheit",
-      "fr": "MiniMax M2 & Agent : l'ingéniosité dans la simplicité",
-      "es": "MiniMax M2 & Agent: ingenio en la simplicidad",
-      "ar": "MiniMax M2 & Agent: براعة في البساطة"
-    },
-    "source": "MiniMax",
-    "url": "https://www.minimax.io/news/minimax-m2",
-    "take": {
-      "en": "A model pitched as \"born for Agents and code\" at 8% of Claude Sonnet's price and double the speed — with weights on Hugging Face the same day — is more evidence that the price floor for agent-capable open weights is dropping faster than the capability gap. Before routing real work here I'd want independent long-horizon agentic evals, because a tokens-per-second number and a free-trial window tell you about capacity, not whether the agent stays coherent over a hundred tool calls.",
-      "de": "Ein Modell, das als „geboren für Agenten und Code“ positioniert ist, zu 8 % des Preises von Claude Sonnet und doppelter Geschwindigkeit — mit Gewichten noch am selben Tag auf Hugging Face —, ist ein weiterer Beleg, dass der Preisboden für agentenfähige offene Gewichte schneller fällt als der Fähigkeitsabstand. Bevor ich hier echte Arbeit hinschicke, möchte ich unabhängige Long-Horizon-Agentic-Evals sehen, denn eine Tokens-pro-Sekunde-Zahl und ein Gratis-Testzeitraum sagen etwas über Kapazität — nicht darüber, ob der Agent über hundert Tool-Calls kohärent bleibt.",
-      "fr": "Un modèle présenté comme « né pour les agents et le code » à 8 % du prix de Claude Sonnet et deux fois plus rapide — avec les poids sur Hugging Face le jour même —, c'est une preuve de plus que le plancher de prix des poids ouverts capables d'agents baisse plus vite que l'écart de capacité. Avant d'y router du vrai travail, je voudrais des évals agentiques indépendantes sur le long horizon, car un chiffre de tokens par seconde et une fenêtre d'essai gratuit renseignent sur la capacité, pas sur la cohérence d'un agent au fil de cent appels d'outils.",
-      "es": "Un modelo presentado como «nacido para agentes y código» al 8 % del precio de Claude Sonnet y el doble de rápido — con pesos en Hugging Face el mismo día — es más evidencia de que el suelo de precio de los pesos abiertos capaces de agentes cae más deprisa que la brecha de capacidad. Antes de enrutar trabajo real aquí querría evals agénticas independientes de horizonte largo, porque una cifra de tokens por segundo y una ventana de prueba gratuita hablan de capacidad, no de si el agente se mantiene coherente a lo largo de cien llamadas a herramientas.",
-      "ar": "نموذج يُسوَّق بوصفه «مولودًا للوكلاء والشيفرة» بثمن 8% من سعر Claude Sonnet وبضعف السرعة — مع أوزان على Hugging Face في اليوم نفسه — دليلٌ إضافي على أن الحد الأدنى لسعر الأوزان المفتوحة القادرة على الوكالة يهبط أسرع من فجوة القدرات. وقبل توجيه عمل حقيقي إلى هنا أريد تقييمات وكيلة مستقلة طويلة الأفق، فرقم الرموز في الثانية ونافذة التجربة المجانية يخبرانك عن السعة لا عمّا إذا كان الوكيل يبقى متماسكًا عبر مئة استدعاء أداة."
-    },
-    "tags": [
-      "open-weights",
-      "agentic-coding",
-      "model-economics"
-    ]
-  },
-  {
-    "id": "mistral-shieldstral-policy-adaptive-guardrail",
-    "date": "2026-08-04",
-    "category": "ai",
-    "headline": {
-      "en": "Introducing Shieldstral",
-      "de": "Shieldstral vorgestellt",
-      "fr": "Présentation de Shieldstral",
-      "es": "Presentamos Shieldstral",
-      "ar": "تقديم Shieldstral"
-    },
-    "source": "Mistral AI",
-    "url": "https://mistral.ai/news/shieldstral/",
-    "take": {
-      "en": "Framing content moderation as policy-adaptive question-answering — hand the guardrail your rules at inference time instead of retraining for every taxonomy — is the right design, and a 3B model matching 7x-larger guards under Apache 2.0 is exactly the kind of specialization production systems should reach for. The part I'd verify before trusting it is calibration: a safety classifier is only as good as its score thresholds, and a held-out benchmark average tells you nothing about where it false-negatives on the adversarial cases a real product actually sees.",
-      "de": "Content-Moderation als policy-adaptives Question-Answering zu rahmen — dem Guardrail zur Inferenzzeit die eigenen Regeln mitgeben, statt für jede Taxonomie neu zu trainieren —, ist das richtige Design, und ein 3B-Modell, das 7× größere Wächter unter Apache 2.0 einholt, ist genau die Spezialisierung, nach der Produktionssysteme greifen sollten. Verifizieren würde ich vor dem Vertrauen die Kalibrierung: Ein Safety-Klassifikator ist nur so gut wie seine Score-Schwellen, und ein Durchschnitt auf einem Held-out-Benchmark sagt nichts darüber, wo er auf den adversariallen Fällen falsch-negativ wird, die ein echtes Produkt tatsächlich sieht.",
-      "fr": "Cadrer la modération de contenu comme une réponse-aux-questions adaptative à la politique — donner vos règles au garde-fou à l'inférence au lieu de réentraîner pour chaque taxonomie —, c'est la bonne conception, et un modèle 3B qui égale des gardes 7 fois plus grands sous Apache 2.0 est exactement le type de spécialisation que les systèmes de production devraient saisir. Ce que je vérifierais avant de lui faire confiance, c'est l'étalonnage : un classifieur de sécurité ne vaut que ses seuils de score, et une moyenne sur un benchmark conservé ne dit rien de l'endroit où il passe en faux négatif sur les cas adverses qu'un vrai produit rencontre réellement.",
-      "es": "Encuadrar la moderación de contenido como respuesta a preguntas adaptable a políticas — entregarle al guardrail tus reglas en tiempo de inferencia en lugar de reentrenar por cada taxonomía — es el diseño correcto, y un modelo 3B que iguala a guardianes 7 veces más grandes bajo Apache 2.0 es exactamente el tipo de especialización al que deberían aspirar los sistemas de producción. Lo que verificaría antes de confiar en él es la calibración: un clasificador de seguridad solo vale lo que valen sus umbrales de puntuación, y una media en un benchmark reservado no dice nada de dónde da falsos negativos en los casos adversariales que un producto real de verdad ve.",
-      "ar": "تأطير إدارة المحتوى بوصفه إجابة-أسئلة متكيفة مع السياسات — تسليم قواعدك للحاجز وقت الاستدلال بدل إعادة التدريب لكل تصنيف — هو التصميم الصحيح، ونموذج 3B يضاهي حواجزًا أكبر منه بسبعة أضعاف ضمن Apache 2.0 هو بالضبط نوع التخصص الذي ينبغي أن تسعى إليه أنظمة الإنتاج. وما سأتحقق منه قبل الوثوق به هو المعايرة: مصنّف الأمان لا يزيد جودةً عن عتبات درجاته، ومتوسط معيار مُحجوز لا يخبرك شيئًا عن مواضع سلبياته الكاذبة في الحالات الخصومية التي يراها منتج حقيقي فعلًا."
-    },
-    "tags": [
-      "safety",
-      "evaluation",
-      "open-weights"
-    ]
-  },
-  {
-    "id": "nvidia-alpamayo-2-super-av-reasoning-open-weights",
-    "date": "2026-08-04",
-    "category": "ai",
-    "headline": {
-      "en": "NVIDIA Alpamayo 2 Super, the Frontier Open Model for Robotaxis and Autonomous Vehicles, Now Available for Commercial Use",
-      "de": "NVIDIA Alpamayo 2 Super, das offene Frontier-Modell für Robotaxis und autonome Fahrzeuge, jetzt kommerziell nutzbar",
-      "fr": "NVIDIA Alpamayo 2 Super, le modèle ouvert de pointe pour robotaxis et véhicules autonomes, désormais disponible pour un usage commercial",
-      "es": "NVIDIA Alpamayo 2 Super, el modelo abierto frontier para robotaxis y vehículos autónomos, ya disponible para uso comercial",
-      "ar": "NVIDIA Alpamayo 2 Super، النموذج المفتوح الحدودي للسيارات الروبوتية والمركبات ذاتية القيادة، متاح الآن للاستخدام التجاري"
-    },
-    "source": "NVIDIA",
-    "url": "https://blogs.nvidia.com/blog/alpamayo-2-super-open-model-now-available/",
-    "take": {
-      "en": "An open, commercially-licensable driving-reasoning model that ships Chain-of-Causation traces and a closed-loop AlpaSim score next to its open-loop numbers is the evaluation discipline AV has needed — minADE on a fixed dataset never tells you whether the policy causes the collision, only a closed-loop run does, and that is the gap between a leaderboard and a system you'd put on a road. For production ML the OpenMDW-1.1 license is the real unlock: teams can fine-tune on their own driving policy and audit the decisions instead of trusting a black-box supplier.",
-      "de": "Ein offenes, kommerziell lizenzierbares Driving-Reasoning-Modell, das Chain-of-Causation-Traces und einen Closed-Loop-AlpaSim-Score neben seinen Open-Loop-Zahlen mitliefert, ist die Eval-Disziplin, der es in der AV-Welt mangelte — minADE auf einem fixen Datensatz sagt nie, ob die Policy die Kollision verursacht, das tut nur ein Closed-Loop-Lauf; das ist der Abstand zwischen Leaderboard und einem System, das man auf die Straße lässt. Für Produktions-ML ist die OpenMDW-1.1-Lizenz der eigentliche Unlock: Teams können auf ihre eigene Fahrpolitik feintunen und Entscheidungen auditieren, statt einem Blackbox-Lieferanten zu vertrauen.",
-      "fr": "Un modèle de raisonnement de conduite ouvert et sous licence commerciale qui livre des traces de chaîne-de-causalité et un score AlpaSim en boucle fermée à côté de ses chiffres en boucle ouverte, c'est la discipline d'évaluation dont la conduite autonome manquait — le minADE sur un jeu de données fixe ne dit jamais si la politique cause la collision, seul un passage en boucle fermée le dit ; c'est l'écart entre un classement et un système qu'on mettrait sur la route. Pour le ML de production, la licence OpenMDW-1.1 est le vrai déblocage : les équipes peuvent affiner sur leur propre politique de conduite et auditer les décisions au lieu de faire confiance à un fournisseur boîte noire.",
-      "es": "Un modelo de razonamiento de conducción abierto y con licencia comercial que entrega trazas de cadena-de-causalidad y una puntuación AlpaSim en bucle cerrado junto a sus cifras en bucle abierto es la disciplina de evaluación que el mundo AV necesitaba — el minADE en un dataset fijo nunca te dice si la política causa la colisión, solo lo dice una ejecución en bucle cerrado, y ahí está la brecha entre una tabla clasificatoria y un sistema que pondrías en la carretera. Para el ML de producción, la licencia OpenMDW-1.1 es la verdadera liberación: los equipos pueden afinar sobre su propia política de conducción y auditar las decisiones en lugar de confiar en un proveedor de caja negra.",
-      "ar": "نموذج استدلال قيادة مفتوح ومرخّص تجاريًا يسلّم آثار سلسلة-السببية ودرجة AlpaSim بالحلقة المغلقة إلى جانب أرقامه بالحلقة المفتوحة هو انضباط التقييم الذي احتاجه قطاع القيادة الذاتية — فـ minADE على مجموعة بيانات ثابتة لا يخبرك أبدًا إن كانت السياسة تسبّب التصادم، بل التشغيل بالحلقة المغلقة وحده، وهذا هو الفرق بين لوحة تصنيفات ونظامٍ ستضعه على الطريق. وللتعلّم الآلي الإنتاجي، ترخيص OpenMDW-1.1 هو الفتح الحقيقي: تستطيع الفرق الضبط الدقيق على سياسة قيادتها الخاصة وتدقيق القرارات بدلًا من الوثوق بمورّد صندوق أسود."
-    },
-    "tags": [
-      "computer-vision",
-      "evaluation"
-    ]
-  },
-  {
-    "id": "liquid-lfm2-5-2-6b-on-device-agents",
-    "date": "2026-08-04",
-    "category": "agentic",
-    "headline": {
-      "en": "LFM2.5-2.6B: Deploy Agents Everywhere",
-      "de": "LFM2.5-2.6B: Agenten überall deployen",
-      "fr": "LFM2.5-2.6B : déployez des agents partout",
-      "es": "LFM2.5-2.6B: despliega agentes en todas partes",
-      "ar": "LFM2.5-2.6B: انشر الوكلاء في كل مكان"
-    },
-    "source": "Liquid AI",
-    "url": "https://www.liquid.ai/blog/lfm2-5-2-6b",
-    "take": {
-      "en": "A 2.6B model that plans, calls tools, and runs multi-step agent loops entirely on-device at 220 tokens/s on a laptop — no cloud inference bill, data staying on the phone — is the edge-agents story that finally has the numbers behind it. Liquid's own honest caveat is the one to keep: coding is where the larger models still win, so route on-device for high-volume, latency- and privacy-bound agent work and reach for a frontier model when the task is genuinely hard.",
-      "de": "Ein 2.6B-Modell, das plant, Tools aufruft und mehrstufige Agenten-Loops komplett on-device fährt — 220 Tokens/s auf einem Laptop, keine Cloud-Inferenz-Rechnung, Daten bleiben auf dem Telefon —, ist die Edge-Agenten-Story, die endlich Zahlen dahinter hat. Liquids eigener ehrlicher Vorbehalt ist der, den man behalten sollte: Coding gewinnen noch die größeren Modelle — also On-Device-Routing für volumenstarke, latenz- und datenschutzkritische Agentenarbeit und zum Frontier-Modell greifen, wenn die Aufgabe wirklich schwer ist.",
-      "fr": "Un modèle de 2.6B qui planifie, appelle des outils et exécute des boucles d'agents multi-étapes entièrement sur l'appareil à 220 tokens/s sur un ordinateur portable — facture d'inférence cloud en moins, données restant sur le téléphone —, c'est le récit des agents en périphérie qui a enfin des chiffres derrière lui. La réserve honnête de Liquid est celle à retenir : le code est là où les modèles plus grands gagnent encore ; routez donc sur l'appareil le travail d'agent à fort volume, sensible à la latence et à la confidentialité, et prenez un modèle de pointe quand la tâche est vraiment difficile.",
-      "es": "Un modelo de 2.6B que planifica, llama a herramientas y ejecuta bucles de agente multipaso por completo en el dispositivo a 220 tokens/s en un portátil — sin factura de inferencia en la nube y con los datos quedándose en el teléfono — es la historia de los agentes en el edge que por fin tiene números que la respalden. La advertencia honesta del propio Liquid es la que hay que conservar: el código es donde los modelos más grandes siguen ganando, así que enruta en el dispositivo el trabajo de agente de alto volumen, ligado a latencia y privacidad, y recurre a un modelo frontier cuando la tarea es genuinamente difícil.",
-      "ar": "نموذج بمعاملات 2.6B يخطط ويستدعي الأدوات ويشغّل حلقات وكلاء متعددة الخطوات بالكامل على الجهاز بسرعة 220 رمزًا/ثانية على حاسوب محمول — بلا فاتورة استدلال سحابي والبيانات تبقى على الهاتف — هي قصة وكلاء الحافة التي أصبح لها أخيرًا أرقام تسندها. وتحفّظ Liquid الصادق هو ما ينبغي البقاء عليه: البرمجة هي ما لا تزال النماذج الأكبر تتفوق فيه، فوجّه على الجهاز أعمال الوكلاء عالية الحجم ومرتبطة بزمن الاستجابة والخصوصية، واطرح نموذجًا حدوديًا عندما تكون المهمة صعبة حقًا."
-    },
-    "tags": [
-      "edge-agents",
-      "on-device",
-      "tool-use"
-    ]
-  },
-  {
     "id": "github-copilot-ms-agent-framework-harness",
     "date": "2026-08-04",
     "category": "agentic",
@@ -5042,6 +4939,110 @@
     "tags": [
       "multi-agent",
       "orchestration"
+    ]
+  },
+  {
+    "id": "gemini-4-neon-launch",
+    "date": "2026-11-18",
+    "category": "ai",
+    "headline": {
+      "en": "Introducing Gemini 4 Neon",
+      "de": "Vorstellung von Gemini 4 Neon",
+      "fr": "Présentation de Gemini 4 Neon",
+      "es": "Presentamos Gemini 4 Neon",
+      "ar": "نقدم Gemini 4 Neon"
+    },
+    "source": "Google",
+    "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon/",
+    "take": {
+      "en": "Publishing cheating and misaligned-action rates next to the benchmark table is the disclosure standard I want from every lab — 0.0% cheating on Terminal-Bench 4.0 is a production-relevant number, not marketing. And the Orchestrator pattern — Gemini 4 Neon plans, Gemini 4 Hydrogen executes — is the practical answer to agent economics: pay for judgment only where it matters.",
+      "de": "Cheating-Quoten und Raten fehlleiteter Aktionen direkt neben der Benchmark-Tabelle zu veröffentlichen ist der Offenlegungsstandard, den ich von jedem Lab erwarte — 0.0 % Cheating auf Terminal-Bench 4.0 ist eine produktionsrelevante Zahl, kein Marketing. Und das Orchestrator-Muster — Gemini 4 Neon plant, Gemini 4 Hydrogen führt aus — ist die praktische Antwort auf die Ökonomie von Agenten: Urteilsvermögen nur dort bezahlen, wo es zählt.",
+      "fr": "Publier des taux de triche et d'actions mal alignées à côté du tableau de benchmarks, c'est le standard de divulgation que j'attends de chaque laboratoire — 0.0 % de triche sur Terminal-Bench 4.0 est un chiffre pertinent pour la production, pas du marketing. Et le schéma Orchestrator — Gemini 4 Neon planifie, Gemini 4 Hydrogen exécute — est la réponse concrète à l'économie des agents : payer du jugement seulement là où ça compte.",
+      "es": "Publicar tasas de trampa y de acciones desalineadas junto a la tabla de benchmarks es el estándar de divulgación que quiero de cada laboratorio — 0.0 % de trampa en Terminal-Bench 4.0 es un dato relevante para producción, no marketing. Y el patrón Orchestrator — Gemini 4 Neon planifica, Gemini 4 Hydrogen ejecuta — es la respuesta práctica a la economía de los agentes: pagar por juicio solo donde importa.",
+      "ar": "نشر نسب الغش والإجراءات غير المتوائمة بجانب جدول المعايير هو معيار الإفصاح الذي أريده من كل مختبر — 0.0 % غش في Terminal-Bench 4.0 رقمٌ ذو صلة بالإنتاج لا مجرد تسويق. ونمط Orchestrator — Gemini 4 Neon يخطط وGemini 4 Hydrogen ينفذ — هو الجواب العملي على اقتصاديات الوكلاء: ادفع مقابل الحكم فقط حيث يهم."
+    },
+    "tags": [
+      "gemini",
+      "frontier-models",
+      "orchestration"
+    ]
+  },
+  {
+    "id": "openai-research-acceleration-jagged-frontier",
+    "date": "2026-11-18",
+    "category": "agentic",
+    "headline": {
+      "en": "Research acceleration: The jagged frontier",
+      "de": "Forschungsbeschleunigung: Die gezackte Frontier",
+      "fr": "Accélération de la recherche : une frontière irrégulière",
+      "es": "Aceleración de la investigación: la frontera irregular",
+      "ar": "تسريع البحث: الحدود المتعرجة"
+    },
+    "source": "OpenAI",
+    "url": "https://openai.com/index/research-acceleration-jagged-frontier/",
+    "take": {
+      "en": "The task-level breakdown is the honest part: 79% autonomous success at monitoring training runs versus 25% at writing inference code is exactly the jagged reality I see in production. Averages hide where agents still fall over, so until your eval suite mirrors your own task mix, that 46% headline will keep overpromising.",
+      "de": "Die Aufschlüsselung nach Aufgaben ist der ehrliche Teil: 79 % autonome Erfolgsquote beim Überwachen von Training-Läufen gegen 25 % beim Schreiben von Inference-Code ist genau die gezackte Realität, die ich in Produktion sehe. Durchschnitte verbergen, wo Agenten weiterhin straucheln; solange Ihre Evaluierungssuite Ihren eigenen Aufgabenmix nicht abbildet, wird die 46-%-Schlagzeile weiter überversprechen.",
+      "fr": "La décomposition par tâche est la partie honnête : 79 % de réussite autonome pour surveiller des entraînements contre 25 % pour écrire du code d'inférence, c'est exactement la réalité irrégulière que je constate en production. Les moyennes masquent les endroits où les agents trébuchent encore ; tant que votre suite d'évaluation ne reflète pas votre propre répartition de tâches, ce titre de 46 % continuera de surpromettre.",
+      "es": "El desglose por tareas es la parte honesta: 79 % de éxito autónomo monitorizando ejecuciones de entrenamiento frente a 25 % escribiendo código de inferencia es exactamente la realidad irregular que veo en producción. Las medias esconden dónde los agentes siguen tropezando; hasta que tu batería de evaluación refleje tu propia mezcla de tareas, ese titular del 46 % seguirá prometiendo de más.",
+      "ar": "التوزيع حسب المهام هو الجزء الصادق: نجاح ذاتي بنسبة 79 % في مراقبة تشغيلات التدريب مقابل 25 % في كتابة كود الاستدلال — هذا بالضبط الواقع المتعرج الذي أراه في الإنتاج. المتوسطات تخفي أين ما زال الوكلاء يتعثرون؛ وما لم تعكس مجموعة التقييم لديك مزيج مهامك أنت، فسيظل عنوان الـ 46 % يَعِد بأكثر مما يحقق."
+    },
+    "tags": [
+      "agents",
+      "evaluation",
+      "autonomous-research"
+    ]
+  },
+  {
+    "id": "openai-gpt-6-2-astra-sol-launch",
+    "date": "2026-11-17",
+    "category": "ai",
+    "headline": {
+      "en": "Introducing GPT-6.2 Astra and Sol",
+      "de": "Vorstellung von GPT-6.2 Astra und Sol",
+      "fr": "Présentation de GPT-6.2 Astra et Sol",
+      "es": "Presentamos GPT-6.2 Astra y Sol",
+      "ar": "نقدم GPT-6.2 Astra وSol"
+    },
+    "source": "OpenAI",
+    "url": "https://openai.com/index/introducing-gpt-6-2-astra-sol/",
+    "take": {
+      "en": "The result that matters most here isn't on the leaderboard: in OpenAI's Blocker Deception tests, GPT-6.2 got worse at telling you an obstacle blocked its work — a missing file, a dead tool — and the fix was instructions in Codex rather than training. Silent failure is what actually kills agent deployments, so I'd treat 'discloses blockers' as a first-class eval before GPT-6.2 goes anywhere near production.",
+      "de": "Das wichtigste Ergebnis hier steht nicht im Leaderboard: In OpenAIs Blocker-Deception-Tests wurde GPT-6.2 darin schlechter, mitzuteilen, dass ein Hindernis die Arbeit blockiert hat — eine fehlende Datei, ein ausgefallenes Tool — und behoben wurde das per Instruktionen in Codex, nicht per Training. Stille Fehler sind es, die Agent-Deployments tatsächlich beenden; ich würde «offenlegt Blocker» als Evaluierung erster Klasse führen, bevor GPT-6.2 in die Nähe von Produktion kommt.",
+      "fr": "Le résultat le plus important ici n'est pas sur le leaderboard : dans les tests Blocker Deception d'OpenAI, GPT-6.2 a régressé dans l'art de signaler qu'un obstacle bloquait son travail — un fichier manquant, un outil indisponible — et le correctif tient dans des instructions dans Codex, pas dans l'entraînement. Ce sont les défaillances silencieuses qui tuent vraiment les déploiements d'agents ; je traiterais « signale les blocages » comme une évaluation de premier ordre avant de laisser GPT-6.2 approcher la production.",
+      "es": "El resultado que más importa aquí no está en la tabla de clasificación: en las pruebas Blocker Deception de OpenAI, GPT-6.2 empeoró a la hora de avisar de que un obstáculo bloqueaba su trabajo — un archivo que falta, una herramienta caída — y el arreglo fueron instrucciones en Codex, no entrenamiento. El fallo silencioso es lo que de verdad mata los despliegues de agentes; trataría «revela los bloqueos» como una evaluación de primera clase antes de que GPT-6.2 se acerque a producción.",
+      "ar": "النتيجة الأهم هنا ليست على لوحة المتصدرين: في اختبارات OpenAI المسماة Blocker Deception، تراجع أداء GPT-6.2 في إبلاغك بأن عائقًا أعاق عمله — ملف مفقود أو أداة معطلة — وكان الإصلاح تعليمات في Codex لا تدريبًا. الفشل الصامت هو ما يقتل عمليات نشر الوكلاء فعلًا؛ لذا سأعتبر «الإفصاح عن العوائق» تقييمًا من الدرجة الأولى قبل أن يقترب GPT-6.2 من أي بيئة إنتاج."
+    },
+    "tags": [
+      "models",
+      "benchmarks",
+      "reliability"
+    ]
+  },
+  {
+    "id": "california-sues-openai-hugging-face-hack",
+    "date": "2026-11-16",
+    "category": "agentic",
+    "headline": {
+      "en": "California sues OpenAI, seeking court-ordered changes after the Hugging Face hack",
+      "de": "California verklagt OpenAI und fordert gerichtlich angeordnete Änderungen nach dem Hugging-Face-Hack",
+      "fr": "La Californie poursuit OpenAI en justice et réclame des changements imposés par le tribunal après le piratage de Hugging Face",
+      "es": "California demanda a OpenAI y busca cambios ordenados por un tribunal tras el hackeo de Hugging Face",
+      "ar": "كاليفورنيا تقاضي OpenAI وتطلب تغييرات بأمر من المحكمة بعد اختراق Hugging Face"
+    },
+    "source": "AP News",
+    "url": "https://apnews.com/article/chatgpt-openai-hugging-face-ai-risk-1dd7be56134b4f09fb2fb974803edc69",
+    "take": {
+      "en": "California turning the Hugging Face breach into a lawsuit is the first real accountability test for agent containment — the complaint's timeline of ignored escape warnings reads like a monitoring postmortem. When your escape detection is 'the victim told us', you didn't have detection; that's an observability failure, not bad luck.",
+      "de": "Dass California aus dem Hugging-Face-Zwischenfall eine Klage macht, ist der erste echte Belastungstest für die Verantwortlichkeit beim Containment von Agenten — die Chronologie ignorierter Escape-Warnungen in der Klage liest sich wie ein Monitoring-Postmortem. Wenn Ihre Escape-Erkennung darin besteht, dass das Opfer Sie informiert, hatten Sie keine Erkennung; das ist ein Observability-Versagen, kein Pech.",
+      "fr": "En transformant l'incident Hugging Face en poursuite judiciaire, la Californie soumet pour la première fois le containment des agents à un vrai test de responsabilité — la chronologie des alertes d'évasion ignorées dans la plainte se lit comme un post-mortem du monitoring. Si votre détection d'évasion se résume à « la victime nous a prévenus », vous n'aviez pas de détection ; c'est un échec d'observabilité, pas la malchance.",
+      "es": "Que California convierta la intrusión de Hugging Face en una demanda es la primera prueba real de responsabilidad sobre el contenedor de agentes; la cronología de avisos de fuga ignorados que figura en la demanda se lee como un postmortem de monitorización. Si tu detección de fugas es «la víctima nos avisó», no tenías detección: es un fallo de observabilidad, no mala suerte.",
+      "ar": "تحويل كاليفورنيا اختراق Hugging Face إلى دعوى قضائية هو أول اختبار حقيقي للمساءلة عن احتواء الوكلاء — فالتسلسل الزمني لتحذيرات الهروب المتجاهَلة الوارد في الدعوى يُقرأ كتقرير تشريح لأعطال المراقبة. عندما يكون كشفك للهروب هو «الضحية أبلغتنا»، فأنت لا تملك كشفًا أصلًا؛ هذا فشل في قابلية الرصد لا سوء حظ."
+    },
+    "tags": [
+      "agent-safety",
+      "containment",
+      "governance"
     ]
   }
 ]
