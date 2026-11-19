@@ -247,7 +247,7 @@ const copy = {
  * Interactive 3-tab thesis explorer backed by empirical raw PyTorch score histograms
  * (seed42_*.pt) and ablation JSON artefacts from ahmed-3m/DiffusionOOD.
  */
-export default function OodDemo({ id }: { id?: string }) {
+export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; heading?: 'h2' | 'h3' }) {
   const { t, lang } = useI18n()
   const sliderId = useId()
   const timestepSliderId = useId()
@@ -375,9 +375,9 @@ export default function OodDemo({ id }: { id?: string }) {
           >
             {t(copy.eyebrow)}
           </div>
-          <h3 style={{ fontSize: 'clamp(1.25rem, 2.2vw, 1.6rem)', fontWeight: 700, color: 'var(--cd-fg)', margin: '0 0 8px 0' }}>
+          <Heading style={{ fontSize: 'clamp(1.25rem, 2.2vw, 1.6rem)', fontWeight: 700, color: 'var(--cd-fg)', margin: '0 0 8px 0' }}>
             {t(copy.title)}
-          </h3>
+          </Heading>
           <p style={{ fontSize: 13.5, lineHeight: 1.6, color: 'var(--cd-fg2)', margin: 0 }}>
             {t(copy.subtitle)}
           </p>

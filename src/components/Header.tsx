@@ -8,12 +8,10 @@ import { languageOptions, useI18n, type TranslationMap, isLanguage } from '@/lib
 
 const links = [
   { href: '/#projects', label: { en: 'Projects', de: 'Projekte', fr: 'Projets', es: 'Proyectos', ar: 'المشاريع' } },
-  { href: '/#about', label: { en: 'About', de: 'Profil', fr: 'Profil', es: 'Perfil', ar: 'نبذة' } },
-  { href: '/#experience', label: { en: 'Experience', de: 'Erfahrung', fr: 'Expérience', es: 'Experiencia', ar: 'الخبرة' } },
-  { href: '/#research', label: { en: 'Research', de: 'Forschung', fr: 'Recherche', es: 'Investigación', ar: 'الأبحاث' } },
-  { href: '/#writing', label: { en: 'Blog', de: 'Blog', fr: 'Blog', es: 'Blog', ar: 'المدونة' } },
+  { href: '/about/', label: { en: 'About', de: 'Profil', fr: 'Profil', es: 'Perfil', ar: 'نبذة' } },
+  { href: '/research/', label: { en: 'Research', de: 'Forschung', fr: 'Recherche', es: 'Investigación', ar: 'الأبحاث' } },
+  { href: '/blog/', label: { en: 'Writing', de: 'Artikel', fr: 'Articles', es: 'Artículos', ar: 'المقالات' } },
   { href: '/news/', label: { en: 'News', de: 'News', fr: 'Actualités', es: 'Noticias', ar: 'الأخبار' } },
-  { href: '/#contact', label: { en: 'Contact', de: 'Kontakt', fr: 'Contact', es: 'Contacto', ar: 'تواصل' } },
 ] satisfies Array<{ href: string; label: TranslationMap }>
 
 const ctaLabel: TranslationMap = {
@@ -154,7 +152,7 @@ export default function Header() {
   }, [open])
 
   return (
-    <nav className="cd-nav" ref={navRef}>
+    <nav className="cd-nav portfolio-nav" ref={navRef}>
       <div className="cd-nav-inner">
         <a href={isHome ? '#hero' : '/'} className="cd-nav-logo" aria-label="Ahmed Mohammed — home">Ahmed<span>.</span></a>
 

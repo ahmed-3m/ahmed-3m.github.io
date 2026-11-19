@@ -1,12 +1,13 @@
 'use client'
 
-import { Fragment } from 'react'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
-import { ArrowLeft } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
-import { translateValue } from '@/lib/i18n-config'
 import { getCaseStudy } from '@/lib/case-studies'
+import { caseStudyOverview } from '@/lib/case-study-overview'
+import { portfolioCopy, selectedWork } from '@/lib/portfolio-copy'
+import { CIFAR_LAMBDA_SWEEP, INKJET_OVERALL_SWEEP } from '@/lib/ood-explorer-data'
+import ResearchCharts from '@/components/ResearchCharts'
 
 const decisions = {
   'diffusion-ood': {
@@ -46,143 +47,140 @@ const sihemExample = {
 const OodDemo = dynamic(() => import('./OodDemo'))
 
 const labels = {
-  eyebrow: { en: 'Case study', de: 'Fallstudie', fr: 'Étude de cas', es: 'Caso de estudio', ar: 'دراسة حالة' },
   back: { en: 'Back to portfolio', de: 'Zurück zum Portfolio', fr: 'Retour au portfolio', es: 'Volver al portfolio', ar: 'العودة إلى البورتفوليو' },
   problem: { en: 'Problem', de: 'Problem', fr: 'Problème', es: 'Problema', ar: 'المشكلة' },
-  role: { en: 'Role', de: 'Rolle', fr: 'Rôle', es: 'Rol', ar: 'الدور' },
-  architecture: {
-    en: 'Architecture & Pipeline Summary',
-    de: 'Architektur- & Pipeline-Übersicht',
-    fr: 'Architecture système & pipeline',
-    es: 'Resumen de arquitectura y pipeline',
-    ar: 'ملخص المعمارية وخط المعالجة',
+  contribution: { en: 'My contribution', de: 'Mein Beitrag', fr: 'Ma contribution', es: 'Mi contribución', ar: 'مساهمتي' },
+  outcome: { en: 'Outcome', de: 'Ergebnis', fr: 'Résultat', es: 'Resultado', ar: 'النتيجة' },
+  evaluation: { en: 'Evaluation', de: 'Evaluation', fr: 'Évaluation', es: 'Evaluación', ar: 'التقييم' },
+  limitations: { en: 'Design choices and limitations', de: 'Entscheidungen und Grenzen', fr: 'Choix et limites', es: 'Decisiones y límites', ar: 'القرارات والحدود' },
+  cifarSetup: {
+    en: 'Mean ± standard deviation across three seeds on CIFAR-10 (airplanes versus the other nine classes), with λ = 0.02 and K = 50 scoring samples per image.',
+    de: 'Mittelwert ± Standardabweichung über drei Seeds auf CIFAR-10 (Flugzeuge gegen die übrigen neun Klassen), mit λ = 0.02 und K = 50 Stichproben pro Bild.',
+    fr: 'Moyenne ± écart type sur trois graines sur CIFAR-10 (avions contre les neuf autres classes), avec λ = 0.02 et K = 50 échantillons par image.',
+    es: 'Media ± desviación estándar de tres semillas en CIFAR-10 (aviones frente a las otras nueve clases), con λ = 0.02 y K = 50 muestras por imagen.',
+    ar: 'المتوسط ± الانحراف المعياري عبر ثلاث بذور على CIFAR-10 (الطائرات مقابل الفئات التسع الأخرى)، عند λ = 0.02 وK = 50 عينة لحساب درجة كل صورة.',
+  },
+  inkjetSetup: {
+    en: 'Mean ± standard deviation for the FTI_Zer0P print dataset across five stratified folds split by source image, with λ = 0 (baseline) and K = 100 scoring samples per crop.',
+    de: 'Mittelwert ± Standardabweichung für die FTI_Zer0P-Druckdaten über fünf stratifizierte Folds, getrennt nach Quellbild, mit λ = 0 (Baseline) und K = 100 Stichproben pro Ausschnitt.',
+    fr: 'Moyenne ± écart type pour FTI_Zer0P sur cinq partitions stratifiées par image source, avec λ = 0 (référence) et K = 100 échantillons par zone.',
+    es: 'Media ± desviación estándar para FTI_Zer0P en cinco particiones estratificadas por imagen de origen, con λ = 0 (referencia) y K = 100 muestras por recorte.',
+    ar: 'المتوسط ± الانحراف المعياري لمجموعة طباعة FTI_Zer0P عبر خمس طيات طبقية مقسّمة حسب الصورة الأصلية، عند λ = 0 (خط الأساس) وK = 100 عينة لكل جزء مقتطع.',
+  },
+  auroc: {
+    en: 'AUROC measures how well the scores rank unfamiliar examples above familiar ones across decision thresholds.',
+    de: 'AUROC misst, wie gut die Scores unbekannte Beispiele über vertraute einordnen, über verschiedene Schwellenwerte hinweg.',
+    fr: 'L’AUROC mesure dans quelle mesure les scores classent les exemples inhabituels au-dessus des exemples familiers, tous seuils confondus.',
+    es: 'El AUROC mide qué tan bien las puntuaciones colocan los ejemplos desconocidos por encima de los conocidos a lo largo de distintos umbrales.',
+    ar: 'يقيس AUROC مدى نجاح الدرجات في ترتيب الأمثلة غير المألوفة فوق الأمثلة المألوفة عبر عتبات قرار مختلفة.',
   },
   approach: { en: 'Approach', de: 'Ansatz', fr: 'Approche', es: 'Enfoque', ar: 'المنهج' },
-  results: { en: 'Results', de: 'Ergebnisse', fr: 'Résultats', es: 'Resultados', ar: 'النتائج' },
-  lessons: { en: 'Lessons', de: 'Erkenntnisse', fr: 'Leçons', es: 'Lecciones', ar: 'الدروس' },
   artifacts: { en: 'Artifacts', de: 'Artefakte', fr: 'Artefacts', es: 'Artefactos', ar: 'الروابط' },
 } as const
 
-export default function CaseStudyPage({ slug }: { slug: string }) {
-  const { lang, t } = useI18n()
+export default function CaseStudyPage({ slug }: { slug: keyof typeof caseStudyOverview }) {
+  const { t } = useI18n()
   const study = getCaseStudy(slug)
+  const project = selectedWork.find((work) => work.slug === slug)
 
-  if (!study) return null
+  if (!study || !project) return null
+
+  const overview = caseStudyOverview[slug]
+  const track = slug === 'diffusion-ood' ? 'cifar' : slug === 'inkjet-ood' ? 'industrial' : null
+  const cifar = CIFAR_LAMBDA_SWEEP[3] // Table 6.6, λ = 0.02
+  const inkjet = INKJET_OVERALL_SWEEP['0.0']
 
   return (
-    <main id="main" tabIndex={-1} className="min-h-screen pb-20 pt-24">
-      <article className="mx-auto max-w-4xl px-5">
-        <Link href="/#projects" className="mb-8 inline-flex items-center gap-2 text-[var(--cd-accent)]">
-          <ArrowLeft size={18} className="rtl:rotate-180" />
-          {t(labels.back)}
-        </Link>
+    <main id="main" tabIndex={-1} className="portfolio-case">
+      <article className="portfolio-shell">
+        <Link href="/#projects" className="portfolio-text-link">{t(labels.back)}</Link>
+        <header>
+          <p className="portfolio-project-context">{t(project.context)}</p>
+          <h1>{t(project.title)}</h1>
+        </header>
 
-        <div className="glass-surface glass-subtle p-6 sm:p-8">
-          <div className="cd-section-eyebrow" style={{ marginBottom: 10 }}>
-            {t(labels.eyebrow)}
-          </div>
-          <h1 className="mb-3 text-4xl font-bold">{translateValue(lang, study.title)}</h1>
-          <p className="max-w-3xl text-[var(--cd-fg2)]">{translateValue(lang, study.summary)}</p>
+        <div className="portfolio-case-overview">
+          {(['problem', 'contribution', 'outcome'] as const).map((key) => (
+            <section key={key}>
+              <h2>{t(labels[key])}</h2>
+              <p>{t(overview[key])}</p>
+            </section>
+          ))}
         </div>
 
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))',
-            gap: 16,
-            marginTop: 24,
-          }}
-        >
-          <section className="glass-surface glass-subtle p-5">
-            <h2 className="mb-2 text-lg font-semibold">{t(labels.problem)}</h2>
-            <p className="text-[var(--cd-fg2)]">{translateValue(lang, study.problem)}</p>
-          </section>
-          <section className="glass-surface glass-subtle p-5">
-            <h2 className="mb-2 text-lg font-semibold">{t(labels.role)}</h2>
-            <p className="text-[var(--cd-fg2)]">{translateValue(lang, study.role)}</p>
-          </section>
+        <div className="portfolio-case-links">
+          <Link href="#evaluation" className="portfolio-text-link">{t(labels.evaluation)}</Link>
+          {track === 'cifar' && <Link href="#ood-explorer" className="portfolio-text-link">{t(portfolioCopy.explorer)}</Link>}
+          <Link href="#artifacts" className="portfolio-text-link">{t(labels.artifacts)}</Link>
         </div>
 
-        {study.stack && study.pipelineStages && (
-          <section className="glass-surface glass-subtle mt-6 p-5 sm:p-6">
-            <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
-              <h2 className="text-lg font-semibold">{t(labels.architecture)}</h2>
-              <div className="flex flex-wrap gap-1.5">
-                {study.stack.map((item) => (
-                  <span
-                    key={item}
-                    className="rounded px-2 py-0.5 font-mono text-xs text-[var(--cd-accent)]"
-                    style={{ background: 'var(--cd-elev)', border: '1px solid var(--cd-b0)' }}
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </div>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-              {study.pipelineStages.map((stage, idx) => (
-                <div
-                  key={idx}
-                  className="rounded-lg p-3.5"
-                  style={{
-                    background: 'var(--cd-surf)',
-                    border: '1px solid var(--cd-b0)',
-                  }}
-                >
-                  <div className="mb-1.5 font-semibold text-sm text-[var(--cd-fg1)]">
-                    {translateValue(lang, stage.title)}
-                  </div>
-                  <div className="text-xs leading-relaxed text-[var(--cd-fg2)]">
-                    {translateValue(lang, stage.desc)}
-                  </div>
-                </div>
+        <section className="portfolio-case-section">
+          <h2>{t(labels.approach)}</h2>
+          <ul className="list-disc space-y-2 ps-5">
+            {study.approach.map((item) => <li key={item.en}>{t(item)}</li>)}
+          </ul>
+          {study.pipelineStages && (
+            <ol className="grid gap-4 pt-5 sm:grid-cols-3">
+              {study.pipelineStages.map((stage) => (
+                <li key={stage.title.en} className="min-w-0 border-s border-[var(--cd-b1)] ps-3">
+                  <h3 className="font-semibold text-[var(--cd-fg1)]">{t(stage.title)}</h3>
+                  <p className="mt-1">{t(stage.desc)}</p>
+                </li>
               ))}
-            </div>
-          </section>
-        )}
-
-        <section className="glass-surface glass-subtle mt-6 p-5">
-          <h2 className="mb-3 text-lg font-semibold">{t({ en: 'Design choices & limitations', de: 'Entscheidungen und Grenzen', fr: 'Choix et limites', es: 'Decisiones y límites', ar: 'القرارات والحدود' })}</h2>
-          <p className="text-[var(--cd-fg2)]">{t(decisions[study.slug])}</p>
+            </ol>
+          )}
+          {study.stack && <p className="mt-4 text-sm"><bdi>{study.stack.join(' · ')}</bdi></p>}
         </section>
 
-        {study.slug === 'sihem' && (
-          <section className="glass-surface glass-subtle mt-6 p-5">
-            <h2 className="mb-3 text-lg font-semibold">{t(sihemExample.title)}</h2>
-            <p className="text-[var(--cd-fg2)]">{t(sihemExample.context)}</p>
+        {slug === 'sihem' && (
+          <section className="portfolio-case-section">
+            <h2>{t(sihemExample.title)}</h2>
+            <p>{t(sihemExample.context)}</p>
           </section>
         )}
 
-        {(['approach', 'results', 'lessons'] as const).map((key) => (
-          <Fragment key={key}>
-            <section className="glass-surface glass-subtle mt-6 p-5">
-              <h2 className="mb-4 text-lg font-semibold">{t(labels[key])}</h2>
-              <ul className="list-disc space-y-3 ps-5 text-[var(--cd-fg2)]">
-                {study[key].map((item, idx) => (
-                  <li key={idx}>{translateValue(lang, item)}</li>
-                ))}
-              </ul>
-            </section>
-            {key === 'results' && study.slug === 'diffusion-ood' && <OodDemo id="ood-explorer" />}
-          </Fragment>
-        ))}
+        <section className="portfolio-case-section" id="evaluation" aria-labelledby="evaluation-title">
+          <h2 id="evaluation-title">{t(labels.evaluation)}</h2>
+          {track && (
+            <div className="portfolio-case-highlight">
+              <p>
+                <strong>
+                  <bdi>{track === 'cifar'
+                    ? `${cifar.withinCifarMean.toFixed(2)}% ± ${cifar.withinCifarStd?.toFixed(2)}% AUROC`
+                    : `${inkjet.aurocMean.toFixed(4)} ± ${inkjet.aurocStd.toFixed(4)} AUROC`}</bdi>
+                </strong>
+                {' · '}{t(track === 'cifar' ? labels.cifarSetup : labels.inkjetSetup)}
+              </p>
+              <p className="mt-2">{t(labels.auroc)}</p>
+            </div>
+          )}
+          <ul className="list-disc space-y-2 ps-5">
+            {study.results.map((item) => <li key={item.en}>{t(item)}</li>)}
+          </ul>
+          {track && <ResearchCharts track={track} />}
+          {track === 'cifar' && <Link href="#ood-explorer" className="portfolio-text-link">{t(portfolioCopy.explorer)}</Link>}
+        </section>
 
-        <section className="glass-surface glass-subtle mt-6 p-5">
-          <h2 className="mb-4 text-lg font-semibold">{t(labels.artifacts)}</h2>
-          <div className="flex flex-wrap gap-3">
-            {study.artifacts.map((artifact, idx) => (
-              <a
-                key={idx}
-                href={artifact.href}
-                target={artifact.external || artifact.href.startsWith('http') ? '_blank' : undefined}
-                rel={artifact.external || artifact.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="cd-btn-ghost"
-              >
-                {translateValue(lang, artifact.label)}
+        <section className="portfolio-case-section">
+          <h2>{t(labels.limitations)}</h2>
+          <p>{t(decisions[slug])}</p>
+          <ul className="mt-3 list-disc space-y-2 ps-5">
+            {study.lessons.map((item) => <li key={item.en}>{t(item)}</li>)}
+          </ul>
+        </section>
+
+        <section className="portfolio-case-section" id="artifacts">
+          <h2>{t(labels.artifacts)}</h2>
+          <div className="portfolio-case-links">
+            {study.artifacts.map((artifact) => (
+              <a key={artifact.href} href={artifact.href} className="portfolio-text-link">
+                {t(artifact.label)}
               </a>
             ))}
           </div>
         </section>
+
+        {track === 'cifar' && <OodDemo id="ood-explorer" heading="h2" />}
       </article>
     </main>
   )

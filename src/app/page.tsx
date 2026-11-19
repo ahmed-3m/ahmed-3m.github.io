@@ -1,13 +1,6 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
-import Hero from "@/components/Hero";
-import About from "@/components/About";
-import Projects from "@/components/Projects";
-import Evidence from "@/components/Evidence";
-import Experience from "@/components/Experience";
-import Research from "@/components/Research";
-import Writing from "@/components/Writing";
-import News from "@/components/News";
+import PortfolioAbstract from "@/components/PortfolioAbstract";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import {
@@ -28,17 +21,9 @@ export default function Home() {
       <ProjectsSchema />
       <ResearchSchema />
       <WebPageSchema />
-      <div className="cd-ambient" aria-hidden="true" />
       <Header />
-      <main id="main" tabIndex={-1}>
-        <Hero />
-        <Projects />
-        <About />
-        <Experience />
-        <Research />
-        <Evidence />
-        <Writing />
-        <News />
+      <main id="main" tabIndex={-1} className="portfolio-page">
+        <PortfolioAbstract />
         <Contact />
       </main>
       <Footer />
