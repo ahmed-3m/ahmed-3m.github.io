@@ -5,7 +5,8 @@ import { useReveal } from '@/lib/useReveal'
 
 const copy = {
   eyebrow: { en: '// Projects', de: '// Projekte', fr: '// Projets', es: '// Proyectos', ar: '// المشاريع' },
-  title: { en: 'Research that ships.', de: 'Forschung, die produktiv wird.', fr: 'La recherche qui devient produit.', es: 'Investigación que llega a producción.', ar: 'بحث يتحول إلى منتج.' },
+  fullTitle: { en: 'Research that ships.', de: 'Forschung, die produktiv wird.', fr: 'La recherche qui devient produit.', es: 'Investigación que llega a producción.', ar: 'بحث يتحول إلى منتج.' },
+  title: { en: 'Other projects and open source', de: 'Weitere Projekte und Open Source', fr: 'Autres projets et open source', es: 'Otros proyectos y código abierto', ar: 'مشاريع أخرى ومصادر مفتوحة' },
   supporting: { en: 'Supporting proof · Invitation-only beta (tech2b)', de: 'Weiterer Nachweis · Beta mit Einladung (tech2b)', fr: 'Preuve complémentaire · Bêta sur invitation (tech2b)', es: 'Prueba adicional · Beta por invitación (tech2b)', ar: 'دليل إضافي · نسخة تجريبية بدعوة (tech2b)' },
   caseStudy: { en: 'Case study', de: 'Fallstudie', fr: 'Étude de cas', es: 'Caso de estudio', ar: 'دراسة حالة' },
   caseStudyLink: { en: 'Case study', de: 'Fallstudie', fr: 'Étude de cas', es: 'Caso de estudio', ar: 'دراسة حالة' },
@@ -44,14 +45,6 @@ const copy = {
     es: "Construí y evalué un sistema que localiza elementos impresos y busca defectos. Lo probé con el conjunto público FTI_Zer0P en cinco particiones.",
     ar: "طوّرت وقيّمت نظامًا يحدد العناصر المطبوعة في الصور ثم يبحث فيها عن العيوب. اختبرته على مجموعة FTI_Zer0P العامة باستخدام خمسة تقسيمات.",
   },
-  eegTitle: { en: 'EEG Signal Classification', de: 'EEG-Signalklassifikation', fr: 'Classification de signaux EEG', es: 'Clasificación de señales EEG', ar: 'تصنيف إشارات EEG' },
-  eegDesc: {
-    en: 'LSTM, Bi-LSTM, and GRU architectures for motor imagery classification in brain-computer interface applications.',
-    de: 'LSTM-, Bi-LSTM- und GRU-Architekturen für Motor-Imagery-Klassifikation in Brain-Computer-Interfaces.',
-    fr: "Architectures LSTM, Bi-LSTM et GRU pour la classification d'imagerie motrice dans les interfaces cerveau-ordinateur.",
-    es: 'Arquitecturas LSTM, Bi-LSTM y GRU para clasificación de imaginación motora en interfaces cerebro-computadora.',
-    ar: 'معماريات LSTM وBi-LSTM وGRU لتصنيف التخيل الحركي في تطبيقات واجهة الدماغ والحاسوب.',
-  },
   mentoTitle: { en: 'Sihem — AI Mentor Assistant', de: 'Sihem — KI-Mentor-Assistent', fr: 'Sihem — Assistant mentor IA', es: 'Sihem — Asistente mentor con IA', ar: 'Sihem — مساعد موجه بالذكاء الاصطناعي' },
   mentoDesc: {
     en: "A personal assistant for weekly planning and daily routines through Telegram and a web app. I built its scheduling, long-term memory, and multi-provider AI integration. Morning briefings, evening reviews, and adaptive check-ins are available in an invitation-only beta.",
@@ -65,28 +58,14 @@ const copy = {
     de: 'Open Source · Agent-Tooling',
     fr: 'Open source · Outillage agents',
     es: 'Open source · Herramientas para agentes',
-    ar: 'مصدر مفتوح · أدوات الوكلاء',
+    ar: 'مفتوح المصدر · أدوات الوكلاء',
   },
   mergeproofDesc: {
     en: "Checks AI-written pull requests against configured deterministic merge requirements without calling an LLM. Passing those checks does not guarantee defect-free code.",
-    de: "Prüft KI-generierte Pull Requests anhand konfigurierter deterministischer Merge-Anforderungen ohne LLM-Aufruf. Bestandene Prüfungen garantieren keine Fehlerfreiheit.",
-    fr: "Vérifie les pull requests générées par IA selon des exigences déterministes configurées, sans appel LLM. La réussite des contrôles ne garantit pas l’absence de défauts.",
+    de: "Prüft KI-generierte Pull Requests anhand konfigurierter deterministischer Merge-Anforderungen ohne LLM-Aufruf. Bestandene Prüfungen garantieren keinen fehlerfreien Code.",
+    fr: "Vérifie les pull requests générées par IA selon des exigences de fusion déterministes configurées, sans appel à un LLM. La réussite de ces contrôles ne garantit pas un code sans défaut.",
     es: "Verifica pull requests generadas por IA según requisitos deterministas configurados, sin llamadas a un LLM. Superar las comprobaciones no garantiza la ausencia de errores.",
     ar: "يتحقق من طلبات الدمج المكتوبة بالذكاء الاصطناعي وفق متطلبات حتمية محددة دون استدعاء نموذج لغوي. اجتياز هذه الفحوص لا يضمن خلو الشيفرة من الأخطاء.",
-  },
-  tagZeroDeps: {
-    en: 'Zero dependencies',
-    de: 'Keine Abhängigkeiten',
-    fr: 'Zéro dépendance',
-    es: 'Sin dependencias',
-    ar: 'بدون تبعيات',
-  },
-  tagLlmFree: {
-    en: 'LLM-free gate',
-    de: 'LLM-freies Gate',
-    fr: 'Garde-fou sans LLM',
-    es: 'Compuerta sin LLM',
-    ar: 'بوابة خالية من LLM',
   },
   mergeproofMetric: {
     en: 'LLM calls',
@@ -95,30 +74,99 @@ const copy = {
     es: 'llamadas LLM',
     ar: 'استدعاءات LLM',
   },
+  tagZeroDeps: {
+    en: 'Zero dependencies',
+    de: 'Keine Abhängigkeiten',
+    fr: 'Zéro dépendance',
+    es: 'Cero dependencias',
+    ar: 'بدون تبعيات',
+  },
+  tagLlmFree: {
+    en: 'LLM-free gate',
+    de: 'LLM-freies Gate',
+    fr: 'Porte sans LLM',
+    es: 'Compuerta sin LLM',
+    ar: 'بوابة خالية من LLM',
+  },
+  eegTitle: { en: 'EEG Signal Classification', de: 'EEG-Signalklassifikation', fr: 'Classification de signaux EEG', es: 'Clasificación de señales EEG', ar: 'تصنيف إشارات EEG' },
+  eegDesc: {
+    en: 'LSTM, Bi-LSTM, and GRU architectures for motor imagery classification in brain-computer interface applications.',
+    de: 'LSTM-, Bi-LSTM- und GRU-Architekturen für Motor-Imagery-Klassifikation in Brain-Computer-Interfaces.',
+    fr: "Architectures LSTM, Bi-LSTM et GRU pour la classification d'imagerie motrice dans les interfaces cerveau-ordinateur.",
+    es: 'Arquitecturas LSTM, Bi-LSTM y GRU para clasificación de imaginación motora en interfaces cerebro-computadora.',
+    ar: 'معماريات LSTM وBi-LSTM وGRU لتصنيف التخيل الحركي في تطبيقات واجهة الدماغ والحاسوب.',
+  },
   moreOssEyebrow: {
     en: 'More open source',
-    de: 'Mehr Open Source',
-    fr: "Plus d'open source",
-    es: 'Más open source',
-    ar: 'المزيد من المصادر المفتوحة',
+    de: 'Weiteres Open Source',
+    fr: 'Autres projets open source',
+    es: 'Más proyectos open source',
+    ar: 'مشاريع أخرى مفتوحة المصدر',
   },
   moreOss1: {
-    en: "a Messenger bot that answers a real shop's customers about prices, hours and delivery.",
-    de: 'ein Messenger-Bot, der den Kunden eines echten Ladens zu Preisen, Öffnungszeiten und Lieferung antwortet.',
-    fr: "un bot Messenger qui répond aux clients d'une vraie boutique sur les prix, les horaires et la livraison.",
-    es: 'un bot de Messenger que responde a los clientes de una tienda real sobre precios, horarios y entrega.',
-    ar: 'بوت ماسنجر يجيب عملاء متجر حقيقي حول الأسعار وأوقات العمل والتوصيل.',
+    en: "a Messenger bot that answers a real shop's customers about prices, hours and delivery",
+    de: 'ein Messenger-Bot, der Kunden eines echten Ladens Fragen zu Preisen, Öffnungszeiten und Lieferung beantwortet',
+    fr: "un bot Messenger qui répond aux clients d'une vraie boutique sur les prix, horaires et livraisons",
+    es: 'un bot de Messenger que responde a los clientes de una tienda real sobre precios, horarios y entregas',
+    ar: 'بوت ماسنجر يجيب عملاء متجر حقيقي عن الأسعار وساعات العمل والتوصيل',
   },
   moreOss2: {
     en: 'zero-dependency tools that take a fuzzy idea to a linted brief, then to a tested prototype, with any coding agent.',
-    de: 'Zero-Dependency-Werkzeuge, die eine vage Idee in ein gelintetes Briefing und dann in einen getesteten Prototyp überführen — mit jedem Coding-Agent.',
-    fr: "des outils sans dépendance qui transforment une idée floue en brief linté, puis en prototype testé, avec n'importe quel agent de code.",
-    es: 'herramientas sin dependencias que llevan una idea difusa a un brief lintado y luego a un prototipo probado, con cualquier agente de código.',
-    ar: 'أدوات بدون تبعيات تحوّل فكرة غامضة إلى موجز مُدقَّق ثم إلى نموذج أولي مُختبَر، مع أي وكيل برمجي.',
+    de: 'Zero-Dependency-Tools, die eine vage Idee mit jedem Coding-Agenten erst in ein geprüftes Briefing und dann in einen getesteten Prototyp überführen.',
+    fr: "des outils sans dépendances qui transforment une idée floue en brief validé puis en prototype testé, avec n'importe quel agent de code.",
+    es: 'herramientas sin dependencias que llevan una idea difusa a un brief validado y luego a un prototipo probado con cualquier agente de código.',
+    ar: 'أدوات بدون تبعيات تحول الفكرة الأولية إلى ملخص مدقق ثم إلى نموذج أولي مختبر مع أي وكيل برمجة.',
   },
 } satisfies Record<string, TranslationMap>
 
-export default function Projects() {
+function AdditionalProjectCards() {
+  const { t } = useI18n()
+
+  return (
+    <>
+      <article className="cd-project-card reveal">
+        <div className="cd-pc-eyebrow">{t(copy.mergeproofEyebrow)}</div>
+        <h3 className="cd-pc-title">mergeproof</h3>
+        <div className="cd-pc-desc">{t(copy.mergeproofDesc)}</div>
+        <div className="cd-pc-metric">0<span> {t(copy.mergeproofMetric)}</span></div>
+        <div className="cd-proj-tags" style={{ marginTop: 12 }}>
+          {['JavaScript', t(copy.tagZeroDeps), t(copy.tagLlmFree), 'npm'].map(tag => (
+            <span key={tag} className="cd-proj-tag">{tag}</span>
+          ))}
+        </div>
+        <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
+          <a href="https://github.com/ahmed-3m/mergeproof" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.code)} &rarr;</a>
+        </div>
+      </article>
+
+      <article className="cd-project-card reveal">
+        <div className="cd-pc-eyebrow">Karunya Institute of Technology and Sciences · BCI Research</div>
+        <h3 className="cd-pc-title">{t(copy.eegTitle)}</h3>
+        <div className="cd-pc-desc">{t(copy.eegDesc)}</div>
+        <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
+          <a href="https://github.com/ahmed-3m/Motor-Imagery-classification" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.code)} &rarr;</a>
+        </div>
+      </article>
+
+      <article className="cd-project-card cd-project-card--full reveal">
+        <div className="cd-pc-eyebrow">{t(copy.moreOssEyebrow)}</div>
+        <div className="cd-pc-desc" style={{ maxWidth: 760 }}>
+          <a href="https://github.com/ahmed-3m/Elbostan-Pazar-bot" target="_blank" rel="noopener noreferrer" className="cd-proj-link">Elbostan Pazar bot</a>
+          {' — '}
+          {t(copy.moreOss1)}
+          {' · '}
+          <a href="https://github.com/ahmed-3m/brainstorm2idea" target="_blank" rel="noopener noreferrer" className="cd-proj-link">brainstorm2idea</a>
+          {' + '}
+          <a href="https://github.com/ahmed-3m/idea2prototype" target="_blank" rel="noopener noreferrer" className="cd-proj-link">idea2prototype</a>
+          {' — '}
+          {t(copy.moreOss2)}
+        </div>
+      </article>
+    </>
+  )
+}
+
+export function FullProjects() {
   useReveal()
   const { t } = useI18n()
 
@@ -126,7 +174,7 @@ export default function Projects() {
     <section id="projects" className="cd-section">
       <div className="cd-container">
         <div className="cd-section-eyebrow">{t(copy.eyebrow)}</div>
-        <h2 className="cd-section-title">{t(copy.title)}</h2>
+        <h2 className="cd-section-title">{t(copy.fullTitle)}</h2>
 
         <div className="cd-projects-grid">
           <article className="cd-project-featured reveal">
@@ -180,46 +228,25 @@ export default function Projects() {
           <details className="cd-additional-projects">
             <summary>{t({ en: 'More projects and open source', de: 'Weitere Projekte und Open Source', fr: 'Autres projets et open source', es: 'Más proyectos y código abierto', ar: 'مشاريع أخرى ومصادر مفتوحة' })}</summary>
             <div className="cd-projects-grid" style={{ marginTop: 20 }}>
-          <article className="cd-project-card reveal">
-            <div className="cd-pc-eyebrow">{t(copy.mergeproofEyebrow)}</div>
-            <div className="cd-pc-title">mergeproof</div>
-            <div className="cd-pc-desc">{t(copy.mergeproofDesc)}</div>
-            <div className="cd-pc-metric">0<span> {t(copy.mergeproofMetric)}</span></div>
-            <div className="cd-proj-tags" style={{ marginTop: 12 }}>
-              {['JavaScript', t(copy.tagZeroDeps), t(copy.tagLlmFree), 'npm'].map(tag => (
-                <span key={tag} className="cd-proj-tag">{tag}</span>
-              ))}
-            </div>
-            <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
-              <a href="https://github.com/ahmed-3m/mergeproof" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.code)} &rarr;</a>
-            </div>
-          </article>
-
-          <article className="cd-project-card reveal">
-            <div className="cd-pc-eyebrow">Karunya Institute of Technology and Sciences · BCI Research</div>
-            <div className="cd-pc-title">{t(copy.eegTitle)}</div>
-            <div className="cd-pc-desc">{t(copy.eegDesc)}</div>
-            <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
-              <a href="https://github.com/ahmed-3m/Motor-Imagery-classification" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.code)} &rarr;</a>
-            </div>
-          </article>
-
-          <article className="cd-project-card cd-project-card--full reveal">
-            <div className="cd-pc-eyebrow">{t(copy.moreOssEyebrow)}</div>
-            <div className="cd-pc-desc" style={{ maxWidth: 760 }}>
-              <a href="https://github.com/ahmed-3m/Elbostan-Pazar-bot" target="_blank" rel="noopener noreferrer" className="cd-proj-link">Elbostan Pazar bot</a>
-              {' — '}
-              {t(copy.moreOss1)}
-              {' · '}
-              <a href="https://github.com/ahmed-3m/brainstorm2idea" target="_blank" rel="noopener noreferrer" className="cd-proj-link">brainstorm2idea</a>
-              {' + '}
-              <a href="https://github.com/ahmed-3m/idea2prototype" target="_blank" rel="noopener noreferrer" className="cd-proj-link">idea2prototype</a>
-              {' — '}
-              {t(copy.moreOss2)}
-            </div>
-          </article>
+              <AdditionalProjectCards />
             </div>
           </details>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default function AdditionalProjects() {
+  useReveal()
+  const { t } = useI18n()
+
+  return (
+    <section id="other-projects" className="cd-section">
+      <div className="cd-container">
+        <h2 className="cd-section-title">{t(copy.title)}</h2>
+        <div className="cd-projects-grid">
+          <AdditionalProjectCards />
         </div>
       </div>
     </section>

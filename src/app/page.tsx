@@ -1,46 +1,34 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
-import Hero from "@/components/Hero";
-import About from "@/components/About";
-import Projects from "@/components/Projects";
-import Evidence from "@/components/Evidence";
-import Experience from "@/components/Experience";
-import Research from "@/components/Research";
-import Writing from "@/components/Writing";
-import News from "@/components/News";
-import Contact from "@/components/Contact";
+import HomePortfolio from "@/components/HomePortfolio";
 import Footer from "@/components/Footer";
 import {
-  SocialProfileSchema,
   ProjectsSchema,
   ResearchSchema,
   WebPageSchema,
 } from "@/components/JsonLd";
+import { ogImage } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  alternates: { canonical: 'https://ahmed-3m.github.io/' },
+  alternates: { canonical: "https://ahmed-3m.github.io/" },
+  openGraph: {
+    title: "Ahmed Mohammed | AI/ML Engineer",
+    description:
+      "AI/ML Engineer in Linz, Austria — computer vision, industrial ML, diffusion models, LLM products (Sihem), and deterministic agent tooling (mergeproof).",
+    type: "website",
+    url: "https://ahmed-3m.github.io/",
+    images: ogImage("Ahmed Mohammed - AI/ML Engineer"),
+  },
 };
 
 export default function Home() {
   return (
     <>
-      <SocialProfileSchema />
       <ProjectsSchema />
       <ResearchSchema />
       <WebPageSchema />
-      <div className="cd-ambient" aria-hidden="true" />
       <Header />
-      <main id="main" tabIndex={-1}>
-        <Hero />
-        <Projects />
-        <About />
-        <Experience />
-        <Research />
-        <Evidence />
-        <Writing />
-        <News />
-        <Contact />
-      </main>
+      <HomePortfolio />
       <Footer />
     </>
   );

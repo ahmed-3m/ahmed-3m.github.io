@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import "./portfolio.css";
 import { I18nProvider } from "@/lib/i18n";
 import {
   PersonSchema,
@@ -110,12 +111,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       >
         <noscript>
           <style>{`.reveal { opacity: 1 !important; transform: none !important; animation: none !important; }`}</style>
-          <div style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto', fontFamily: 'system-ui, sans-serif' }}>
-            <h1>Ahmed Mohammed — AI/ML Engineer</h1>
-            <p>Based in Linz, Austria. Building AI systems end to end — computer vision, industrial ML, diffusion models, LLM products, and agent tooling. Builder of <a href="https://sihem-pwa.pages.dev/">Sihem</a> and <a href="https://github.com/ahmed-3m/mergeproof">mergeproof</a>.</p>
-            <h2>Contact</h2>
-            <p>Email: <a href="mailto:ahmed.mo.0595@gmail.com">ahmed.mo.0595@gmail.com</a> | <a href="https://www.linkedin.com/in/ahmed-3m/">LinkedIn</a> | <a href="https://github.com/ahmed-3m">GitHub</a> | <a href="/cv.pdf">CV (PDF)</a></p>
-          </div>
         </noscript>
         <ThemeProvider>
           <I18nProvider>

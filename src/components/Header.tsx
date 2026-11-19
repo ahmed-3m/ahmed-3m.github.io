@@ -2,18 +2,18 @@
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Check, ChevronDown, Globe2, Moon, Sun } from 'lucide-react'
+import { ArrowRight, Check, ChevronDown, Globe2, Layers, Moon, Sun } from 'lucide-react'
 import { useTheme } from '@/lib/ThemeContext'
 import { languageOptions, useI18n, type TranslationMap, isLanguage } from '@/lib/i18n'
+import { portfolioCopy } from '@/lib/portfolio-copy'
+import { setPortfolioView, usePortfolioView } from '@/lib/portfolio-view'
 
 const links = [
   { href: '/#projects', label: { en: 'Projects', de: 'Projekte', fr: 'Projets', es: 'Proyectos', ar: 'المشاريع' } },
-  { href: '/#about', label: { en: 'About', de: 'Profil', fr: 'Profil', es: 'Perfil', ar: 'نبذة' } },
-  { href: '/#experience', label: { en: 'Experience', de: 'Erfahrung', fr: 'Expérience', es: 'Experiencia', ar: 'الخبرة' } },
-  { href: '/#research', label: { en: 'Research', de: 'Forschung', fr: 'Recherche', es: 'Investigación', ar: 'الأبحاث' } },
-  { href: '/#writing', label: { en: 'Blog', de: 'Blog', fr: 'Blog', es: 'Blog', ar: 'المدونة' } },
+  { href: '/about/', label: { en: 'About', de: 'Profil', fr: 'Profil', es: 'Perfil', ar: 'نبذة' } },
+  { href: '/research/', label: { en: 'Research', de: 'Forschung', fr: 'Recherche', es: 'Investigación', ar: 'الأبحاث' } },
+  { href: '/blog/', label: { en: 'Writing', de: 'Artikel', fr: 'Articles', es: 'Artículos', ar: 'المقالات' } },
   { href: '/news/', label: { en: 'News', de: 'News', fr: 'Actualités', es: 'Noticias', ar: 'الأخبار' } },
-  { href: '/#contact', label: { en: 'Contact', de: 'Kontakt', fr: 'Contact', es: 'Contacto', ar: 'تواصل' } },
 ] satisfies Array<{ href: string; label: TranslationMap }>
 
 const ctaLabel: TranslationMap = {
@@ -114,6 +114,45 @@ function NavCta({ onClick }: { onClick?: () => void }) {
   )
 }
 
+function ViewModeToggle({ isHome, onAfterClick }: { isHome: boolean; onAfterClick?: () => void }) {
+  const { t } = useI18n()
+  const { view, toggleView } = usePortfolioView()
+
+  if (isHome) {
+    const isConcise = view !== 'full'
+    return (
+      <button
+        type="button"
+        className={isConcise ? 'cd-nav-view-toggle cd-nav-view-toggle--featured' : 'cd-nav-view-toggle'}
+        onClick={() => {
+          toggleView()
+          window.scrollTo({ top: 0 })
+          onAfterClick?.()
+        }}
+      >
+        {isConcise && <Layers size={14} strokeWidth={2.2} aria-hidden="true" />}
+        <span>{t(isConcise ? portfolioCopy.fullPortfolio : portfolioCopy.conciseView)}</span>
+        {isConcise && <ArrowRight size={14} strokeWidth={2.2} className="rtl:rotate-180" aria-hidden="true" />}
+      </button>
+    )
+  }
+
+  return (
+    <Link
+      href="/?view=full"
+      className="cd-nav-view-toggle cd-nav-view-toggle--featured"
+      onClick={() => {
+        setPortfolioView('full', false)
+        onAfterClick?.()
+      }}
+    >
+      <Layers size={14} strokeWidth={2.2} aria-hidden="true" />
+      <span>{t(portfolioCopy.fullPortfolio)}</span>
+      <ArrowRight size={14} strokeWidth={2.2} className="rtl:rotate-180" aria-hidden="true" />
+    </Link>
+  )
+}
+
 const menuLabels = {
   open: { en: 'Open menu', de: 'Menü öffnen', fr: 'Ouvrir le menu', es: 'Abrir menú', ar: 'افتح القائمة' },
   close: { en: 'Close menu', de: 'Menü schließen', fr: 'Fermer le menu', es: 'Cerrar menú', ar: 'أغلق القائمة' },
@@ -133,6 +172,8 @@ export default function Header() {
   const isDark = theme === 'dark'
   // On the homepage the logo scrolls to the hero; everywhere else it returns home.
   const isHome = usePathname() === '/'
+  const { view } = usePortfolioView()
+  const isFullHome = isHome && view === 'full'
 
   useEffect(() => {
     if (!open) return
@@ -154,7 +195,7 @@ export default function Header() {
   }, [open])
 
   return (
-    <nav className="cd-nav" ref={navRef}>
+    <nav className={isFullHome ? 'cd-nav' : 'cd-nav portfolio-nav'} ref={navRef}>
       <div className="cd-nav-inner">
         <a href={isHome ? '#hero' : '/'} className="cd-nav-logo" aria-label="Ahmed Mohammed — home">Ahmed<span>.</span></a>
 
@@ -167,6 +208,7 @@ export default function Header() {
         </ul>
 
         <div className="cd-nav-actions">
+          <ViewModeToggle isHome={isHome} />
           <LanguageSelector />
           <button
             type="button"
@@ -205,6 +247,7 @@ export default function Header() {
         {links.map(l => (
           <NavLink key={l.href} href={l.href} label={l.label} onClick={() => setOpen(false)} />
         ))}
+        <ViewModeToggle isHome={isHome} onAfterClick={() => setOpen(false)} />
         <NavCta onClick={() => setOpen(false)} />
       </div>
     </nav>

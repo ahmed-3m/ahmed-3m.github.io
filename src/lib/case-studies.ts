@@ -4,10 +4,6 @@ export type CaseStudy = {
   slug: 'diffusion-ood' | 'inkjet-ood' | 'sihem'
   // Update this stored date whenever this case study changes.
   lastModified: string
-  title: TranslationMap
-  summary: TranslationMap
-  problem: TranslationMap
-  role: TranslationMap
   stack?: string[]
   pipelineStages?: Array<{ title: TranslationMap; desc: TranslationMap }>
   approach: TranslationMap[]
@@ -20,34 +16,6 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: 'diffusion-ood',
     lastModified: '2026-11-18',
-    title: {
-      en: 'DiffusionOOD: Class-Conditional Separation Loss for Out-of-Distribution Detection',
-      de: 'DiffusionOOD: Klassenkonditionale Separation Loss für OOD-Erkennung',
-      fr: 'DiffusionOOD : Separation Loss conditionnelle pour la détection OOD',
-      es: 'DiffusionOOD: Separation Loss condicional para detección OOD',
-      ar: 'DiffusionOOD: خسارة الفصل الشرطية لكشف الخارج عن التوزيع',
-    },
-    summary: {
-      en: 'Conditional diffusion models used as generative classifiers for OOD detection, with separation loss reaching 99.03% ± 0.07% AUROC on a within-CIFAR airplane-vs-rest binary split (single ID class).',
-      de: 'Konditionale Diffusionsmodelle als generative Klassifikatoren für OOD-Erkennung mit Separation Loss und 99.03% ± 0.07% AUROC auf einem Within-CIFAR Airplane-vs-Rest-Binary-Split (einzelne ID-Klasse).',
-      fr: 'Modèles de diffusion conditionnels utilisés comme classificateurs génératifs pour la détection OOD avec 99.03% ± 0.07% AUROC sur un split binaire airplane-vs-rest within-CIFAR (classe ID unique).',
-      es: 'Modelos de difusión condicional usados como clasificadores generativos para detección OOD con 99.03% ± 0.07% AUROC en un split binario airplane-vs-rest within-CIFAR (clase ID única).',
-      ar: 'نماذج انتشار شرطية استُخدمت كمصنفات توليدية لكشف OOD مع 99.03% ± 0.07% AUROC على تقسيم ثنائي airplane-vs-rest ضمن CIFAR-10 (فئة ID واحدة).',
-    },
-    problem: {
-      en: 'Standard neural classifiers exhibit dangerous overconfidence on out-of-distribution samples. Generative classifiers offer principled reconstruction error scoring, but suffer from high standard deviation across random seeds and ambiguous boundary decisions.',
-      de: 'Klassische neuronale Klassifikatoren neigen zu gefährlicher Überkonfidenz bei OOD-Daten. Generative Klassifikatoren bieten prinzipielle Rekonstruktionsfehler, leiden aber unter hoher Standardabweichung über Seeds und uneindeutigen Entscheidungsgrenzen.',
-      fr: "Les classificateurs neuronaux standards affichent une surconfiance dangereuse sur les échantillons hors distribution. Les classificateurs génératifs offrent une erreur de reconstruction principielle mais souffrent d'un écart-type élevé entre seeds.",
-      es: 'Los clasificadores neuronales estándar muestran un exceso de confianza peligroso en muestras OOD. Los clasificadores generativos ofrecen una señal de error de reconstrucción pero sufren una alta desviación estándar entre semillas.',
-      ar: 'تظهر المصنفات العصبية التقليدية ثقة مفرطة وخطيرة في العينات الخارجة عن التوزيع. تقدم المصنفات التوليدية تقييماً منهجياً عبر أخطاء إعادة البناء، لكنها تعاني من انحراف معياري مرتفع عبر البذور العشوائية وحدود قرار ملتبسة.',
-    },
-    role: {
-      en: 'Master thesis author: novel separation loss objective formulation, PyTorch Lightning & Hydra infrastructure, multi-seed statistical evaluation, and benchmark analysis.',
-      de: 'Autor der Masterarbeit: Formulierung der neuen Separation-Loss-Zielfunktion, PyTorch Lightning & Hydra Infrastruktur, statistische Multi-Seed-Evaluation und Benchmark-Analyse.',
-      fr: 'Auteur du mémoire : formulation de la novel separation loss, infrastructure PyTorch Lightning & Hydra, évaluation statistique multi-seeds et analyse des benchmarks.',
-      es: 'Autor de la tesis: formulación de la nueva función objetivo de separation loss, infraestructura en PyTorch Lightning e Hydra, evaluación estadística con múltiples semillas y análisis.',
-      ar: 'صاحب رسالة الماجستير: صياغة دالة خسارة الفصل المبتكرة، وبناء بنية التجارب بـ PyTorch Lightning وHydra، والتقييم الإحصائي عبر بذور متعددة، وتحليل المعايير.',
-    },
     stack: ['PyTorch', 'PyTorch Lightning', 'Hydra', 'DDPM / UNet', 'W&B', 'CIFAR-10'],
     pipelineStages: [
       {
@@ -87,13 +55,6 @@ export const caseStudies: CaseStudy[] = [
       },
     ],
     results: [
-      {
-        en: '99.03% ± 0.07% AUROC averaged over three seeds on a within-CIFAR airplane-vs-rest binary split (single ID class; not comparable to multi-class CIFAR-10 OOD benchmarks).',
-        de: '99.03% ± 0.07% AUROC gemittelt über drei Seeds auf einem Within-CIFAR Airplane-vs-Rest-Binary-Split (einzelne ID-Klasse; nicht vergleichbar mit Mehrklassen-CIFAR-10-OOD-Benchmarks).',
-        fr: '99.03% ± 0.07% AUROC en moyenne sur trois seeds sur un split binaire within-CIFAR airplane-vs-rest (classe ID unique ; non comparable aux benchmarks OOD multi-classes CIFAR-10).',
-        es: '99.03% ± 0.07% AUROC promedio sobre tres semillas en un split binario within-CIFAR airplane-vs-rest (clase ID única; no comparable con benchmarks OOD multiclase de CIFAR-10).',
-        ar: '99.03% ± 0.07% AUROC كمتوسط عبر 3 بذور عشوائية على تقسيم ثنائي airplane-vs-rest ضمن CIFAR-10 (فئة ID واحدة؛ غير قابل للمقارنة بمعايير OOD متعددة الفئات لـ CIFAR-10).',
-      },
       {
         en: '+6.5 percentage points gain over the non-separated baseline (which achieved 92.52% ± 11.07% AUROC at lambda=0).',
         de: '+6.5 Prozentpunkte Gewinn gegenüber der Basis ohne Separation (die bei lambda=0 92.52% ± 11.07% AUROC erreichte).',
@@ -140,34 +101,6 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: 'inkjet-ood',
     lastModified: '2026-11-18',
-    title: {
-      en: 'InkjetOOD: Transferring Generative OOD Detection to Industrial Print Quality Control',
-      de: 'InkjetOOD: Transfer generativer OOD-Erkennung auf industrielle Druckqualitätskontrolle',
-      fr: 'InkjetOOD : Transfert de la détection OOD générative au contrôle qualité industriel',
-      es: 'InkjetOOD: Transferencia de detección OOD generativa al control de calidad de impresión industrial',
-      ar: 'InkjetOOD: نقل كشف الخارج عن التوزيع التوليدي إلى مراقبة جودة الطباعة الصناعية',
-    },
-    summary: {
-      en: 'A public YOLO + conditional diffusion pipeline for industrial print-quality control evaluated on FTI_Zer0P.',
-      de: 'Eine öffentliche YOLO + Conditional-Diffusion-Pipeline für industrielle Druckqualitätskontrolle auf FTI_Zer0P.',
-      fr: 'Une pipeline publique YOLO + diffusion conditionnelle pour le contrôle qualité industriel sur FTI_Zer0P.',
-      es: 'Una pipeline pública YOLO + difusión condicional para control de calidad industrial sobre FTI_Zer0P.',
-      ar: 'خط عام يجمع بين YOLO ونموذج انتشار شرطي لمراقبة جودة الطباعة الصناعية على FTI_Zer0P.',
-    },
-    problem: {
-      en: 'Industrial quality control in inkjet printing on composite building components deals with micro-scale defects, severe class imbalance, and strict latency requirements, requiring rigorous cross-validation.',
-      de: 'Industrielle Qualitätskontrolle beim Inkjet-Druck auf Bauelementen steht vor mikroskopischen Fehlern, starkem Klassenungleichgewicht und strengen Latenzanforderungen mit harter Kreuzvalidierung.',
-      fr: "Le contrôle qualité industriel en impression inkjet sur composants de construction fait face à des micro-défauts, un déséquilibre sévère des classes et des contraintes de latence strictes.",
-      es: 'El control de calidad industrial en impresión inkjet sobre componentes de construcción enfrenta microdefectos, desbalance severo de clases y estrictas restricciones de latencia.',
-      ar: 'تواجه مراقبة الجودة الصناعية في الطباعة النافثة على مكونات البناء عيوباً مجهرية دقيقة، وعدم توازن حاد في الفئات، ومتطلبات استجابة زمنية صارمة تتطلب تحققاً تقاطعياً دقيقاً.',
-    },
-    role: {
-      en: 'Machine vision researcher: dataset annotation in Roboflow, YOLOv8 feature integration, conditional diffusion modeling, and 5-fold cross-validation benchmarking.',
-      de: 'Machine-Vision-Forscher: Datensatz-Annotation in Roboflow, YOLOv8-Feature-Integration, konditionale Diffusionsmodellierung und 5-faches Kreuzvalidierungs-Benchmarking.',
-      fr: 'Chercheur en vision industrielle : annotation du jeu de données dans Roboflow, intégration YOLOv8, modélisation par diffusion conditionnelle et benchmarking en validation croisée 5 plis.',
-      es: 'Investigador de visión artificial: anotación del conjunto de datos en Roboflow, integración de características YOLOv8, modelos de difusión condicional y benchmarking con 5-fold CV.',
-      ar: 'باحث رؤية حاسوبية: توصيف البيانات في Roboflow، دمج ميزات YOLOv8، نمذجة الانتشار الشرطي، وتقييم المعايير بتحقق تقاطعي خماسي.',
-    },
     stack: ['YOLOv8', 'PyTorch', 'Roboflow', 'OpenCV', 'Hydra', 'FTI_Zer0P'],
     pipelineStages: [
       {
@@ -207,13 +140,6 @@ export const caseStudies: CaseStudy[] = [
       },
     ],
     results: [
-      {
-        en: '0.8673 ± 0.0230 AUROC baseline achieved on the public FTI_Zer0P benchmark under strict 5-fold cross-validation.',
-        de: '0.8673 ± 0.0230 AUROC Baseline auf dem öffentlichen FTI_Zer0P Benchmark unter strenger 5-facher Kreuzvalidierung erreicht.',
-        fr: '0.8673 ± 0.0230 AUROC de référence obtenu sur le benchmark public FTI_Zer0P sous validation croisée stricte en 5 plis.',
-        es: '0.8673 ± 0.0230 AUROC de referencia alcanzado en el benchmark público FTI_Zer0P bajo validación cruzada estricta de 5 folds.',
-        ar: 'تحقيق خط أساس 0.8673 ± 0.0230 AUROC على معيار FTI_Zer0P العام بتحقق تقاطعي خماسي صارم.',
-      },
       {
         en: 'Separation loss showed null effect on small industrial textures, confirming that natural-image gains do not automatically transfer to manufacturing surfaces.',
         de: 'Separation Loss zeigte keinen signifikanten Gewinn bei feinen Industriestrukturen — Naturbild-Gewinne übertragen sich nicht automatisch auf Fertigungsoberflächen.',
@@ -262,34 +188,6 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: 'sihem',
     lastModified: '2026-11-18',
-    title: {
-      en: 'Sihem: Proactive AI Personal-Mentor & Routine Assistant',
-      de: 'Sihem: Proaktiver KI-Mentor & Routine-Assistent',
-      fr: 'Sihem : Assistant mentor personnel & routines proactif par IA',
-      es: 'Sihem: Asistente mentor personal y de rutinas proactivo con IA',
-      ar: 'Sihem: مساعد موجه شخصي وروتين يومي استباقي بالذكاء الاصطناعي',
-    },
-    summary: {
-      en: 'Proactive personal-mentor assistant on Telegram (@sihem_ai_bot) and installable PWA (sihem-pwa.pages.dev) in an invitation-only beta, accepted into the tech2b incubator in Linz.',
-      de: 'Proaktiver persönlicher Mentor-Assistent auf Telegram (@sihem_ai_bot) und installierbare PWA (sihem-pwa.pages.dev) in einer Beta mit Einladung, aufgenommen in den tech2b-Inkubator in Linz.',
-      fr: 'Assistant mentor personnel proactif sur Telegram (@sihem_ai_bot) et PWA installable (sihem-pwa.pages.dev) en bêta sur invitation, incubé chez tech2b à Linz.',
-      es: 'Asistente mentor personal proactivo en Telegram (@sihem_ai_bot) y PWA instalable (sihem-pwa.pages.dev) en beta por invitación, aceptado en la incubadora tech2b de Linz.',
-      ar: 'مساعد موجه شخصي استباقي على تيليجرام (@sihem_ai_bot) وتطبيق ويب قابل للتثبيت (sihem-pwa.pages.dev) في نسخة تجريبية بدعوة، ومقبول في حاضنة tech2b في لينز.',
-    },
-    problem: {
-      en: "Most habit trackers and todo apps are passive — they wait for manual input and break down as soon as a user's schedule shifts, while raw LLM chats lack persistent structured state, proactive scheduling, and cost-controlled multi-provider reliability.",
-      de: 'Die meisten Gewohnheits- und Todo-Apps sind rein passiv: Sie warten auf manuelle Eingaben und versagen bei Terminverschiebungen, während reine LLM-Chats keinen persistenten Zustand, keine proaktive Planung und kein kostenoptimiertes Multi-Provider-Routing bieten.',
-      fr: "La plupart des gestionnaires d'habitudes sont passifs : ils attendent une saisie manuelle et échouent dès que l'emploi du temps change, tandis que les chats LLM bruts manquent d'état persistant, de planification proactive et de fiabilité multi-fournisseurs.",
-      es: 'La mayoría de rastreadores de hábitos son pasivos: esperan entradas manuales y fallan ante imprevistos, mientras que los chats LLM carecen de estado estructurado persistente, programación proactiva y fiabilidad multiproveedor con control de costes.',
-      ar: 'معظم تطبيقات تتبع العادات وقوائم المهام سلبية وتنتظر إدخالاً يدوياً وتنهار عند أي تغيير في جدول المستخدم، بينما تفتقر محادثات LLM المباشرة إلى حالة منظمة مستمرة، وجدولة استباقية، وموثوقية متعددة المزودين بتكلفة مضبوطة.',
-    },
-    role: {
-      en: 'Solo Developer & Project Lead: full cloud architecture, deterministic nudging engine, pgvector RAG memory, multi-provider LLM routing, Telegram bot, and installable PWA.',
-      de: 'Solo-Entwickler & Projektleiter: komplette Cloud-Architektur, deterministische Nudging-Engine, pgvector-RAG-Gedächtnis, Multi-Provider-LLM-Routing, Telegram-Bot und installierbare PWA.',
-      fr: 'Développeur solo & chef de projet : architecture cloud complète, moteur de nudging déterministe, mémoire RAG pgvector, routage LLM multi-fournisseurs, bot Telegram et PWA installable.',
-      es: 'Desarrollador en solitario y líder de proyecto: arquitectura en la nube completa, motor de nudging determinista, memoria RAG pgvector, enrutamiento LLM multiproveedor, bot de Telegram y PWA instalable.',
-      ar: 'مطور منفرد وقائد مشروع: البنية السحابية الكاملة، محرك تنبيه حتمي، ذاكرة RAG بـ pgvector، توجيه LLM متعدد المزودين، بوت تيليجرام، وتطبيق ويب قابل للتثبيت.',
-    },
     stack: [
       'Deno / TypeScript',
       'Supabase Edge Functions',

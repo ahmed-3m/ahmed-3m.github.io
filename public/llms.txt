@@ -85,6 +85,8 @@ Deep-dives on research decisions, production lessons, and the gap between papers
 ## Selected Evidence
 
 - CV (PDF): https://ahmed-3m.github.io/cv.pdf
+- About & experience: https://ahmed-3m.github.io/about/
+- Research & thesis details: https://ahmed-3m.github.io/research/
 - Thesis PDF: https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf
 - Industrial report PDF: https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf
 - Research poster PDF: https://ahmed-3m.github.io/research-poster.pdf

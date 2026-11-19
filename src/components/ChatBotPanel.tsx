@@ -68,7 +68,8 @@ const TTFB_TIMEOUT_MS = 20000
 const PORTFOLIO = 'https://ahmed-3m.github.io'
 const CV_URL = `${PORTFOLIO}/cv.pdf`
 const CONTACT_URL = `${PORTFOLIO}/#contact`
-const BACKGROUND_URL = `${PORTFOLIO}/#about`
+const BACKGROUND_URL = `${PORTFOLIO}/about/`
+const RESEARCH_URL = `${PORTFOLIO}/research/`
 const INDUSTRIAL_URL = `${PORTFOLIO}/case-studies/inkjet-ood/`
 const DIFFUSION_URL = `${PORTFOLIO}/case-studies/diffusion-ood/`
 const SIHEM_URL = `${PORTFOLIO}/case-studies/sihem/`
@@ -87,7 +88,7 @@ Featured work:
 - Sihem: Ahmed leads and builds this invitation-only personal planning and routines beta. It uses Telegram and an installable web app, with scheduled check-ins, retrieval-based memory, and model routing. The case study is public; beta access is by invitation. Case study: ${SIHEM_URL}
 - mergeproof checks AI-written pull requests against configured deterministic merge requirements without calling a language model. Passing its checks does not guarantee defect-free code. Repository: https://github.com/ahmed-3m/mergeproof
 
-Public links: CV ${CV_URL} · About ${BACKGROUND_URL} · Contact ${CONTACT_URL} · GitHub https://github.com/ahmed-3m · LinkedIn https://www.linkedin.com/in/ahmed-3m/
+Public links: CV ${CV_URL} · About ${BACKGROUND_URL} · Research reports and evidence ${RESEARCH_URL} · Explorer ${DIFFUSION_URL}#ood-explorer · Contact ${CONTACT_URL} · GitHub https://github.com/ahmed-3m · LinkedIn https://www.linkedin.com/in/ahmed-3m/
 `
 }
 
@@ -891,7 +892,9 @@ function trackChatEvent() {
   }
 }
 
-const CASE_STUDY_SECTIONS: Partial<Record<string, string>> = {
+const ROUTE_SECTIONS: Partial<Record<string, string>> = {
+  '/about': 'about',
+  '/research': 'research',
   '/case-studies/inkjet-ood': 'inkjet',
   '/case-studies/diffusion-ood': 'research',
   '/case-studies/sihem': 'sihem',
@@ -899,11 +902,11 @@ const CASE_STUDY_SECTIONS: Partial<Record<string, string>> = {
 
 function useCurrentSection() {
   const pathname = usePathname()
-  const caseStudy = CASE_STUDY_SECTIONS[pathname.replace(/\/$/, '')]
+  const routeSection = ROUTE_SECTIONS[pathname.replace(/\/$/, '')]
   const [section, setSection] = useState('hero')
 
   useEffect(() => {
-    if (caseStudy) return
+    if (routeSection) return
     const sections = ['hero', 'about', 'projects', 'experience', 'research', 'evidence', 'ood-explorer', 'writing', 'contact']
 
     const pickFromViewport = () => {
@@ -934,9 +937,9 @@ function useCurrentSection() {
       window.removeEventListener('scroll', pickFromViewport)
       window.removeEventListener('resize', pickFromViewport)
     }
-  }, [pathname, caseStudy])
+  }, [pathname, routeSection])
 
-  return caseStudy ?? section
+  return routeSection ?? section
 }
 
 export function getStarterPrompts(section: string): PromptId[] {
@@ -1100,7 +1103,7 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
   useEffect(() => {
     const container = messagesRef.current
     if (!container) return
-    container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' })
+    container.scrollTo({ top: container.scrollHeight, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })
   }, [messages, isLoading])
 
   function labelForPrompt(promptId: PromptId) {
