@@ -1,5 +1,6 @@
 'use client'
 
+import { ArrowUpRight, Mail } from 'lucide-react'
 import RequestCvButton from '@/components/RequestCvButton'
 import ScheduleMeetingButton from '@/components/ScheduleMeetingButton'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
@@ -66,17 +67,31 @@ export default function Contact({ full = false }: { full?: boolean }) {
 
   return (
     <section id="contact" className="portfolio-contact portfolio-shell" aria-labelledby="portfolio-contact-title">
-      <h2 id="portfolio-contact-title">{t(copy.title)}</h2>
-      <p>{t(copy.sub)}</p>
-      <a href="mailto:ahmed.mo.0595@gmail.com" className="portfolio-text-link">
-        ahmed.mo.0595@gmail.com
-      </a>
-      <div className="portfolio-case-links">
+      <div className="portfolio-contact-top">
+        <div>
+          <h2 id="portfolio-contact-title">{t(copy.title)}</h2>
+          <p className="portfolio-contact-sub">{t(copy.sub)}</p>
+        </div>
+        <a href="mailto:ahmed.mo.0595@gmail.com" className="portfolio-contact-email">
+          <Mail size={16} strokeWidth={2.1} aria-hidden="true" />
+          <bdi dir="ltr">ahmed.mo.0595@gmail.com</bdi>
+        </a>
+      </div>
+      <div className="portfolio-contact-links">
         {socials.map((social) => (
-          <a key={social.href} href={social.href} className="portfolio-text-link">{social.label}</a>
+          <a
+            key={social.href}
+            href={social.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="portfolio-contact-chip"
+          >
+            <span>{social.label}</span>
+            <ArrowUpRight size={13} strokeWidth={2.1} className="rtl:-scale-x-100" aria-hidden="true" />
+          </a>
         ))}
-        <ScheduleMeetingButton variant="link" compact className="portfolio-text-link" />
-        <RequestCvButton variant="link" compact className="portfolio-text-link" />
+        <ScheduleMeetingButton variant="link" compact className="portfolio-contact-chip" />
+        <RequestCvButton variant="link" compact className="portfolio-contact-chip" />
       </div>
     </section>
   )
