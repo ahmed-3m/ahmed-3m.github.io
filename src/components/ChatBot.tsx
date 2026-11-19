@@ -129,7 +129,9 @@ export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false)
   const [isPanelRequested, setIsPanelRequested] = useState(false)
   const launcherRef = useRef<HTMLButtonElement>(null)
+  const panelRef = useRef<HTMLDivElement>(null)
   const wasOpenRef = useRef(false)
+  const restoreFocusRef = useRef(true)
 
   // Preload the panel once the page is idle (or after a short delay where
   // requestIdleCallback is missing), so first open feels instant.
@@ -160,24 +162,46 @@ export default function ChatBot() {
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key !== 'Escape') return
       event.preventDefault()
+      restoreFocusRef.current = true
       setIsOpen(false)
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [isOpen])
 
-  // Return focus to the launcher when the dialog closes — but not on first mount.
+  // Dismiss on outside pointerdown (capture phase) so inside drags/selections
+  // and prompt chips that unmount on click stay open, and launcher clicks toggle once.
+  useEffect(() => {
+    if (!isOpen) return
+    function handlePointerDown(event: PointerEvent) {
+      if (event.pointerType === 'mouse' && event.button !== 0) return
+      const target = event.target
+      if (!(target instanceof Node)) return
+      if (panelRef.current?.contains(target) || launcherRef.current?.contains(target)) return
+      restoreFocusRef.current = false
+      setIsOpen(false)
+    }
+    document.addEventListener('pointerdown', handlePointerDown, true)
+    return () => document.removeEventListener('pointerdown', handlePointerDown, true)
+  }, [isOpen])
+
+  // Return focus to the launcher when closed via Escape or close button — not on outside clicks.
   useEffect(() => {
     if (isOpen) {
       wasOpenRef.current = true
+      restoreFocusRef.current = true
       return
     }
     if (!wasOpenRef.current) return
     wasOpenRef.current = false
-    launcherRef.current?.focus()
+    if (!restoreFocusRef.current) return
+    launcherRef.current?.focus({ preventScroll: true })
   }, [isOpen])
 
-  const closePanel = useCallback(() => setIsOpen(false), [])
+  const closePanel = useCallback(() => {
+    restoreFocusRef.current = true
+    setIsOpen(false)
+  }, [])
 
   const shouldRenderPanel = isOpen || isPanelRequested
 
@@ -193,6 +217,7 @@ export default function ChatBot() {
         inert={!isOpen}
       >
         <div
+          ref={panelRef}
           id="ahmed-chatbot-panel"
           className="flex h-[min(560px,calc(100vh-7rem))] max-h-[calc(100dvh-6.5rem)] flex-col overflow-hidden rounded-[28px] border"
           style={panelStyle}

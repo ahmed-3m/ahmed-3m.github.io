@@ -6,7 +6,7 @@ import type { TranslationMap } from '@/lib/i18n-config'
  *
  * It lives in its own module so the shell can render the launcher label and the
  * panel's dialog label without pulling the heavy panel chunk into the initial
- * page bundle. Contents are unchanged from the pre-split ChatBot.tsx.
+ * page bundle.
  */
 
 export const GENIE_NAME = 'Genie\u{1F9DE}\u200D\u2642\uFE0F'
@@ -27,11 +27,25 @@ export const CHAT_COPY = {
     ar: GENIE_NAME,
   },
   welcome: {
-    en: `Hi, I'm ${GENIE_NAME}, Ahmed's Personal assistant. Ask me about Ahmed's research, products, projects, or background.`,
-    de: `Hi, ich bin ${GENIE_NAME}, Ahmeds persönlicher Assistent. Frage nach Ahmeds Forschung, Produkten, Projekten oder Hintergrund.`,
-    fr: `Bonjour, je suis ${GENIE_NAME}, l’assistant personnel d’Ahmed. Posez une question sur la recherche, les produits, les projets ou le parcours d’Ahmed.`,
-    es: `Hola, soy ${GENIE_NAME}, el asistente personal de Ahmed. Pregunta sobre la investigación, los productos, los proyectos o la trayectoria de Ahmed.`,
-    ar: `مرحباً، أنا ${GENIE_NAME}، المساعد الشخصي لأحمد. اسألني عن أبحاث أحمد أو منتجاته أو مشاريعه أو خلفيته.`,
+    en: 'Find out what Ahmed built, how he tested it, or where to get his CV.',
+    de: 'Erfahren Sie, was Ahmed entwickelt hat, wie er es getestet hat und wo sein Lebenslauf zu finden ist.',
+    fr: 'Découvrez ce qu’Ahmed a développé, comment il l’a testé ou où télécharger son CV.',
+    es: 'Descubre qué desarrolló Ahmed, cómo lo evaluó o dónde descargar su CV.',
+    ar: 'تعرّف على مشاريع أحمد وكيف اختبرها، أو اعثر على سيرته الذاتية.',
+  },
+  suggestions: {
+    en: 'Suggested questions',
+    de: 'Vorgeschlagene Fragen',
+    fr: 'Questions suggérées',
+    es: 'Preguntas sugeridas',
+    ar: 'أسئلة مقترحة',
+  },
+  followUps: {
+    en: 'Explore further',
+    de: 'Mehr entdecken',
+    fr: 'Aller plus loin',
+    es: 'Seguir explorando',
+    ar: 'اكتشف المزيد',
   },
   placeholder: {
     en: 'Ask Genie...',
@@ -63,17 +77,17 @@ export const CHAT_COPY = {
   },
   typing: {
     en: 'Genie is typing',
-    de: 'Ahmed schreibt',
-    fr: 'Ahmed répond',
-    es: 'Ahmed está respondiendo',
-    ar: 'أحمد يكتب الآن',
+    de: 'Genie schreibt',
+    fr: 'Genie écrit',
+    es: 'Genie está escribiendo',
+    ar: 'جيني يكتب الآن',
   },
-  missingToken: {
-    en: 'Add NEXT_PUBLIC_GROQ_TOKEN or NEXT_PUBLIC_BIGMODEL_TOKEN to enable the assistant.',
-    de: 'Füge NEXT_PUBLIC_GROQ_TOKEN oder NEXT_PUBLIC_BIGMODEL_TOKEN hinzu, um den Assistenten zu aktivieren.',
-    fr: 'Ajoutez NEXT_PUBLIC_GROQ_TOKEN ou NEXT_PUBLIC_BIGMODEL_TOKEN pour activer l’assistant.',
-    es: 'Agrega NEXT_PUBLIC_GROQ_TOKEN o NEXT_PUBLIC_BIGMODEL_TOKEN para activar el asistente.',
-    ar: 'أضف NEXT_PUBLIC_GROQ_TOKEN أو NEXT_PUBLIC_BIGMODEL_TOKEN لتفعيل المساعد.',
+  limitedAnswers: {
+    en: 'Open-ended answers are temporarily unavailable. Ask about Ahmed’s projects, thesis, background, or CV.',
+    de: 'Freie Antworten sind vorübergehend nicht verfügbar. Fragen Sie nach Ahmeds Projekten, der Masterarbeit, seinem Hintergrund oder Lebenslauf.',
+    fr: 'Les réponses aux questions libres sont temporairement indisponibles. Posez une question sur les projets, le mémoire, le parcours ou le CV d’Ahmed.',
+    es: 'Las respuestas abiertas no están disponibles temporalmente. Pregunta por los proyectos, la tesis, la trayectoria o el CV de Ahmed.',
+    ar: 'الإجابات عن الأسئلة المفتوحة غير متاحة مؤقتًا. اسأل عن مشاريع أحمد أو رسالته أو خلفيته أو سيرته الذاتية.',
   },
   genericError: {
     en: 'Something went wrong while contacting the assistant.',
