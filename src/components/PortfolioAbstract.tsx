@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { ArrowRight, Layers } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
 import { portfolioCopy as copy, selectedWork } from '@/lib/portfolio-copy'
 import { usePortfolioView } from '@/lib/portfolio-view'
@@ -19,17 +20,19 @@ export default function PortfolioAbstract() {
           <p className="portfolio-lede" data-speakable>{t(copy.lede)}</p>
           <div className="portfolio-actions">
             <a className="portfolio-primary" href="/cv.pdf">{t(copy.cv)}</a>
-            <Link className="portfolio-secondary" href="#contact">{t(copy.contact)}</Link>
             <button
               type="button"
-              className="portfolio-secondary"
+              className="portfolio-full-cta"
               onClick={() => {
                 setView('full')
                 window.scrollTo({ top: 0 })
               }}
             >
-              {t(copy.fullPortfolio)}
+              <Layers size={16} strokeWidth={2.2} aria-hidden="true" />
+              <span>{t(copy.fullPortfolio)}</span>
+              <ArrowRight size={16} strokeWidth={2.2} className="portfolio-cta-arrow rtl:rotate-180" aria-hidden="true" />
             </button>
+            <Link className="portfolio-secondary" href="#contact">{t(copy.contact)}</Link>
           </div>
         </div>
         <div className="portfolio-location">

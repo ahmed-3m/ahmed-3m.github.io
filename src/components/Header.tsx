@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Check, ChevronDown, Globe2, Moon, Sun } from 'lucide-react'
+import { ArrowRight, Check, ChevronDown, Globe2, Layers, Moon, Sun } from 'lucide-react'
 import { useTheme } from '@/lib/ThemeContext'
 import { languageOptions, useI18n, type TranslationMap, isLanguage } from '@/lib/i18n'
 import { portfolioCopy } from '@/lib/portfolio-copy'
@@ -119,17 +119,20 @@ function ViewModeToggle({ isHome, onAfterClick }: { isHome: boolean; onAfterClic
   const { view, toggleView } = usePortfolioView()
 
   if (isHome) {
+    const isConcise = view !== 'full'
     return (
       <button
         type="button"
-        className="cd-nav-view-toggle"
+        className={isConcise ? 'cd-nav-view-toggle cd-nav-view-toggle--featured' : 'cd-nav-view-toggle'}
         onClick={() => {
           toggleView()
           window.scrollTo({ top: 0 })
           onAfterClick?.()
         }}
       >
-        {t(view === 'full' ? portfolioCopy.conciseView : portfolioCopy.fullPortfolio)}
+        {isConcise && <Layers size={14} strokeWidth={2.2} aria-hidden="true" />}
+        <span>{t(isConcise ? portfolioCopy.fullPortfolio : portfolioCopy.conciseView)}</span>
+        {isConcise && <ArrowRight size={14} strokeWidth={2.2} className="rtl:rotate-180" aria-hidden="true" />}
       </button>
     )
   }
@@ -137,13 +140,15 @@ function ViewModeToggle({ isHome, onAfterClick }: { isHome: boolean; onAfterClic
   return (
     <Link
       href="/?view=full"
-      className="cd-nav-view-toggle"
+      className="cd-nav-view-toggle cd-nav-view-toggle--featured"
       onClick={() => {
         setPortfolioView('full', false)
         onAfterClick?.()
       }}
     >
-      {t(portfolioCopy.fullPortfolio)}
+      <Layers size={14} strokeWidth={2.2} aria-hidden="true" />
+      <span>{t(portfolioCopy.fullPortfolio)}</span>
+      <ArrowRight size={14} strokeWidth={2.2} className="rtl:rotate-180" aria-hidden="true" />
     </Link>
   )
 }
