@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+  experimental: {
+    agentUpgrade: "security",
+  },
   turbopack: {
     root: path.resolve(__dirname),
   },
