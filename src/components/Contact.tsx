@@ -15,6 +15,10 @@ const socials = [
 ]
 
 const copy = {
+  eyebrow: { en: '// Contact', de: '// Kontakt', fr: '// Contact', es: '// Contacto', ar: '// التواصل' },
+  titleA: { en: "Let's build", de: 'Lass uns', fr: 'Construisons', es: 'Construyamos', ar: 'لنبنِ' },
+  titleB: { en: 'something', de: 'etwas', fr: 'quelque chose', es: 'algo', ar: 'شيئاً' },
+  titleC: { en: 'extraordinary', de: 'Außergewöhnliches bauen', fr: 'd\'extraordinaire', es: 'extraordinario', ar: 'استثنائياً' },
   title: { en: 'Contact', de: 'Kontakt', fr: 'Contact', es: 'Contacto', ar: 'تواصل' },
   sub: {
     en: 'Open to AI/ML roles, research collaborations, and product partnerships.',
@@ -25,8 +29,40 @@ const copy = {
   },
 } satisfies Record<string, TranslationMap>
 
-export default function Contact() {
+export default function Contact({ full = false }: { full?: boolean }) {
   const { t } = useI18n()
+
+  if (full) {
+    return (
+      <section id="contact" className="cd-section cd-contact-section">
+        <div className="cd-container">
+          <div className="cd-section-eyebrow" style={{ justifyContent: 'center', marginBottom: 16 }}>
+            {t(copy.eyebrow)}
+          </div>
+
+          <h2 className="cd-contact-heading">
+            {t(copy.titleA)} <span className="outline">{t(copy.titleB)}</span> {t(copy.titleC)}
+          </h2>
+
+          <p className="cd-contact-sub">{t(copy.sub)}</p>
+
+          <div className="cd-contact-links">
+            {socials.map((social) => (
+              <a key={social.href} href={social.href} target="_blank" rel="noopener noreferrer" className="cd-contact-link">
+                {social.label} &rarr;
+              </a>
+            ))}
+            <ScheduleMeetingButton variant="link" />
+            <RequestCvButton variant="link" />
+          </div>
+
+          <a href="mailto:ahmed.mo.0595@gmail.com" className="cd-contact-email">
+            ahmed.mo.0595@gmail.com
+          </a>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section id="contact" className="portfolio-contact portfolio-shell" aria-labelledby="portfolio-contact-title">

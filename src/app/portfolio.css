@@ -65,16 +65,20 @@ body:has(.portfolio-page, .portfolio-detail, .portfolio-case)::before {
   margin-block-start: 1.5rem;
 }
 
-.portfolio-actions a {
+.portfolio-actions a,
+.portfolio-actions button {
   display: inline-flex;
   min-height: 44px;
   align-items: center;
   padding: .55rem 1rem;
   border: 1px solid var(--cd-b1);
   border-radius: .3rem;
+  background: transparent;
+  font-family: inherit;
   font-size: .95rem;
   font-weight: 650;
   line-height: 1.35;
+  cursor: pointer;
 }
 
 .portfolio-actions .portfolio-primary {
@@ -87,7 +91,8 @@ body:has(.portfolio-page, .portfolio-detail, .portfolio-case)::before {
   color: var(--cd-fg1);
 }
 
-.portfolio-actions a:hover {
+.portfolio-actions a:hover,
+.portfolio-actions button:hover {
   border-color: var(--cd-accent);
   color: var(--cd-accent);
   background: var(--cd-surf);
@@ -442,6 +447,42 @@ body:has(.portfolio-page, .portfolio-detail, .portfolio-case)::before {
 
 .cd-nav-mobile-panel[hidden] {
   display: none;
+}
+
+.cd-nav-view-toggle {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  padding: 7px 14px;
+  border: 1px solid var(--cd-b1);
+  border-radius: 7px;
+  background: var(--cd-surf);
+  color: var(--cd-fg1);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 150ms, border-color 150ms, background 150ms;
+}
+
+.cd-nav-view-toggle:hover {
+  color: var(--cd-accent);
+  border-color: var(--cd-accent);
+}
+
+@media (max-width: 960px) {
+  .cd-nav-actions .cd-nav-view-toggle {
+    display: none;
+  }
+}
+
+.cd-nav-mobile-panel .cd-nav-view-toggle {
+  display: inline-flex;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 16px;
 }
 
 @media (max-width: 720px) {

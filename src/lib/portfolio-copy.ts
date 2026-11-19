@@ -13,6 +13,8 @@ export const portfolioCopy = {
   availability: { en: 'Open to AI/ML roles', de: 'Offen für KI- und ML-Stellen', fr: 'Ouvert aux postes en IA et ML', es: 'Abierto a puestos de IA y ML', ar: 'منفتح على وظائف الذكاء الاصطناعي والتعلّم الآلي' },
   cv: { en: 'View CV (PDF)', de: 'Lebenslauf ansehen (PDF)', fr: 'Voir le CV (PDF)', es: 'Ver CV (PDF)', ar: 'عرض السيرة الذاتية (PDF)' },
   contact: { en: 'Get in touch', de: 'Kontakt', fr: 'Me contacter', es: 'Contactar', ar: 'تواصل معي' },
+  fullPortfolio: { en: 'Full portfolio', de: 'Vollständiges Portfolio', fr: 'Portfolio complet', es: 'Portfolio completo', ar: 'البورتفوليو الكامل' },
+  conciseView: { en: 'Concise overview', de: 'Kurzübersicht', fr: 'Vue résumée', es: 'Vista resumida', ar: 'العرض المختصر' },
   work: { en: 'Selected work', de: 'Ausgewählte Projekte', fr: 'Projets sélectionnés', es: 'Proyectos seleccionados', ar: 'مشاريع مختارة' },
   about: { en: 'About me', de: 'Über mich', fr: 'À propos', es: 'Sobre mí', ar: 'نبذة عني' },
   background: {

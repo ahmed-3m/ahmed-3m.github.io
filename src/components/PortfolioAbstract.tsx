@@ -4,9 +4,11 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useI18n } from '@/lib/i18n'
 import { portfolioCopy as copy, selectedWork } from '@/lib/portfolio-copy'
+import { usePortfolioView } from '@/lib/portfolio-view'
 
 export default function PortfolioAbstract() {
   const { t } = useI18n()
+  const { setView } = usePortfolioView()
 
   return (
     <div className="portfolio-shell">
@@ -18,6 +20,16 @@ export default function PortfolioAbstract() {
           <div className="portfolio-actions">
             <a className="portfolio-primary" href="/cv.pdf">{t(copy.cv)}</a>
             <Link className="portfolio-secondary" href="#contact">{t(copy.contact)}</Link>
+            <button
+              type="button"
+              className="portfolio-secondary"
+              onClick={() => {
+                setView('full')
+                window.scrollTo({ top: 0 })
+              }}
+            >
+              {t(copy.fullPortfolio)}
+            </button>
           </div>
         </div>
         <div className="portfolio-location">

@@ -4,6 +4,8 @@ import RequestCvButton from '@/components/RequestCvButton'
 import ScheduleMeetingButton from '@/components/ScheduleMeetingButton'
 import HeroSignal from '@/components/HeroSignal'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
+import { portfolioCopy } from '@/lib/portfolio-copy'
+import { usePortfolioView } from '@/lib/portfolio-view'
 import { useReveal } from '@/lib/useReveal'
 
 const copy = {
@@ -67,6 +69,7 @@ const copy = {
 export default function Hero() {
   useReveal()
   const { t } = useI18n()
+  const { setView } = usePortfolioView()
 
   return (
     <section id="hero" className="cd-hero" style={{ borderTop: 'none' }}>
@@ -96,6 +99,16 @@ export default function Hero() {
             <div className="cd-hero-ctas">
               <a href="#projects" className="cd-btn-primary">{t(copy.viewWork)} <span className="inline-block rtl:rotate-180" aria-hidden="true">&rarr;</span></a>
               <RequestCvButton />
+              <button
+                type="button"
+                className="cd-btn-ghost"
+                onClick={() => {
+                  setView('concise')
+                  window.scrollTo({ top: 0 })
+                }}
+              >
+                {t(portfolioCopy.conciseView)}
+              </button>
             </div>
             <div className="cd-hero-secondary">
               <span>{t(copy.or)}</span>
