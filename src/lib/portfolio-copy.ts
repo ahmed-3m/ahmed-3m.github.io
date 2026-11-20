@@ -1,5 +1,7 @@
 import type { TranslationMap } from '@/lib/i18n-config'
 
+export const diffusionExplorerHref = '/case-studies/diffusion-ood/#ood-explorer'
+
 export const portfolioCopy = {
   role: { en: 'AI/ML Engineer', de: 'KI- und ML-Ingenieur', fr: 'Ingénieur IA et ML', es: 'Ingeniero de IA y ML', ar: 'مهندس ذكاء اصطناعي وتعلّم آلي' },
   lede: {
@@ -195,7 +197,7 @@ export const selectedWork = [
       es: 'Un modelo puede mostrar confianza ante un tipo de imagen que nunca ha visto. En la JKU Linz comprobé si la forma en que reconstruye una imagen permite detectar que queda fuera de lo que conoce.',
       ar: 'قد يجيب النموذج بثقة حتى عندما يرى نوعًا جديدًا من الصور. في جامعة يوهانس كيبلر في لينتس اختبرت ما إذا كانت طريقة إعادة بناء الصورة تكشف أنها خارج نطاق ما يعرفه النموذج.',
     },
-    link: { en: 'See thesis findings and explorer', de: 'Ergebnisse und interaktive Analyse ansehen', fr: 'Voir les résultats et l’explorateur', es: 'Ver los resultados y el explorador', ar: 'اطّلع على نتائج الرسالة والمستكشف' },
+    link: { en: 'Read the thesis case study', de: 'Fallstudie zur Masterarbeit lesen', fr: 'Lire l’étude de cas du mémoire', es: 'Leer el estudio de caso de la tesis', ar: 'اقرأ دراسة حالة الرسالة' },
     metricValue: '99.03% ± 0.07%',
     metricLabel: {
       en: 'AUROC · CIFAR-10 airplane-vs-rest (3 seeds, +6.5pp)',
@@ -278,7 +280,7 @@ export const focusPillars: readonly FocusPillar[] = [
       es: 'Abrir el explorador OOD interactivo',
       ar: 'افتح مستكشف OOD التفاعلي',
     },
-    href: '/case-studies/diffusion-ood/#ood-explorer',
+    href: diffusionExplorerHref,
   },
   {
     id: 'inkjet-ood',

@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { ArrowRight, ArrowUpRight, Layers } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
 import { BENCHMARK_DATASETS } from '@/lib/ood-explorer-data'
-import { focusPillars, portfolioCopy as copy, selectedWork } from '@/lib/portfolio-copy'
+import { diffusionExplorerHref, focusPillars, portfolioCopy as copy, selectedWork } from '@/lib/portfolio-copy'
 import { usePortfolioView } from '@/lib/portfolio-view'
 
 const HIST_W = 360
@@ -29,7 +29,7 @@ function stepAreaPath(pct: readonly number[], yMax: number): string {
 
 const exploreItems = [
   { id: 'research', href: '/research/', titleKey: 'research', descKey: 'exploreResearchDesc' },
-  { id: 'ood-explorer', href: '/case-studies/diffusion-ood/#ood-explorer', titleKey: 'explorer', descKey: 'exploreExplorerDesc' },
+  { id: 'ood-explorer', href: diffusionExplorerHref, titleKey: 'explorer', descKey: 'exploreExplorerDesc' },
   { id: 'writing', href: '/blog/', titleKey: 'writing', descKey: 'exploreWritingDesc' },
   { id: 'news', href: '/news/', titleKey: 'news', descKey: 'exploreNewsDesc' },
 ] as const
@@ -76,6 +76,7 @@ export default function PortfolioAbstract() {
               Ahmed Mohammed<span className="cd-hero-dot" aria-hidden="true">.</span>
             </bdi>
           </h1>
+          <p className="portfolio-role">{t(copy.role)}</p>
           <div className="portfolio-disciplines">
             <span>{t(copy.discipline1)}</span>
             <span>{t(copy.discipline2)}</span>
@@ -310,10 +311,18 @@ export default function PortfolioAbstract() {
                     </span>
                   ))}
                 </div>
-                <Link className="portfolio-text-link" href={work.href}>
-                  <span>{t(work.link)}</span>
-                  <ArrowRight size={15} className="rtl:rotate-180" aria-hidden="true" />
-                </Link>
+                <div className="portfolio-project-links">
+                  <Link className="portfolio-text-link" href={work.href}>
+                    <span>{t(work.link)}</span>
+                    <ArrowRight size={15} className="rtl:rotate-180" aria-hidden="true" />
+                  </Link>
+                  {work.slug === 'diffusion-ood' && (
+                    <Link className="portfolio-text-link portfolio-project-explorer" href={diffusionExplorerHref}>
+                      <span>{t(copy.explorer)}</span>
+                      <ArrowRight size={15} className="rtl:rotate-180" aria-hidden="true" />
+                    </Link>
+                  )}
+                </div>
               </div>
             </article>
           ))}
