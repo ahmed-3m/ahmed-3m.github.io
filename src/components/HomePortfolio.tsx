@@ -35,9 +35,12 @@ export default function HomePortfolio() {
   }
 
   return (
-    <main id="main" tabIndex={-1} className="portfolio-page">
-      <PortfolioAbstract />
-      <Contact />
-    </main>
+    <>
+      <div className="cd-ambient" aria-hidden="true" />
+      <main id="main" tabIndex={-1} className="portfolio-page">
+        <PortfolioAbstract />
+        <Contact />
+      </main>
+    </>
   )
 }

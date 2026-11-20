@@ -1,88 +1,508 @@
 'use client'
 
+import { useRef, useState, type KeyboardEvent } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight, Layers } from 'lucide-react'
-import { useI18n } from '@/lib/i18n'
-import { portfolioCopy as copy, selectedWork } from '@/lib/portfolio-copy'
+import { ArrowRight, ArrowUpRight, Layers } from 'lucide-react'
+import { useI18n, type TranslationMap } from '@/lib/i18n'
+import { BENCHMARK_DATASETS, INKJET_OVERALL_SWEEP } from '@/lib/ood-explorer-data'
+import { diffusionExplorerHref, focusPillars, portfolioCopy as copy, selectedWork } from '@/lib/portfolio-copy'
 import { usePortfolioView } from '@/lib/portfolio-view'
+
+const specimenCopy = {
+  legendGood: { en: 'Classified good', de: 'Als in Ordnung erkannt', fr: 'Classé conforme', es: 'Clasificada como correcta', ar: 'مصنفة سليمة' },
+  legendBad: { en: 'Classified defective', de: 'Als fehlerhaft erkannt', fr: 'Classé défectueux', es: 'Clasificada como defectuosa', ar: 'مصنفة معيبة' },
+  open: { en: 'Enlarge image', de: 'Bild vergrößern', fr: 'Agrandir l’image', es: 'Ampliar imagen', ar: 'تكبير الصورة' },
+  close: { en: 'Close image viewer', de: 'Bildansicht schließen', fr: 'Fermer la visionneuse', es: 'Cerrar el visor', ar: 'إغلاق عارض الصورة' },
+} satisfies Record<string, TranslationMap>
+
+const HIST_W = 520
+const HIST_H = 148
+const HIST_PAD_X = 6
+const HIST_BASE = HIST_H - 4
+
+function stepAreaPath(pct: readonly number[], yMax: number): string {
+  const n = pct.length
+  const bw = (HIST_W - HIST_PAD_X * 2) / n
+  let d = `M${HIST_PAD_X},${HIST_BASE}`
+  pct.forEach((v, i) => {
+    const y = HIST_BASE - (v / yMax) * (HIST_BASE - 8)
+    const x0 = HIST_PAD_X + i * bw
+    d += ` L${x0.toFixed(2)},${y.toFixed(2)} L${(x0 + bw).toFixed(2)},${y.toFixed(2)}`
+  })
+  d += ` L${HIST_W - HIST_PAD_X},${HIST_BASE} Z`
+  return d
+}
+
+const sihemSteps = [
+  { labelKey: 'sihemStep1Label', descKey: 'sihemStep1Desc', hasArrow: true },
+  { labelKey: 'sihemStep2Label', descKey: 'sihemStep2Desc', hasArrow: true },
+  { labelKey: 'sihemStep3Label', descKey: 'sihemStep3Desc', hasArrow: false },
+] as const
+
+const exploreItems = [
+  { id: 'research', href: '/research/', titleKey: 'research', descKey: 'exploreResearchDesc' },
+  { id: 'ood-explorer', href: diffusionExplorerHref, titleKey: 'explorer', descKey: 'exploreExplorerDesc' },
+  { id: 'writing', href: '/blog/', titleKey: 'writing', descKey: 'exploreWritingDesc' },
+  { id: 'news', href: '/news/', titleKey: 'news', descKey: 'exploreNewsDesc' },
+] as const
 
 export default function PortfolioAbstract() {
   const { t } = useI18n()
   const { setView } = usePortfolioView()
+  const [activeTab, setActiveTab] = useState<(typeof focusPillars)[number]['id']>('diffusion-ood')
+  const [diffusionView, setDiffusionView] = useState<'histogram' | 'diagram'>('histogram')
+  const tabRefs = useRef<Array<HTMLButtonElement | null>>([])
+  const specimenDialog = useRef<HTMLDialogElement>(null)
+  const specimenTrigger = useRef<HTMLButtonElement>(null)
+  const [specimenOpen, setSpecimenOpen] = useState(false)
+
+  const ds = BENCHMARK_DATASETS.within_cifar
+  const hist = ds.histogram
+  const yMax = Math.max(...hist.id_pct, ...hist.ood_pct)
+  const tauX = HIST_PAD_X + ((ds.tauTpr95 - hist.lo) / (hist.hi - hist.lo)) * (HIST_W - HIST_PAD_X * 2)
+  const inkjet = INKJET_OVERALL_SWEEP['0.0']
+
+  const handleTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    const count = focusPillars.length
+    const isRtl = typeof document !== 'undefined' && document.documentElement.dir === 'rtl'
+    let nextIndex: number | null = null
+
+    if (event.key === 'ArrowRight') {
+      nextIndex = isRtl ? (index - 1 + count) % count : (index + 1) % count
+    } else if (event.key === 'ArrowLeft') {
+      nextIndex = isRtl ? (index + 1) % count : (index - 1 + count) % count
+    } else if (event.key === 'Home') {
+      nextIndex = 0
+    } else if (event.key === 'End') {
+      nextIndex = count - 1
+    }
+
+    if (nextIndex === null) return
+    event.preventDefault()
+    const nextPillar = focusPillars[nextIndex]
+    setActiveTab(nextPillar.id)
+    tabRefs.current[nextIndex]?.focus()
+  }
 
   return (
     <div className="portfolio-shell">
-      <section className="portfolio-intro" id="hero" aria-labelledby="portfolio-name">
-        <div>
-          <h1 id="portfolio-name"><bdi>Ahmed Mohammed</bdi></h1>
-          <p className="portfolio-role">{t(copy.role)}</p>
-          <p className="portfolio-lede" data-speakable>{t(copy.lede)}</p>
-          <div className="portfolio-actions">
-            <a className="portfolio-primary" href="/cv.pdf">{t(copy.cv)}</a>
-            <button
-              type="button"
-              className="portfolio-full-cta"
-              onClick={() => {
-                setView('full')
-                window.scrollTo({ top: 0 })
-              }}
+      <section className="stage-hero" id="hero" aria-labelledby="portfolio-name">
+        <h1 id="portfolio-name" className="stage-hero-name">
+          <bdi>
+            Ahmed Mohammed<span className="cd-hero-dot" aria-hidden="true">.</span>
+          </bdi>
+        </h1>
+
+        <p className="stage-role">{t(copy.role)}</p>
+
+        <div className="stage-disciplines">
+          <span>{t(copy.discipline1)}</span>
+          <span>{t(copy.discipline2)}</span>
+          <span>{t(copy.discipline3)}</span>
+        </div>
+
+        <p className="stage-hero-lede" data-speakable>
+          {t(copy.lede)}
+        </p>
+
+        <div className="stage-dock">
+          <button
+            type="button"
+            className="stage-cta-full"
+            onClick={() => {
+              setView('full')
+              window.scrollTo({ top: 0 })
+            }}
+          >
+            <Layers size={16} strokeWidth={2.2} aria-hidden="true" />
+            <span>{t(copy.fullPortfolio)}</span>
+            <ArrowRight size={16} strokeWidth={2.2} className="stage-cta-arrow rtl:rotate-180" aria-hidden="true" />
+          </button>
+          <a className="stage-cta-cv" href="/cv.pdf">
+            {t(copy.cv)}
+          </a>
+          <Link className="stage-cta-contact" href="#contact">
+            {t(copy.contact)}
+          </Link>
+        </div>
+
+        <div className="stage-telemetry-ribbon">
+          <span className="cd-open-badge">
+            <span className="cd-open-dot" aria-hidden="true" />
+            {t(copy.availability)}
+          </span>
+          <span className="stage-ribbon-sep" aria-hidden="true" />
+          <span>{t(copy.location)}</span>
+          <span className="stage-ribbon-sep" aria-hidden="true" />
+          <span>{t(copy.degreeBadge)}</span>
+        </div>
+      </section>
+
+      <section className="stage-theater-section" id="projects" aria-labelledby="portfolio-work-title">
+        <div className="stage-section-head">
+          <h2 id="portfolio-work-title">{t(copy.work)}</h2>
+        </div>
+
+        <div className="stage-theater">
+          <div role="tablist" aria-label={t(copy.stageTablistAria)} className="stage-rail">
+            {focusPillars.map((pillar, index) => {
+              const isSelected = pillar.id === activeTab
+              return (
+                <button
+                  key={pillar.id}
+                  ref={(el) => {
+                    tabRefs.current[index] = el
+                  }}
+                  type="button"
+                  role="tab"
+                  id={`stage-tab-${pillar.id}`}
+                  aria-selected={isSelected}
+                  aria-controls={`stage-panel-${pillar.id}`}
+                  tabIndex={isSelected ? 0 : -1}
+                  className={`stage-rail-btn${isSelected ? ' is-active' : ''}`}
+                  onClick={() => setActiveTab(pillar.id)}
+                  onKeyDown={(event) => handleTabKeyDown(event, index)}
+                >
+                  <span className="stage-rail-dot" aria-hidden="true" />
+                  <span className="stage-rail-title">{t(pillar.tabLabel)}</span>
+                  <span className="stage-rail-metric">
+                    <bdi dir="ltr">{pillar.metricValue}</bdi>
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+
+          {focusPillars.map((pillar) => {
+            const isSelected = pillar.id === activeTab
+            const work = selectedWork.find((item) => item.slug === pillar.id) ?? selectedWork[0]
+
+            return (
+              <div
+                key={pillar.id}
+                role="tabpanel"
+                id={`stage-panel-${pillar.id}`}
+                aria-labelledby={`stage-tab-${pillar.id}`}
+                hidden={!isSelected}
+                className="stage-panel"
+              >
+                <div className="stage-canvas">
+                  {pillar.id === 'diffusion-ood' && (
+                    <>
+                      <div className="stage-canvas-head">
+                        <div className="stage-mode-switch" role="group" aria-label={t(copy.stageVisualModeAria)}>
+                          <button
+                            type="button"
+                            className={`stage-mode-btn${diffusionView === 'histogram' ? ' is-active' : ''}`}
+                            aria-pressed={diffusionView === 'histogram'}
+                            onClick={() => setDiffusionView('histogram')}
+                          >
+                            {t(copy.stageVisualHistogram)}
+                          </button>
+                          <button
+                            type="button"
+                            className={`stage-mode-btn${diffusionView === 'diagram' ? ' is-active' : ''}`}
+                            aria-pressed={diffusionView === 'diagram'}
+                            onClick={() => setDiffusionView('diagram')}
+                          >
+                            {t(copy.stageVisualDiagram)}
+                          </button>
+                        </div>
+                        <p className="stage-canvas-cap">{t(copy.snapshotCaption)}</p>
+                      </div>
+
+                      <div className="stage-canvas-body">
+                        {diffusionView === 'histogram' ? (
+                          <>
+                            <div className="cd-signal-plot stage-hist-plot" dir="ltr">
+                              <svg viewBox={`0 0 ${HIST_W} ${HIST_H}`} role="img" aria-label={t(copy.histogramChartLabel)} preserveAspectRatio="none">
+                                {[0.25, 0.5, 0.75].map((f) => (
+                                  <line
+                                    key={f}
+                                    x1={HIST_PAD_X}
+                                    x2={HIST_W - HIST_PAD_X}
+                                    y1={HIST_BASE - f * (HIST_BASE - 8)}
+                                    y2={HIST_BASE - f * (HIST_BASE - 8)}
+                                    className="cd-signal-grid"
+                                  />
+                                ))}
+                                <rect x={tauX} y={0} width={HIST_W - HIST_PAD_X - tauX} height={HIST_BASE} className="cd-signal-flag" />
+                                <path d={stepAreaPath(hist.ood_pct, yMax)} className="cd-signal-ood" />
+                                <path d={stepAreaPath(hist.id_pct, yMax)} className="cd-signal-id" />
+                                <line x1={HIST_PAD_X} x2={HIST_W - HIST_PAD_X} y1={HIST_BASE} y2={HIST_BASE} className="cd-signal-axis" />
+                                <line x1={tauX} x2={tauX} y1={2} y2={HIST_BASE} className="cd-signal-tau" />
+                              </svg>
+                              <span className="cd-signal-tau-label" style={{ left: `${(tauX / HIST_W) * 100}%` }}>
+                                {t(copy.histogramTau)}
+                              </span>
+                            </div>
+                            <ul className="cd-signal-legend stage-hist-legend">
+                              <li><span className="sw sw-id" aria-hidden="true" />{t(copy.histogramId)}</li>
+                              <li><span className="sw sw-ood" aria-hidden="true" />{t(copy.histogramOod)}</li>
+                            </ul>
+                          </>
+                        ) : (
+                          <div className="stage-visual-frame stage-visual-frame--dark">
+                            <Image
+                              src="/research/separation-apart-preview.webp"
+                              width={800}
+                              height={450}
+                              sizes="(max-width: 900px) 92vw, 620px"
+                              loading="eager"
+                              alt={t(copy.diffusionDiagramAlt)}
+                              className="stage-visual-img"
+                            />
+                          </div>
+                        )}
+                      </div>
+
+                      <dl className="stage-telemetry-grid">
+                        <div className="stage-telemetry-cell">
+                          <dt>
+                            <bdi dir="ltr">AUROC</bdi>
+                            <span className="stage-telemetry-qual"> · {t(copy.telemetrySeed42)}</span>
+                          </dt>
+                          <dd><bdi dir="ltr">{ds.auroc.toFixed(2)}%</bdi></dd>
+                        </div>
+                        <div className="stage-telemetry-cell">
+                          <dt><bdi dir="ltr">FPR@95</bdi></dt>
+                          <dd><bdi dir="ltr">{ds.fpr95.toFixed(1)}%</bdi></dd>
+                        </div>
+                        <div className="stage-telemetry-cell">
+                          <dt><bdi dir="ltr">AUPRC</bdi></dt>
+                          <dd><bdi dir="ltr">{ds.auprc.toFixed(2)}%</bdi></dd>
+                        </div>
+                      </dl>
+                    </>
+                  )}
+
+                  {pillar.id === 'inkjet-ood' && (
+                    <>
+                      <div className="stage-canvas-head">
+                        <p className="stage-canvas-cap">{t(copy.inkjetCaption)}</p>
+                        <ul className="stage-specimen-legend">
+                          <li><span className="stage-specimen-key stage-specimen-key--good" aria-hidden="true" />{t(specimenCopy.legendGood)}</li>
+                          <li><span className="stage-specimen-key stage-specimen-key--bad" aria-hidden="true" />{t(specimenCopy.legendBad)}</li>
+                        </ul>
+                      </div>
+
+                      <div className="stage-canvas-body">
+                        <button
+                          ref={specimenTrigger}
+                          type="button"
+                          className="stage-visual-frame stage-visual-frame--specimen"
+                          aria-haspopup="dialog"
+                          aria-label={`${t(specimenCopy.open)}: ${t(copy.inkjetAlt)}`}
+                          title={t(specimenCopy.open)}
+                          onClick={() => {
+                            const viewer = specimenDialog.current
+                            if (typeof viewer?.showModal !== 'function') return
+                            viewer.showModal()
+                            setSpecimenOpen(true)
+                          }}
+                        >
+                          <Image
+                            src="/research/inkjet-inspection-samples-dark.webp"
+                            width={1083}
+                            height={546}
+                            sizes="(max-width: 900px) 92vw, 620px"
+                            loading="lazy"
+                            alt={t(copy.inkjetAlt)}
+                            className="stage-visual-img stage-visual-img--dark"
+                          />
+                          <Image
+                            src="/research/inkjet-inspection-samples-light.webp"
+                            width={1083}
+                            height={546}
+                            sizes="(max-width: 900px) 92vw, 620px"
+                            loading="lazy"
+                            alt=""
+                            aria-hidden="true"
+                            className="stage-visual-img stage-visual-img--light"
+                          />
+                        </button>
+                        <dialog
+                          ref={specimenDialog}
+                          className="portfolio-figure-dialog"
+                          aria-labelledby="stage-specimen-dialog-cap"
+                          onClick={(event) => {
+                            if (event.target === event.currentTarget) event.currentTarget.close()
+                          }}
+                          onClose={() => {
+                            setSpecimenOpen(false)
+                            specimenTrigger.current?.focus()
+                          }}
+                        >
+                          <div>
+                            <button type="button" className="portfolio-text-link" onClick={() => specimenDialog.current?.close()}>
+                              {t(specimenCopy.close)}
+                            </button>
+                            {specimenOpen && (
+                              <Image
+                                src="/research/inkjet-inspection-samples.webp"
+                                width={1100}
+                                height={678}
+                                alt={t(copy.inkjetAlt)}
+                              />
+                            )}
+                            <p id="stage-specimen-dialog-cap">{t(copy.inkjetCaption)}</p>
+                          </div>
+                        </dialog>
+                      </div>
+
+                      <dl className="stage-telemetry-grid">
+                        <div className="stage-telemetry-cell">
+                          <dt><bdi dir="ltr">AUROC</bdi></dt>
+                          <dd><bdi dir="ltr">{`${inkjet.aurocMean.toFixed(4)} ± ${inkjet.aurocStd.toFixed(4)}`}</bdi></dd>
+                        </div>
+                        <div className="stage-telemetry-cell">
+                          <dt>{t(copy.telemetryAccuracy)}</dt>
+                          <dd><bdi dir="ltr">{`${inkjet.accMean.toFixed(4)} ± ${inkjet.accStd.toFixed(4)}`}</bdi></dd>
+                        </div>
+                        <div className="stage-telemetry-cell">
+                          <dt>{t(copy.telemetryProtocol)}</dt>
+                          <dd className="stage-telemetry-val--prose">{t(copy.telemetryInkjetProtocolVal)}</dd>
+                        </div>
+                      </dl>
+                    </>
+                  )}
+
+                  {pillar.id === 'sihem' && (
+                    <>
+                      <div className="stage-canvas-head">
+                        <p className="stage-canvas-cap">{t(work.context)}</p>
+                      </div>
+
+                      <div className="stage-canvas-body">
+                        <ol className="stage-sihem-schematic" aria-label={t(copy.sihemLoopAria)}>
+                          {sihemSteps.map((step) => (
+                            <li key={step.labelKey} className="stage-sihem-step">
+                              <div className="stage-sihem-head">
+                                <span className="stage-sihem-dot" aria-hidden="true" />
+                                <span className="stage-sihem-label">{t(copy[step.labelKey])}</span>
+                                {step.hasArrow && (
+                                  <ArrowRight size={14} className="stage-sihem-arrow rtl:rotate-180" aria-hidden="true" />
+                                )}
+                              </div>
+                              <p className="stage-sihem-desc">{t(copy[step.descKey])}</p>
+                            </li>
+                          ))}
+                        </ol>
+                      </div>
+
+                      <dl className="stage-telemetry-grid">
+                        <div className="stage-telemetry-cell">
+                          <dt>{t(copy.telemetryChannels)}</dt>
+                          <dd><bdi dir="ltr">Telegram + PWA</bdi></dd>
+                        </div>
+                        <div className="stage-telemetry-cell">
+                          <dt>{t(copy.telemetryMemory)}</dt>
+                          <dd><bdi dir="ltr">pgvector RAG</bdi></dd>
+                        </div>
+                        <div className="stage-telemetry-cell">
+                          <dt>{t(copy.telemetryStage)}</dt>
+                          <dd className="stage-telemetry-val--prose">{t(copy.telemetryBeta)}</dd>
+                        </div>
+                      </dl>
+                    </>
+                  )}
+                </div>
+
+                <div className="stage-dossier">
+                  <h3>{t(work.title)}</h3>
+                  <p className="stage-dossier-meta">{t(work.context)}</p>
+
+                  <div className="stage-dossier-kpi">
+                    <strong className="stage-dossier-num">
+                      <bdi dir="ltr">{pillar.metricValue}</bdi>
+                    </strong>
+                    <p className="stage-dossier-qual">{t(pillar.metricSub)}</p>
+                  </div>
+
+                  <p className="stage-dossier-summary">{t(work.summary)}</p>
+
+                  <div className="cd-proj-tags">
+                    {work.tags.map((tag) => {
+                      const isStringTag = typeof tag === 'string'
+                      return (
+                        <span
+                          key={isStringTag ? tag : tag.en}
+                          className={isStringTag ? 'cd-proj-tag' : 'cd-proj-tag stage-tag--prose'}
+                        >
+                          {isStringTag ? tag : t(tag)}
+                        </span>
+                      )
+                    })}
+                  </div>
+
+                  <div className="stage-dossier-actions">
+                    <Link className="portfolio-text-link" href={work.href}>
+                      <span>{t(work.link)}</span>
+                      <ArrowRight size={15} className="rtl:rotate-180" aria-hidden="true" />
+                    </Link>
+                    {pillar.id === 'diffusion-ood' && (
+                      <Link className="portfolio-text-link" href={diffusionExplorerHref}>
+                        <span>{t(copy.explorer)}</span>
+                        <ArrowRight size={15} className="rtl:rotate-180" aria-hidden="true" />
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )
+          })}
+
+          <div className="stage-oss-rail">
+            <span className="stage-oss-name"><bdi dir="ltr">mergeproof</bdi></span>
+            <span className="cd-proj-tag stage-tag--prose">{t(copy.ossBadge)}</span>
+            <p className="stage-oss-summary">{t(copy.ossSummary)}</p>
+            <a
+              href="https://github.com/ahmed-3m/mergeproof"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="portfolio-inline-link"
             >
-              <Layers size={16} strokeWidth={2.2} aria-hidden="true" />
-              <span>{t(copy.fullPortfolio)}</span>
-              <ArrowRight size={16} strokeWidth={2.2} className="portfolio-cta-arrow rtl:rotate-180" aria-hidden="true" />
-            </button>
-            <Link className="portfolio-secondary" href="#contact">{t(copy.contact)}</Link>
+              <span>{t(copy.ossLink)}</span>
+              <ArrowUpRight size={15} className="rtl:-scale-x-100" aria-hidden="true" />
+            </a>
           </div>
         </div>
-        <div className="portfolio-location">
-          <p>{t(copy.location)}</p>
-          <p><span className="portfolio-status-dot" aria-hidden="true" />{t(copy.availability)}</p>
-        </div>
       </section>
 
-      <section className="portfolio-work" id="projects" aria-labelledby="portfolio-work-title">
-        <h2 id="portfolio-work-title">{t(copy.work)}</h2>
-        <div className="portfolio-work-grid">
-          {selectedWork.map((work) => (
-            <article key={work.href} className="portfolio-project">
-              <div className="portfolio-project-body">
-                <p className="portfolio-project-context">{t(work.context)}</p>
-                <h3>{t(work.title)}</h3>
-                <p className="portfolio-project-summary">{t(work.summary)}</p>
-                <Link className="portfolio-text-link" href={work.href}>{t(work.link)}</Link>
-              </div>
-              {work.visual && (
-                <figure className="portfolio-project-figure">
-                  <Image src="/research/inkjet-inspection-samples.webp" width={1100} height={678}
-                    sizes="(max-width: 720px) 94vw, 510px" alt={t(copy.inkjetAlt)} />
-                  <figcaption>{t(copy.inkjetCaption)}</figcaption>
-                </figure>
-              )}
-            </article>
-          ))}
-        </div>
-      </section>
+      <div className="stage-closing-grid">
+        <section className="stage-about" id="about" aria-labelledby="portfolio-about-title">
+          <h2 id="portfolio-about-title">{t(copy.about)}</h2>
+          <div className="stage-about-lead">
+            <Image
+              src="/headshot.jpg"
+              width={64}
+              height={64}
+              alt={t(copy.headshotAlt)}
+              className="stage-headshot"
+            />
+            <p>{t(copy.background)}</p>
+          </div>
+          <div className="stage-about-links">
+            <Link className="portfolio-text-link" href="/about/">{t(copy.moreAbout)}</Link>
+            <Link id="experience" className="portfolio-text-link" href="/about/#experience">{t(copy.experience)}</Link>
+            <Link id="evidence" className="portfolio-text-link" href="/research/#evidence">{t(copy.evidence)}</Link>
+          </div>
+        </section>
 
-      <section className="portfolio-about" id="about" aria-labelledby="portfolio-about-title">
-        <h2 id="portfolio-about-title">{t(copy.about)}</h2>
-        <div>
-          <p>{t(copy.background)}</p>
-          <Link className="portfolio-text-link" href="/about/">{t(copy.moreAbout)}</Link>
-          <Link id="experience" className="portfolio-text-link" href="/about/#experience">{t(copy.experience)}</Link>
-        </div>
-      </section>
-
-      <nav className="portfolio-index" aria-labelledby="portfolio-index-title">
-        <h2 id="portfolio-index-title">{t(copy.explore)}</h2>
-        <ul>
-          <li id="research"><Link className="portfolio-text-link" href="/research/">{t(copy.research)}</Link></li>
-          <li id="evidence"><Link className="portfolio-text-link" href="/research/#evidence">{t(copy.evidence)}</Link></li>
-          <li id="ood-explorer"><Link className="portfolio-text-link" href="/case-studies/diffusion-ood/#ood-explorer">{t(copy.explorer)}</Link></li>
-          <li id="writing"><Link className="portfolio-text-link" href="/blog/">{t(copy.writing)}</Link></li>
-          <li id="news"><Link className="portfolio-text-link" href="/news/">{t(copy.news)}</Link></li>
-        </ul>
-      </nav>
+        <nav className="stage-directory" aria-labelledby="portfolio-index-title">
+          <h2 id="portfolio-index-title">{t(copy.explore)}</h2>
+          <div className="stage-dir-list">
+            {exploreItems.map((item) => (
+              <Link key={item.id} id={item.id} href={item.href} className="stage-dir-row">
+                <span className="stage-dir-title">{t(copy[item.titleKey])}</span>
+                <span className="stage-dir-desc">{t(copy[item.descKey])}</span>
+                <ArrowRight size={15} className="stage-dir-arrow rtl:rotate-180" aria-hidden="true" />
+              </Link>
+            ))}
+          </div>
+        </nav>
+      </div>
     </div>
   )
 }

@@ -23,7 +23,7 @@ const copy = {
   },
   summaryContributionLabel: { en: 'Contribution', de: 'Beitrag', fr: 'Contribution', es: 'Contribución', ar: 'المساهمة' },
   summaryContributionText: {
-    en: 'A separation loss that forces the model s competing class explanations to move apart.',
+    en: 'A separation loss that forces the model’s competing class explanations to move apart.',
     de: 'Eine Separation Loss, die konkurrierende Klassenerklärungen des Modells auseinanderdrückt.',
     fr: "Une separation loss qui force les explications de classe concurrentes à s'éloigner.",
     es: 'Una separation loss que obliga a separar las explicaciones de clase rivales del modelo.',
