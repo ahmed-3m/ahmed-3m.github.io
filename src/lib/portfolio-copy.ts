@@ -159,11 +159,11 @@ export const portfolioCopy = {
     ar: 'عرض على GitHub',
   },
   degreeBadge: {
-    en: 'M.Sc. AI, JKU · Grade 1',
-    de: 'M.Sc. AI, JKU · Note 1',
-    fr: 'M.Sc. IA, JKU · Note 1',
-    es: 'M.Sc. IA, JKU · Nota 1',
-    ar: 'ماجستير ذكاء اصطناعي، JKU · تقدير 1',
+    en: 'M.Sc. AI, JKU · Thesis grade 1',
+    de: 'M.Sc. AI, JKU · Masterarbeit (Note 1)',
+    fr: 'M.Sc. IA, JKU · Mémoire (note 1)',
+    es: 'M.Sc. IA, JKU · Tesis (nota 1)',
+    ar: 'ماجستير ذكاء اصطناعي، JKU · الرسالة (تقدير 1)',
   },
   stageTablistAria: {
     en: 'Selected work showcase channels',

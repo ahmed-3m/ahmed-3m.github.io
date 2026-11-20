@@ -51,6 +51,7 @@ export default function PortfolioAbstract() {
   const { t } = useI18n()
   const { setView } = usePortfolioView()
   const [activeTab, setActiveTab] = useState<(typeof focusPillars)[number]['id']>('diffusion-ood')
+  const [hasVisitedInkjet, setHasVisitedInkjet] = useState(false)
   const [diffusionView, setDiffusionView] = useState<'histogram' | 'diagram'>('histogram')
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([])
   const specimenDialog = useRef<HTMLDialogElement>(null)
@@ -62,6 +63,11 @@ export default function PortfolioAbstract() {
   const yMax = Math.max(...hist.id_pct, ...hist.ood_pct)
   const tauX = HIST_PAD_X + ((ds.tauTpr95 - hist.lo) / (hist.hi - hist.lo)) * (HIST_W - HIST_PAD_X * 2)
   const inkjet = INKJET_OVERALL_SWEEP['0.0']
+
+  const activateTab = (id: typeof activeTab) => {
+    setActiveTab(id)
+    if (id === 'inkjet-ood') setHasVisitedInkjet(true)
+  }
 
   const handleTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
     const count = focusPillars.length
@@ -81,7 +87,7 @@ export default function PortfolioAbstract() {
     if (nextIndex === null) return
     event.preventDefault()
     const nextPillar = focusPillars[nextIndex]
-    setActiveTab(nextPillar.id)
+    activateTab(nextPillar.id)
     tabRefs.current[nextIndex]?.focus()
   }
 
@@ -161,7 +167,7 @@ export default function PortfolioAbstract() {
                   aria-controls={`stage-panel-${pillar.id}`}
                   tabIndex={isSelected ? 0 : -1}
                   className={`stage-rail-btn${isSelected ? ' is-active' : ''}`}
-                  onClick={() => setActiveTab(pillar.id)}
+                  onClick={() => activateTab(pillar.id)}
                   onKeyDown={(event) => handleTabKeyDown(event, index)}
                 >
                   <span className="stage-rail-dot" aria-hidden="true" />
@@ -184,6 +190,7 @@ export default function PortfolioAbstract() {
                 role="tabpanel"
                 id={`stage-panel-${pillar.id}`}
                 aria-labelledby={`stage-tab-${pillar.id}`}
+                tabIndex={pillar.id === 'diffusion-ood' ? undefined : 0}
                 hidden={!isSelected}
                 className="stage-panel"
               >
@@ -277,7 +284,7 @@ export default function PortfolioAbstract() {
                     </>
                   )}
 
-                  {pillar.id === 'inkjet-ood' && (
+                  {pillar.id === 'inkjet-ood' && hasVisitedInkjet && (
                     <>
                       <div className="stage-canvas-head">
                         <p className="stage-canvas-cap">{t(copy.inkjetCaption)}</p>
