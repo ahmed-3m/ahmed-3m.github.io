@@ -172,8 +172,6 @@ export default function Header() {
   const isDark = theme === 'dark'
   // On the homepage the logo scrolls to the hero; everywhere else it returns home.
   const isHome = usePathname() === '/'
-  const { view } = usePortfolioView()
-  const isFullHome = isHome && view === 'full'
 
   useEffect(() => {
     if (!open) return
@@ -195,7 +193,7 @@ export default function Header() {
   }, [open])
 
   return (
-    <nav className={isFullHome ? 'cd-nav' : 'cd-nav portfolio-nav'} ref={navRef}>
+    <nav className={isHome ? 'cd-nav' : 'cd-nav portfolio-nav'} ref={navRef}>
       <div className="cd-nav-inner">
         <a href={isHome ? '#hero' : '/'} className="cd-nav-logo" aria-label="Ahmed Mohammed — home">Ahmed<span>.</span></a>
 
