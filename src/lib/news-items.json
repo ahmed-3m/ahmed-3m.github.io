@@ -1,108 +1,5 @@
 [
   {
-    "id": "github-copilot-ms-agent-framework-harness",
-    "date": "2026-08-04",
-    "category": "agentic",
-    "headline": {
-      "en": "Build Production-Ready Agents with the GitHub Copilot Harness and Agent Framework",
-      "de": "Produktionsreife Agenten mit dem GitHub-Copilot-Harness und Agent Framework bauen",
-      "fr": "Construire des agents prêts pour la production avec le harnais GitHub Copilot et Agent Framework",
-      "es": "Construye agentes listos para producción con el harness de GitHub Copilot y Agent Framework",
-      "ar": "ابنِ وكلاء جاهزين للإنتاج باستخدام حزمة GitHub Copilot وإطار Agent Framework"
-    },
-    "source": "Microsoft",
-    "url": "https://devblogs.microsoft.com/agent-framework/build-production-ready-agents-with-the-github-copilot-harness-and-agent-framework/",
-    "take": {
-      "en": "Letting GitHub Copilot own the agent loop — model calls, tool invocation, planning, session state — while Agent Framework wraps it with consistent approvals, OpenTelemetry observability, and human-in-the-loop governance is the right separation of concerns: don't rebuild a coding harness, reuse one and put your production controls around it. The model-agnostic framing is exactly how an agent should be operated once it touches real systems — the loop is a commodity, the governance around it is not.",
-      "de": "GitHub Copilot die Agenten-Schleife besitzen zu lassen — Modellaufrufe, Tool-Invokation, Planung, Session-State —, während Agent Framework sie mit konsistenten Approvals, OpenTelemetry-Observability und Human-in-the-Loop-Governance ummantelt, ist die richtige Trennung der Verantwortungen: keinen Coding-Harness neu bauen, einen wiederverwenden und die Produktionskontrollen außenherumlegen. Der modellagnostische Rahmen ist genau so, wie ein Agent betrieben werden sollte, sobald er echte Systeme berührt — die Schleife ist eine Commodity, die Governance drumherum nicht.",
-      "fr": "Laisser GitHub Copilot posséder la boucle d'agent — appels de modèle, invocation d'outils, planification, état de session — tandis qu'Agent Framework l'enveloppe d'approbations cohérentes, d'observabilité OpenTelemetry et de gouvernance avec humain dans la boucle, c'est la bonne séparation des responsabilités : ne reconstruisez pas un harnais de code, réutilisez-en un et posez vos contrôles de production autour. Le cadrage agnostique du modèle est exactement la façon d'opérer un agent dès qu'il touche des systèmes réels — la boucle est une commodité, la gouvernance autour ne l'est pas.",
-      "es": "Dejar que GitHub Copilot posea el bucle del agente — llamadas al modelo, invocación de herramientas, planificación, estado de sesión — mientras Agent Framework lo envuelve con aprobaciones consistentes, observabilidad OpenTelemetry y gobernanza con humano en el bucle es la separación de responsabilidades correcta: no reconstruyas un harness de código, reutiliza uno y pon tus controles de producción alrededor. El encuadre agnóstico del modelo es exactamente cómo debería operarse un agente en cuanto toca sistemas reales — el bucle es una commodity, la gobernanza a su alrededor no.",
-      "ar": "ترك GitHub Copilot يملك حلقة الوكيل — استدعاءات النموذج واستدعاء الأدوات والتخطيط وحالة الجلسة — بينما يغلّفها Agent Framework بموافقات متسقة ورصد OpenTelemetry وحوكمة بإشراف بشري هو الفصل الصحيح للمسؤوليات: لا تُعد بناء حزمة برمجية، أعد استخدام واحدة وضع ضوابط إنتاجك حولها. والإطار غير المرتبط بنموذج هو تمامًا الطريقة التي ينبغي أن يُشغَّل بها الوكيل متى لمس أنظمة حقيقية — فالحلقة سلعة رائجة، أما الحوكمة حولها فلا."
-    },
-    "tags": [
-      "agent-harness",
-      "agent-governance",
-      "agentic-coding"
-    ]
-  },
-  {
-    "id": "glm-5-2-open-weight-safety-gap",
-    "date": "2026-08-04",
-    "category": "ai",
-    "headline": {
-      "en": "Open-weight AI models are catching up to the frontier. The safety gap remains.",
-      "de": "Offene KI-Gewichte holen zur Frontier auf. Die Safety-Lücke bleibt.",
-      "fr": "Les modèles IA à poids ouverts rattrapent la frontière. L'écart de sécurité demeure.",
-      "es": "Los modelos de IA de pesos abiertos alcanzan a la frontera. La brecha de seguridad permanece.",
-      "ar": "نماذج الذكاء الاصطناعي مفتوحة الأوزان تلحق بالحدود، وفجوة الأمان باقية"
-    },
-    "source": "TechCrunch",
-    "url": "https://techcrunch.com/2026/08/04/open-weight-ai-models-are-catching-up-to-the-frontier-the-safety-gap-remains/",
-    "take": {
-      "en": "SaferAI reporting that Z.ai's GLM-5.2 refused none of the offensive cyber and biology tasks it was given — while Claude Opus 4.7 refused so consistently that CyberGym could not be completed on it at all — is a calibration story, not a capability one: a frontier-class open-weight model shipped with no safety framework, no pre-deployment eval, and no risk assessment is the asymmetric risk of open weights in exactly the form critics warned about, because the refusal threshold you never measured is the one an adversary probes first. Capability is closing fast; the safety-discipline gap is widening, and that is the variable that decides whether you can deploy it.",
-      "de": "Dass SaferAI berichtet, Z.ais GLM-5.2 habe keine der ihm gestellten offensiven Cyber- und Bio-Aufgaben verweigert — während Claude Opus 4.7 so konsistent verweigerte, dass CyberGym darauf gar nicht abgeschlossen werden konnte —, ist eine Kalibrierungs-, keine Fähigkeitsgeschichte: Ein Frontier-Klasse-Open-Weight-Modell ohne Safety-Framework, ohne Pre-Deployment-Eval, ohne Risikobewertung ist das asymmetrische Risiko offener Gewichte exakt in der Form, vor der Kritiker gewarnt haben — denn die Verweigerungsschwelle, die du nie gemessen hast, ist die, die ein Angreifer zuerst testet. Capability schließt sich schnell; die Safety-Disciplin-Lücke weitet sich — und das ist die Variable, die entscheidet, ob du es deployen kannst.",
-      "fr": "SaferAI rapporte que le GLM-5.2 de Z.ai n'a refusé aucune des tâches offensives cyber et biologie qu'on lui a données — tandis que Claude Opus 4.7 refusait si systématiquement que CyberGym n'a pas pu être mené à terme sur lui —, c'est une histoire d'étalonnage, pas de capacité : un modèle à poids ouverts de classe frontière livré sans cadre de sécurité, sans éval pré-déploiement et sans évaluation des risques, c'est le risque asymétrique des poids ouverts exactement sous la forme dont les critiques prévenaient — car le seuil de refus que vous n'avez jamais mesuré est le premier qu'un adversaire sonde. La capacité comble l'écart vite ; la discipline de sécurité, elle, s'élargit, et c'est la variable qui décide si vous pouvez le déployer.",
-      "es": "Que SaferAI informe de que el GLM-5.2 de Z.ai no rechazó ninguna de las tareas ofensivas ciber y biología que se le dieron — mientras Claude Opus 4.7 rechazaba tan consistentemente que CyberGym no pudo completarse en él en absoluto — es una historia de calibración, no de capacidad: un modelo de pesos abiertos clase frontier entregado sin marco de seguridad, sin eval pre-despliegue y sin evaluación de riesgos es el riesgo asimétrico de los pesos abiertos exactamente en la forma que advertían los críticos, porque el umbral de rechazo que nunca mediste es el primero que un adversario sondea. La capacidad se cierra rápido; la brecha de disciplina de seguridad se ensancha, y esa es la variable que decide si puedes desplegarlo.",
-      "ar": "إبلاغ SaferAI بأن GLM-5.2 من Z.ai لم يرفض أيًّا من مهام الهجوم السيبراني والبيولوجية التي أُسندت إليه — بينما رفض Claude Opus 4.7 باستمرار حتى تعذّر إكمال CyberGym عليه إطلاقًا — قصة معايرة لا قصة قدرات: نموذج حدودي بأوزان مفتوحة يُسلَّم دون إطار أمان ولا تقييم ما قبل النشر ولا تقدير مخاطر هو الخطر غير المتماثل للأوزان المفتوحة بالضبط بالصورة التي حذّر منها النقاد، فعتبة الرفض التي لم تقسها أبدًا هي أول ما يستكشفه الخصم. القدرات تُغلق الفجوة بسرعة؛ وفجوة الانضباط الأمني تتسع، وهذا هو المتغير الذي يقرر إن كان بإمكانك نشره."
-    },
-    "tags": [
-      "open-weights",
-      "safety",
-      "evaluation"
-    ]
-  },
-  {
-    "id": "databricks-unity-ai-gateway-agent-governance",
-    "date": "2026-08-04",
-    "category": "agentic",
-    "headline": {
-      "en": "Unity AI Gateway is Generally Available",
-      "de": "Unity AI Gateway ist allgemein verfügbar",
-      "fr": "Unity AI Gateway est disponible de manière générale",
-      "es": "Unity AI Gateway ya está disponible de forma general",
-      "ar": "Unity AI Gateway متاح الآن بشكل عام"
-    },
-    "source": "Databricks",
-    "url": "https://www.databricks.com/blog/unity-ai-gateway-generally-available",
-    "take": {
-      "en": "Databricks treating every AI asset — models, agents, MCP servers, coding assistants — as one governed surface with hard spend caps and runtime guardrails in Unity Catalog is the control plane agentic rollouts have been missing: token cost and tool-call blast radius are the two things that blow up in production, and both have to live at a layer the model cannot argue its way past. Smart routing each request to the cheapest model that clears a quality bar is what makes least-privilege affordable instead of a principle nobody enforces — and routing by an eval gate is the only economics that survive once an agent runs for hours.",
-      "de": "Dass Databricks jedes KI-Asset — Modelle, Agenten, MCP-Server, Coding-Assistenten — als eine einzige governierte Oberfläche mit harten Spend-Caps und Runtime-Guardrails im Unity Catalog behandelt, ist die Kontrollebene, die Agenten-Rollouts gefehlt hat: Token-Kosten und Tool-Call-Blast-Radius sind die zwei Dinge, die in Produktion explodieren, und beide müssen auf einer Ebene liegen, an der das Modell nicht vorbeireden kann. Dass Smart Routing jede Anfrage an das billigste Modell leitet, das eine Qualitätsleiste besteht, macht Least-Privilege bezahlbar statt zu einem Prinzip, das niemand durchsetzt — und Routing über eine Eval-Gate ist die einzige Ökonomie, die überlebt, sobald ein Agent Stunden läuft.",
-      "fr": "Que Databricks traite chaque actif d'IA — modèles, agents, serveurs MCP, assistants de code — comme une seule surface gouvernée avec des plafonds de dépense stricts et des garde-fous d'exécution dans Unity Catalog, c'est le plan de contrôle qui manquait aux déploiements agentiques : le coût en tokens et le rayon d'impact des appels d'outils sont les deux choses qui explosent en production, et les deux doivent vivre à une couche que le modèle ne peut pas contourner par la parole. Le routage intelligent de chaque requête vers le modèle le moins cher qui franchit la barre de qualité rend le moindre-privège abordable au lieu d'un principe que personne n'applique — et router par une porte d'éval est la seule économie qui survit dès qu'un agent tourne des heures.",
-      "es": "Que Databricks trate cada activo de IA — modelos, agentes, servidores MCP, asistentes de código — como una única superficie gobernada con topes de gasto duros y guardrails de runtime en Unity Catalog es el plano de control que faltaba a los despliegues agénticos: el coste en tokens y el radio de impacto de las llamadas a herramientas son las dos cosas que explotan en producción, y ambas deben vivir en una capa que el modelo no pueda esquivar con argumentos. El enrutado inteligente de cada petición al modelo más barato que supera una barra de calidad es lo que hace asequible el mínimo privilegio en vez de un principio que nadie aplica — y enrutar mediante una compuerta de eval es la única economía que sobrevive cuando un agente corre durante horas.",
-      "ar": "تعامل Databricks مع كل أصل ذكاء اصطناعي — نماذج ووكلاء وخوادم MCP ومساعدي برمجة — بوصفه سطحًا محكومًا واحدًا بسنوف إنفاق صارمة وحواجز تشغيل داخل Unity Catalog هو مستوى التحكم الذي افتقده نشر الوكلاء: تكلفة الرموز ونطاق انفجار استدعاءات الأدوات هما الشيئان اللذان ينفجران في الإنتاج، وكلاهما يجب أن يعيش في طبقة لا يستطيع النموذج المراوغة عبرها. والتوجيه الذكي لكل طلب إلى أرخص نموذج يتجاوز عتبة جودة هو ما يجعل أقل الامتيازات ميسورًا بدل كونه مبدأً لا يطبّقه أحد — والتوجيه عبر بوابة تقييم هو الاقتصاد الوحيد الذي يبقى حين يعمل الوكيل ساعات."
-    },
-    "tags": [
-      "agent-governance",
-      "model-routing",
-      "production"
-    ]
-  },
-  {
-    "id": "cisco-antares-open-weight-security-slms",
-    "date": "2026-08-04",
-    "category": "ai",
-    "headline": {
-      "en": "Cisco Antares: helping to make AI secure for all",
-      "de": "Cisco Antares: KI für alle sicherer machen",
-      "fr": "Cisco Antares : contribuer à sécuriser l'IA pour tous",
-      "es": "Cisco Antares: ayudar a que la IA sea segura para todos",
-      "ar": "Cisco Antares: المساعدة في جعل الذكاء الاصطناعي آمنًا للجميع"
-    },
-    "source": "Cisco",
-    "url": "https://newsroom.cisco.com/c/r/newsroom/en/us/a/y2026/m08/cisco-antares-helping-to-make-ai-secure-for-all.html",
-    "take": {
-      "en": "Antares is the specialization argument aimed at security: three small open-weight models that do nothing but find code flaws, cheap enough to scan continuously on a laptop or a single GPU instead of paying frontier-model rates per pass. The premise to internalize is Cisco's own — coding agents ship more code and therefore more vulnerabilities, so scanning has to be an always-on eval inside the loop rather than a quarterly gate, and a pipeline that cannot find its own bugs should not be merging unattended.",
-      "de": "Antares ist das Spezialisierungsargument für Security: drei kleine Open-Weight-Modelle, die nichts weiter tun, als Code-Schwächen zu finden — günstig genug, um kontinuierlich auf einem Laptop oder einer einzigen GPU zu scannen, statt pro Durchlauf Frontier-Modell-Tarife zu zahlen. Die Prämisse zum Verinnerlichen ist Ciscos eigene: Coding-Agenten liefern mehr Code und damit mehr Schwachstellen, Scannen muss also eine Always-On-Eval innerhalb der Schleife sein statt ein Quartalsgate — und eine Pipeline, die ihre eigenen Bugs nicht findet, sollte nicht unbeaufsichtigt mergen.",
-      "fr": "Antares, c'est l'argument de la spécialisation appliqué à la sécurité : trois petits modèles à poids ouverts qui ne font que trouver des failles de code, assez bon marché pour scanner en continu sur un ordinateur portable ou un seul GPU au lieu de payer des tarifs de modèle de pointe à chaque passe. La prémisse à intégrer est celle de Cisco lui-même : les agents de code livrent plus de code et donc plus de vulnérabilités, le scan doit donc être une éval toujours active dans la boucle plutôt qu'une porte trimestrielle — et un pipeline incapable de trouver ses propres bugs ne devrait pas fusionner sans surveillance.",
-      "es": "Antares es el argumento de la especialización aplicado a la seguridad: tres modelos pequeños de pesos abiertos que no hacen nada más que encontrar fallos de código, lo bastante baratos para escanear de forma continua en un portátil o una sola GPU en lugar de pagar tarifas de modelo frontier por pasada. La premisa que hay que interiorizar es la del propio Cisco: los agentes de código envían más código y por tanto más vulnerabilidades, así que el escaneo tiene que ser una eval siempre activa dentro del bucle y no una puerta trimestral — y un pipeline que no puede encontrar sus propios bugs no debería fusionar sin supervisión.",
-      "ar": "Antares هو حجة التخصص موجّهةً إلى الأمن: ثلاثة نماذج صغيرة بأوزان مفتوحة لا تفعل شيئًا سوى اكتشاف عيوب الشيفرة، ورخيصة بما يكفي للفحص المستمر على حاسوب محمول أو معالج GPU واحد بدلًا من دفع أسعار النماذج الحدودية لكل تمريرة. والفرضية التي ينبغي استبطانها هي فرضية Cisco نفسها — وكلاء البرمجة ينتجون شيفرة أكثر وبالتالي ثغرات أكثر، فيجب أن يكون الفحص تقييمًا دائم التشغيل داخل الحلقة لا بوابة فصلية، وأي خط تجميع لا يستطيع إيجاد أخطائه الخاصة لا ينبغي أن يدمج دون إشراف."
-    },
-    "tags": [
-      "open-weights",
-      "evaluation"
-    ]
-  },
-  {
     "id": "jeff-dean-discovery-loop-deepmind-shakeup",
     "date": "2026-08-05",
     "category": "agentic",
@@ -5043,6 +4940,106 @@
       "agent-safety",
       "containment",
       "governance"
+    ]
+  },
+  {
+    "id": "anthropic-ipo-record-nasdaq-debut",
+    "date": "2026-11-19",
+    "category": "ai",
+    "headline": {
+      "en": "Anthropic set to begin trading after pricing its stock at $83 per share in biggest IPO on record",
+      "de": "Anthropic startet den Handel nach Preisfestlegung bei 83 Dollar je Aktie im größten Börsengang der Geschichte",
+      "fr": "Anthropic entame sa cotation après avoir fixé son prix à 83 dollars par action, pour la plus grande introduction en bourse de l'histoire",
+      "es": "Anthropic inicia su cotización tras fijar el precio en 83 dólares por acción en la mayor OPV de la historia",
+      "ar": "أنثروبيك تبدأ التداول بعد تسعير سهمها عند 83 دولارًا في أكبر طرح عام أولي في التاريخ"
+    },
+    "source": "AP News",
+    "url": "https://apnews.com/article/anthropic-ipo-nasdaq-ai-b6a74b8949021207dc162fcc876c4649",
+    "take": {
+      "en": "A $1.8 trillion day-one market cap is a huge vote of confidence in Claude, but quarterly public-market pressure is an incentive gradient that safety commitments have never been tested against. The first serious incident after listing will tell us more than the prospectus did.",
+      "de": "Eine Marktkapitalisierung von 1,8 Billionen Dollar am ersten Tag ist ein riesiges Vertrauensvotum für Claude, aber der quartalsweise Druck des Aktienmarkts ist ein Anreizgefälle, an dem Sicherheitszusagen noch nie getestet wurden. Der erste ernste Zwischenfall nach dem Börsengang wird uns mehr verraten als der Prospekt.",
+      "fr": "Une capitalisation de 1 800 milliards de dollars dès le premier jour est un immense vote de confiance pour Claude, mais la pression trimestrielle des marchés boursiers constitue un gradient d'incitations contre lequel les engagements de sécurité n'ont jamais été testés. Le premier incident sérieux après l'introduction en bourse nous en dira plus que le prospectus.",
+      "es": "Una capitalización de mercado de 1,8 billones de dólares el primer día es un enorme voto de confianza en Claude, pero la presión trimestral del mercado bursátil es un gradiente de incentivos contra el que los compromisos de seguridad nunca han sido puestos a prueba. El primer incidente serio tras la salida a bolsa nos dirá más de lo que dijo el prospecto.",
+      "ar": "الوصول إلى قيمة سوقية تبلغ 1.8 تريليون دولار في اليوم الأول هو ثقة هائلة بـ Claude، لكن ضغط أسواق المال الفصلي تدرّجُ حوافز لم تُختبر بحته التزامات السلامة من قبل. أول حادثة جادة بعد الإدراج ستخبرنا أكثر مما أخبرنا به نشرة الإصدار."
+    },
+    "tags": [
+      "governance",
+      "frontier-models"
+    ]
+  },
+  {
+    "id": "openai-performance-factory-codex-regression-agents",
+    "date": "2026-11-19",
+    "category": "agentic",
+    "headline": {
+      "en": "How OpenAI's Performance Factory keeps ChatGPT fast",
+      "de": "Wie OpenAIs Performance Factory ChatGPT schnell hält",
+      "fr": "Comment la Performance Factory d'OpenAI garde ChatGPT rapide",
+      "es": "Cómo la Performance Factory de OpenAI mantiene la velocidad de ChatGPT",
+      "ar": "كيف يحافظ «مصنع الأداء» لدى OpenAI على سرعة ChatGPT"
+    },
+    "source": "OpenAI",
+    "url": "https://openai.com/index/how-openai-performance-factory-keeps-chatgpt-fast/",
+    "take": {
+      "en": "OpenAI publishing real numbers — 1,700 investigations, 70% of agent root-cause diagnoses graded accurate — is the production-eval honesty I want to see from every lab. The adversarial reviewer that reopens bad diagnoses is exactly how I'd run an autonomous pipeline: never trust the first plausible explanation.",
+      "de": "Dass OpenAI echte Zahlen veröffentlicht — 1.700 Untersuchungen, 70 % der von Agenten ermittelten Ursachendiagnosen als korrekt bewertet — ist die Ehrlichkeit bei Produktions-Evaluationen, die ich mir von jedem Labor wünsche. Der adversarische Reviewer, der fehlerhafte Diagnosen wieder öffnet, ist genau so, wie ich eine autonome Pipeline betreiben würde: vertraue nie der ersten plausiblen Erklärung.",
+      "fr": "Quand OpenAI publie des chiffres réels — 1 700 enquêtes, 70 % des diagnostics de cause racine établis par les agents jugés exacts — c'est l'honnêteté d'évaluation en production que j'attends de chaque laboratoire. Le réviseur adversarial qui rouvre les mauvais diagnostics, c'est exactement comme cela que je ferais tourner un pipeline autonome : ne jamais se fier à la première explication plausible.",
+      "es": "Que OpenAI publique cifras reales —1.700 investigaciones, 70 % de los diagnósticos de causa raíz de los agentes calificados como acertados— es la honestidad de evaluación en producción que quiero ver en cada laboratorio. El revisor adversarial que reabre los diagnósticos erróneos es exactamente cómo operaría un pipeline autónomo: nunca confiar en la primera explicación plausible.",
+      "ar": "نشر OpenAI أرقامًا حقيقية — 1,700 تحقيق، و70% من تشخيصات السبب الجذري التي حددها الوكلاء صُنّفت دقيقة — هو نوع الصدق في تقييم الإنتاج الذي أريد رؤيته من كل مختبر. والمراجِع الخصم الذي يعيد فتح التشخيصات الخاطئة هو بالضبط كيفية تشغيل أي خط عمل ذاتي: لا تثق أبدًا بأول تفسير معقول."
+    },
+    "tags": [
+      "production",
+      "reliability"
+    ]
+  },
+  {
+    "id": "langsmith-tool-gateway-public-beta",
+    "date": "2026-11-19",
+    "category": "agentic",
+    "headline": {
+      "en": "LangSmith Tool Gateway: Secure, governed tool use for agents",
+      "de": "LangSmith Tool Gateway: Sichere und kontrollierte Tool-Nutzung für Agenten",
+      "fr": "LangSmith Tool Gateway : un usage des outils sécurisé et gouverné pour les agents",
+      "es": "LangSmith Tool Gateway: uso de herramientas seguro y gobernado para agentes",
+      "ar": "بوابة أدوات LangSmith: استخدام آمن ومُحكَّم للأدوات للوكلاء"
+    },
+    "source": "LangChain",
+    "url": "https://www.langchain.com/blog/langsmith-tool-gateway",
+    "take": {
+      "en": "Once agents run on schedules instead of prompts, \"whose credentials did this call use\" becomes an audit question, and most teams today answer it with hardcoded tokens. One gateway for identity, policies and per-call traces is unglamorous plumbing, but it's what every serious agent deployment ends up building anyway.",
+      "de": "Sobald Agenten nach Zeitplan statt auf Prompts laufen, wird „Mit welchen Zugangsdaten lief dieser Aufruf?“ zu einer Audit-Frage — und die meisten Teams beantworten sie heute mit fest kodierten Tokens. Ein einziger Gateway für Identität, Richtlinien und Traces pro Aufruf ist unspektakuläre Grundlagenarbeit, aber genau das baut am Ende jedes ernsthafte Agenten-Deployment sowieso selbst.",
+      "fr": "Dès que les agents s'exécutent selon un planning plutôt qu'au gré des prompts, « avec quels identifiants cet appel a-t-il été fait » devient une question d'audit, et la plupart des équipes y répondent aujourd'hui avec des jetons codés en dur. Une passerelle unique pour l'identité, les politiques et les traces de chaque appel, c'est une plomberie sans glamour, mais c'est ce que tout déploiement d'agents sérieux finit par construire.",
+      "es": "Cuando los agentes se ejecutan por programación y no por prompts, «¿con qué credenciales se hizo esta llamada?» se convierte en una pregunta de auditoría, y hoy la mayoría de los equipos la responden con tokens incrustados en el código. Un único gateway para identidad, políticas y trazas por llamada es fontanería poco glamourosa, pero es lo que todo despliegue serio de agentes acaba construyendo de todos modos.",
+      "ar": "حالما يعمل الوكلاء وفق جدولة بدلًا من الأوامر الفورية، يصبح السؤال «بأي بيانات اعتماد جرى هذا الاستدعاء؟» سؤالَ تدقيق، ومعظم الفرق اليوم تجيب عليه برموز مكتوبة يدويًا في الشيفرة. بوابة واحدة للهوية والسياسات وتتبع كل استدعاء هي عمل بنية تحتية غير برّاق، لكنها ما ينتهي به كل نشر جاد للوكلاء."
+    },
+    "tags": [
+      "agent-governance",
+      "tool-use"
+    ]
+  },
+  {
+    "id": "google-gemini-computer-use-mac",
+    "date": "2026-11-19",
+    "category": "agentic",
+    "headline": {
+      "en": "Google gives Gemini the ability to use your Mac for you",
+      "de": "Google gibt Gemini die Fähigkeit, deinen Mac für dich zu bedienen",
+      "fr": "Google donne à Gemini la capacité d'utiliser votre Mac à votre place",
+      "es": "Google le da a Gemini la capacidad de usar tu Mac por ti",
+      "ar": "جوجل تمنح Gemini القدرة على استخدام جهاز Mac الخاص بك نيابةً عنك"
+    },
+    "source": "TechCrunch",
+    "url": "https://techcrunch.com/2026/11/19/google-gives-gemini-the-ability-to-use-your-mac-for-you/",
+    "take": {
+      "en": "Google is late to desktop computer use, but the live preview with pause-and-approve controls is the right shipping shape — watch the agent work while keeping veto power. The demo-reel form filling matters less than reliability on messy native apps, and that's exactly what the first reviews will test.",
+      "de": "Google ist spät bei Computer Use auf dem Desktop, aber die Live-Vorschau mit Pause- und Freigabe-Kontrolle ist die richtige Form zum Ausliefern — dem Agenten bei der Arbeit zusehen und trotzdem ein Vetorecht behalten. Das Formular-Ausfüllen aus dem Demo-Reel zählt weniger als Zuverlässigkeit bei unübersichtlichen nativen Apps, und genau das werden die ersten Tests prüfen.",
+      "fr": "Google arrive en retard sur le computer use sur ordinateur de bureau, mais l'aperçu en direct avec commandes de pause et d'approbation est la bonne façon de livrer — regarder l'agent travailler tout en gardant un droit de veto. Le remplissage de formulaires des démos compte moins que la fiabilité sur des applications natives chaotiques, et c'est exactement ce que les premiers tests vont vérifier.",
+      "es": "Google llega tarde al uso del ordenador de escritorio, pero la vista previa en directo con controles de pausa y aprobación es la forma correcta de lanzarlo: ver al agente trabajar manteniendo el poder de veto. Rellenar formularios de demostración importa menos que la fiabilidad en apps nativas caóticas, y eso es exactamente lo que probarán las primeras reseñas.",
+      "ar": "وصلت جوجل متأخرة إلى الاستخدام الحاسوبي على سطح المكتب، لكن المعاينة الحية مع أدوات الإيقاف والموافقة هي الشكل الصحيح للإطلاق — تراقب الوكيل وهو يعمل مع الاحتفاظ بحق النقض. تعبئة النماذج في العروض التوضيحية أقل أهمية من الموثوقية في التطبيقات الأصلية الفوضوية، وهذا بالضبط ما ستختبره المراجعات الأولى."
+    },
+    "tags": [
+      "computer-use",
+      "personal-agents"
     ]
   }
 ]
