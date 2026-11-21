@@ -67,6 +67,23 @@ assertThrows('future date', () => {
   parseNewsItems([{ ...valid, date: '2026-09-07' }], new Date('2026-09-06T00:00:00Z'))
 })
 
+assertThrows('future date rejected when allowFutureDates is false', () => {
+  parseNewsItems(
+    [{ ...valid, date: '2026-09-07' }],
+    new Date('2026-09-06T00:00:00Z'),
+    { allowFutureDates: false },
+  )
+})
+
+{
+  const [item] = parseNewsItems(
+    [{ ...valid, date: '2026-09-07' }],
+    new Date('2026-09-06T00:00:00Z'),
+    { allowFutureDates: true },
+  )
+  assert('future date allowed when allowFutureDates is true', item.date === '2026-09-07')
+}
+
 assertThrows('unknown field', () => {
   parseNewsItems([{ ...valid, extra: 1 }])
 })

@@ -19,7 +19,9 @@ export interface LocalizedNewsItem extends Omit<NewsItem, 'take' | 'headline'> {
   headline: string
 }
 
-const newsItems = parseNewsItems(raw)
+const newsItems = parseNewsItems(raw, undefined, {
+  allowFutureDates: typeof window !== 'undefined',
+})
 
 export const newsCategoryLabels: Record<NewsCategory, { en: string; de: string; fr: string; es: string; ar: string }> = {
   ai: { en: 'AI', de: 'KI', fr: 'IA', es: 'IA', ar: 'الذكاء الاصطناعي' },

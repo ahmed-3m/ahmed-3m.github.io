@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import { ArrowLeft, ArrowUpRight, Calendar } from 'lucide-react'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
@@ -9,6 +9,8 @@ import { getAllNews, newsCategoryLabels, type NewsCategory } from '@/lib/news-it
 import { serializeJsonLd } from '@/lib/serialize-json-ld'
 
 type Filter = 'all' | NewsCategory
+
+const PAGE_SIZE = 24
 
 const copy = {
   title: { en: 'News', de: 'News', fr: 'Actualités', es: 'Noticias', ar: 'الأخبار' },
@@ -21,41 +23,82 @@ const copy = {
   },
   backHome: { en: 'Back to home', de: 'Zur Startseite', fr: "Retour à l'accueil", es: 'Volver al inicio', ar: 'العودة إلى الرئيسية' },
   all: { en: 'All', de: 'Alle', fr: 'Tout', es: 'Todo', ar: 'الكل' },
+  filterAria: {
+    en: 'Filter news by category',
+    de: 'Nachrichten nach Kategorie filtern',
+    fr: 'Filtrer les actualités par catégorie',
+    es: 'Filtrar noticias por categoría',
+    ar: 'تصفية الأخبار حسب الفئة',
+  },
   readSource: { en: 'Read source', de: 'Quelle lesen', fr: 'Lire la source', es: 'Leer la fuente', ar: 'اقرأ المصدر' },
+  showMore: {
+    en: 'Show more ({count} remaining)',
+    de: 'Mehr anzeigen ({count} weitere)',
+    fr: 'Afficher plus ({count} restants)',
+    es: 'Mostrar más ({count} restantes)',
+    ar: 'عرض المزيد (المتبقي: {count})',
+  },
   empty: { en: 'No items in this category yet.', de: 'Noch keine Einträge in dieser Kategorie.', fr: 'Aucun élément dans cette catégorie pour l’instant.', es: 'Aún no hay elementos en esta categoría.', ar: 'لا توجد عناصر في هذه الفئة بعد.' },
 } satisfies Record<string, TranslationMap>
 
 export default function NewsPageClient() {
   const { lang, t } = useI18n()
   const [filter, setFilter] = useState<Filter>('all')
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
   const locale = languageLocale[lang]
 
-  const all = getAllNews(lang)
-  const items = filter === 'all' ? all : all.filter((item) => item.category === filter)
+  const all = useMemo(() => getAllNews(lang), [lang])
 
-  const filters: Array<{ key: Filter; label: TranslationMap; count: number }> = [
-    { key: 'all', label: copy.all, count: all.length },
-    { key: 'ai', label: newsCategoryLabels.ai, count: all.filter((i) => i.category === 'ai').length },
-    { key: 'agentic', label: newsCategoryLabels.agentic, count: all.filter((i) => i.category === 'agentic').length },
-  ]
+  const filteredItems = useMemo(
+    () => (filter === 'all' ? all : all.filter((item) => item.category === filter)),
+    [all, filter],
+  )
+
+  const visibleItems = useMemo(
+    () => filteredItems.slice(0, visibleCount),
+    [filteredItems, visibleCount],
+  )
+  const remainingCount = Math.max(0, filteredItems.length - visibleItems.length)
+
+  const filters = useMemo<Array<{ key: Filter; label: TranslationMap; count: number }>>(() => {
+    let aiCount = 0
+    let agenticCount = 0
+    for (const item of all) {
+      if (item.category === 'ai') aiCount += 1
+      else if (item.category === 'agentic') agenticCount += 1
+    }
+    return [
+      { key: 'all', label: copy.all, count: all.length },
+      { key: 'ai', label: newsCategoryLabels.ai, count: aiCount },
+      { key: 'agentic', label: newsCategoryLabels.agentic, count: agenticCount },
+    ]
+  }, [all])
+
+  const handleFilterChange = (nextFilter: Filter) => {
+    setFilter(nextFilter)
+    setVisibleCount(PAGE_SIZE)
+  }
 
   // JSON-LD is built client-side (the news data already ships in this chunk)
   // so the schema is not duplicated into the RSC flight payload. English is
   // the canonical crawl language.
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    name: 'AI & Agentic AI News',
-    description: 'Curated AI and agentic AI news with editorial commentary.',
-    url: 'https://ahmed-3m.github.io/news/',
-    hasPart: getAllNews('en').map((item) => ({
-      '@type': 'NewsArticle',
-      headline: item.headline,
-      datePublished: item.date,
-      url: item.url,
-      abstract: item.take,
-    })),
-  }
+  const jsonLd = useMemo(
+    () => ({
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: 'AI & Agentic AI News',
+      description: 'Curated AI and agentic AI news with editorial commentary.',
+      url: 'https://ahmed-3m.github.io/news/',
+      hasPart: getAllNews('en').map((item) => ({
+        '@type': 'NewsArticle',
+        headline: item.headline,
+        datePublished: item.date,
+        url: item.url,
+        abstract: item.take,
+      })),
+    }),
+    [],
+  )
 
   return (
     <main id="main" tabIndex={-1} className="min-h-screen pb-20 pt-24">
@@ -72,16 +115,15 @@ export default function NewsPageClient() {
         <h1 className="mb-2 text-4xl font-bold">{t(copy.title)}</h1>
         <p className="mb-6 text-[var(--cd-fg2)]">{t(copy.subtitle)}</p>
 
-        <div className="mb-8 flex flex-wrap gap-2" role="radiogroup" aria-label="News filter">
+        <div className="mb-8 flex flex-wrap gap-2" role="group" aria-label={t(copy.filterAria)}>
           {filters.map(({ key, label, count }) => {
             const active = filter === key
             return (
               <button
                 key={key}
                 type="button"
-                role="radio"
-                aria-checked={active}
-                onClick={() => setFilter(key)}
+                aria-pressed={active}
+                onClick={() => handleFilterChange(key)}
                 className="rounded-full border px-4 py-1.5 text-sm transition-colors"
                 style={{
                   borderColor: active ? 'var(--cd-accent)' : 'var(--cd-b0)',
@@ -95,64 +137,83 @@ export default function NewsPageClient() {
           })}
         </div>
 
-        {items.length === 0 ? (
+        {filteredItems.length === 0 ? (
           <p className="text-[var(--cd-fg3)]">{t(copy.empty)}</p>
         ) : (
-          <div className="space-y-6">
-            {items.map((item) => (
-              <article
-                key={item.id}
-                className="card-3d rounded-xl border border-[var(--cd-b0)] bg-[var(--cd-surf)] p-6 transition-shadow"
-              >
-                <div className="mb-3 flex flex-wrap items-center gap-4 text-sm text-[var(--cd-fg3)]">
-                  <time dateTime={item.date} className="flex items-center gap-1">
-                    <Calendar size={14} />
-                    {new Date(item.date).toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' })}
-                  </time>
-                  <span
-                    className="rounded-full px-2.5 py-0.5 text-xs font-medium"
-                    style={{ background: 'var(--cd-elev)', color: 'var(--cd-accent)' }}
-                  >
-                    {t(newsCategoryLabels[item.category])}
-                  </span>
-                  <span>{item.source}</span>
-                </div>
-
-                <a href={item.url} target="_blank" rel="noopener noreferrer" className="group">
-                  <h2 className="mb-3 inline-flex items-start gap-1 text-xl font-semibold transition-colors group-hover:text-[var(--cd-accent)]">
-                    {item.headline}
-                    <ArrowUpRight size={18} className="mt-1 shrink-0 opacity-60" />
-                  </h2>
-                </a>
-
-                <p className="mb-4 text-[var(--cd-fg2)]">{item.take}</p>
-
-                <div className="flex items-center justify-between gap-4 max-sm:flex-col max-sm:items-start">
-                  <div className="flex flex-wrap gap-2">
-                    {(item.tags ?? []).map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded px-2 py-1 text-xs"
-                        style={{ background: 'var(--cd-elev)', color: 'var(--cd-fg2)' }}
-                      >
-                        {tag}
-                      </span>
-                    ))}
+          <>
+            <div className="space-y-6">
+              {visibleItems.map((item) => (
+                <article
+                  key={item.id}
+                  className="card-3d rounded-xl border border-[var(--cd-b0)] bg-[var(--cd-surf)] p-6 transition-shadow"
+                >
+                  <div className="mb-3 flex flex-wrap items-center gap-4 text-sm text-[var(--cd-fg3)]">
+                    <time dateTime={item.date} className="flex items-center gap-1">
+                      <Calendar size={14} />
+                      {new Date(item.date).toLocaleDateString(locale, {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        timeZone: 'UTC',
+                      })}
+                    </time>
+                    <span
+                      className="rounded-full px-2.5 py-0.5 text-xs font-medium"
+                      style={{ background: 'var(--cd-elev)', color: 'var(--cd-accent)' }}
+                    >
+                      {t(newsCategoryLabels[item.category])}
+                    </span>
+                    <span>{item.source}</span>
                   </div>
 
-                  <a
-                    href={item.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 font-medium text-[var(--cd-accent)]"
-                  >
-                    {t(copy.readSource)}
-                    <ArrowUpRight size={16} />
+                  <a href={item.url} target="_blank" rel="noopener noreferrer" className="group">
+                    <h2 className="mb-3 inline-flex items-start gap-1 text-xl font-semibold transition-colors group-hover:text-[var(--cd-accent)]">
+                      {item.headline}
+                      <ArrowUpRight size={18} className="mt-1 shrink-0 opacity-60" />
+                    </h2>
                   </a>
-                </div>
-              </article>
-            ))}
-          </div>
+
+                  <p className="mb-4 text-[var(--cd-fg2)]">{item.take}</p>
+
+                  <div className="flex items-center justify-between gap-4 max-sm:flex-col max-sm:items-start">
+                    <div className="flex flex-wrap gap-2">
+                      {(item.tags ?? []).map((tag) => (
+                        <span
+                          key={tag}
+                          className="rounded px-2 py-1 text-xs"
+                          style={{ background: 'var(--cd-elev)', color: 'var(--cd-fg2)' }}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    <a
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 font-medium text-[var(--cd-accent)]"
+                    >
+                      {t(copy.readSource)}
+                      <ArrowUpRight size={16} />
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            {remainingCount > 0 && (
+              <div className="mt-8 flex justify-center">
+                <button
+                  type="button"
+                  onClick={() => setVisibleCount((prev) => prev + PAGE_SIZE)}
+                  className="rounded-full border border-[var(--cd-b1)] bg-[var(--cd-surf)] px-6 py-2.5 text-sm font-medium text-[var(--cd-fg1)] transition-colors hover:border-[var(--cd-accent)] hover:text-[var(--cd-accent)]"
+                >
+                  {t(copy.showMore).replace('{count}', String(remainingCount))}
+                </button>
+              </div>
+            )}
+          </>
         )}
       </div>
     </main>

@@ -51,7 +51,11 @@ export function canonicalNewsUrl(url: string): string {
   return parsed.toString()
 }
 
-export function parseNewsItems(value: unknown, now?: Date): readonly NewsItem[] {
+export function parseNewsItems(
+  value: unknown,
+  now?: Date,
+  options?: { allowFutureDates?: boolean },
+): readonly NewsItem[] {
   if (!Array.isArray(value)) {
     throw new Error('news catalog must be an array')
   }
@@ -59,13 +63,14 @@ export function parseNewsItems(value: unknown, now?: Date): readonly NewsItem[] 
     throw new Error(`news catalog exceeds maxCatalog (${NEWS_LIMITS.maxCatalog})`)
   }
 
+  const allowFutureDates = options?.allowFutureDates === true
   const today = utcYmd(now ?? new Date())
   const items: NewsItem[] = []
   const ids = new Set<string>()
   const urls = new Set<string>()
 
   for (let i = 0; i < value.length; i++) {
-    const item = parseNewsItem(value[i], today, i)
+    const item = parseNewsItem(value[i], today, i, allowFutureDates)
     if (ids.has(item.id)) {
       throw new Error(`news item "${item.id}": duplicate id`)
     }
@@ -137,7 +142,12 @@ function evictOldest(items: readonly NewsItem[]): readonly NewsItem[] {
   return items.filter((_, index) => !evicted.has(index))
 }
 
-function parseNewsItem(value: unknown, today: string, index: number): NewsItem {
+function parseNewsItem(
+  value: unknown,
+  today: string,
+  index: number,
+  allowFutureDates: boolean,
+): NewsItem {
   if (!isPlainObject(value)) {
     throw new Error(`news item [${index}]: must be a plain object`)
   }
@@ -158,7 +168,7 @@ function parseNewsItem(value: unknown, today: string, index: number): NewsItem {
   if (!isRealCalendarDate(date)) {
     throw new Error(`${where}: date must be a real calendar ISO YYYY-MM-DD`)
   }
-  if (date > today) {
+  if (!allowFutureDates && date > today) {
     throw new Error(`${where}: date ${date} is in the future (today UTC is ${today})`)
   }
 

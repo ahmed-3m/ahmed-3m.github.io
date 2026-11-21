@@ -33,38 +33,44 @@ function formatContent(content: string | undefined) {
     return url
   }
 
-  // Inline transform shared by paragraphs and list items: inline code,
-  // markdown links, bold markup, and bare-URL linkification.
+  // Inline transform shared by headings, paragraphs, and list items: tokenize
+  // inline code, markdown links, and bare URLs first, escape raw HTML on all
+  // surrounding text, then apply bold formatting and restore safe HTML spans.
   const inline = (text: string) => {
     // 1. Inline code: `...`
     const codeSpans: string[] = []
-    let s = text.replace(/`([^`]+)`/g, (_, code) => {
+    let s = text.replace(/\0/g, '').replace(/`([^`]+)`/g, (_, code) => {
       const idx = codeSpans.length
-      codeSpans.push(`<code class="px-1.5 py-0.5 rounded bg-slate-800/60 font-mono text-sm">${escapeHtml(code)}</code>`)
-      return `___CODE_SPAN_${idx}___`
+      codeSpans.push(`<code class="px-1.5 py-0.5 rounded bg-[var(--cd-elev)] text-[var(--cd-fg1)] font-mono text-sm">${escapeHtml(code)}</code>`)
+      return `\0CODE_${idx}\0`
     })
 
     // 2. Markdown links: [text](https://...)
     const links: string[] = []
     s = s.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, (_, label, url) => {
       const idx = links.length
-      links.push(`<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" class="underline text-cyan-400 hover:text-cyan-300">${escapeHtml(label)}</a>`)
-      return `___LINK_SPAN_${idx}___`
+      links.push(`<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" class="underline text-[var(--cd-accent)] hover:underline">${escapeHtml(label)}</a>`)
+      return `\0LINK_${idx}\0`
     })
 
-    // 3. Bold: **text**
-    s = s.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-
-    // 4. Bare URLs: https://...
+    // 3. Bare URLs: https://...
     s = s.replace(/(https?:\/\/[^\s<>"]+)/g, (rawUrl) => {
       const url = cleanUrl(rawUrl)
       const trailing = rawUrl.slice(url.length)
-      return `<a href="${escapeHtml(url)}" class="text-[var(--cd-accent)] underline underline-offset-2" target="_blank" rel="noopener noreferrer">${escapeHtml(url)}</a>${trailing}`
+      const idx = links.length
+      links.push(`<a href="${escapeHtml(url)}" class="text-[var(--cd-accent)] underline underline-offset-2 hover:underline" target="_blank" rel="noopener noreferrer">${escapeHtml(url)}</a>`)
+      return `\0LINK_${idx}\0${trailing}`
     })
 
-    // 5. Restore placeholders
-    s = s.replace(/___LINK_SPAN_(\d+)___/g, (_, idx) => links[Number(idx)])
-    s = s.replace(/___CODE_SPAN_(\d+)___/g, (_, idx) => codeSpans[Number(idx)])
+    // 4. Escape raw HTML in surrounding prose before applying bold or restoring spans
+    s = escapeHtml(s)
+
+    // 5. Bold: **text**
+    s = s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+
+    // 6. Restore placeholders
+    s = s.replace(/\0LINK_(\d+)\0/g, (_, idx) => links[Number(idx)] ?? '')
+    s = s.replace(/\0CODE_(\d+)\0/g, (_, idx) => codeSpans[Number(idx)] ?? '')
 
     return s
   }
@@ -74,10 +80,10 @@ function formatContent(content: string | undefined) {
     .split('\n\n')
     .map((block) => {
       if (block.startsWith('## ')) {
-        return `<h2 class="text-2xl font-bold mt-8 mb-4">${block.replace('## ', '')}</h2>`
+        return `<h2 class="text-2xl font-bold mt-8 mb-4">${inline(block.slice(3))}</h2>`
       }
       if (block.startsWith('### ')) {
-        return `<h3 class="text-xl font-semibold mt-6 mb-3">${block.replace('### ', '')}</h3>`
+        return `<h3 class="text-xl font-semibold mt-6 mb-3">${inline(block.slice(4))}</h3>`
       }
       if (block.startsWith('```')) {
         const code = block.replace(/```[\w]*\n?/g, '').replace(/```/g, '')
@@ -116,7 +122,14 @@ const copy = {
     de: 'Häufige Fragen',
     fr: 'Questions fréquentes',
     es: 'Preguntas frecuentes',
-    ar: 'الاسئلة الشائعة',
+    ar: 'الأسئلة الشائعة',
+  },
+  breadcrumb: {
+    en: 'Breadcrumb',
+    de: 'Brotkrümelnavigation',
+    fr: 'Fil d’Ariane',
+    es: 'Ruta de navegación',
+    ar: 'مسار التنقل',
   },
   viewAll: {
     en: 'View all posts',
@@ -235,7 +248,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
         />
       )}
       <article className="mx-auto max-w-3xl px-5">
-        <nav aria-label="Breadcrumb" className="mb-6">
+        <nav aria-label={t(copy.breadcrumb)} className="mb-6">
           <ol className="flex flex-wrap items-center gap-2 text-sm text-[var(--cd-fg3)]">
             <li>
               <Link href="/" className="text-[var(--cd-accent)]">
@@ -271,6 +284,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
                     year: 'numeric',
                     month: 'long',
                     day: 'numeric',
+                    timeZone: 'UTC',
                   })}
                 </time>
               </span>
@@ -300,7 +314,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
         </header>
 
         <div
-          className="prose max-w-none prose-slate dark:prose-invert"
+          className="prose max-w-none"
           dangerouslySetInnerHTML={{ __html: formatContent(post.content) }}
         />
 

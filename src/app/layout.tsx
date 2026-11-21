@@ -95,8 +95,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           }}
         />
         <link rel="manifest" href="/manifest.json" />
+        <meta name="referrer" content="strict-origin-when-cross-origin" />
         <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#08090d" />
-        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f7f9" />
+        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f3eadc" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/svg+xml" href="/icon.svg" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />

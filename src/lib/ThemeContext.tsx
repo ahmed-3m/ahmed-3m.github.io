@@ -33,17 +33,53 @@ const colorSchemeQuery =
     ? window.matchMedia('(prefers-color-scheme: light)')
     : null;
 
+const THEME_STORAGE_KEY = 'theme';
+const REDUCE_TRANSPARENCY_KEY = 'reduceTransparency';
+
+let memoryTheme: Theme | null = null;
+let memoryReduceTransparency: boolean | null = null;
+
+function readStorage(key: string): string | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    return window.localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function writeStorage(key: string, value: string): boolean {
+  if (typeof window === 'undefined') return false;
+  try {
+    window.localStorage.setItem(key, value);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 function subscribeTheme(callback: () => void) {
-  window.addEventListener('storage', callback);
+  const handleStorage = (event: Event) => {
+    if (
+      typeof StorageEvent !== 'undefined' &&
+      event instanceof StorageEvent &&
+      (event.key === null || event.key === THEME_STORAGE_KEY)
+    ) {
+      memoryTheme = null;
+    }
+    callback();
+  };
+  window.addEventListener('storage', handleStorage);
   colorSchemeQuery?.addEventListener('change', callback);
   return () => {
-    window.removeEventListener('storage', callback);
+    window.removeEventListener('storage', handleStorage);
     colorSchemeQuery?.removeEventListener('change', callback);
   };
 }
 
 function getClientTheme(): Theme {
-  const saved = localStorage.getItem('theme');
+  if (memoryTheme) return memoryTheme;
+  const saved = readStorage(THEME_STORAGE_KEY);
   if (saved === 'light' || saved === 'dark') return saved;
   return colorSchemeQuery?.matches ? 'light' : 'dark';
 }
@@ -60,16 +96,27 @@ const reduceTransparencyQuery =
     : null;
 
 function subscribeTransparency(callback: () => void) {
-  window.addEventListener('storage', callback);
+  const handleStorage = (event: Event) => {
+    if (
+      typeof StorageEvent !== 'undefined' &&
+      event instanceof StorageEvent &&
+      (event.key === null || event.key === REDUCE_TRANSPARENCY_KEY)
+    ) {
+      memoryReduceTransparency = null;
+    }
+    callback();
+  };
+  window.addEventListener('storage', handleStorage);
   reduceTransparencyQuery?.addEventListener('change', callback);
   return () => {
-    window.removeEventListener('storage', callback);
+    window.removeEventListener('storage', handleStorage);
     reduceTransparencyQuery?.removeEventListener('change', callback);
   };
 }
 
 function getClientReduceTransparency(): boolean {
-  const saved = localStorage.getItem('reduceTransparency');
+  if (memoryReduceTransparency !== null) return memoryReduceTransparency;
+  const saved = readStorage(REDUCE_TRANSPARENCY_KEY);
   if (saved === 'true') return true;
   if (saved === 'false') return false;
   return reduceTransparencyQuery?.matches ?? false;
@@ -97,13 +144,17 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }, [theme, reduceTransparency]);
 
   const toggleTheme = useCallback(() => {
-    localStorage.setItem('theme', getClientTheme() === 'dark' ? 'light' : 'dark');
+    const nextTheme: Theme = getClientTheme() === 'dark' ? 'light' : 'dark';
+    memoryTheme = nextTheme;
+    writeStorage(THEME_STORAGE_KEY, nextTheme);
     // The storage event does not fire in the tab that made the change.
     window.dispatchEvent(new Event('storage'));
   }, []);
 
   const toggleReduceTransparency = useCallback(() => {
-    localStorage.setItem('reduceTransparency', getClientReduceTransparency() ? 'false' : 'true');
+    const nextReduceTransparency = !getClientReduceTransparency();
+    memoryReduceTransparency = nextReduceTransparency;
+    writeStorage(REDUCE_TRANSPARENCY_KEY, nextReduceTransparency ? 'true' : 'false');
     window.dispatchEvent(new Event('storage'));
   }, []);
 

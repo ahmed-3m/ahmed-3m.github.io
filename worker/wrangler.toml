@@ -2,11 +2,18 @@ name = "ahmed-chat-proxy"
 main = "chat-proxy.js"
 compatibility_date = "2024-01-01"
 
-# Set the Zhipu BigModel API key as a Cloudflare secret:
+# Set the Z.ai (api.z.ai) GLM Coding Plan and Groq API keys as Cloudflare secrets:
 #   wrangler secret put ZAI_API_KEY
+#   wrangler secret put GROQ_API_KEY
 # (The binding name `ZAI_API_KEY` is retained for backward compatibility with
-# existing deployments; the value it holds is a BigModel open.bigmodel.cn key.)
-# This key is NEVER exposed to the client — it lives only in the Worker's environment.
+# existing deployments; the value it holds is an api.z.ai GLM Coding Plan key.)
+# These keys are NEVER exposed to the client — they live only in the Worker's environment.
+
+# Keep ALLOW_LOCALHOST disabled in production; set to "true" (or pass
+# `--var ALLOW_LOCALHOST:true` to `wrangler dev`) only for local development
+# from http://localhost:3000.
+[vars]
+ALLOW_LOCALHOST = "false"
 
 # Optional: bind a KV namespace to enable simple IP-based rate limiting.
 # Create the namespace first with `wrangler kv namespace create CHAT_RATE_KV`,

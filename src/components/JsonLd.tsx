@@ -1,6 +1,5 @@
 'use client'
 
-import { getLatestContentDate } from '@/lib/content-dates'
 import { serializeJsonLd } from '@/lib/serialize-json-ld'
 
 // Server-rendered <script> elements are serialized twice into the delivered
@@ -166,69 +165,6 @@ export function WebsiteSchema() {
   );
 }
 
-export function SocialProfileSchema() {
-  const socialSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'ProfilePage',
-    // schema.org Date/DateTime validators (incl. Google's ProfilePage report)
-    // require a full ISO datetime, not a bare YYYY-MM-DD date.
-    dateCreated: '2024-01-01T00:00:00Z',
-    // Must not be render-time: this module is 'use client', so a Date.now()
-    // here is evaluated once during the static export and again at hydration,
-    // producing two different strings and a hydration mismatch. The newest
-    // content date is stable across both and is what dateModified should mean.
-    dateModified: getLatestContentDate().toISOString(),
-    mainEntity: {
-      '@type': 'Person',
-      name: 'Ahmed Mohammed',
-      alternateName: 'Ahmed 3M',
-      description: 'AI/ML Engineer building AI systems end to end: computer vision, industrial ML, diffusion models, out-of-distribution detection, LLM products, and agent tooling. Builder of Sihem and mergeproof. M.Sc. AI (thesis graded 1) from JKU Linz under Prof. Sepp Hochreiter. Based in Linz, Austria.',
-      image: 'https://ahmed-3m.github.io/headshot.jpg',
-      email: 'ahmed.mo.0595@gmail.com',
-      sameAs: [
-        'https://github.com/ahmed-3m',
-        'https://www.linkedin.com/in/ahmed-3m/',
-        'https://huggingface.co/ahmed-3m',
-        'https://wandb.ai/ahmed-mu-0593',
-        'https://epub.jku.at/obvulihs/content/titleinfo/14374221',
-        'https://orcid.org/0009-0004-8934-1270',
-        // TODO(owner): re-enable with new X account
-        // 'https://x.com/Ahmed_mo_93',
-      ],
-      jobTitle: 'AI/ML Engineer',
-      alumniOf: [
-        {
-          '@type': 'CollegeOrUniversity',
-          name: 'Johannes Kepler University Linz',
-        },
-        {
-          '@type': 'CollegeOrUniversity',
-          name: 'Eastern Mediterranean University',
-        },
-      ],
-      knowsAbout: [
-        'Artificial Intelligence',
-        'Machine Learning',
-        'Computer Vision',
-        'Deep Learning',
-        'PyTorch',
-        'YOLOv8',
-        'Diffusion Models',
-        'Anomaly Detection',
-        'Out-of-Distribution Detection',
-        'Industrial Quality Control',
-      ],
-    },
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: serializeJsonLd(socialSchema) }}
-    />
-  );
-}
-
 export function ProjectsSchema() {
   const projectsSchema = {
     '@context': 'https://schema.org',
@@ -255,7 +191,7 @@ export function ProjectsSchema() {
         item: {
           '@type': 'SoftwareApplication',
           name: 'InkjetOOD — Industrial Defect Detection (FTI_Zer0P)',
-          description: 'YOLO + conditional diffusion pipeline for industrial defect detection on inkjet-printed building components, evaluated on the public FTI_Zer0P dataset under strict 5-fold cross-validation (0.8673 ± 0.0230 AUROC baseline). Production deployment also tracked an internal threshold-dependent binary classification accuracy of 98.4% (not comparable to public AUROC benchmarks). Part of the Zer0P project with PROFACTOR GmbH.',
+          description: 'YOLO + conditional diffusion pipeline for industrial defect detection on inkjet-printed building components, evaluated on the public FTI_Zer0P dataset under strict 5-fold cross-validation (0.8673 ± 0.0230 AUROC baseline; separation loss showed no statistically significant gain after Holm correction). Part of the Zer0P project with PROFACTOR GmbH.',
           applicationCategory: 'BusinessApplication',
           url: 'https://github.com/ahmed-3m/InkjetOOD',
           author: { '@type': 'Person', name: 'Ahmed Mohammed' },
@@ -400,6 +336,8 @@ export function WebPageSchema() {
     significantLink: [
       'https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf',
       'https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf',
+      'https://ahmed-3m.github.io/about/',
+      'https://ahmed-3m.github.io/research/',
       'https://ahmed-3m.github.io/case-studies/diffusion-ood/',
       'https://ahmed-3m.github.io/case-studies/inkjet-ood/',
       'https://ahmed-3m.github.io/case-studies/sihem/',
