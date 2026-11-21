@@ -87,7 +87,7 @@ jobs:
           NEXT_PUBLIC_ZAI_FAST_MODEL: ${{ vars.NEXT_PUBLIC_ZAI_FAST_MODEL }}
           NEXT_PUBLIC_ZAI_ROUTER_MODEL: ${{ vars.NEXT_PUBLIC_ZAI_ROUTER_MODEL }}
           # Optional Calendly URL override (defaults to https://calendly.com/ahmed-3m).
-          NEXT_PUBLIC_CALENDLY_URL: ${{ vars.NEXT_PUBLIC_CALENDLY_URL }}
+          NEXT_PUBLIC_CALENDLY_URL: ${{ vars.NEXT_PUBLIC_CALENDLY_URL || 'https://calendly.com/ahmed-3m' }}
           # Privacy-hardened GA4 beacon (src/components/Analytics.tsx) — renders
           # nothing until the variable holds a G-XXXXXXX measurement ID.
           NEXT_PUBLIC_GA_MEASUREMENT_ID: ${{ vars.NEXT_PUBLIC_GA_MEASUREMENT_ID }}

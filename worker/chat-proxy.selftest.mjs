@@ -263,6 +263,7 @@ await test('Rate limit exceeded (CHAT_RATE_LIMITER returning { success: false })
   assert(res.status === 429, `status ${res.status}`)
   const data = await res.json()
   assert(data.error.includes('Rate limit exceeded'), `expected rate limit error, got ${data.error}`)
+  assert(data.scope === 'proxy', `expected scope 'proxy', got ${data.scope}`)
 })
 
 // 9. Forwarding reasoning_effort: 'low' to Z.ai upstream

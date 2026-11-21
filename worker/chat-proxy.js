@@ -102,7 +102,7 @@ export default {
       const { success } = await limiter.limit({ key: ip })
       if (success === false) {
         return jsonResponse(
-          { error: 'Rate limit exceeded. Please try again later.' },
+          { error: 'Rate limit exceeded. Please try again later.', scope: 'proxy' },
           429,
           origin,
           env
@@ -136,7 +136,7 @@ export default {
 
       if (record.count > RATE_LIMIT_PER_HOUR) {
         return jsonResponse(
-          { error: 'Rate limit exceeded. Please try again later.' },
+          { error: 'Rate limit exceeded. Please try again later.', scope: 'proxy' },
           429,
           origin,
           env

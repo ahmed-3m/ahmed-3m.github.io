@@ -20,7 +20,7 @@ function formatContent(content: string | undefined) {
 
     while (url !== previousUrl) {
       previousUrl = url
-      url = url.replace(/[.,;:!?]+$/, '')
+      url = url.replace(/[.,;:!?*`]+$/, '')
       const openParentheses = (url.match(/\(/g) ?? []).length
       let closeParentheses = (url.match(/\)/g) ?? []).length
 
