@@ -14,10 +14,10 @@ export const GENIE_NAME = 'Genie\u{1F9DE}\u200D\u2642\uFE0F'
 export const CHAT_COPY = {
   dialogLabel: {
     en: 'Ask Genie',
-    de: 'Fragen zu Ahmed',
-    fr: 'Questions sur Ahmed',
-    es: 'Preguntar sobre Ahmed',
-    ar: 'اسأل عن أحمد',
+    de: 'Genie fragen',
+    fr: 'Demander à Genie',
+    es: 'Preguntar a Genie',
+    ar: 'اسأل جيني',
   },
   title: {
     en: GENIE_NAME,
@@ -49,10 +49,10 @@ export const CHAT_COPY = {
   },
   placeholder: {
     en: 'Ask Genie...',
-    de: 'Frage zu Ahmed...',
-    fr: 'Question sur Ahmed...',
-    es: 'Pregunta sobre Ahmed...',
-    ar: 'اسأل عن أحمد...',
+    de: 'Genie fragen...',
+    fr: 'Demander à Genie...',
+    es: 'Preguntar a Genie...',
+    ar: 'اسأل جيني...',
   },
   close: {
     en: 'Close chat',
@@ -88,6 +88,13 @@ export const CHAT_COPY = {
     fr: 'Les réponses aux questions libres sont temporairement indisponibles. Posez une question sur les projets, le mémoire, le parcours ou le CV d’Ahmed.',
     es: 'Las respuestas abiertas no están disponibles temporalmente. Pregunta por los proyectos, la tesis, la trayectoria o el CV de Ahmed.',
     ar: 'الإجابات عن الأسئلة المفتوحة غير متاحة مؤقتًا. اسأل عن مشاريع أحمد أو رسالته أو خلفيته أو سيرته الذاتية.',
+  },
+  rateLimited: {
+    en: 'Too many requests right now. Please wait a bit before asking another open-ended question, or try the suggested prompts.',
+    de: 'Gerade zu viele Anfragen. Bitte warten Sie einen Moment vor der nächsten freien Frage oder nutzen Sie die vorgeschlagenen Fragen.',
+    fr: 'Trop de requêtes en ce moment. Patientez un instant avant une nouvelle question libre ou utilisez les questions suggérées.',
+    es: 'Demasiadas solicitudes en este momento. Espera un momento antes de hacer otra pregunta abierta o prueba las preguntas sugeridas.',
+    ar: 'تم تجاوز حد الطلبات حاليًا. يُرجى الانتظار قليلًا قبل طرح سؤال مفتوح جديد، أو تجربة الأسئلة المقترحة.',
   },
   genericError: {
     en: 'Something went wrong while contacting the assistant.',
