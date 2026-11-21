@@ -63,11 +63,11 @@ export const caseStudyOverview = {
       ar: 'بنيت الجدولة والتذكيرات وروبوت تيليجرام وتطبيق الويب القابل للتثبيت. يستخدم Sihem تغيّرات التقويم والروتين لتحديد الوقت المناسب لإرسال متابعة.',
     },
     outcome: {
-      en: 'Sihem runs as a private, invitation-only beta. Its morning briefings and evening reviews are available to invited testers.',
-      de: 'Sihem läuft als private Beta mit Einladung. Eingeladene Testpersonen können die morgendliche Übersicht und den abendlichen Rückblick nutzen.',
-      fr: 'Sihem fonctionne en bêta privée sur invitation. Les personnes invitées peuvent utiliser les bilans du matin et du soir.',
-      es: 'Sihem está en beta privada por invitación. Las personas invitadas pueden usar los resúmenes de la mañana y las revisiones de la noche.',
-      ar: 'يعمل Sihem في نسخة تجريبية خاصة بالدعوة. ويمكن للمختبرين المدعوين استخدام الملخصات الصباحية والمراجعات المسائية.',
+      en: 'Sihem’s Telegram bot and web app are in an invitation-only beta. The native Android client, built with Kotlin and Jetpack Compose, is in private testing.',
+      de: 'Der Telegram-Bot und die Web-App von Sihem sind in einer Beta mit Einladung verfügbar. Die native Android-App wurde mit Kotlin und Jetpack Compose entwickelt und wird in einem privaten Test erprobt.',
+      fr: 'Le bot Telegram et l’application web de Sihem sont accessibles en bêta sur invitation. L’application Android native, développée avec Kotlin et Jetpack Compose, est en test privé.',
+      es: 'El bot de Telegram y la aplicación web de Sihem están en beta por invitación. La aplicación nativa para Android, desarrollada con Kotlin y Jetpack Compose, está en pruebas privadas.',
+      ar: 'يتوفر بوت Sihem على تيليجرام وتطبيق الويب في نسخة تجريبية بالدعوة. ويخضع تطبيق Android الأصلي، المبني باستخدام Kotlin وJetpack Compose، لاختبارات خاصة.',
     },
   },
 } satisfies Record<string, Record<'problem' | 'contribution' | 'outcome', TranslationMap>>

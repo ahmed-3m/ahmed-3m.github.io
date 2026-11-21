@@ -5,10 +5,11 @@ import { useReveal } from '@/lib/useReveal'
 const copy = {
   eyebrow: { en: '// Experience', de: '// Erfahrung', fr: '// Expérience', es: '// Experiencia', ar: '// الخبرة' },
   title: { en: "Experience & independent work.", de: 'Erfahrung und eigene Projekte.', fr: "Expérience et projets personnels.", es: 'Experiencia y proyectos propios.', ar: 'الخبرة والمشاريع المستقلة.' },
+  may2026ToPresent: { en: 'May 2026\nPresent', de: 'Mai 2026\nHeute', fr: 'Mai 2026\nAujourd’hui', es: 'May. 2026\nActualidad', ar: 'مايو 2026\nحتى الآن' },
 } satisfies Record<string, TranslationMap>
 
 const experiences: Array<{
-  date: string
+  date: TranslationMap
   role: TranslationMap
   company: string | TranslationMap
   desc: TranslationMap
@@ -17,7 +18,20 @@ const experiences: Array<{
   last?: boolean
 }> = [
   {
-    date: 'May 2026\nPresent',
+    date: copy.may2026ToPresent,
+    role: { en: 'AI Consultant, LLMs & AI Agents', de: 'KI-Berater für LLMs und KI-Agenten', fr: 'Consultant IA, LLM et agents IA', es: 'Consultor de IA, LLM y agentes de IA', ar: 'استشاري ذكاء اصطناعي، نماذج لغوية كبيرة ووكلاء ذكاء اصطناعي' },
+    company: { en: 'Freelance · Remote', de: 'Freiberuflich · Remote', fr: 'Indépendant · À distance', es: 'Autónomo · En remoto', ar: 'عمل حر · عن بُعد' },
+    desc: {
+      en: 'Advise small and medium-sized businesses on AI integration, workflow automation, and applications built with large language models.',
+      de: 'Berate kleine und mittlere Unternehmen bei der KI-Integration, der Automatisierung von Arbeitsabläufen und Anwendungen mit großen Sprachmodellen.',
+      fr: 'Je conseille les petites et moyennes entreprises sur l’intégration de l’IA, l’automatisation des processus et les applications fondées sur de grands modèles de langage.',
+      es: 'Asesoro a pequeñas y medianas empresas sobre integración de IA, automatización de flujos de trabajo y aplicaciones basadas en grandes modelos de lenguaje.',
+      ar: 'أقدّم المشورة للشركات الصغيرة والمتوسطة بشأن دمج الذكاء الاصطناعي وأتمتة سير العمل وتطبيقات النماذج اللغوية الكبيرة.',
+    },
+    active: true,
+  },
+  {
+    date: copy.may2026ToPresent,
     role: { en: 'Solo Developer & Project Lead', de: 'Solo-Entwickler & Projektleiter', fr: 'Développeur solo & chef de projet', es: 'Desarrollador en solitario y líder de proyecto', ar: 'مطور منفرد وقائد مشروع' },
     company: 'Sihem (side project) · tech2b incubator, Linz',
     desc: {
@@ -31,27 +45,34 @@ const experiences: Array<{
     active: true,
   },
   {
-    date: 'Apr 2024\nJul 2026',
-    role: { en: 'M.Sc. Thesis Researcher, Machine Vision', de: 'Masterarbeits-Forscher, Machine Vision', fr: 'Chercheur de mémoire M.Sc., vision industrielle', es: 'Investigador de tesis de máster, visión artificial', ar: 'باحث رسالة ماجستير، رؤية آلية' },
-    company: {
-      en: 'JKU Institute for Machine Learning with PROFACTOR GmbH · Linz / Steyr (Remote / Home Office)',
-      de: 'JKU Institute for Machine Learning mit PROFACTOR GmbH · Linz / Steyr (Remote / Homeoffice)',
-      fr: 'JKU Institute for Machine Learning avec PROFACTOR GmbH · Linz / Steyr (Télétravail / À distance)',
-      es: 'JKU Institute for Machine Learning con PROFACTOR GmbH · Linz / Steyr (Remoto / Teletrabajo)',
-      ar: 'معهد JKU لتعلم الآلة مع PROFACTOR GmbH · لينز / شتاير (عن بُعد / العمل من المنزل)',
-    },
+    date: { en: 'Jul 2026', de: 'Juli 2026', fr: 'Juil. 2026', es: 'Jul. 2026', ar: 'يوليو 2026' },
+    role: { en: 'M.Sc. Thesis Research, Machine Vision', de: 'Masterarbeit in maschineller Bildverarbeitung', fr: 'Mémoire de master en vision par ordinateur', es: 'Tesis de máster en visión artificial', ar: 'بحث رسالة ماجستير في الرؤية الحاسوبية' },
+    company: 'Johannes Kepler University Linz',
     desc: {
-      en: 'Conditional diffusion models as generative classifiers for OOD detection under Prof. Sepp Hochreiter. A class-conditional separation loss cut seed-to-seed std from 11.07 to 0.07 points while raising CIFAR-10 AUROC from 92.52% to 99.03%. Applied in project Zer0P (zero-defect inkjet printing on building components) as a two-stage YOLOv8 + conditional-diffusion pipeline, with an eight-method 5-fold comparison.',
-      de: 'Konditionale Diffusionsmodelle als generative Klassifikatoren für OOD-Erkennung bei Prof. Sepp Hochreiter. Ein klassenkonditionaler Separation Loss senkte die Seed-Standardabweichung von 11,07 auf 0,07 Punkte und hob die CIFAR-10-AUROC von 92,52% auf 99,03%. Angewandt im Projekt Zer0P (Zero-Defect-Inkjetdruck auf Bauteilen) als zweistufige YOLOv8- + Diffusionspipeline mit einem 5-fachen Vergleich von acht Methoden.',
-      fr: "Modèles de diffusion conditionnels comme classificateurs génératifs pour la détection OOD, sous la direction du Prof. Sepp Hochreiter. Une separation loss conditionnelle a réduit l'écart-type entre seeds de 11,07 à 0,07 points et porté l'AUROC CIFAR-10 de 92,52% à 99,03%. Appliqué au projet Zer0P (impression inkjet zéro défaut sur composants de construction) via un pipeline YOLOv8 + diffusion en deux étapes, avec une comparaison de huit méthodes en 5-fold.",
-      es: 'Modelos de difusión condicional como clasificadores generativos para detección OOD, bajo la supervisión del Prof. Sepp Hochreiter. Una separation loss condicional redujo la desviación estándar entre seeds de 11,07 a 0,07 puntos y elevó el AUROC en CIFAR-10 de 92,52% a 99,03%. Aplicado en el proyecto Zer0P (impresión inkjet sin defectos en componentes de construcción) como pipeline YOLOv8 + difusión en dos etapas, con una comparación 5-fold de ocho métodos.',
-      ar: 'نماذج انتشار شرطية كمصنفات توليدية لكشف الخارج عن التوزيع بإشراف البروفيسور سيب هوخرايتر. خفّضت خسارة الفصل الشرطية الانحراف المعياري بين البذور من 11.07 إلى 0.07 نقطة ورفعت AUROC على CIFAR-10 من 92.52% إلى 99.03%. طُبّقت في مشروع Zer0P (طباعة inkjet بلا عيوب على مكونات البناء) عبر خط YOLOv8 + انتشار شرطي من مرحلتين، مع مقارنة ثماني طرق بتحقق خماسي.',
+      en: 'Continued the PROFACTOR research at JKU under Prof. Sepp Hochreiter and submitted the thesis in July 2026. On CIFAR-10 airplane-vs-rest, a class-conditional separation loss raised mean AUROC from 92.52% to 99.03% across three runs and reduced the standard deviation from 11.07 to 0.07 percentage points.',
+      de: 'Führte die bei PROFACTOR begonnene Forschung an der JKU unter Prof. Sepp Hochreiter fort und reichte die Masterarbeit im Juli 2026 ein. Bei CIFAR-10 (Flugzeuge gegen alle übrigen Klassen) erhöhte ein klassenkonditionaler Separation Loss die mittlere AUROC über drei Läufe von 92,52 % auf 99,03 % und senkte die Standardabweichung von 11,07 auf 0,07 Prozentpunkte.',
+      fr: 'J’ai poursuivi à la JKU les recherches commencées chez PROFACTOR, sous la direction du professeur Sepp Hochreiter, et remis mon mémoire en juillet 2026. Sur CIFAR-10 (avions contre toutes les autres classes), une perte de séparation conditionnée par la classe a fait passer l’AUROC moyenne de 92,52 % à 99,03 % sur trois essais et réduit l’écart-type de 11,07 à 0,07 point de pourcentage.',
+      es: 'Continué en la JKU la investigación iniciada en PROFACTOR, bajo la supervisión del profesor Sepp Hochreiter, y entregué la tesis en julio de 2026. En CIFAR-10 (aviones frente al resto), una pérdida de separación condicionada por clase elevó el AUROC medio de 92,52 % a 99,03 % en tres ejecuciones y redujo la desviación estándar de 11,07 a 0,07 puntos porcentuales.',
+      ar: 'واصلت في جامعة يوهانس كيبلر البحث الذي بدأته في PROFACTOR بإشراف البروفيسور سيب هوخرايتر، وقدّمت الرسالة في يوليو 2026. وفي اختبار CIFAR-10 للطائرات مقابل بقية الفئات، رفعت خسارة الفصل المشروطة بالفئة متوسط AUROC عبر ثلاث تجارب من 92.52% إلى 99.03% وخفّضت الانحراف المعياري من 11.07 إلى 0.07 نقطة مئوية.',
     },
     badge: { en: 'Thesis graded 1 (top mark)', de: 'Masterarbeit mit 1 (Sehr gut) bewertet', fr: 'Mémoire noté 1 (meilleure note)', es: 'Tesis calificada con 1 (nota máxima)', ar: 'الرسالة بتقدير 1 (أعلى درجة)' },
     active: false,
   },
   {
-    date: 'Aug 2023\nOct 2023',
+    date: { en: 'Apr 2024\nNov 2024', de: 'Apr. 2024\nNov. 2024', fr: 'Avr. 2024\nNov. 2024', es: 'Abr. 2024\nNov. 2024', ar: 'أبريل 2024\nنوفمبر 2024' },
+    role: { en: 'Master’s Thesis Researcher (AI/ML)', de: 'Masterand für KI und ML', fr: 'Chercheur en IA et ML dans le cadre du master', es: 'Investigador de tesis de máster en IA y ML', ar: 'باحث رسالة ماجستير في الذكاء الاصطناعي والتعلّم الآلي' },
+    company: { en: 'PROFACTOR GmbH · Steyr, Austria (remote)', de: 'PROFACTOR GmbH · Steyr, Österreich (Homeoffice)', fr: 'PROFACTOR GmbH · Steyr, Autriche (à distance)', es: 'PROFACTOR GmbH · Steyr, Austria (en remoto)', ar: 'PROFACTOR GmbH · شتاير، النمسا (عن بُعد)' },
+    desc: {
+      en: 'Built a two-stage pipeline for inspecting experimental inkjet prints during a research contract on the Zer0P project. YOLOv8 locates printed features and a conditional diffusion model flags anomalies.',
+      de: 'Entwickelte während eines Forschungsvertrags im Projekt Zer0P eine zweistufige Pipeline zur Prüfung experimenteller Inkjet-Drucke. YOLOv8 lokalisiert die Druckmerkmale, ein konditionales Diffusionsmodell markiert Anomalien.',
+      fr: 'J’ai développé une chaîne en deux étapes pour inspecter des impressions jet d’encre expérimentales dans le cadre d’un contrat de recherche sur le projet Zer0P. YOLOv8 localise les éléments imprimés et un modèle de diffusion conditionnel signale les anomalies.',
+      es: 'Durante un contrato de investigación en el proyecto Zer0P, desarrollé un sistema de dos etapas para inspeccionar impresiones experimentales de inyección de tinta. YOLOv8 localiza los elementos impresos y un modelo de difusión condicional detecta anomalías.',
+      ar: 'طوّرت خلال عقد بحثي ضمن مشروع Zer0P نظامًا من مرحلتين لفحص مطبوعات تجريبية بنفث الحبر. يحدّد YOLOv8 مواقع العناصر المطبوعة، ويكشف نموذج انتشار شرطي الأنماط الشاذة.',
+    },
+    active: false,
+  },
+  {
+    date: { en: 'Aug 2023\nOct 2023', de: 'Aug. 2023\nOkt. 2023', fr: 'Août 2023\nOct. 2023', es: 'Ago. 2023\nOct. 2023', ar: 'أغسطس 2023\nأكتوبر 2023' },
     role: { en: 'AI Research Intern', de: 'KI-Forschungspraktikant', fr: 'Stagiaire recherche IA', es: 'Practicante de investigación IA', ar: 'متدرب بحث ذكاء اصطناعي' },
     company: 'Karunya Institute of Technology and Sciences · Coimbatore, India',
     desc: {
@@ -64,7 +85,7 @@ const experiences: Array<{
     active: false,
   },
   {
-    date: 'Sep 2018\nOct 2020',
+    date: { en: 'Sep 2018\nOct 2020', de: 'Sept. 2018\nOkt. 2020', fr: 'Sept. 2018\nOct. 2020', es: 'Sep. 2018\nOct. 2020', ar: 'سبتمبر 2018\nأكتوبر 2020' },
     role: { en: 'Electronics Technician', de: 'Elektroniker', fr: 'Technicien en électronique', es: 'Técnico de electrónica', ar: 'فني إلكترونيات' },
     company: 'Ledzone · Karaköy, Istanbul, Turkey',
     desc: {
@@ -92,7 +113,7 @@ export default function Experience() {
         <div className="cd-timeline">
           {experiences.map((exp, i) => (
             <div key={i} className="cd-tl-item reveal">
-              <div className="cd-tl-date" style={{ whiteSpace: 'pre-line' }}>{exp.date}</div>
+              <div className="cd-tl-date" style={{ whiteSpace: 'pre-line' }}>{t(exp.date)}</div>
               <div className="cd-tl-spine">
                 <div className={`cd-tl-dot${exp.active ? '' : ' dim'}`} />
                 {!exp.last && <div className="cd-tl-line" />}
