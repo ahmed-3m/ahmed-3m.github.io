@@ -46,12 +46,14 @@ type ChatCompletionResponse = {
     }
   }>
   error?: string | ApiErrorDetail
+  scope?: 'proxy' | 'upstream'
 }
 
 type ChatCompletionError = Error & {
   status?: number
   code?: string
   provider?: 'Groq' | 'BigModel'
+  isProxyRateLimit?: boolean
 }
 
 const GROQ_MODEL = process.env.NEXT_PUBLIC_GROQ_MODEL || 'openai/gpt-oss-20b'
@@ -418,13 +420,27 @@ function createChatError(
   message: string,
   provider: 'Groq' | 'BigModel',
   status?: number,
-  code?: string
+  code?: string,
+  isProxyRateLimit = false
 ): ChatCompletionError {
   const error = new Error(message) as ChatCompletionError
   error.provider = provider
   error.status = status
   error.code = code
+  error.isProxyRateLimit = isProxyRateLimit
   return error
+}
+
+function isProxyRateLimitPayload(
+  data: ChatCompletionResponse,
+  status: number,
+  useProxy: boolean
+): boolean {
+  if (!useProxy || status !== 429) return false
+  return (
+    data.scope === 'proxy' ||
+    (typeof data.error === 'string' && data.error === 'Rate limit exceeded. Please try again later.')
+  )
 }
 
 type StreamDelta = (fullContent: string) => void
@@ -478,7 +494,11 @@ async function routeWithClassifier(
         signal: controller.signal,
       })
       if (auth.useProxy && response.status === 429) {
-        throw createChatError('Rate limit exceeded.', 'BigModel', 429)
+        const errorData = (await response.json().catch(() => ({}))) as ChatCompletionResponse
+        if (isProxyRateLimitPayload(errorData, response.status, auth.useProxy)) {
+          throw createChatError('Rate limit exceeded.', 'BigModel', 429, undefined, true)
+        }
+        return 'deep'
       }
       if (!response.ok) return 'deep'
       const data = (await response.json()) as ChatCompletionResponse
@@ -488,7 +508,7 @@ async function routeWithClassifier(
       clearTimeout(timeout)
     }
   } catch (err) {
-    if ((err as ChatCompletionError | undefined)?.status === 429) throw err
+    if ((err as ChatCompletionError | undefined)?.isProxyRateLimit) throw err
     return 'deep'
   }
 }
@@ -496,6 +516,7 @@ async function routeWithClassifier(
 async function throwProviderError(
   response: Response,
   provider: ChatProvider,
+  useProxy: boolean,
   status503Message?: string
 ): Promise<never> {
   const data = (await response.json().catch(() => ({}))) as ChatCompletionResponse
@@ -504,10 +525,11 @@ async function throwProviderError(
     typeof data.error === 'string'
       ? data.error
       : errorDetail?.message ?? `${provider} could not respond right now.`
+  const isProxyRateLimit = isProxyRateLimitPayload(data, response.status, useProxy)
   if (status503Message && response.status === 503) {
-    throw createChatError(status503Message, provider, response.status)
+    throw createChatError(status503Message, provider, response.status, errorDetail?.code, isProxyRateLimit)
   }
-  throw createChatError(message, provider, response.status, errorDetail?.code)
+  throw createChatError(message, provider, response.status, errorDetail?.code, isProxyRateLimit)
 }
 
 async function readChatResponse({
@@ -637,7 +659,7 @@ async function fetchBigModel({
     })
 
     if (!response.ok) {
-      await throwProviderError(response, 'BigModel')
+      await throwProviderError(response, 'BigModel', auth.useProxy)
     }
 
     return await readChatResponse({
@@ -698,7 +720,12 @@ async function fetchGroq({
     })
 
     if (!response.ok) {
-      await throwProviderError(response, 'Groq', 'Model is warming up, try again in a moment.')
+      await throwProviderError(
+        response,
+        'Groq',
+        auth.useProxy,
+        'Model is warming up, try again in a moment.'
+      )
     }
 
     return await readChatResponse({
@@ -1205,8 +1232,7 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
           : null
 
       const proxyRateLimited = Boolean(
-        zaiAuth?.useProxy &&
-          (lastProviderError as ChatCompletionError | undefined)?.status === 429
+        (lastProviderError as ChatCompletionError | undefined)?.isProxyRateLimit
       )
 
       if (rawReply === null && groqAuth && !(proxyRateLimited && groqAuth.useProxy)) {
