@@ -19,11 +19,11 @@ export default function HomePortfolio() {
     return (
       <>
         <div className="cd-ambient" aria-hidden="true" />
-        <main id="main" tabIndex={-1}>
+        <main id="main" tabIndex={-1} className="cd-full-portfolio">
           <Hero />
           <FullProjects />
-          <About />
           <Experience />
+          <About />
           <Research />
           <Evidence />
           <Writing />

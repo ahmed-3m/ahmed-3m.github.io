@@ -45,17 +45,27 @@ const copy = {
     ar: 'أنظمة ذكاء اصطناعي إنتاجية',
   },
   body: {
-    en: "AI/ML engineer building systems that inspect images, support daily routines, and check AI-written code. I combine carefully evaluated research with hands-on product development.",
-    de: "AI/ML Engineer für Systeme, die Bilder prüfen, Alltagsroutinen unterstützen und KI-generierten Code kontrollieren. Ich verbinde sorgfältig evaluierte Forschung mit praktischer Produktentwicklung.",
-    fr: "Ingénieur IA/ML : je construis des systèmes pour inspecter des images, accompagner les routines et vérifier le code généré par IA. Je combine recherche évaluée et développement de produits.",
-    es: "Ingeniero de IA/ML. Creo sistemas para inspeccionar imágenes, apoyar rutinas y verificar código generado por IA. Combino investigación evaluada con desarrollo de productos.",
-    ar: "مهندس ذكاء اصطناعي وتعلم آلي. أبني أنظمة لفحص الصور ودعم الروتين اليومي والتحقق من الشيفرة التي يولدها الذكاء الاصطناعي، وأجمع بين البحث المُقيّم بعناية وتطوير المنتجات.",
+    en: 'AI/ML engineer building systems that inspect images, support daily routines, and check AI-written code.',
+    de: 'AI/ML Engineer für Systeme, die Bilder prüfen, Alltagsroutinen unterstützen und KI-generierten Code kontrollieren.',
+    fr: 'Ingénieur IA/ML, je crée des systèmes qui inspectent des images, accompagnent les routines et vérifient le code généré par IA.',
+    es: 'Ingeniero de IA/ML. Creo sistemas para inspeccionar imágenes, apoyar rutinas y verificar código generado por IA.',
+    ar: 'مهندس ذكاء اصطناعي وتعلّم آلي. أبني أنظمة لفحص الصور ودعم الروتين اليومي والتحقق من الشيفرة التي يولّدها الذكاء الاصطناعي.',
   },
   viewWork: { en: 'View work', de: 'Arbeiten ansehen', fr: 'Voir les projets', es: 'Ver trabajos', ar: 'عرض الأعمال' },
+  sections: { en: 'Portfolio sections', de: 'Portfolio-Bereiche', fr: 'Sections du portfolio', es: 'Secciones del portafolio', ar: 'أقسام الملف الشخصي' },
+  experience: { en: 'Experience', de: 'Erfahrung', fr: 'Expérience', es: 'Experiencia', ar: 'الخبرة' },
+  research: { en: 'Research', de: 'Forschung', fr: 'Recherche', es: 'Investigación', ar: 'الأبحاث' },
   contact: { en: 'Get in touch', de: 'Kontakt', fr: 'Contact', es: 'Contacto', ar: 'تواصل' },
   or: { en: 'or', de: 'oder', fr: 'ou', es: 'o', ar: 'أو' },
   degree: { en: 'AI · JKU Linz', de: 'KI · JKU Linz', fr: 'IA · JKU Linz', es: 'IA · JKU Linz', ar: 'ذكاء اصطناعي · JKU Linz' },
   auroc: { en: 'OOD Detection AUROC', de: 'OOD-Erkennung AUROC', fr: 'Détection OOD AUROC', es: 'Detección OOD AUROC', ar: 'مقياس AUROC لكشف الخارج عن التوزيع' },
+  benchmark: {
+    en: 'AUROC · CIFAR-10 airplane vs. rest · mean ± SD across three runs',
+    de: 'AUROC · CIFAR-10, Flugzeuge gegen übrige Klassen · Mittelwert ± Standardabweichung aus drei Läufen',
+    fr: 'AUROC · CIFAR-10, avions contre les autres classes · moyenne ± écart-type sur trois essais',
+    es: 'AUROC · CIFAR-10, aviones frente al resto · media ± desviación estándar de tres pruebas',
+    ar: 'AUROC · ‏CIFAR-10، الطائرات مقابل بقية الفئات · المتوسط ± الانحراف المعياري عبر ثلاث تجارب',
+  },
   gain: { en: 'Gain over baseline (stable)', de: 'Gewinn gegenüber Baseline (stabil)', fr: 'Gain face au baseline (stable)', es: 'Mejora sobre la base (estable)', ar: 'تحسن على خط الأساس (مستقر)' },
   legend: {
     en: '99.03% ± 0.07% AUROC = CIFAR-10 thesis (binary, single-class airplane-vs-rest, 3-seed mean) · 0.8673 ± 0.0230 AUROC = industrial FTI_Zer0P 5-fold baseline · +6.5pp = mean gain over 92.52% ± 11.07% baseline',
@@ -97,7 +107,7 @@ export default function Hero() {
             </div>
             <p className="cd-hero-body" data-speakable>{t(copy.body)}</p>
             <div className="cd-hero-ctas">
-              <a href="#projects" className="cd-btn-primary">{t(copy.viewWork)} <span className="inline-block rtl:rotate-180" aria-hidden="true">&rarr;</span></a>
+              <a href="#projects" className="cd-btn-primary cd-hero-work">{t(copy.viewWork)} <span className="inline-block rtl:rotate-180" aria-hidden="true">&rarr;</span></a>
               <RequestCvButton />
               <button
                 type="button"
@@ -117,20 +127,28 @@ export default function Hero() {
               <a href="#contact" className="cd-hero-textlink">{t(copy.contact)}</a>
             </div>
             <div className="cd-hero-stats">
-              <div className="cd-stat">
+              <div className="cd-stat cd-stat--wide">
                 <div className="cd-stat-num" dir="ltr">M.Sc.</div>
                 <div className="cd-stat-label">{t(copy.degree)}</div>
               </div>
               <div className="cd-stat">
                 <div className="cd-stat-num" dir="ltr">99<span className="a">.</span>03<span className="u">% ± 0.07%</span></div>
-                <div className="cd-stat-label">{t(copy.auroc)}</div>
+                <div className="cd-stat-label">
+                  <span className="cd-stat-label-wide">{t(copy.auroc)}</span>
+                  <span className="cd-stat-label-compact">{t(copy.benchmark)}</span>
+                </div>
               </div>
-              <div className="cd-stat">
+              <div className="cd-stat cd-stat--wide">
                 <div className="cd-stat-num" dir="ltr">+6.5<span className="g u">pp</span></div>
                 <div className="cd-stat-label">{t(copy.gain)}</div>
               </div>
             </div>
             <p className="cd-hero-legend">{t(copy.legend)}</p>
+            <nav className="cd-hero-jump" aria-label={t(copy.sections)}>
+              <a href="#projects" className="cd-btn-ghost">{t(portfolioCopy.work)}</a>
+              <a href="#experience" className="cd-btn-ghost">{t(copy.experience)}</a>
+              <a href="#research" className="cd-btn-ghost">{t(copy.research)}</a>
+            </nav>
           </div>
           <div className="cd-hero-visual">
             <HeroSignal />
