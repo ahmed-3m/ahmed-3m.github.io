@@ -845,7 +845,7 @@ Most YOLO posts stop at "train on a large dataset and report mAP." Industrial qu
 
 In the **InkjetOOD** two-stage pipeline, **YOLOv8m** acts explicitly as a **Stage-1 feature detector and cropper** (` + '`640×640`' + ` YOLO input over ` + '`1920×1080`' + ` print frames, ` + '`95.04%`' + ` mAP@0.5 reported in the thesis). *(Erratum note: the thesis PDF text prints YOLOv8n in five places, whereas the released trained checkpoint ` + '`yolo_best.pt`' + ` is ` + '`YOLOv8m`' + ` with 25.86M parameters verified from ` + '`train_args`' + `.)*
 
-Each detected print region (8 feature classes: ` + '`angle`' + `, ` + '`dist1`' + `, ` + '`dist6`' + `, ` + '`dots`' + `, and ` + '`edge1–4`' + `) is cropped and resized via bilinear interpolation to **` + '128×128`' + ` RGB**. Across the 573 processed source-image groups on **FTI_Zer0P**, that yields **6,408 retained feature crops** for Stage-2 generative classification.
+Each detected print region (8 feature classes: ` + '`angle`' + `, ` + '`dist1`' + `, ` + '`dist6`' + `, ` + '`dots`' + `, and ` + '`edge1–4`' + `) is cropped and resized via bilinear interpolation to **128×128 RGB**. Across the 573 processed source-image groups on **FTI_Zer0P**, that yields **6,408 retained feature crops** for Stage-2 generative classification.
 
 ## Data Discipline Over Tricks
 
@@ -864,7 +864,7 @@ pipeline = {
 
 ## Evaluation That Meant Something
 
-Evaluated on public **FTI_Zer0P** under 5-fold image-level CV (` + '`λ = 0.0`' + `), the two-stage baseline achieved **` + '0.8673 ± 0.0230 AUROC`' + `** (` + '`0.8094 ± 0.0151`' + ` accuracy). Per-feature AUROC told the real engineering story: dense local patterns like **Dots (` + '0.9557 ± 0.0353`' + `)** and **Distance 6 (` + '0.9362 ± 0.0666`' + `)** scored reliably, whereas sparse or imbalanced classes like **Angle (` + '9.67:1`' + ` GOOD:BAD, ` + '0.8166 ± 0.1381`' + `)** and **Edge 3 (` + '0.7441 ± 0.0757`' + `)** carried high cross-fold spread.
+Evaluated on public **FTI_Zer0P** under 5-fold image-level CV (` + '`λ = 0.0`' + `), the two-stage baseline achieved **0.8673 ± 0.0230 AUROC** (` + '`0.8094 ± 0.0151`' + ` accuracy). Per-feature AUROC told the real engineering story: dense local patterns like **Dots (0.9557 ± 0.0353)** and **Distance 6 (0.9362 ± 0.0666)** scored reliably, whereas sparse or imbalanced classes like **Angle (9.67:1 GOOD:BAD, 0.8166 ± 0.1381)** and **Edge 3 (0.7441 ± 0.0757)** carried high cross-fold spread.
 
 ## What Actually Moved the Needle
 
@@ -906,7 +906,7 @@ Die meisten YOLO-Beiträge enden bei "auf großem Datensatz trainieren und mAP b
 
 In der zweistufigen **InkjetOOD**-Pipeline arbeitet **YOLOv8m** gezielt als **Stufe-1-Merkmalsdetektor und Cropper** (` + '`640×640`' + `-Eingang auf ` + '`1920×1080`' + `-Druckbildern, ` + '`95.04%`' + ` mAP@0.5 laut Masterarbeit). *(Erratum-Hinweis: Im Text der Thesis-PDF steht fünfmal YOLOv8n, das trainierte Gewicht ` + '`yolo_best.pt`' + ` ist jedoch laut ` + '`train_args`' + ` YOLOv8m mit 25,86 Mio. Parametern.)*
 
-Jede erkannte Druckregion (8 Klassen: ` + '`angle`' + `, ` + '`dist1`' + `, ` + '`dist6`' + `, ` + '`dots`' + `, ` + '`edge1–4`' + `) wird ausgeschnitten und bilinear auf **` + '128×128`' + ` RGB** skaliert. Über die 573 verarbeiteten Quellbild-Gruppen von **FTI_Zer0P** entstehen so **6.408 Merkmals-Crops** für die zweite Stufe.
+Jede erkannte Druckregion (8 Klassen: ` + '`angle`' + `, ` + '`dist1`' + `, ` + '`dist6`' + `, ` + '`dots`' + `, ` + '`edge1–4`' + `) wird ausgeschnitten und bilinear auf **128×128 RGB** skaliert. Über die 573 verarbeiteten Quellbild-Gruppen von **FTI_Zer0P** entstehen so **6.408 Merkmals-Crops** für die zweite Stufe.
 
 ## Datendisziplin statt Tricks
 
@@ -925,7 +925,7 @@ pipeline = {
 
 ## Aussagekräftige Evaluation
 
-Unter 5-facher bildbasierter Kreuzvalidierung auf dem öffentlichen **FTI_Zer0P**-Datensatz (` + '`λ = 0.0`' + `) erreichte die Baseline **` + '0.8673 ± 0.0230 AUROC`' + `** (` + '`0.8094 ± 0.0151`' + ` Genauigkeit). Die Aufschlüsselung pro Merkmal zeigt das reale Bild: **Dots (` + '0.9557 ± 0.0353`' + `)** und **Distance 6 (` + '0.9362 ± 0.0666`' + `)** trennen sehr stabil, während stark unausgewogene oder dünne Klassen wie **Angle (` + '9.67:1`' + ` GOOD:BAD, ` + '0.8166 ± 0.1381`' + `)** und **Edge 3 (` + '0.7441 ± 0.0757`' + `)** deutlich stärker streuen.
+Unter 5-facher bildbasierter Kreuzvalidierung auf dem öffentlichen **FTI_Zer0P**-Datensatz (` + '`λ = 0.0`' + `) erreichte die Baseline **0.8673 ± 0.0230 AUROC** (` + '`0.8094 ± 0.0151`' + ` Genauigkeit). Die Aufschlüsselung pro Merkmal zeigt das reale Bild: **Dots (0.9557 ± 0.0353)** und **Distance 6 (0.9362 ± 0.0666)** trennen sehr stabil, während stark unausgewogene oder dünne Klassen wie **Angle (9.67:1 GOOD:BAD, 0.8166 ± 0.1381)** und **Edge 3 (0.7441 ± 0.0757)** deutlich stärker streuen.
 
 ## Was wirklich den Unterschied gemacht hat
 
@@ -967,7 +967,7 @@ La plupart des articles YOLO s'arrêtent à « entraîner sur un grand dataset e
 
 Dans la pipeline en deux étapes **InkjetOOD**, **YOLOv8m** sert explicitement de **détecteur et recadreur de phase 1** (entrée ` + '`640×640`' + ` sur images ` + '`1920×1080`' + `, ` + '`95.04%`' + ` mAP@0.5 rapportés dans le mémoire). *(Erratum : le texte PDF du mémoire mentionne YOLOv8n à cinq reprises, alors que le checkpoint publié ` + '`yolo_best.pt`' + ` est ` + '`YOLOv8m`' + ` à 25,86 M paramètres selon ` + '`train_args`' + `.)*
 
-Chaque motif détecté (8 catégories : ` + '`angle`' + `, ` + '`dist1`' + `, ` + '`dist6`' + `, ` + '`dots`' + `, ` + '`edge1–4`' + `) est recadré et redimensionné par interpolation bilinéaire en **` + '128×128`' + ` RGB**. Sur les 573 groupes d'images de **FTI_Zer0P**, cela produit **6 408 crops de motifs** pour le classificateur génératif de phase 2.
+Chaque motif détecté (8 catégories : ` + '`angle`' + `, ` + '`dist1`' + `, ` + '`dist6`' + `, ` + '`dots`' + `, ` + '`edge1–4`' + `) est recadré et redimensionné par interpolation bilinéaire en **128×128 RGB**. Sur les 573 groupes d'images de **FTI_Zer0P**, cela produit **6 408 crops de motifs** pour le classificateur génératif de phase 2.
 
 ## Discipline sur les données
 
@@ -986,7 +986,7 @@ pipeline = {
 
 ## Une évaluation révélatrice
 
-Évaluée sur **FTI_Zer0P** en validation croisée par image à 5 plis (` + '`λ = 0.0`' + `), la baseline atteint **` + '0.8673 ± 0.0230 AUROC`' + `** (` + '`0.8094 ± 0.0151`' + ` d'exactitude). Le détail par motif montre la réalité terrain : **Dots (` + '0.9557 ± 0.0353`' + `)** et **Distance 6 (` + '0.9362 ± 0.0666`' + `)** se séparent nettement, tandis que les classes rares ou déséquilibrées comme **Angle (` + '9.67:1`' + ` GOOD:BAD, ` + '0.8166 ± 0.1381`' + `)** et **Edge 3 (` + '0.7441 ± 0.0757`' + `)** présentent une dispersion plus élevée.
+Évaluée sur **FTI_Zer0P** en validation croisée par image à 5 plis (` + '`λ = 0.0`' + `), la baseline atteint **0.8673 ± 0.0230 AUROC** (` + '`0.8094 ± 0.0151`' + ` d'exactitude). Le détail par motif montre la réalité terrain : **Dots (0.9557 ± 0.0353)** et **Distance 6 (0.9362 ± 0.0666)** se séparent nettement, tandis que les classes rares ou déséquilibrées comme **Angle (9.67:1 GOOD:BAD, 0.8166 ± 0.1381)** et **Edge 3 (0.7441 ± 0.0757)** présentent une dispersion plus élevée.
 
 ## Ce qui a vraiment fait la différence
 
@@ -1028,7 +1028,7 @@ La mayoría de los posts sobre YOLO terminan en «entrenar en un gran dataset y 
 
 En la pipeline de dos etapas **InkjetOOD**, **YOLOv8m** funciona explícitamente como **detector y recortador de etapa 1** (entrada ` + '`640×640`' + ` sobre capturas ` + '`1920×1080`' + `, ` + '`95.04%`' + ` mAP@0.5 según la tesis). *(Nota de errata: el PDF de la tesis menciona YOLOv8n en cinco ocasiones, pero el checkpoint publicado ` + '`yolo_best.pt`' + ` es ` + '`YOLOv8m`' + ` con 25,86 M parámetros verificados en ` + '`train_args`' + `.)*
 
-Cada región detectada (8 tipos: ` + '`angle`' + `, ` + '`dist1`' + `, ` + '`dist6`' + `, ` + '`dots`' + `, ` + '`edge1–4`' + `) se recorta y redimensiona por interpolación bilineal a **` + '128×128`' + ` RGB**. En los 573 grupos de imágenes fuente de **FTI_Zer0P**, eso produce **6.408 recortes** para el clasificador generativo de etapa 2.
+Cada región detectada (8 tipos: ` + '`angle`' + `, ` + '`dist1`' + `, ` + '`dist6`' + `, ` + '`dots`' + `, ` + '`edge1–4`' + `) se recorta y redimensiona por interpolación bilineal a **128×128 RGB**. En los 573 grupos de imágenes fuente de **FTI_Zer0P**, eso produce **6.408 recortes** para el clasificador generativo de etapa 2.
 
 ## Disciplina de datos antes que trucos
 
@@ -1047,7 +1047,7 @@ pipeline = {
 
 ## Evaluación con significado real
 
-Evaluado en **FTI_Zer0P** con 5-fold CV a nivel de imagen (` + '`λ = 0.0`' + `), la línea base obtuvo **` + '0.8673 ± 0.0230 AUROC`' + `** (` + '`0.8094 ± 0.0151`' + ` de exactitud). El desglose por rasgo cuenta la historia real: **Dots (` + '0.9557 ± 0.0353`' + `)** y **Distance 6 (` + '0.9362 ± 0.0666`' + `)** muestran alta separación, mientras que rasgos escasos o desbalanceados como **Angle (` + '9.67:1`' + ` GOOD:BAD, ` + '0.8166 ± 0.1381`' + `)** y **Edge 3 (` + '0.7441 ± 0.0757`' + `)** presentan mayor dispersión.
+Evaluado en **FTI_Zer0P** con 5-fold CV a nivel de imagen (` + '`λ = 0.0`' + `), la línea base obtuvo **0.8673 ± 0.0230 AUROC** (` + '`0.8094 ± 0.0151`' + ` de exactitud). El desglose por rasgo cuenta la historia real: **Dots (0.9557 ± 0.0353)** y **Distance 6 (0.9362 ± 0.0666)** muestran alta separación, mientras que rasgos escasos o desbalanceados como **Angle (9.67:1 GOOD:BAD, 0.8166 ± 0.1381)** y **Edge 3 (0.7441 ± 0.0757)** presentan mayor dispersión.
 
 ## Qué movió la aguja de verdad
 
@@ -1089,7 +1089,7 @@ Evaluado en **FTI_Zer0P** con 5-fold CV a nivel de imagen (` + '`λ = 0.0`' + `)
 
 في خط **InkjetOOD** ذي المرحلتين، يعمل **YOLOv8m** صراحةً كـ **كاشف ومقتطع للمرحلة الأولى** (مدخل ` + '`640×640`' + ` على إطارات ` + '`1920×1080`' + `، بمقياس ` + '`95.04%`' + ` mAP@0.5 في الرسالة). *(ملاحظة تصويب: يذكر نص PDF الرسالة YOLOv8n في خمسة مواضع، بينما نقطة التحقق المنشورة ` + '`yolo_best.pt`' + ` هي ` + '`YOLOv8m`' + ` بـ 25.86 مليون معامل وفق ` + '`train_args`' + `.)*
 
-تُقتطع كل منطقة ميزة مكتشفة (8 فئات: ` + '`angle`' + `، ` + '`dist1`' + `، ` + '`dist6`' + `، ` + '`dots`' + `، ` + '`edge1–4`' + `) ويُعاد تحجيمها ثنائياً إلى **` + '128×128`' + ` RGB**. وعبر 573 مجموعة صور أصلية في **FTI_Zer0P** ينتج عن ذلك **6,408 قصاصات** لمصنف المرحلة الثانية التوليدي.
+تُقتطع كل منطقة ميزة مكتشفة (8 فئات: ` + '`angle`' + `، ` + '`dist1`' + `، ` + '`dist6`' + `، ` + '`dots`' + `، ` + '`edge1–4`' + `) ويُعاد تحجيمها ثنائياً إلى **128×128 RGB**. وعبر 573 مجموعة صور أصلية في **FTI_Zer0P** ينتج عن ذلك **6,408 قصاصات** لمصنف المرحلة الثانية التوليدي.
 
 ## انضباط البيانات قبل الحيل
 
@@ -1108,7 +1108,7 @@ pipeline = {
 
 ## تقييم ذو معنى فعلي
 
-على معيار **FTI_Zer0P** العام بتحقق تقاطعي من 5 طيات على مستوى الصورة (` + '`λ = 0.0`' + `)، بلغ خط الأساس **` + '0.8673 ± 0.0230 AUROC`' + `** (` + '`0.8094 ± 0.0151`' + ` دقة). وتوضح نتائج كل ميزة الصورة الكاملة: حققت **Dots (` + '0.9557 ± 0.0353`' + `)** و**Distance 6 (` + '0.9362 ± 0.0666`' + `)** فصلاً قوياً، بينما سجلت الفئات الأقل وفرة مثل **Angle (` + '9.67:1`' + ` سليم:معيب، ` + '0.8166 ± 0.1381`' + `)** و**Edge 3 (` + '0.7441 ± 0.0757`' + `)** تبايناً أكبر عبر الطيات.
+على معيار **FTI_Zer0P** العام بتحقق تقاطعي من 5 طيات على مستوى الصورة (` + '`λ = 0.0`' + `)، بلغ خط الأساس **0.8673 ± 0.0230 AUROC** (` + '`0.8094 ± 0.0151`' + ` دقة). وتوضح نتائج كل ميزة الصورة الكاملة: حققت **Dots (0.9557 ± 0.0353)** و**Distance 6 (0.9362 ± 0.0666)** فصلاً قوياً، بينما سجلت الفئات الأقل وفرة مثل **Angle (9.67:1 سليم:معيب، 0.8166 ± 0.1381)** و**Edge 3 (0.7441 ± 0.0757)** تبايناً أكبر عبر الطيات.
 
 ## ما الذي أحدث الفرق فعلاً
 
