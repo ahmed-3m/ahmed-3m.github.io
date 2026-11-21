@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 
 const copy = {
@@ -18,6 +19,7 @@ const copy = {
 
 export default function Footer() {
   const { t } = useI18n()
+  const projectsHref = usePathname() === '/' ? '#projects' : '/#projects'
 
   return (
     <footer className="cd-footer">
@@ -27,7 +29,7 @@ export default function Footer() {
           <nav aria-label="Footer links" style={{ display: 'flex', gap: '1.25rem', flexWrap: 'wrap', alignItems: 'center' }}>
             <Link href="/blog/" style={{ color: 'var(--cd-fg3)', fontSize: '0.8rem', textDecoration: 'none' }}>{t(copy.blog)}</Link>
             <Link href="/news/" style={{ color: 'var(--cd-fg3)', fontSize: '0.8rem', textDecoration: 'none' }}>{t(copy.news)}</Link>
-            <Link href="/#projects" style={{ color: 'var(--cd-fg3)', fontSize: '0.8rem', textDecoration: 'none' }}>{t(copy.caseStudies)}</Link>
+            <Link href={projectsHref} style={{ color: 'var(--cd-fg3)', fontSize: '0.8rem', textDecoration: 'none' }}>{t(copy.caseStudies)}</Link>
             <span aria-hidden="true" style={{ color: 'var(--cd-fg3)', opacity: 0.35 }}>·</span>
             <a href="https://www.linkedin.com/in/ahmed-3m/" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--cd-fg3)', fontSize: '0.8rem', textDecoration: 'none' }}>LinkedIn</a>
             <a href="https://github.com/ahmed-3m" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--cd-fg3)', fontSize: '0.8rem', textDecoration: 'none' }}>GitHub</a>

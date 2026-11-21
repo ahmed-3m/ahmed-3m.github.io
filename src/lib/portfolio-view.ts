@@ -23,7 +23,7 @@ export function setPortfolioView(next: PortfolioView, updateUrl = true) {
     } else {
       url.searchParams.delete('view')
     }
-    window.history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`)
+    window.history.replaceState(null, '', `${url.pathname}${url.search}`)
   }
 }
 
