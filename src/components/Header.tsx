@@ -9,7 +9,7 @@ import { portfolioCopy } from '@/lib/portfolio-copy'
 import { setPortfolioView, usePortfolioView } from '@/lib/portfolio-view'
 
 const links = [
-  { href: '/#projects', label: { en: 'Projects', de: 'Projekte', fr: 'Projets', es: 'Proyectos', ar: 'المشاريع' } },
+  { href: '#projects', label: { en: 'Projects', de: 'Projekte', fr: 'Projets', es: 'Proyectos', ar: 'المشاريع' } },
   { href: '/about/', label: { en: 'About', de: 'Profil', fr: 'Profil', es: 'Perfil', ar: 'نبذة' } },
   { href: '/research/', label: { en: 'Research', de: 'Forschung', fr: 'Recherche', es: 'Investigación', ar: 'الأبحاث' } },
   { href: '/blog/', label: { en: 'Writing', de: 'Artikel', fr: 'Articles', es: 'Artículos', ar: 'المقالات' } },
@@ -104,11 +104,11 @@ function NavLink({ href, label, onClick }: { href: string; label: TranslationMap
   )
 }
 
-function NavCta({ onClick }: { onClick?: () => void }) {
+function NavCta({ isHome, onClick }: { isHome: boolean; onClick?: () => void }) {
   const { t } = useI18n()
 
   return (
-    <Link href="/#contact" className="cd-nav-cta" onClick={onClick}>
+    <Link href={isHome ? '#contact' : '/#contact'} className="cd-nav-cta" onClick={onClick}>
       {t(ctaLabel)}
     </Link>
   )
@@ -172,6 +172,10 @@ export default function Header() {
   const isDark = theme === 'dark'
   // On the homepage the logo scrolls to the hero; everywhere else it returns home.
   const isHome = usePathname() === '/'
+  const navLinks = links.map(link => ({
+    ...link,
+    href: !isHome && link.href.startsWith('#') ? `/${link.href}` : link.href,
+  }))
 
   useEffect(() => {
     if (!open) return
@@ -198,7 +202,7 @@ export default function Header() {
         <a href={isHome ? '#hero' : '/'} className="cd-nav-logo" aria-label="Ahmed Mohammed — home">Ahmed<span>.</span></a>
 
         <ul className="cd-nav-links">
-          {links.map(l => (
+          {navLinks.map(l => (
             <li key={l.href}>
               <NavLink href={l.href} label={l.label} />
             </li>
@@ -217,7 +221,7 @@ export default function Header() {
           >
             {isDark ? <Sun size={16} strokeWidth={2.1} /> : <Moon size={16} strokeWidth={2.1} />}
           </button>
-          <NavCta />
+          <NavCta isHome={isHome} />
         </div>
 
         <button
@@ -242,11 +246,11 @@ export default function Header() {
         className="cd-nav-mobile-panel"
         hidden={!open}
       >
-        {links.map(l => (
+        {navLinks.map(l => (
           <NavLink key={l.href} href={l.href} label={l.label} onClick={() => setOpen(false)} />
         ))}
         <ViewModeToggle isHome={isHome} onAfterClick={() => setOpen(false)} />
-        <NavCta onClick={() => setOpen(false)} />
+        <NavCta isHome={isHome} onClick={() => setOpen(false)} />
       </div>
     </nav>
   )

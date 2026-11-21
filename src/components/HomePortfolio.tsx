@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import Hero from '@/components/Hero'
 import { FullProjects } from '@/components/Projects'
 import About from '@/components/About'
@@ -14,6 +15,14 @@ import { usePortfolioView } from '@/lib/portfolio-view'
 
 export default function HomePortfolio() {
   const { view } = usePortfolioView()
+
+  useEffect(() => {
+    if (view !== 'full') return
+
+    // The exported page starts in concise mode. Resolve the fragment again once the full sections exist.
+    const sectionId = window.location.hash.slice(1)
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'instant' })
+  }, [view])
 
   if (view === 'full') {
     return (
