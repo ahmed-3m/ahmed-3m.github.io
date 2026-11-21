@@ -187,7 +187,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: 'sihem',
-    lastModified: '2026-11-18',
+    lastModified: '2026-11-21',
     stack: [
       'Deno / TypeScript',
       'Supabase Edge Functions',

@@ -2,7 +2,7 @@
 
 > AI/ML Engineer based in Linz, Austria. M.Sc. in Artificial Intelligence from Johannes Kepler University Linz (Oct 2020 - Sep 2026; Defensio 25 Sep 2026, thesis graded 1, supervised by Prof. Sepp Hochreiter). Specializing in computer vision, industrial ML, diffusion models, out-of-distribution detection, LLM products (Sihem), and deterministic agent tooling (mergeproof).
 
-Last updated: 2026-11-18
+Last updated: 2026-11-21
 
 ## Identity
 
@@ -10,7 +10,7 @@ Last updated: 2026-11-18
 - **Location:** Linz, Upper Austria, Austria
 - **Email:** ahmed.mo.0595@gmail.com
 - **Portfolio:** https://ahmed-3m.github.io
-- **Current work:** Computer vision & diffusion OOD research; Sihem — LLM personal-mentor side project in the tech2b incubator, invitation-only beta (https://t.me/sihem_ai_bot)
+- **Current work:** Freelance AI consulting on integrations, workflow automation, and LLM applications. Sihem is an independent project in the tech2b incubator, with an invitation-only beta on Telegram and the web.
 - **Availability:** Available now; eligible for the Rot-Weiß-Rot Karte für Studienabsolventen (no labour-market test, no quota)
 - **Open to:** AI/ML engineering roles · Research collaborations · Enterprise partnerships
 
@@ -25,7 +25,7 @@ Last updated: 2026-11-18
 - [OOD Detection Framework](https://github.com/ahmed-3m/DiffusionOOD): Novel use of conditional diffusion models as generative classifiers for out-of-distribution detection. 99.03% ± 0.07% average AUROC on CIFAR-10 airplane-vs-rest (binary, single ID class, 3-seed mean). Introduced class-conditional separation loss. Applied to industrial quality control with multi-head conditioning on the public FTI_Zer0P benchmark (0.8673 ± 0.0230 AUROC; thesis-documented).
 - Thesis PDF erratum: the PDF says YOLOv8n in five places; the trained artifact yolo_best.pt is YOLOv8m (25.86M params, verified from train_args).
 - [Industrial Anomaly Detection](https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf): Early 2024 YOLO + diffusion model pipeline for industrial defect detection — a negative-result technical report that motivated the later thesis approach. (The FTI_Zer0P 0.8673 ± 0.0230 AUROC baseline is reported in the [Master's thesis](https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf), not this report.)
-- [Sihem](https://sihem-pwa.pages.dev/): Supporting side project. LLM personal-mentor assistant in an invitation-only beta — Telegram bot plus PWA. Built on Supabase edge functions (Deno/TS) with pgvector RAG long-term memory, multi-provider LLM routing (GLM/Gemini/Groq) with failover, a deterministic generators-arbiter-composer decision engine, multimodal meal-photo vision, TTS voice reminders, and Google Calendar sync (@sihem_ai_bot).
+- [Sihem](https://sihem-pwa.pages.dev/): Independent personal-mentor project with an invitation-only beta on Telegram and the installable web app. The native Android client uses Kotlin and Jetpack Compose and is in private testing. Built on Supabase edge functions (Deno/TS) with pgvector RAG long-term memory, multi-provider LLM routing (GLM/Gemini/Groq) with failover, a deterministic generators-arbiter-composer decision engine, multimodal meal-photo vision, TTS voice reminders, and Google Calendar sync (@sihem_ai_bot).
 - [mergeproof](https://github.com/ahmed-3m/mergeproof): Checks AI-written pull requests against configured deterministic merge requirements without calling an LLM. Passing those checks does not guarantee defect-free code. Zero dependencies, MIT, npm package @ahmed-3m/mergeproof.
 - [EEG Signal Classification](https://github.com/ahmed-3m/Motor-Imagery-classification): LSTM, Bi-LSTM, GRU architectures for EEG motor imagery classification in brain-computer interface applications. Hyperparameter optimization across architectures (Karunya Institute of Technology and Sciences, 2023).
 - [Elbostan Pazar bot](https://github.com/ahmed-3m/Elbostan-Pazar-bot): Messenger bot that answers a real shop's customers about prices, hours and delivery.
@@ -45,8 +45,10 @@ Last updated: 2026-11-18
 
 ## Experience
 
+- **AI Consultant, LLMs & AI Agents** (May 2026 – Present, freelance, remote): Advises small and medium-sized businesses on AI integration, workflow automation, and large language model applications.
 - **Solo Developer & Project Lead, Sihem** (May 2026 – Present, personal side project, accepted into the tech2b incubator, Linz): Designs and runs the full cloud stack behind a habits and daily-routine assistant (Telegram bot + installable web app): Supabase Postgres with row-level security, Deno/TypeScript serverless functions, scheduled jobs, pgvector memory, GitHub Actions deploys, multi-provider LLM routing with escalation and failover. In invitation-only beta at @sihem_ai_bot.
-- **M.Sc. Thesis Researcher, Machine Vision — JKU Institute for Machine Learning with PROFACTOR GmbH** (Apr 2024 – Jul 2026, Linz / Steyr · Remote / Home Office): Thesis on conditional diffusion models as generative classifiers for OOD detection under Prof. Sepp Hochreiter, graded 1. A class-conditional separation loss cut seed-to-seed std from 11.07 to 0.07 points and raised mean CIFAR-10 airplane-vs-rest AUROC from 92.52% to 99.03% (3 seeds). Applied in project Zer0P (Government of Upper Austria) as a two-stage YOLOv8 + conditional-diffusion pipeline; eight-method 5-fold comparison with a 0.8673 ± 0.0230 AUROC baseline on the public FTI_Zer0P dataset.
+- **M.Sc. thesis research — Johannes Kepler University Linz** (submitted Jul 2026): Continued the PROFACTOR research under Prof. Sepp Hochreiter and earned a thesis grade of 1. Class-conditional separation loss raised mean CIFAR-10 airplane-vs-rest AUROC from 92.52% to 99.03% across three runs and reduced the standard deviation from 11.07 to 0.07 percentage points. The thesis also compared eight methods under five-fold cross-validation on public FTI_Zer0P, with a diffusion baseline of 0.8673 ± 0.0230 AUROC.
+- **Master's Thesis Researcher (AI/ML) — PROFACTOR GmbH** (Apr–Nov 2024, Steyr · Remote): Built a two-stage YOLOv8 and conditional diffusion pipeline for experimental inkjet print inspection during a research contract on the Zer0P project.
 - **AI Research Intern, Karunya Institute of Technology and Sciences** (Aug 2023 – Oct 2023, Coimbatore, India): RNN/CNN architectures for EEG motor imagery classification.
 - **Electronics Technician, Ledzone** (Sep 2018 – Oct 2020, Karaköy, Istanbul): IoT prototypes on Arduino-based boards (wiring sensors/actuators, board programming, bench testing); PCB assembly, soldering, LED and motor-driver circuits, functional test and fault finding.
 
