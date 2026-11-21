@@ -1,17 +1,17 @@
 'use client'
 import Link from 'next/link'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
+import { portfolioCopy } from '@/lib/portfolio-copy'
 import { useReveal } from '@/lib/useReveal'
 
 const copy = {
-  eyebrow: { en: '// Projects', de: '// Projekte', fr: '// Projets', es: '// Proyectos', ar: '// المشاريع' },
-  fullTitle: { en: 'Research that ships.', de: 'Forschung, die produktiv wird.', fr: 'La recherche qui devient produit.', es: 'Investigación que llega a producción.', ar: 'بحث يتحول إلى منتج.' },
   title: { en: 'Other projects and open source', de: 'Weitere Projekte und Open Source', fr: 'Autres projets et open source', es: 'Otros proyectos y código abierto', ar: 'مشاريع أخرى ومصادر مفتوحة' },
-  supporting: { en: 'Supporting proof · Invitation-only beta (tech2b)', de: 'Weiterer Nachweis · Beta mit Einladung (tech2b)', fr: 'Preuve complémentaire · Bêta sur invitation (tech2b)', es: 'Prueba adicional · Beta por invitación (tech2b)', ar: 'دليل إضافي · نسخة تجريبية بدعوة (tech2b)' },
+  sihemContext: { en: 'Independent project · tech2b incubator', de: 'Eigenes Projekt · tech2b-Inkubator', fr: 'Projet indépendant · incubateur tech2b', es: 'Proyecto independiente · incubadora tech2b', ar: 'مشروع مستقل · حاضنة tech2b' },
   caseStudy: { en: 'Case study', de: 'Fallstudie', fr: 'Étude de cas', es: 'Caso de estudio', ar: 'دراسة حالة' },
   caseStudyLink: { en: 'Case study', de: 'Fallstudie', fr: 'Étude de cas', es: 'Caso de estudio', ar: 'دراسة حالة' },
   thesisPdf: { en: 'Thesis PDF', de: 'Thesis PDF', fr: 'PDF mémoire', es: 'PDF tesis', ar: 'PDF الرسالة' },
   code: { en: 'Code', de: 'Code', fr: 'Code', es: 'Código', ar: 'الكود' },
+  mergeproofExample: { en: 'See example', de: 'Beispiel ansehen', fr: 'Voir un exemple', es: 'Ver ejemplo', ar: 'عرض مثال' },
   oodMetric: {
     en: 'AUROC · CIFAR-10 airplanes vs. other classes · 3-run mean ± SD',
     de: 'AUROC · CIFAR-10: Flugzeuge gegen andere Klassen · Mittelwert ± Standardabweichung (3 Läufe)',
@@ -20,38 +20,38 @@ const copy = {
     ar: 'AUROC · CIFAR-10: الطائرات مقابل الفئات الأخرى · المتوسط ± الانحراف المعياري (3 تجارب)',
   },
   inkjetMetric: {
-    en: 'AUROC (5-fold CV)',
-    de: 'AUROC (5-fache Kreuzvalidierung)',
-    fr: 'AUROC (validation croisée en 5 plis)',
-    es: 'AUROC (validación cruzada de 5 particiones)',
-    ar: 'AUROC (تحقق تقاطعي من 5 طيات)',
+    en: 'Baseline AUROC · FTI_Zer0P · 5-fold cross-validation',
+    de: 'Baseline-AUROC · FTI_Zer0P · 5-fache Kreuzvalidierung',
+    fr: 'AUROC de référence · FTI_Zer0P · validation croisée en 5 plis',
+    es: 'AUROC de referencia · FTI_Zer0P · validación cruzada de 5 particiones',
+    ar: 'AUROC لخط الأساس · FTI_Zer0P · تحقق تقاطعي من 5 طيات',
   },
   diffusionTag: { en: 'Diffusion models', de: 'Diffusionsmodelle', fr: 'Modèles de diffusion', es: 'Modelos de difusión', ar: 'نماذج الانتشار' },
   thesis: { en: "Master's Thesis · JKU Linz · Graded 1", de: 'Masterarbeit · JKU Linz · Note 1', fr: 'Mémoire M.Sc. · JKU Linz · Note 1', es: 'Tesis M.Sc. · JKU Linz · Nota 1', ar: 'رسالة الماجستير · JKU لينز · تقدير 1' },
   track2Eyebrow: { en: "Master's Thesis Track 2 · Industrial CV", de: 'Masterarbeit Track 2 · Industrial CV', fr: 'Mémoire Track 2 · Vision industrielle', es: 'Tesis Track 2 · Visión industrial', ar: 'المسار 2 للرسالة · رؤية صناعية' },
   oodTitle: { en: 'DiffusionOOD — OOD Detection Framework', de: 'DiffusionOOD — OOD-Erkennungsframework', fr: 'DiffusionOOD — Détection OOD', es: 'DiffusionOOD — Detección OOD', ar: 'DiffusionOOD — إطار كشف الخارج عن التوزيع' },
   oodDesc: {
-    en: "I trained an image model to flag pictures outside a familiar category. In my thesis experiment, I tested whether a new training method could better separate airplane photos from other images. It improved the average score across three runs. The case study explains the benchmark and its limits.",
-    de: "Ich trainierte ein Bildmodell, das Bilder außerhalb einer vertrauten Kategorie erkennt. In meiner Masterarbeit verbesserte eine neue Trainingsmethode den Durchschnittswert für die Trennung von Flugzeugbildern und anderen Bildern über drei Läufe.",
-    fr: "J’ai entraîné un modèle à repérer les images hors d’une catégorie connue. Dans mon mémoire, une nouvelle méthode d’entraînement a amélioré le score moyen de séparation entre les images d’avions et les autres images sur trois essais.",
-    es: "Entrené un modelo para detectar imágenes fuera de una categoría conocida. En mi tesis, un nuevo método de entrenamiento mejoró la puntuación media al separar fotos de aviones de otras imágenes en tres pruebas.",
-    ar: "درّبت نموذجًا لرصد الصور التي لا تنتمي إلى فئة مألوفة. في رسالتي رفعت طريقة تدريب جديدة متوسط نتيجة الفصل بين صور الطائرات والصور الأخرى عبر ثلاث تجارب.",
+    en: 'I added a class-conditional separation loss to a diffusion model to distinguish airplane images from the other CIFAR-10 classes. Across three runs, it raised the mean AUROC and reduced the variation between runs.',
+    de: 'Ich ergänzte ein Diffusionsmodell um eine klassenbedingte Separationsverlustfunktion, um Flugzeugbilder von den übrigen CIFAR-10-Klassen zu unterscheiden. Über drei Läufe hinweg stieg die mittlere AUROC, und die Streuung zwischen den Läufen sank.',
+    fr: 'J’ai ajouté à un modèle de diffusion une perte de séparation conditionnée par la classe pour distinguer les images d’avions des autres classes de CIFAR-10. Sur trois essais, l’AUROC moyenne a augmenté et la variabilité entre les essais a diminué.',
+    es: 'Añadí a un modelo de difusión una pérdida de separación condicionada por clase para distinguir las imágenes de aviones del resto de CIFAR-10. En tres pruebas, aumentó el AUROC medio y disminuyó la variación entre pruebas.',
+    ar: 'أضفت خسارة فصل مشروطة بالفئة إلى نموذج انتشار لتمييز صور الطائرات عن بقية فئات CIFAR-10. ارتفع متوسط AUROC وانخفض التفاوت بين التجارب الثلاث.',
   },
   inkjetTitle: { en: 'InkjetOOD Defect Detection', de: 'InkjetOOD Defekterkennung', fr: 'Détection de défauts InkjetOOD', es: 'Detección de defectos InkjetOOD', ar: 'كشف العيوب InkjetOOD' },
   inkjetDesc: {
-    en: "I built and evaluated a two-stage system to spot defects in industrial inkjet printing. It finds printed features in an image, then checks each feature for unusual patterns. I tested it on the public FTI_Zer0P dataset across five splits.",
-    de: "Ich entwickelte und prüfte ein zweistufiges System für Druckfehler. Es findet gedruckte Merkmale im Bild und prüft sie auf Auffälligkeiten. Der öffentliche Datensatz FTI_Zer0P wurde unter fünf Aufteilungen ausgewertet.",
-    fr: "J’ai construit et évalué un système qui repère les éléments imprimés puis recherche des défauts. Je l’ai testé sur le jeu public FTI_Zer0P en cinq partitions.",
-    es: "Construí y evalué un sistema que localiza elementos impresos y busca defectos. Lo probé con el conjunto público FTI_Zer0P en cinco particiones.",
-    ar: "طوّرت وقيّمت نظامًا يحدد العناصر المطبوعة في الصور ثم يبحث فيها عن العيوب. اختبرته على مجموعة FTI_Zer0P العامة باستخدام خمسة تقسيمات.",
+    en: 'I built a two-stage inspection pipeline during a PROFACTOR research contract and evaluated it in my JKU thesis. YOLOv8 locates printed features, then a diffusion model scores anomalies. Across five held-out folds of FTI_Zer0P, the training change that helped on CIFAR-10 showed no reliable gain on the print samples.',
+    de: 'Ich entwickelte während eines Forschungsvertrags bei PROFACTOR eine zweistufige Prüfpipeline und evaluierte sie in meiner JKU-Masterarbeit. YOLOv8 lokalisiert gedruckte Merkmale, danach bewertet ein Diffusionsmodell Anomalien. In fünf Test-Folds von FTI_Zer0P brachte die auf CIFAR-10 erfolgreiche Trainingsänderung bei den Druckproben keinen verlässlichen Vorteil.',
+    fr: 'J’ai développé un système d’inspection en deux étapes lors d’un contrat de recherche chez PROFACTOR, puis je l’ai évalué dans mon mémoire à la JKU. YOLOv8 repère les éléments imprimés, puis un modèle de diffusion évalue les anomalies. Sur cinq plis de test de FTI_Zer0P, la modification utile sur CIFAR-10 n’a pas donné de gain fiable sur les impressions.',
+    es: 'Desarrollé un sistema de inspección de dos etapas durante un contrato de investigación con PROFACTOR y lo evalué en mi tesis en la JKU. YOLOv8 localiza los elementos impresos y un modelo de difusión puntúa las anomalías. En cinco particiones de prueba de FTI_Zer0P, el cambio que funcionó en CIFAR-10 no produjo una mejora fiable en las muestras impresas.',
+    ar: 'طوّرت نظام فحص من مرحلتين خلال عقد بحثي مع PROFACTOR وقيّمته في رسالتي في JKU. يحدّد YOLOv8 مواضع العناصر المطبوعة ثم يقيّم نموذج انتشار الحالات الشاذة. في خمسة أقسام اختبار من FTI_Zer0P، لم يحقّق تعديل التدريب الذي أفاد في CIFAR-10 تحسّنًا موثوقًا على العينات المطبوعة.',
   },
-  mentoTitle: { en: 'Sihem — AI Mentor Assistant', de: 'Sihem — KI-Mentor-Assistent', fr: 'Sihem — Assistant mentor IA', es: 'Sihem — Asistente mentor con IA', ar: 'Sihem — مساعد موجه بالذكاء الاصطناعي' },
-  mentoDesc: {
-    en: "A personal assistant for weekly planning and daily routines through Telegram and a web app. I built its scheduling, long-term memory, and multi-provider AI integration. Morning briefings, evening reviews, and adaptive check-ins are available in an invitation-only beta.",
-    de: "Ein persönlicher Assistent für Wochenplanung und tägliche Routinen per Telegram und Web-App. Ich entwickelte Zeitplanung, Langzeitgedächtnis und die Anbindung mehrerer KI-Anbieter. Morgenbriefings, Abendreviews und adaptive Check-ins sind in einer Beta mit Einladung verfügbar.",
-    fr: "Un assistant personnel pour organiser la semaine et les routines via Telegram et une application web. J’ai développé la planification, la mémoire à long terme et l’intégration de plusieurs fournisseurs IA. Briefings matinaux, bilans du soir et suivis adaptatifs sont disponibles en bêta sur invitation.",
-    es: "Un asistente para organizar la semana y las rutinas mediante Telegram y una aplicación web. Desarrollé la planificación, la memoria a largo plazo y la integración de varios proveedores de IA. Ofrece resúmenes matutinos, revisiones nocturnas y seguimientos adaptativos en una beta por invitación.",
-    ar: "مساعد شخصي لتنظيم الأسبوع والروتين اليومي عبر تيليجرام وتطبيق ويب. طورت الجدولة والذاكرة طويلة المدى والتكامل مع عدة مزودي ذكاء اصطناعي. تتوفر الملخصات الصباحية والمراجعات المسائية والمتابعات التكيفية في نسخة تجريبية تتطلب دعوة.",
+  sihemTitle: { en: 'Sihem, a planning assistant', de: 'Sihem, ein Planungsassistent', fr: 'Sihem, un assistant de planification', es: 'Sihem, un asistente de planificación', ar: 'Sihem، مساعد للتخطيط' },
+  sihemDesc: {
+    en: 'I built Sihem’s scheduling, memory, and failover across AI providers. When a calendar event moves, its rules can trigger a Telegram check-in. The Telegram bot and web app are in an invitation-only beta, and the native Android app is in private testing.',
+    de: 'Ich entwickelte Sihems Terminplanung, Gedächtnis und automatischen Wechsel zwischen KI-Anbietern bei Ausfällen. Wird ein Termin verschoben, können die Regeln eine Nachfrage per Telegram auslösen. Der Telegram-Bot und die Web-App befinden sich in einer Beta mit Einladung, die native Android-App im privaten Test.',
+    fr: 'J’ai développé la planification, la mémoire et le basculement entre fournisseurs IA de Sihem. Lorsqu’un événement est déplacé, ses règles peuvent déclencher un suivi sur Telegram. Le bot Telegram et l’application web sont en bêta sur invitation. L’application Android native est en test privé.',
+    es: 'Desarrollé la planificación, la memoria y el cambio a proveedores de IA de respaldo de Sihem. Si cambia la hora de un evento, sus reglas pueden activar un seguimiento por Telegram. El bot de Telegram y la aplicación web están en beta por invitación. La aplicación nativa para Android está en pruebas privadas.',
+    ar: 'طوّرت الجدولة والذاكرة في Sihem وإمكان التبديل بين مزوّدي الذكاء الاصطناعي عند التعطّل. إذا تغيّر موعد في التقويم، قد تُطلق القواعد رسالة متابعة على تيليجرام. بوت تيليجرام وتطبيق الويب في نسخة تجريبية بالدعوة، وتطبيق Android الأصلي في اختبار خاص.',
   },
   mergeproofEyebrow: {
     en: 'Open source · Agent tooling',
@@ -61,11 +61,11 @@ const copy = {
     ar: 'مفتوح المصدر · أدوات الوكلاء',
   },
   mergeproofDesc: {
-    en: "Checks AI-written pull requests against configured deterministic merge requirements without calling an LLM. Passing those checks does not guarantee defect-free code.",
-    de: "Prüft KI-generierte Pull Requests anhand konfigurierter deterministischer Merge-Anforderungen ohne LLM-Aufruf. Bestandene Prüfungen garantieren keinen fehlerfreien Code.",
-    fr: "Vérifie les pull requests générées par IA selon des exigences de fusion déterministes configurées, sans appel à un LLM. La réussite de ces contrôles ne garantit pas un code sans défaut.",
-    es: "Verifica pull requests generadas por IA según requisitos deterministas configurados, sin llamadas a un LLM. Superar las comprobaciones no garantiza la ausencia de errores.",
-    ar: "يتحقق من طلبات الدمج المكتوبة بالذكاء الاصطناعي وفق متطلبات حتمية محددة دون استدعاء نموذج لغوي. اجتياز هذه الفحوص لا يضمن خلو الشيفرة من الأخطاء.",
+    en: 'I built mergeproof to check AI-written pull requests against deterministic rules without calling a language model. For example, it flags a pull request for human review if it edits an existing test.',
+    de: 'Ich entwickelte mergeproof, um KI-generierte Pull Requests mit deterministischen Regeln und ohne Sprachmodell zu prüfen. Wird ein bestehender Test geändert, markiert mergeproof den Pull Request zur manuellen Prüfung.',
+    fr: 'J’ai créé mergeproof pour vérifier les pull requests écrites par IA à l’aide de règles déterministes, sans faire appel à un modèle de langage. Par exemple, si un test existant est modifié, mergeproof signale la pull request pour une revue humaine.',
+    es: 'Creé mergeproof para comprobar los pull requests escritos por IA con reglas deterministas y sin consultar un modelo de lenguaje. Por ejemplo, si se modifica una prueba existente, marca el pull request para revisión humana.',
+    ar: 'طوّرت mergeproof للتحقق من طلبات الدمج المكتوبة بالذكاء الاصطناعي وفق قواعد حتمية ودون استدعاء نموذج لغوي. إذا عدّل الطلب اختبارًا موجودًا، مثلًا، تشير الأداة إلى ضرورة مراجعته بشريًا.',
   },
   mergeproofMetric: {
     en: 'LLM calls',
@@ -136,6 +136,7 @@ function AdditionalProjectCards() {
         </div>
         <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
           <a href="https://github.com/ahmed-3m/mergeproof" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.code)} &rarr;</a>
+          <a href="https://github.com/ahmed-3m/mergeproof#quick-start" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.mergeproofExample)} &rarr;</a>
         </div>
       </article>
 
@@ -173,8 +174,7 @@ export function FullProjects() {
   return (
     <section id="projects" className="cd-section">
       <div className="cd-container">
-        <div className="cd-section-eyebrow">{t(copy.eyebrow)}</div>
-        <h2 className="cd-section-title">{t(copy.fullTitle)}</h2>
+        <h2 className="cd-section-title">{t(portfolioCopy.work)}</h2>
 
         <div className="cd-projects-grid">
           <article className="cd-project-featured reveal">
@@ -210,11 +210,11 @@ export function FullProjects() {
           </article>
 
           <article className="cd-project-card reveal">
-            <div className="cd-pc-eyebrow">{t(copy.supporting)}</div>
-            <div className="cd-pc-title">{t(copy.mentoTitle)}</div>
-            <div className="cd-pc-desc">{t(copy.mentoDesc)}</div>
+            <div className="cd-pc-eyebrow">{t(copy.sihemContext)}</div>
+            <div className="cd-pc-title">{t(copy.sihemTitle)}</div>
+            <div className="cd-pc-desc">{t(copy.sihemDesc)}</div>
             <div className="cd-proj-tags" style={{ marginTop: 12 }}>
-              {['Deno / TypeScript', 'Supabase'].map(tag => (
+              {['Deno / TypeScript', 'Supabase', 'Kotlin / Jetpack Compose'].map(tag => (
                 <span key={tag} className="cd-proj-tag">{tag}</span>
               ))}
             </div>
