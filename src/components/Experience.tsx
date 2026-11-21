@@ -33,7 +33,13 @@ const experiences: Array<{
   {
     date: copy.may2026ToPresent,
     role: { en: 'Solo Developer & Project Lead', de: 'Solo-Entwickler & Projektleiter', fr: 'Développeur solo & chef de projet', es: 'Desarrollador en solitario y líder de proyecto', ar: 'مطور منفرد وقائد مشروع' },
-    company: 'Sihem (side project) · tech2b incubator, Linz',
+    company: {
+      en: 'Sihem (side project) · tech2b incubator, Linz',
+      de: 'Sihem (Nebenprojekt) · tech2b-Inkubator, Linz',
+      fr: 'Sihem (projet personnel) · incubateur tech2b, Linz',
+      es: 'Sihem (proyecto propio) · incubadora tech2b, Linz',
+      ar: 'Sihem (مشروع جانبي) · حاضنة tech2b، لينتس',
+    },
     desc: {
       en: 'Design and run the full cloud stack behind a habits and daily-routine assistant, delivered as a Telegram bot and an installable web app: managed PostgreSQL with row-level security, Deno/TypeScript serverless functions, scheduled jobs, pgvector memory, and GitHub Actions deploys. LLM calls route across several providers with escalation and failover.',
       de: 'Entwerfe und betreibe den gesamten Cloud-Stack eines Assistenten für Gewohnheiten und Tagesroutinen, ausgeliefert als Telegram-Bot und installierbare Web-App: verwaltetes PostgreSQL mit Row-Level Security, Serverless-Funktionen in Deno/TypeScript, geplante Jobs, pgvector-Gedächtnis und Deployments über GitHub Actions. LLM-Aufrufe laufen über mehrere Anbieter mit Eskalation und Failover.',
@@ -47,7 +53,13 @@ const experiences: Array<{
   {
     date: { en: 'Jul 2026', de: 'Juli 2026', fr: 'Juil. 2026', es: 'Jul. 2026', ar: 'يوليو 2026' },
     role: { en: 'M.Sc. Thesis Research, Machine Vision', de: 'Masterarbeit in maschineller Bildverarbeitung', fr: 'Mémoire de master en vision par ordinateur', es: 'Tesis de máster en visión artificial', ar: 'بحث رسالة ماجستير في الرؤية الحاسوبية' },
-    company: 'Johannes Kepler University Linz',
+    company: {
+      en: 'Johannes Kepler University Linz',
+      de: 'Johannes Kepler Universität Linz',
+      fr: 'Université Johannes Kepler de Linz',
+      es: 'Universidad Johannes Kepler de Linz',
+      ar: 'جامعة يوهانس كيبلر لينتس',
+    },
     desc: {
       en: 'Continued the PROFACTOR research at JKU under Prof. Sepp Hochreiter and submitted the thesis in July 2026. On CIFAR-10 airplane-vs-rest, a class-conditional separation loss raised mean AUROC from 92.52% to 99.03% across three runs and reduced the standard deviation from 11.07 to 0.07 percentage points.',
       de: 'Führte die bei PROFACTOR begonnene Forschung an der JKU unter Prof. Sepp Hochreiter fort und reichte die Masterarbeit im Juli 2026 ein. Bei CIFAR-10 (Flugzeuge gegen alle übrigen Klassen) erhöhte ein klassenkonditionaler Separation Loss die mittlere AUROC über drei Läufe von 92,52 % auf 99,03 % und senkte die Standardabweichung von 11,07 auf 0,07 Prozentpunkte.',
@@ -74,7 +86,13 @@ const experiences: Array<{
   {
     date: { en: 'Aug 2023\nOct 2023', de: 'Aug. 2023\nOkt. 2023', fr: 'Août 2023\nOct. 2023', es: 'Ago. 2023\nOct. 2023', ar: 'أغسطس 2023\nأكتوبر 2023' },
     role: { en: 'AI Research Intern', de: 'KI-Forschungspraktikant', fr: 'Stagiaire recherche IA', es: 'Practicante de investigación IA', ar: 'متدرب بحث ذكاء اصطناعي' },
-    company: 'Karunya Institute of Technology and Sciences · Coimbatore, India',
+    company: {
+      en: 'Karunya Institute of Technology and Sciences · Coimbatore, India',
+      de: 'Karunya Institute of Technology and Sciences · Coimbatore, Indien',
+      fr: 'Karunya Institute of Technology and Sciences · Coimbatore, Inde',
+      es: 'Karunya Institute of Technology and Sciences · Coimbatore, India',
+      ar: 'معهد كارونيا للتكنولوجيا والعلوم · كويمباتور، الهند',
+    },
     desc: {
       en: 'RNN/CNN architectures for EEG motor imagery classification with hyperparameter optimization.',
       de: 'RNN/CNN-Architekturen für EEG-Motor-Imagery-Klassifikation mit Hyperparameteroptimierung.',
@@ -87,7 +105,13 @@ const experiences: Array<{
   {
     date: { en: 'Sep 2018\nOct 2020', de: 'Sept. 2018\nOkt. 2020', fr: 'Sept. 2018\nOct. 2020', es: 'Sep. 2018\nOct. 2020', ar: 'سبتمبر 2018\nأكتوبر 2020' },
     role: { en: 'Electronics Technician', de: 'Elektroniker', fr: 'Technicien en électronique', es: 'Técnico de electrónica', ar: 'فني إلكترونيات' },
-    company: 'Ledzone · Karaköy, Istanbul, Turkey',
+    company: {
+      en: 'Ledzone · Karaköy, Istanbul, Turkey',
+      de: 'Ledzone · Karaköy, Istanbul, Türkei',
+      fr: 'Ledzone · Karaköy, Istanbul, Turquie',
+      es: 'Ledzone · Karaköy, Estambul, Turquía',
+      ar: 'Ledzone · كاراكوي، إسطنبول، تركيا',
+    },
     desc: {
       en: 'PCB assembly and soldering, LED and motor-driver circuit build-up, reading schematics and layouts, and functional test, fault finding and final inspection with multimeter, oscilloscope and function generator.',
       de: 'Leiterplattenbestückung und Löten, Aufbau von LED- und Motortreiberschaltungen, Lesen von Schaltplänen und Layouts sowie Funktionstest, Fehlersuche und Endprüfung mit Multimeter, Oszilloskop und Funktionsgenerator.',

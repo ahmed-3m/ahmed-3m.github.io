@@ -1,10 +1,21 @@
 import { getAllBlogPostsMeta } from '@/lib/blog-posts-meta';
+import { getLatestBlogDate } from '@/lib/content-dates';
 
 export const dynamic = 'force-static';
+
+function escapeXml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
 
 export async function GET() {
   const posts = getAllBlogPostsMeta();
   const baseUrl = 'https://ahmed-3m.github.io';
+  const lastBuildDate = getLatestBlogDate().toUTCString();
 
   const items = posts.map((post) => `
     <item>
@@ -13,7 +24,7 @@ export async function GET() {
       <guid isPermaLink="true">${baseUrl}/blog/${post.slug}/</guid>
       <description><![CDATA[${post.excerpt}]]></description>
       <pubDate>${new Date(post.date).toUTCString()}</pubDate>
-      ${post.tags.map(t => `<category>${t}</category>`).join('\n      ')}
+      ${post.tags.map(t => `<category>${escapeXml(t)}</category>`).join('\n      ')}
     </item>
   `).join('');
 
@@ -26,7 +37,7 @@ export async function GET() {
     <language>en-us</language>
     <atom:link href="${baseUrl}/feed.xml" rel="self" type="application/rss+xml"/>
     <managingEditor>ahmed.mo.0595@gmail.com (Ahmed Mohammed)</managingEditor>
-    <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
+    <lastBuildDate>${lastBuildDate}</lastBuildDate>
     ${items}
   </channel>
 </rss>`;

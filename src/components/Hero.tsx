@@ -21,7 +21,7 @@ const copy = {
     de: 'Standort Linz, Österreich',
     fr: 'Basé à Linz, Autriche',
     es: 'Con base en Linz, Austria',
-    ar: 'مقيم في لينز، النمسا',
+    ar: 'مقيم في لينتس، النمسا',
   },
   title1: {
     en: 'Computer Vision',

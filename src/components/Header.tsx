@@ -16,6 +16,14 @@ const links = [
   { href: '/news/', label: { en: 'News', de: 'News', fr: 'Actualités', es: 'Noticias', ar: 'الأخبار' } },
 ] satisfies Array<{ href: string; label: TranslationMap }>
 
+const logoLabels: TranslationMap = {
+  en: 'Ahmed Mohammed — home',
+  de: 'Ahmed Mohammed — Startseite',
+  fr: 'Ahmed Mohammed — accueil',
+  es: 'Ahmed Mohammed — inicio',
+  ar: 'أحمد محمد — الرئيسية',
+}
+
 const ctaLabel: TranslationMap = {
   en: 'Get in touch',
   de: 'Kontakt',
@@ -199,7 +207,7 @@ export default function Header() {
   return (
     <nav className={isHome ? 'cd-nav' : 'cd-nav portfolio-nav'} ref={navRef}>
       <div className="cd-nav-inner">
-        <a href={isHome ? '#hero' : '/'} className="cd-nav-logo" aria-label="Ahmed Mohammed — home">Ahmed<span>.</span></a>
+        <a href={isHome ? '#hero' : '/'} className="cd-nav-logo" aria-label={t(logoLabels)}>Ahmed<span>.</span></a>
 
         <ul className="cd-nav-links">
           {navLinks.map(l => (

@@ -14,7 +14,7 @@ const copy = {
     es: 'Noticias de IA seleccionadas con un breve análisis — con énfasis en la IA agéntica.',
     ar: 'أخبار مختارة عن الذكاء الاصطناعي مع تعليق موجز — مع تركيز على الذكاء الاصطناعي الوكيل.',
   },
-  read: { en: 'Read take', de: 'Einordnung', fr: 'Voir l’analyse', es: 'Ver análisis', ar: 'اقرأ التعليق' },
+  read: { en: 'Read source', de: 'Quelle lesen', fr: 'Lire la source', es: 'Leer fuente', ar: 'اقرأ المصدر' },
   all: { en: 'View all news', de: 'Alle News ansehen', fr: 'Voir toutes les actualités', es: 'Ver todas las noticias', ar: 'عرض كل الأخبار' },
 } satisfies Record<string, TranslationMap>
 
@@ -53,7 +53,9 @@ export default function News() {
               </div>
               <div className="cd-wc-footer">
                 <span className="cd-wc-time">{item.date}</span>
-                <span className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.read)} &rarr;</span>
+                <span className="cd-proj-link" style={{ fontSize: 12 }}>
+                  {t(copy.read)} <span className="inline-block rtl:-scale-x-100" aria-hidden="true">&#8599;</span>
+                </span>
               </div>
             </a>
           ))}

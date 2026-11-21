@@ -2,7 +2,7 @@
 
 > AI/ML Engineer based in Linz, Austria. M.Sc. in Artificial Intelligence from Johannes Kepler University Linz (Oct 2020 - Sep 2026; Defensio 25 Sep 2026, thesis graded 1, supervised by Prof. Sepp Hochreiter). Specializing in computer vision, industrial ML, diffusion models, out-of-distribution detection, LLM products (Sihem), and deterministic agent tooling (mergeproof).
 
-Last updated: 2026-11-21
+Last updated: 2026-11-22
 
 ## Identity
 
@@ -22,7 +22,7 @@ Last updated: 2026-11-21
 
 ## Projects
 
-- [OOD Detection Framework](https://github.com/ahmed-3m/DiffusionOOD): Novel use of conditional diffusion models as generative classifiers for out-of-distribution detection. 99.03% ± 0.07% average AUROC on CIFAR-10 airplane-vs-rest (binary, single ID class, 3-seed mean). Introduced class-conditional separation loss. Applied to industrial quality control with multi-head conditioning on the public FTI_Zer0P benchmark (0.8673 ± 0.0230 AUROC; thesis-documented).
+- [OOD Detection Framework](https://github.com/ahmed-3m/DiffusionOOD): Novel use of conditional diffusion models as generative classifiers for out-of-distribution detection. 99.03% ± 0.07% average AUROC on CIFAR-10 airplane-vs-rest (binary, single ID class, 3-seed mean). Introduced class-conditional separation loss. Applied to industrial quality control via a Stage-1 YOLOv8m detector (6,408 128×128 YOLO crops across 573 source-image groups) plus multi-head conditional diffusion on the public FTI_Zer0P benchmark (0.8673 ± 0.0230 AUROC; thesis-documented).
 - Thesis PDF erratum: the PDF says YOLOv8n in five places; the trained artifact yolo_best.pt is YOLOv8m (25.86M params, verified from train_args).
 - [Industrial Anomaly Detection](https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf): Early 2024 YOLO + diffusion model pipeline for industrial defect detection — a negative-result technical report that motivated the later thesis approach. (The FTI_Zer0P 0.8673 ± 0.0230 AUROC baseline is reported in the [Master's thesis](https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf), not this report.)
 - [Sihem](https://sihem-pwa.pages.dev/): Independent personal-mentor project with an invitation-only beta on Telegram and the installable web app. The native Android client uses Kotlin and Jetpack Compose and is in private testing. Built on Supabase edge functions (Deno/TS) with pgvector RAG long-term memory, multi-provider LLM routing (GLM/Gemini/Groq) with failover, a deterministic generators-arbiter-composer decision engine, multimodal meal-photo vision, TTS voice reminders, and Google Calendar sync (@sihem_ai_bot).
@@ -48,7 +48,7 @@ Last updated: 2026-11-21
 - **AI Consultant, LLMs & AI Agents** (May 2026 – Present, freelance, remote): Advises small and medium-sized businesses on AI integration, workflow automation, and large language model applications.
 - **Solo Developer & Project Lead, Sihem** (May 2026 – Present, personal side project, accepted into the tech2b incubator, Linz): Designs and runs the full cloud stack behind a habits and daily-routine assistant (Telegram bot + installable web app): Supabase Postgres with row-level security, Deno/TypeScript serverless functions, scheduled jobs, pgvector memory, GitHub Actions deploys, multi-provider LLM routing with escalation and failover. In invitation-only beta at @sihem_ai_bot.
 - **M.Sc. thesis research — Johannes Kepler University Linz** (submitted Jul 2026): Continued the PROFACTOR research under Prof. Sepp Hochreiter and earned a thesis grade of 1. Class-conditional separation loss raised mean CIFAR-10 airplane-vs-rest AUROC from 92.52% to 99.03% across three runs and reduced the standard deviation from 11.07 to 0.07 percentage points. The thesis also compared eight methods under five-fold cross-validation on public FTI_Zer0P, with a diffusion baseline of 0.8673 ± 0.0230 AUROC.
-- **Master's Thesis Researcher (AI/ML) — PROFACTOR GmbH** (Apr–Nov 2024, Steyr · Remote): Built a two-stage YOLOv8 and conditional diffusion pipeline for experimental inkjet print inspection during a research contract on the Zer0P project.
+- **Master's Thesis Researcher (AI/ML) — PROFACTOR GmbH** (Apr–Nov 2024, Steyr · Remote): Built a two-stage YOLOv8m detector and conditional diffusion pipeline (6,408 128×128 crops across 573 source-image groups) for experimental inkjet print inspection during a research contract on the Zer0P project.
 - **AI Research Intern, Karunya Institute of Technology and Sciences** (Aug 2023 – Oct 2023, Coimbatore, India): RNN/CNN architectures for EEG motor imagery classification.
 - **Electronics Technician, Ledzone** (Sep 2018 – Oct 2020, Karaköy, Istanbul): IoT prototypes on Arduino-based boards (wiring sensors/actuators, board programming, bench testing); PCB assembly, soldering, LED and motor-driver circuits, functional test and fault finding.
 
@@ -58,7 +58,7 @@ Last updated: 2026-11-21
 - **Computer Vision:** OOD Detection, Object Detection (YOLOv8), Defect Detection, Image Classification
 - **Research:** Hydra, Experiment Design, Ablation Studies, AUROC/FPR95, Monte Carlo, Cross-Validation, Weights & Biases
 - **ML Engineering:** End-to-End Pipelines, LLM Inference, Prompt Engineering, Structured Output Extraction, OpenAI API
-- **Infrastructure:** Docker, Git, Linux, REST APIs, TypeScript, Next.js, Convex, CUDA, Python, OpenCV
+- **Infrastructure:** Docker, Git, Linux, REST APIs, TypeScript, Next.js, Supabase, Deno, pgvector, CUDA, Python, OpenCV
 - **Agent Tooling:** mergeproof, Claude Code, GitHub Copilot, deterministic checks for AI coding agents
 
 ## Online Profiles
@@ -94,7 +94,7 @@ Tags: Diffusion Models, OOD Detection, Deep Learning, PyTorch, CIFAR-10, Generat
 
 My Master's thesis at JKU Linz (under Prof. Sepp Hochreiter) introduced class-conditional separation loss into conditional diffusion models used as generative classifiers — achieving an average of 99.03% ± 0.07% AUROC on CIFAR-10 airplane-vs-rest (binary, single ID class, 3-seed mean), stable over seeds and showing a +6.5pp gain over the non-separated baseline ($92.52\% \pm 11.07\%$).
 
-Out-of-distribution (OOD) detection is the ability of a neural network to say "I don't know" when it sees something it was never trained on. My key contribution was a class-conditional separation loss λ·L_sep that explicitly encourages the model's intermediate representations to cluster by class and push different classes apart.
+Out-of-distribution (OOD) detection is the ability of a neural network to say "I don't know" when it sees something it was never trained on. My key contribution was a class-conditional separation loss λ·L_sep that explicitly pushes the model's conditional noise predictions ε_θ(x_t, t, c=0) and ε_θ(x_t, t, c=1) apart during training, widening the reconstruction-error gap between in-distribution and out-of-distribution inputs.
 
 Ablation results on CIFAR-10 (average across seeds):
 - λ=0.0 (baseline): 92.52% ± 11.07% AUROC (degenerate on SVHN OOD due to unstable scores)
@@ -121,11 +121,11 @@ Tags: Diffusion Models, Anomaly Detection, YOLOv8, Industrial AI, Computer Visio
 
 Working with PROFACTOR GmbH (Steyr, Austria; remote / home office) through the JKU Institute for Machine Learning, I evaluated a machine vision pipeline for defect detection on inkjet-printed building components as part of Zer0P — a zero-defect manufacturing initiative funded by the Government of Upper Austria.
 
-Architecture: YOLOv8 as feature backbone (not detector) → feature maps fed into conditional diffusion model as generative classifier. Multi-head conditioning: one learned embedding per feature type (8 types: angle, dist1, dist6, dots, edge1-4), all sharing the same U-Net backbone.
+Architecture: Two-stage YOLO + conditional diffusion pipeline on FTI_Zer0P. Stage 1 uses a YOLOv8m detector (25.86M params in the released yolo_best.pt checkpoint; thesis PDF erratum prints YOLOv8n in five places) to localize 8 printed feature types (angle, dist1, dist6, dots, edge1-4) and extract 6,408 128×128 RGB crops across 573 source-image groups. Stage 2 uses a multi-head conditional diffusion U-Net (NoisePredictorV3 with AdaGN conditioning across the 8 feature types) as a generative classifier.
 
-Results by feature type under 5-fold CV baseline: dots 0.9557 ± 0.0353 AUROC, dist6 0.9362 ± 0.0666. Overall baseline AUROC is 0.8673 ± 0.0230 under strict 5-fold CV. Separation loss weights (λ ∈ {0.01, 0.02, 0.05}) produce AUROC scores within the cross-fold standard deviation (e.g. 0.8670 ± 0.0256 at λ = 0.05), which are statistically non-significant after Holm correction (adjusted p > 0.05).
+Results by feature type under 5-fold CV baseline (λ = 0.0, K=100): dots 0.9557 ± 0.0353 AUROC, dist6 0.9362 ± 0.0666. Overall baseline AUROC is 0.8673 ± 0.0230 (accuracy 0.8094 ± 0.0151, FPR@95%TPR 0.5631 ± 0.1697) under strict 5-fold image-level CV. Separation loss weights (λ ∈ {0.01, 0.02, 0.05}) produce AUROC scores within the cross-fold standard deviation (e.g. 0.8670 ± 0.0256 at λ = 0.05), which are statistically non-significant after Holm correction (adjusted p > 0.05).
 
-Key lessons: (1) Generative models vs discriminative baselines in scarce-defect settings, (2) Feature type heterogeneity matters more than architecture, (3) Statistical rigor with 5-fold CV + Holm correction is non-negotiable, (4) Deployment conditions require explicit qualification separate from benchmark AUROC.
+Key lessons: (1) Generative models vs discriminative baselines in scarce-defect settings, (2) Feature type heterogeneity matters more than architecture, (3) Statistical rigor with 5-fold image-level CV + Holm correction is non-negotiable, (4) Domain gains on semantic natural images do not automatically transfer to small industrial feature crops.
 
 Benchmark source (M.Sc. thesis): https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf
 
@@ -140,18 +140,16 @@ URL: https://ahmed-3m.github.io/blog/computer-vision-yolo-mastery/
 Date: 2024-10-20
 Tags: Computer Vision, YOLOv8, Deep Learning, Industrial AI, PyTorch, Production ML
 
-Engineering notes on feature extraction, data splits, and deployment trade-offs from the industrial inkjet quality-control evaluation (0.8673 ± 0.0230 AUROC under 5-fold CV on FTI_Zer0P).
+Engineering notes on Stage-1 feature localization, image-level data splits, and evaluation trade-offs from the industrial inkjet quality-control benchmark (0.8673 ± 0.0230 AUROC under 5-fold CV on FTI_Zer0P).
 
 Key decisions:
-1. YOLOv8 as feature extractor (not detector) — extracted bottleneck features after layer 9, before detection head
-2. Data: 1,327 components across 8 feature types, 70-80% GOOD / 20-30% BAD. Effective augmentations: ±20% brightness/contrast, horizontal/vertical flips, CutMix between GOOD samples. Unsuccessful: synthetic defect generation (GANs), heavy geometric augmentation
-3. Training: freeze backbone for 10 epochs, then unfreeze at 10x lower LR. lr=1e-4, batch_size=16, cosine scheduler, early stopping patience=15
-4. Evaluation: 5-fold stratified CV (seed=42), AUROC as primary metric, per-feature breakdown more informative than single accuracy figure
-5. Production: INT8 quantization via TensorRT achieved 18ms latency but showed instability; FP16 at 35ms used in production. Ring buffer for streaming inference. Alert threshold at FPR < 5%.
+1. Two-stage YOLOv8m detector + conditional diffusion pipeline: Stage 1 uses a YOLOv8m detector (640×640 input, 25.86M params in yolo_best.pt; thesis PDF erratum prints YOLOv8n in five places) to localize 8 structured print feature types from 1920×1080 frames and extract 128×128 RGB crops for Stage 2 generative classification.
+2. Data & leakage control: 6,408 128×128 YOLO crops across 573 source-image groups on public FTI_Zer0P (8 feature types), split at the source-image level so crops from the same print never leak across folds. Crops are resized to 128×128 without synthetic crop augmentation.
+3. Training & architecture: reproducible PyTorch Lightning + Hydra configs training a multi-head conditional diffusion U-Net (NoisePredictorV3 with AdaGN feature-type embeddings) across all 8 feature heads.
+4. Evaluation: 5-fold stratified image-level CV, AUROC as primary metric (0.8673 ± 0.0230 baseline at λ = 0.0, K=100), with per-feature breakdown showing stronger separation on Dots (0.9557 ± 0.0353) and Distance 6 (0.9362 ± 0.0666) than sparse Edge/Angle classes.
+5. Engineering lesson: isolating Stage-1 detection from Stage-2 anomaly scoring keeps per-feature diagnostics, threshold calibration, and cross-domain validation transparent without conflating internal runtime targets with public benchmark AUROC.
 
-What I'd do differently: (1) Collect more BAD samples from day one, (2) Add Monte Carlo Dropout as confidence signal, (3) Log everything from the start with W&B.
-
----
+What I'd do differently: (1) Collect more BAD samples for rare feature classes like Angle, (2) Quantify Stage-1 detector miss impact alongside Stage-2 crop scoring, (3) Track every ablation run with Hydra + W&B from day one.
 
 ---
 

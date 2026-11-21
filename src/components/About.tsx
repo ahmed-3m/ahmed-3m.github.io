@@ -43,13 +43,30 @@ const copy = {
   skills: { en: 'Skills & Stack', de: 'Skills & Stack', fr: 'Compétences & stack', es: 'Habilidades y stack', ar: 'المهارات والتقنيات' },
   languages: { en: 'Languages', de: 'Sprachen', fr: 'Langues', es: 'Idiomas', ar: 'اللغات' },
   location: { en: 'Location', de: 'Standort', fr: 'Lieu', es: 'Ubicación', ar: 'الموقع' },
+  locationValue: { en: 'Linz, Austria', de: 'Linz, Österreich', fr: 'Linz, Autriche', es: 'Linz, Austria', ar: 'لينتس، النمسا' },
+  workAuth: { en: 'Work permit', de: 'Arbeitserlaubnis', fr: 'Permis de travail', es: 'Permiso de trabajo', ar: 'تصريح العمل' },
+  workAuthValue: {
+    en: 'Eligible for Rot-Weiß-Rot Karte für Studienabsolventen (Austria)',
+    de: 'Berechtigt für Rot-Weiß-Rot-Karte für Studienabsolventen (Österreich)',
+    fr: 'Éligible à la Rot-Weiß-Rot Karte für Studienabsolventen (Autriche)',
+    es: 'Elegible para la Rot-Weiß-Rot Karte für Studienabsolventen (Austria)',
+    ar: 'مؤهل لبطاقة Rot-Weiß-Rot Karte für Studienabsolventen (النمسا)',
+  },
   supervisor: { en: 'Supervisor', de: 'Betreuer', fr: 'Superviseur', es: 'Supervisor', ar: 'المشرف' },
   current: { en: 'Current work', de: 'Aktuell', fr: 'Travail actuel', es: 'Trabajo actual', ar: 'العمل الحالي' },
   openTo: { en: 'Open to', de: 'Offen für', fr: 'Ouvert à', es: 'Abierto a', ar: 'متاح لـ' },
   roles: { en: 'AI/ML Roles - Research Collaborations', de: 'AI/ML-Rollen - Forschungskooperationen', fr: 'Rôles IA/ML - collaborations recherche', es: 'Roles IA/ML - colaboraciones de investigación', ar: 'أدوار الذكاء الاصطناعي - تعاونات بحثية' },
   currentWork: { en: 'Sihem — LLM side project (tech2b incubator)', de: 'Sihem — LLM-Nebenprojekt (tech2b-Inkubator)', fr: 'Sihem — projet LLM personnel (incubateur tech2b)', es: 'Sihem — proyecto LLM personal (incubadora tech2b)', ar: 'Sihem — مشروع LLM جانبي (حاضنة tech2b)' },
   degree1: { en: 'M.Sc. in Artificial Intelligence', de: 'M.Sc. Artificial Intelligence', fr: 'M.Sc. en intelligence artificielle', es: 'M.Sc. en Inteligencia Artificial', ar: 'ماجستير في الذكاء الاصطناعي' },
+  school1: { en: 'Johannes Kepler University Linz', de: 'Johannes Kepler Universität Linz', fr: 'Université Johannes Kepler de Linz', es: 'Universidad Johannes Kepler de Linz', ar: 'جامعة يوهانس كيبلر لينتس' },
   degree2: { en: 'B.Sc. in Mechatronics Engineering', de: 'B.Sc. Mechatronik', fr: 'B.Sc. en génie mécatronique', es: 'B.Sc. en Ingeniería Mecatrónica', ar: 'بكالوريوس في هندسة الميكاترونكس' },
+  school2: {
+    en: 'Eastern Mediterranean University, Famagusta, Cyprus',
+    de: 'Eastern Mediterranean University, Famagusta, Zypern',
+    fr: 'Eastern Mediterranean University, Famagouste, Chypre',
+    es: 'Eastern Mediterranean University, Famagusta, Chipre',
+    ar: 'جامعة شرق البحر المتوسط، فاماغوستا، قبرص',
+  },
   desc1: { en: 'Thesis (grade 1): using diffusion models to detect unfamiliar images.', de: 'Masterarbeit (Note 1): Erkennung unbekannter Bilder mit Diffusionsmodellen.', fr: 'Mémoire (note 1) : détecter les images inconnues à l’aide de modèles de diffusion.', es: 'Tesis (nota 1): detección de imágenes desconocidas con modelos de difusión.', ar: 'الرسالة (تقدير 1): كشف الصور غير المألوفة باستخدام نماذج الانتشار.' },
   mastersDates: { en: 'Oct 2020 to Sep 2026', de: 'Okt. 2020 bis Sept. 2026', fr: 'Oct. 2020 à sept. 2026', es: 'Oct. 2020 a sept. 2026', ar: 'أكتوبر 2020 إلى سبتمبر 2026' },
   bachelorsDates: { en: 'Feb 2015 to Jan 2018', de: 'Feb. 2015 bis Jan. 2018', fr: 'Févr. 2015 à janv. 2018', es: 'Feb. 2015 a ene. 2018', ar: 'فبراير 2015 إلى يناير 2018' },
@@ -121,12 +138,13 @@ export default function About() {
   const { t } = useI18n()
 
   const education = [
-    { degree: t(copy.degree1), school: 'Johannes Kepler University Linz', date: t(copy.mastersDates), desc: t(copy.desc1) },
-    { degree: t(copy.degree2), school: 'Eastern Mediterranean University, Famagusta, Cyprus', date: t(copy.bachelorsDates), desc: t(copy.desc2) },
+    { degree: t(copy.degree1), school: t(copy.school1), date: t(copy.mastersDates), desc: t(copy.desc1) },
+    { degree: t(copy.degree2), school: t(copy.school2), date: t(copy.bachelorsDates), desc: t(copy.desc2) },
   ]
 
   const infoRows = [
-    { label: t(copy.location), value: 'Linz, Austria', accent: false },
+    { label: t(copy.location), value: t(copy.locationValue), accent: false },
+    { label: t(copy.workAuth), value: t(copy.workAuthValue), accent: false },
     { label: t(copy.supervisor), value: 'Prof. Sepp Hochreiter', accent: false },
     { label: t(copy.current), value: t(copy.currentWork), accent: true },
     { label: t(copy.openTo), value: t(copy.roles), accent: false },
@@ -153,7 +171,7 @@ export default function About() {
         <div className="cd-section-eyebrow">{t(copy.eyebrow)}</div>
         <div className="cd-about-bio-row reveal">
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginBottom: 24 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginBottom: 24, flexWrap: 'wrap' }}>
               <img
                 src="/headshot.jpg"
                 alt="Ahmed Mohammed"

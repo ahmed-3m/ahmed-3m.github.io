@@ -172,11 +172,34 @@ export default function CaseStudyPage({ slug }: { slug: keyof typeof caseStudyOv
         <section className="portfolio-case-section" id="artifacts">
           <h2>{t(labels.artifacts)}</h2>
           <div className="portfolio-case-links">
-            {study.artifacts.map((artifact) => (
-              <a key={artifact.href} href={artifact.href} className="portfolio-text-link">
-                {t(artifact.label)}
-              </a>
-            ))}
+            {study.artifacts.map((artifact) => {
+              const label = t(artifact.label)
+              if (artifact.external) {
+                return (
+                  <a
+                    key={artifact.href}
+                    href={artifact.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="portfolio-text-link"
+                  >
+                    {label}
+                  </a>
+                )
+              }
+              if (artifact.href.startsWith('/') && !artifact.href.endsWith('.pdf')) {
+                return (
+                  <Link key={artifact.href} href={artifact.href} className="portfolio-text-link">
+                    {label}
+                  </Link>
+                )
+              }
+              return (
+                <a key={artifact.href} href={artifact.href} className="portfolio-text-link">
+                  {label}
+                </a>
+              )
+            })}
           </div>
         </section>
 

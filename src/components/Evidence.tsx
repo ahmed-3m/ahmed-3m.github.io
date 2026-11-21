@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { useReveal } from '@/lib/useReveal'
 
@@ -27,7 +28,7 @@ const evidenceItems = [
   {
     id: 'thesis-pdf',
     title: { en: 'Master thesis PDF', de: 'Masterarbeit PDF', fr: 'PDF du mémoire', es: 'PDF de la tesis', ar: 'PDF الرسالة' },
-    meta: { en: '99.03% +/- 0.07% AUROC', de: '99.03% +/- 0.07% AUROC', fr: '99.03% +/- 0.07% AUROC', es: '99.03% +/- 0.07% AUROC', ar: '\u206699.03%\u00A0+/-\u00A00.07% AUROC\u2069' },
+    meta: { en: '99.03% ± 0.07% AUROC', de: '99.03% ± 0.07% AUROC', fr: '99.03% ± 0.07% AUROC', es: '99.03% ± 0.07% AUROC', ar: '\u206699.03%\u00A0±\u00A00.07% AUROC\u2069' },
     href: '/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf',
     label: 'Proof',
   },
@@ -39,7 +40,7 @@ const evidenceItems = [
     // all, which is why spec 001 repointed this card here. Keep the two cards keyed by
     // `id`, not `href`.
     title: { en: 'Industrial OOD baseline (thesis)', de: 'Industrielle OOD-Baseline (Thesis)', fr: 'Baseline OOD industrielle (mémoire)', es: 'Baseline OOD industrial (tesis)', ar: 'خط الأساس OOD الصناعي (الرسالة)' },
-    meta: { en: '0.8673 +/- 0.0230 AUROC · FTI_Zer0P 5-fold', de: '0.8673 +/- 0.0230 AUROC · FTI_Zer0P 5-fach', fr: '0.8673 +/- 0.0230 AUROC · FTI_Zer0P 5-plis', es: '0.8673 +/- 0.0230 AUROC · FTI_Zer0P 5-folds', ar: '\u20660.8673\u00A0+/-\u00A00.0230 AUROC\u2069 · FTI_Zer0P 5 طيات' },
+    meta: { en: '0.8673 ± 0.0230 AUROC · FTI_Zer0P 5-fold', de: '0.8673 ± 0.0230 AUROC · FTI_Zer0P 5-fach', fr: '0.8673 ± 0.0230 AUROC · FTI_Zer0P 5-plis', es: '0.8673 ± 0.0230 AUROC · FTI_Zer0P 5-folds', ar: '\u20660.8673\u00A0±\u00A00.0230 AUROC\u2069 · FTI_Zer0P 5 طيات' },
     href: '/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf',
     label: 'Proof',
   },
@@ -47,7 +48,7 @@ const evidenceItems = [
     id: 'early-technical-report-2024',
     title: { en: 'Early technical report (2024)', de: 'Frühzeitiger Technischer Bericht (2024)', fr: 'Rapport technique précoce (2024)', es: 'Informe técnico temprano (2024)', ar: 'تقرير تقني مبكر (2024)' },
     meta: { en: 'Negative result — motivated the thesis approach', de: 'Negatives Ergebnis — motivierte den Thesis-Ansatz', fr: "Résultat négatif — a motivé l'approche de la thèse", es: 'Resultado negativo — motivó el enfoque de la tesis', ar: 'نتيجة سلبية — حفّزت نهج الرسالة' },
-    href: '/Diffusion-Based Multi-class Defect Detection.pdf',
+    href: '/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf',
     label: 'Case study',
   },
   {
@@ -67,7 +68,7 @@ const evidenceItems = [
   {
     id: 'huggingface-weights',
     title: { en: 'Hugging Face model weights', de: 'Hugging Face Modellgewichte', fr: 'Poids de modèle Hugging Face', es: 'Pesos del modelo en Hugging Face', ar: 'أوزان النموذج على Hugging Face' },
-    meta: { en: 'Public checkpoints and artifacts', de: 'Öffentliche Checkpoints und Artefakte', fr: 'Checkpoints et artefacts publics', es: 'Checkpoints y artefactos públicos', ar: 'نماذج وartefacts عامة' },
+    meta: { en: 'Public checkpoints and artifacts', de: 'Öffentliche Checkpoints und Artefakte', fr: 'Checkpoints et artefacts publics', es: 'Checkpoints y artefactos públicos', ar: 'نماذج وملفات عامة' },
     href: 'https://huggingface.co/ahmed-3m/InkjetOOD',
     label: 'Proof',
   },
@@ -117,27 +118,46 @@ export default function Evidence() {
         </p>
 
         <div className="cd-evidence-grid">
-          {evidenceItems.map((item) => (
-            <a
-              key={item.id}
-              href={item.href}
-              target={item.href.startsWith('http') ? '_blank' : undefined}
-              rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-              className="cd-evidence-card reveal glass-surface glass-subtle"
-            >
-              <div
-                className="cd-evidence-card-label"
-                style={{ color: item.label === 'Case study' ? 'var(--cd-success)' : 'var(--cd-accent)' }}
+          {evidenceItems.map((item) => {
+            const isInternalRoute = item.href.startsWith('/') && !item.href.endsWith('.pdf')
+            const cardBody = (
+              <>
+                <div
+                  className="cd-evidence-card-label"
+                  style={{ color: item.label === 'Case study' ? 'var(--cd-success)' : 'var(--cd-accent)' }}
+                >
+                  {item.label === 'Case study' ? t(copy.caseStudy) : t(copy.proof)}
+                </div>
+                <div className="cd-evidence-card-title">{t(item.title)}</div>
+                <div className="cd-evidence-card-meta">{t(item.meta)}</div>
+                <div className="cd-proj-link" style={{ marginTop: 2 }}>
+                  {t({ en: "Open", de: "Öffnen", fr: "Ouvrir", es: "Abrir", ar: "فتح" })} <span className="inline-block rtl:rotate-180" aria-hidden="true">&rarr;</span>
+                </div>
+              </>
+            )
+            if (isInternalRoute) {
+              return (
+                <Link
+                  key={item.id}
+                  href={item.href}
+                  className="cd-evidence-card reveal glass-surface glass-subtle"
+                >
+                  {cardBody}
+                </Link>
+              )
+            }
+            return (
+              <a
+                key={item.id}
+                href={item.href}
+                target={item.href.startsWith('http') ? '_blank' : undefined}
+                rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                className="cd-evidence-card reveal glass-surface glass-subtle"
               >
-                {item.label === 'Case study' ? t(copy.caseStudy) : t(copy.proof)}
-              </div>
-              <div className="cd-evidence-card-title">{t(item.title)}</div>
-              <div className="cd-evidence-card-meta">{t(item.meta)}</div>
-              <div className="cd-proj-link" style={{ marginTop: 2 }}>
-                {t({ en: "Open", de: "Öffnen", fr: "Ouvrir", es: "Abrir", ar: "فتح" })} <span className="inline-block rtl:rotate-180" aria-hidden="true">&rarr;</span>
-              </div>
-            </a>
-          ))}
+                {cardBody}
+              </a>
+            )
+          })}
         </div>
       </div>
     </section>

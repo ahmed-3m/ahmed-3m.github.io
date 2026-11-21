@@ -50,7 +50,7 @@ export default function Contact({ full = false }: { full?: boolean }) {
           <div className="cd-contact-links">
             {socials.map((social) => (
               <a key={social.href} href={social.href} target="_blank" rel="noopener noreferrer" className="cd-contact-link">
-                {social.label} &rarr;
+                {social.label} <span className="inline-block rtl:rotate-180" aria-hidden="true">&rarr;</span>
               </a>
             ))}
             <ScheduleMeetingButton variant="link" />

@@ -107,7 +107,7 @@ function stepArea(pct: readonly number[], yMax: number): string {
 }
 
 export default function HeroSignal() {
-  const { t } = useI18n()
+  const { lang, t } = useI18n()
   const ds = BENCHMARK_DATASETS.within_cifar
   const h = ds.histogram
   const yMax = Math.max(...h.id_pct, ...h.ood_pct)
@@ -162,7 +162,9 @@ export default function HeroSignal() {
       </dl>
 
       <figcaption className="cd-signal-caption">{t(copy.caption)}</figcaption>
-      <a href="#ood-explorer" className="cd-signal-link">{t(copy.explore)} <span aria-hidden="true">&rarr;</span></a>
+      <a href="#ood-explorer" dir={lang === 'ar' ? 'rtl' : undefined} className="cd-signal-link">
+        {t(copy.explore)} <span className="inline-block rtl:rotate-180" aria-hidden="true">&rarr;</span>
+      </a>
     </figure>
   )
 }
