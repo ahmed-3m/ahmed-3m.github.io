@@ -1355,6 +1355,27 @@ body {
   line-height: 1.45;
 }
 
+.portfolio-charts-featured {
+  max-inline-size: 46rem;
+}
+
+.portfolio-chart-results {
+  margin-block-end: 1.5rem;
+  border-block-end: 1px solid var(--cd-b1);
+}
+
+.portfolio-chart-results summary {
+  padding-block: 0.65rem;
+  color: var(--cd-accent);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.portfolio-chart-results > .portfolio-charts {
+  margin-block-start: 0.5rem;
+}
+
 .portfolio-figure-dialog {
   position: fixed;
   inset: 0;
