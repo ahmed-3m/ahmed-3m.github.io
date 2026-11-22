@@ -142,7 +142,7 @@ The model scores an image by how well a class-conditional diffusion model recons
     </td>
     <td valign="top">
       <b>Live pieces</b><br>
-      Dedicated <a href="https://ahmed-3m.github.io/about/">About</a>, <a href="https://ahmed-3m.github.io/research/">Research</a>, <a href="https://ahmed-3m.github.io/blog/">Blog</a> and <a href="https://ahmed-3m.github.io/news/">News</a> routes, an interactive thesis explorer from recorded scores, a multilingual chat assistant with deterministic fallback (plus an optional Cloudflare Worker proxy in <a href="worker/chat-proxy.js"><code>worker/</code></a>), and a daily AI-news feed added by an agent through reviewed PRs.
+      Dedicated <a href="https://ahmed-3m.github.io/about/">About</a>, <a href="https://ahmed-3m.github.io/research/">Research</a>, <a href="https://ahmed-3m.github.io/blog/">Blog</a> and <a href="https://ahmed-3m.github.io/news/">News</a> routes, an interactive thesis explorer from recorded scores, a multilingual chat assistant with curated fallback answers and a <a href="worker/chat-proxy.js">Cloudflare Worker proxy</a>, and a daily AI-news feed added by an agent through reviewed PRs.
     </td>
   </tr>
 </table>

@@ -60,9 +60,7 @@ const GROQ_MODEL = process.env.NEXT_PUBLIC_GROQ_MODEL || 'openai/gpt-oss-20b'
 const ZAI_MODEL = process.env.NEXT_PUBLIC_BIGMODEL_MODEL || 'glm-5.3'
 const ZAI_FAST_MODEL = process.env.NEXT_PUBLIC_ZAI_FAST_MODEL || 'glm-5-turbo'
 const ZAI_ROUTER_MODEL = process.env.NEXT_PUBLIC_ZAI_ROUTER_MODEL || 'glm-5.3-flash'
-const GROQ_CHAT_URL = 'https://api.groq.com/openai/v1/chat/completions'
-const ZAI_CHAT_URL = 'https://api.z.ai/api/coding/paas/v4/chat/completions'
-const CHAT_PROXY_URL = process.env.NEXT_PUBLIC_CHAT_PROXY_URL
+const CHAT_PROXY_URL = process.env.NEXT_PUBLIC_CHAT_PROXY_URL?.trim()
 const MAX_REPLY_CHARS = 1600
 const ROUTER_TIMEOUT_MS = 1500
 const TTFB_TIMEOUT_MS = 20000
@@ -398,10 +396,6 @@ const FOLLOWUP_PROMPTS: Partial<Record<ReplyId, PromptId[]>> = {
   contact: ['cv', 'projects_best', 'background'],
 }
 
-function isConfiguredToken(token: string | undefined): token is string {
-  return Boolean(token && token !== 'your_groq_token_here' && token !== 'your_zai_token_here')
-}
-
 function shortenReply(reply: string): string {
   if (reply.length <= MAX_REPLY_CHARS) return reply
 
@@ -433,10 +427,9 @@ function createChatError(
 
 function isProxyRateLimitPayload(
   data: ChatCompletionResponse | null,
-  status: number,
-  useProxy: boolean
+  status: number
 ): boolean {
-  if (!useProxy || status !== 429 || !data) return false
+  if (status !== 429 || !data) return false
   if (data.scope !== undefined) return data.scope === 'proxy'
   return data.error === 'Rate limit exceeded. Please try again later.'
 }
@@ -462,21 +455,18 @@ function routeLocally(message: string): ChatLane | null {
 }
 
 type ChatProvider = 'Groq' | 'BigModel'
-type ProviderAuth = { token: string; url: string; useProxy: boolean }
 
 async function routeWithClassifier(
   message: string,
-  auth: ProviderAuth
+  proxyUrl: string
 ): Promise<ChatLane> {
   try {
-    const headers: Record<string, string> = { 'Content-Type': 'application/json' }
-    if (auth.token && !auth.useProxy) headers.Authorization = `Bearer ${auth.token}`
     const controller = new AbortController()
     const timeout = setTimeout(() => controller.abort(), ROUTER_TIMEOUT_MS)
     try {
-      const response = await fetch(auth.url, {
+      const response = await fetch(proxyUrl, {
         method: 'POST',
-        headers,
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           model: ZAI_ROUTER_MODEL,
           messages: [
@@ -491,9 +481,9 @@ async function routeWithClassifier(
         }),
         signal: controller.signal,
       })
-      if (auth.useProxy && response.status === 429) {
+      if (response.status === 429) {
         const errorData = (await response.json().catch(() => null)) as ChatCompletionResponse | null
-        if (isProxyRateLimitPayload(errorData, response.status, auth.useProxy)) {
+        if (isProxyRateLimitPayload(errorData, response.status)) {
           throw createChatError('Rate limit exceeded.', 'BigModel', 429, undefined, true)
         }
         return 'deep'
@@ -514,7 +504,6 @@ async function routeWithClassifier(
 async function throwProviderError(
   response: Response,
   provider: ChatProvider,
-  useProxy: boolean,
   status503Message?: string
 ): Promise<never> {
   const data = (await response.json().catch(() => null)) as ChatCompletionResponse | null
@@ -524,7 +513,7 @@ async function throwProviderError(
     typeof detail === 'string'
       ? detail
       : errorDetail?.message ?? `${provider} could not respond right now.`
-  const isProxyRateLimit = isProxyRateLimitPayload(data, response.status, useProxy)
+  const isProxyRateLimit = isProxyRateLimitPayload(data, response.status)
   if (status503Message && response.status === 503) {
     throw createChatError(status503Message, provider, response.status, errorDetail?.code, isProxyRateLimit)
   }
@@ -612,24 +601,19 @@ async function readChatResponse({
 async function fetchBigModel({
   messages,
   lang,
-  auth,
+  proxyUrl,
   lane,
   onDelta,
 }: {
   messages: readonly ChatMessage[]
   lang: Language
-  auth: ProviderAuth
+  proxyUrl: string
   lane: ChatLane
   onDelta?: StreamDelta
 }): Promise<string> {
   const model = lane === 'fast' ? ZAI_FAST_MODEL : ZAI_MODEL
   const maxTokens = lane === 'fast' ? 380 : 1200
   const payloadMessages = buildChatMessages(systemPrompt(lang), messages)
-
-  const headers: Record<string, string> = { 'Content-Type': 'application/json' }
-  if (auth.token && !auth.useProxy) {
-    headers.Authorization = `Bearer ${auth.token}`
-  }
 
   const controller = new AbortController()
   const timers = createRequestTimers({
@@ -643,9 +627,9 @@ async function fetchBigModel({
 
   try {
     const streaming = Boolean(onDelta)
-    const response = await fetch(auth.url, {
+    const response = await fetch(proxyUrl, {
       method: 'POST',
-      headers,
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model,
         messages: payloadMessages,
@@ -658,7 +642,7 @@ async function fetchBigModel({
     })
 
     if (!response.ok) {
-      await throwProviderError(response, 'BigModel', auth.useProxy)
+      await throwProviderError(response, 'BigModel')
     }
 
     return await readChatResponse({
@@ -676,22 +660,15 @@ async function fetchBigModel({
 async function fetchGroq({
   messages,
   lang,
-  auth,
+  proxyUrl,
   onDelta,
 }: {
   messages: readonly ChatMessage[]
   lang: Language
-  auth: ProviderAuth
+  proxyUrl: string
   onDelta?: StreamDelta
 }): Promise<string> {
   const payloadMessages = buildChatMessages(systemPrompt(lang), messages)
-
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-  }
-  if (!auth.useProxy && auth.token) {
-    headers.Authorization = `Bearer ${auth.token}`
-  }
 
   const controller = new AbortController()
   const timers = createRequestTimers({
@@ -705,9 +682,9 @@ async function fetchGroq({
 
   try {
     const streaming = Boolean(onDelta)
-    const response = await fetch(auth.url, {
+    const response = await fetch(proxyUrl, {
       method: 'POST',
-      headers,
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: GROQ_MODEL,
         messages: payloadMessages,
@@ -722,7 +699,6 @@ async function fetchGroq({
       await throwProviderError(
         response,
         'Groq',
-        auth.useProxy,
         'Model is warming up, try again in a moment.'
       )
     }
@@ -1139,12 +1115,6 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
     const content = messageText.trim()
     if (!content || isLoading) return
 
-    const groqToken = process.env.NEXT_PUBLIC_GROQ_TOKEN
-    const zaiToken = process.env.NEXT_PUBLIC_BIGMODEL_TOKEN
-    const hasGroqToken = isConfiguredToken(groqToken)
-    const hasZaiToken = isConfiguredToken(zaiToken)
-    const hasProxy = Boolean(CHAT_PROXY_URL)
-
     const nextUserMessage: ChatMessage = { role: 'user', content }
     const nextMessages = [...messages, nextUserMessage]
 
@@ -1155,7 +1125,7 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
 
     // Suggested questions point to public facts and can answer immediately.
     const curatedReply = promptId ? translateValue(lang, LOCAL_REPLIES[REPLY_FOR_PROMPT[promptId]]) : null
-    if (curatedReply || (!hasGroqToken && !hasZaiToken && !hasProxy)) {
+    if (curatedReply || !CHAT_PROXY_URL) {
       const local = curatedReply ?? getLocalReply(content, lang)
       if (local) {
         setMessages((prev) => [
@@ -1176,14 +1146,6 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
     setIsStreaming(false)
 
     try {
-      const zaiAuth = (hasZaiToken || hasProxy)
-        ? {
-            token: zaiToken ?? '',
-            url: CHAT_PROXY_URL || ZAI_CHAT_URL,
-            useProxy: Boolean(CHAT_PROXY_URL),
-          }
-        : null
-
       let streamStarted = false
       const emitDelta = (fullContent: string) => {
         if (!streamStarted) {
@@ -1204,43 +1166,31 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
       let rawReply: string | null = null
       let lastProviderError: unknown = null
 
-      if (zaiAuth) {
-        try {
-          const lane = routeLocally(content) ?? (await routeWithClassifier(content, zaiAuth))
-          streamStarted = false
-          rawReply = await fetchBigModel({
-            messages: nextMessages,
-            lang,
-            auth: zaiAuth,
-            lane,
-            onDelta: emitDelta,
-          })
-        } catch (providerError) {
-          lastProviderError = providerError
-          console.error('Chat provider BigModel failed:', providerError)
-        }
+      try {
+        const lane = routeLocally(content) ?? (await routeWithClassifier(content, CHAT_PROXY_URL))
+        rawReply = await fetchBigModel({
+          messages: nextMessages,
+          lang,
+          proxyUrl: CHAT_PROXY_URL,
+          lane,
+          onDelta: emitDelta,
+        })
+      } catch (providerError) {
+        lastProviderError = providerError
+        console.error('Chat provider BigModel failed:', providerError)
       }
-
-      const groqAuth: ProviderAuth | null =
-        hasGroqToken || hasProxy
-          ? {
-              token: groqToken ?? '',
-              url: CHAT_PROXY_URL || GROQ_CHAT_URL,
-              useProxy: Boolean(CHAT_PROXY_URL),
-            }
-          : null
 
       const proxyRateLimited = Boolean(
         (lastProviderError as ChatCompletionError | undefined)?.isProxyRateLimit
       )
 
-      if (rawReply === null && groqAuth && !(proxyRateLimited && groqAuth.useProxy)) {
+      if (rawReply === null && !proxyRateLimited) {
         try {
           streamStarted = false
           rawReply = await fetchGroq({
             messages: nextMessages,
             lang,
-            auth: groqAuth,
+            proxyUrl: CHAT_PROXY_URL,
             onDelta: emitDelta,
           })
         } catch (providerError) {

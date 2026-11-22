@@ -1,6 +1,6 @@
 # ahmed-chat-proxy
 
-An optional Cloudflare Worker that proxies the portfolio's ChatBot requests to
+The Cloudflare Worker that proxies the portfolio's ChatBot requests to
 the Z.ai API (GLM Coding Plan, `api.z.ai`) and Groq (`api.groq.com`). It keeps
 the real API keys server-side so they are never inlined into the static
 JavaScript bundle that ships to visitors' browsers.
@@ -77,15 +77,16 @@ production.
 ## Enable on the site
 
 Set `NEXT_PUBLIC_CHAT_PROXY_URL` to the Worker URL in your GitHub repository
-variables (and keep `NEXT_PUBLIC_*` fallback tokens in secrets if needed). Example value:
+variables before merging the proxy-only frontend. Verify both provider bindings
+using a harmless sample question before switching production. Example value:
 
 ```
 NEXT_PUBLIC_CHAT_PROXY_URL=https://ahmed-chat-proxy.your-subdomain.workers.dev
 ```
 
-That env var is read at build time and inlined into the bundle. The Worker URL
-is safe to expose (it has no secret in it), but it is the only thing the bundle
-contains — no API key.
+The build embeds the Worker URL. Once the deployed widget has been verified,
+revoke the former browser keys at their providers and remove the unused
+`NEXT_PUBLIC_BIGMODEL_TOKEN` and `NEXT_PUBLIC_GROQ_TOKEN` GitHub secrets.
 
 ## How it works
 
@@ -95,10 +96,8 @@ contains — no API key.
   allowlisted Z.ai models (`glm-5.3`, `glm-5-turbo`, `glm-5.3-flash`) to
   `api.z.ai` with `env.ZAI_API_KEY` and allowlisted Groq models
   (`openai/gpt-oss-20b`) to `api.groq.com` with `env.GROQ_API_KEY`.
-- When `NEXT_PUBLIC_CHAT_PROXY_URL` is **not** set, the ChatBot falls back to
-  direct-call behavior using `NEXT_PUBLIC_BIGMODEL_TOKEN` / `NEXT_PUBLIC_GROQ_TOKEN`.
-  **Note:** keys are provisioned per host — configure `NEXT_PUBLIC_BIGMODEL_TOKEN`
-  with a valid Z.ai (`api.z.ai`) key; an `open.bigmodel.cn` key will not authenticate.
+- Without `NEXT_PUBLIC_CHAT_PROXY_URL`, Genie uses its curated answers. It also
+  uses them when the configured providers fail.
 - The proxy requires an allowlisted `Origin` on `POST` and `OPTIONS` (missing or
   disallowed origins receive `403`), enforces `MAX_TOKENS_CAP = 1_200`, caps
   body size (`64_000` UTF-8 bytes), allows at most one `system` message (only at

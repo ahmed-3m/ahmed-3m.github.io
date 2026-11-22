@@ -54,6 +54,9 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
 
+      - name: Chat proxy self-test
+        run: node worker/chat-proxy.selftest.mjs
+
   build:
     needs: quality
     if: github.event.action != 'closed' && (github.event.action != 'edited' || github.event.changes.base != null)
@@ -74,13 +77,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          # NEXT_PUBLIC_* tokens are inlined into the static JS bundle and are
-          # publicly extractable. Use disposable, rate-limited free-tier keys only.
-          # The news agent uses a separate private key (BIGMODEL_NEWS_TOKEN) — see news-update.yml.
-          NEXT_PUBLIC_GROQ_TOKEN: ${{ secrets.NEXT_PUBLIC_GROQ_TOKEN }}
-          NEXT_PUBLIC_BIGMODEL_TOKEN: ${{ secrets.NEXT_PUBLIC_BIGMODEL_TOKEN }}
-          # Optional chat proxy URL + model overrides via GitHub repository variables.
-          # Unset or empty vars fall back to the defaults compiled into ChatBotPanel.tsx.
+          # Model credentials are stored in the Worker. Without a URL, Genie uses curated answers.
           NEXT_PUBLIC_CHAT_PROXY_URL: ${{ vars.NEXT_PUBLIC_CHAT_PROXY_URL }}
           NEXT_PUBLIC_GROQ_MODEL: ${{ vars.NEXT_PUBLIC_GROQ_MODEL }}
           NEXT_PUBLIC_BIGMODEL_MODEL: ${{ vars.NEXT_PUBLIC_BIGMODEL_MODEL }}

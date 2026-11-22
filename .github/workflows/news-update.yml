@@ -20,7 +20,6 @@ name: Daily news update
 # Required repository secrets:
 #   BIGMODEL_NEWS_TOKEN         - private Z.ai (api.z.ai) API key for the news agent (NOT exposed in the client bundle).
 #                                 Falls back to the pre-migration ZAI_NEWS_TOKEN secret if unset.
-#   NEXT_PUBLIC_BIGMODEL_TOKEN  - public, rate-limited BigModel key for the portfolio chatbot (inlined in the static bundle).
 #   EXA_API_KEY                 - Exa API key for the research MCP (https://exa.ai).
 
 on:
