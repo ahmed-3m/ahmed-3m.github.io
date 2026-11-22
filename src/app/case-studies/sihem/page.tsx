@@ -18,6 +18,13 @@ export const metadata: Metadata = {
     url: 'https://ahmed-3m.github.io/case-studies/sihem/',
     images: ogImage('Sihem case study', '/og-sihem.png'),
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Sihem — Proactive AI Personal-Mentor Assistant (Case Study)',
+    description:
+      'Proactive personal-mentor and daily-routine assistant with deterministic nudging, pgvector RAG memory, and multi-provider LLM routing, incubated at tech2b Linz.',
+    images: ['/og-sihem.png'],
+  },
 }
 
 export default function SihemCaseStudy() {

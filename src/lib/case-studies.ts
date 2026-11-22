@@ -15,7 +15,7 @@ export type CaseStudy = {
 export const caseStudies: CaseStudy[] = [
   {
     slug: 'diffusion-ood',
-    lastModified: '2026-11-18',
+    lastModified: '2026-11-22',
     stack: ['PyTorch', 'PyTorch Lightning', 'Hydra', 'DDPM / UNet', 'W&B', 'CIFAR-10'],
     pipelineStages: [
       {
@@ -96,40 +96,41 @@ export const caseStudies: CaseStudy[] = [
     artifacts: [
       { label: { en: 'Thesis PDF', de: 'Thesis PDF', fr: 'PDF du mémoire', es: 'PDF de la tesis', ar: 'PDF الرسالة' }, href: '/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf' },
       { label: { en: 'DiffusionOOD repository', de: 'DiffusionOOD Repository', fr: 'Dépôt DiffusionOOD', es: 'Repositorio DiffusionOOD', ar: 'مستودع DiffusionOOD' }, href: 'https://github.com/ahmed-3m/DiffusionOOD', external: true },
+      { label: { en: 'Model weights & raw scores (Hugging Face)', de: 'Modellgewichte & Rohwerte (Hugging Face)', fr: 'Poids et scores bruts (Hugging Face)', es: 'Pesos y puntuaciones (Hugging Face)', ar: 'أوزان النموذج والنتائج الخام (Hugging Face)' }, href: 'https://huggingface.co/ahmed-3m/DiffusionOOD', external: true },
     ],
   },
   {
     slug: 'inkjet-ood',
-    lastModified: '2026-11-18',
-    stack: ['YOLOv8', 'PyTorch', 'Roboflow', 'OpenCV', 'Hydra', 'FTI_Zer0P'],
+    lastModified: '2026-11-22',
+    stack: ['YOLOv8m', 'PyTorch', 'Roboflow', 'OpenCV', 'Hydra', 'FTI_Zer0P'],
     pipelineStages: [
       {
         title: { en: '1. Industrial Surface Imaging', de: '1. Industrielle Oberflächenerfassung', fr: '1. Imagerie de surface industrielle', es: '1. Captura de superficies industriales', ar: '1. تصوير الأسطح الصناعية' },
-        desc: { en: 'High-resolution thermographic and optical frame capture of composite building components.', de: 'Hochauflösende thermografische und optische Einzelbilder von Verbundbauelementen erfassen.', fr: "Capture d'images thermographiques et optiques haute résolution de panneaux de construction.", es: 'Captura de imágenes termográficas y ópticas de alta resolución de paneles compuestos.', ar: 'التقاط صور حرارية وبصرية عالية الدقة لمكونات البناء المركبة.' },
+        desc: { en: '1920×1080 frames of inkjet-printed building components grouped across 573 source images.', de: '1920×1080-Einzelbilder inkjet-bedruckter Bauteile aus 573 Quellbild-Gruppen.', fr: 'Images 1920×1080 de composants imprimés par jet d’encre regroupées sur 573 images sources.', es: 'Imágenes de 1920×1080 de componentes impresos por inyección agrupadas en 573 imágenes fuente.', ar: 'إطارات بدقة 1920×1080 لمكونات مطبوعة بنفث الحبر مجمعة عبر 573 مجموعة صور أصلية.' },
       },
       {
-        title: { en: '2. YOLOv8 Feature Extraction', de: '2. YOLOv8 Merkmalsextraktion', fr: '2. Extraction de caractéristiques YOLOv8', es: '2. Extracción de características con YOLOv8', ar: '2. استخراج الميزات بواسطة YOLOv8' },
-        desc: { en: 'Localizing regions of interest and extracting structured defect feature representations.', de: 'Interessante Regionen lokalisieren und strukturierte Fehler-Merkmale extrahieren.', fr: "Localisation des régions d'intérêt et extraction de représentations structurées de défauts.", es: 'Localización de regiones de interés y extracción de representaciones estructuradas de defectos.', ar: 'تحديد مناطق الاهتمام واستخراج تمثيلات منظمة لميزات العيوب.' },
+        title: { en: '2. YOLOv8m Feature Detection & Cropping', de: '2. YOLOv8m-Merkmalsdetektion & Zuschnitt', fr: '2. Détection et recadrage YOLOv8m', es: '2. Detección y recorte con YOLOv8m', ar: '2. كشف العناصر واقتصاصها عبر YOLOv8m' },
+        desc: { en: 'Stage-1 YOLOv8m detector (25.86M params in yolo_best.pt; thesis PDF erratum prints YOLOv8n) localizes 8 feature types into 6,408 128×128 crops.', de: 'Stufe-1-YOLOv8m-Detektor (25,86 Mio. Parameter in yolo_best.pt; Thesis-PDF-Erratum nennt YOLOv8n) lokalisiert 8 Merkmalstypen in 6.408 128×128-Ausschnitte.', fr: 'Un détecteur YOLOv8m de phase 1 (25,86 M paramètres dans yolo_best.pt ; erratum PDF : YOLOv8n) localise 8 types de motifs en 6 408 crops 128×128.', es: 'Un detector YOLOv8m en etapa 1 (25,86 M parámetros en yolo_best.pt; errata del PDF: YOLOv8n) localiza 8 tipos de rasgos en 6.408 recortes de 128×128.', ar: 'يكشف مصنف المرحلة الأولى YOLOv8m (25.86 مليون معامل في yolo_best.pt؛ ورد سهواً YOLOv8n في نص PDF الرسالة) 8 أنواع من الميزات ليقتطع 6,408 قصاصة بأبعاد 128×128.' },
       },
       {
         title: { en: '3. 5-Fold Cross-Validation', de: '3. 5-fache Kreuzvalidierung', fr: '3. Validation croisée en 5 plis', es: '3. Validación cruzada de 5 folds', ar: '3. تحقق تقاطعي خماسي صارم' },
-        desc: { en: 'Strict 5-fold CV protocol on FTI_Zer0P establishing an auditable 0.8673 ± 0.0230 baseline.', de: 'Striktes 5-faches CV-Protokoll auf FTI_Zer0P zur Etablierung einer auditierbaren 0.8673 ± 0.0230 Baseline.', fr: 'Protocole strict de validation croisée 5 plis sur FTI_Zer0P établissant une référence vérifiable de 0.8673 ± 0.0230.', es: 'Protocolo estricto de 5-fold CV en FTI_Zer0P estableciendo una línea base auditable de 0.8673 ± 0.0230.', ar: 'بروتوكول تحقق تقاطعي خماسي صارم على FTI_Zer0P يثبت خط أساس موثوقاً عند 0.8673 ± 0.0230.' },
+        desc: { en: 'Image-level 5-fold stratified CV across the 573 source-image groups establishing an auditable 0.8673 ± 0.0230 AUROC baseline.', de: 'Bildbasierte 5-fache stratifizierte Kreuzvalidierung über 573 Quellbild-Gruppen ergibt eine prüfbare Baseline von 0.8673 ± 0.0230 AUROC.', fr: 'Validation croisée stratifiée par image source (573 groupes, 5 plis) établissant une référence vérifiable de 0.8673 ± 0.0230 AUROC.', es: 'Validación cruzada estratificada a nivel de imagen (573 grupos, 5 folds) estableciendo una referencia auditable de 0.8673 ± 0.0230 AUROC.', ar: 'تحقق تقاطعي طبقي على مستوى الصورة الأصلية عبر 573 مجموعة يثبت خط أساس موثوقاً عند 0.8673 ± 0.0230 AUROC.' },
       },
     ],
     approach: [
       {
-        en: 'Extract structured visual features from industrial prints using YOLOv8 backbone representations.',
-        de: 'Strukturierte visuelle Merkmale aus industriellen Drucken mittels YOLOv8-Backbone extrahieren.',
-        fr: 'Extraire des caractéristiques visuelles structurées à partir des impressions avec le backbone YOLOv8.',
-        es: 'Extraer características visuales estructuradas de impresiones industriales con la arquitectura YOLOv8.',
-        ar: 'استخراج ميزات بصرية منظمة من المطبوعات الصناعية باستخدام العمود الفقري لـ YOLOv8.',
+        en: 'Run Stage-1 YOLOv8m detection (25.86M params in yolo_best.pt; thesis PDF erratum writes YOLOv8n) to localize 8 print feature types and extract 6,408 128×128 RGB crops across 573 source-image groups on FTI_Zer0P.',
+        de: 'Stufe-1-YOLOv8m-Detektor (25,86 Mio. Parameter in yolo_best.pt; Thesis-PDF-Erratum nennt YOLOv8n) zur Lokalisierung von 8 Druckmerkmalstypen und Extraktion von 6.408 128×128-RGB-Crops über 573 Quellbild-Gruppen auf FTI_Zer0P.',
+        fr: 'Exécuter la détection YOLOv8m de phase 1 (25,86 M paramètres dans yolo_best.pt ; erratum PDF : YOLOv8n) pour localiser 8 types de motifs et extraire 6 408 crops RGB 128×128 sur 573 groupes d’images FTI_Zer0P.',
+        es: 'Ejecutar detección YOLOv8m en etapa 1 (25,86 M parámetros en yolo_best.pt; errata del PDF: YOLOv8n) para localizar 8 tipos de rasgos y extraer 6.408 recortes RGB 128×128 en 573 grupos de FTI_Zer0P.',
+        ar: 'تشغيل كاشف YOLOv8m في المرحلة الأولى (25.86 مليون معامل في yolo_best.pt؛ ذُكر سهواً YOLOv8n في نص PDF الرسالة) لتحديد 8 أنواع من ميزات الطباعة واستخراج 6,408 قصاصة RGB بأبعاد 128×128 عبر 573 مجموعة صور في FTI_Zer0P.',
       },
       {
-        en: 'Condition a diffusion model on print metadata and feature embeddings for quality verification.',
-        de: 'Ein Diffusionsmodell auf Druckmetadaten und Feature-Embeddings zur Qualitätsprüfung konditionieren.',
-        fr: 'Conditionner un modèle de diffusion sur les métadonnées et embeddings pour vérifier la qualité.',
-        es: 'Condicionar un modelo de difusión en metadatos y embeddings para verificar la calidad.',
-        ar: 'تكييف نموذج انتشار على بيانات المطبوعات والتضمينات للتحقق من الجودة.',
+        en: 'Train a multi-head conditional diffusion U-Net (AdaGN conditioning across the 8 feature types) on 128×128 crops to classify GOOD vs. BAD via differential reconstruction error.',
+        de: 'Ein Multi-Head-Konditional-Diffusions-U-Net (AdaGN-Konditionierung über 8 Merkmalstypen) auf 128×128-Crops trainieren, um GOOD vs. BAD per Rekonstruktionsfehlerdifferenz zu klassifizieren.',
+        fr: 'Entraîner un U-Net de diffusion conditionnel multi-têtes (conditionnement AdaGN sur 8 types de motifs) sur les crops 128×128 pour distinguer GOOD et BAD par écart de reconstruction.',
+        es: 'Entrenar una red U-Net de difusión condicional multi-cabeza (condicionamiento AdaGN para 8 tipos de rasgos) sobre recortes 128×128 para clasificar GOOD frente a BAD por error de reconstrucción.',
+        ar: 'تدريب شبكة U-Net انتشارية شرطية متعددة الرؤوس (تكييف AdaGN عبر 8 أنواع ميزات) على القصاصات 128×128 لتصنيف العينات السليمة والمعيبة عبر فرق خطأ إعادة البناء.',
       },
       {
         en: 'Run strict 5-fold cross-validation on FTI_Zer0P and compare separation loss settings under statistical correction.',
@@ -180,7 +181,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     artifacts: [
       { label: { en: 'Thesis PDF (0.8673 source)', de: 'Thesis PDF (0.8673 Quelle)', fr: 'PDF du mémoire (source 0.8673)', es: 'PDF de la tesis (fuente 0.8673)', ar: 'PDF الرسالة (مصدر 0.8673)' }, href: '/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf' },
-      { label: { en: 'Early technical report (2024)', de: 'Frühzeitiger Technischer Bericht (2024)', fr: 'Rapport technique précoce (2024)', es: 'Informe técnico temprano (2024)', ar: 'تقرير تقني مبكر (2024)' }, href: '/Diffusion-Based Multi-class Defect Detection.pdf' },
+      { label: { en: 'Early technical report (2024)', de: 'Frühzeitiger Technischer Bericht (2024)', fr: 'Rapport technique précoce (2024)', es: 'Informe técnico temprano (2024)', ar: 'تقرير تقني مبكر (2024)' }, href: '/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf' },
       { label: { en: 'InkjetOOD repository', de: 'InkjetOOD Repository', fr: 'Dépôt InkjetOOD', es: 'Repositorio InkjetOOD', ar: 'مستودع InkjetOOD' }, href: 'https://github.com/ahmed-3m/InkjetOOD', external: true },
       { label: { en: 'Model weights', de: 'Modellgewichte', fr: 'Poids du modèle', es: 'Pesos del modelo', ar: 'أوزان النموذج' }, href: 'https://huggingface.co/ahmed-3m/InkjetOOD', external: true },
     ],
@@ -291,7 +292,7 @@ export const caseStudies: CaseStudy[] = [
         de: 'Aufgenommen in den oberösterreichischen tech2b-Inkubator (Mai 2026 – heute) zur Produktvalidierung und für Nutzertests in Linz.',
         fr: 'Accepté au sein de l’incubateur tech2b en Haute-Autriche (mai 2026 – présent) pour la validation produit et les tests utilisateurs à Linz.',
         es: 'Aceptado en la incubadora tech2b de Alta Austria (mayo 2026 – presente) para validación de producto y pruebas de usuarios en Linz.',
-        ar: 'القبول في حاضنة الأعمال tech2b في النمسا العليا (مايو 2026 – حتى الآن) لمصادقة المنتج واختبار مجموعات المستخدمين في لينز.',
+        ar: 'القبول في حاضنة الأعمال tech2b في النمسا العليا (مايو 2026 – حتى الآن) لمصادقة المنتج واختبار مجموعات المستخدمين في لينتس.',
       },
     ],
     lessons: [

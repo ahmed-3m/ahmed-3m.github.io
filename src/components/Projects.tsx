@@ -27,7 +27,7 @@ const copy = {
     ar: 'AUROC لخط الأساس · FTI_Zer0P · تحقق تقاطعي من 5 طيات',
   },
   diffusionTag: { en: 'Diffusion models', de: 'Diffusionsmodelle', fr: 'Modèles de diffusion', es: 'Modelos de difusión', ar: 'نماذج الانتشار' },
-  thesis: { en: "Master's Thesis · JKU Linz · Graded 1", de: 'Masterarbeit · JKU Linz · Note 1', fr: 'Mémoire M.Sc. · JKU Linz · Note 1', es: 'Tesis M.Sc. · JKU Linz · Nota 1', ar: 'رسالة الماجستير · JKU لينز · تقدير 1' },
+  thesis: { en: "Master's Thesis · JKU Linz · Graded 1", de: 'Masterarbeit · JKU Linz · Note 1', fr: 'Mémoire M.Sc. · JKU Linz · Note 1', es: 'Tesis M.Sc. · JKU Linz · Nota 1', ar: 'رسالة الماجستير · JKU لينتس · تقدير 1' },
   track2Eyebrow: { en: "Master's Thesis Track 2 · Industrial CV", de: 'Masterarbeit Track 2 · Industrial CV', fr: 'Mémoire Track 2 · Vision industrielle', es: 'Tesis Track 2 · Visión industrial', ar: 'المسار 2 للرسالة · رؤية صناعية' },
   oodTitle: { en: 'DiffusionOOD — OOD Detection Framework', de: 'DiffusionOOD — OOD-Erkennungsframework', fr: 'DiffusionOOD — Détection OOD', es: 'DiffusionOOD — Detección OOD', ar: 'DiffusionOOD — إطار كشف الخارج عن التوزيع' },
   oodDesc: {
@@ -88,6 +88,13 @@ const copy = {
     es: 'Compuerta sin LLM',
     ar: 'بوابة خالية من LLM',
   },
+  bciEyebrow: {
+    en: 'Karunya Institute of Technology and Sciences · BCI Research',
+    de: 'Karunya Institute of Technology and Sciences · BCI-Forschung',
+    fr: 'Karunya Institute of Technology and Sciences · Recherche BCI',
+    es: 'Karunya Institute of Technology and Sciences · Investigación BCI',
+    ar: 'معهد كارونيا للتكنولوجيا والعلوم · أبحاث واجهة الدماغ والحاسوب',
+  },
   eegTitle: { en: 'EEG Signal Classification', de: 'EEG-Signalklassifikation', fr: 'Classification de signaux EEG', es: 'Clasificación de señales EEG', ar: 'تصنيف إشارات EEG' },
   eegDesc: {
     en: 'LSTM, Bi-LSTM, and GRU architectures for motor imagery classification in brain-computer interface applications.',
@@ -119,6 +126,10 @@ const copy = {
   },
 } satisfies Record<string, TranslationMap>
 
+function RtlArrow() {
+  return <span className="inline-block rtl:rotate-180" aria-hidden="true">&rarr;</span>
+}
+
 function AdditionalProjectCards() {
   const { t } = useI18n()
 
@@ -135,17 +146,17 @@ function AdditionalProjectCards() {
           ))}
         </div>
         <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
-          <a href="https://github.com/ahmed-3m/mergeproof" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.code)} &rarr;</a>
-          <a href="https://github.com/ahmed-3m/mergeproof#quick-start" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.mergeproofExample)} &rarr;</a>
+          <a href="https://github.com/ahmed-3m/mergeproof" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.code)} <RtlArrow /></a>
+          <a href="https://github.com/ahmed-3m/mergeproof#quick-start" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.mergeproofExample)} <RtlArrow /></a>
         </div>
       </article>
 
       <article className="cd-project-card reveal">
-        <div className="cd-pc-eyebrow">Karunya Institute of Technology and Sciences · BCI Research</div>
+        <div className="cd-pc-eyebrow">{t(copy.bciEyebrow)}</div>
         <h3 className="cd-pc-title">{t(copy.eegTitle)}</h3>
         <div className="cd-pc-desc">{t(copy.eegDesc)}</div>
         <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
-          <a href="https://github.com/ahmed-3m/Motor-Imagery-classification" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.code)} &rarr;</a>
+          <a href="https://github.com/ahmed-3m/Motor-Imagery-classification" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.code)} <RtlArrow /></a>
         </div>
       </article>
 
@@ -191,9 +202,9 @@ export function FullProjects() {
             <div className="cd-proj-metric-big">
               <div className="cd-pc-metric" style={{ marginTop: 0 }}><bdi dir="ltr">99.03% <span>± 0.07%</span></bdi><br /><span>{t(copy.oodMetric)}</span></div>
               <div className="cd-proj-actions" style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
-                <Link href="/case-studies/diffusion-ood/" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.caseStudyLink)} &rarr;</Link>
-                <a href="https://github.com/ahmed-3m/DiffusionOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.code)} &rarr;</a>
-                <a href="/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.thesisPdf)} &rarr;</a>
+                <Link href="/case-studies/diffusion-ood/" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.caseStudyLink)} <RtlArrow /></Link>
+                <a href="https://github.com/ahmed-3m/DiffusionOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.code)} <RtlArrow /></a>
+                <a href="/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.thesisPdf)} <RtlArrow /></a>
               </div>
             </div>
           </article>
@@ -204,8 +215,8 @@ export function FullProjects() {
             <div className="cd-pc-desc">{t(copy.inkjetDesc)}</div>
             <div className="cd-pc-metric"><bdi dir="ltr">0.8673 <span>± 0.0230</span></bdi><br /><span>{t(copy.inkjetMetric)}</span></div>
             <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
-              <a href="https://github.com/ahmed-3m/InkjetOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.code)} &rarr;</a>
-              <Link href="/case-studies/inkjet-ood/" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.caseStudy)} &rarr;</Link>
+              <a href="https://github.com/ahmed-3m/InkjetOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.code)} <RtlArrow /></a>
+              <Link href="/case-studies/inkjet-ood/" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.caseStudy)} <RtlArrow /></Link>
             </div>
           </article>
 
@@ -219,9 +230,9 @@ export function FullProjects() {
               ))}
             </div>
             <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
-              <Link href="/case-studies/sihem/" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.caseStudyLink)} &rarr;</Link>
-              <a href="https://t.me/sihem_ai_bot" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>Telegram &rarr;</a>
-              <a href="https://sihem-pwa.pages.dev/" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>PWA &rarr;</a>
+              <Link href="/case-studies/sihem/" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.caseStudyLink)} <RtlArrow /></Link>
+              <a href="https://t.me/sihem_ai_bot" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>Telegram <RtlArrow /></a>
+              <a href="https://sihem-pwa.pages.dev/" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>PWA <RtlArrow /></a>
             </div>
           </article>
 

@@ -35,7 +35,12 @@ export default function RequestCvButton({
       className={cls}
     >
       {t(copy.label)}
-      {variant === 'link' && !compact && ' ->'}
+      {variant === 'link' && !compact && (
+        <>
+          {' '}
+          <span className="inline-block rtl:rotate-180" aria-hidden="true">&rarr;</span>
+        </>
+      )}
     </a>
   )
 }

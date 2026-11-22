@@ -10,7 +10,7 @@ const copy = {
     en: 'Schedule meeting',
     de: 'Meeting planen',
     fr: 'Planifier un rendez-vous',
-    es: 'Programar reunion',
+    es: 'Programar reunión',
     ar: 'جدولة اجتماع',
   },
 } satisfies Record<string, TranslationMap>
@@ -37,7 +37,12 @@ export default function ScheduleMeetingButton({
       aria-label={`${t(copy.label)} (Calendly)`}
     >
       {t(copy.label)}
-      {variant === 'link' && !compact && ' ->'}
+      {variant === 'link' && !compact && (
+        <>
+          {' '}
+          <span className="inline-block rtl:rotate-180" aria-hidden="true">&rarr;</span>
+        </>
+      )}
     </a>
   )
 }

@@ -6,7 +6,7 @@ import { useReveal } from '@/lib/useReveal'
 
 const copy = {
   eyebrow: { en: '// Writing', de: '// Schreiben', fr: '// Écriture', es: '// Escritura', ar: '// الكتابة' },
-  title: { en: 'Thinking out loud.', de: 'Gedanken laut gedacht.', fr: 'Reflexions ouvertes.', es: 'Pensando en voz alta.', ar: 'أفكار بصوت عال.' },
+  title: { en: 'Thinking out loud.', de: 'Gedanken laut gedacht.', fr: 'Réflexions ouvertes.', es: 'Pensando en voz alta.', ar: 'أفكار بصوت عالٍ.' },
   intro: {
     en: 'Deep-dives on research decisions, production lessons, and the gap between papers and products.',
     de: 'Deep-Dives zu Forschungsentscheidungen, Produktionslektionen und der Lücke zwischen Papers und Produkten.',
@@ -51,15 +51,17 @@ export default function Writing() {
               </div>
               <div className="cd-wc-footer">
                 <span className="cd-wc-time">{post.readingTime}</span>
-                <span className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.read)} &rarr;</span>
+                <span className="cd-proj-link" style={{ fontSize: 12 }}>
+                  {t(copy.read)} <span className="inline-block rtl:rotate-180" aria-hidden="true">&rarr;</span>
+                </span>
               </div>
             </Link>
           ))}
         </div>
 
         <div style={{ textAlign: 'center', marginTop: 32 }}>
-          <Link href="/blog/" className="cd-btn cd-btn-ghost">
-            {t(copy.all)} &rarr;
+          <Link href="/blog/" className="cd-btn-ghost" style={{ fontSize: 13 }}>
+            {t(copy.all)} <span className="inline-block rtl:rotate-180" aria-hidden="true">&rarr;</span>
           </Link>
         </div>
       </div>

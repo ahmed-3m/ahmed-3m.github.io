@@ -1,4 +1,4 @@
-<a href="https://ahmed-3m.github.io">
+<a href="https://ahmed-3m.github.io/">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset=".github/readme/hero-dark.svg">
     <source media="(prefers-color-scheme: light)" srcset=".github/readme/hero-light.svg">
@@ -7,7 +7,7 @@
 </a>
 
 <p align="center">
-  <a href="https://ahmed-3m.github.io"><img src="https://img.shields.io/badge/Portfolio-ahmed--3m.github.io-00d4ff?style=flat-square&labelColor=08090d&logo=googlechrome&logoColor=00d4ff" alt="Portfolio"></a>
+  <a href="https://ahmed-3m.github.io/"><img src="https://img.shields.io/badge/Portfolio-ahmed--3m.github.io-00d4ff?style=flat-square&labelColor=08090d&logo=googlechrome&logoColor=00d4ff" alt="Portfolio"></a>
   <a href="https://ahmed-3m.github.io/cv.pdf"><img src="https://img.shields.io/badge/CV-PDF-00d4ff?style=flat-square&labelColor=08090d&logo=readdotcv&logoColor=00d4ff" alt="CV (PDF)"></a>
   <a href="https://www.linkedin.com/in/ahmed-3m/"><img src="https://img.shields.io/badge/LinkedIn-ahmed--3m-00d4ff?style=flat-square&labelColor=08090d&logo=linkedin&logoColor=00d4ff" alt="LinkedIn"></a>
   <a href="https://huggingface.co/ahmed-3m"><img src="https://img.shields.io/badge/Hugging_Face-ahmed--3m-00d4ff?style=flat-square&labelColor=08090d&logo=huggingface&logoColor=00d4ff" alt="Hugging Face"></a>
@@ -23,7 +23,7 @@ I'm an AI/ML engineer in **Linz, Austria**. I build systems that inspect images,
 
 - **M.Sc. in Artificial Intelligence, JKU Linz** — graduated September 2026 (Defensio 25 Sep 2026). Thesis on conditional diffusion models for out-of-distribution (OOD) detection, supervised by **Prof. Sepp Hochreiter**, **graded 1** (top mark).
 - **Background:** mechatronics and electronics before AI, so I bring a hardware and systems view to computer vision and production ML.
-- **Open to:** AI/ML engineering roles and research collaborations. Available full time now.
+- **Open to:** AI/ML engineering roles and research collaborations. Available full time now (eligible for Austria's Rot-Weiß-Rot Karte für Studienabsolventen). Full background on <a href="https://ahmed-3m.github.io/about/">About</a>.
 
 <sub><code>// Experience</code></sub>
 
@@ -56,7 +56,7 @@ I'm an AI/ML engineer in **Linz, Austria**. I build systems that inspect images,
     <td width="50%" valign="top">
       <sub><code>THESIS TRACK 2 · INDUSTRIAL CV · PROFACTOR</code></sub>
       <h3>InkjetOOD</h3>
-      A two-stage system for defects in industrial inkjet printing: find printed features, then check each one for unusual patterns.<br><br>
+      A two-stage system for defects in industrial inkjet printing: YOLOv8m localizes 8 print feature types into 6,408 128×128 crops across 573 source-image groups, then a multi-head conditional diffusion model scores each crop.<br><br>
       <b>0.8673 ± 0.0230 AUROC</b><br>
       <sub>Public FTI_Zer0P dataset · 5-fold cross-validation · λ = 0 baseline; the separation loss did not transfer here (documented in the thesis)</sub><br><br>
       <a href="https://ahmed-3m.github.io/case-studies/inkjet-ood/">Case study</a> ·
@@ -105,7 +105,7 @@ The model scores an image by how well a class-conditional diffusion model recons
 
 </div>
 
-<sub>The task is binary with a single in-distribution class, so these numbers are not comparable to multi-class CIFAR-10 OOD leaderboards. All figures come from the thesis and are mirrored in <a href="src/lib/ood-explorer-data.ts"><code>src/lib/ood-explorer-data.ts</code></a>. You can drag the threshold yourself in the <a href="https://ahmed-3m.github.io/case-studies/diffusion-ood/">interactive explorer</a>.</sub>
+<sub>The task is binary with a single in-distribution class, so these numbers are not comparable to multi-class CIFAR-10 OOD leaderboards. All figures come from the thesis and are mirrored in <a href="src/lib/ood-explorer-data.ts"><code>src/lib/ood-explorer-data.ts</code></a>. See the <a href="https://ahmed-3m.github.io/research/">research overview</a> or drag the threshold yourself in the <a href="https://ahmed-3m.github.io/case-studies/diffusion-ood/">interactive explorer</a>.</sub>
 
 <sub><code>// Stack</code></sub>
 
@@ -140,7 +140,7 @@ The model scores an image by how well a class-conditional diffusion model recons
     </td>
     <td valign="top">
       <b>Live pieces</b><br>
-      Thesis explorer built from recorded scores, a chat assistant behind a Cloudflare Worker proxy, and a daily AI-news feed added by an agent through reviewed PRs.
+      Dedicated <a href="https://ahmed-3m.github.io/about/">About</a>, <a href="https://ahmed-3m.github.io/research/">Research</a>, <a href="https://ahmed-3m.github.io/blog/">Blog</a> and <a href="https://ahmed-3m.github.io/news/">News</a> routes, an interactive thesis explorer from recorded scores, a multilingual chat assistant with deterministic fallback (plus an optional Cloudflare Worker proxy in <a href="worker/chat-proxy.js"><code>worker/</code></a>), and a daily AI-news feed added by an agent through reviewed PRs.
     </td>
   </tr>
 </table>
@@ -150,5 +150,5 @@ The model scores an image by how well a class-conditional diffusion model recons
 ---
 
 <p align="center">
-  <b>Let's talk.</b> <a href="mailto:ahmed.mo.0595@gmail.com">ahmed.mo.0595@gmail.com</a> · <a href="https://www.linkedin.com/in/ahmed-3m/">LinkedIn</a> · <a href="https://www.researchgate.net/profile/Ahmed-Mohammed-114">ResearchGate</a> · <a href="https://ahmed-3m.github.io/#contact">Book a call</a>
+  <b>Let's talk.</b> <a href="mailto:ahmed.mo.0595@gmail.com">ahmed.mo.0595@gmail.com</a> · <a href="https://www.linkedin.com/in/ahmed-3m/">LinkedIn</a> · <a href="https://github.com/ahmed-3m">GitHub</a> · <a href="https://orcid.org/0009-0004-8934-1270">ORCID</a> · <a href="https://ahmed-3m.github.io/#contact">Book a call</a>
 </p>

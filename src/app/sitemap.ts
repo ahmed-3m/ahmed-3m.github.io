@@ -54,7 +54,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${baseUrl}/feed.xml`,
-      lastModified: latestNews ? new Date(latestNews) : latestContent,
+      lastModified: latestBlog,
       changeFrequency: 'weekly' as const,
       priority: 0.4,
     },

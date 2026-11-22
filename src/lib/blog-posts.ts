@@ -463,87 +463,72 @@ loss = L_diffusion + lambda * L_separation
     slug: 'diffusion-models-anomaly-detection',
     date: '2024-11-20',
     ogImage: '/og-diffusion-models-anomaly-detection.png',
-    lastModified: '2026-11-13',
+    lastModified: '2026-11-22',
     translations: {
       en: {
         title: 'Diffusion Models for Industrial Defect Detection at PROFACTOR GmbH',
         excerpt:
-          'How I evaluated a public YOLO + conditional diffusion pipeline on the FTI_Zer0P benchmark under strict 5-fold cross-validation, reaching a 0.8673 +/- 0.0230 AUROC baseline and learning where the method transfers and where it does not.',
+          'How I evaluated a two-stage YOLOv8m detector and conditional diffusion pipeline on the FTI_Zer0P benchmark under strict 5-fold image-level cross-validation, reaching a 0.8673 ± 0.0230 AUROC baseline and mapping where separation loss does not transfer.',
         tags: ['Diffusion Models', 'Anomaly Detection', 'Industrial AI', 'YOLOv8', 'Quality Control'],
         readingTime: '11 min read',
         faq: [
           {
             question: 'What result did the industrial system achieve?',
             answer:
-              'On the public FTI_Zer0P benchmark, the strict 5-fold CV baseline reached 0.8673 +/- 0.0230 AUROC. Separately, an internal production deployment tracked 98.4% threshold-dependent binary classification accuracy (operational deployment metric, not comparable to public AUROC).',
+              'On the public FTI_Zer0P benchmark under strict 5-fold image-level CV across 573 source-image groups (6,408 128×128 crops), the λ = 0.0 baseline reached 0.8673 ± 0.0230 AUROC (0.8094 ± 0.0151 accuracy, K=100).',
           },
           {
             question: 'What was the architecture?',
             answer:
-              'YOLOv8 was used as a feature backbone, and a conditional diffusion model acted as the generative classifier. Multi-head conditioning handled the different inkjet feature types.',
+              'A two-stage pipeline: Stage 1 runs a YOLOv8m detector (25.86M params in yolo_best.pt; thesis PDF erratum prints YOLOv8n) to localize 8 print feature types into 128×128 crops, and Stage 2 runs a multi-head conditional diffusion U-Net (AdaGN) as the generative classifier.',
           },
           {
             question: 'Did separation loss help here too?',
             answer:
-              'Not significantly. That became one of the most honest findings of the work: the method transferred well across code and workflow, but not all gains transferred to this small industrial dataset.',
+              'Not significantly. Across λ ∈ {0.01, 0.02, 0.05}, scores stayed within the cross-fold standard deviation and failed Holm-corrected significance testing — showing where natural-image gains stop transferring.',
           },
         ],
         content: `
 ## Industrial Context
 
-At PROFACTOR GmbH in Austria, I worked on machine vision for inkjet-printed building components. The goal was simple to state and difficult to solve: detect defects before a bad component leaves the line.
+At PROFACTOR GmbH in Austria, I worked on machine vision for inkjet-printed building components under the Zer0P initiative. The goal was clear: inspect printed features reliably on a small, heterogeneous industrial dataset.
 
-The challenge was not only model accuracy. The data was small, defects were heterogeneous, and evaluation had to be statistically honest.
+## The Two-Stage Pipeline
 
-## The Pipeline
+The public **InkjetOOD** evaluation uses a **Stage-1 YOLOv8m detector + Stage-2 conditional diffusion model** pipeline on **FTI_Zer0P**:
 
-The system used a **YOLO + conditional diffusion model** pipeline:
-
-1. YOLOv8 extracted structured visual features from the printed component.
-2. A conditional diffusion model learned what normal feature crops should look like for each feature type.
-3. The reconstruction-based score became the anomaly signal.
-
-This reused the same generative-classification mindset from my thesis, but in a much more constrained industrial environment.
+1. **Stage 1 (YOLOv8m detector):** Localizes 8 structured feature types (angle, dist1, dist6, dots, edge1–4) from 1920×1080 frames at 640×640 input and crops each region to **128×128 RGB** (**6,408 crops** across **573 source-image groups**). *(Thesis PDF erratum: the thesis text identifies the detector as YOLOv8n, while the released checkpoint \`yolo_best.pt\` is YOLOv8m with 25.86M parameters verified from \`train_args\`.)*
+2. **Stage 2 (Multi-head CDM):** A conditional diffusion U-Net (\`NoisePredictorV3\` with AdaGN feature-type embeddings) models normal vs. defective crops per feature category.
+3. **Anomaly scoring:** Differential reconstruction error \`s_OOD(x) = ê_0(x) - ê_1(x)\` averaged across \`K = 100\` Monte Carlo timesteps scores each crop.
 
 ## Why the Setting Was Hard
 
-- only a limited number of source groups
-- strong variation across feature types
-- defect classes were not equally represented
-- cross-validation was mandatory
+- Only **573 source-image groups** (expanded into **6,408** feature crops)
+- Strong heterogeneity and class imbalance across the 8 feature types (e.g. Angle at 9.67:1 GOOD:BAD)
+- Multiple crops originate from the same physical print, requiring strict **image-level** fold grouping to prevent data leakage
 
-That means a flashy one-run result would have been misleading. I evaluated the pipeline on the public **FTI_Zer0P** benchmark with strict **5-fold cross-validation**.
+## Results on Public FTI_Zer0P
 
-## Results
+Evaluated under strict **5-fold stratified image-level cross-validation** at \`λ = 0.0\` (\`K = 100\`):
 
-The public crop-based baseline at λ = 0.0 reached:
-
-- **0.8673 +/- 0.0230 AUROC**
-
-In an internal threshold-dependent production deployment evaluation, the system reached:
-
-- **98.4% defect classification accuracy** (threshold-dependent operational metric; not comparable to public AUROC)
-
-Those numbers describe two different realities:
-
-- AUROC (0.8673 +/- 0.0230 across 5-fold CV) describes threshold-independent ranking quality on the public FTI_Zer0P benchmark
-- the 98.4% number describes an internal operational decision threshold in deployment rather than a public AUROC benchmark
+- **0.8673 ± 0.0230 AUROC** overall baseline
+- **0.8094 ± 0.0151 accuracy** and **0.5631 ± 0.1697 FPR@95%TPR**
+- Strongest per-feature AUROC on **Dots (0.9557 ± 0.0353)** and **Distance 6 (0.9362 ± 0.0666)**, with higher spread on sparse features such as **Angle (0.8166 ± 0.1381)** and **Edge 3 (0.7441 ± 0.0757)**
 
 ## What I Learned About Transfer
 
-One of the most useful outcomes was discovering where the separation-loss idea stopped helping. On CIFAR-10 it was a major win. On this industrial benchmark, non-zero separation settings stayed within the cross-fold variation and did not survive Holm-corrected significance testing.
-
-That does not make the idea weak. It makes the conclusion more precise: some gains are domain-dependent.
+The most honest finding was where separation loss stopped helping. On CIFAR-10 airplane-vs-rest, \`λ = 0.02\` lifted mean AUROC by +6.5 pp and collapsed seed variance. On FTI_Zer0P, non-zero separation weights (\`0.8628 ± 0.0286\` at \`λ=0.01\`, \`0.8510 ± 0.0326\` at \`λ=0.02\`, \`0.8670 ± 0.0256\` at \`λ=0.05\`) stayed within fold spread and were non-significant after Holm correction (\`p > 0.05\`).
 
 ## Engineering Takeaways
 
-- industrial ML needs evaluation discipline more than leaderboard energy
-- feature-type heterogeneity can matter more than architecture choice
-- public artifacts matter if you want results other people can trust
+- Image-level fold splitting is non-negotiable whenever a detector extracts multiple crops per frame
+- Per-feature reporting reveals failure modes hidden by a single aggregate metric
+- Public code, weights, and thesis documentation make negative transfer findings genuinely useful
 
 Artifacts:
 
-- Report PDF: https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf
+- M.Sc. Thesis PDF (0.8673 baseline source): https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf
+- Early Technical Report PDF (2024, negative result): https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf
 - Code: https://github.com/ahmed-3m/InkjetOOD
 - Weights: https://huggingface.co/ahmed-3m/InkjetOOD
         `,
@@ -551,82 +536,67 @@ Artifacts:
       de: {
         title: 'Diffusionsmodelle für industrielle Defekterkennung bei PROFACTOR GmbH',
         excerpt:
-          'Wie ich eine öffentliche YOLO + Conditional-Diffusion-Pipeline auf dem FTI_Zer0P Benchmark unter strenger 5-facher Kreuzvalidierung bewertet habe und eine Baseline von 0.8673 +/- 0.0230 AUROC erreicht wurde.',
+          'Wie ich eine zweistufige Pipeline aus YOLOv8m-Detektor und konditionalem Diffusionsmodell auf FTI_Zer0P unter strenger 5-facher bildbasierter Kreuzvalidierung evaluiert habe (0.8673 ± 0.0230 AUROC Baseline).',
         tags: ['Diffusionsmodelle', 'Anomalieerkennung', 'Industrielle KI', 'YOLOv8', 'Qualitätskontrolle'],
         readingTime: '11 Min. Lesezeit',
         faq: [
           {
             question: 'Welches Ergebnis erreichte das industrielle System?',
             answer:
-              'Auf dem öffentlichen FTI_Zer0P Benchmark lag die strenge 5-fold-CV Baseline bei 0.8673 +/- 0.0230 AUROC. Davon getrennt erreichte das interne Produktions-Setup schwellenwertabhängig 98.4% binäre Defektklassifikationsgenauigkeit (keine öffentliche AUROC-Metrik).',
+              'Auf dem öffentlichen FTI_Zer0P Benchmark unter strenger 5-facher bildbasierter Kreuzvalidierung über 573 Quellbild-Gruppen (6.408 128×128-Ausschnitte) erreichte die λ = 0.0 Baseline 0.8673 ± 0.0230 AUROC (0.8094 ± 0.0151 Genauigkeit, K=100).',
           },
           {
             question: 'Wie sah die Architektur aus?',
             answer:
-              'YOLOv8 wurde als Feature-Backbone genutzt und ein konditionales Diffusionsmodell übernahm die generative Klassifikation. Multi-Head Conditioning modellierte die verschiedenen Merkmalstypen.',
+              'Eine zweistufige Pipeline: Stufe 1 nutzt einen YOLOv8m-Detektor (25,86 Mio. Parameter in yolo_best.pt; Thesis-PDF-Erratum nennt YOLOv8n), der 8 Druckmerkmalstypen in 128×128-Crops lokalisiert; Stufe 2 klassifiziert per Multi-Head-Konditional-Diffusion (AdaGN).',
           },
           {
             question: 'Half die Separation Loss auch hier?',
             answer:
-              'Nicht signifikant. Genau das war eine wichtige, ehrliche Erkenntnis: Workflow und Methodik übertrugen sich, aber nicht jeder Gewinn übertrug sich auf diesen kleinen industriellen Datensatz.',
+              'Nicht signifikant. Bei λ ∈ {0.01, 0.02, 0.05} blieben die Werte innerhalb der Fold-Streuung und zeigten nach Holm-Korrektur keinen signifikanten Vorteil.',
           },
         ],
         content: `
 ## Industrieller Kontext
 
-Bei PROFACTOR GmbH in Österreich arbeitete ich an Machine Vision für inkjet-bedruckte Bauteile. Das Ziel war klar: Defekte erkennen, bevor fehlerhafte Teile die Linie verlassen.
+Bei PROFACTOR GmbH in Österreich arbeitete ich im Rahmen von Zer0P an Machine Vision für inkjet-bedruckte Bauteile. Die Datenbasis war begrenzt, die Defekte heterogen, und die Auswertung musste statistisch sauber auf Bildebene erfolgen.
 
-Schwierig war nicht nur die Modellleistung. Der Datensatz war klein, die Defekte waren heterogen, und die Auswertung musste statistisch sauber sein.
+## Die zweistufige Pipeline
 
-## Die Pipeline
+Die öffentliche **InkjetOOD**-Evaluation kombiniert einen **Stufe-1-YOLOv8m-Detektor** mit einem **Stufe-2-Diffusionsklassifikator** auf **FTI_Zer0P**:
 
-Die Lösung nutzte eine **YOLO + Conditional-Diffusion-Model** Pipeline:
-
-1. YOLOv8 extrahierte strukturierte visuelle Features.
-2. Ein konditionales Diffusionsmodell lernte für jeden Merkmalstyp, wie normale Feature-Crops aussehen.
-3. Der rekonstruktionsbasierte Score wurde als Anomaliesignal verwendet.
-
-Damit wurde derselbe generative Klassifikationsgedanke wie in meiner Thesis in eine viel stärker eingeschränkte industrielle Umgebung übertragen.
+1. **Stufe 1 (YOLOv8m-Detektor):** Lokalisiert 8 strukturierte Merkmalstypen (angle, dist1, dist6, dots, edge1–4) in 1920×1080-Bildern bei 640×640-Eingang und schneidet sie auf **128×128 RGB** zu (**6.408 Crops** aus **573 Quellbild-Gruppen**). *(Thesis-PDF-Erratum: Der Text der Arbeit bezeichnet den Detektor als YOLOv8n; das veröffentlichte Gewicht \`yolo_best.pt\` ist laut \`train_args\` YOLOv8m mit 25,86 Mio. Parametern.)*
+2. **Stufe 2 (Multi-Head CDM):** Ein konditionales Diffusions-U-Net (\`NoisePredictorV3\` mit AdaGN-Embeddings pro Merkmalstyp) modelliert normale vs. fehlerhafte Crops.
+3. **Anomalie-Score:** Die Rekonstruktionsfehler-Differenz \`s_OOD(x) = ê_0(x) - ê_1(x)\` über \`K = 100\` Monte-Carlo-Schritte bewertet jeden Ausschnitt.
 
 ## Warum das Setting schwierig war
 
-- nur begrenzte Datenmenge
-- starke Unterschiede zwischen den Merkmalstypen
-- unausgeglichene Defektverteilungen
-- Kreuzvalidierung war Pflicht
+- Nur **573 Quellbild-Gruppen** (erweitert auf **6.408** Merkmals-Crops)
+- Starke Heterogenität und Ungleichgewicht zwischen den 8 Merkmalstypen (z. B. Angle 9,67:1 GOOD:BAD)
+- Mehrere Crops stammen vom selben Bauteilbild — daher strikte **bildbasierte** Fold-Trennung gegen Data Leakage
 
-Darum wäre ein einzelner guter Lauf irreführend gewesen. Ich habe die Pipeline auf dem öffentlichen **FTI_Zer0P** Benchmark mit strenger **5-facher Kreuzvalidierung** bewertet.
+## Ergebnisse auf FTI_Zer0P
 
-## Ergebnisse
+Unter strenger **5-facher stratifizierter bildbasierter Kreuzvalidierung** bei \`λ = 0.0\` (\`K = 100\`):
 
-Die öffentliche crop-basierte Baseline bei λ = 0.0 erreichte:
-
-- **0.8673 +/- 0.0230 AUROC**
-
-In einer internen schwellwertabhängigen Produktivbewertung erreichte das System:
-
-- **98.4% Defektklassifikationsgenauigkeit** (interne, schwellwertabhängige Betriebsmetrik; nicht mit öffentlichem AUROC vergleichbar)
-
-Diese Werte beschreiben zwei verschiedene Ebenen:
-
-- AUROC (0.8673 +/- 0.0230 in 5-facher CV) misst die schwellwertunabhängige Rangqualität auf dem öffentlichen Benchmark FTI_Zer0P
-- 98.4% beschreibt eine interne betriebliche Entscheidungsschwelle im Deployment und keinen öffentlichen AUROC-Benchmark
+- **0.8673 ± 0.0230 AUROC** Gesamt-Baseline
+- **0.8094 ± 0.0151 Genauigkeit** und **0.5631 ± 0.1697 FPR@95%TPR**
+- Stärkste Einzelwerte bei **Dots (0.9557 ± 0.0353)** und **Distance 6 (0.9362 ± 0.0666)**; größere Streuung bei dünn besetzten Merkmalen wie **Angle (0.8166 ± 0.1381)** und **Edge 3 (0.7441 ± 0.0757)**
 
 ## Was ich über Transfer gelernt habe
 
-Eine der wichtigsten Erkenntnisse war, wo die Separation Loss aufhört zu helfen. Auf CIFAR-10 war sie ein großer Gewinn. Auf diesem industriellen Benchmark blieben die nicht-null Einstellungen innerhalb der Fold-Variation und überstanden keine Holm-korrigierte Signifikanzprüfung.
-
-Das ist kein negatives Ergebnis, sondern ein präziseres Ergebnis: Einige Verbesserungen sind stark domänenabhängig.
+Eine zentrale Erkenntnis war, wo die Separation Loss aufhört zu helfen. Auf CIFAR-10 brachte \`λ = 0.02\` +6.5 Prozentpunkte und minimale Seed-Streuung. Auf FTI_Zer0P lagen alle \`λ > 0\`-Läufe (\`0.8628 ± 0.0286\` bei \`λ=0.01\`, \`0.8510 ± 0.0326\` bei \`λ=0.02\`, \`0.8670 ± 0.0256\` bei \`λ=0.05\`) innerhalb der Fold-Streuung und blieben nach Holm-Korrektur nicht signifikant (\`p > 0.05\`).
 
 ## Engineering-Erkenntnisse
 
-- industrielle ML-Projekte brauchen Auswertungsdisziplin
-- Heterogenität der Merkmalstypen kann wichtiger sein als Architekturdetails
-- öffentliche Artefakte machen Resultate prüfbar
+- Bildbasierte Fold-Trennung ist Pflicht, sobald ein Detektor mehrere Crops pro Aufnahme liefert
+- Metriken pro Merkmalstyp decken Schwächen auf, die ein Gesamtwert verdeckt
+- Offene Artefakte und ehrliche Nullresultate machen Ergebnisse prüfbar
 
 Artefakte:
 
-- Report PDF: https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf
+- Masterarbeit PDF (Quelle für 0.8673): https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf
+- Frühzeitiger Technikbericht PDF (2024, Negativergebnis): https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf
 - Code: https://github.com/ahmed-3m/InkjetOOD
 - Weights: https://huggingface.co/ahmed-3m/InkjetOOD
         `,
@@ -634,82 +604,67 @@ Artefakte:
       fr: {
         title: 'Modèles de diffusion pour la détection de défauts industriels chez PROFACTOR GmbH',
         excerpt:
-          "Comment j'ai évalué une pipeline publique YOLO + diffusion conditionnelle sur le benchmark FTI_Zer0P avec validation croisée stricte à 5 plis, obtenant une baseline de 0.8673 +/- 0.0230 AUROC.",
+          "Comment j'ai évalué une pipeline en deux étapes (détecteur YOLOv8m + diffusion conditionnelle) sur FTI_Zer0P avec validation croisée stricte par image source à 5 plis, obtenant une baseline de 0.8673 ± 0.0230 AUROC.",
         tags: ['Modèles de diffusion', "Détection d'anomalie", 'IA industrielle', 'YOLOv8', 'Contrôle qualité'],
         readingTime: '11 min de lecture',
         faq: [
           {
             question: 'Quel résultat le système industriel a-t-il obtenu ?',
             answer:
-              "Sur le benchmark public FTI_Zer0P, la baseline en validation croisée stricte à 5 plis a atteint 0.8673 +/- 0.0230 AUROC. Séparément, le déploiement interne a mesuré 98.4% de précision binaire dépendante du seuil (métrique opérationnelle, non comparable à l'AUROC public).",
+              'Sur le benchmark public FTI_Zer0P en validation croisée stricte par image source à 5 plis (573 groupes d’images, 6 408 crops 128×128), la baseline λ = 0.0 a atteint 0.8673 ± 0.0230 AUROC (0.8094 ± 0.0151 d’exactitude, K=100).',
           },
           {
             question: "Quelle était l'architecture ?",
             answer:
-              'YOLOv8 servait de backbone de features et un modèle de diffusion conditionnel jouait le rôle de classificateur génératif. Le multi-head conditioning gérait les différents types de motifs inkjet.',
+              'Une pipeline en deux étapes : la phase 1 utilise un détecteur YOLOv8m (25,86 M paramètres dans yolo_best.pt ; erratum PDF : YOLOv8n) pour localiser 8 types de motifs en crops 128×128, et la phase 2 un U-Net de diffusion conditionnel multi-têtes (AdaGN).',
           },
           {
             question: 'La separation loss a-t-elle aidé ici aussi ?',
             answer:
-              "Pas de façon significative. C'est justement une conclusion utile et honnête : la méthode se transfère, mais pas tous les gains.",
+              "Pas de façon significative. Pour λ ∈ {0.01, 0.02, 0.05}, les scores restaient dans l'écart-type des plis après correction de Holm — montrant les limites du transfert inter-domaines.",
           },
         ],
         content: `
 ## Contexte industriel
 
-Chez PROFACTOR GmbH en Autriche, j'ai travaillé sur la vision industrielle pour des composants de construction imprimés à jet d'encre. L'objectif était clair : détecter les défauts avant qu'une pièce mauvaise quitte la ligne.
+Chez PROFACTOR GmbH en Autriche, j'ai travaillé dans le cadre du projet Zer0P sur la vision industrielle pour des composants imprimés par jet d'encre. Le jeu de données était limité, hétérogène et exigeait une validation sans fuite de données.
 
-La difficulté ne venait pas seulement du modèle. Le jeu de données était petit, les défauts étaient hétérogènes, et l'évaluation devait être rigoureuse.
+## La pipeline en deux étapes
 
-## La pipeline
+L'évaluation publique **InkjetOOD** combine un **détecteur YOLOv8m (phase 1)** et un **classificateur génératif par diffusion conditionnelle (phase 2)** sur **FTI_Zer0P** :
 
-La solution utilisait une pipeline **YOLO + modèle de diffusion conditionnel** :
-
-1. YOLOv8 extrayait des features visuelles structurées.
-2. Le modèle de diffusion apprenait à représenter des crops normaux pour chaque type de feature.
-3. Le score basé sur la reconstruction devenait le signal d'anomalie.
-
-On retrouve ici la même logique de classification générative que dans mon mémoire, mais dans un contexte industriel beaucoup plus contraint.
+1. **Phase 1 (Détecteur YOLOv8m) :** Localise 8 types de motifs structurés (angle, dist1, dist6, dots, edge1–4) sur des images 1920×1080 (entrée 640×640) et extrait **6 408 crops RGB 128×128** issus de **573 groupes d'images sources**. *(Erratum PDF du mémoire : le mémoire désigne le détecteur comme YOLOv8n, alors que le checkpoint publié \`yolo_best.pt\` est YOLOv8m avec 25,86 M paramètres vérifiés dans \`train_args\`.)*
+2. **Phase 2 (CDM multi-têtes) :** Un U-Net de diffusion conditionnel (\`NoisePredictorV3\` avec conditionnement AdaGN par type de motif) apprend la reconstruction des crops normaux et défectueux.
+3. **Score d'anomalie :** L'écart d'erreur de reconstruction \`s_OOD(x) = ê_0(x) - ê_1(x)\` sur \`K = 100\` pas Monte Carlo évalue chaque crop.
 
 ## Pourquoi le problème était difficile
 
-- peu de données
-- forte hétérogénéité selon les types de feature
-- répartition des défauts déséquilibrée
-- validation croisée indispensable
+- Seulement **573 groupes d'images sources** (expansés en **6 408** crops de motifs)
+- Forte hétérogénéité et déséquilibre entre les 8 types (ex. Angle à 9,67:1 GOOD:BAD)
+- Plusieurs crops proviennent de la même image : séparation stricte par **image source** obligatoire
 
-Un résultat unique aurait donc été trompeur. J'ai évalué la pipeline sur le benchmark public **FTI_Zer0P** avec une **validation croisée stricte à 5 plis**.
+## Résultats sur FTI_Zer0P public
 
-## Résultats
+En **validation croisée stratifiée par image à 5 plis** avec \`λ = 0.0\` (\`K = 100\`) :
 
-La baseline publique par crops à λ = 0.0 a atteint :
-
-- **0.8673 +/- 0.0230 AUROC**
-
-Dans une évaluation interne en déploiement à seuil fixe, le système a atteint :
-
-- **98.4% de précision de classification des défauts** (métrique opérationnelle interne dépendante du seuil ; non comparable à l'AUROC public)
-
-Ces deux nombres décrivent deux réalités différentes :
-
-- AUROC (0.8673 +/- 0.0230 en CV à 5 plis) mesure la qualité de classement indépendante du seuil sur le benchmark public FTI_Zer0P
-- 98.4% mesure une décision opérationnelle interne à seuil fixe, et non un score AUROC public
+- **0.8673 ± 0.0230 AUROC** (baseline globale)
+- **0.8094 ± 0.0151 d'exactitude** et **0.5631 ± 0.1697 FPR@95%TPR**
+- Meilleures performances sur **Dots (0.9557 ± 0.0353)** et **Distance 6 (0.9362 ± 0.0666)**, et plus forte variance sur **Angle (0.8166 ± 0.1381)** ou **Edge 3 (0.7441 ± 0.0757)**
 
 ## Ce que j'ai appris sur le transfert
 
-Le point le plus utile a été de voir où la separation loss cessait d'aider. Sur CIFAR-10, elle était très forte. Sur ce benchmark industriel, les réglages non nuls restaient dans la variation des folds et n'étaient pas significatifs après correction de Holm.
-
-Ce n'est pas un mauvais résultat. C'est un résultat plus précis : certains gains sont dépendants du domaine.
+Le constat le plus honnête concerne les limites de la separation loss. Sur CIFAR-10, \`λ = 0.02\` gagnait +6.5 points tout en stabilisant les seeds. Sur FTI_Zer0P, les valeurs \`λ > 0\` (\`0.8628 ± 0.0286\` à \`0.01\`, \`0.8510 ± 0.0326\` à \`0.02\`, \`0.8670 ± 0.0256\` à \`0.05\`) restaient dans la dispersion des plis et n'étaient pas significatives après correction de Holm (\`p > 0.05\`).
 
 ## Leçons d'ingénierie
 
-- l'IA industrielle demande surtout de la rigueur d'évaluation
-- l'hétérogénéité des features peut compter davantage que l'architecture
-- les artefacts publics rendent un résultat vérifiable
+- Le découpage par image source est indispensable dès qu'un détecteur extrait plusieurs crops par vue
+- Les scores par type de motif révèlent ce qu'une moyenne globale masque
+- Les artefacts publics donnent de la valeur même aux résultats négatifs
 
 Artefacts :
 
-- PDF du rapport : https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf
+- PDF du mémoire (source du 0.8673) : https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf
+- Rapport technique précoce PDF (2024, résultat négatif) : https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf
 - Code : https://github.com/ahmed-3m/InkjetOOD
 - Weights : https://huggingface.co/ahmed-3m/InkjetOOD
         `,
@@ -717,165 +672,135 @@ Artefacts :
       es: {
         title: 'Modelos de difusión para detección de defectos industriales en PROFACTOR GmbH',
         excerpt:
-          'Cómo evalué una pipeline pública YOLO + difusión condicional en el benchmark FTI_Zer0P con validación cruzada estricta de 5 folds, logrando una base de 0.8673 +/- 0.0230 AUROC.',
+          'Cómo evalué una pipeline de dos etapas (detector YOLOv8m + difusión condicional) en el benchmark FTI_Zer0P bajo validación cruzada estricta de 5 folds a nivel de imagen, logrando una base de 0.8673 ± 0.0230 AUROC.',
         tags: ['Modelos de difusión', 'Detección de anomalías', 'IA industrial', 'YOLOv8', 'Control de calidad'],
         readingTime: '11 min de lectura',
         faq: [
           {
             question: '¿Qué resultado logró el sistema industrial?',
             answer:
-              'En el benchmark público FTI_Zer0P, la base con validación cruzada estricta de 5 folds alcanzó 0.8673 +/- 0.0230 AUROC. Por separado, en producción interna se registró 98.4% de precisión binaria dependiente del umbral (métrica operativa, no comparable al AUROC público).',
+              'En el benchmark público FTI_Zer0P bajo validación cruzada estricta de 5 folds a nivel de imagen (573 grupos fuente, 6.408 recortes 128×128), la base con λ = 0.0 alcanzó 0.8673 ± 0.0230 AUROC (0.8094 ± 0.0151 de exactitud, K=100).',
           },
           {
             question: '¿Cuál era la arquitectura?',
             answer:
-              'YOLOv8 se usó como backbone de features y un modelo de difusión condicional actuó como clasificador generativo. Multi-head conditioning manejó los distintos tipos de features de inkjet.',
+              'Una pipeline de dos etapas: la etapa 1 usa un detector YOLOv8m (25,86 M parámetros en yolo_best.pt; errata del PDF: YOLOv8n) para localizar 8 tipos de rasgos en recortes de 128×128, y la etapa 2 un U-Net de difusión condicional multi-cabeza (AdaGN).',
           },
           {
             question: '¿La separation loss también ayudó aquí?',
             answer:
-              'No de forma significativa. Esa fue una conclusión muy útil: el método se transfirió, pero no todos los beneficios pasaron a este pequeño dataset industrial.',
+              'No de forma significativa. Para λ ∈ {0.01, 0.02, 0.05}, los resultados quedaron dentro de la dispersión entre folds tras la corrección de Holm, delimitando el alcance de transferencia.',
           },
         ],
         content: `
 ## Contexto industrial
 
-En PROFACTOR GmbH en Austria trabajé en visión por computador para componentes de construcción impresos por inkjet. El objetivo era detectar defectos antes de que una pieza mala saliera de la línea.
+En PROFACTOR GmbH en Austria trabajé dentro del proyecto Zer0P en visión artificial para componentes impresos por inyección de tinta. El dataset era reducido y heterogéneo, exigiendo una evaluación rigurosa sin fugas de datos.
 
-La dificultad no era solo el modelo. El dataset era pequeño, los defectos eran heterogéneos y la evaluación debía ser rigurosa.
+## La pipeline de dos etapas
 
-## La pipeline
+La evaluación pública **InkjetOOD** combina un **detector YOLOv8m en etapa 1** con un **clasificador generativo por difusión condicional en etapa 2** sobre **FTI_Zer0P**:
 
-La solución usó una pipeline **YOLO + modelo de difusión condicional**:
-
-1. YOLOv8 extraía features visuales estructuradas.
-2. El modelo de difusión aprendía cómo debían verse los crops normales de cada tipo de feature.
-3. El score basado en reconstrucción se convertía en la señal de anomalía.
-
-Es la misma idea de clasificación generativa de mi tesis, pero dentro de un entorno industrial mucho más restringido.
+1. **Etapa 1 (Detector YOLOv8m):** Localiza 8 tipos de rasgos impresos (angle, dist1, dist6, dots, edge1–4) en fotogramas 1920×1080 (entrada 640×640) y extrae **6.408 recortes RGB de 128×128** en **573 grupos de imágenes fuente**. *(Errata del PDF de la tesis: la tesis identifica el detector como YOLOv8n, pero el checkpoint publicado \`yolo_best.pt\` es YOLOv8m con 25,86 M parámetros verificados en \`train_args\`.)*
+2. **Etapa 2 (CDM multi-cabeza):** Una U-Net de difusión condicional (\`NoisePredictorV3\` con condicionamiento AdaGN por tipo de rasgo) modela recortes normales frente a defectuosos.
+3. **Puntuación de anomalía:** La diferencia de error de reconstrucción \`s_OOD(x) = ê_0(x) - ê_1(x)\` promediada en \`K = 100\` pasos de Monte Carlo puntúa cada recorte.
 
 ## Por qué el problema era difícil
 
-- pocos datos
-- mucha heterogeneidad entre tipos de feature
-- distribución de defectos desequilibrada
-- validación cruzada obligatoria
+- Solo **573 grupos de imágenes fuente** (expandidos a **6.408** recortes)
+- Alta heterogeneidad y desbalanceo entre los 8 tipos (p. ej. Angle 9,67:1 GOOD:BAD)
+- Varios recortes provienen de la misma captura, obligando a dividir los folds a **nivel de imagen fuente**
 
-Por eso un solo run llamativo habría sido engañoso. Evalué la pipeline sobre el benchmark público **FTI_Zer0P** con **validación cruzada estricta de 5 folds**.
+## Resultados en FTI_Zer0P público
 
-## Resultados
+Con **validación cruzada estratificada de 5 folds a nivel de imagen** (\`λ = 0.0\`, \`K = 100\`):
 
-La base pública por crops con λ = 0.0 alcanzó:
-
-- **0.8673 +/- 0.0230 AUROC**
-
-En una evaluación operativa interna con umbral fijo en despliegue, el sistema alcanzó:
-
-- **98.4% de precisión de clasificación de defectos** (métrica operativa interna dependiente del umbral; no comparable con el AUROC público)
-
-Estos dos números describen dos realidades distintas:
-
-- AUROC (0.8673 +/- 0.0230 en CV de 5 folds) mide calidad de ranking independiente del umbral sobre el benchmark público FTI_Zer0P
-- 98.4% describe un umbral de decisión operativo interno en despliegue, no un benchmark público de AUROC
+- **0.8673 ± 0.0230 AUROC** de línea base global
+- **0.8094 ± 0.0151 de exactitud** y **0.5631 ± 0.1697 FPR@95%TPR**
+- Mayor separación en **Dots (0.9557 ± 0.0353)** y **Distance 6 (0.9362 ± 0.0666)**, y mayor dispersión en rasgos escasos como **Angle (0.8166 ± 0.1381)** y **Edge 3 (0.7441 ± 0.0757)**
 
 ## Lo que aprendí sobre transferencia
 
-Lo más valioso fue ver dónde la separation loss dejaba de ayudar. En CIFAR-10 fue una gran mejora. En este benchmark industrial, las configuraciones no nulas quedaron dentro de la variación entre folds y no fueron significativas tras la corrección de Holm.
-
-Eso no debilita la idea. La hace más precisa: algunas mejoras dependen del dominio.
+La conclusión más honesta fue observar dónde dejaba de ayudar la separation loss. En CIFAR-10, \`λ = 0.02\` aportó +6.5 puntos y estabilidad entre semillas. En FTI_Zer0P, los ajustes \`λ > 0\` (\`0.8628 ± 0.0286\` en \`0.01\`, \`0.8510 ± 0.0326\` en \`0.02\`, \`0.8670 ± 0.0256\` en \`0.05\`) no superaron la variación entre folds ni la corrección de Holm (\`p > 0.05\`).
 
 ## Lecciones de ingeniería
 
-- el ML industrial necesita disciplina de evaluación
-- la heterogeneidad de los tipos de feature puede importar más que la arquitectura
-- los artefactos públicos hacen que el resultado sea verificable
+- Dividir por imagen fuente es obligatorio cuando un detector genera múltiples recortes por imagen
+- El desglose por tipo de rasgo evita que una media oculte debilidades concretas
+- Publicar código, pesos y resultados negativos convierte las limitaciones en conocimiento útil
 
 Artefactos:
 
-- PDF del informe: https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf
-- Codigo: https://github.com/ahmed-3m/InkjetOOD
+- PDF de la tesis (fuente de 0.8673): https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf
+- PDF del informe técnico temprano (2024, resultado negativo): https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf
+- Código: https://github.com/ahmed-3m/InkjetOOD
 - Weights: https://huggingface.co/ahmed-3m/InkjetOOD
         `,
       },
       ar: {
         title: 'نماذج الانتشار لكشف العيوب الصناعية في PROFACTOR GmbH',
         excerpt:
-          'كيف قمت بتقييم خط عام يجمع بين YOLO ونموذج انتشار شرطي على benchmark FTI_Zer0P مع تحقق تقاطعي صارم من 5 طيات، وحققت baseline قدرها 0.8673 +/- 0.0230 AUROC.',
+          'كيف قيّمت خطاً من مرحلتين يجمع بين كاشف YOLOv8m ونموذج انتشار شرطي على معيار FTI_Zer0P بتحقق تقاطعي صارم من 5 طيات على مستوى الصورة الأصلية، محقّقاً خط أساس 0.8673 ± 0.0230 AUROC.',
         tags: ['نماذج الانتشار', 'كشف الشذوذ', 'الذكاء الاصطناعي الصناعي', 'YOLOv8', 'ضبط الجودة'],
         readingTime: '11 دقيقة قراءة',
         faq: [
           {
             question: 'ما النتيجة التي حققها النظام الصناعي؟',
             answer:
-              'على معيار FTI_Zer0P العام وصلت baseline مع تحقق تقاطعي صارم من 5 طيات إلى 0.8673 +/- 0.0230 AUROC. وبشكل منفصل، سجّل التشغيل الداخلي دقة تصنيف ثنائية 98.4% تعتمد على العتبة (مقياس تشغيلي داخلي غير قابل للمقارنة مع AUROC العام).',
+              'على معيار FTI_Zer0P العام مع تحقق تقاطعي صارم من 5 طيات على مستوى الصورة الأصلية عبر 573 مجموعة صور (6,408 قصاصات 128×128)، حقق خط الأساس عند λ = 0.0 مقياس 0.8673 ± 0.0230 AUROC (ودقة 0.8094 ± 0.0151، عند K=100).',
           },
           {
             question: 'ما هي البنية المستخدمة؟',
             answer:
-              'استُخدم YOLOv8 كبنية لاستخراج الميزات، بينما عمل نموذج الانتشار الشرطي كمصنف توليدي. كما استُخدم multi-head conditioning للتعامل مع أنواع الميزات المختلفة.',
+              'نظام من مرحلتين: المرحلة الأولى تستخدم كاشف YOLOv8m (بـ 25.86 مليون معامل في yolo_best.pt؛ ورد سهواً YOLOv8n في نص PDF الرسالة) لتحديد 8 أنواع من الميزات واقتصاصها بأبعاد 128×128، والمرحلة الثانية شبكة U-Net انتشارية شرطية متعددة الرؤوس (AdaGN).',
           },
           {
             question: 'هل ساعدت separation loss هنا أيضاً؟',
             answer:
-              'ليس بشكل ذي دلالة. وكانت هذه من أكثر النتائج صدقاً في العمل: المنهجية انتقلت، لكن ليس كل المكاسب انتقلت إلى هذا dataset الصناعي الصغير.',
+              'ليس بشكل ذي دلالة إحصائية. عند λ ∈ {0.01, 0.02, 0.05} بقيت النتائج ضمن تباين الطيات بعد تصحيح هولم، مما يوضح حدود انتقال المكاسب بين المجالات.',
           },
         ],
         content: `
 ## السياق الصناعي
 
-في PROFACTOR GmbH في النمسا عملت على الرؤية الحاسوبية لمكونات بناء مطبوعة بالحبر. الهدف كان واضحاً: اكتشاف العيوب قبل أن تغادر القطعة المعيبة خط الإنتاج.
+في شركة PROFACTOR GmbH في النمسا عملت ضمن مشروع Zer0P على الرؤية الحاسوبية لمكونات بناء مطبوعة بنفث الحبر. كانت البيانات محدودة ومتنوعة، مما استلزم تقييماً إحصائياً صارماً خالياً من تسرب البيانات.
 
-الصعوبة لم تكن في النموذج فقط. البيانات كانت قليلة، والعيوب متنوعة، والتقييم كان يجب أن يكون صارماً.
+## خط العمل ذو المرحلتين
 
-## خط العمل
+يجمع التقييم العام **InkjetOOD** بين **كاشف YOLOv8m في المرحلة الأولى** و**مصنف توليدي بالانتشار الشرطي في المرحلة الثانية** على مجموعة **FTI_Zer0P**:
 
-استخدمنا خطاً يجمع بين **YOLO ونموذج انتشار شرطي**:
-
-1. استخرج YOLOv8 ميزات بصرية منظمة.
-2. تعلم نموذج الانتشار كيف تبدو crops الطبيعية لكل نوع من الميزات.
-3. أصبحت الدرجة المعتمدة على إعادة البناء هي إشارة الشذوذ.
-
-إنها نفس عقلية التصنيف التوليدي في رسالتي، لكن داخل بيئة صناعية أكثر تقييداً.
+1. **المرحلة الأولى (كاشف YOLOv8m):** يحدّد 8 أنواع من ميزات الطباعة (angle، dist1، dist6، dots، edge1–4) داخل إطارات 1920×1080 (بمدخل 640×640) ويقتطع **6,408 قصاصة RGB بأبعاد 128×128** عبر **573 مجموعة صور أصلية**. *(تصويب مطبعي في PDF الرسالة: يصف نص الرسالة الكاشف بأنه YOLOv8n، بينما النموذج المدرب المنشور \`yolo_best.pt\` هو YOLOv8m بـ 25.86 مليون معامل وفق \`train_args\`.)*
+2. **المرحلة الثانية (CDM متعدد الرؤوس):** شبكة U-Net انتشارية شرطية (\`NoisePredictorV3\` مع تكييف AdaGN لكل نوع ميزة) تميّز بين القصاصات السليمة والمعيبة.
+3. **حساب درجة الشذوذ:** يقيس فرق خطأ إعادة البناء \`s_OOD(x) = ê_0(x) - ê_1(x)\` عبر \`K = 100\` عينة مونت كارلو درجة كل قصاصة.
 
 ## لماذا كانت المهمة صعبة
 
-- بيانات محدودة
-- اختلاف كبير بين أنواع الميزات
-- توزيع غير متوازن للعيوب
-- التحقق التقاطعي كان إلزامياً
+- وجود **573 مجموعة صور أصلية** فقط (تنتج **6,408** قصاصة ميزات)
+- تباين وعدم توازن كبيران بين الأنواع الثمانية (مثل Angle بنسبة 9.67:1 سليم:معيب)
+- صدور عدة قصاصات من اللقطة نفسها مما يفرض التقسيم على **مستوى الصورة الأصلية** لمنع التسرب
 
-لذلك فإن أي نتيجة جيدة من تشغيل واحد فقط كانت ستكون مضللة. قمت بتقييم الخط على benchmark العام **FTI_Zer0P** مع **تحقق تقاطعي صارم من 5 طيات**.
+## النتائج على FTI_Zer0P العام
 
-## النتائج
+بتحقق تقاطعي طبقي صارم من **5 طيات على مستوى الصورة** عند \`λ = 0.0\` (\`K = 100\`):
 
-وصلت baseline العامة المعتمدة على crops عند λ = 0.0 إلى:
-
-- **0.8673 +/- 0.0230 AUROC**
-
-وفي تقييم تشغيلي داخلي يعتمد على عتبة قرار محددة في بيئة الإنتاج وصل النظام إلى:
-
-- **98.4% دقة في تصنيف العيوب** (مقياس تشغيلي داخلي يعتمد على العتبة؛ غير قابل للمقارنة مع AUROC العام)
-
-هاتان النتيجتان تصفان مستويين مختلفين:
-
-- AUROC (0.8673 +/- 0.0230 عبر تحقق تقاطعي من 5 طيات) يقيس جودة الترتيب مستقلة عن العتبة على معيار FTI_Zer0P العام
-- 98.4% تصف عتبة قرار تشغيلية داخلية في الإنتاج وليست نتيجة AUROC على معيار عام
+- **0.8673 ± 0.0230 AUROC** كخط أساس عام
+- **0.8094 ± 0.0151 دقة** و**0.5631 ± 0.1697 FPR@95%TPR**
+- أقوى فصل في **Dots (0.9557 ± 0.0353)** و**Distance 6 (0.9362 ± 0.0666)**، مقابل تباين أعلى في الفئات الأقل وفرة مثل **Angle (0.8166 ± 0.1381)** و**Edge 3 (0.7441 ± 0.0757)**
 
 ## ما تعلمته عن النقل بين المجالات
 
-أهم ما خرجت به هو معرفة أين تتوقف separation loss عن المساعدة. على CIFAR-10 كانت مفيدة جداً. أما على هذا benchmark الصناعي فبقيت الإعدادات غير الصفرية داخل تباين الطيات، ولم تكن ذات دلالة بعد Holm correction.
-
-وهذا ليس نتيجة سلبية، بل نتيجة أكثر دقة: بعض المكاسب تعتمد على طبيعة المجال.
+النتيجة الأصدق كانت تحديد أين تتوقف خسارة الفصل عن تقديم فائدة. على CIFAR-10 حقق \`λ = 0.02\` زيادة +6.5 نقطة مئوية واستقراراً عالياً عبر البذور. أما على FTI_Zer0P فبقيت قيم \`λ > 0\` (\`0.8628 ± 0.0286\` عند \`0.01\`، \`0.8510 ± 0.0326\` عند \`0.02\`، \`0.8670 ± 0.0256\` عند \`0.05\`) ضمن تباين الطيات ولم تثبت دلالتها بعد تصحيح هولم (\`p > 0.05\`).
 
 ## دروس هندسية
 
-- التعلم الآلي الصناعي يحتاج إلى انضباط في التقييم
-- اختلاف أنواع الميزات قد يكون أهم من اختيار البنية نفسها
-- artefacts العامة تجعل النتائج قابلة للتحقق
+- التقسيم على مستوى الصورة الأصلية ضروري متى استخرج الكاشف عدة قصاصات من كل إطار
+- تحليل كل نوع ميزة يكشف تفاصيل يخفيها المتوسط العام
+- مشاركة الكود والأوزان والرسالة تجعل النتائج السلبية قابلة للتحقق ومفيدة للباحثين
 
 الروابط:
 
-- PDF التقرير: https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf
+- PDF الرسالة (مصدر 0.8673): https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf
+- PDF التقرير التقني المبكر (2024، نتيجة سلبية): https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf
 - الكود: https://github.com/ahmed-3m/InkjetOOD
 - الأوزان: https://huggingface.co/ahmed-3m/InkjetOOD
         `,
@@ -886,376 +811,311 @@ Artefactos:
     slug: 'computer-vision-yolo-mastery',
     date: '2024-10-20',
     ogImage: '/og-computer-vision-yolo-mastery.png',
-    lastModified: '2026-04-25',
+    lastModified: '2026-11-22',
     translations: {
       en: {
-        title: 'YOLOv8 for Industrial Quality Control: Decisions That Actually Moved the Needle',
+        title: 'YOLOv8m for Industrial Quality Control: Stage-1 Detection & Leakage-Free Splits',
         excerpt:
-          'A practical post-mortem on the architecture, data strategy, and deployment decisions that mattered in industrial inkjet quality control, instead of another generic YOLO tutorial.',
+          'Engineering notes on using YOLOv8m as a Stage-1 feature detector and 128×128 cropper across 573 source-image groups on FTI_Zer0P, plus why image-level 5-fold CV mattered more than model tweaks.',
         tags: ['Computer Vision', 'YOLOv8', 'Industrial AI', 'PyTorch', 'Production ML'],
         readingTime: '10 min read',
         faq: [
           {
-            question: 'Why use YOLO as a feature extractor and not as a detector?',
+            question: 'Why use YOLOv8m as a Stage-1 feature detector and cropper?',
             answer:
-              'Because the task was not natural object detection. The feature types behaved more like structured visual signatures than bounding-box objects, so the backbone features were more useful than the detector head.',
+              'Industrial inkjet frames (1920×1080) contain 8 localized feature types (dots, distances, edges, angle). Stage-1 YOLOv8m (25.86M params in yolo_best.pt; thesis PDF erratum prints YOLOv8n) detects and crops 6,408 normalized 128×128 patches across 573 source images so Stage 2 can score local anomalies cleanly.',
           },
           {
-            question: 'What latency did the deployed system reach?',
+            question: 'What did the strict 5-fold evaluation show on FTI_Zer0P?',
             answer:
-              'Around 35 ms per component in the final production-friendly configuration, which stayed within the edge constraint.',
+              'Under 5-fold stratified image-level cross-validation across the 573 source-image groups, the YOLO+CDM baseline reached 0.8673 ± 0.0230 AUROC (0.8094 ± 0.0151 accuracy, K=100), with Dots at 0.9557 ± 0.0353 and Distance 6 at 0.9362 ± 0.0666.',
           },
           {
             question: 'What mattered most?',
             answer:
-              'Data discipline, fold design, and choosing a stable deployment path mattered more than chasing the fanciest architecture variant.',
+              'Source-image fold grouping to avoid crop leakage, per-feature evaluation, and reproducible Hydra + PyTorch Lightning runs mattered far more than architecture tuning.',
           },
         ],
         content: `
 ## This Was Not a Tutorial Project
 
-Most YOLO posts stop at "train on a large dataset and report mAP." Industrial quality control does not work that way. The constraints are different: fewer images, harder defects, tighter latency budgets, and real-world consequences for false alarms and misses.
+Most YOLO posts stop at "train on a large dataset and report mAP." Industrial quality control has harder constraints: 573 source images, asymmetric class balance, heterogeneous geometries, and zero tolerance for fold leakage.
 
-## The First Important Decision
+## Stage-1 Detection & Cropping with YOLOv8m
 
-I did **not** use YOLOv8 mainly as a detector. I used it as a **feature extractor**. The print-quality problem involved feature types such as dots, distances, edges, and angles. Those are not always best represented as classic object-detection boxes.
+In the **InkjetOOD** two-stage pipeline, **YOLOv8m** acts explicitly as a **Stage-1 feature detector and cropper** (` + '`640×640`' + ` YOLO input over ` + '`1920×1080`' + ` print frames, ` + '`95.04%`' + ` mAP@0.5 reported in the thesis). *(Erratum note: the thesis text identifies the detector as YOLOv8n, whereas the released trained checkpoint ` + '`yolo_best.pt`' + ` is ` + '`YOLOv8m`' + ` with 25.86M parameters verified from ` + '`train_args`' + `.)*
 
-Using the backbone features gave the downstream anomaly detector richer geometric information than relying on the final detection head alone.
+Each detected print region (8 feature classes: ` + '`angle`' + `, ` + '`dist1`' + `, ` + '`dist6`' + `, ` + '`dots`' + `, and ` + '`edge1–4`' + `) is cropped and resized via bilinear interpolation to **128×128 RGB**. Across the 573 processed source-image groups on **FTI_Zer0P**, that yields **6,408 retained feature crops** for Stage-2 generative classification.
 
-## Data Engineering Mattered More Than Hype
+## Data Discipline Over Tricks
 
-With a limited dataset, the biggest wins came from discipline:
+When one frame produces ~11 feature crops on average, random crop-level train/validation splits leak near-identical background context across folds and inflate metrics. Grouping strictly by **source image (` + '`573`' + ` groups)** kept every crop from a given physical print inside a single fold, and resizing crops cleanly to ` + '`128×128`' + ` without synthetic crop augmentation preserved authentic defect textures.
 
-- careful fold construction
-- avoiding leakage between folds
-- realistic augmentation only
-- respecting feature-type imbalance
-
-Heavy synthetic tricks were much less useful than simply being honest about the data regime.
-
-## Training Choices That Helped
+## Reproducible Pipeline Setup
 
 \`\`\`python
-config = {
-    "lr": 1e-4,
-    "batch_size": 16,
-    "epochs": 150,
-    "scheduler": "cosine",
+pipeline = {
+    "stage1_detector": "YOLOv8m (yolo_best.pt, 25.86M params, 640x640 input)",
+    "stage2_crop_size": "128x128 RGB (6,408 crops / 573 source groups)",
+    "stage2_classifier": "Multi-head AdaGN Diffusion UNet (NoisePredictorV3)",
+    "cv_protocol": "5-fold image-level stratified CV, K=100 trials",
 }
 \`\`\`
 
-The key was not the exact numbers by themselves. The key was matching them to a small industrial dataset and a production target. Freeze-then-unfreeze strategies, conservative optimization, and per-feature inspection mattered much more than generic defaults.
-
 ## Evaluation That Meant Something
 
-The system was evaluated with strict **5-fold cross-validation**. Per-feature AUROC told a more honest story than a single overall score. Some features were highly reliable, while others were limited mostly by data scarcity rather than by architecture.
-
-## Deployment Reality
-
-The final system had to run within edge constraints. Quantization helped latency, but reliability still came first. The practical lesson was simple: a slightly slower stable deployment is better than a faster unstable one.
+Evaluated on public **FTI_Zer0P** under 5-fold image-level CV (` + '`λ = 0.0`' + `), the two-stage baseline achieved **0.8673 ± 0.0230 AUROC** (` + '`0.8094 ± 0.0151`' + ` accuracy). Per-feature AUROC told the real engineering story: dense local patterns like **Dots (0.9557 ± 0.0353)** and **Distance 6 (0.9362 ± 0.0666)** scored reliably, whereas sparse or imbalanced classes like **Angle (9.67:1 GOOD:BAD, 0.8166 ± 0.1381)** and **Edge 3 (0.7441 ± 0.0757)** carried high cross-fold spread.
 
 ## What Actually Moved the Needle
 
-- using YOLO features instead of forcing a detector framing
-- building a disciplined evaluation loop
-- treating feature types as different sub-problems
-- optimizing for dependable inference, not just lab numbers
+- decoupling Stage-1 localization (` + '`YOLOv8m`' + `) from Stage-2 anomaly scoring on ` + '`128×128`' + ` crops
+- enforcing strict image-level grouping across all ` + '`573`' + ` source images
+- reporting per-feature AUROC and cross-fold standard deviations instead of cherry-picked runs
+- publishing reproducible Hydra configs, checkpoints, and documented errata openly
         `,
       },
       de: {
-        title: 'YOLOv8 für industrielle Qualitätskontrolle: Entscheidungen, die wirklich etwas verändert haben',
+        title: 'YOLOv8m für industrielle Qualitätskontrolle: Stufe-1-Detektion & saubere Splits',
         excerpt:
-          'Ein praxisnahes Post-Mortem über Architektur, Datenstrategie und Deployment-Entscheidungen in industrieller Inkjet-Qualitätskontrolle statt eines weiteren allgemeinen YOLO-Tutorials.',
+          'Engineering-Notizen zum Einsatz von YOLOv8m als Stufe-1-Detektor für 6.408 128×128-Crops über 573 Quellbild-Gruppen auf FTI_Zer0P — und warum bildbasierte 5-fach-CV mehr zählte als Architektur-Tuning.',
         tags: ['Computer Vision', 'YOLOv8', 'Industrielle KI', 'PyTorch', 'Production ML'],
         readingTime: '10 Min. Lesezeit',
         faq: [
           {
-            question: 'Warum YOLO als Feature-Extractor und nicht als Detektor?',
+            question: 'Warum YOLOv8m als Stufe-1-Merkmalsdetektor und Cropper einsetzen?',
             answer:
-              'Weil die Aufgabe keine klassische Objekterkennung war. Die Merkmalstypen verhielten sich eher wie strukturierte visuelle Signaturen als wie Bounding-Box-Objekte.',
+              'Industrielle Inkjet-Aufnahmen (1920×1080) enthalten 8 lokale Merkmalstypen (Punkte, Abstände, Kanten, Winkel). Stufe 1 mit YOLOv8m (25,86 Mio. Parameter in yolo_best.pt; Thesis-PDF-Erratum nennt YOLOv8n) erkennt und schneidet 6.408 normierte 128×128-Crops aus 573 Quellbildern für die nachgelagerte Anomaliebewertung.',
           },
           {
-            question: 'Welche Latenz erreichte das System?',
+            question: 'Was zeigte die strenge 5-fache Kreuzvalidierung auf FTI_Zer0P?',
             answer:
-              'Etwa 35 ms pro Komponente in der finalen produktionsnahen Konfiguration, also innerhalb der Edge-Vorgabe.',
+              'Unter 5-facher stratifizierter bildbasierter CV über 573 Quellbild-Gruppen erreichte die YOLO+CDM-Baseline 0.8673 ± 0.0230 AUROC (0.8094 ± 0.0151 Genauigkeit, K=100), mit Dots bei 0.9557 ± 0.0353 und Distance 6 bei 0.9362 ± 0.0666.',
           },
           {
             question: 'Was war am wichtigsten?',
             answer:
-              'Datendisziplin, Fold-Design und ein stabiles Deployment waren wichtiger als die schickste Architekturvariante.',
+              'Gruppierung der Folds auf Quellbildebene zur Vermeidung von Data Leakage, Auswertung pro Merkmalstyp und reproduzierbare Hydra-/PyTorch-Lightning-Läufe waren wichtiger als Modell-Tuning.',
           },
         ],
         content: `
 ## Kein Tutorial-Projekt
 
-Die meisten YOLO-Beiträge enden bei "auf großem Datensatz trainieren und mAP berichten". Industrielle Qualitätskontrolle funktioniert anders: weniger Bilder, schwierigere Defekte, engere Latenzbudgets und echte Kosten für Fehlalarme und übersehene Fehler.
+Die meisten YOLO-Beiträge enden bei "auf großem Datensatz trainieren und mAP berichten". Industrielle Qualitätskontrolle bedeutet in der Praxis: 573 Quellbilder, unausgewogene Klassen, heterogene Geometrien und null Toleranz für Data Leakage zwischen Folds.
 
-## Die erste wichtige Entscheidung
+## Stufe-1-Detektion und Zuschneiden mit YOLOv8m
 
-Ich habe YOLOv8 **nicht** primär als Detektor verwendet, sondern als **Feature-Extractor**. Das Druckqualitätsproblem bestand aus Merkmalen wie Punkten, Abständen, Kanten und Winkeln. Diese lassen sich nicht immer sinnvoll als klassische Bounding-Box-Objekte behandeln.
+In der zweistufigen **InkjetOOD**-Pipeline arbeitet **YOLOv8m** gezielt als **Stufe-1-Merkmalsdetektor und Cropper** (` + '`640×640`' + `-Eingang auf ` + '`1920×1080`' + `-Druckbildern, ` + '`95.04%`' + ` mAP@0.5 laut Masterarbeit). *(Erratum-Hinweis: der Text der Arbeit bezeichnet den Detektor als YOLOv8n, das trainierte Gewicht ` + '`yolo_best.pt`' + ` ist jedoch laut ` + '`train_args`' + ` YOLOv8m mit 25,86 Mio. Parametern.)*
 
-Die Backbone-Features gaben dem nachgelagerten Anomaliedetektor deutlich mehr geometrische Information.
+Jede erkannte Druckregion (8 Klassen: ` + '`angle`' + `, ` + '`dist1`' + `, ` + '`dist6`' + `, ` + '`dots`' + `, ` + '`edge1–4`' + `) wird ausgeschnitten und bilinear auf **128×128 RGB** skaliert. Über die 573 verarbeiteten Quellbild-Gruppen von **FTI_Zer0P** entstehen so **6.408 Merkmals-Crops** für die zweite Stufe.
 
-## Datenarbeit war wichtiger als Hype
+## Datendisziplin statt Tricks
 
-Bei einem kleinen Datensatz kamen die größten Gewinne aus Disziplin:
+Wenn ein Bild im Schnitt rund 11 Crops liefert, verursacht ein zufälliges Splitting auf Crop-Ebene sofort Leakage zwischen Training und Validierung. Durch strikte Gruppierung nach **Quellbild (` + '`573`' + ` Gruppen)** blieben alle Ausschnitte derselben Aufnahme im selben Fold, während die direkte Skalierung auf ` + '`128×128`' + ` ohne synthetische Crop-Augmentierung die reale Oberflächentextur bewahrte.
 
-- saubere Fold-Konstruktion
-- keine Leakage zwischen Folds
-- nur realistische Augmentation
-- Respekt vor dem Ungleichgewicht der Merkmalstypen
-
-Aufwendige synthetische Tricks brachten viel weniger als ein ehrlicher Umgang mit dem Datenregime.
-
-## Trainingseinstellungen, die geholfen haben
+## Reproduzierbares Setup
 
 \`\`\`python
-config = {
-    "lr": 1e-4,
-    "batch_size": 16,
-    "epochs": 150,
-    "scheduler": "cosine",
+pipeline = {
+    "stage1_detector": "YOLOv8m (yolo_best.pt, 25.86M params, 640x640 input)",
+    "stage2_crop_size": "128x128 RGB (6,408 crops / 573 source groups)",
+    "stage2_classifier": "Multi-head AdaGN Diffusion UNet (NoisePredictorV3)",
+    "cv_protocol": "5-fold image-level stratified CV, K=100 trials",
 }
 \`\`\`
 
-Entscheidend waren nicht die Zahlen allein, sondern ihre Passung zu kleinem Industriedatensatz und Produktionsziel. Freeze-then-unfreeze, konservative Optimierung und Analyse pro Merkmal waren wichtiger als Standarddefaults.
-
 ## Aussagekräftige Evaluation
 
-Das System wurde mit strenger **5-facher Kreuzvalidierung** bewertet. AUROC pro Merkmal erzählte eine ehrlichere Geschichte als ein einzelner Gesamtscore. Einige Merkmale waren sehr stabil, andere litten vor allem unter zu wenig Daten.
-
-## Deployment-Realität
-
-Das finale System musste unter Edge-Bedingungen laufen. Quantisierung half bei der Latenz, aber Zuverlässigkeit blieb wichtiger. Die praktische Lektion: eine etwas langsamere stabile Variante ist besser als eine schnelle instabile.
+Unter 5-facher bildbasierter Kreuzvalidierung auf dem öffentlichen **FTI_Zer0P**-Datensatz (` + '`λ = 0.0`' + `) erreichte die Baseline **0.8673 ± 0.0230 AUROC** (` + '`0.8094 ± 0.0151`' + ` Genauigkeit). Die Aufschlüsselung pro Merkmal zeigt das reale Bild: **Dots (0.9557 ± 0.0353)** und **Distance 6 (0.9362 ± 0.0666)** trennen sehr stabil, während stark unausgewogene oder dünne Klassen wie **Angle (9.67:1 GOOD:BAD, 0.8166 ± 0.1381)** und **Edge 3 (0.7441 ± 0.0757)** deutlich stärker streuen.
 
 ## Was wirklich den Unterschied gemacht hat
 
-- YOLO-Features statt erzwungener Detektor-Perspektive
-- disziplinierte Evaluation
-- Merkmalstypen als unterschiedliche Teilprobleme behandeln
-- auf zuverlässige Inferenz optimieren
+- Klare Trennung von Stufe-1-Lokalisierung (` + '`YOLOv8m`' + `) und Stufe-2-Anomaliebewertung auf ` + '`128×128`' + `-Crops
+- Strikte Gruppierung nach den ` + '`573`' + ` Quellbildern statt Crop-Level-Splits
+- Ehrliche Auswertung pro Merkmal samt Standardabweichung statt Einzelwerten
+- Offene Hydra-Konfigurationen, Checkpoints und transparent dokumentierte Errata
         `,
       },
       fr: {
-        title: 'YOLOv8 pour le contrôle qualité industriel : les décisions qui ont vraiment compté',
+        title: 'YOLOv8m pour le contrôle qualité industriel : détection phase 1 et splits sans fuite',
         excerpt:
-          "Un retour pratique sur les choix d'architecture, de données et de déploiement qui ont compté en contrôle qualité inkjet industriel, au lieu d'un tutoriel YOLO générique.",
+          "Notes d'ingénierie sur l'utilisation de YOLOv8m comme détecteur de phase 1 (6 408 crops 128×128 sur 573 groupes d'images FTI_Zer0P) et pourquoi la validation croisée par image source a compté plus que le tuning.",
         tags: ['Vision par ordinateur', 'YOLOv8', 'IA industrielle', 'PyTorch', 'Production ML'],
         readingTime: '10 min de lecture',
         faq: [
           {
-            question: "Pourquoi utiliser YOLO comme extracteur de features et non comme détecteur ?",
+            question: 'Pourquoi utiliser YOLOv8m comme détecteur et recadreur en phase 1 ?',
             answer:
-              "Parce que la tâche n'était pas une détection d'objets classique. Les types de feature ressemblaient davantage à des signatures visuelles structurées qu'à des objets en bounding box.",
+              'Les images industrielles (1920×1080) contiennent 8 types de motifs locaux (points, distances, bords, angle). En phase 1, YOLOv8m (25,86 M paramètres dans yolo_best.pt ; erratum PDF : YOLOv8n) détecte et recadre 6 408 patchs 128×128 sur 573 images sources pour la phase 2 générative.',
           },
           {
-            question: 'Quelle latence a été atteinte ?',
+            question: 'Qu’a montré la validation croisée en 5 plis sur FTI_Zer0P ?',
             answer:
-              'Environ 35 ms par composant dans la configuration finale compatible production edge.',
+              'En validation croisée stratifiée par image source sur 573 groupes, la baseline YOLO+CDM a atteint 0.8673 ± 0.0230 AUROC (0.8094 ± 0.0151 d’exactitude, K=100), avec Dots à 0.9557 ± 0.0353 et Distance 6 à 0.9362 ± 0.0666.',
           },
           {
             question: "Qu'est-ce qui a le plus compté ?",
             answer:
-              "La discipline sur les données, le design des folds et un chemin de déploiement stable ont compté plus qu'une architecture à la mode.",
+              'Le regroupement des plis par image source pour éviter les fuites, l’analyse par type de motif et des runs Hydra + PyTorch Lightning reproductibles ont compté plus que les ajustements d’architecture.',
           },
         ],
         content: `
 ## Ce n'était pas un projet tutoriel
 
-La plupart des articles YOLO s'arrêtent à "entraîner sur un grand dataset et rapporter le mAP". Le contrôle qualité industriel est tout autre chose : moins d'images, défauts plus subtils, budget de latence plus strict, et vraies conséquences opérationnelles.
+La plupart des articles YOLO s'arrêtent à « entraîner sur un grand dataset et afficher le mAP ». En contrôle qualité industriel, les contraintes sont tout autres : 573 images sources, fort déséquilibre de classes, géométries variées et aucune tolérance aux fuites de données.
 
-## La première décision importante
+## Détection et recadrage en phase 1 avec YOLOv8m
 
-Je n'ai pas utilisé YOLOv8 principalement comme détecteur, mais comme **extracteur de features**. Le problème concernait des points, distances, bords et angles. Ce sont des motifs structurés, pas toujours des objets détectables de façon classique.
+Dans la pipeline en deux étapes **InkjetOOD**, **YOLOv8m** sert explicitement de **détecteur et recadreur de phase 1** (entrée ` + '`640×640`' + ` sur images ` + '`1920×1080`' + `, ` + '`95.04%`' + ` mAP@0.5 rapportés dans le mémoire). *(Erratum : le mémoire désigne le détecteur comme YOLOv8n, alors que le checkpoint publié ` + '`yolo_best.pt`' + ` est ` + '`YOLOv8m`' + ` à 25,86 M paramètres selon ` + '`train_args`' + `.)*
 
-Les features du backbone étaient plus riches pour l'étape suivante de détection d'anomalie.
+Chaque motif détecté (8 catégories : ` + '`angle`' + `, ` + '`dist1`' + `, ` + '`dist6`' + `, ` + '`dots`' + `, ` + '`edge1–4`' + `) est recadré et redimensionné par interpolation bilinéaire en **128×128 RGB**. Sur les 573 groupes d'images de **FTI_Zer0P**, cela produit **6 408 crops de motifs** pour le classificateur génératif de phase 2.
 
-## L'ingénierie des données a plus compté que le buzz
+## Discipline sur les données
 
-Sur un petit dataset, les plus grands gains sont venus de la discipline :
+Puisqu'une image fournit en moyenne ~11 crops, un découpage aléatoire par crop introduirait une fuite directe entre apprentissage et validation. Regrouper strictement par **image source (` + '`573`' + ` groupes)** garantit qu'aucune impression ne traverse deux plis, et redimensionner sans augmentation synthétique préserve les textures réelles des défauts.
 
-- construction propre des folds
-- absence de fuite de données
-- augmentations réalistes seulement
-- prise en compte de l'hétérogénéité des features
-
-Les astuces synthétiques ont moins aidé qu'une évaluation honnête du régime de données.
-
-## Des choix d'entraînement utiles
+## Configuration reproductible
 
 \`\`\`python
-config = {
-    "lr": 1e-4,
-    "batch_size": 16,
-    "epochs": 150,
-    "scheduler": "cosine",
+pipeline = {
+    "stage1_detector": "YOLOv8m (yolo_best.pt, 25.86M params, 640x640 input)",
+    "stage2_crop_size": "128x128 RGB (6,408 crops / 573 source groups)",
+    "stage2_classifier": "Multi-head AdaGN Diffusion UNet (NoisePredictorV3)",
+    "cv_protocol": "5-fold image-level stratified CV, K=100 trials",
 }
 \`\`\`
 
-Le plus important n'était pas le chiffre exact, mais l'adéquation au petit dataset industriel et à la cible de production. Les stratégies freeze-then-unfreeze et l'analyse par feature ont davantage compté que les réglages par défaut.
+## Une évaluation révélatrice
 
-## Une évaluation qui veut dire quelque chose
-
-Le système a été évalué avec une **validation croisée stricte à 5 plis**. L'AUROC par feature racontait une histoire plus honnête qu'un score global unique. Certaines features étaient robustes, d'autres étaient surtout limitées par le manque de données.
-
-## Réalité du déploiement
-
-Le système final devait tourner en environnement edge. La quantification aidait la latence, mais la stabilité restait prioritaire. Leçon pratique : un déploiement légèrement plus lent mais fiable vaut mieux qu'une option rapide mais instable.
+Évaluée sur **FTI_Zer0P** en validation croisée par image à 5 plis (` + '`λ = 0.0`' + `), la baseline atteint **0.8673 ± 0.0230 AUROC** (` + '`0.8094 ± 0.0151`' + ` d'exactitude). Le détail par motif montre la réalité terrain : **Dots (0.9557 ± 0.0353)** et **Distance 6 (0.9362 ± 0.0666)** se séparent nettement, tandis que les classes rares ou déséquilibrées comme **Angle (9.67:1 GOOD:BAD, 0.8166 ± 0.1381)** et **Edge 3 (0.7441 ± 0.0757)** présentent une dispersion plus élevée.
 
 ## Ce qui a vraiment fait la différence
 
-- utiliser les features YOLO plutôt qu'imposer une logique de détection
-- une boucle d'évaluation disciplinée
-- traiter les types de feature comme des sous-problèmes différents
-- optimiser pour une inférence fiable
+- découpler la localisation phase 1 (` + '`YOLOv8m`' + `) de l'évaluation d'anomalie phase 2 sur crops ` + '`128×128`' + `
+- imposer une séparation stricte par image source sur les ` + '`573`' + ` groupes
+- rapporter l'AUROC et l'écart-type par motif plutôt qu'un score isolé
+- publier configurations Hydra, poids et errata de façon transparente
         `,
       },
       es: {
-        title: 'YOLOv8 para control de calidad industrial: decisiones que realmente movieron la aguja',
+        title: 'YOLOv8m para control de calidad industrial: detección en etapa 1 y splits sin fugas',
         excerpt:
-          'Un post-mortem práctico sobre las decisiones de arquitectura, datos y despliegue que importaron en control de calidad inkjet industrial, en lugar de otro tutorial genérico de YOLO.',
+          'Notas de ingeniería sobre YOLOv8m como detector de etapa 1 (6.408 recortes 128×128 en 573 grupos de FTI_Zer0P) y por qué la validación cruzada a nivel de imagen importó más que ajustar la arquitectura.',
         tags: ['Visión por computador', 'YOLOv8', 'IA industrial', 'PyTorch', 'Production ML'],
         readingTime: '10 min de lectura',
         faq: [
           {
-            question: '¿Por qué usar YOLO como extractor de features y no como detector?',
+            question: '¿Por qué usar YOLOv8m como detector y recortador en la etapa 1?',
             answer:
-              'Porque la tarea no era detección clásica de objetos. Los tipos de feature se comportaban más como firmas visuales estructuradas que como objetos en bounding boxes.',
+              'Los fotogramas industriales (1920×1080) contienen 8 tipos de rasgos locales (puntos, distancias, bordes, ángulo). En la etapa 1, YOLOv8m (25,86 M parámetros en yolo_best.pt; errata del PDF: YOLOv8n) detecta y recorta 6.408 parches de 128×128 desde 573 imágenes fuente para la etapa 2 generativa.',
           },
           {
-            question: '¿Qué latencia alcanzó el sistema?',
+            question: '¿Qué mostró la evaluación de 5 folds en FTI_Zer0P?',
             answer:
-              'Alrededor de 35 ms por componente en la configuración final apta para producción edge.',
+              'Bajo validación cruzada estratificada de 5 folds a nivel de imagen (573 grupos), la base YOLO+CDM alcanzó 0.8673 ± 0.0230 AUROC (0.8094 ± 0.0151 de exactitud, K=100), con Dots en 0.9557 ± 0.0353 y Distance 6 en 0.9362 ± 0.0666.',
           },
           {
             question: '¿Qué fue lo más importante?',
             answer:
-              'La disciplina de datos, el diseño de folds y un camino de despliegue estable importaron más que perseguir la arquitectura más llamativa.',
+              'Agrupar los folds por imagen fuente para evitar fugas, analizar cada rasgo por separado y mantener ejecuciones reproducibles con Hydra y PyTorch Lightning.',
           },
         ],
         content: `
 ## Esto no fue un proyecto tutorial
 
-La mayoría de los posts sobre YOLO terminan en "entrena sobre un gran dataset y reporta mAP". El control de calidad industrial es otra cosa: menos imágenes, defectos más difíciles, presupuestos de latencia más estrictos y consecuencias reales.
+La mayoría de los posts sobre YOLO terminan en «entrenar en un gran dataset y reportar mAP». En control de calidad industrial las condiciones son distintas: 573 imágenes fuente, fuerte desbalanceo, geometrías heterogéneas y cero tolerancia a fugas entre folds.
 
-## La primera decisión importante
+## Detección y recorte en etapa 1 con YOLOv8m
 
-No usé YOLOv8 principalmente como detector, sino como **extractor de features**. El problema incluía puntos, distancias, bordes y ángulos. Esos patrones no siempre encajan bien como objetos clásicos con bounding boxes.
+En la pipeline de dos etapas **InkjetOOD**, **YOLOv8m** funciona explícitamente como **detector y recortador de etapa 1** (entrada ` + '`640×640`' + ` sobre capturas ` + '`1920×1080`' + `, ` + '`95.04%`' + ` mAP@0.5 según la tesis). *(Nota de errata: la tesis identifica el detector como YOLOv8n, pero el checkpoint publicado ` + '`yolo_best.pt`' + ` es ` + '`YOLOv8m`' + ` con 25,86 M parámetros verificados en ` + '`train_args`' + `.)*
 
-Las features del backbone dieron al detector de anomalías una representación geométrica mejor.
+Cada región detectada (8 tipos: ` + '`angle`' + `, ` + '`dist1`' + `, ` + '`dist6`' + `, ` + '`dots`' + `, ` + '`edge1–4`' + `) se recorta y redimensiona por interpolación bilineal a **128×128 RGB**. En los 573 grupos de imágenes fuente de **FTI_Zer0P**, eso produce **6.408 recortes** para el clasificador generativo de etapa 2.
 
-## La ingeniería de datos importó más que el hype
+## Disciplina de datos antes que trucos
 
-Con un dataset pequeño, las mayores mejoras vinieron de la disciplina:
+Cuando una imagen genera ~11 recortes de media, dividir aleatoriamente por recorte filtra contexto entre entrenamiento y validación. Agrupar estrictamente por **imagen fuente (` + '`573`' + ` grupos)** mantiene toda la pieza en un único fold, y escalar limpiamente a ` + '`128×128`' + ` sin aumentación sintética conserva la textura real de cada defecto.
 
-- construcción cuidadosa de folds
-- evitar leakage
-- augmentations realistas solamente
-- respetar la heterogeneidad de las features
-
-Los trucos sintéticos ayudaron menos que una lectura honesta del régimen de datos.
-
-## Ajustes de entrenamiento útiles
+## Configuración reproducible
 
 \`\`\`python
-config = {
-    "lr": 1e-4,
-    "batch_size": 16,
-    "epochs": 150,
-    "scheduler": "cosine",
+pipeline = {
+    "stage1_detector": "YOLOv8m (yolo_best.pt, 25.86M params, 640x640 input)",
+    "stage2_crop_size": "128x128 RGB (6,408 crops / 573 source groups)",
+    "stage2_classifier": "Multi-head AdaGN Diffusion UNet (NoisePredictorV3)",
+    "cv_protocol": "5-fold image-level stratified CV, K=100 trials",
 }
 \`\`\`
 
-Lo importante no fueron solo los números, sino ajustarlos al dataset industrial pequeño y al objetivo de producción. Freeze-then-unfreeze, optimización conservadora y análisis por feature importaron más que usar defaults.
+## Evaluación con significado real
 
-## Una evaluación que significaba algo
-
-El sistema se evaluó con **validación cruzada estricta de 5 folds**. El AUROC por feature contó una historia más honesta que un solo score global. Algunas features eran estables; otras estaban limitadas sobre todo por la falta de datos.
-
-## Realidad del despliegue
-
-El sistema final tenía que funcionar en edge. La cuantización mejoró la latencia, pero la fiabilidad siguió siendo lo primero. La lección práctica fue simple: una versión un poco más lenta pero estable es mejor que una rápida e inestable.
+Evaluado en **FTI_Zer0P** con 5-fold CV a nivel de imagen (` + '`λ = 0.0`' + `), la línea base obtuvo **0.8673 ± 0.0230 AUROC** (` + '`0.8094 ± 0.0151`' + ` de exactitud). El desglose por rasgo cuenta la historia real: **Dots (0.9557 ± 0.0353)** y **Distance 6 (0.9362 ± 0.0666)** muestran alta separación, mientras que rasgos escasos o desbalanceados como **Angle (9.67:1 GOOD:BAD, 0.8166 ± 0.1381)** y **Edge 3 (0.7441 ± 0.0757)** presentan mayor dispersión.
 
 ## Qué movió la aguja de verdad
 
-- usar features de YOLO en vez de forzar una perspectiva de detector
-- una evaluación disciplinada
-- tratar los tipos de feature como subproblemas distintos
-- optimizar para inferencia confiable
+- desacoplar la localización en etapa 1 (` + '`YOLOv8m`' + `) de la puntuación de anomalía en etapa 2 sobre recortes ` + '`128×128`' + `
+- exigir agrupación estricta por las ` + '`573`' + ` imágenes fuente
+- reportar AUROC y desviación entre folds por cada tipo de rasgo
+- publicar configuraciones Hydra, pesos y erratas con total transparencia
         `,
       },
       ar: {
-        title: 'YOLOv8 لمراقبة الجودة الصناعية: القرارات التي أحدثت الفرق فعلاً',
+        title: 'YOLOv8m لمراقبة الجودة الصناعية: كشف المرحلة الأولى وتقسيم البيانات بلا تسرب',
         excerpt:
-          'مراجعة عملية لقرارات البنية والبيانات والنشر التي أثرت فعلاً في جودة الطباعة الصناعية، بدلاً من تكرار شرح YOLO العام.',
+          'ملاحظات هندسية حول استخدام YOLOv8m ككاشف للمرحلة الأولى (6,408 قصاصة 128×128 عبر 573 مجموعة صور في FTI_Zer0P)، ولماذا كان التحقق التقاطعي على مستوى الصورة أهم من تعديل البنية.',
         tags: ['الرؤية الحاسوبية', 'YOLOv8', 'الذكاء الاصطناعي الصناعي', 'PyTorch', 'Production ML'],
         readingTime: '10 دقائق قراءة',
         faq: [
           {
-            question: 'لماذا استخدمت YOLO كمستخرج ميزات وليس ككاشف فقط؟',
+            question: 'لماذا استُخدم YOLOv8m ككاشف ومقتطع في المرحلة الأولى؟',
             answer:
-              'لأن المهمة لم تكن كشف أجسام تقليدي. أنواع الميزات كانت أقرب إلى إشارات بصرية منظمة منها إلى أجسام ضمن bounding boxes.',
+              'تحوي إطارات الطباعة الصناعية (1920×1080) 8 أنواع ميزات محلية (نقاط، مسافات، حواف، زاوية). يكتشف YOLOv8m في المرحلة الأولى (25.86 مليون معامل في yolo_best.pt؛ ورد سهواً YOLOv8n في نص PDF الرسالة) هذه المناطق ويقتطع 6,408 قصاصات 128×128 عبر 573 صورة أصلية للمرحلة الثانية.',
           },
           {
-            question: 'ما زمن الاستدلال الذي وصل إليه النظام؟',
+            question: 'ماذا أظهر التقييم الخماسي الصارم على FTI_Zer0P؟',
             answer:
-              'حوالي 35 مللي ثانية لكل مكوّن في الإعداد النهائي المناسب للتشغيل على edge.',
+              'بتحقق تقاطعي طبقي من 5 طيات على مستوى الصورة عبر 573 مجموعة، حقق خط الأساس YOLO+CDM مقياس 0.8673 ± 0.0230 AUROC (ودقة 0.8094 ± 0.0151، عند K=100)، مع 0.9557 ± 0.0353 لـ Dots و0.9362 ± 0.0666 لـ Distance 6.',
           },
           {
             question: 'ما العامل الأهم فعلاً؟',
             answer:
-              'الانضباط في البيانات، وتصميم الطيات، ومسار نشر ثابت كان أهم من مطاردة أكثر نسخة معمارية لامعة.',
+              'تجميع الطيات حسب الصورة الأصلية لمنع التسرب، وتقييم كل نوع ميزة على حدة، وتشغيلات Hydra وPyTorch Lightning القابلة لإعادة الإنتاج.',
           },
         ],
         content: `
 ## هذا لم يكن مشروعاً تعليمياً عادياً
 
-معظم مقالات YOLO تنتهي عند "درّب على dataset كبيرة واذكر mAP". أما ضبط الجودة الصناعي فله شروط مختلفة: صور أقل، وعيوب أصعب، وقيود زمنية أقسى، وعواقب حقيقية.
+معظم مقالات YOLO تتوقف عند "درّب على بيانات كبيرة واذكر mAP". أما ضبط الجودة الصناعي فيفرض قيوداً مختلفة: 573 صورة أصلية فقط، وعدم توازن بين الفئات، وأشكال هندسية متباينة، وصفر تسامح مع تسرب البيانات بين الطيات.
 
-## أول قرار مهم
+## الكشف والاقتصاص في المرحلة الأولى باستخدام YOLOv8m
 
-لم أستخدم YOLOv8 أساساً ككاشف، بل كمستخرج ميزات. المشكلة كانت تتعلق بالنقاط والمسافات والحواف والزوايا، وهذه لا تتصرف دائماً كأجسام كلاسيكية يمكن تمثيلها بسهولة في bounding boxes.
+في خط **InkjetOOD** ذي المرحلتين، يعمل **YOLOv8m** صراحةً كـ **كاشف ومقتطع للمرحلة الأولى** (مدخل ` + '`640×640`' + ` على إطارات ` + '`1920×1080`' + `، بمقياس ` + '`95.04%`' + ` mAP@0.5 في الرسالة). *(ملاحظة تصويب: يصف نص الرسالة الكاشف بأنه YOLOv8n، بينما نقطة التحقق المنشورة ` + '`yolo_best.pt`' + ` هي ` + '`YOLOv8m`' + ` بـ 25.86 مليون معامل وفق ` + '`train_args`' + `.)*
 
-ميزات الـ backbone أعطت مرحلة كشف الشذوذ تمثيلاً هندسياً أفضل.
+تُقتطع كل منطقة ميزة مكتشفة (8 فئات: ` + '`angle`' + `، ` + '`dist1`' + `، ` + '`dist6`' + `، ` + '`dots`' + `، ` + '`edge1–4`' + `) ويُعاد تحجيمها ثنائياً إلى **128×128 RGB**. وعبر 573 مجموعة صور أصلية في **FTI_Zer0P** ينتج عن ذلك **6,408 قصاصات** لمصنف المرحلة الثانية التوليدي.
 
-## هندسة البيانات كانت أهم من الضجيج
+## انضباط البيانات قبل الحيل
 
-مع dataset صغيرة، جاءت أكبر المكاسب من الانضباط:
+عندما تنتج الصورة الواحدة نحو 11 قصاصة في المتوسط، فإن التقسيم العشوائي على مستوى القصاصة يسرّب سياق اللقطة نفسها بين التدريب والتحقق. التجميع الصارم حسب **الصورة الأصلية (` + '`573`' + ` مجموعة)** يحفظ كل قصاصات اللقطة في طية واحدة، كما يحفظ التحجيم المباشر إلى ` + '`128×128`' + ` دون توليد اصطناعي نسيجَ العيب الحقيقي.
 
-- بناء طيات نظيف
-- منع التسرب بين الطيات
-- augmentations واقعية فقط
-- احترام اختلاف أنواع الميزات
-
-الحيل الاصطناعية لم تكن مفيدة بقدر الفهم الصريح لطبيعة البيانات.
-
-## إعدادات التدريب التي ساعدت
+## إعداد قابل لإعادة الإنتاج
 
 \`\`\`python
-config = {
-    "lr": 1e-4,
-    "batch_size": 16,
-    "epochs": 150,
-    "scheduler": "cosine",
+pipeline = {
+    "stage1_detector": "YOLOv8m (yolo_best.pt, 25.86M params, 640x640 input)",
+    "stage2_crop_size": "128x128 RGB (6,408 crops / 573 source groups)",
+    "stage2_classifier": "Multi-head AdaGN Diffusion UNet (NoisePredictorV3)",
+    "cv_protocol": "5-fold image-level stratified CV, K=100 trials",
 }
 \`\`\`
 
-المهم لم يكن الأرقام وحدها، بل ملاءمتها لبيانات صناعية صغيرة وهدف نشر حقيقي. استراتيجيات freeze-then-unfreeze والتحسين المحافظ والتحليل لكل feature كانت أكثر فائدة من الاعتماد على الإعدادات الافتراضية.
+## تقييم ذو معنى فعلي
 
-## تقييم له معنى
-
-تم تقييم النظام باستخدام **تحقق تقاطعي صارم من 5 طيات**. وقد أعطى AUROC لكل feature صورة أصدق من رقم إجمالي واحد. بعض الميزات كانت مستقرة، وبعضها كان محدوداً أساساً بنقص البيانات.
-
-## واقع النشر
-
-كان لا بد أن يعمل النظام النهائي على edge. ساعدت quantization في الزمن، لكن الثبات بقي أهم. والدرس العملي كان واضحاً: نسخة أبطأ قليلاً لكنها مستقرة أفضل من نسخة أسرع وغير موثوقة.
+على معيار **FTI_Zer0P** العام بتحقق تقاطعي من 5 طيات على مستوى الصورة (` + '`λ = 0.0`' + `)، بلغ خط الأساس **0.8673 ± 0.0230 AUROC** (` + '`0.8094 ± 0.0151`' + ` دقة). وتوضح نتائج كل ميزة الصورة الكاملة: حققت **Dots (0.9557 ± 0.0353)** و**Distance 6 (0.9362 ± 0.0666)** فصلاً قوياً، بينما سجلت الفئات الأقل وفرة مثل **Angle (9.67:1 سليم:معيب، 0.8166 ± 0.1381)** و**Edge 3 (0.7441 ± 0.0757)** تبايناً أكبر عبر الطيات.
 
 ## ما الذي أحدث الفرق فعلاً
 
-- استخدام ميزات YOLO بدلاً من فرض منظور كاشف تقليدي
-- حلقة تقييم منضبطة
-- التعامل مع أنواع الميزات كمشكلات فرعية مختلفة
-- تحسين النظام من أجل استدلال موثوق
+- فصل تحديد المواضع في المرحلة الأولى (` + '`YOLOv8m`' + `) عن تقييم الشذوذ في المرحلة الثانية على قصاصات ` + '`128×128`' + `
+- فرض التقسيم الصارم على مستوى الصور الـ ` + '`573`' + `
+- الإبلاغ عن AUROC والانحراف المعياري لكل ميزة بدلاً من نتائج منتقاة
+- نشر إعدادات Hydra والأوزان والتصويبات بشفافية كاملة
         `,
       },
     },

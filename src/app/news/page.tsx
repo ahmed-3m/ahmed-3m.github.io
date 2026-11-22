@@ -17,6 +17,12 @@ export const metadata: Metadata = {
     // an images array the route ships no og:image.
     images: ogImage('AI & Agentic AI News — curated daily with a take', '/og-news.png'),
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'News | AI and agentic AI, with a take',
+    description: 'Curated news on AI and agentic AI, each with a short editorial take from Ahmed Mohammed.',
+    images: ['/og-news.png'],
+  },
 }
 
 export default function NewsPage() {

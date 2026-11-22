@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import CaseStudyPage from '@/components/CaseStudyPage'
+import { BreadcrumbSchema } from '@/components/JsonLd'
 
 import { ogImage } from '@/lib/seo'
 
@@ -18,11 +19,25 @@ export const metadata: Metadata = {
     url: 'https://ahmed-3m.github.io/case-studies/diffusion-ood/',
     images: ogImage('Diffusion OOD detection case study', '/og-diffusion-ood.png'),
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Diffusion OOD Detection — 99.03% AUROC (Case Study)',
+    description:
+      'Conditional diffusion models as generative OOD classifiers with a novel separation loss: 99.03% ± 0.07% AUROC, +6.5pp over baseline, low seed standard deviation.',
+    images: ['/og-diffusion-ood.png'],
+  },
 }
 
 export default function DiffusionOodCaseStudy() {
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: 'Home', url: 'https://ahmed-3m.github.io/' },
+          { name: 'Projects', url: 'https://ahmed-3m.github.io/#projects' },
+          { name: 'Diffusion OOD Detection', url: 'https://ahmed-3m.github.io/case-studies/diffusion-ood/' },
+        ]}
+      />
       <Header />
       <CaseStudyPage slug="diffusion-ood" />
       <Footer />

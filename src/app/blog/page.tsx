@@ -17,6 +17,12 @@ export const metadata: Metadata = {
     // an images array the route ships no og:image.
     images: ogImage('Ahmed Mohammed - AI/ML Engineer'),
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Blog | AI, research, and product notes',
+    description: 'Articles on diffusion models, industrial AI, product engineering, and real-world ML work.',
+    images: ['/og-image.png'],
+  },
 }
 
 export default function BlogPage() {

@@ -29,13 +29,13 @@ const copy = {
     es: 'Una separation loss que obliga a separar las explicaciones de clase rivales del modelo.',
     ar: 'خسارة فصل تدفع تفسيرات الفئات المتنافسة داخل النموذج إلى الابتعاد عن بعضها.',
   },
-  summaryResultLabel: { en: 'Result', de: 'Ergebnis', fr: 'Resultat', es: 'Resultado', ar: 'النتيجة' },
+  summaryResultLabel: { en: 'Result', de: 'Ergebnis', fr: 'Résultat', es: 'Resultado', ar: 'النتيجة' },
   summaryResultText: {
-    en: '99.03% +/- 0.07% AUROC on CIFAR-10 airplane-vs-rest (binary, single ID class, 3-seed mean), with a +6.5pp gain over the non-separated baseline.',
-    de: '99.03% +/- 0.07% AUROC auf CIFAR-10 airplane-vs-rest (binär, Einzelklasse, 3-Seed-Mittel) mit +6.5 Prozentpunkten gegenüber der Basis ohne Separation.',
-    fr: '99.03% +/- 0.07% AUROC sur CIFAR-10 airplane-vs-rest (binaire, classe unique, moyenne 3 seeds) avec un gain de +6.5 points face à la baseline sans séparation.',
-    es: '99.03% +/- 0.07% AUROC en CIFAR-10 airplane-vs-rest (binaria, clase única, media 3 seeds) con una mejora de +6.5 puntos sobre la base sin separación.',
-    ar: '99.03% +/- 0.07% AUROC على CIFAR-10 airplane-vs-rest (ثنائي، فئة واحدة، متوسط 3 بذور) مع تحسن قدره +6.5 نقطة على الخط الأساسي بدون فصل.',
+    en: '99.03% ± 0.07% AUROC on CIFAR-10 airplane-vs-rest (binary, single ID class, 3-seed mean), with a +6.5pp gain over the non-separated baseline.',
+    de: '99.03% ± 0.07% AUROC auf CIFAR-10 airplane-vs-rest (binär, Einzelklasse, 3-Seed-Mittel) mit +6.5 Prozentpunkten gegenüber der Basis ohne Separation.',
+    fr: '99.03% ± 0.07% AUROC sur CIFAR-10 airplane-vs-rest (binaire, classe unique, moyenne 3 seeds) avec un gain de +6.5 points face à la baseline sans séparation.',
+    es: '99.03% ± 0.07% AUROC en CIFAR-10 airplane-vs-rest (binaria, clase única, media 3 seeds) con una mejora de +6.5 puntos sobre la base sin separación.',
+    ar: '99.03% ± 0.07% AUROC على CIFAR-10 airplane-vs-rest (ثنائي، فئة واحدة، متوسط 3 بذور) مع تحسن قدره +6.5 نقطة على الخط الأساسي بدون فصل.',
   },
   summaryImpactLabel: { en: 'Why it matters', de: 'Warum es zählt', fr: 'Pourquoi cela compte', es: 'Por qué importa', ar: 'لماذا يهم ذلك' },
   summaryImpactText: {
@@ -45,13 +45,13 @@ const copy = {
     es: 'La puntuación no solo subió, sino que también se volvió mucho más estable entre semillas.',
     ar: 'لم ترتفع النتيجة فقط، بل أصبحت أكثر ثباتاً بكثير عبر البذور وأسهل في الثقة.',
   },
-  track1: { en: "Master's Thesis (Track 1) - JKU Linz - 2026", de: 'Masterarbeit (Track 1) - JKU Linz - 2026', fr: 'Mémoire de master (Track 1) - JKU Linz - 2026', es: 'Tesis de master (Track 1) - JKU Linz - 2026', ar: 'رسالة ماجستير (المسار 1) - JKU Linz - 2026' },
+  track1: { en: "Master's Thesis (Track 1) - JKU Linz - 2026", de: 'Masterarbeit (Track 1) - JKU Linz - 2026', fr: 'Mémoire de master (Track 1) - JKU Linz - 2026', es: 'Tesis de máster (Track 1) - JKU Linz - 2026', ar: 'رسالة ماجستير (المسار 1) - JKU لينتس - 2026' },
   thesisTitle: { en: 'Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control', de: 'Konditionale Diffusionsmodelle als generative Klassifikatoren für OOD-Erkennung in der Inkjet-Druckqualitätskontrolle', fr: 'Modèles de diffusion conditionnels comme classificateurs génératifs pour détection OOD dans le contrôle qualité impression inkjet', es: 'Modelos de difusión condicional como clasificadores generativos para detección OOD en control de calidad de impresión inkjet', ar: 'نماذج الانتشار الشرطية كمصنفات توليدية لكشف الخارج عن التوزيع في مراقبة جودة الطباعة النافثة' },
   thesisDesc: { en: 'A diffusion model compares how well different class explanations reconstruct an image. The new separation loss pushes those explanations apart, making the anomaly score clearer and more stable.', de: 'Ein Diffusionsmodell vergleicht, wie gut verschiedene Klassenerklärungen ein Bild rekonstruieren. Die neue Separation Loss trennt diese Erklärungen und macht den Anomalie-Score klarer und stabiler.', fr: "Un modèle de diffusion compare la reconstruction selon différentes explications de classe. La separation loss les éloigne et rend le score d'anomalie plus clair et stable.", es: 'Un modelo de difusión compara reconstrucciones bajo distintas explicaciones de clase. La separation loss las separa y hace el score de anomalía más claro y estable.', ar: 'يقارن نموذج الانتشار مدى قدرة تفسيرات الفئات المختلفة على إعادة بناء الصورة. خسارة الفصل تبعد هذه التفسيرات وتجعل درجة الشذوذ أوضح وأكثر ثباتاً.' },
   supervisor: { en: 'Supervisor', de: 'Betreuer', fr: 'Superviseur', es: 'Supervisor', ar: 'المشرف' },
   assistant: { en: 'Assistant', de: 'Assistent', fr: 'Assistant', es: 'Asistente', ar: 'المساعد' },
   metricLabel: { en: 'Mean AUROC · CIFAR-10 airplanes vs. other classes', de: 'Mittlere AUROC · CIFAR-10: Flugzeuge gegen andere Klassen', fr: 'AUROC moyenne · CIFAR-10 : avions contre les autres classes', es: 'AUROC media · CIFAR-10: aviones frente a otras clases', ar: 'متوسط AUROC · CIFAR-10: الطائرات مقابل الفئات الأخرى' },
-  variance: { en: '+/-0.07% std dev (3 seeds)', de: '+/-0.07% Std.-Abw. (3 Seeds)', fr: '+/-0.07% écart-type (3 seeds)', es: '+/-0.07% desv. est. (3 semillas)', ar: '+/-0.07% انحراف معياري (3 بذور)' },
+  variance: { en: '± 0.07% std dev (3 seeds)', de: '± 0.07% Std.-Abw. (3 Seeds)', fr: '± 0.07% écart-type (3 seeds)', es: '± 0.07% desv. est. (3 semillas)', ar: '± 0.07% انحراف معياري (3 بذور)' },
   chartHeading: {
     en: 'Separation-weight sweep · Threshold calibration · Reconstruction error',
     de: 'Variation des Separationsgewichts · Schwellenwertkalibrierung · Rekonstruktionsfehler',
@@ -83,9 +83,9 @@ const copy = {
   totalLoss: { en: 'Training loss L_total', de: 'Trainingsverlust L_total', fr: "Perte d'entraînement L_total", es: 'Pérdida de entrenamiento L_total', ar: 'خسارة التدريب L_total' },
   denoiseLoss: { en: 'L_denoise (MSE)', de: 'L_denoise (MSE)', fr: 'L_denoise (MSE)', es: 'L_denoise (MSE)', ar: 'L_denoise (MSE)' },
   sepLoss: { en: 'lambda * L_sep  |  Inference: s_OOD(x) = e_0(x) - e_1(x)', de: 'lambda * L_sep  |  Inferenz: s_OOD(x) = e_0(x) - e_1(x)', fr: 'lambda * L_sep  |  Inférence : s_OOD(x) = e_0(x) - e_1(x)', es: 'lambda * L_sep  |  Inferencia: s_OOD(x) = e_0(x) - e_1(x)', ar: 'lambda * L_sep  |  الاستدلال: s_OOD(x) = e_0(x) - e_1(x)' },
-  latest: { en: 'Latest thesis result: lambda = 0.02 reached 99.03% +/- 0.07% AUROC, a +6.5pp gain over no separation loss.', de: 'Aktuelles Thesis-Ergebnis: lambda = 0.02 erreicht 99.03% +/- 0.07% AUROC, +6.5pp gegenüber ohne Separation Loss.', fr: 'Résultat thèse récent : lambda = 0.02 atteint 99.03% +/- 0.07% AUROC, +6.5pp vs sans separation loss.', es: 'Resultado reciente: lambda = 0.02 alcanzó 99.03% +/- 0.07% AUROC, +6.5pp frente a sin separation loss.', ar: 'آخر نتيجة في الرسالة: lambda = 0.02 حققت 99.03% +/- 0.07% AUROC، بزيادة +6.5pp مقارنة بدون خسارة الفصل.' },
-  thesisPdf: { en: 'View Full Thesis (PDF) ->', de: 'Vollständige Thesis ansehen (PDF) ->', fr: 'Voir le mémoire complet (PDF) ->', es: 'Ver tesis completa (PDF) ->', ar: 'عرض الرسالة كاملة (PDF) ->' },
-  track2: { en: "Master's Thesis (Track 2) - JKU Linz - 2026", de: 'Masterarbeit (Track 2) - JKU Linz - 2026', fr: 'Mémoire de master (Track 2) - JKU Linz - 2026', es: 'Tesis de master (Track 2) - JKU Linz - 2026', ar: 'رسالة ماجستير (المسار 2) - JKU Linz - 2026' },
+  latest: { en: 'Latest thesis result: lambda = 0.02 reached 99.03% ± 0.07% AUROC, a +6.5pp gain over no separation loss.', de: 'Aktuelles Thesis-Ergebnis: lambda = 0.02 erreicht 99.03% ± 0.07% AUROC, +6.5pp gegenüber ohne Separation Loss.', fr: 'Résultat thèse récent : lambda = 0.02 atteint 99.03% ± 0.07% AUROC, +6.5pp vs sans separation loss.', es: 'Resultado reciente: lambda = 0.02 alcanzó 99.03% ± 0.07% AUROC, +6.5pp frente a sin separation loss.', ar: 'آخر نتيجة في الرسالة: lambda = 0.02 حققت 99.03% ± 0.07% AUROC، بزيادة +6.5pp مقارنة بدون خسارة الفصل.' },
+  thesisPdf: { en: 'View Full Thesis (PDF)', de: 'Vollständige Thesis ansehen (PDF)', fr: 'Voir le mémoire complet (PDF)', es: 'Ver tesis completa (PDF)', ar: 'عرض الرسالة كاملة (PDF)' },
+  track2: { en: "Master's Thesis (Track 2) - JKU Linz - 2026", de: 'Masterarbeit (Track 2) - JKU Linz - 2026', fr: 'Mémoire de master (Track 2) - JKU Linz - 2026', es: 'Tesis de máster (Track 2) - JKU Linz - 2026', ar: 'رسالة ماجستير (المسار 2) - JKU لينتس - 2026' },
   track2Title: { en: 'Rigorous Cross-Domain Transfer & FTI_Zer0P Benchmark', de: 'Strenger Cross-Domain Transfer & FTI_Zer0P Benchmark', fr: 'Transfert cross-domain rigoureux & benchmark FTI_Zer0P', es: 'Transferencia cross-domain rigurosa y benchmark FTI_Zer0P', ar: 'انتقال صارم بين المجالات ومعيار FTI_Zer0P' },
   track2Desc: { en: 'The public YOLO+CDM print-quality pipeline was evaluated on FTI_Zer0P with strict 5-fold cross-validation, showing where separation loss transfers and where small manufacturing textures behave differently.', de: 'Die öffentliche YOLO+CDM Pipeline wurde auf FTI_Zer0P mit strenger 5-facher Kreuzvalidierung evaluiert und zeigt die Grenzen der Übertragbarkeit.', fr: 'La pipeline publique YOLO+CDM a été évaluée sur FTI_Zer0P avec validation croisée stricte en 5 plis, montrant les limites du transfert.', es: 'La pipeline pública YOLO+CDM se evaluó en FTI_Zer0P con validación cruzada estricta de 5 folds, mostrando los límites de transferencia.', ar: 'تم تقييم خط YOLO+CDM العام على FTI_Zer0P بتحقق تقاطعي صارم من 5 طيات، مع توضيح حدود انتقال خسارة الفصل.' },
   track2Meta: {
@@ -138,27 +138,41 @@ const copy = {
     es: 'Fotogramas termográficos industriales',
     ar: 'إطارات تصوير حراري صناعي',
   },
-  industrialReport: { en: 'View Early Technical Report (2024) ->', de: 'Frühzeitigen Technikbericht ansehen (2024) ->', fr: 'Voir le rapport technique précoce (2024) ->', es: 'Ver informe técnico temprano (2024) ->', ar: 'عرض التقرير التقني المبكر (2024) ->' },
+  industrialReport: { en: 'View Early Technical Report (2024)', de: 'Frühzeitigen Technikbericht ansehen (2024)', fr: 'Voir le rapport technique précoce (2024)', es: 'Ver informe técnico temprano (2024)', ar: 'عرض التقرير التقني المبكر (2024)' },
   diffusionCaseStudy: {
-    en: 'Case Study ->',
-    de: 'Fallstudie ->',
-    fr: 'Étude de cas ->',
-    es: 'Caso de estudio ->',
-    ar: 'دراسة الحالة ->',
+    en: 'Case Study',
+    de: 'Fallstudie',
+    fr: 'Étude de cas',
+    es: 'Caso de estudio',
+    ar: 'دراسة الحالة',
   },
   diffusionCode: {
-    en: 'Code: DiffusionOOD ->',
-    de: 'Code: DiffusionOOD ->',
-    fr: 'Code : DiffusionOOD ->',
-    es: 'Código: DiffusionOOD ->',
-    ar: 'الكود: DiffusionOOD ->',
+    en: 'Code: DiffusionOOD',
+    de: 'Code: DiffusionOOD',
+    fr: 'Code : DiffusionOOD',
+    es: 'Código: DiffusionOOD',
+    ar: 'الكود: DiffusionOOD',
   },
   diffusionHf: {
-    en: 'HF: Raw Scores & Weights ->',
-    de: 'HF: Rohwerte & Gewichte ->',
-    fr: 'HF : Scores bruts & poids ->',
-    es: 'HF: Puntuaciones y pesos ->',
-    ar: 'HF: النتائج الخام والأوزان ->',
+    en: 'HF: Raw Scores & Weights',
+    de: 'HF: Rohwerte & Gewichte',
+    fr: 'HF : Scores bruts & poids',
+    es: 'HF: Puntuaciones y pesos',
+    ar: 'HF: النتائج الخام والأوزان',
+  },
+  inkjetCode: {
+    en: 'Code: InkjetOOD',
+    de: 'Code: InkjetOOD',
+    fr: 'Code : InkjetOOD',
+    es: 'Código: InkjetOOD',
+    ar: 'الكود: InkjetOOD',
+  },
+  inkjetHf: {
+    en: 'HF: Model Weights',
+    de: 'HF: Modellgewichte',
+    fr: 'HF : Poids du modèle',
+    es: 'HF: Pesos del modelo',
+    ar: 'HF: أوزان النموذج',
   },
   loadInteractiveLab: {
     en: 'Launch Interactive Thesis Explorer',
@@ -169,10 +183,34 @@ const copy = {
   },
 } satisfies Record<string, TranslationMap>
 
-const publications = [
-  { title: 'Motor Imagery Classification Based Brain-Computer Interface for Rehabilitation', venue: 'Karunya Institute of Technology and Sciences - 2023', href: 'https://ahmed-3m.github.io/Motor%20Imagery%20classification%20Based%20Brain%20Computer.pdf' },
-  { title: 'Reading Thoughts Using GANs', venue: 'Project Report - JKU Linz - 2023', href: 'https://ahmed-3m.github.io/Reading%20Thoughts%20Using%20GANs.pdf' },
+const publications: Array<{ title: string; venue: TranslationMap; href: string }> = [
+  {
+    title: 'Motor Imagery Classification Based Brain-Computer Interface for Rehabilitation',
+    venue: {
+      en: 'Karunya Institute of Technology and Sciences · 2023',
+      de: 'Karunya Institute of Technology and Sciences · 2023',
+      fr: 'Karunya Institute of Technology and Sciences · 2023',
+      es: 'Karunya Institute of Technology and Sciences · 2023',
+      ar: 'معهد كارونيا للتكنولوجيا والعلوم · 2023',
+    },
+    href: '/Motor%20Imagery%20classification%20Based%20Brain%20Computer.pdf',
+  },
+  {
+    title: 'Reading Thoughts Using GANs',
+    venue: {
+      en: 'Project Report · JKU Linz · 2023',
+      de: 'Projektbericht · JKU Linz · 2023',
+      fr: 'Rapport de projet · JKU Linz · 2023',
+      es: 'Informe de proyecto · JKU Linz · 2023',
+      ar: 'تقرير مشروع · JKU لينتس · 2023',
+    },
+    href: '/Reading%20Thoughts%20Using%20GANs.pdf',
+  },
 ]
+
+function RtlArrow() {
+  return <span className="inline-block rtl:rotate-180" aria-hidden="true">&rarr;</span>
+}
 
 /**
  * Renders the two-track M.Sc. thesis research section (CIFAR-10 binary CDM OOD detection
@@ -255,11 +293,13 @@ export default function Research() {
             </div>
           </div>
 
-          <div className="cd-band-eyebrow" style={{ marginTop: 20, marginBottom: 10 }}>
-            {t(copy.chartHeading)}
-          </div>
+          <div className="px-4 min-[481px]:px-6 min-[769px]:px-8">
+            <div className="cd-band-eyebrow" style={{ marginTop: 20, marginBottom: 10 }}>
+              {t(copy.chartHeading)}
+            </div>
 
-          <ResearchCharts track="cifar" />
+            <ResearchCharts track="cifar" />
+          </div>
 
           <div className="cd-rf-formula-box">
             <div className="cd-rfc-simple-label">{t(copy.formulaLabel)}</div>
@@ -307,24 +347,24 @@ export default function Research() {
                     cursor: 'pointer',
                   }}
                 >
-                  {t(copy.loadInteractiveLab)} &rarr;
+                  {t(copy.loadInteractiveLab)} <RtlArrow />
                 </button>
               </div>
             )}
           </div>
 
           <div className="cd-rf-footer" style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center' }}>
-            <a href="https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf" target="_blank" rel="noopener noreferrer" className="cd-proj-link">
-              {t(copy.thesisPdf)}
+            <a href="/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf" target="_blank" rel="noopener noreferrer" className="cd-proj-link">
+              {t(copy.thesisPdf)} <RtlArrow />
             </a>
             <Link href="/case-studies/diffusion-ood/" className="cd-proj-link">
-              {t(copy.diffusionCaseStudy)}
+              {t(copy.diffusionCaseStudy)} <RtlArrow />
             </Link>
             <a href="https://github.com/ahmed-3m/DiffusionOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link">
-              {t(copy.diffusionCode)}
+              {t(copy.diffusionCode)} <RtlArrow />
             </a>
             <a href="https://huggingface.co/ahmed-3m/DiffusionOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link">
-              {t(copy.diffusionHf)}
+              {t(copy.diffusionHf)} <RtlArrow />
             </a>
           </div>
         </div>
@@ -334,7 +374,7 @@ export default function Research() {
             <div className="cd-rf-left">
               <div className="cd-rf-label">{t(copy.track2)}</div>
               <h3 className="cd-rf-title">{t(copy.track2Title)}</h3>
-              <div className="cd-rf-desc">{t(copy.track2Desc)} <strong>0.8673 +/- 0.0230 AUROC</strong>.</div>
+              <div className="cd-rf-desc">{t(copy.track2Desc)} <strong>0.8673 ± 0.0230 AUROC</strong>.</div>
               <div className="cd-rf-meta">{t(copy.track2Meta)}</div>
             </div>
             <div className="cd-rf-metric">
@@ -344,16 +384,18 @@ export default function Research() {
             </div>
           </div>
 
-          <div className="cd-band-eyebrow" style={{ marginTop: 20, marginBottom: 10 }}>
-            {t(copy.datasetOverview)}: {t(copy.thermographicFrames)} · {t(copy.zeroDefectSamples)} · {t(copy.defectCategories)} · {t(copy.fiveFoldCv)}
+          <div className="px-4 min-[481px]:px-6 min-[769px]:px-8">
+            <div className="cd-band-eyebrow" style={{ marginTop: 20, marginBottom: 10 }}>
+              {t(copy.datasetOverview)}: {t(copy.thermographicFrames)} · {t(copy.zeroDefectSamples)} · {t(copy.defectCategories)} · {t(copy.fiveFoldCv)}
+            </div>
+
+            <ResearchCharts track="industrial" />
           </div>
 
-          <ResearchCharts track="industrial" />
-
           <div className="cd-rf-footer" style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center' }}>
-            <a href="https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf" target="_blank" rel="noopener noreferrer" className="cd-proj-link">{t(copy.industrialReport)}</a>
-            <a href="https://github.com/ahmed-3m/InkjetOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link">Code: InkjetOOD -&gt;</a>
-            <a href="https://huggingface.co/ahmed-3m/InkjetOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link">HF: Model Weights -&gt;</a>
+            <a href="/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf" target="_blank" rel="noopener noreferrer" className="cd-proj-link">{t(copy.industrialReport)} <RtlArrow /></a>
+            <a href="https://github.com/ahmed-3m/InkjetOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link">{t(copy.inkjetCode)} <RtlArrow /></a>
+            <a href="https://huggingface.co/ahmed-3m/InkjetOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link">{t(copy.inkjetHf)} <RtlArrow /></a>
           </div>
         </div>
 
@@ -362,9 +404,9 @@ export default function Research() {
             <a key={pub.href} href={pub.href} target="_blank" rel="noopener noreferrer" className="cd-pub-item reveal">
               <div>
                 <div className="cd-pub-title">{pub.title}</div>
-                <div className="cd-pub-venue">{pub.venue}</div>
+                <div className="cd-pub-venue">{t(pub.venue)}</div>
               </div>
-              <div className="cd-pub-arrow">-&gt;</div>
+              <div className="cd-pub-arrow"><RtlArrow /></div>
             </a>
           ))}
         </div>
