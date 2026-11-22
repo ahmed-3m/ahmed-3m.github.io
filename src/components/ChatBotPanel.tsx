@@ -1,6 +1,6 @@
 'use client'
 
-import type { CSSProperties, FormEvent, ReactNode } from 'react'
+import type { CSSProperties, FormEvent, MouseEvent, ReactNode } from 'react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { ArrowUp, ChevronRight, X } from 'lucide-react'
 import { usePathname } from 'next/navigation'
@@ -46,12 +46,14 @@ type ChatCompletionResponse = {
     }
   }>
   error?: string | ApiErrorDetail
+  scope?: 'proxy' | 'upstream'
 }
 
 type ChatCompletionError = Error & {
   status?: number
   code?: string
   provider?: 'Groq' | 'BigModel'
+  isProxyRateLimit?: boolean
 }
 
 const GROQ_MODEL = process.env.NEXT_PUBLIC_GROQ_MODEL || 'openai/gpt-oss-20b'
@@ -250,7 +252,7 @@ export const LOCAL_REPLIES = {
     de: `Ahmed ist AI/ML Engineer in Linz mit einem Master in KI von der JKU und einem Bachelor in Mechatronik. Sein Weg führte von Elektronik und Robotik zur industriellen Bildverarbeitung und KI-Forschung. Sein SCARA-Abschlussprojekt erhielt die Note Excellent. [Ausbildung und Hintergrund](${BACKGROUND_URL})`,
     fr: `Ahmed est ingénieur IA/ML à Linz, diplômé d’un master en IA à la JKU et d’un bachelor en mécatronique. Il est passé de l’électronique et de la robotique à la vision industrielle et à la recherche en IA. Son projet SCARA a reçu la mention Excellent. [Formation et parcours](${BACKGROUND_URL})`,
     es: `Ahmed es ingeniero de IA/ML en Linz, con un máster en IA por la JKU y un grado en Mecatrónica. Pasó de la electrónica y la robótica a la visión industrial y la investigación en IA. Su proyecto SCARA recibió la calificación Excelente. [Formación y trayectoria](${BACKGROUND_URL})`,
-    ar: `أحمد مهندس ذكاء اصطناعي وتعلّم آلي في لينز، حاصل على ماجستير في الذكاء الاصطناعي من JKU وبكالوريوس في الميكاترونكس. انتقل من الإلكترونيات والروبوتات إلى الرؤية الحاسوبية الصناعية وأبحاث الذكاء الاصطناعي. حصل مشروعه SCARA على تقدير ممتاز. [التعليم والخبرة](${BACKGROUND_URL})`,
+    ar: `أحمد مهندس ذكاء اصطناعي وتعلّم آلي في لينتس، حاصل على ماجستير في الذكاء الاصطناعي من JKU وبكالوريوس في الميكاترونكس. انتقل من الإلكترونيات والروبوتات إلى الرؤية الحاسوبية الصناعية وأبحاث الذكاء الاصطناعي. حصل مشروعه SCARA على تقدير ممتاز. [التعليم والخبرة](${BACKGROUND_URL})`,
   },
   cv: {
     en: `[Download Ahmed’s public CV (PDF)](${CV_URL})`,
@@ -285,7 +287,7 @@ export const LOCAL_REPLIES = {
     de: `Sihem (Telegram @sihem_ai_bot, PWA: https://sihem-pwa.pages.dev/, Beta mit Einladung) ist Ahmeds proaktiver KI-Mentor-Assistent für Gewohnheiten und Tagesroutinen, aufgenommen in den tech2b-Inkubator in Linz (Mai 2026–heute). Entwickelt auf Supabase Edge Functions (Deno/TypeScript) und PostgreSQL mit RLS, nutzt das System eine deterministische Generatoren→Arbiter→Komponist-Entscheidungsmaschine für Check-Ins, pgvector-Langzeitgedächtnis mit RAG, Multi-Provider-LLM-Routing (GLM/Gemini/Groq) mit Failover, Cloudflare MeloTTS-Spracherinnerungen und Google-Kalender-Synchronisation. [Zur öffentlichen Fallstudie](${SIHEM_URL}).`,
     fr: `Sihem (Telegram @sihem_ai_bot, PWA : https://sihem-pwa.pages.dev/, bêta sur invitation) est l'assistant personnel mentor proactif d'Ahmed pour les habitudes et routines quotidiennes, incubé chez tech2b à Linz (mai 2026–présent). Développé sur Supabase Edge Functions (Deno/TypeScript) et PostgreSQL avec RLS, il intègre un moteur décisionnel générateurs→arbitre→compositeur pour la planification des rappels, une mémoire long terme pgvector avec RAG, un routage LLM multi-fournisseurs (GLM/Gemini/Groq) avec basculement automatique, des rappels vocaux Cloudflare MeloTTS et la synchronisation Google Calendar. [Lire l’étude de cas publique](${SIHEM_URL}).`,
     es: `Sihem (Telegram @sihem_ai_bot, PWA: https://sihem-pwa.pages.dev/, beta por invitación) es el asistente mentor personal proactivo de Ahmed para hábitos y rutinas diarias, aceptado en la incubadora tech2b de Linz (mayo 2026–presente). Desarrollado con Supabase Edge Functions (Deno/TypeScript) y PostgreSQL con RLS, cuenta con un motor de decisiones generadores→árbitro→compositor para programar recordatorios, memoria a largo plazo pgvector con RAG, enrutamiento LLM multiproveedor (GLM/Gemini/Groq) con failover, avisos de voz Cloudflare MeloTTS y sincronización con Google Calendar. [Leer el caso de estudio público](${SIHEM_URL}).`,
-    ar: `مشروع Sihem (تيليجرام @sihem_ai_bot، وتطبيق الويب: https://sihem-pwa.pages.dev/، نسخة تجريبية بدعوة) هو مساعد شخصي موجه واستباقي للعادات والروتين اليومي من تطوير أحمد، ومقبول في حاضنة الأعمال tech2b في لينز (مايو 2026 – الآن). مبني على Supabase Edge Functions (Deno/TypeScript) وPostgreSQL مع RLS، ويتميز بمحرك قرار حتمي (مولدات←محكم←مؤلف) لجدولة التنبيهات، وذاكرة pgvector طويلة المدى مع RAG، وتوجيه LLM متعدد المزودين (GLM/Gemini/Groq) مع تبديل تلقائي، وتذكيرات صوتية بـ Cloudflare MeloTTS، ومزامنة Google Calendar. [اقرأ دراسة الحالة العامة](${SIHEM_URL}).`,
+    ar: `مشروع Sihem (تيليجرام @sihem_ai_bot، وتطبيق الويب: https://sihem-pwa.pages.dev/، نسخة تجريبية بدعوة) هو مساعد شخصي موجه واستباقي للعادات والروتين اليومي من تطوير أحمد، ومقبول في حاضنة الأعمال tech2b في لينتس (مايو 2026 – الآن). مبني على Supabase Edge Functions (Deno/TypeScript) وPostgreSQL مع RLS، ويتميز بمحرك قرار حتمي (مولدات←محكم←مؤلف) لجدولة التنبيهات، وذاكرة pgvector طويلة المدى مع RAG، وتوجيه LLM متعدد المزودين (GLM/Gemini/Groq) مع تبديل تلقائي، وتذكيرات صوتية بـ Cloudflare MeloTTS، ومزامنة Google Calendar. [اقرأ دراسة الحالة العامة](${SIHEM_URL}).`,
   },
   thesis: {
     en: `Ahmed’s thesis tested whether a diffusion model could recognize unfamiliar images. Separation loss improved mean AUROC from 92.52% ± 11.07% to 99.03% ± 0.07% across three seeds on a binary CIFAR-10 airplane-vs-rest split. [See the findings and limits](${DIFFUSION_URL}).`,
@@ -306,21 +308,28 @@ export const LOCAL_REPLIES = {
     de: `Ahmed lebt in Linz und sucht Vollzeitstellen in AI/ML, insbesondere in der Bildverarbeitung und im angewandten ML. [Kontaktieren Sie Ahmed](${CONTACT_URL}), um eine Stelle und seine aktuelle Verfügbarkeit zu besprechen.`,
     fr: `Ahmed est basé à Linz et ouvert aux postes à temps plein en IA/ML, notamment en vision par ordinateur et en ML appliqué. [Contactez Ahmed](${CONTACT_URL}) pour parler d’un poste ou confirmer ses disponibilités.`,
     es: `Ahmed vive en Linz y busca puestos a tiempo completo en IA/ML, especialmente en visión por computador y ML aplicado. [Contacta con Ahmed](${CONTACT_URL}) para hablar de un puesto o confirmar su disponibilidad.`,
-    ar: `يقيم أحمد في لينز وهو متاح لوظائف بدوام كامل في الذكاء الاصطناعي وتعلّم الآلة، خاصة في الرؤية الحاسوبية وتعلّم الآلة التطبيقي. [تواصل مع أحمد](${CONTACT_URL}) لمناقشة فرصة عمل أو تأكيد توافره الحالي.`,
+    ar: `يقيم أحمد في لينتس وهو متاح لوظائف بدوام كامل في الذكاء الاصطناعي وتعلّم الآلة، خاصة في الرؤية الحاسوبية وتعلّم الآلة التطبيقي. [تواصل مع أحمد](${CONTACT_URL}) لمناقشة فرصة عمل أو تأكيد توافره الحالي.`,
+  },
+  mergeproof: {
+    en: `[mergeproof](https://github.com/ahmed-3m/mergeproof) checks AI-written pull requests against configured deterministic merge requirements without calling an LLM. Passing its checks does not guarantee defect-free code.`,
+    de: `[mergeproof](https://github.com/ahmed-3m/mergeproof) prüft KI-generierte Pull Requests anhand konfigurierter deterministischer Merge-Anforderungen ohne LLM-Aufruf. Bestandene Prüfungen garantieren keinen fehlerfreien Code.`,
+    fr: `[mergeproof](https://github.com/ahmed-3m/mergeproof) vérifie les pull requests écrites par IA selon des exigences de fusion déterministes configurées sans appel à un LLM. Réussir ces contrôles ne garantit pas un code sans défaut.`,
+    es: `[mergeproof](https://github.com/ahmed-3m/mergeproof) verifica pull requests escritos por IA frente a requisitos de fusión deterministas configurados sin llamar a un LLM. Superar estas comprobaciones no garantiza un código libre de errores.`,
+    ar: `أداة [mergeproof](https://github.com/ahmed-3m/mergeproof) تفحص طلبات الدمج المكتوبة بالذكاء الاصطناعي وفق متطلبات دمج حتمية محددة دون استدعاء نموذج لغوي. اجتياز هذه الفحوص لا يضمن خلو الشيفرة من الأخطاء.`,
   },
   tech_stack: {
-    en: `Ahmed's stack spans AI research and production engineering:\n- ML: PyTorch, Python, Diffusion Models, YOLO, OpenCV, Anomaly Detection\n- Product/Infra: Next.js, React, TypeScript, Convex, Docker, PostgreSQL, Cloudflare\n- Tools: Git, Weights & Biases, Hugging Face, Linux\n[Skills and background](${BACKGROUND_URL}) · [Inkjet inspection](${INDUSTRIAL_URL}) · [Sihem](${SIHEM_URL})`,
-    de: `Ahmeds Stack umfasst KI-Forschung und Produktionsentwicklung:\n- ML: PyTorch, Python, Diffusionsmodelle, YOLO, OpenCV, Anomalieerkennung\n- Produkt/Infra: Next.js, React, TypeScript, Convex, Docker, PostgreSQL, Cloudflare\n- Tools: Git, Weights & Biases, Hugging Face, Linux\n[Skills und Hintergrund](${BACKGROUND_URL}) · [Inkjet-Prüfung](${INDUSTRIAL_URL}) · [Sihem](${SIHEM_URL})`,
-    fr: `Le stack d'Ahmed couvre la recherche IA et la production :\n- ML : PyTorch, Python, Modèles de diffusion, YOLO, OpenCV, Détection d'anomalies\n- Produit/Infra : Next.js, React, TypeScript, Convex, Docker, PostgreSQL, Cloudflare\n- Outils : Git, Weights & Biases, Hugging Face, Linux\n[Compétences et parcours](${BACKGROUND_URL}) · [Inspection jet d’encre](${INDUSTRIAL_URL}) · [Sihem](${SIHEM_URL})`,
-    es: `El stack de Ahmed abarca investigación en IA e ingeniería de producción:\n- ML: PyTorch, Python, Modelos de difusión, YOLO, OpenCV, Detección de anomalías\n- Producto/Infra: Next.js, React, TypeScript, Convex, Docker, PostgreSQL, Cloudflare\n- Herramientas: Git, Weights & Biases, Hugging Face, Linux\n[Habilidades y trayectoria](${BACKGROUND_URL}) · [Inspección inkjet](${INDUSTRIAL_URL}) · [Sihem](${SIHEM_URL})`,
-    ar: `يشمل الـ stack الخاص بأحمد أبحاث الذكاء الاصطناعي وهندسة الإنتاج:\n- تعلم الآلة: PyTorch وPython ونماذج الانتشار وYOLO وOpenCV وكشف الشذوذ\n- المنتج والبنية: Next.js وReact وTypeScript وConvex وDocker وPostgreSQL وCloudflare\n- الأدوات: Git وWeights & Biases وHugging Face وLinux\n[المهارات والخلفية](${BACKGROUND_URL}) · [فحص الطباعة](${INDUSTRIAL_URL}) · [Sihem](${SIHEM_URL})`,
+    en: `Ahmed's stack spans AI research and production engineering:\n- ML: PyTorch, Python, Diffusion Models, YOLO, OpenCV, Anomaly Detection\n- Product/Infra: Next.js, React, TypeScript, Supabase, Deno, Docker, PostgreSQL, pgvector, Cloudflare\n- Tools: Git, mergeproof, Weights & Biases, Hugging Face, Linux\n[Skills and background](${BACKGROUND_URL}) · [Inkjet inspection](${INDUSTRIAL_URL}) · [Sihem](${SIHEM_URL})`,
+    de: `Ahmeds Stack umfasst KI-Forschung und Produktionsentwicklung:\n- ML: PyTorch, Python, Diffusionsmodelle, YOLO, OpenCV, Anomalieerkennung\n- Produkt/Infra: Next.js, React, TypeScript, Supabase, Deno, Docker, PostgreSQL, pgvector, Cloudflare\n- Tools: Git, mergeproof, Weights & Biases, Hugging Face, Linux\n[Skills und Hintergrund](${BACKGROUND_URL}) · [Inkjet-Prüfung](${INDUSTRIAL_URL}) · [Sihem](${SIHEM_URL})`,
+    fr: `Le stack d'Ahmed couvre la recherche IA et la production :\n- ML : PyTorch, Python, Modèles de diffusion, YOLO, OpenCV, Détection d'anomalies\n- Produit/Infra : Next.js, React, TypeScript, Supabase, Deno, Docker, PostgreSQL, pgvector, Cloudflare\n- Outils : Git, mergeproof, Weights & Biases, Hugging Face, Linux\n[Compétences et parcours](${BACKGROUND_URL}) · [Inspection jet d’encre](${INDUSTRIAL_URL}) · [Sihem](${SIHEM_URL})`,
+    es: `El stack de Ahmed abarca investigación en IA e ingeniería de producción:\n- ML: PyTorch, Python, Modelos de difusión, YOLO, OpenCV, Detección de anomalías\n- Producto/Infra: Next.js, React, TypeScript, Supabase, Deno, Docker, PostgreSQL, pgvector, Cloudflare\n- Herramientas: Git, mergeproof, Weights & Biases, Hugging Face, Linux\n[Habilidades y trayectoria](${BACKGROUND_URL}) · [Inspección inkjet](${INDUSTRIAL_URL}) · [Sihem](${SIHEM_URL})`,
+    ar: `يشمل الـ stack الخاص بأحمد أبحاث الذكاء الاصطناعي وهندسة الإنتاج:\n- تعلم الآلة: PyTorch وPython ونماذج الانتشار وYOLO وOpenCV وكشف الشذوذ\n- المنتج والبنية: Next.js وReact وTypeScript وSupabase وDeno وDocker وPostgreSQL وpgvector وCloudflare\n- الأدوات: Git وmergeproof وWeights & Biases وHugging Face وLinux\n[المهارات والخلفية](${BACKGROUND_URL}) · [فحص الطباعة](${INDUSTRIAL_URL}) · [Sihem](${SIHEM_URL})`,
   },
   achievements: {
     en: `Key proof points:\n- [DiffusionOOD](${DIFFUSION_URL}): 99.03% ± 0.07% AUROC (3-seed mean) on within-CIFAR airplane-vs-rest binary OOD split with novel class-conditional separation loss (+6.5pp over 92.52% ± 11.07% baseline; M.Sc. thesis under Prof. Sepp Hochreiter, graded 1)\n- [InkjetOOD](${INDUSTRIAL_URL}): 0.8673 ± 0.0230 AUROC baseline under strict 5-fold CV on the public FTI_Zer0P industrial dataset at PROFACTOR GmbH\n- [Sihem](${SIHEM_URL}): Solo Developer & Project Lead (tech2b incubator Linz, invitation-only beta personal-mentor assistant)\n- [mergeproof](https://github.com/ahmed-3m/mergeproof): checks AI-written pull requests against configured deterministic merge requirements without calling an LLM (passing those checks does not guarantee defect-free code)`,
     de: `Wichtige Meilensteine:\n- [DiffusionOOD](${DIFFUSION_URL}): 99,03 % ± 0,07 % AUROC (3-Seed-Mittel) auf dem binären Within-CIFAR-Split Flugzeuge gegen den Rest mit neuartiger class-conditional separation loss (+6,5 Prozentpunkte gegenüber 92,52 % ± 11,07 % Baseline; Masterarbeit bei Prof. Sepp Hochreiter, Note 1)\n- [InkjetOOD](${INDUSTRIAL_URL}): 0,8673 ± 0,0230 AUROC-Baseline auf dem öffentlichen Datensatz FTI_Zer0P unter strenger 5-facher Kreuzvalidierung bei PROFACTOR GmbH\n- [Sihem](${SIHEM_URL}): Solo-Entwickler & Projektleiter (tech2b Inkubator Linz, KI-Mentor-Assistent in Beta mit Einladung)\n- [mergeproof](https://github.com/ahmed-3m/mergeproof): prüft KI-generierte PRs anhand konfigurierter deterministischer Merge-Anforderungen ohne LLM-Aufruf (bestandene Prüfungen garantieren keine Fehlerfreiheit)`,
     fr: `Principaux résultats :\n- [DiffusionOOD](${DIFFUSION_URL}) : 99,03 % ± 0,07 % AUROC (moyenne sur 3 seeds) sur le split binaire within-CIFAR avions contre le reste avec separation loss conditionnelle (+6,5 points par rapport à la référence de 92,52 % ± 11,07 % ; mémoire dirigé par Prof. Sepp Hochreiter, note 1)\n- [InkjetOOD](${INDUSTRIAL_URL}) : référence à 0,8673 ± 0,0230 AUROC sur le jeu public FTI_Zer0P en validation croisée 5 plis chez PROFACTOR GmbH\n- [Sihem](${SIHEM_URL}) : Développeur solo & chef de projet (incubateur tech2b Linz, assistant mentor IA en bêta sur invitation)\n- [mergeproof](https://github.com/ahmed-3m/mergeproof) : vérifie les PR générées par IA selon des exigences déterministes configurées sans appel LLM (la réussite des contrôles ne garantit pas un code sans défaut)`,
     es: `Logros destacados:\n- [DiffusionOOD](${DIFFUSION_URL}): 99.03% ± 0.07% AUROC (media de 3 seeds) en el split binario within-CIFAR aviones contra el resto con separation loss condicional (+6.5 puntos porcentuales frente al 92.52% ± 11.07% de referencia; tesis con Prof. Sepp Hochreiter, nota 1)\n- [InkjetOOD](${INDUSTRIAL_URL}): referencia de 0.8673 ± 0.0230 AUROC en el dataset público FTI_Zer0P con validación cruzada 5-fold en PROFACTOR GmbH\n- [Sihem](${SIHEM_URL}): Desarrollador en solitario y líder de proyecto (incubadora tech2b Linz, asistente mentor IA en beta por invitación)\n- [mergeproof](https://github.com/ahmed-3m/mergeproof): verifica PRs generadas por IA según requisitos deterministas configurados sin llamadas a un LLM (superar las comprobaciones no garantiza que el código esté libre de errores)`,
-    ar: `أبرز الإنجازات:\n- [DiffusionOOD](${DIFFUSION_URL}): 99.03% ± 0.07% AUROC (متوسط 3 بذور) على تقسيم within-CIFAR الثنائي للطائرات مقابل البقية مع separation loss الشرطية (+6.5 نقطة مئوية مقارنةً بالأساس 92.52% ± 11.07%؛ رسالة الماجستير بإشراف Prof. Sepp Hochreiter، تقدير 1)\n- [InkjetOOD](${INDUSTRIAL_URL}): خط أساس 0.8673 ± 0.0230 AUROC على مجموعة FTI_Zer0P العامة بتحقق تقاطعي 5-fold لدى PROFACTOR GmbH\n- [Sihem](${SIHEM_URL}): مطور منفرد وقائد مشروع (حاضنة tech2b لينز، مساعد موجه بالذكاء الاصطناعي في نسخة تجريبية بدعوة)\n- [mergeproof](https://github.com/ahmed-3m/mergeproof): يتحقق من طلبات الدمج المكتوبة بالذكاء الاصطناعي وفق متطلبات حتمية محددة دون استدعاء نموذج لغوي (اجتياز الفحوص لا يضمن خلو الشيفرة من الأخطاء)`,
+    ar: `أبرز الإنجازات:\n- [DiffusionOOD](${DIFFUSION_URL}): 99.03% ± 0.07% AUROC (متوسط 3 بذور) على تقسيم within-CIFAR الثنائي للطائرات مقابل البقية مع separation loss الشرطية (+6.5 نقطة مئوية مقارنةً بالأساس 92.52% ± 11.07%؛ رسالة الماجستير بإشراف Prof. Sepp Hochreiter، تقدير 1)\n- [InkjetOOD](${INDUSTRIAL_URL}): خط أساس 0.8673 ± 0.0230 AUROC على مجموعة FTI_Zer0P العامة بتحقق تقاطعي 5-fold لدى PROFACTOR GmbH\n- [Sihem](${SIHEM_URL}): مطور منفرد وقائد مشروع (حاضنة tech2b لينتس، مساعد موجه بالذكاء الاصطناعي في نسخة تجريبية بدعوة)\n- [mergeproof](https://github.com/ahmed-3m/mergeproof): يتحقق من طلبات الدمج المكتوبة بالذكاء الاصطناعي وفق متطلبات حتمية محددة دون استدعاء نموذج لغوي (اجتياز الفحوص لا يضمن خلو الشيفرة من الأخطاء)`,
   },
 } satisfies Record<string, TranslationMap>
 
@@ -362,6 +371,7 @@ function inferReplyId(text: string): ReplyId | undefined {
   if (/^\s*(?:his|the|a)?\s*(?:cv|r[eé]sum[eé])(?:\s+please)?\s*[?!. ]*$|\b(?:download|get|find|see|show|share|send|read|open|view|access|check|need|want|have|where(?:'s|\s+is)|link(?:\s+to)?|copy\s+of|his|public|pdf|son|télécharger|descargar|su|ver|obtener)\b[^.?!]{0,35}\b(?:cv|r[eé]sum[eé])\b|\b(?:cv|r[eé]sum[eé])\b[^.?!]{0,20}\b(?:link|pdf|file|download|url|please|available)\b|curr[ií]culum|lebenslauf|سير(?:ة|ته)\s*الذاتية/i.test(text)) return 'cv'
   if (/(contact|email|linkedin|reach|talk to|connect|تواصل)/i.test(text)) return 'contact'
   if (/(open to work|available|hire|job|role|opportunit|وظائف)/i.test(text)) return 'open_to_work'
+  if (/mergeproof|merge\s*gate|pr\s*check/i.test(text)) return 'mergeproof'
   if (/(tech stack|stack|tools|technolog)/i.test(text)) return 'tech_stack'
   if (/(achievement|accomplishment|highlights|best result|proof points)/i.test(text)) return 'achievements'
   if (/(background|education|mechatronics|ausbildung|parcours|trayectoria|خلفية)/i.test(text)) return 'background'
@@ -381,6 +391,7 @@ const FOLLOWUP_PROMPTS: Partial<Record<ReplyId, PromptId[]>> = {
   thesis: ['industrial_result', 'background', 'cv'],
   sihem_intro: ['sihem_tech', 'projects_best', 'contact'],
   sihem: ['sihem_overview', 'projects_best', 'contact'],
+  mergeproof: ['projects_best', 'tech_stack', 'contact'],
   cv: ['background', 'open_to_work', 'contact'],
   background: ['projects_best', 'cv', 'contact'],
   open_to_work: ['cv', 'contact', 'projects_best'],
@@ -409,13 +420,25 @@ function createChatError(
   message: string,
   provider: 'Groq' | 'BigModel',
   status?: number,
-  code?: string
+  code?: string,
+  isProxyRateLimit = false
 ): ChatCompletionError {
   const error = new Error(message) as ChatCompletionError
   error.provider = provider
   error.status = status
   error.code = code
+  error.isProxyRateLimit = isProxyRateLimit
   return error
+}
+
+function isProxyRateLimitPayload(
+  data: ChatCompletionResponse | null,
+  status: number,
+  useProxy: boolean
+): boolean {
+  if (!useProxy || status !== 429 || !data) return false
+  if (data.scope !== undefined) return data.scope === 'proxy'
+  return data.error === 'Rate limit exceeded. Please try again later.'
 }
 
 type StreamDelta = (fullContent: string) => void
@@ -438,9 +461,12 @@ function routeLocally(message: string): ChatLane | null {
   return null
 }
 
+type ChatProvider = 'Groq' | 'BigModel'
+type ProviderAuth = { token: string; url: string; useProxy: boolean }
+
 async function routeWithClassifier(
   message: string,
-  auth: { token: string; url: string; useProxy: boolean }
+  auth: ProviderAuth
 ): Promise<ChatLane> {
   try {
     const headers: Record<string, string> = { 'Content-Type': 'application/json' }
@@ -465,6 +491,13 @@ async function routeWithClassifier(
         }),
         signal: controller.signal,
       })
+      if (auth.useProxy && response.status === 429) {
+        const errorData = (await response.json().catch(() => null)) as ChatCompletionResponse | null
+        if (isProxyRateLimitPayload(errorData, response.status, auth.useProxy)) {
+          throw createChatError('Rate limit exceeded.', 'BigModel', 429, undefined, true)
+        }
+        return 'deep'
+      }
       if (!response.ok) return 'deep'
       const data = (await response.json()) as ChatCompletionResponse
       const verdict = data.choices?.[0]?.message?.content?.trim().toLowerCase() ?? ''
@@ -472,12 +505,109 @@ async function routeWithClassifier(
     } finally {
       clearTimeout(timeout)
     }
-  } catch {
+  } catch (err) {
+    if ((err as ChatCompletionError | undefined)?.isProxyRateLimit) throw err
     return 'deep'
   }
 }
 
-type ProviderAuth = { token: string; url: string; useProxy: boolean }
+async function throwProviderError(
+  response: Response,
+  provider: ChatProvider,
+  useProxy: boolean,
+  status503Message?: string
+): Promise<never> {
+  const data = (await response.json().catch(() => null)) as ChatCompletionResponse | null
+  const detail = data?.error
+  const errorDetail = typeof detail === 'string' ? undefined : detail
+  const message =
+    typeof detail === 'string'
+      ? detail
+      : errorDetail?.message ?? `${provider} could not respond right now.`
+  const isProxyRateLimit = isProxyRateLimitPayload(data, response.status, useProxy)
+  if (status503Message && response.status === 503) {
+    throw createChatError(status503Message, provider, response.status, errorDetail?.code, isProxyRateLimit)
+  }
+  throw createChatError(message, provider, response.status, errorDetail?.code, isProxyRateLimit)
+}
+
+async function readChatResponse({
+  response,
+  provider,
+  streaming,
+  timers,
+  onDelta,
+}: {
+  response: Response
+  provider: ChatProvider
+  streaming: boolean
+  timers: ReturnType<typeof createRequestTimers>
+  onDelta?: StreamDelta
+}): Promise<string> {
+  if (!streaming || !response.body) {
+    timers.onFirstByte()
+    const data = (await response.json()) as ChatCompletionResponse
+    const reply = data.choices?.[0]?.message?.content?.trim()
+    if (!reply) throw createChatError(`${provider} returned an empty response.`, provider)
+    return reply
+  }
+
+  timers.onFirstByte()
+
+  const reader = response.body.getReader()
+  const decoder = new TextDecoder()
+  let buffer = ''
+  let content = ''
+
+  const consumeLine = (line: string) => {
+    const trimmed = line.trim()
+    if (!trimmed.startsWith('data:')) return
+    const payload = trimmed.slice(5).trim()
+    if (!payload || payload === '[DONE]') return
+    let chunk: StreamChunk
+    try {
+      chunk = JSON.parse(payload) as StreamChunk
+    } catch {
+      return
+    }
+    if (chunk.error) {
+      const message =
+        typeof chunk.error === 'string'
+          ? chunk.error
+          : chunk.error.message ?? `${provider} stream failed.`
+      throw createChatError(message, provider)
+    }
+    const delta = chunk.choices?.[0]?.delta?.content
+    if (delta) {
+      content += delta
+      onDelta?.(content)
+    }
+  }
+
+  try {
+    for (;;) {
+      const { done, value } = await reader.read()
+      if (done) break
+      timers.onChunk()
+      buffer += decoder.decode(value, { stream: true })
+      const lines = buffer.split('\n')
+      buffer = lines.pop() ?? ''
+      for (const line of lines) consumeLine(line)
+    }
+    if (buffer) consumeLine(buffer)
+  } catch (streamError) {
+    if (content.trim()) {
+      console.warn(`Chat stream from ${provider} ended early — keeping partial reply.`, streamError)
+      return content.trim()
+    }
+    throw streamError
+  }
+
+  if (!content.trim()) {
+    throw createChatError(`${provider} returned an empty response.`, provider)
+  }
+  return content.trim()
+}
 
 async function fetchBigModel({
   messages,
@@ -528,78 +658,16 @@ async function fetchBigModel({
     })
 
     if (!response.ok) {
-      const data = (await response.json().catch(() => ({}))) as ChatCompletionResponse
-      const errorDetail = typeof data.error === 'string' ? undefined : data.error
-      const message =
-        typeof data.error === 'string'
-          ? data.error
-          : errorDetail?.message ?? 'BigModel could not respond right now.'
-      throw createChatError(message, 'BigModel', response.status, errorDetail?.code)
+      await throwProviderError(response, 'BigModel', auth.useProxy)
     }
 
-    if (!streaming || !response.body) {
-      timers.onFirstByte()
-      const data = (await response.json()) as ChatCompletionResponse
-      const reply = data.choices?.[0]?.message?.content?.trim()
-      if (!reply) throw createChatError('BigModel returned an empty response.', 'BigModel')
-      return reply
-    }
-
-    timers.onFirstByte()
-
-    const reader = response.body.getReader()
-    const decoder = new TextDecoder()
-    let buffer = ''
-    let content = ''
-
-    const consumeLine = (line: string) => {
-      const trimmed = line.trim()
-      if (!trimmed.startsWith('data:')) return
-      const payload = trimmed.slice(5).trim()
-      if (!payload || payload === '[DONE]') return
-      let chunk: StreamChunk
-      try {
-        chunk = JSON.parse(payload) as StreamChunk
-      } catch {
-        return
-      }
-      if (chunk.error) {
-        const message =
-          typeof chunk.error === 'string'
-            ? chunk.error
-            : chunk.error.message ?? 'BigModel stream failed.'
-        throw createChatError(message, 'BigModel')
-      }
-      const delta = chunk.choices?.[0]?.delta?.content
-      if (delta) {
-        content += delta
-        onDelta?.(content)
-      }
-    }
-
-    try {
-      for (;;) {
-        const { done, value } = await reader.read()
-        if (done) break
-        timers.onChunk()
-        buffer += decoder.decode(value, { stream: true })
-        const lines = buffer.split('\n')
-        buffer = lines.pop() ?? ''
-        for (const line of lines) consumeLine(line)
-      }
-      if (buffer) consumeLine(buffer)
-    } catch (streamError) {
-      if (content.trim()) {
-        console.warn('Chat stream from BigModel ended early — keeping partial reply.', streamError)
-        return content.trim()
-      }
-      throw streamError
-    }
-
-    if (!content.trim()) {
-      throw createChatError('BigModel returned an empty response.', 'BigModel')
-    }
-    return content.trim()
+    return await readChatResponse({
+      response,
+      provider: 'BigModel',
+      streaming,
+      timers,
+      onDelta,
+    })
   } finally {
     timers.clear()
   }
@@ -651,81 +719,21 @@ async function fetchGroq({
     })
 
     if (!response.ok) {
-      const data = (await response.json().catch(() => ({}))) as ChatCompletionResponse
-      const errorDetail = typeof data.error === 'string' ? undefined : data.error
-      const message =
-        typeof data.error === 'string'
-          ? data.error
-          : errorDetail?.message ?? 'Groq could not respond right now.'
-      if (response.status === 503) {
-        throw createChatError('Model is warming up, try again in a moment.', 'Groq', response.status)
-      }
-      throw createChatError(message, 'Groq', response.status, errorDetail?.code)
+      await throwProviderError(
+        response,
+        'Groq',
+        auth.useProxy,
+        'Model is warming up, try again in a moment.'
+      )
     }
 
-    if (!streaming || !response.body) {
-      timers.onFirstByte()
-      const data = (await response.json()) as ChatCompletionResponse
-      const reply = data.choices?.[0]?.message?.content?.trim()
-      if (!reply) throw createChatError('Groq returned an empty response.', 'Groq')
-      return reply
-    }
-
-    timers.onFirstByte()
-
-    const reader = response.body.getReader()
-    const decoder = new TextDecoder()
-    let buffer = ''
-    let content = ''
-
-    const consumeLine = (line: string) => {
-      const trimmed = line.trim()
-      if (!trimmed.startsWith('data:')) return
-      const payload = trimmed.slice(5).trim()
-      if (!payload || payload === '[DONE]') return
-      let chunk: StreamChunk
-      try {
-        chunk = JSON.parse(payload) as StreamChunk
-      } catch {
-        return
-      }
-      if (chunk.error) {
-        const message =
-          typeof chunk.error === 'string'
-            ? chunk.error
-            : chunk.error.message ?? 'Groq stream failed.'
-        throw createChatError(message, 'Groq')
-      }
-      const delta = chunk.choices?.[0]?.delta?.content
-      if (delta) {
-        content += delta
-        onDelta?.(content)
-      }
-    }
-
-    try {
-      for (;;) {
-        const { done, value } = await reader.read()
-        if (done) break
-        timers.onChunk()
-        buffer += decoder.decode(value, { stream: true })
-        const lines = buffer.split('\n')
-        buffer = lines.pop() ?? ''
-        for (const line of lines) consumeLine(line)
-      }
-      if (buffer) consumeLine(buffer)
-    } catch (streamError) {
-      if (content.trim()) {
-        console.warn('Chat stream from Groq ended early — keeping partial reply.', streamError)
-        return content.trim()
-      }
-      throw streamError
-    }
-
-    if (!content.trim()) {
-      throw createChatError('Groq returned an empty response.', 'Groq')
-    }
-    return content.trim()
+    return await readChatResponse({
+      response,
+      provider: 'Groq',
+      streaming,
+      timers,
+      onDelta,
+    })
   } finally {
     timers.clear()
   }
@@ -756,10 +764,14 @@ function resolveLinkProps(rawHref: string, isEmail: boolean): { href: string; ex
   return { href: rawHref, external: true }
 }
 
-function renderInline(text: string, keyPrefix: string): ReactNode[] {
+function renderInline(
+  text: string,
+  keyPrefix: string,
+  onInternalLinkClick?: (href: string, event: MouseEvent<HTMLAnchorElement>) => void
+): ReactNode[] {
   const renderLinkedText = (value: string, segmentKey: string): ReactNode[] => {
     const linkPattern =
-      /\[([^\]\n]+)\]\(((?:https?:\/\/|\/(?!\/))[^\s)]+)\)|((?:https?:\/\/|www\.)[^\s]+|(?:[a-z0-9-]+\.)+[a-z]{2,}(?:\/[^\s]*)?|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/gi
+      /\[([^\]\n]+)\]\(((?:https?:\/\/|\/(?!\/))[^\s)]+)\)|((?:https?:\/\/|www\.)[^\s]+|(?:ahmed-3m\.github\.io|github\.com|linkedin\.com|huggingface\.co|sihem-pwa\.pages\.dev|t\.me)(?:\/[^\s]*)?|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/gi
     const nodes: ReactNode[] = []
     let lastIndex = 0
     let matchIndex = 0
@@ -768,14 +780,21 @@ function renderInline(text: string, keyPrefix: string): ReactNode[] {
       const raw = match[0]
       const start = match.index ?? 0
       const end = start + raw.length
+      const [, label, namedUrl] = match
+      const isEmail = !namedUrl && /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(raw)
+
+      if (!namedUrl && !isEmail && !/^(?:https?:\/\/|www\.)/i.test(raw)) {
+        const prevChar = start > 0 ? value[start - 1] : ''
+        if (/[a-z0-9._@-]/i.test(prevChar)) {
+          continue
+        }
+      }
 
       if (start > lastIndex) {
         nodes.push(value.slice(lastIndex, start))
       }
 
-      const isEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(raw)
       const display = raw.replace(/[),.;!?،؛؟]+$/, '')
-      const [, label, namedUrl] = match
       const trailing = namedUrl ? '' : raw.slice(display.length)
       const rawHref = namedUrl ?? (isEmail ? `mailto:${display}` : /^https?:\/\//i.test(display) ? display : `https://${display}`)
       const { href, external } = resolveLinkProps(rawHref, isEmail)
@@ -786,6 +805,7 @@ function renderInline(text: string, keyPrefix: string): ReactNode[] {
           href={href}
           target={external ? '_blank' : undefined}
           rel={external ? 'noopener noreferrer' : undefined}
+          onClick={!external && onInternalLinkClick ? (event) => onInternalLinkClick(href, event) : undefined}
           style={{
             color: 'inherit',
             textDecoration: 'underline',
@@ -828,7 +848,10 @@ function renderInline(text: string, keyPrefix: string): ReactNode[] {
   })
 }
 
-function renderMarkdown(text: string): ReactNode {
+function renderMarkdown(
+  text: string,
+  onInternalLinkClick?: (href: string, event: MouseEvent<HTMLAnchorElement>) => void
+): ReactNode {
   const lines = text.split('\n')
   const result: ReactNode[] = []
   const pending: string[] = []
@@ -841,7 +864,7 @@ function renderMarkdown(text: string): ReactNode {
       <ul key={key} style={{ paddingInlineStart: '1.1em', margin: '0.25em 0', listStyleType: 'disc' }}>
         {pending.map((item, index) => (
           <li key={`${key}-${index}`} style={{ margin: '0.1em 0' }}>
-            {renderInline(item, `${key}-${index}`)}
+            {renderInline(item, `${key}-${index}`, onInternalLinkClick)}
           </li>
         ))}
       </ul>
@@ -860,7 +883,7 @@ function renderMarkdown(text: string): ReactNode {
           key={`h-${index}`}
           style={{ display: 'block', fontWeight: 600, marginTop: '0.5em', marginBottom: '0.1em' }}
         >
-          {renderInline(heading[2], `h-${index}`)}
+          {renderInline(heading[2], `h-${index}`, onInternalLinkClick)}
         </span>
       )
     } else if (bullet) {
@@ -872,7 +895,7 @@ function renderMarkdown(text: string): ReactNode {
       } else {
         result.push(
           <span key={`l-${index}`} style={{ display: 'block' }}>
-            {renderInline(line, `l-${index}`)}
+            {renderInline(line, `l-${index}`, onInternalLinkClick)}
           </span>
         )
       }
@@ -993,7 +1016,7 @@ function SuggestedQuestions({ label, prompts, labelForPrompt, onSelect }: {
   label: string
   prompts: PromptId[]
   labelForPrompt: (id: PromptId) => string
-  onSelect: (id: PromptId, keyboard: boolean) => void
+  onSelect: (id: PromptId) => void
 }) {
   return (
     <div role="group" aria-label={label} className="space-y-2">
@@ -1003,7 +1026,7 @@ function SuggestedQuestions({ label, prompts, labelForPrompt, onSelect }: {
           <li key={id}>
             <button
               type="button"
-              onClick={event => onSelect(id, event.detail === 0)}
+              onClick={() => onSelect(id)}
               className="flex min-h-11 w-full items-center justify-between gap-3 rounded-xl border border-[var(--cd-b1)] bg-[var(--cd-surf)] px-3 py-2 text-start text-sm leading-5 text-[var(--cd-fg1)] hover:border-[var(--cd-accent)]"
             >
               <span className="min-w-0 break-words">{labelForPrompt(id)}</span>
@@ -1019,6 +1042,7 @@ function SuggestedQuestions({ label, prompts, labelForPrompt, onSelect }: {
 function LoadingDots({ label }: { label: string }) {
   return (
     <div
+      role="status"
       className="inline-flex items-center gap-1 rounded-2xl border px-3 py-2"
       style={bubbleStyles.assistant}
       aria-label={label}
@@ -1051,6 +1075,7 @@ type ChatBotPanelProps = {
  */
 export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
   const { lang, t } = useI18n()
+  const pathname = usePathname()
   const [input, setInput] = useState('')
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [isLoading, setIsLoading] = useState(false)
@@ -1159,11 +1184,6 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
           }
         : null
 
-      let lane: ChatLane = 'deep'
-      if (zaiAuth) {
-        lane = routeLocally(content) ?? (await routeWithClassifier(content, zaiAuth))
-      }
-
       let streamStarted = false
       const emitDelta = (fullContent: string) => {
         if (!streamStarted) {
@@ -1186,6 +1206,7 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
 
       if (zaiAuth) {
         try {
+          const lane = routeLocally(content) ?? (await routeWithClassifier(content, zaiAuth))
           streamStarted = false
           rawReply = await fetchBigModel({
             messages: nextMessages,
@@ -1209,7 +1230,11 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
             }
           : null
 
-      if (rawReply === null && groqAuth) {
+      const proxyRateLimited = Boolean(
+        (lastProviderError as ChatCompletionError | undefined)?.isProxyRateLimit
+      )
+
+      if (rawReply === null && groqAuth && !(proxyRateLimited && groqAuth.useProxy)) {
         try {
           streamStarted = false
           rawReply = await fetchGroq({
@@ -1233,7 +1258,7 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
         }
       }
 
-      const reply = shortenReply(rawReply)
+      const reply = streamStarted ? rawReply : shortenReply(rawReply)
 
       setMessages((prev) => {
         const lastIndex = prev.length - 1
@@ -1259,7 +1284,8 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
       })
     } catch (caughtError) {
       console.error('Chat failed across all configured providers:', caughtError)
-      setError(t(CHAT_COPY.genericError))
+      const status = (caughtError as ChatCompletionError | undefined)?.status
+      setError(t(status === 429 ? CHAT_COPY.rateLimited : CHAT_COPY.genericError))
     } finally {
       setIsLoading(false)
       setIsStreaming(false)
@@ -1271,9 +1297,30 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
     void sendMessage(input)
   }
 
-  function handlePrompt(promptId: PromptId, keyboard: boolean) {
-    if (keyboard) inputRef.current?.focus({ preventScroll: true })
+  function handlePrompt(promptId: PromptId) {
     void sendMessage(labelForPrompt(promptId), promptId)
+    requestAnimationFrame(() => {
+      inputRef.current?.focus({ preventScroll: true })
+    })
+  }
+
+  function handleInternalLinkClick(href: string, event: MouseEvent<HTMLAnchorElement>) {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
+    if (!href.includes('#')) return
+    const [linkPath, linkHash] = href.split('#')
+    const normCurrent = pathname.replace(/\/$/, '') || '/'
+    const normTarget = (linkPath || '/').replace(/\/$/, '') || '/'
+    if (normCurrent !== normTarget) return
+    event.preventDefault()
+    onClose()
+    if (linkHash) {
+      document.getElementById(linkHash)?.scrollIntoView()
+      window.history.replaceState(
+        null,
+        '',
+        `${window.location.pathname}${window.location.search}#${linkHash}`
+      )
+    }
   }
 
   return (
@@ -1301,7 +1348,13 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
         </button>
       </header>
 
-      <div ref={messagesRef} className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
+      <div
+        ref={messagesRef}
+        role="log"
+        aria-live="polite"
+        aria-relevant="additions text"
+        className="flex-1 space-y-3 overflow-y-auto px-4 py-4"
+      >
         {messages.length === 0 ? (
           <div className="space-y-4">
             <div
@@ -1332,7 +1385,9 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
                     }`}
                     style={bubbleStyles[message.role]}
                   >
-                    {message.role === 'assistant' ? renderMarkdown(message.content) : message.content}
+                    {message.role === 'assistant'
+                      ? renderMarkdown(message.content, handleInternalLinkClick)
+                      : message.content}
                   </div>
                 </div>
 
@@ -1358,7 +1413,7 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
 
       <div className="border-t px-4 pb-4 pt-3" style={{ borderColor: 'var(--cd-b0)' }}>
         {error && (
-          <p className="mb-3 text-xs leading-5" style={{ color: 'var(--cd-warn)' }}>
+          <p role="alert" className="mb-3 text-xs leading-5" style={{ color: 'var(--cd-warn)' }}>
             {error}
           </p>
         )}
@@ -1368,7 +1423,7 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
             value={input}
             onChange={(event) => setInput(event.target.value)}
             placeholder={t(CHAT_COPY.placeholder)}
-            className="h-12 min-w-0 flex-1 rounded-2xl border px-4 text-base outline-none transition-colors md:text-sm"
+            className="h-12 min-w-0 flex-1 rounded-2xl border px-4 text-base transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--cd-accent)] md:text-sm"
             style={{
               borderColor: 'var(--cd-b0)',
               background: 'color-mix(in srgb, var(--cd-surf) 70%, var(--cd-bg) 30%)',

@@ -25,11 +25,6 @@ const ChatBotPanel = dynamic(() => import('./ChatBotPanel'), {
   loading: () => <PanelSkeleton />,
 })
 
-/** Fallback delay when `requestIdleCallback` is unavailable. */
-const IDLE_PRELOAD_MS = 1500
-/** Upper bound for the idle callback, so slow pages still preload the panel. */
-const IDLE_PRELOAD_TIMEOUT_MS = 3000
-
 const panelStyle = {
   background:
     'linear-gradient(180deg, color-mix(in srgb, var(--cd-surf) 92%, var(--cd-bg) 8%) 0%, var(--cd-elev) 100%)',
@@ -133,27 +128,9 @@ export default function ChatBot() {
   const wasOpenRef = useRef(false)
   const restoreFocusRef = useRef(true)
 
-  // Preload the panel once the page is idle (or after a short delay where
-  // requestIdleCallback is missing), so first open feels instant.
-  useEffect(() => {
-    if (isPanelRequested) return
-    let cancelled = false
-    const request = () => {
-      if (!cancelled) setIsPanelRequested(true)
-    }
-
-    const supportsIdle = typeof window.requestIdleCallback === 'function'
-    const idleHandle = supportsIdle
-      ? window.requestIdleCallback(request, { timeout: IDLE_PRELOAD_TIMEOUT_MS })
-      : undefined
-    const timer = supportsIdle ? undefined : window.setTimeout(request, IDLE_PRELOAD_MS)
-
-    return () => {
-      cancelled = true
-      if (idleHandle !== undefined) window.cancelIdleCallback(idleHandle)
-      if (timer !== undefined) window.clearTimeout(timer)
-    }
-  }, [isPanelRequested])
+  const requestPanel = useCallback(() => {
+    setIsPanelRequested(true)
+  }, [])
 
   // Escape closes the dialog even while the lazy chunk is still loading, so the
   // panel only has to own the focus trap.
@@ -209,7 +186,7 @@ export default function ChatBot() {
     <>
       <div
         id="chatbot-dialog"
-        className={`fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom))] end-4 z-[9998] w-[min(400px,calc(100vw-2rem))] transition-all duration-300 ease-out sm:bottom-24 sm:end-6 ${
+        className={`fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom))] inset-x-4 z-[9998] transition-all duration-300 ease-out sm:inset-x-auto sm:bottom-24 sm:end-6 sm:w-[400px] ${
           isOpen ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none translate-y-6 opacity-0'
         }`}
         aria-hidden={!isOpen}
@@ -236,7 +213,12 @@ export default function ChatBot() {
       <button
         ref={launcherRef}
         type="button"
-        onClick={() => setIsOpen((value) => !value)}
+        onPointerEnter={requestPanel}
+        onFocus={requestPanel}
+        onClick={() => {
+          requestPanel()
+          setIsOpen((value) => !value)
+        }}
         className={`group fixed bottom-[max(1rem,env(safe-area-inset-bottom))] end-4 z-[9999] inline-flex h-14 items-center overflow-hidden rounded-full border transition-all duration-300 ease-out sm:bottom-6 sm:end-6 ${
           isOpen
             ? 'gap-2 ps-1.5 pe-2'
@@ -254,7 +236,7 @@ export default function ChatBot() {
       >
         <GenieOrb />
         <span
-          className={`cd-chatbot-launcher-text whitespace-nowrap text-sm font-semibold tracking-[0.01em] transition-all duration-300 ${
+          className={`whitespace-nowrap text-sm font-semibold tracking-[0.01em] transition-all duration-300 ${
             isOpen
               ? 'max-w-0 opacity-0'
               : 'max-w-0 opacity-0 group-focus-visible:max-w-32 group-focus-visible:opacity-100 [@media(hover:hover)]:group-hover:max-w-32 [@media(hover:hover)]:group-hover:opacity-100'

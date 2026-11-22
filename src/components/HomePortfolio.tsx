@@ -21,6 +21,7 @@ export default function HomePortfolio() {
 
     // The exported page starts in concise mode. Resolve the fragment again once the full sections exist.
     const sectionId = window.location.hash.slice(1)
+    if (!sectionId) return
     document.getElementById(sectionId)?.scrollIntoView({ behavior: 'instant' })
   }, [view])
 

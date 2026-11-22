@@ -1,7 +1,8 @@
 'use client'
 
-import React, { useState, useMemo, useId } from 'react'
+import React, { useState, useMemo, useId, useRef, type KeyboardEvent } from 'react'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
+import { languageLocale } from '@/lib/i18n-config'
 import {
   BENCHMARK_DATASETS,
   LAMBDA0_SEED42_HISTOGRAM,
@@ -16,6 +17,8 @@ import {
   type OodDatasetKey,
   type ScoringRuleKey,
   type InkjetLambdaKey,
+  type KAblationEntry,
+  type TimestepStrategyEntry,
 } from '@/lib/ood-explorer-data'
 
 type LabTab = 'calibration' | 'timesteps' | 'ablations'
@@ -63,6 +66,89 @@ const DATASET_LABELS: Record<OodDatasetKey, TranslationMap> = {
     es: 'SVHN (Far-OOD · Números de calle)',
     ar: 'SVHN (شذوذ بعيد · أرقام المباني)',
   },
+}
+
+const STRATEGY_LABELS: Record<TimestepStrategyEntry['key'], { name: TranslationMap; dist: TranslationMap }> = {
+  uniform: {
+    name: { en: 'Uniform', de: 'Gleichverteilt', fr: 'Uniforme', es: 'Uniforme', ar: 'منتظم' },
+    dist: { en: 't ~ U[1, 1000]', de: 't ~ U[1, 1000]', fr: 't ~ U[1, 1000]', es: 't ~ U[1, 1000]', ar: 't ~ U[1, 1000]' },
+  },
+  stratified: {
+    name: { en: 'Stratified', de: 'Stratifiziert', fr: 'Stratifié', es: 'Estratificado', ar: 'طبقي' },
+    dist: {
+      en: 'K equal bins over [1, 1000]',
+      de: 'K gleiche Intervalle über [1, 1000]',
+      fr: 'K intervalles égaux sur [1, 1000]',
+      es: 'K intervalos iguales en [1, 1000]',
+      ar: 'K فئات متساوية على [1, 1000]',
+    },
+  },
+  mid_focus: {
+    name: { en: 'Mid-focus', de: 'Mittenfokus', fr: 'Focus médian', es: 'Enfoque medio', ar: 'تركيز أوسط' },
+    dist: {
+      en: 'N_trunc(μ=300, σ=150)',
+      de: 'N_trunc(μ=300, σ=150)',
+      fr: 'N_trunc(μ=300, σ=150)',
+      es: 'N_trunc(μ=300, σ=150)',
+      ar: 'N_trunc(μ=300, σ=150)',
+    },
+  },
+}
+
+const RESNET_MULTIPLE_COPY: Record<KAblationEntry['k'], TranslationMap> = {
+  1: {
+    en: 'Fast triage (un-retimed)',
+    de: 'Schnelle Triage (nicht neu vermessen)',
+    fr: 'Tri rapide (non rechronométré)',
+    es: 'Triaje rápido (sin re-cronometrar)',
+    ar: 'فرز سريع (دون إعادة قياس الزمن)',
+  },
+  5: {
+    en: '~34.3× ResNet-18',
+    de: '~34,3× ResNet-18',
+    fr: '~34,3× ResNet-18',
+    es: '~34.3× ResNet-18',
+    ar: '~34.3× ResNet-18',
+  },
+  10: {
+    en: '68.6× ResNet-18 (5× speedup)',
+    de: '68,6× ResNet-18 (5× schneller)',
+    fr: '68,6× ResNet-18 (accélération ×5)',
+    es: '68.6× ResNet-18 (aceleración 5×)',
+    ar: '68.6× ResNet-18 (تسريع 5×)',
+  },
+  25: {
+    en: '~246× ResNet-18',
+    de: '~246× ResNet-18',
+    fr: '~246× ResNet-18',
+    es: '~246× ResNet-18',
+    ar: '~246× ResNet-18',
+  },
+  50: {
+    en: '492.4× ResNet-18 (Default)',
+    de: '492,4× ResNet-18 (Standard)',
+    fr: '492,4× ResNet-18 (Par défaut)',
+    es: '492.4× ResNet-18 (Predeterminado)',
+    ar: '492.4× ResNet-18 (الافتراضي)',
+  },
+  100: {
+    en: '~985× ResNet-18 (Core Eval)',
+    de: '~985× ResNet-18 (Hauptauswertung)',
+    fr: '~985× ResNet-18 (Éval. principale)',
+    es: '~985× ResNet-18 (Eval. principal)',
+    ar: '~985× ResNet-18 (التقييم الأساسي)',
+  },
+}
+
+const INKJET_FEATURE_LABELS: Record<string, TranslationMap> = {
+  Dots: { en: 'Dots', de: 'Punkte (Dots)', fr: 'Points (Dots)', es: 'Puntos (Dots)', ar: 'النقاط (Dots)' },
+  'Distance 6': { en: 'Distance 6', de: 'Abstand 6', fr: 'Distance 6', es: 'Distancia 6', ar: 'المسافة 6' },
+  'Distance 1': { en: 'Distance 1', de: 'Abstand 1', fr: 'Distance 1', es: 'Distancia 1', ar: 'المسافة 1' },
+  'Angle†': { en: 'Angle†', de: 'Winkel†', fr: 'Angle†', es: 'Ángulo†', ar: 'الزاوية†' },
+  'Edge 2': { en: 'Edge 2', de: 'Kante 2', fr: 'Bord 2', es: 'Borde 2', ar: 'الحافة 2' },
+  'Edge 1': { en: 'Edge 1', de: 'Kante 1', fr: 'Bord 1', es: 'Borde 1', ar: 'الحافة 1' },
+  'Edge 4': { en: 'Edge 4', de: 'Kante 4', fr: 'Bord 4', es: 'Borde 4', ar: 'الحافة 4' },
+  'Edge 3': { en: 'Edge 3', de: 'Kante 3', fr: 'Bord 3', es: 'Borde 3', ar: 'الحافة 3' },
 }
 
 const copy = {
@@ -192,12 +278,89 @@ const copy = {
     es: 'Frontera cero (τ = 0 · ê₀ = ê₁)',
     ar: 'الحد الصفري (τ = 0 · ê₀ = ê₁)',
   },
+  kpiAurocLabel: {
+    en: 'AUROC (Seed 42 · K=100)',
+    de: 'AUROC (Seed 42 · K=100)',
+    fr: 'AUROC (Seed 42 · K=100)',
+    es: 'AUROC (Seed 42 · K=100)',
+    ar: 'AUROC (بذرة 42 · K=100)',
+  },
+  kpiThreeSeed: {
+    en: '3-seed',
+    de: '3-Seeds',
+    fr: '3 graines',
+    es: '3 semillas',
+    ar: 'متوسط 3 بذور',
+  },
+  kpiTprLabel: {
+    en: 'Live TPR(τ) · Sensitivity',
+    de: 'Live TPR(τ) · Sensitivität',
+    fr: 'TPR(τ) en direct · Sensibilité',
+    es: 'TPR(τ) en vivo · Sensibilidad',
+    ar: 'TPR(τ) المباشر · الحساسية',
+  },
+  kpiFprLabel: {
+    en: 'Live FPR(τ) · False Alarms',
+    de: 'Live FPR(τ) · Fehlalarme',
+    fr: 'FPR(τ) en direct · Faux positifs',
+    es: 'FPR(τ) en vivo · Falsas alarmas',
+    ar: 'FPR(τ) المباشر · إنذارات خاطئة',
+  },
+  kpiAirplanes: {
+    en: 'Airplanes',
+    de: 'Flugzeuge',
+    fr: 'Avions',
+    es: 'Aviones',
+    ar: 'طائرات',
+  },
+  kpiYoudenLabel: {
+    en: "Youden's J(τ) = TPR − FPR",
+    de: 'Youden-J(τ) = TPR − FPR',
+    fr: 'J de Youden(τ) = TPR − FPR',
+    es: 'J de Youden(τ) = TPR − FPR',
+    ar: 'معامل Youden J(τ) = TPR − FPR',
+  },
+  kpiBalAcc: {
+    en: 'Balanced Acc',
+    de: 'Ausgewogene Genauigkeit',
+    fr: 'Précision équilibrée',
+    es: 'Precisión balanceada',
+    ar: 'الدقة المتوازنة',
+  },
   histTitle: {
     en: 'Empirical Score Distribution s_OOD(x) = ê₀(x) − ê₁(x) (48 bins from .pt tensors)',
     de: 'Empirische Score-Verteilung s_OOD(x) = ê₀(x) − ê₁(x) (48 Bins aus .pt-Tensoren)',
     fr: 'Distribution empirique s_OOD(x) = ê₀(x) − ê₁(x) (48 classes depuis tenseurs .pt)',
     es: 'Distribución empírica s_OOD(x) = ê₀(x) − ê₁(x) (48 bins de tensores .pt)',
     ar: 'التوزيع التجريبي للدرجات s_OOD(x) = ê₀(x) − ê₁(x) (من ملفات .pt الحقيقية)',
+  },
+  histAriaLabel: {
+    en: 'Empirical OOD Score Histogram',
+    de: 'Empirisches OOD-Score-Histogramm',
+    fr: 'Histogramme empirique des scores OOD',
+    es: 'Histograma empírico de puntuaciones OOD',
+    ar: 'المدرج التكراري التجريبي لدرجات OOD',
+  },
+  histLegendId: {
+    en: 'ID: CIFAR-10 Airplane',
+    de: 'ID: CIFAR-10 Flugzeug',
+    fr: 'ID : CIFAR-10 Avion',
+    es: 'ID: CIFAR-10 Avión',
+    ar: 'ID: طائرات CIFAR-10',
+  },
+  histLegendOod: {
+    en: 'OOD Cohort',
+    de: 'OOD-Kohorte',
+    fr: 'Cohorte OOD',
+    es: 'Cohorte OOD',
+    ar: 'مجموعة OOD',
+  },
+  histLegendTau: {
+    en: 'Threshold τ',
+    de: 'Schwelle τ',
+    fr: 'Seuil τ',
+    es: 'Umbral τ',
+    ar: 'العتبة τ',
   },
   rocTitle: {
     en: 'Empirical ROC Curve & Live Operating Point (FPR(τ), TPR(τ))',
@@ -206,12 +369,117 @@ const copy = {
     es: 'Curva ROC empírica y Punto de operación en vivo (FPR(τ), TPR(τ))',
     ar: 'منحنى ROC التجريبي ونقطة التشغيل الحية (FPR(τ), TPR(τ))',
   },
+  rocAriaLabel: {
+    en: 'Empirical ROC Curve',
+    de: 'Empirische ROC-Kurve',
+    fr: 'Courbe ROC empirique',
+    es: 'Curva ROC empírica',
+    ar: 'منحنى ROC التجريبي',
+  },
+  rocXAxis: {
+    en: 'False Positive Rate (FPR)',
+    de: 'Falsch-Positiv-Rate (FPR)',
+    fr: 'Taux de faux positifs (FPR)',
+    es: 'Tasa de falsos positivos (FPR)',
+    ar: 'معدل الإيجابية الكاذبة (FPR)',
+  },
+  rocYAxis: {
+    en: 'True Positive Rate (TPR)',
+    de: 'Richtig-Positiv-Rate (TPR)',
+    fr: 'Taux de vrais positifs (TPR)',
+    es: 'Tasa de verdaderos positivos (TPR)',
+    ar: 'معدل الإيجابية الحقيقية (TPR)',
+  },
+  operatingPointLabel: {
+    en: 'Operating Point',
+    de: 'Arbeitspunkt',
+    fr: 'Point de fonctionnement',
+    es: 'Punto de operación',
+    ar: 'نقطة التشغيل',
+  },
+  benchmarkFprLabel: {
+    en: 'Benchmark FPR@95%TPR',
+    de: 'Benchmark FPR@95%TPR',
+    fr: 'Référence FPR@95%TPR',
+    es: 'Referencia FPR@95%TPR',
+    ar: 'معيار FPR@95%TPR',
+  },
   timestepHeading: {
     en: 'Diffusion Timestep Explorer t ∈ [50, 950] (Thesis Fig. 6.7 · per_timestep JSON)',
     de: 'Diffusions-Zeitschritt-Explorer t ∈ [50, 950] (Abb. 6.7 · per_timestep JSON)',
     fr: 'Explorateur de pas de diffusion t ∈ [50, 950] (Fig. 6.7 · JSON per_timestep)',
     es: 'Explorador de paso de difusión t ∈ [50, 950] (Fig. 6.7 · JSON per_timestep)',
     ar: 'مستكشف خطوات زمن الانتشار t ∈ [50, 950] (شكل 6.7 · بيانات per_timestep)',
+  },
+  timestepSignalLabel: {
+    en: 'Signal',
+    de: 'Signal',
+    fr: 'Signal',
+    es: 'Señal',
+    ar: 'الإشارة',
+  },
+  cosineScheduleLabel: {
+    en: 'Eq. 3.25 Cosine Schedule · s = 0.008',
+    de: 'Gl. 3.25 Kosinus-Zeitplan · s = 0,008',
+    fr: 'Éq. 3.25 Calendrier cosinus · s = 0,008',
+    es: 'Ec. 3.25 Planificación coseno · s = 0.008',
+    ar: 'معادلة 3.25 جدول جيب التمام · s = 0.008',
+  },
+  timestepAriaLabel: {
+    en: 'Per-timestep reconstruction error curves',
+    de: 'Rekonstruktionsfehler-Kurven pro Zeitschritt',
+    fr: 'Courbes d’erreur de reconstruction par pas de temps',
+    es: 'Curvas de error de reconstrucción por paso de tiempo',
+    ar: 'منحنيات خطأ إعادة البناء لكل خطوة زمنية',
+  },
+  timestepAxisLow: {
+    en: 't = 50 (Low noise)',
+    de: 't = 50 (Geringes Rauschen)',
+    fr: 't = 50 (Faible bruit)',
+    es: 't = 50 (Ruido bajo)',
+    ar: 't = 50 (ضوضاء منخفضة)',
+  },
+  timestepAxisMid: {
+    en: 't = 500 (Mid noise · Peak OOD signal)',
+    de: 't = 500 (Mittleres Rauschen · Peak-OOD-Signal)',
+    fr: 't = 500 (Bruit moyen · Pic du signal OOD)',
+    es: 't = 500 (Ruido medio · Pico de señal OOD)',
+    ar: 't = 500 (ضوضاء متوسطة · ذروة إشارة OOD)',
+  },
+  timestepAxisHigh: {
+    en: 't = 950 (Near-pure Gaussian)',
+    de: 't = 950 (Nahezu reines Gauß-Rauschen)',
+    fr: 't = 950 (Bruit gaussien quasi pur)',
+    es: 't = 950 (Ruido gaussiano casi puro)',
+    ar: 't = 950 (ضوضاء غاوسية شبه خالصة)',
+  },
+  idMseLabel: {
+    en: 'ID (Airplane) MSE',
+    de: 'ID (Flugzeug) MSE',
+    fr: 'MSE ID (Avion)',
+    es: 'MSE ID (Avión)',
+    ar: 'خطأ MSE للداخل (طائرة)',
+  },
+  oodMseLabel: {
+    en: 'OOD Cohort MSE',
+    de: 'OOD-Kohorte MSE',
+    fr: 'MSE Cohorte OOD',
+    es: 'MSE Cohorte OOD',
+    ar: 'خطأ MSE للخارج OOD',
+  },
+  manifoldMismatchLabel: {
+    en: 'Manifold Mismatch Δ_OOD(t) (Eq. 3.15)',
+    de: 'Manifold-Diskrepanz Δ_OOD(t) (Gl. 3.15)',
+    fr: 'Écart de variété Δ_OOD(t) (Éq. 3.15)',
+    es: 'Desajuste de variedad Δ_OOD(t) (Ec. 3.15)',
+    ar: 'تباين المتشعب Δ_OOD(t) (معادلة 3.15)',
+  },
+  uniformSummaryNote: {
+    en: 'Uniform t ~ U[1,1000] achieves 98.9% CIFAR / 95.4% SVHN',
+    de: 'Gleichverteilt t ~ U[1,1000] erreicht 98,9% CIFAR / 95,4% SVHN',
+    fr: 'Uniforme t ~ U[1,1000] atteint 98,9% CIFAR / 95,4% SVHN',
+    es: 'Uniforme t ~ U[1,1000] alcanza 98.9% CIFAR / 95.4% SVHN',
+    ar: 'التوزيع المنتظم t ~ U[1,1000] يحقق 98.9% على CIFAR و95.4% على SVHN',
   },
   scoringHeading: {
     en: 'Why Contrastive Scoring Is Essential (Table 6.5 & D.3 · Seed 42, λ = 0.01, K = 50)',
@@ -220,12 +488,110 @@ const copy = {
     es: 'Por qué el puntaje contrastivo es esencial (Tabla 6.5 y D.3 · Seed 42, λ = 0.01, K = 50)',
     ar: 'لماذا يعد التقييم التبايني ضرورياً (جدول 6.5 و D.3 · بذرة 42، λ = 0.01، K = 50)',
   },
+  scoreDiffLabel: {
+    en: 'Difference: ê₀ − ê₁ (Default)',
+    de: 'Differenz: ê₀ − ê₁ (Standard)',
+    fr: 'Différence : ê₀ − ê₁ (Défaut)',
+    es: 'Diferencia: ê₀ − ê₁ (Predeterminado)',
+    ar: 'الفرق: ê₀ − ê₁ (الافتراضي)',
+  },
+  scoreRatioLabel: {
+    en: 'Ratio: ê₀ / ê₁',
+    de: 'Verhältnis: ê₀ / ê₁',
+    fr: 'Ratio : ê₀ / ê₁',
+    es: 'Cociente: ê₀ / ê₁',
+    ar: 'النسبة: ê₀ / ê₁',
+  },
+  scoreIdOnlyLabel: {
+    en: 'ID-Only: ê₀ (No Contrast)',
+    de: 'Nur ID: ê₀ (Ohne Kontrast)',
+    fr: 'ID seul : ê₀ (Sans contraste)',
+    es: 'Solo ID: ê₀ (Sin contraste)',
+    ar: 'الداخلي فقط: ê₀ (دون تباين)',
+  },
+  withinCifarAurocLabel: {
+    en: 'Within-CIFAR AUROC',
+    de: 'Within-CIFAR AUROC',
+    fr: 'AUROC Within-CIFAR',
+    es: 'AUROC Within-CIFAR',
+    ar: 'AUROC ضمن CIFAR',
+  },
+  externalSvhnAurocLabel: {
+    en: 'External SVHN AUROC',
+    de: 'Externe SVHN AUROC',
+    fr: 'AUROC externe SVHN',
+    es: 'AUROC externa SVHN',
+    ar: 'AUROC الخارجي على SVHN',
+  },
+  collapseAlertText: {
+    en: 'Collapse alert (Table D.3): Using ID reconstruction error ê₀(x) alone collapses to 20.23% AUROC on SVHN (worse than random) because smooth SVHN digits have lower raw reconstruction error than textured airplanes.',
+    de: 'Kollaps-Warnung (Tabelle D.3): Die Nutzung des reinen ID-Rekonstruktionsfehlers ê₀(x) bricht auf SVHN auf 20,23% AUROC ein (schlechter als Zufall), da glatte SVHN-Ziffern geringere Rohfehler als texturierte Flugzeuge haben.',
+    fr: "Alerte d'effondrement (Tableau D.3) : utiliser l'erreur de reconstruction ID ê₀(x) seule chute à 20,23% d'AUROC sur SVHN (pire que le hasard), car les chiffres lisses de SVHN ont une erreur brute plus faible que les avions texturés.",
+    es: 'Alerta de colapso (Tabla D.3): usar solo el error de reconstrucción ID ê₀(x) cae al 20.23% de AUROC en SVHN (peor que el azar) porque los dígitos lisos de SVHN tienen menor error bruto que los aviones con textura.',
+    ar: 'تحذير الانهيار (جدول D.3): استخدام خطأ إعادة بناء الفئة الداخلية ê₀(x) وحده ينهار إلى 20.23% AUROC على SVHN (أسوأ من العشوائي) لأن أرقام SVHN الملساء لها خطأ خام أقل من صور الطائرات ذات التفاصيل.',
+  },
+  contrastiveNoteText: {
+    en: 'Contrastive scoring (comparing c=0 vs c=1 on the same noisy sample x_t) cancels raw image-complexity bias and isolates class-manifold fit.',
+    de: 'Kontrastives Scoring (Vergleich c=0 vs. c=1 auf derselben verrauschten Probe x_t) neutralisiert Bildkomplexitäts-Bias und isoliert die Klassenzugehörigkeit.',
+    fr: 'Le score contrastif (comparer c=0 vs c=1 sur le même échantillon bruité x_t) annule le biais de complexité brute et isole l’ajustement à la variété de classe.',
+    es: 'El puntaje contrastivo (comparar c=0 vs c=1 en la misma muestra con ruido x_t) cancela el sesgo de complejidad y aísla el ajuste a la variedad de clase.',
+    ar: 'التقييم التبايني (مقارنة c=0 مقابل c=1 على العينة نفسها x_t) يلغي تحيّز تعقيد الصورة الخام ويعزل مدى تطابق الصنف.',
+  },
+  samplingHeading: {
+    en: 'Timestep Sampling Strategy Ablation (Table 6.4 · K = 50, λ = 0.01)',
+    de: 'Ablation der Zeitschritt-Sampling-Strategie (Tabelle 6.4 · K = 50, λ = 0.01)',
+    fr: "Ablation de la stratégie d'échantillonnage des pas (Tableau 6.4 · K = 50, λ = 0.01)",
+    es: 'Ablación de la estrategia de muestreo de pasos (Tabla 6.4 · K = 50, λ = 0.01)',
+    ar: 'دراسة استبدال استراتيجية اختيار الخطوات الزمنية (جدول 6.4 · K = 50، λ = 0.01)',
+  },
   lambdaSweepHeading: {
     en: 'Separation Loss Weight Sweep λ ∈ {0.0 … 0.1} (Table 6.6 & Fig. 6.6)',
     de: 'Separation-Loss-Gewichts-Sweep λ ∈ {0.0 … 0.1} (Tabelle 6.6 & Abb. 6.6)',
     fr: 'Balayage du poids λ ∈ {0.0 … 0.1} (Tableau 6.6 & Fig. 6.6)',
     es: 'Barrido del peso λ ∈ {0.0 … 0.1} (Tabla 6.6 y Fig. 6.6)',
     ar: 'مسح معامل خسارة الفصل λ ∈ {0.0 … 0.1} (جدول 6.6 وشكل 6.6)',
+  },
+  seed42Paren: {
+    en: '(seed 42)',
+    de: '(Seed 42)',
+    fr: '(seed 42)',
+    es: '(seed 42)',
+    ar: '(بذرة 42)',
+  },
+  seedRunsLabel: {
+    en: 'Seed runs (42 / 123 / 456):',
+    de: 'Seed-Läufe (42 / 123 / 456):',
+    fr: 'Exécutions (graines 42 / 123 / 456) :',
+    es: 'Ejecuciones (semillas 42 / 123 / 456):',
+    ar: 'تجارب البذور (42 / 123 / 456):',
+  },
+  bestEpochLabel: {
+    en: 'Best Convergence Epoch (seed 42):',
+    de: 'Beste Konvergenz-Epoche (Seed 42):',
+    fr: 'Meilleure époque de convergence (seed 42) :',
+    es: 'Mejor época de convergencia (seed 42):',
+    ar: 'أفضل حقبة تقارب (بذرة 42):',
+  },
+  epochPrefix: {
+    en: 'Epoch',
+    de: 'Epoche',
+    fr: 'Époque',
+    es: 'Época',
+    ar: 'الحقبة',
+  },
+  svhnExternalLabel: {
+    en: 'SVHN External AUROC (seed 42):',
+    de: 'Externe SVHN AUROC (Seed 42):',
+    fr: 'AUROC externe SVHN (seed 42) :',
+    es: 'AUROC externa SVHN (seed 42):',
+    ar: 'AUROC الخارجي على SVHN (بذرة 42):',
+  },
+  artefactNote: {
+    en: '† (artefact)',
+    de: '† (Artefakt)',
+    fr: '† (artéfact)',
+    es: '† (artefacto)',
+    ar: '† (أثر غير حقيقي)',
   },
   kSweepHeading: {
     en: 'Monte Carlo Timestep Trials K ∈ {1 … 100} Frontier (Table 6.3 & Fig. 6.3)',
@@ -234,12 +600,96 @@ const copy = {
     es: 'Frontera de ensayos Monte Carlo K ∈ {1 … 100} (Tabla 6.3 y Fig. 6.3)',
     ar: 'منحنى تجارب مونت كارلو K ∈ {1 … 100} (جدول 6.3 وشكل 6.3)',
   },
+  kWithinCifarLabel: {
+    en: 'Within-CIFAR AUROC (λ=0.01, seed 42):',
+    de: 'Within-CIFAR AUROC (λ=0,01, Seed 42):',
+    fr: 'AUROC Within-CIFAR (λ=0,01, seed 42) :',
+    es: 'AUROC Within-CIFAR (λ=0.01, seed 42):',
+    ar: 'AUROC ضمن CIFAR (λ=0.01، بذرة 42):',
+  },
+  rtxTimeLabel: {
+    en: 'RTX 2080 Ti Time (per 10K images):',
+    de: 'RTX 2080 Ti Laufzeit (pro 10.000 Bilder):',
+    fr: 'Temps RTX 2080 Ti (pour 10 000 images) :',
+    es: 'Tiempo RTX 2080 Ti (por 10.000 imágenes):',
+    ar: 'زمن RTX 2080 Ti (لكل 10 آلاف صورة):',
+  },
+  msPerImg: {
+    en: 'ms / img',
+    de: 'ms / Bild',
+    fr: 'ms / img',
+    es: 'ms / img',
+    ar: 'مللي ثانية / صورة',
+  },
+  costVsResnetLabel: {
+    en: 'Cost vs. ResNet-18 Forward Pass:',
+    de: 'Kosten vs. ResNet-18 Forward-Pass:',
+    fr: 'Coût vs passage avant ResNet-18 :',
+    es: 'Costo frente a pasada directa ResNet-18:',
+    ar: 'التكلفة مقارنة بتمريرة ResNet-18:',
+  },
   inkjetHeading: {
     en: 'Cross-Domain Boundary Condition: Inkjet Print QC (Tables 6.7–6.9 · 5-Fold Stratified CV)',
     de: 'Cross-Domain-Randbedingung: Inkjet-Qualitätskontrolle (Tab. 6.7–6.9 · 5-Fold-CV)',
     fr: 'Condition aux limites inter-domaines : Contrôle qualité Inkjet (Tab. 6.7–6.9 · CV 5 plis)',
     es: 'Condición de frontera entre dominios: Control de calidad Inkjet (Tab. 6.7–6.9 · CV 5-fold)',
     ar: 'شروط الحدود عبر المجالات: فحص جودة الطباعة النفاثة (جداول 6.7–6.9 · تحقق من 5 طيات)',
+  },
+  inkjetSubheading: {
+    en: 'Public FTI_Zer0P Dataset · 573 Source-Image Groups · 6,408 YOLO Crops (128×128) · Multi-Head AdaGN CDM',
+    de: 'Öffentlicher FTI_Zer0P-Datensatz · 573 Quellbild-Gruppen · 6.408 YOLO-Ausschnitte (128×128) · Multi-Head AdaGN CDM',
+    fr: 'Jeu public FTI_Zer0P · 573 groupes d’images sources · 6 408 recadrages YOLO (128×128) · Multi-Head AdaGN CDM',
+    es: 'Conjunto público FTI_Zer0P · 573 grupos de imagen fuente · 6.408 recortes YOLO (128×128) · Multi-Head AdaGN CDM',
+    ar: 'مجموعة بيانات FTI_Zer0P العامة · 573 مجموعة صور مصدرية · 6,408 قصاصة YOLO (128×128) · Multi-Head AdaGN CDM',
+  },
+  inkjetLambdaPrefix: {
+    en: 'Inkjet',
+    de: 'Inkjet',
+    fr: 'Inkjet',
+    es: 'Inkjet',
+    ar: 'طباعة نفاثة',
+  },
+  inkjetCvMeanLabel: {
+    en: '5-Fold CV Mean AUROC:',
+    de: '5-Fold-CV Mittel-AUROC:',
+    fr: 'AUROC moyenne CV 5 plis :',
+    es: 'AUROC media CV 5-fold:',
+    ar: 'متوسط AUROC للتحقق الخماسي:',
+  },
+  inkjetAccuracyLabel: {
+    en: 'Accuracy:',
+    de: 'Genauigkeit:',
+    fr: 'Exactitude :',
+    es: 'Exactitud:',
+    ar: 'الدقة:',
+  },
+  inkjetHolmLabel: {
+    en: 'Holm-Adjusted p vs λ=0:',
+    de: 'Holm-korrigierter p-Wert vs. λ=0:',
+    fr: 'p ajusté (Holm) vs λ=0 :',
+    es: 'p ajustado (Holm) vs λ=0:',
+    ar: 'قيمة p المصححة بـ Holm مقابل λ=0:',
+  },
+  inkjetBaseline: {
+    en: 'Baseline',
+    de: 'Baseline',
+    fr: 'Référence',
+    es: 'Referencia',
+    ar: 'خط الأساس',
+  },
+  inkjetNotSig: {
+    en: '(not significant)',
+    de: '(nicht signifikant)',
+    fr: '(non significatif)',
+    es: '(no significativo)',
+    ar: '(غير دال إحصائيًا)',
+  },
+  inkjetBadPerFold: {
+    en: '(<5 BAD/fold)',
+    de: '(<5 BAD/Fold)',
+    fr: '(<5 BAD/pli)',
+    es: '(<5 BAD/pliegue)',
+    ar: '(<5 عينات معيبة/طية)',
   },
 } satisfies Record<string, TranslationMap>
 
@@ -249,8 +699,11 @@ const copy = {
  */
 export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; heading?: 'h2' | 'h3' }) {
   const { t, lang } = useI18n()
+  const baseId = useId()
   const sliderId = useId()
   const timestepSliderId = useId()
+  const numberLocale = languageLocale[lang]
+  const tabRefs = useRef<Array<HTMLButtonElement | null>>([])
 
   const [activeTab, setActiveTab] = useState<LabTab>('calibration')
   const [regime, setRegime] = useState<'sep' | 'base'>('sep')
@@ -265,6 +718,34 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
   const [selectedLambdaIdx, setSelectedLambdaIdx] = useState<number>(3) // lambda = 0.02
   const [selectedKIdx, setSelectedKIdx] = useState<number>(2) // K = 10 recommended
   const [inkjetLambda, setInkjetLambda] = useState<InkjetLambdaKey>('0.0')
+
+  const tabs: ReadonlyArray<{ id: LabTab; label: TranslationMap }> = [
+    { id: 'calibration', label: copy.tabCalibration },
+    { id: 'timesteps', label: copy.tabTimesteps },
+    { id: 'ablations', label: copy.tabAblations },
+  ]
+
+  const handleTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    const count = tabs.length
+    const isRtl = lang === 'ar'
+    let nextIndex: number | null = null
+
+    if (event.key === 'ArrowRight') {
+      nextIndex = isRtl ? (index - 1 + count) % count : (index + 1) % count
+    } else if (event.key === 'ArrowLeft') {
+      nextIndex = isRtl ? (index + 1) % count : (index - 1 + count) % count
+    } else if (event.key === 'Home') {
+      nextIndex = 0
+    } else if (event.key === 'End') {
+      nextIndex = count - 1
+    }
+
+    if (nextIndex === null) return
+    event.preventDefault()
+    const nextTab = tabs[nextIndex]
+    setActiveTab(nextTab.id)
+    tabRefs.current[nextIndex]?.focus()
+  }
 
   const activeMeta = BENCHMARK_DATASETS[datasetKey]
   const activeHist = regime === 'base' ? LAMBDA0_SEED42_HISTOGRAM : activeMeta.histogram
@@ -422,26 +903,27 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
           marginBottom: 24,
         }}
       >
-        {(
-          [
-            { id: 'calibration', label: copy.tabCalibration },
-            { id: 'timesteps', label: copy.tabTimesteps },
-            { id: 'ablations', label: copy.tabAblations },
-          ] as const
-        ).map((tab) => {
+        {tabs.map((tab, index) => {
           const isSelected = activeTab === tab.id
           return (
             <button
               key={tab.id}
+              ref={(el) => {
+                tabRefs.current[index] = el
+              }}
               type="button"
               role="tab"
+              id={`${baseId}-tab-${tab.id}`}
               aria-selected={isSelected}
+              aria-controls={`${baseId}-panel-${tab.id}`}
+              tabIndex={isSelected ? 0 : -1}
               onClick={() => setActiveTab(tab.id)}
+              onKeyDown={(event) => handleTabKeyDown(event, index)}
               style={{
                 padding: '11px 14px',
                 borderRadius: 10,
                 border: isSelected ? '1px solid var(--cd-accent)' : '1px solid var(--cd-border)',
-                background: isSelected ? 'rgba(0, 212, 255, 0.12)' : 'var(--cd-bg)',
+                background: isSelected ? 'var(--cd-accent-dim)' : 'var(--cd-bg)',
                 color: isSelected ? 'var(--cd-fg)' : 'var(--cd-fg2)',
                 fontFamily: 'var(--font-mono)',
                 fontSize: 12,
@@ -460,175 +942,182 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
       {/* =====================================================================
           TAB 1: SCORE DISTRIBUTIONS & THRESHOLD CALIBRATION (Table 6.1 & Fig 6.8)
          ===================================================================== */}
-      {activeTab === 'calibration' && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-          {/* Regime + Dataset Controls */}
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 290px), 1fr))',
-              gap: 16,
-              padding: 16,
-              borderRadius: 12,
-              border: '1px solid var(--cd-border)',
-              background: 'var(--cd-bg)',
-            }}
-          >
-            <div style={{ minWidth: 0 }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-fg3)', marginBottom: 8 }}>
-                {t(copy.regimeHeading)}
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                <button
-                  type="button"
-                  onClick={() => handleRegimeChange('sep')}
-                  style={{
-                    padding: '9px 12px',
-                    borderRadius: 8,
-                    border: regime === 'sep' ? '1px solid var(--cd-success)' : '1px solid var(--cd-border)',
-                    background: regime === 'sep' ? 'rgba(16, 185, 129, 0.12)' : 'transparent',
-                    color: 'var(--cd-fg)',
-                    fontSize: 12,
-                    fontFamily: 'var(--font-mono)',
-                    textAlign: 'start',
-                    cursor: 'pointer',
-                  }}
-                >
-                  ● {t(copy.regimeSep)}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleRegimeChange('base')}
-                  style={{
-                    padding: '9px 12px',
-                    borderRadius: 8,
-                    border: regime === 'base' ? '1px solid var(--cd-warn)' : '1px solid var(--cd-border)',
-                    background: regime === 'base' ? 'rgba(245, 158, 11, 0.12)' : 'transparent',
-                    color: 'var(--cd-fg)',
-                    fontSize: 12,
-                    fontFamily: 'var(--font-mono)',
-                    textAlign: 'start',
-                    cursor: 'pointer',
-                  }}
-                >
-                  ○ {t(copy.regimeBase)}
-                </button>
-              </div>
+      <div
+        role="tabpanel"
+        id={`${baseId}-panel-calibration`}
+        aria-labelledby={`${baseId}-tab-calibration`}
+        tabIndex={0}
+        hidden={activeTab !== 'calibration'}
+        style={activeTab === 'calibration' ? { display: 'flex', flexDirection: 'column', gap: 20 } : undefined}
+      >
+        {/* Regime + Dataset Controls */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 290px), 1fr))',
+            gap: 16,
+            padding: 16,
+            borderRadius: 12,
+            border: '1px solid var(--cd-border)',
+            background: 'var(--cd-bg)',
+          }}
+        >
+          <div style={{ minWidth: 0 }}>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-fg3)', marginBottom: 8 }}>
+              {t(copy.regimeHeading)}
             </div>
-
-            <div style={{ minWidth: 0 }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-fg3)', marginBottom: 8 }}>
-                {t(copy.datasetHeading)}
-              </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 175px), 1fr))', gap: 6 }}>
-                {(Object.keys(BENCHMARK_DATASETS) as OodDatasetKey[]).map((key) => {
-                  const meta = BENCHMARK_DATASETS[key]
-                  const selected = regime === 'sep' && datasetKey === key
-                  return (
-                    <button
-                      key={key}
-                      type="button"
-                      onClick={() => handleDatasetChange(key)}
-                      style={{
-                        padding: '7px 10px',
-                        borderRadius: 8,
-                        border: selected ? '1px solid var(--cd-accent)' : '1px solid var(--cd-border)',
-                        background: selected ? 'rgba(0, 212, 255, 0.12)' : 'transparent',
-                        color: 'var(--cd-fg)',
-                        fontSize: 11.5,
-                        textAlign: 'left',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        gap: 6,
-                      }}
-                    >
-                      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                        {t(DATASET_LABELS[key]).split(' (')[0]}
-                      </span>
-                      <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--cd-accent)' }}>
-                        {meta.auroc.toFixed(2)}%
-                      </span>
-                    </button>
-                  )
-                })}
-              </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <button
+                type="button"
+                onClick={() => handleRegimeChange('sep')}
+                style={{
+                  padding: '9px 12px',
+                  borderRadius: 8,
+                  border: regime === 'sep' ? '1px solid var(--cd-success)' : '1px solid var(--cd-border)',
+                  background: regime === 'sep' ? 'color-mix(in srgb, var(--cd-success) 12%, transparent)' : 'transparent',
+                  color: 'var(--cd-fg)',
+                  fontSize: 12,
+                  fontFamily: 'var(--font-mono)',
+                  textAlign: 'start',
+                  cursor: 'pointer',
+                }}
+              >
+                ● {t(copy.regimeSep)}
+              </button>
+              <button
+                type="button"
+                onClick={() => handleRegimeChange('base')}
+                style={{
+                  padding: '9px 12px',
+                  borderRadius: 8,
+                  border: regime === 'base' ? '1px solid var(--cd-warn)' : '1px solid var(--cd-border)',
+                  background: regime === 'base' ? 'color-mix(in srgb, var(--cd-warn) 12%, transparent)' : 'transparent',
+                  color: 'var(--cd-fg)',
+                  fontSize: 12,
+                  fontFamily: 'var(--font-mono)',
+                  textAlign: 'start',
+                  cursor: 'pointer',
+                }}
+              >
+                ○ {t(copy.regimeBase)}
+              </button>
             </div>
           </div>
 
-          {/* Threshold Slider & Presets */}
-          <div
-            style={{
-              padding: 16,
-              borderRadius: 12,
-              border: '1px solid var(--cd-border)',
-              background: 'var(--cd-bg)',
-            }}
-          >
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: 12, marginBottom: 10 }}>
-              <label
-                htmlFor={sliderId}
-                style={{ fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 600, color: 'var(--cd-fg)' }}
-              >
-                {t(copy.thresholdHeading)}:{' '}
-                <span style={{ color: '#f97316', fontWeight: 700 }}>
-                  τ = {threshold >= 0 ? `+${threshold.toFixed(5)}` : threshold.toFixed(5)}
-                </span>
-              </label>
-
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-                <button
-                  type="button"
-                  onClick={() => setThreshold(regime === 'base' ? LAMBDA0_SEED42_META.tauTpr95 : activeMeta.tauTpr95)}
-                  style={{
-                    padding: '5px 10px',
-                    borderRadius: 6,
-                    border: '1px solid var(--cd-border)',
-                    background: 'var(--cd-surface)',
-                    color: 'var(--cd-fg)',
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: 11,
-                    cursor: 'pointer',
-                  }}
-                >
-                  {t(copy.presetTpr95)}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setThreshold(regime === 'base' ? LAMBDA0_SEED42_META.tauYouden : activeMeta.tauYouden)}
-                  style={{
-                    padding: '5px 10px',
-                    borderRadius: 6,
-                    border: '1px solid var(--cd-border)',
-                    background: 'var(--cd-surface)',
-                    color: 'var(--cd-fg)',
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: 11,
-                    cursor: 'pointer',
-                  }}
-                >
-                  {t(copy.presetYouden)}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setThreshold(0)}
-                  style={{
-                    padding: '5px 10px',
-                    borderRadius: 6,
-                    border: '1px solid var(--cd-border)',
-                    background: 'var(--cd-surface)',
-                    color: 'var(--cd-fg)',
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: 11,
-                    cursor: 'pointer',
-                  }}
-                >
-                  {t(copy.presetZero)}
-                </button>
-              </div>
+          <div style={{ minWidth: 0 }}>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-fg3)', marginBottom: 8 }}>
+              {t(copy.datasetHeading)}
             </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 175px), 1fr))', gap: 6 }}>
+              {(Object.keys(BENCHMARK_DATASETS) as OodDatasetKey[]).map((key) => {
+                const meta = BENCHMARK_DATASETS[key]
+                const selected = regime === 'sep' && datasetKey === key
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => handleDatasetChange(key)}
+                    style={{
+                      padding: '7px 10px',
+                      borderRadius: 8,
+                      border: selected ? '1px solid var(--cd-accent)' : '1px solid var(--cd-border)',
+                      background: selected ? 'var(--cd-accent-dim)' : 'transparent',
+                      color: 'var(--cd-fg)',
+                      fontSize: 11.5,
+                      textAlign: 'start',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      gap: 6,
+                    }}
+                  >
+                    <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      {t(DATASET_LABELS[key]).split(' (')[0]}
+                    </span>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--cd-accent)' }}>
+                      <bdi dir="ltr">{meta.auroc.toFixed(2)}%</bdi>
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        </div>
 
+        {/* Threshold Slider & Presets */}
+        <div
+          style={{
+            padding: 16,
+            borderRadius: 12,
+            border: '1px solid var(--cd-border)',
+            background: 'var(--cd-bg)',
+          }}
+        >
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: 12, marginBottom: 10 }}>
+            <label
+              htmlFor={sliderId}
+              style={{ fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 600, color: 'var(--cd-fg)' }}
+            >
+              {t(copy.thresholdHeading)}:{' '}
+              <span style={{ color: 'var(--cd-warn)', fontWeight: 700 }}>
+                <bdi dir="ltr">τ = {threshold >= 0 ? `+${threshold.toFixed(5)}` : threshold.toFixed(5)}</bdi>
+              </span>
+            </label>
+
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+              <button
+                type="button"
+                onClick={() => setThreshold(regime === 'base' ? LAMBDA0_SEED42_META.tauTpr95 : activeMeta.tauTpr95)}
+                style={{
+                  padding: '5px 10px',
+                  borderRadius: 6,
+                  border: '1px solid var(--cd-border)',
+                  background: 'var(--cd-surface)',
+                  color: 'var(--cd-fg)',
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: 11,
+                  cursor: 'pointer',
+                }}
+              >
+                {t(copy.presetTpr95)}
+              </button>
+              <button
+                type="button"
+                onClick={() => setThreshold(regime === 'base' ? LAMBDA0_SEED42_META.tauYouden : activeMeta.tauYouden)}
+                style={{
+                  padding: '5px 10px',
+                  borderRadius: 6,
+                  border: '1px solid var(--cd-border)',
+                  background: 'var(--cd-surface)',
+                  color: 'var(--cd-fg)',
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: 11,
+                  cursor: 'pointer',
+                }}
+              >
+                {t(copy.presetYouden)}
+              </button>
+              <button
+                type="button"
+                onClick={() => setThreshold(0)}
+                style={{
+                  padding: '5px 10px',
+                  borderRadius: 6,
+                  border: '1px solid var(--cd-border)',
+                  background: 'var(--cd-surface)',
+                  color: 'var(--cd-fg)',
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: 11,
+                  cursor: 'pointer',
+                }}
+              >
+                {t(copy.presetZero)}
+              </button>
+            </div>
+          </div>
+
+          <div dir="ltr">
             <input
               id={sliderId}
               type="range"
@@ -637,69 +1126,93 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
               step={(activeHist.hi - activeHist.lo) / 300}
               value={threshold}
               onChange={(e) => setThreshold(parseFloat(e.target.value))}
-              style={{ width: '100%', accentColor: '#f97316', cursor: 'pointer' }}
+              style={{ width: '100%', accentColor: 'var(--cd-warn)', cursor: 'pointer' }}
             />
+          </div>
 
-            {/* Live KPI Strip */}
-            <div
-              dir="ltr"
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 150px), 1fr))',
-                gap: 10,
-                marginTop: 14,
-              }}
-            >
-              <div style={{ padding: '10px 12px', borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-fg3)' }}>AUROC (Seed 42 · K=100)</div>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 18, fontWeight: 700, color: 'var(--cd-accent)' }}>
-                  {`${(regime === 'base' ? LAMBDA0_SEED42_META.auroc : activeMeta.auroc).toFixed(2)}%`}
-                </div>
-                <div style={{ fontSize: 11, color: 'var(--cd-fg3)' }}>
-                  {regime === 'base' ? '3-seed: 92.52% ± 11.07%' : datasetKey === 'within_cifar' ? '3-seed: 99.03% ± 0.07%' : `AUPRC: ${activeMeta.auprc.toFixed(2)}%`}
-                </div>
+          {/* Live KPI Strip */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 150px), 1fr))',
+              gap: 10,
+              marginTop: 14,
+            }}
+          >
+            <div style={{ padding: '10px 12px', borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-fg3)' }}>
+                {t(copy.kpiAurocLabel)}
               </div>
-
-              <div style={{ padding: '10px 12px', borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-fg3)' }}>Live TPR(τ) · Sensitivity</div>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 18, fontWeight: 700, color: 'var(--cd-success)' }}>
-                  {liveDiagnostics.tpr.toFixed(1)}%
-                </div>
-                <div style={{ fontSize: 11, color: 'var(--cd-fg3)' }}>
-                  TP: {liveDiagnostics.tpCount.toLocaleString()} / {liveDiagnostics.nOod.toLocaleString()} OOD
-                </div>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 18, fontWeight: 700, color: 'var(--cd-accent)' }}>
+                <bdi dir="ltr">{`${(regime === 'base' ? LAMBDA0_SEED42_META.auroc : activeMeta.auroc).toFixed(2)}%`}</bdi>
               </div>
-
-              <div style={{ padding: '10px 12px', borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-fg3)' }}>Live FPR(τ) · False Alarms</div>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 18, fontWeight: 700, color: liveDiagnostics.fpr <= 15 ? 'var(--cd-accent)' : 'var(--cd-danger)' }}>
-                  {liveDiagnostics.fpr.toFixed(1)}%
-                </div>
-                <div style={{ fontSize: 11, color: 'var(--cd-fg3)' }}>
-                  FP: {liveDiagnostics.fpCount.toLocaleString()} / {liveDiagnostics.nId.toLocaleString()} Airplanes
-                </div>
+              <div style={{ fontSize: 11, color: 'var(--cd-fg3)' }}>
+                {regime === 'base' ? (
+                  <>
+                    {t(copy.kpiThreeSeed)}: <bdi dir="ltr">92.52% ± 11.07%</bdi>
+                  </>
+                ) : datasetKey === 'within_cifar' ? (
+                  <>
+                    {t(copy.kpiThreeSeed)}: <bdi dir="ltr">99.03% ± 0.07%</bdi>
+                  </>
+                ) : (
+                  <bdi dir="ltr">AUPRC: {activeMeta.auprc.toFixed(2)}%</bdi>
+                )}
               </div>
+            </div>
 
-              <div style={{ padding: '10px 12px', borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-fg3)' }}>Youden&apos;s J(τ) = TPR − FPR</div>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 18, fontWeight: 700, color: 'var(--cd-fg)' }}>
-                  {liveDiagnostics.youdenJ.toFixed(1)}%
-                </div>
-                <div style={{ fontSize: 11, color: 'var(--cd-fg3)' }}>
-                  Balanced Acc: {liveDiagnostics.balAcc.toFixed(1)}%
-                </div>
+            <div style={{ padding: '10px 12px', borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-fg3)' }}>
+                {t(copy.kpiTprLabel)}
+              </div>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 18, fontWeight: 700, color: 'var(--cd-success)' }}>
+                <bdi dir="ltr">{liveDiagnostics.tpr.toFixed(1)}%</bdi>
+              </div>
+              <div style={{ fontSize: 11, color: 'var(--cd-fg3)' }}>
+                <bdi dir="ltr">
+                  TP: {liveDiagnostics.tpCount.toLocaleString(numberLocale)} / {liveDiagnostics.nOod.toLocaleString(numberLocale)} OOD
+                </bdi>
+              </div>
+            </div>
+
+            <div style={{ padding: '10px 12px', borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-fg3)' }}>
+                {t(copy.kpiFprLabel)}
+              </div>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 18, fontWeight: 700, color: liveDiagnostics.fpr <= 15 ? 'var(--cd-accent)' : 'var(--cd-danger)' }}>
+                <bdi dir="ltr">{liveDiagnostics.fpr.toFixed(1)}%</bdi>
+              </div>
+              <div style={{ fontSize: 11, color: 'var(--cd-fg3)' }}>
+                <bdi dir="ltr">
+                  FP: {liveDiagnostics.fpCount.toLocaleString(numberLocale)} / {liveDiagnostics.nId.toLocaleString(numberLocale)}
+                </bdi>{' '}
+                {t(copy.kpiAirplanes)}
+              </div>
+            </div>
+
+            <div style={{ padding: '10px 12px', borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-fg3)' }}>
+                {t(copy.kpiYoudenLabel)}
+              </div>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 18, fontWeight: 700, color: 'var(--cd-fg)' }}>
+                <bdi dir="ltr">{liveDiagnostics.youdenJ.toFixed(1)}%</bdi>
+              </div>
+              <div style={{ fontSize: 11, color: 'var(--cd-fg3)' }}>
+                {t(copy.kpiBalAcc)}: <bdi dir="ltr">{liveDiagnostics.balAcc.toFixed(1)}%</bdi>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Side-by-Side Empirical Histogram SVG & ROC Curve SVG */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 310px), 1fr))', gap: 16 }}>
-            {/* 48-Bin Empirical Histogram */}
-            <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)', minWidth: 0 }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--cd-fg)', marginBottom: 10 }}>
-                {t(copy.histTitle)}
-              </div>
-              <svg viewBox="0 0 520 230" style={{ width: '100%', height: 'auto', overflow: 'visible' }} role="img" aria-label="Empirical OOD Score Histogram">
+        {/* Side-by-Side Empirical Histogram SVG & ROC Curve SVG */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 310px), 1fr))', gap: 16 }}>
+          {/* 48-Bin Empirical Histogram */}
+          <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)', minWidth: 0 }}>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--cd-fg)', marginBottom: 10 }}>
+              {t(copy.histTitle)}
+            </div>
+            <div dir="ltr">
+              <svg viewBox="0 0 520 230" style={{ width: '100%', height: 'auto', overflow: 'visible' }} role="img" aria-label={t(copy.histAriaLabel)}>
                 {/* Axes */}
                 <line x1="40" y1="195" x2="500" y2="195" stroke="var(--cd-border)" strokeWidth="1" />
                 <line x1="40" y1="20" x2="40" y2="195" stroke="var(--cd-border)" strokeWidth="1" />
@@ -718,14 +1231,16 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
                         y={195 - idH}
                         width={Math.max(1.5, barW - 1)}
                         height={idH}
-                        fill="rgba(56, 189, 248, 0.55)"
+                        fill="var(--cd-accent)"
+                        fillOpacity="0.52"
                       />
                       <rect
                         x={x}
                         y={195 - oodH}
                         width={Math.max(1.5, barW - 1)}
                         height={oodH}
-                        fill="rgba(239, 68, 68, 0.50)"
+                        fill="var(--cd-danger)"
+                        fillOpacity="0.48"
                       />
                     </g>
                   )
@@ -737,9 +1252,9 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
                   const tx = 40 + ratio * 460
                   return (
                     <g>
-                      <line x1={tx} y1="16" x2={tx} y2="195" stroke="#f97316" strokeWidth="2.5" strokeDasharray="5 4" />
-                      <rect x={Math.min(415, Math.max(42, tx - 44))} y="12" width="88" height="18" rx="4" fill="#f97316" />
-                      <text x={Math.min(459, Math.max(86, tx))} y="24" textAnchor="middle" fill="#000" fontSize="9.5" fontWeight="700" fontFamily="monospace">
+                      <line x1={tx} y1="16" x2={tx} y2="195" stroke="var(--cd-warn)" strokeWidth="2.5" strokeDasharray="5 4" />
+                      <rect x={Math.min(415, Math.max(42, tx - 44))} y="12" width="88" height="18" rx="4" fill="var(--cd-warn)" />
+                      <text x={Math.min(459, Math.max(86, tx))} y="24" textAnchor="middle" fill="var(--cd-bg)" fontSize="9.5" fontWeight="700" fontFamily="monospace">
                         τ = {threshold.toFixed(4)}
                       </text>
                     </g>
@@ -757,19 +1272,29 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
                   +{activeHist.hi.toFixed(4)}
                 </text>
               </svg>
-              <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--cd-fg2)', marginTop: 6 }}>
-                <span><strong style={{ color: 'var(--cd-accent)' }}>■</strong> ID: CIFAR-10 Airplane (N={activeHist.n_id.toLocaleString()})</span>
-                <span><strong style={{ color: 'var(--cd-danger)' }}>■</strong> OOD Cohort (N={activeHist.n_ood.toLocaleString()})</span>
-                <span><strong style={{ color: '#f97316' }}>┆</strong> Threshold τ</span>
-              </div>
             </div>
+            <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--cd-fg2)', marginTop: 6 }}>
+              <span>
+                <strong style={{ color: 'var(--cd-accent)' }}>■</strong> {t(copy.histLegendId)}{' '}
+                <bdi dir="ltr">(N={activeHist.n_id.toLocaleString(numberLocale)})</bdi>
+              </span>
+              <span>
+                <strong style={{ color: 'var(--cd-danger)' }}>■</strong> {t(copy.histLegendOod)}{' '}
+                <bdi dir="ltr">(N={activeHist.n_ood.toLocaleString(numberLocale)})</bdi>
+              </span>
+              <span>
+                <strong style={{ color: 'var(--cd-warn)' }}>┆</strong> {t(copy.histLegendTau)}
+              </span>
+            </div>
+          </div>
 
-            {/* Empirical ROC Curve */}
-            <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)', minWidth: 0 }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--cd-fg)', marginBottom: 10 }}>
-                {t(copy.rocTitle)}
-              </div>
-              <svg viewBox="0 0 320 230" style={{ width: '100%', height: 'auto', overflow: 'visible' }} role="img" aria-label="Empirical ROC Curve">
+          {/* Empirical ROC Curve */}
+          <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)', minWidth: 0 }}>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--cd-fg)', marginBottom: 10 }}>
+              {t(copy.rocTitle)}
+            </div>
+            <div dir="ltr">
+              <svg viewBox="0 0 320 230" style={{ width: '100%', height: 'auto', overflow: 'visible' }} role="img" aria-label={t(copy.rocAriaLabel)}>
                 <line x1="45" y1="195" x2="295" y2="195" stroke="var(--cd-border)" strokeWidth="1" />
                 <line x1="45" y1="20" x2="45" y2="195" stroke="var(--cd-border)" strokeWidth="1" />
                 {/* Diagonal chance line */}
@@ -791,46 +1316,59 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
                   const cy = 195 - (liveDiagnostics.tpr / 100) * 175
                   return (
                     <g>
-                      <line x1={cx} y1={cy} x2={cx} y2="195" stroke="#f97316" strokeWidth="1" strokeDasharray="3 3" />
-                      <line x1="45" y1={cy} x2={cx} y2={cy} stroke="#f97316" strokeWidth="1" strokeDasharray="3 3" />
-                      <circle cx={cx} cy={cy} r="5.5" fill="#f97316" stroke="#fff" strokeWidth="1.5" />
+                      <line x1={cx} y1={cy} x2={cx} y2="195" stroke="var(--cd-warn)" strokeWidth="1" strokeDasharray="3 3" />
+                      <line x1="45" y1={cy} x2={cx} y2={cy} stroke="var(--cd-warn)" strokeWidth="1" strokeDasharray="3 3" />
+                      <circle cx={cx} cy={cy} r="5.5" fill="var(--cd-warn)" stroke="var(--cd-bg)" strokeWidth="1.5" />
                     </g>
                   )
                 })()}
 
                 <text x="170" y="214" textAnchor="middle" fill="var(--cd-fg2)" fontSize="10" fontFamily="monospace">
-                  False Positive Rate (FPR)
+                  {t(copy.rocXAxis)}
                 </text>
                 <text x="16" y="110" textAnchor="middle" fill="var(--cd-fg2)" fontSize="10" fontFamily="monospace" transform="rotate(-90 16 110)">
-                  True Positive Rate (TPR)
+                  {t(copy.rocYAxis)}
                 </text>
               </svg>
-              <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--cd-fg2)', marginTop: 6 }}>
-                Operating Point: <strong>FPR = {liveDiagnostics.fpr.toFixed(1)}%</strong>, <strong>TPR = {liveDiagnostics.tpr.toFixed(1)}%</strong> (Benchmark FPR@95%TPR = {`${regime === 'base' ? LAMBDA0_SEED42_META.fpr95 : activeMeta.fpr95}%`})
-              </div>
+            </div>
+            <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--cd-fg2)', marginTop: 6 }}>
+              {t(copy.operatingPointLabel)}:{' '}
+              <bdi dir="ltr">
+                <strong>FPR = {liveDiagnostics.fpr.toFixed(1)}%</strong>, <strong>TPR = {liveDiagnostics.tpr.toFixed(1)}%</strong>
+              </bdi>{' '}
+              ({t(copy.benchmarkFprLabel)} ={' '}
+              <bdi dir="ltr">{`${regime === 'base' ? LAMBDA0_SEED42_META.fpr95 : activeMeta.fpr95}%`}</bdi>)
             </div>
           </div>
         </div>
-      )}
+      </div>
 
       {/* =====================================================================
           TAB 2: PER-TIMESTEP ERROR (Fig. 6.7) & CONTRASTIVE SCORING (Table 6.5)
          ===================================================================== */}
-      {activeTab === 'timesteps' && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-          <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)' }}>
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: 12, marginBottom: 10 }}>
-              <label htmlFor={timestepSliderId} style={{ fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 600, color: 'var(--cd-fg)' }}>
-                {t(copy.timestepHeading)}:{' '}
-                <span style={{ color: 'var(--cd-accent)' }}>
-                  t = {activeTimestep.t} / 1000 (Signal ᾱ_t = {activeTimestep.alphaBar.toFixed(4)})
-                </span>
-              </label>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-fg3)' }}>
-                Eq. 3.25 Cosine Schedule · s = 0.008
+      <div
+        role="tabpanel"
+        id={`${baseId}-panel-timesteps`}
+        aria-labelledby={`${baseId}-tab-timesteps`}
+        tabIndex={0}
+        hidden={activeTab !== 'timesteps'}
+        style={activeTab === 'timesteps' ? { display: 'flex', flexDirection: 'column', gap: 20 } : undefined}
+      >
+        <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: 12, marginBottom: 10 }}>
+            <label htmlFor={timestepSliderId} style={{ fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 600, color: 'var(--cd-fg)' }}>
+              {t(copy.timestepHeading)}:{' '}
+              <span style={{ color: 'var(--cd-accent)' }}>
+                <bdi dir="ltr">t = {activeTimestep.t} / 1000</bdi> ({t(copy.timestepSignalLabel)}{' '}
+                <bdi dir="ltr">ᾱ_t = {activeTimestep.alphaBar.toFixed(4)}</bdi>)
               </span>
-            </div>
+            </label>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-fg3)' }}>
+              {t(copy.cosineScheduleLabel)}
+            </span>
+          </div>
 
+          <div dir="ltr">
             <input
               id={timestepSliderId}
               type="range"
@@ -841,9 +1379,11 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
               onChange={(e) => setTimestepIdx(parseInt(e.target.value, 10))}
               style={{ width: '100%', accentColor: 'var(--cd-accent)', cursor: 'pointer', marginBottom: 14 }}
             />
+          </div>
 
-            {/* Per-Timestep SVG Curve (Thesis Figure 6.7) */}
-            <svg viewBox="0 0 600 220" style={{ width: '100%', height: 'auto', overflow: 'visible' }} role="img" aria-label="Per-timestep reconstruction error curves">
+          {/* Per-Timestep SVG Curve (Thesis Figure 6.7) */}
+          <div dir="ltr">
+            <svg viewBox="0 0 600 220" style={{ width: '100%', height: 'auto', overflow: 'visible' }} role="img" aria-label={t(copy.timestepAriaLabel)}>
               <line x1="45" y1="190" x2="575" y2="190" stroke="var(--cd-border)" strokeWidth="1" />
               <line x1="45" y1="15" x2="45" y2="190" stroke="var(--cd-border)" strokeWidth="1" />
 
@@ -858,10 +1398,10 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
                   return `${x.toFixed(1)},${y.toFixed(1)}`
                 }).join(' ')}
               />
-              {/* OOD c=1 curve (orange dashed) */}
+              {/* OOD c=1 curve (warn dashed) */}
               <polyline
                 fill="none"
-                stroke="#fb923c"
+                stroke="var(--cd-warn)"
                 strokeWidth="1.8"
                 strokeDasharray="4 3"
                 points={PER_TIMESTEP_ERRORS.map((pt, i) => {
@@ -870,7 +1410,7 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
                   return `${x.toFixed(1)},${y.toFixed(1)}`
                 }).join(' ')}
               />
-              {/* ID c=0 curve (blue) */}
+              {/* ID c=0 curve (accent) */}
               <polyline
                 fill="none"
                 stroke="var(--cd-accent)"
@@ -881,10 +1421,10 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
                   return `${x.toFixed(1)},${y.toFixed(1)}`
                 }).join(' ')}
               />
-              {/* ID c=1 curve (cyan dashed) */}
+              {/* ID c=1 curve (success dashed) */}
               <polyline
                 fill="none"
-                stroke="#818cf8"
+                stroke="var(--cd-success)"
                 strokeWidth="1.8"
                 strokeDasharray="4 3"
                 points={PER_TIMESTEP_ERRORS.map((pt, i) => {
@@ -900,347 +1440,388 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
                 return <line x1={cx} y1="15" x2={cx} y2="190" stroke="var(--cd-accent)" strokeWidth="2" strokeDasharray="4 3" />
               })()}
 
-              <text x="45" y="208" fill="var(--cd-fg3)" fontSize="10" fontFamily="monospace">t = 50 (Low noise)</text>
-              <text x="310" y="208" textAnchor="middle" fill="var(--cd-fg2)" fontSize="10" fontFamily="monospace">t = 500 (Mid noise · Peak OOD signal)</text>
-              <text x="575" y="208" textAnchor="end" fill="var(--cd-fg3)" fontSize="10" fontFamily="monospace">t = 950 (Near-pure Gaussian)</text>
+              <text x="45" y="208" fill="var(--cd-fg3)" fontSize="10" fontFamily="monospace">{t(copy.timestepAxisLow)}</text>
+              <text x="310" y="208" textAnchor="middle" fill="var(--cd-fg2)" fontSize="10" fontFamily="monospace">{t(copy.timestepAxisMid)}</text>
+              <text x="575" y="208" textAnchor="end" fill="var(--cd-fg3)" fontSize="10" fontFamily="monospace">{t(copy.timestepAxisHigh)}</text>
             </svg>
-
-            {/* Live Timestep Metrics */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 180px), 1fr))', gap: 10, marginTop: 12 }}>
-              <div style={{ padding: 10, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-accent)' }}>ID (Airplane) MSE @ t={activeTimestep.t}</div>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--cd-fg)', marginTop: 4 }}>
-                  c=0: <strong>{activeTimestep.idC0Mean.toFixed(4)}</strong> · c=1: <strong>{activeTimestep.idC1Mean.toFixed(4)}</strong>
-                </div>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-success)', marginTop: 2 }}>
-                  {t(copy.meanErrorDifference)}: <bdi dir="ltr">ê₀ − ê₁ = {(() => {
-                    const diff = activeTimestep.idC0Mean - activeTimestep.idC1Mean
-                    return `${diff >= 0 ? '+' : ''}${diff.toFixed(5)}`
-                  })()}</bdi>
-                </div>
-              </div>
-
-              <div style={{ padding: 10, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-danger)' }}>OOD Cohort MSE @ t={activeTimestep.t}</div>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--cd-fg)', marginTop: 4 }}>
-                  c=0: <strong>{activeTimestep.oodC0Mean.toFixed(4)}</strong> · c=1: <strong>{activeTimestep.oodC1Mean.toFixed(4)}</strong>
-                </div>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-warn)', marginTop: 2 }}>
-                  {t(copy.meanErrorDifference)}: <bdi dir="ltr">ê₀ − ê₁ = {(() => {
-                    const diff = activeTimestep.oodC0Mean - activeTimestep.oodC1Mean
-                    return `${diff >= 0 ? '+' : ''}${diff.toFixed(5)}`
-                  })()}</bdi>
-                </div>
-              </div>
-
-              <div style={{ padding: 10, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-fg3)' }}>Manifold Mismatch Δ_OOD(t) (Eq. 3.15)</div>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 16, fontWeight: 700, color: 'var(--cd-accent)', marginTop: 4 }}>
-                  +{(activeTimestep.oodC0Mean - activeTimestep.idC0Mean).toFixed(4)} MSE
-                </div>
-                <div style={{ fontSize: 11, color: 'var(--cd-fg3)' }}>
-                  Uniform t ~ U[1,1000] achieves 98.9% CIFAR / 95.4% SVHN
-                </div>
-              </div>
-            </div>
           </div>
 
-          {/* Contrastive Scoring Comparison (Table 6.5 & D.3) + Timestep Strategy (Table 6.4) */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 290px), 1fr))', gap: 16 }}>
-            <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)', minWidth: 0 }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--cd-fg)', marginBottom: 10 }}>
-                {t(copy.scoringHeading)}
+          {/* Live Timestep Metrics */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 180px), 1fr))', gap: 10, marginTop: 12 }}>
+            <div style={{ padding: 10, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-accent)' }}>
+                {t(copy.idMseLabel)} <bdi dir="ltr">@ t={activeTimestep.t}</bdi>
               </div>
-              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 12 }}>
-                {(
-                  [
-                    { key: 'difference', label: 'Difference: ê₀ − ê₁ (Default)' },
-                    { key: 'ratio', label: 'Ratio: ê₀ / ê₁' },
-                    { key: 'id_error', label: 'ID-Only: ê₀ (No Contrast)' },
-                  ] as const
-                ).map((item) => (
-                  <button
-                    key={item.key}
-                    type="button"
-                    onClick={() => setScoringKey(item.key)}
-                    style={{
-                      padding: '6px 10px',
-                      borderRadius: 8,
-                      border: scoringKey === item.key ? '1px solid var(--cd-accent)' : '1px solid var(--cd-border)',
-                      background: scoringKey === item.key ? 'rgba(0, 212, 255, 0.12)' : 'transparent',
-                      color: 'var(--cd-fg)',
-                      fontFamily: 'var(--font-mono)',
-                      fontSize: 11,
-                      cursor: 'pointer',
-                    }}
-                  >
-                    {item.label}
-                  </button>
-                ))}
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--cd-fg)', marginTop: 4 }}>
+                <bdi dir="ltr">c=0: <strong>{activeTimestep.idC0Mean.toFixed(4)}</strong> · c=1: <strong>{activeTimestep.idC1Mean.toFixed(4)}</strong></bdi>
               </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 155px), 1fr))', gap: 10 }}>
-                <div style={{ padding: 12, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)', minWidth: 0 }}>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-fg3)' }}>Within-CIFAR AUROC</div>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 20, fontWeight: 700, color: activeScoring.cifarAuroc > 90 ? 'var(--cd-success)' : 'var(--cd-warn)' }}>
-                    {activeScoring.cifarAuroc.toFixed(2)}%
-                  </div>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-fg3)' }}>
-                    FPR95: {activeScoring.cifarFpr95.toFixed(1)}%
-                  </div>
-                </div>
-                <div style={{ padding: 12, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)', minWidth: 0 }}>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-fg3)' }}>External SVHN AUROC</div>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 20, fontWeight: 700, color: activeScoring.svhnAuroc > 90 ? 'var(--cd-success)' : 'var(--cd-danger)' }}>
-                    {activeScoring.svhnAuroc.toFixed(2)}%
-                  </div>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-fg3)' }}>
-                    FPR95: {activeScoring.svhnFpr95.toFixed(1)}%
-                  </div>
-                </div>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-success)', marginTop: 2 }}>
+                {t(copy.meanErrorDifference)}: <bdi dir="ltr">ê₀ − ê₁ = {(() => {
+                  const diff = activeTimestep.idC0Mean - activeTimestep.idC1Mean
+                  return `${diff >= 0 ? '+' : ''}${diff.toFixed(5)}`
+                })()}</bdi>
               </div>
-              <p style={{ fontSize: 12, color: 'var(--cd-fg2)', margin: '10px 0 0 0', lineHeight: 1.55 }}>
-                {scoringKey === 'id_error'
-                  ? 'Collapse alert (Table D.3): Using ID reconstruction error ê₀(x) alone collapses to 20.23% AUROC on SVHN (worse than random) because smooth SVHN digits have lower raw reconstruction error than textured airplanes.'
-                  : 'Contrastive scoring (comparing c=0 vs c=1 on the same noisy sample x_t) cancels raw image-complexity bias and isolates class-manifold fit.'}
-              </p>
             </div>
 
-            {/* Table 6.4 Timestep Sampling Strategies */}
-            <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)', minWidth: 0 }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--cd-fg)', marginBottom: 10 }}>
-                Timestep Sampling Strategy Ablation (Table 6.4 · K = 50, λ = 0.01)
+            <div style={{ padding: 10, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-danger)' }}>
+                {t(copy.oodMseLabel)} <bdi dir="ltr">@ t={activeTimestep.t}</bdi>
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                {TIMESTEP_STRATEGIES.map((strat) => (
-                  <div
-                    key={strat.key}
-                    style={{
-                      padding: '10px 12px',
-                      borderRadius: 8,
-                      border: '1px solid var(--cd-border)',
-                      background: 'var(--cd-surface)',
-                      display: 'flex',
-                      flexWrap: 'wrap',
-                      gap: 8,
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      fontFamily: 'var(--font-mono)',
-                      fontSize: 11.5,
-                    }}
-                  >
-                    <div style={{ minWidth: 0 }}>
-                      <strong style={{ color: 'var(--cd-fg)', textTransform: 'capitalize' }}>{strat.key.replace('_', '-')}</strong>
-                      <div style={{ fontSize: 10.5, color: 'var(--cd-fg3)' }}>{strat.distribution}</div>
-                    </div>
-                    <div style={{ textAlign: 'end' }}>
-                      <div style={{ color: 'var(--cd-accent)', fontWeight: 700 }}>CIFAR: {strat.cifarAuroc.toFixed(1)}%</div>
-                      <div style={{ color: 'var(--cd-fg2)', fontSize: 11 }}>SVHN: {strat.svhnAuroc.toFixed(1)}%</div>
-                    </div>
-                  </div>
-                ))}
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--cd-fg)', marginTop: 4 }}>
+                <bdi dir="ltr">c=0: <strong>{activeTimestep.oodC0Mean.toFixed(4)}</strong> · c=1: <strong>{activeTimestep.oodC1Mean.toFixed(4)}</strong></bdi>
+              </div>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-warn)', marginTop: 2 }}>
+                {t(copy.meanErrorDifference)}: <bdi dir="ltr">ê₀ − ê₁ = {(() => {
+                  const diff = activeTimestep.oodC0Mean - activeTimestep.oodC1Mean
+                  return `${diff >= 0 ? '+' : ''}${diff.toFixed(5)}`
+                })()}</bdi>
+              </div>
+            </div>
+
+            <div style={{ padding: 10, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-fg3)' }}>
+                {t(copy.manifoldMismatchLabel)}
+              </div>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 16, fontWeight: 700, color: 'var(--cd-accent)', marginTop: 4 }}>
+                <bdi dir="ltr">+{(activeTimestep.oodC0Mean - activeTimestep.idC0Mean).toFixed(4)} MSE</bdi>
+              </div>
+              <div style={{ fontSize: 11, color: 'var(--cd-fg3)' }}>
+                {t(copy.uniformSummaryNote)}
               </div>
             </div>
           </div>
         </div>
-      )}
+
+        {/* Contrastive Scoring Comparison (Table 6.5 & D.3) + Timestep Strategy (Table 6.4) */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 290px), 1fr))', gap: 16 }}>
+          <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)', minWidth: 0 }}>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--cd-fg)', marginBottom: 10 }}>
+              {t(copy.scoringHeading)}
+            </div>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 12 }}>
+              {(
+                [
+                  { key: 'difference', label: copy.scoreDiffLabel },
+                  { key: 'ratio', label: copy.scoreRatioLabel },
+                  { key: 'id_error', label: copy.scoreIdOnlyLabel },
+                ] as const
+              ).map((item) => (
+                <button
+                  key={item.key}
+                  type="button"
+                  onClick={() => setScoringKey(item.key)}
+                  style={{
+                    padding: '6px 10px',
+                    borderRadius: 8,
+                    border: scoringKey === item.key ? '1px solid var(--cd-accent)' : '1px solid var(--cd-border)',
+                    background: scoringKey === item.key ? 'var(--cd-accent-dim)' : 'transparent',
+                    color: 'var(--cd-fg)',
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: 11,
+                    cursor: 'pointer',
+                  }}
+                >
+                  {t(item.label)}
+                </button>
+              ))}
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 155px), 1fr))', gap: 10 }}>
+              <div style={{ padding: 12, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)', minWidth: 0 }}>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-fg3)' }}>
+                  {t(copy.withinCifarAurocLabel)}
+                </div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 20, fontWeight: 700, color: activeScoring.cifarAuroc > 90 ? 'var(--cd-success)' : 'var(--cd-warn)' }}>
+                  <bdi dir="ltr">{activeScoring.cifarAuroc.toFixed(2)}%</bdi>
+                </div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-fg3)' }}>
+                  <bdi dir="ltr">FPR95: {activeScoring.cifarFpr95.toFixed(1)}%</bdi>
+                </div>
+              </div>
+              <div style={{ padding: 12, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)', minWidth: 0 }}>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--cd-fg3)' }}>
+                  {t(copy.externalSvhnAurocLabel)}
+                </div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 20, fontWeight: 700, color: activeScoring.svhnAuroc > 90 ? 'var(--cd-success)' : 'var(--cd-danger)' }}>
+                  <bdi dir="ltr">{activeScoring.svhnAuroc.toFixed(2)}%</bdi>
+                </div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-fg3)' }}>
+                  <bdi dir="ltr">FPR95: {activeScoring.svhnFpr95.toFixed(1)}%</bdi>
+                </div>
+              </div>
+            </div>
+            <p style={{ fontSize: 12, color: 'var(--cd-fg2)', margin: '10px 0 0 0', lineHeight: 1.55 }}>
+              {t(scoringKey === 'id_error' ? copy.collapseAlertText : copy.contrastiveNoteText)}
+            </p>
+          </div>
+
+          {/* Table 6.4 Timestep Sampling Strategies */}
+          <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)', minWidth: 0 }}>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--cd-fg)', marginBottom: 10 }}>
+              {t(copy.samplingHeading)}
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {TIMESTEP_STRATEGIES.map((strat) => (
+                <div
+                  key={strat.key}
+                  style={{
+                    padding: '10px 12px',
+                    borderRadius: 8,
+                    border: '1px solid var(--cd-border)',
+                    background: 'var(--cd-surface)',
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: 8,
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: 11.5,
+                  }}
+                >
+                  <div style={{ minWidth: 0 }}>
+                    <strong style={{ color: 'var(--cd-fg)' }}>{t(STRATEGY_LABELS[strat.key].name)}</strong>
+                    <div style={{ fontSize: 10.5, color: 'var(--cd-fg3)' }}>{t(STRATEGY_LABELS[strat.key].dist)}</div>
+                  </div>
+                  <div style={{ textAlign: 'end' }}>
+                    <div style={{ color: 'var(--cd-accent)', fontWeight: 700 }}>
+                      <bdi dir="ltr">CIFAR: {strat.cifarAuroc.toFixed(1)}%</bdi>
+                    </div>
+                    <div style={{ color: 'var(--cd-fg2)', fontSize: 11 }}>
+                      <bdi dir="ltr">SVHN: {strat.svhnAuroc.toFixed(1)}%</bdi>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* =====================================================================
           TAB 3: SEPARATION LOSS (λ), MONTE CARLO (K) & INKJET QC (Tables 6.3, 6.6–6.9)
          ===================================================================== */}
-      {activeTab === 'ablations' && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: 16 }}>
-            {/* Separation Loss Lambda Sweep (Table 6.6) */}
-            <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)', minWidth: 0 }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--cd-fg)', marginBottom: 10 }}>
-                {t(copy.lambdaSweepHeading)}
-              </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 12 }}>
-                {CIFAR_LAMBDA_SWEEP.map((row, idx) => (
-                  <button
-                    key={row.lambda}
-                    type="button"
-                    onClick={() => setSelectedLambdaIdx(idx)}
-                    style={{
-                      padding: '6px 10px',
-                      borderRadius: 8,
-                      border: selectedLambdaIdx === idx ? '1px solid var(--cd-accent)' : '1px solid var(--cd-border)',
-                      background: selectedLambdaIdx === idx ? 'rgba(0, 212, 255, 0.14)' : 'var(--cd-surface)',
-                      color: 'var(--cd-fg)',
-                      fontFamily: 'var(--font-mono)',
-                      fontSize: 11.5,
-                      fontWeight: row.isOptimal ? 700 : 500,
-                      cursor: 'pointer',
-                    }}
-                  >
-                    λ={row.lambda}{row.isOptimal ? ' ★' : ''}
-                  </button>
-                ))}
-              </div>
-
-              <div style={{ padding: 12, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 12 }}>
-                  <span>Within-CIFAR AUROC:</span>
-                  <strong style={{ color: 'var(--cd-success)' }}>
-                    {activeLambda.withinCifarMean.toFixed(2)}%
-                    {activeLambda.withinCifarStd !== null ? ` ± ${activeLambda.withinCifarStd.toFixed(2)}%` : ' (seed 42)'}
-                  </strong>
-                </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
-                  <span>Seed runs (42 / 123 / 456):</span>
-                  <span>{activeLambda.seeds.map((s) => `${s.toFixed(2)}%`).join(' · ')}</span>
-                </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
-                  <span>Best Convergence Epoch (seed 42):</span>
-                  <span>Epoch {activeLambda.bestEpochSeed42}</span>
-                </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
-                  <span>SVHN External AUROC (seed 42):</span>
-                  <span>
-                    {activeLambda.svhnAuroc.toFixed(1)}%{activeLambda.svhnArtefact ? '† (artefact)' : ''}
-                  </span>
-                </div>
-              </div>
+      <div
+        role="tabpanel"
+        id={`${baseId}-panel-ablations`}
+        aria-labelledby={`${baseId}-tab-ablations`}
+        tabIndex={0}
+        hidden={activeTab !== 'ablations'}
+        style={activeTab === 'ablations' ? { display: 'flex', flexDirection: 'column', gap: 20 } : undefined}
+      >
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: 16 }}>
+          {/* Separation Loss Lambda Sweep (Table 6.6) */}
+          <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)', minWidth: 0 }}>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--cd-fg)', marginBottom: 10 }}>
+              {t(copy.lambdaSweepHeading)}
+            </div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 12 }}>
+              {CIFAR_LAMBDA_SWEEP.map((row, idx) => (
+                <button
+                  key={row.lambda}
+                  type="button"
+                  onClick={() => setSelectedLambdaIdx(idx)}
+                  style={{
+                    padding: '6px 10px',
+                    borderRadius: 8,
+                    border: selectedLambdaIdx === idx ? '1px solid var(--cd-accent)' : '1px solid var(--cd-border)',
+                    background: selectedLambdaIdx === idx ? 'var(--cd-accent-dim)' : 'var(--cd-surface)',
+                    color: 'var(--cd-fg)',
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: 11.5,
+                    fontWeight: row.isOptimal ? 700 : 500,
+                    cursor: 'pointer',
+                  }}
+                >
+                  <bdi dir="ltr">λ={row.lambda}{row.isOptimal ? ' ★' : ''}</bdi>
+                </button>
+              ))}
             </div>
 
-            {/* Monte Carlo Trials K Sweep (Table 6.3 & D.2) */}
-            <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)', minWidth: 0 }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--cd-fg)', marginBottom: 10 }}>
-                {t(copy.kSweepHeading)}
+            <div style={{ padding: 12, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 12 }}>
+                <span>{t(copy.withinCifarAurocLabel)}:</span>
+                <strong style={{ color: 'var(--cd-success)' }}>
+                  <bdi dir="ltr">
+                    {activeLambda.withinCifarMean.toFixed(2)}%
+                    {activeLambda.withinCifarStd !== null ? ` ± ${activeLambda.withinCifarStd.toFixed(2)}%` : ''}
+                  </bdi>
+                  {activeLambda.withinCifarStd === null ? ` ${t(copy.seed42Paren)}` : ''}
+                </strong>
               </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 12 }}>
-                {K_ABLATION_TABLE.map((row, idx) => (
-                  <button
-                    key={row.k}
-                    type="button"
-                    onClick={() => setSelectedKIdx(idx)}
-                    style={{
-                      padding: '6px 10px',
-                      borderRadius: 8,
-                      border: selectedKIdx === idx ? '1px solid var(--cd-accent)' : '1px solid var(--cd-border)',
-                      background: selectedKIdx === idx ? 'rgba(0, 212, 255, 0.14)' : 'var(--cd-surface)',
-                      color: 'var(--cd-fg)',
-                      fontFamily: 'var(--font-mono)',
-                      fontSize: 11.5,
-                      fontWeight: row.recommended ? 700 : 500,
-                      cursor: 'pointer',
-                    }}
-                  >
-                    K={row.k}{row.recommended ? ' ★' : ''}
-                  </button>
-                ))}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
+                <span>{t(copy.seedRunsLabel)}</span>
+                <span><bdi dir="ltr">{activeLambda.seeds.map((s) => `${s.toFixed(2)}%`).join(' · ')}</bdi></span>
               </div>
-
-              <div style={{ padding: 12, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 12 }}>
-                  <span>Within-CIFAR AUROC (λ=0.01, seed 42):</span>
-                  <strong style={{ color: 'var(--cd-accent)' }}>{activeK.auroc.toFixed(2)}%</strong>
-                </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
-                  <span>FPR@95%TPR:</span>
-                  <span>{activeK.fpr95.toFixed(1)}%</span>
-                </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
-                  <span>RTX 2080 Ti Time (per 10K images):</span>
-                  <span>{activeK.timeSeconds10k.toFixed(1)} s ({activeK.msPerSample.toFixed(1)} ms / img)</span>
-                </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
-                  <span>Cost vs. ResNet-18 Forward Pass:</span>
-                  <span>{activeK.resnetMultiple}</span>
-                </div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
+                <span>{t(copy.bestEpochLabel)}</span>
+                <span>{t(copy.epochPrefix)} <bdi dir="ltr">{activeLambda.bestEpochSeed42}</bdi></span>
+              </div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
+                <span>{t(copy.svhnExternalLabel)}</span>
+                <span>
+                  <bdi dir="ltr">{activeLambda.svhnAuroc.toFixed(1)}%</bdi>
+                  {activeLambda.svhnArtefact ? ` ${t(copy.artefactNote)}` : ''}
+                </span>
               </div>
             </div>
           </div>
 
-          {/* Inkjet Print QC Per-Feature & Lambda Explorer (Tables 6.7, 6.8, 6.9) */}
+          {/* Monte Carlo Trials K Sweep (Table 6.3 & D.2) */}
           <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)', minWidth: 0 }}>
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: 12, marginBottom: 12 }}>
-              <div style={{ minWidth: 0 }}>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--cd-fg)' }}>
-                  {t(copy.inkjetHeading)}
-                </div>
-                <div style={{ fontSize: 12, color: 'var(--cd-fg2)', marginTop: 2 }}>
-                  Public FTI_Zer0P Dataset · 573 Source-Image Groups · 6,408 YOLO Crops (128×128) · Multi-Head AdaGN CDM
-                </div>
-              </div>
-
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-                {(['0.0', '0.01', '0.02', '0.05'] as const).map((lKey) => (
-                  <button
-                    key={lKey}
-                    type="button"
-                    onClick={() => setInkjetLambda(lKey)}
-                    style={{
-                      padding: '6px 10px',
-                      borderRadius: 8,
-                      border: inkjetLambda === lKey ? '1px solid var(--cd-accent)' : '1px solid var(--cd-border)',
-                      background: inkjetLambda === lKey ? 'rgba(0, 212, 255, 0.14)' : 'var(--cd-surface)',
-                      color: 'var(--cd-fg)',
-                      fontFamily: 'var(--font-mono)',
-                      fontSize: 11,
-                      cursor: 'pointer',
-                    }}
-                  >
-                    Inkjet λ={lKey}
-                  </button>
-                ))}
-              </div>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--cd-fg)', marginBottom: 10 }}>
+              {t(copy.kSweepHeading)}
+            </div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 12 }}>
+              {K_ABLATION_TABLE.map((row, idx) => (
+                <button
+                  key={row.k}
+                  type="button"
+                  onClick={() => setSelectedKIdx(idx)}
+                  style={{
+                    padding: '6px 10px',
+                    borderRadius: 8,
+                    border: selectedKIdx === idx ? '1px solid var(--cd-accent)' : '1px solid var(--cd-border)',
+                    background: selectedKIdx === idx ? 'var(--cd-accent-dim)' : 'var(--cd-surface)',
+                    color: 'var(--cd-fg)',
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: 11.5,
+                    fontWeight: row.recommended ? 700 : 500,
+                    cursor: 'pointer',
+                  }}
+                >
+                  <bdi dir="ltr">K={row.k}{row.recommended ? ' ★' : ''}</bdi>
+                </button>
+              ))}
             </div>
 
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, marginBottom: 12, fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--cd-fg2)' }}>
-              <span>
-                5-Fold CV Mean AUROC: <strong style={{ color: 'var(--cd-accent)' }}>{activeInkjetOverall.aurocMean.toFixed(4)} ± {activeInkjetOverall.aurocStd.toFixed(4)}</strong>
-              </span>
-              <span>
-                Accuracy: <strong>{(activeInkjetOverall.accMean * 100).toFixed(2)}% ± {(activeInkjetOverall.accStd * 100).toFixed(2)}%</strong>
-              </span>
-              <span>
-                Holm-Adjusted p vs λ=0:{' '}
-                <strong>{activeInkjetOverall.holmPValue === null ? 'Baseline' : `p = ${activeInkjetOverall.holmPValue.toFixed(3)} (not significant)`}</strong>
-              </span>
-            </div>
-
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 210px), 1fr))', gap: 8 }}>
-              {INKJET_PER_FEATURE.map((feat) => {
-                const stats = feat.byLambda[inkjetLambda]
-                const pct = stats.mean * 100
-                return (
-                  <div
-                    key={feat.feature}
-                    style={{
-                      padding: '9px 11px',
-                      borderRadius: 8,
-                      border: '1px solid var(--cd-border)',
-                      background: 'var(--cd-surface)',
-                      minWidth: 0,
-                    }}
-                  >
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5 }}>
-                      <strong style={{ color: 'var(--cd-fg)' }}>{feat.feature}</strong>
-                      <span style={{ color: pct >= 90 ? 'var(--cd-success)' : pct >= 80 ? 'var(--cd-accent)' : 'var(--cd-warn)', fontWeight: 700 }}>
-                        {stats.mean.toFixed(4)} ± {stats.std.toFixed(4)}
-                      </span>
-                    </div>
-                    <div style={{ height: 5, borderRadius: 3, background: 'var(--cd-bg)', marginTop: 6, overflow: 'hidden' }}>
-                      <div
-                        style={{
-                          width: `${Math.max(0, Math.min(100, (stats.mean - 0.5) * 200))}%`,
-                          height: '100%',
-                          background: pct >= 90 ? 'var(--cd-success)' : pct >= 80 ? 'var(--cd-accent)' : 'var(--cd-warn)',
-                        }}
-                      />
-                    </div>
-                    <div style={{ fontSize: 10.5, color: 'var(--cd-fg3)', marginTop: 4, fontFamily: 'var(--font-mono)' }}>
-                      GOOD:BAD = {feat.goodBadRatio}{feat.unreliableNote ? ' (<5 BAD/fold)' : ''}
-                    </div>
-                  </div>
-                )
-              })}
+            <div style={{ padding: 12, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 12 }}>
+                <span>{t(copy.kWithinCifarLabel)}</span>
+                <strong style={{ color: 'var(--cd-accent)' }}><bdi dir="ltr">{activeK.auroc.toFixed(2)}%</bdi></strong>
+              </div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
+                <span><bdi dir="ltr">FPR@95%TPR:</bdi></span>
+                <span><bdi dir="ltr">{activeK.fpr95.toFixed(1)}%</bdi></span>
+              </div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
+                <span>{t(copy.rtxTimeLabel)}</span>
+                <span>
+                  <bdi dir="ltr">{activeK.timeSeconds10k.toFixed(1)} s ({activeK.msPerSample.toFixed(1)}</bdi> {t(copy.msPerImg)})
+                </span>
+              </div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
+                <span>{t(copy.costVsResnetLabel)}</span>
+                <span>{t(RESNET_MULTIPLE_COPY[activeK.k])}</span>
+              </div>
             </div>
           </div>
         </div>
-      )}
+
+        {/* Inkjet Print QC Per-Feature & Lambda Explorer (Tables 6.7, 6.8, 6.9) */}
+        <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)', minWidth: 0 }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: 12, marginBottom: 12 }}>
+            <div style={{ minWidth: 0 }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--cd-fg)' }}>
+                {t(copy.inkjetHeading)}
+              </div>
+              <div style={{ fontSize: 12, color: 'var(--cd-fg2)', marginTop: 2 }}>
+                {t(copy.inkjetSubheading)}
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+              {(['0.0', '0.01', '0.02', '0.05'] as const).map((lKey) => (
+                <button
+                  key={lKey}
+                  type="button"
+                  onClick={() => setInkjetLambda(lKey)}
+                  style={{
+                    padding: '6px 10px',
+                    borderRadius: 8,
+                    border: inkjetLambda === lKey ? '1px solid var(--cd-accent)' : '1px solid var(--cd-border)',
+                    background: inkjetLambda === lKey ? 'var(--cd-accent-dim)' : 'var(--cd-surface)',
+                    color: 'var(--cd-fg)',
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: 11,
+                    cursor: 'pointer',
+                  }}
+                >
+                  {t(copy.inkjetLambdaPrefix)} <bdi dir="ltr">λ={lKey}</bdi>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, marginBottom: 12, fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--cd-fg2)' }}>
+            <span>
+              {t(copy.inkjetCvMeanLabel)}{' '}
+              <strong style={{ color: 'var(--cd-accent)' }}>
+                <bdi dir="ltr">{activeInkjetOverall.aurocMean.toFixed(4)} ± {activeInkjetOverall.aurocStd.toFixed(4)}</bdi>
+              </strong>
+            </span>
+            <span>
+              {t(copy.inkjetAccuracyLabel)}{' '}
+              <strong>
+                <bdi dir="ltr">{(activeInkjetOverall.accMean * 100).toFixed(2)}% ± {(activeInkjetOverall.accStd * 100).toFixed(2)}%</bdi>
+              </strong>
+            </span>
+            <span>
+              {t(copy.inkjetHolmLabel)}{' '}
+              <strong>
+                {activeInkjetOverall.holmPValue === null ? (
+                  t(copy.inkjetBaseline)
+                ) : (
+                  <>
+                    <bdi dir="ltr">p = {activeInkjetOverall.holmPValue.toFixed(3)}</bdi> {t(copy.inkjetNotSig)}
+                  </>
+                )}
+              </strong>
+            </span>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 210px), 1fr))', gap: 8 }}>
+            {INKJET_PER_FEATURE.map((feat) => {
+              const stats = feat.byLambda[inkjetLambda]
+              const pct = stats.mean * 100
+              const featureLabel = INKJET_FEATURE_LABELS[feat.feature]
+                ? t(INKJET_FEATURE_LABELS[feat.feature])
+                : feat.feature
+              return (
+                <div
+                  key={feat.feature}
+                  style={{
+                    padding: '9px 11px',
+                    borderRadius: 8,
+                    border: '1px solid var(--cd-border)',
+                    background: 'var(--cd-surface)',
+                    minWidth: 0,
+                  }}
+                >
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5 }}>
+                    <strong style={{ color: 'var(--cd-fg)' }}>{featureLabel}</strong>
+                    <span style={{ color: pct >= 90 ? 'var(--cd-success)' : pct >= 80 ? 'var(--cd-accent)' : 'var(--cd-warn)', fontWeight: 700 }}>
+                      <bdi dir="ltr">{stats.mean.toFixed(4)} ± {stats.std.toFixed(4)}</bdi>
+                    </span>
+                  </div>
+                  <div style={{ height: 5, borderRadius: 3, background: 'var(--cd-bg)', marginTop: 6, overflow: 'hidden' }}>
+                    <div
+                      style={{
+                        width: `${Math.max(0, Math.min(100, (stats.mean - 0.5) * 200))}%`,
+                        height: '100%',
+                        background: pct >= 90 ? 'var(--cd-success)' : pct >= 80 ? 'var(--cd-accent)' : 'var(--cd-warn)',
+                      }}
+                    />
+                  </div>
+                  <div style={{ fontSize: 10.5, color: 'var(--cd-fg3)', marginTop: 4, fontFamily: 'var(--font-mono)' }}>
+                    <bdi dir="ltr">GOOD:BAD = {feat.goodBadRatio}</bdi>
+                    {feat.unreliableNote ? ` ${t(copy.inkjetBadPerFold)}` : ''}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </div>
     </section>
   )
 }
