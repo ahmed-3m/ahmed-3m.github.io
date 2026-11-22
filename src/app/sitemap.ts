@@ -32,13 +32,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${baseUrl}/about/`,
-      lastModified: latestContent,
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
       url: `${baseUrl}/research/`,
-      lastModified: latestContent,
       changeFrequency: 'monthly',
       priority: 0.8,
     },

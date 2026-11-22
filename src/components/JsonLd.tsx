@@ -255,7 +255,7 @@ export function ProjectsSchema() {
         item: {
           '@type': 'SoftwareApplication',
           name: 'InkjetOOD — Industrial Defect Detection (FTI_Zer0P)',
-          description: 'YOLO + conditional diffusion pipeline for industrial defect detection on inkjet-printed building components, evaluated on the public FTI_Zer0P dataset under strict 5-fold cross-validation (0.8673 ± 0.0230 AUROC baseline). Production deployment also tracked an internal threshold-dependent binary classification accuracy of 98.4% (not comparable to public AUROC benchmarks). Part of the Zer0P project with PROFACTOR GmbH.',
+          description: 'YOLO + conditional diffusion pipeline for industrial defect detection on inkjet-printed building components, evaluated on the public FTI_Zer0P dataset under strict 5-fold cross-validation (0.8673 ± 0.0230 AUROC baseline; separation loss showed no statistically significant gain after Holm correction). Part of the Zer0P project with PROFACTOR GmbH.',
           applicationCategory: 'BusinessApplication',
           url: 'https://github.com/ahmed-3m/InkjetOOD',
           author: { '@type': 'Person', name: 'Ahmed Mohammed' },

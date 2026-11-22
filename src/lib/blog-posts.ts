@@ -497,7 +497,7 @@ At PROFACTOR GmbH in Austria, I worked on machine vision for inkjet-printed buil
 
 The public **InkjetOOD** evaluation uses a **Stage-1 YOLOv8m detector + Stage-2 conditional diffusion model** pipeline on **FTI_Zer0P**:
 
-1. **Stage 1 (YOLOv8m detector):** Localizes 8 structured feature types (angle, dist1, dist6, dots, edge1–4) from 1920×1080 frames at 640×640 input and crops each region to **128×128 RGB** (**6,408 crops** across **573 source-image groups**). *(Thesis PDF erratum: five places print YOLOv8n, while the released checkpoint \`yolo_best.pt\` is YOLOv8m with 25.86M parameters verified from \`train_args\`.)*
+1. **Stage 1 (YOLOv8m detector):** Localizes 8 structured feature types (angle, dist1, dist6, dots, edge1–4) from 1920×1080 frames at 640×640 input and crops each region to **128×128 RGB** (**6,408 crops** across **573 source-image groups**). *(Thesis PDF erratum: the thesis text identifies the detector as YOLOv8n, while the released checkpoint \`yolo_best.pt\` is YOLOv8m with 25.86M parameters verified from \`train_args\`.)*
 2. **Stage 2 (Multi-head CDM):** A conditional diffusion U-Net (\`NoisePredictorV3\` with AdaGN feature-type embeddings) models normal vs. defective crops per feature category.
 3. **Anomaly scoring:** Differential reconstruction error \`s_OOD(x) = ê_0(x) - ê_1(x)\` averaged across \`K = 100\` Monte Carlo timesteps scores each crop.
 
@@ -565,7 +565,7 @@ Bei PROFACTOR GmbH in Österreich arbeitete ich im Rahmen von Zer0P an Machine V
 
 Die öffentliche **InkjetOOD**-Evaluation kombiniert einen **Stufe-1-YOLOv8m-Detektor** mit einem **Stufe-2-Diffusionsklassifikator** auf **FTI_Zer0P**:
 
-1. **Stufe 1 (YOLOv8m-Detektor):** Lokalisiert 8 strukturierte Merkmalstypen (angle, dist1, dist6, dots, edge1–4) in 1920×1080-Bildern bei 640×640-Eingang und schneidet sie auf **128×128 RGB** zu (**6.408 Crops** aus **573 Quellbild-Gruppen**). *(Thesis-PDF-Erratum: An fünf Stellen steht YOLOv8n; das veröffentlichte Gewicht \`yolo_best.pt\` ist laut \`train_args\` YOLOv8m mit 25,86 Mio. Parametern.)*
+1. **Stufe 1 (YOLOv8m-Detektor):** Lokalisiert 8 strukturierte Merkmalstypen (angle, dist1, dist6, dots, edge1–4) in 1920×1080-Bildern bei 640×640-Eingang und schneidet sie auf **128×128 RGB** zu (**6.408 Crops** aus **573 Quellbild-Gruppen**). *(Thesis-PDF-Erratum: Der Text der Arbeit bezeichnet den Detektor als YOLOv8n; das veröffentlichte Gewicht \`yolo_best.pt\` ist laut \`train_args\` YOLOv8m mit 25,86 Mio. Parametern.)*
 2. **Stufe 2 (Multi-Head CDM):** Ein konditionales Diffusions-U-Net (\`NoisePredictorV3\` mit AdaGN-Embeddings pro Merkmalstyp) modelliert normale vs. fehlerhafte Crops.
 3. **Anomalie-Score:** Die Rekonstruktionsfehler-Differenz \`s_OOD(x) = ê_0(x) - ê_1(x)\` über \`K = 100\` Monte-Carlo-Schritte bewertet jeden Ausschnitt.
 
@@ -633,7 +633,7 @@ Chez PROFACTOR GmbH en Autriche, j'ai travaillé dans le cadre du projet Zer0P s
 
 L'évaluation publique **InkjetOOD** combine un **détecteur YOLOv8m (phase 1)** et un **classificateur génératif par diffusion conditionnelle (phase 2)** sur **FTI_Zer0P** :
 
-1. **Phase 1 (Détecteur YOLOv8m) :** Localise 8 types de motifs structurés (angle, dist1, dist6, dots, edge1–4) sur des images 1920×1080 (entrée 640×640) et extrait **6 408 crops RGB 128×128** issus de **573 groupes d'images sources**. *(Erratum PDF du mémoire : cinq mentions indiquent YOLOv8n, alors que le checkpoint publié \`yolo_best.pt\` est YOLOv8m avec 25,86 M paramètres vérifiés dans \`train_args\`.)*
+1. **Phase 1 (Détecteur YOLOv8m) :** Localise 8 types de motifs structurés (angle, dist1, dist6, dots, edge1–4) sur des images 1920×1080 (entrée 640×640) et extrait **6 408 crops RGB 128×128** issus de **573 groupes d'images sources**. *(Erratum PDF du mémoire : le mémoire désigne le détecteur comme YOLOv8n, alors que le checkpoint publié \`yolo_best.pt\` est YOLOv8m avec 25,86 M paramètres vérifiés dans \`train_args\`.)*
 2. **Phase 2 (CDM multi-têtes) :** Un U-Net de diffusion conditionnel (\`NoisePredictorV3\` avec conditionnement AdaGN par type de motif) apprend la reconstruction des crops normaux et défectueux.
 3. **Score d'anomalie :** L'écart d'erreur de reconstruction \`s_OOD(x) = ê_0(x) - ê_1(x)\` sur \`K = 100\` pas Monte Carlo évalue chaque crop.
 
@@ -701,7 +701,7 @@ En PROFACTOR GmbH en Austria trabajé dentro del proyecto Zer0P en visión artif
 
 La evaluación pública **InkjetOOD** combina un **detector YOLOv8m en etapa 1** con un **clasificador generativo por difusión condicional en etapa 2** sobre **FTI_Zer0P**:
 
-1. **Etapa 1 (Detector YOLOv8m):** Localiza 8 tipos de rasgos impresos (angle, dist1, dist6, dots, edge1–4) en fotogramas 1920×1080 (entrada 640×640) y extrae **6.408 recortes RGB de 128×128** en **573 grupos de imágenes fuente**. *(Errata del PDF de la tesis: cinco menciones dicen YOLOv8n, pero el checkpoint publicado \`yolo_best.pt\` es YOLOv8m con 25,86 M parámetros verificados en \`train_args\`.)*
+1. **Etapa 1 (Detector YOLOv8m):** Localiza 8 tipos de rasgos impresos (angle, dist1, dist6, dots, edge1–4) en fotogramas 1920×1080 (entrada 640×640) y extrae **6.408 recortes RGB de 128×128** en **573 grupos de imágenes fuente**. *(Errata del PDF de la tesis: la tesis identifica el detector como YOLOv8n, pero el checkpoint publicado \`yolo_best.pt\` es YOLOv8m con 25,86 M parámetros verificados en \`train_args\`.)*
 2. **Etapa 2 (CDM multi-cabeza):** Una U-Net de difusión condicional (\`NoisePredictorV3\` con condicionamiento AdaGN por tipo de rasgo) modela recortes normales frente a defectuosos.
 3. **Puntuación de anomalía:** La diferencia de error de reconstrucción \`s_OOD(x) = ê_0(x) - ê_1(x)\` promediada en \`K = 100\` pasos de Monte Carlo puntúa cada recorte.
 
@@ -769,7 +769,7 @@ Artefactos:
 
 يجمع التقييم العام **InkjetOOD** بين **كاشف YOLOv8m في المرحلة الأولى** و**مصنف توليدي بالانتشار الشرطي في المرحلة الثانية** على مجموعة **FTI_Zer0P**:
 
-1. **المرحلة الأولى (كاشف YOLOv8m):** يحدّد 8 أنواع من ميزات الطباعة (angle، dist1، dist6، dots، edge1–4) داخل إطارات 1920×1080 (بمدخل 640×640) ويقتطع **6,408 قصاصة RGB بأبعاد 128×128** عبر **573 مجموعة صور أصلية**. *(تصويب مطبعي في PDF الرسالة: ورد YOLOv8n في خمسة مواضع، بينما النموذج المدرب المنشور \`yolo_best.pt\` هو YOLOv8m بـ 25.86 مليون معامل وفق \`train_args\`.)*
+1. **المرحلة الأولى (كاشف YOLOv8m):** يحدّد 8 أنواع من ميزات الطباعة (angle، dist1، dist6، dots، edge1–4) داخل إطارات 1920×1080 (بمدخل 640×640) ويقتطع **6,408 قصاصة RGB بأبعاد 128×128** عبر **573 مجموعة صور أصلية**. *(تصويب مطبعي في PDF الرسالة: يصف نص الرسالة الكاشف بأنه YOLOv8n، بينما النموذج المدرب المنشور \`yolo_best.pt\` هو YOLOv8m بـ 25.86 مليون معامل وفق \`train_args\`.)*
 2. **المرحلة الثانية (CDM متعدد الرؤوس):** شبكة U-Net انتشارية شرطية (\`NoisePredictorV3\` مع تكييف AdaGN لكل نوع ميزة) تميّز بين القصاصات السليمة والمعيبة.
 3. **حساب درجة الشذوذ:** يقيس فرق خطأ إعادة البناء \`s_OOD(x) = ê_0(x) - ê_1(x)\` عبر \`K = 100\` عينة مونت كارلو درجة كل قصاصة.
 
@@ -843,7 +843,7 @@ Most YOLO posts stop at "train on a large dataset and report mAP." Industrial qu
 
 ## Stage-1 Detection & Cropping with YOLOv8m
 
-In the **InkjetOOD** two-stage pipeline, **YOLOv8m** acts explicitly as a **Stage-1 feature detector and cropper** (` + '`640×640`' + ` YOLO input over ` + '`1920×1080`' + ` print frames, ` + '`95.04%`' + ` mAP@0.5 reported in the thesis). *(Erratum note: the thesis PDF text prints YOLOv8n in five places, whereas the released trained checkpoint ` + '`yolo_best.pt`' + ` is ` + '`YOLOv8m`' + ` with 25.86M parameters verified from ` + '`train_args`' + `.)*
+In the **InkjetOOD** two-stage pipeline, **YOLOv8m** acts explicitly as a **Stage-1 feature detector and cropper** (` + '`640×640`' + ` YOLO input over ` + '`1920×1080`' + ` print frames, ` + '`95.04%`' + ` mAP@0.5 reported in the thesis). *(Erratum note: the thesis text identifies the detector as YOLOv8n, whereas the released trained checkpoint ` + '`yolo_best.pt`' + ` is ` + '`YOLOv8m`' + ` with 25.86M parameters verified from ` + '`train_args`' + `.)*
 
 Each detected print region (8 feature classes: ` + '`angle`' + `, ` + '`dist1`' + `, ` + '`dist6`' + `, ` + '`dots`' + `, and ` + '`edge1–4`' + `) is cropped and resized via bilinear interpolation to **128×128 RGB**. Across the 573 processed source-image groups on **FTI_Zer0P**, that yields **6,408 retained feature crops** for Stage-2 generative classification.
 
@@ -904,7 +904,7 @@ Die meisten YOLO-Beiträge enden bei "auf großem Datensatz trainieren und mAP b
 
 ## Stufe-1-Detektion und Zuschneiden mit YOLOv8m
 
-In der zweistufigen **InkjetOOD**-Pipeline arbeitet **YOLOv8m** gezielt als **Stufe-1-Merkmalsdetektor und Cropper** (` + '`640×640`' + `-Eingang auf ` + '`1920×1080`' + `-Druckbildern, ` + '`95.04%`' + ` mAP@0.5 laut Masterarbeit). *(Erratum-Hinweis: Im Text der Thesis-PDF steht fünfmal YOLOv8n, das trainierte Gewicht ` + '`yolo_best.pt`' + ` ist jedoch laut ` + '`train_args`' + ` YOLOv8m mit 25,86 Mio. Parametern.)*
+In der zweistufigen **InkjetOOD**-Pipeline arbeitet **YOLOv8m** gezielt als **Stufe-1-Merkmalsdetektor und Cropper** (` + '`640×640`' + `-Eingang auf ` + '`1920×1080`' + `-Druckbildern, ` + '`95.04%`' + ` mAP@0.5 laut Masterarbeit). *(Erratum-Hinweis: der Text der Arbeit bezeichnet den Detektor als YOLOv8n, das trainierte Gewicht ` + '`yolo_best.pt`' + ` ist jedoch laut ` + '`train_args`' + ` YOLOv8m mit 25,86 Mio. Parametern.)*
 
 Jede erkannte Druckregion (8 Klassen: ` + '`angle`' + `, ` + '`dist1`' + `, ` + '`dist6`' + `, ` + '`dots`' + `, ` + '`edge1–4`' + `) wird ausgeschnitten und bilinear auf **128×128 RGB** skaliert. Über die 573 verarbeiteten Quellbild-Gruppen von **FTI_Zer0P** entstehen so **6.408 Merkmals-Crops** für die zweite Stufe.
 
@@ -965,7 +965,7 @@ La plupart des articles YOLO s'arrêtent à « entraîner sur un grand dataset e
 
 ## Détection et recadrage en phase 1 avec YOLOv8m
 
-Dans la pipeline en deux étapes **InkjetOOD**, **YOLOv8m** sert explicitement de **détecteur et recadreur de phase 1** (entrée ` + '`640×640`' + ` sur images ` + '`1920×1080`' + `, ` + '`95.04%`' + ` mAP@0.5 rapportés dans le mémoire). *(Erratum : le texte PDF du mémoire mentionne YOLOv8n à cinq reprises, alors que le checkpoint publié ` + '`yolo_best.pt`' + ` est ` + '`YOLOv8m`' + ` à 25,86 M paramètres selon ` + '`train_args`' + `.)*
+Dans la pipeline en deux étapes **InkjetOOD**, **YOLOv8m** sert explicitement de **détecteur et recadreur de phase 1** (entrée ` + '`640×640`' + ` sur images ` + '`1920×1080`' + `, ` + '`95.04%`' + ` mAP@0.5 rapportés dans le mémoire). *(Erratum : le mémoire désigne le détecteur comme YOLOv8n, alors que le checkpoint publié ` + '`yolo_best.pt`' + ` est ` + '`YOLOv8m`' + ` à 25,86 M paramètres selon ` + '`train_args`' + `.)*
 
 Chaque motif détecté (8 catégories : ` + '`angle`' + `, ` + '`dist1`' + `, ` + '`dist6`' + `, ` + '`dots`' + `, ` + '`edge1–4`' + `) est recadré et redimensionné par interpolation bilinéaire en **128×128 RGB**. Sur les 573 groupes d'images de **FTI_Zer0P**, cela produit **6 408 crops de motifs** pour le classificateur génératif de phase 2.
 
@@ -1026,7 +1026,7 @@ La mayoría de los posts sobre YOLO terminan en «entrenar en un gran dataset y 
 
 ## Detección y recorte en etapa 1 con YOLOv8m
 
-En la pipeline de dos etapas **InkjetOOD**, **YOLOv8m** funciona explícitamente como **detector y recortador de etapa 1** (entrada ` + '`640×640`' + ` sobre capturas ` + '`1920×1080`' + `, ` + '`95.04%`' + ` mAP@0.5 según la tesis). *(Nota de errata: el PDF de la tesis menciona YOLOv8n en cinco ocasiones, pero el checkpoint publicado ` + '`yolo_best.pt`' + ` es ` + '`YOLOv8m`' + ` con 25,86 M parámetros verificados en ` + '`train_args`' + `.)*
+En la pipeline de dos etapas **InkjetOOD**, **YOLOv8m** funciona explícitamente como **detector y recortador de etapa 1** (entrada ` + '`640×640`' + ` sobre capturas ` + '`1920×1080`' + `, ` + '`95.04%`' + ` mAP@0.5 según la tesis). *(Nota de errata: la tesis identifica el detector como YOLOv8n, pero el checkpoint publicado ` + '`yolo_best.pt`' + ` es ` + '`YOLOv8m`' + ` con 25,86 M parámetros verificados en ` + '`train_args`' + `.)*
 
 Cada región detectada (8 tipos: ` + '`angle`' + `, ` + '`dist1`' + `, ` + '`dist6`' + `, ` + '`dots`' + `, ` + '`edge1–4`' + `) se recorta y redimensiona por interpolación bilineal a **128×128 RGB**. En los 573 grupos de imágenes fuente de **FTI_Zer0P**, eso produce **6.408 recortes** para el clasificador generativo de etapa 2.
 
@@ -1087,7 +1087,7 @@ Evaluado en **FTI_Zer0P** con 5-fold CV a nivel de imagen (` + '`λ = 0.0`' + `)
 
 ## الكشف والاقتصاص في المرحلة الأولى باستخدام YOLOv8m
 
-في خط **InkjetOOD** ذي المرحلتين، يعمل **YOLOv8m** صراحةً كـ **كاشف ومقتطع للمرحلة الأولى** (مدخل ` + '`640×640`' + ` على إطارات ` + '`1920×1080`' + `، بمقياس ` + '`95.04%`' + ` mAP@0.5 في الرسالة). *(ملاحظة تصويب: يذكر نص PDF الرسالة YOLOv8n في خمسة مواضع، بينما نقطة التحقق المنشورة ` + '`yolo_best.pt`' + ` هي ` + '`YOLOv8m`' + ` بـ 25.86 مليون معامل وفق ` + '`train_args`' + `.)*
+في خط **InkjetOOD** ذي المرحلتين، يعمل **YOLOv8m** صراحةً كـ **كاشف ومقتطع للمرحلة الأولى** (مدخل ` + '`640×640`' + ` على إطارات ` + '`1920×1080`' + `، بمقياس ` + '`95.04%`' + ` mAP@0.5 في الرسالة). *(ملاحظة تصويب: يصف نص الرسالة الكاشف بأنه YOLOv8n، بينما نقطة التحقق المنشورة ` + '`yolo_best.pt`' + ` هي ` + '`YOLOv8m`' + ` بـ 25.86 مليون معامل وفق ` + '`train_args`' + `.)*
 
 تُقتطع كل منطقة ميزة مكتشفة (8 فئات: ` + '`angle`' + `، ` + '`dist1`' + `، ` + '`dist6`' + `، ` + '`dots`' + `، ` + '`edge1–4`' + `) ويُعاد تحجيمها ثنائياً إلى **128×128 RGB**. وعبر 573 مجموعة صور أصلية في **FTI_Zer0P** ينتج عن ذلك **6,408 قصاصات** لمصنف المرحلة الثانية التوليدي.
 
