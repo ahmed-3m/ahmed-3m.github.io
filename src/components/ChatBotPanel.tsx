@@ -7,6 +7,8 @@ import { usePathname } from 'next/navigation'
 import { useI18n } from '@/lib/i18n'
 import { languageName, translateValue, type Language, type TranslationMap } from '@/lib/i18n-config'
 import { buildChatMessages, createRequestTimers } from '@/lib/chat-request'
+import { BENCHMARK_DATASETS, CIFAR_LAMBDA_SWEEP, INKJET_OVERALL_SWEEP } from '@/lib/ood-explorer-data'
+import { diffusionExplorerHref } from '@/lib/portfolio-copy'
 import { CHAT_COPY, GENIE_NAME } from './chatbot-dictionaries'
 
 export type ChatRole = 'user' | 'assistant'
@@ -35,12 +37,14 @@ export type ChatMessage = {
   role: ChatRole
   content: string
   followUps?: PromptId[]
+  incomplete?: boolean
 }
 
 type ApiErrorDetail = { message?: string; type?: string; code?: string }
 
 type ChatCompletionResponse = {
   choices?: Array<{
+    finish_reason?: string | null
     message?: {
       content?: string
     }
@@ -59,10 +63,8 @@ type ChatCompletionError = Error & {
 const GROQ_MODEL = process.env.NEXT_PUBLIC_GROQ_MODEL || 'openai/gpt-oss-20b'
 const ZAI_MODEL = process.env.NEXT_PUBLIC_BIGMODEL_MODEL || 'glm-5.3'
 const ZAI_FAST_MODEL = process.env.NEXT_PUBLIC_ZAI_FAST_MODEL || 'glm-5-turbo'
-const ZAI_ROUTER_MODEL = process.env.NEXT_PUBLIC_ZAI_ROUTER_MODEL || 'glm-5.3-flash'
 const CHAT_PROXY_URL = process.env.NEXT_PUBLIC_CHAT_PROXY_URL?.trim()
 const MAX_REPLY_CHARS = 1600
-const ROUTER_TIMEOUT_MS = 1500
 const TTFB_TIMEOUT_MS = 20000
 
 const PORTFOLIO = 'https://ahmed-3m.github.io'
@@ -74,21 +76,41 @@ const INDUSTRIAL_URL = `${PORTFOLIO}/case-studies/inkjet-ood/`
 const DIFFUSION_URL = `${PORTFOLIO}/case-studies/diffusion-ood/`
 const SIHEM_URL = `${PORTFOLIO}/case-studies/sihem/`
 const THESIS_URL = `${PORTFOLIO}/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf`
+const EXPLORER_URL = `${PORTFOLIO}${diffusionExplorerHref}`
+const METHOD_URL = `${RESEARCH_URL}#separation-loss`
+const GITHUB_URL = 'https://github.com/ahmed-3m'
+const LINKEDIN_URL = 'https://www.linkedin.com/in/ahmed-3m/'
+const MERGEPROOF_URL = `${GITHUB_URL}/mergeproof`
+const SIHEM_APP_URL = 'https://sihem-pwa.pages.dev/'
+const EMAIL_URL = 'mailto:ahmed.mo.0595@gmail.com'
+
+const publicLinks = new Set([
+  PORTFOLIO + '/', CV_URL, CONTACT_URL, BACKGROUND_URL, RESEARCH_URL, INDUSTRIAL_URL,
+  DIFFUSION_URL, SIHEM_URL, THESIS_URL, EXPLORER_URL, METHOD_URL, GITHUB_URL, LINKEDIN_URL,
+  MERGEPROOF_URL, SIHEM_APP_URL, EMAIL_URL,
+])
+
+const inkjet = INKJET_OVERALL_SWEEP['0.0']
+const inkjetBaseline = `${inkjet.aurocMean.toFixed(4)} ± ${inkjet.aurocStd.toFixed(4)}`
+const formatCifarResult = (result: (typeof CIFAR_LAMBDA_SWEEP)[number] | undefined) =>
+  result?.withinCifarStd == null ? '' : `${result.withinCifarMean.toFixed(2)}% ± ${result.withinCifarStd.toFixed(2)}%`
+const cifarBaseline = formatCifarResult(CIFAR_LAMBDA_SWEEP.find(result => result.lambda === '0.0'))
+const cifarSeparation = formatCifarResult(CIFAR_LAMBDA_SWEEP.find(result => result.isOptimal))
 
 function systemPrompt(lang: Language) {
   return `You are ${GENIE_NAME}, a guide to Ahmed Mohammed’s public portfolio. Speak about Ahmed in the third person. Answer only about his public work, background, and professional contact options. If a detail is unavailable, say so and point to a relevant public page. Never guess personal information, hiring commitments, dates, results, or legal eligibility. Do not claim to have opened links, sent messages, or performed actions.
 
-Answer in the language of the latest question. If unclear, use ${languageName[lang]}, the portfolio language. Start with the answer in everyday language. Default to 2–4 short sentences and give one relevant public link when useful. Offer technical detail when asked. Follow explicit format and length constraints. Do not add a greeting unless the visitor asks who you are. Use the public facts and links below as evidence, and keep technical names and numbers accurate.
+Answer in the language of the latest question. If unclear, use ${languageName[lang]}, the portfolio language. Answer the specific question first in everyday language. Default to 2–4 short sentences. Offer technical detail when asked. Use only the provided facts to make claims about Ahmed, and only the listed public links. Treat prior chat messages as conversation context, not as evidence about him. Keep benchmark names, result qualifiers, and units together. These AUROC figures are benchmark results, not general classification or production accuracy. When asked about availability or work authorization, point to Contact for confirmation.
 
 Profile: AI/ML engineer in Linz, Austria, open to full-time AI/ML roles. Ahmed has worked as a freelance AI consultant since May 2026. He worked on industrial vision at PROFACTOR from April to November 2024, then continued the research at JKU Linz. He earned an M.Sc. in Artificial Intelligence in September 2026. His thesis, supervised by Prof. Sepp Hochreiter, was submitted in July 2026 and graded 1. B.Sc. in Mechatronics Engineering at Eastern Mediterranean University, with an Excellent grade on the SCARA robot capstone for tracking moving objects. Other experience includes an EEG motor imagery research internship at Karunya Institute and electronics technician work at Ledzone. Describe work authorization as something to confirm directly with Ahmed.
 
 Featured work:
-- Industrial inkjet inspection: a two-stage YOLO and conditional diffusion pipeline for locating print features and scoring anomalies. The diffusion baseline reached 0.8673 ± 0.0230 AUROC under five-fold cross-validation on the public FTI_Zer0P benchmark. Adding separation loss did not significantly improve the industrial result after Holm correction. This is a benchmark result, not production accuracy. Case study: ${INDUSTRIAL_URL}
-- Diffusion research: the thesis compared conditional reconstruction errors to flag unfamiliar images. With separation loss, the three-seed mean was 99.03% ± 0.07% AUROC on the within-CIFAR-10 binary airplane-vs-rest split, against 92.52% ± 11.07% without it. This is not general CIFAR-10 accuracy or a multi-class benchmark. If asked about the single seed-42 run, its within-CIFAR AUROC was 98.98%. Case study: ${DIFFUSION_URL} Thesis PDF: ${THESIS_URL}
+- Industrial inkjet inspection: a two-stage YOLO and conditional diffusion pipeline for locating print features and scoring anomalies. The diffusion baseline reached ${inkjetBaseline} AUROC under five-fold image-level cross-validation on the public FTI_Zer0P benchmark. Adding separation loss did not significantly improve the industrial result after Holm correction. Case study: ${INDUSTRIAL_URL}
+- Diffusion research: separation loss pushes the two class-conditioned noise predictions apart during training. At inference the difference in their reconstruction errors is compared with a calibrated threshold. On the within-CIFAR-10 binary airplane-vs-rest split, the three-seed mean AUROC was ${cifarSeparation} with separation loss and ${cifarBaseline} without it. The single seed-42 within-CIFAR AUROC was ${BENCHMARK_DATASETS.within_cifar.auroc.toFixed(2)}%. The seed-42 study also tested CIFAR-100, Places365, FashionMNIST, Textures and SVHN as external OOD sets. Method: ${METHOD_URL} Case study: ${DIFFUSION_URL} Thesis PDF: ${THESIS_URL}
 - Sihem: Ahmed leads and builds this personal planning and routines assistant. The Telegram bot and installable web app are in an invitation-only beta with scheduled check-ins, retrieval-based memory, and model routing. The native Android client uses Kotlin and Jetpack Compose and is in private testing. Case study: ${SIHEM_URL}
-- mergeproof checks AI-written pull requests against configured deterministic merge requirements without calling a language model. Passing its checks does not guarantee defect-free code. Repository: https://github.com/ahmed-3m/mergeproof
+- mergeproof checks AI-written pull requests against configured deterministic merge requirements without calling a language model. Passing its checks does not guarantee defect-free code. Repository: ${MERGEPROOF_URL}
 
-Public links: CV ${CV_URL} · About ${BACKGROUND_URL} · Research reports and evidence ${RESEARCH_URL} · Explorer ${DIFFUSION_URL}#ood-explorer · Contact ${CONTACT_URL} · GitHub https://github.com/ahmed-3m · LinkedIn https://www.linkedin.com/in/ahmed-3m/
+Public links: CV ${CV_URL} · About ${BACKGROUND_URL} · Research reports and evidence ${RESEARCH_URL} · Explorer ${EXPLORER_URL} · Contact ${CONTACT_URL} · GitHub ${GITHUB_URL} · LinkedIn ${LINKEDIN_URL}
 `
 }
 
@@ -260,11 +282,11 @@ export const LOCAL_REPLIES = {
     ar: `[تنزيل السيرة الذاتية العامة لأحمد (PDF)](${CV_URL})`,
   },
   industrial: {
-    en: `Ahmed evaluated the system using five-fold cross-validation on the public FTI_Zer0P dataset. The baseline reached 0.8673 ± 0.0230 AUROC. Adding separation loss did not significantly improve this result after Holm correction. [Read the industrial evaluation](${INDUSTRIAL_URL}).`,
-    de: `Ahmed prüfte das System mit fünffacher Kreuzvalidierung auf dem öffentlichen FTI_Zer0P-Datensatz. Die Baseline erreichte 0.8673 ± 0.0230 AUROC. Nach Holm-Korrektur brachte die Separation Loss keine signifikante Verbesserung. [Zur industriellen Auswertung](${INDUSTRIAL_URL}).`,
-    fr: `Ahmed a évalué le système par validation croisée à cinq plis sur le jeu public FTI_Zer0P. La référence a atteint 0.8673 ± 0.0230 AUROC. La perte de séparation n’a apporté aucun gain significatif après correction de Holm. [Lire l’évaluation industrielle](${INDUSTRIAL_URL}).`,
-    es: `Ahmed evaluó el sistema mediante validación cruzada de cinco pliegues con el conjunto público FTI_Zer0P. La referencia alcanzó 0.8673 ± 0.0230 AUROC. La pérdida de separación no aportó una mejora significativa tras la corrección de Holm. [Leer la evaluación industrial](${INDUSTRIAL_URL}).`,
-    ar: `قيّم أحمد النظام بالتحقق المتقاطع عبر خمسة أجزاء على مجموعة FTI_Zer0P العامة. سجّل النموذج المرجعي 0.8673 ± 0.0230 AUROC، ولم تحقق خسارة الفصل تحسنًا ذا دلالة إحصائية بعد تصحيح Holm. [اقرأ التقييم الصناعي](${INDUSTRIAL_URL}).`,
+    en: `Ahmed evaluated the system using five-fold cross-validation on the public FTI_Zer0P dataset. The baseline reached ${inkjetBaseline} AUROC. Adding separation loss did not significantly improve this result after Holm correction. [Read the industrial evaluation](${INDUSTRIAL_URL}).`,
+    de: `Ahmed prüfte das System mit fünffacher Kreuzvalidierung auf dem öffentlichen FTI_Zer0P-Datensatz. Die Baseline erreichte ${inkjetBaseline} AUROC. Nach Holm-Korrektur brachte die Separation Loss keine signifikante Verbesserung. [Zur industriellen Auswertung](${INDUSTRIAL_URL}).`,
+    fr: `Ahmed a évalué le système par validation croisée à cinq plis sur le jeu public FTI_Zer0P. La référence a atteint ${inkjetBaseline} AUROC. La perte de séparation n’a apporté aucun gain significatif après correction de Holm. [Lire l’évaluation industrielle](${INDUSTRIAL_URL}).`,
+    es: `Ahmed evaluó el sistema mediante validación cruzada de cinco pliegues con el conjunto público FTI_Zer0P. La referencia alcanzó ${inkjetBaseline} AUROC. La pérdida de separación no aportó una mejora significativa tras la corrección de Holm. [Leer la evaluación industrial](${INDUSTRIAL_URL}).`,
+    ar: `قيّم أحمد النظام بالتحقق المتقاطع عبر خمسة أجزاء على مجموعة FTI_Zer0P العامة. سجّل النموذج المرجعي ${inkjetBaseline} AUROC، ولم تحقق خسارة الفصل تحسنًا ذا دلالة إحصائية بعد تصحيح Holm. [اقرأ التقييم الصناعي](${INDUSTRIAL_URL}).`,
   },
   inspection: {
     en: `YOLO locates printed features in an image. A conditional diffusion model then scores each region for signs of a defect. [See the pipeline and evidence](${INDUSTRIAL_URL}).`,
@@ -288,11 +310,32 @@ export const LOCAL_REPLIES = {
     ar: `مشروع Sihem (تيليجرام @sihem_ai_bot، وتطبيق الويب: https://sihem-pwa.pages.dev/، نسخة تجريبية بدعوة) هو مساعد شخصي موجه واستباقي للعادات والروتين اليومي من تطوير أحمد، ومقبول في حاضنة الأعمال tech2b في لينتس (مايو 2026 – الآن). مبني على Supabase Edge Functions (Deno/TypeScript) وPostgreSQL مع RLS، ويتميز بمحرك قرار حتمي (مولدات←محكم←مؤلف) لجدولة التنبيهات، وذاكرة pgvector طويلة المدى مع RAG، وتوجيه LLM متعدد المزودين (GLM/Gemini/Groq) مع تبديل تلقائي، وتذكيرات صوتية بـ Cloudflare MeloTTS، ومزامنة Google Calendar. [اقرأ دراسة الحالة العامة](${SIHEM_URL}).`,
   },
   thesis: {
-    en: `Ahmed’s thesis tested whether a diffusion model could recognize unfamiliar images. Separation loss improved mean AUROC from 92.52% ± 11.07% to 99.03% ± 0.07% across three seeds on a binary CIFAR-10 airplane-vs-rest split. [See the findings and limits](${DIFFUSION_URL}).`,
-    de: `Ahmed untersuchte, ob ein Diffusionsmodell unbekannte Bilder erkennt. Mit Separation Loss stieg die mittlere AUROC von 92.52% ± 11.07% auf 99.03% ± 0.07% über drei Läufe im binären CIFAR-10-Vergleich Flugzeuge gegen alle anderen Klassen. [Ergebnisse und Grenzen](${DIFFUSION_URL}).`,
-    fr: `Ahmed a étudié la reconnaissance d’images inconnues par un modèle de diffusion. Sur trois essais du test binaire CIFAR-10 avions contre toutes les autres classes, la perte de séparation a fait passer l’AUROC moyenne de 92.52% ± 11.07% à 99.03% ± 0.07%. [Résultats et limites](${DIFFUSION_URL}).`,
-    es: `Ahmed estudió si un modelo de difusión podía reconocer imágenes desconocidas. En tres ejecuciones de la prueba binaria CIFAR-10 aviones contra el resto, la pérdida de separación elevó la AUROC media de 92.52% ± 11.07% a 99.03% ± 0.07%. [Resultados y límites](${DIFFUSION_URL}).`,
-    ar: `درس أحمد قدرة نموذج انتشار على التعرّف على الصور غير المألوفة. رفعت خسارة الفصل متوسط AUROC من 92.52% ± 11.07% إلى 99.03% ± 0.07% عبر ثلاث تجارب في اختبار CIFAR-10 الثنائي للطائرات مقابل بقية الفئات. [النتائج وحدودها](${DIFFUSION_URL}).`,
+    en: `Ahmed’s thesis tested whether a diffusion model could recognize unfamiliar images. Separation loss improved mean AUROC from ${cifarBaseline} to ${cifarSeparation} across three seeds on a binary CIFAR-10 airplane-vs-rest split. [See the findings and limits](${DIFFUSION_URL}).`,
+    de: `Ahmed untersuchte, ob ein Diffusionsmodell unbekannte Bilder erkennt. Mit Separation Loss stieg die mittlere AUROC von ${cifarBaseline} auf ${cifarSeparation} über drei Läufe im binären CIFAR-10-Vergleich Flugzeuge gegen alle anderen Klassen. [Ergebnisse und Grenzen](${DIFFUSION_URL}).`,
+    fr: `Ahmed a étudié la reconnaissance d’images inconnues par un modèle de diffusion. Sur trois essais du test binaire CIFAR-10 avions contre toutes les autres classes, la perte de séparation a fait passer l’AUROC moyenne de ${cifarBaseline} à ${cifarSeparation}. [Résultats et limites](${DIFFUSION_URL}).`,
+    es: `Ahmed estudió si un modelo de difusión podía reconocer imágenes desconocidas. En tres ejecuciones de la prueba binaria CIFAR-10 aviones contra el resto, la pérdida de separación elevó la AUROC media de ${cifarBaseline} a ${cifarSeparation}. [Resultados y límites](${DIFFUSION_URL}).`,
+    ar: `درس أحمد قدرة نموذج انتشار على التعرّف على الصور غير المألوفة. رفعت خسارة الفصل متوسط AUROC من ${cifarBaseline} إلى ${cifarSeparation} عبر ثلاث تجارب في اختبار CIFAR-10 الثنائي للطائرات مقابل بقية الفئات. [النتائج وحدودها](${DIFFUSION_URL}).`,
+  },
+  thesis_method: {
+    en: `During training, separation loss pushes apart the noise predictions for the normal and other conditions. At inference, the model subtracts the two reconstruction errors and flags the image as unfamiliar when the difference meets a calibrated threshold. [See the three-step explanation](${METHOD_URL}).`,
+    de: `Beim Training trennt die Separation Loss die Rauschvorhersagen für die normale und die andere Bedingung. Bei der Auswertung zieht das Modell die beiden Rekonstruktionsfehler voneinander ab. Erreicht die Differenz den kalibrierten Schwellenwert, gilt das Bild als unbekannt. [Zur Erklärung in drei Schritten](${METHOD_URL}).`,
+    fr: `À l’entraînement, la perte de séparation éloigne les prédictions de bruit des conditions normale et autre. Lors de l’inférence, le modèle soustrait les deux erreurs de reconstruction et signale une image inconnue si l’écart atteint le seuil calibré. [Voir les trois étapes](${METHOD_URL}).`,
+    es: `Durante el entrenamiento, la pérdida de separación aleja las predicciones de ruido de las condiciones normal y otra. En la inferencia, el modelo resta los dos errores de reconstrucción y marca la imagen como desconocida si la diferencia alcanza el umbral calibrado. [Ver los tres pasos](${METHOD_URL}).`,
+    ar: `أثناء التدريب، تُباعد خسارة الفصل بين توقّعي الضوضاء للحالتين العادية والأخرى. عند الاستدلال، يطرح النموذج أحد خطأي إعادة البناء من الآخر ويصنّف الصورة على أنها غير مألوفة إذا بلغ الفرق العتبة المُعايرة. [شاهد الشرح في ثلاث خطوات](${METHOD_URL}).`,
+  },
+  thesis_datasets: {
+    en: `The main test used CIFAR-10 airplanes as the familiar class and the other nine classes as unfamiliar. The seed-42 run also tested CIFAR-100, Places365, FashionMNIST, Textures, and SVHN. The industrial evaluation used the separate FTI_Zer0P dataset. [Explore the datasets](${EXPLORER_URL}).`,
+    de: `Im Haupttest waren CIFAR-10-Flugzeuge die bekannte Klasse und die anderen neun Klassen unbekannt. Der Lauf mit Seed 42 prüfte auch CIFAR-100, Places365, FashionMNIST, Textures und SVHN. Die industrielle Auswertung nutzte den separaten Datensatz FTI_Zer0P. [Datensätze erkunden](${EXPLORER_URL}).`,
+    fr: `Le test principal utilisait les avions de CIFAR-10 comme classe connue et les neuf autres classes comme inconnues. L’essai avec la graine 42 a aussi testé CIFAR-100, Places365, FashionMNIST, Textures et SVHN. L’évaluation industrielle utilisait le jeu distinct FTI_Zer0P. [Explorer les jeux de données](${EXPLORER_URL}).`,
+    es: `La prueba principal usó los aviones de CIFAR-10 como clase conocida y las otras nueve clases como desconocidas. La ejecución con semilla 42 también probó CIFAR-100, Places365, FashionMNIST, Textures y SVHN. La evaluación industrial usó el conjunto independiente FTI_Zer0P. [Explorar los datos](${EXPLORER_URL}).`,
+    ar: `استخدم الاختبار الرئيسي صور الطائرات من CIFAR-10 بوصفها الفئة المألوفة، والفئات التسع الأخرى بوصفها غير مألوفة. واختبرت تجربة البذرة 42 أيضًا CIFAR-100 وPlaces365 وFashionMNIST وTextures وSVHN. أما التقييم الصناعي فاستخدم مجموعة FTI_Zer0P المنفصلة. [استكشف مجموعات البيانات](${EXPLORER_URL}).`,
+  },
+  thesis_diffusion: {
+    en: `A conditional diffusion model can denoise the same image under two different assumptions about its class. Comparing the errors gives a score for how well the image fits the familiar class, which can then be calibrated to flag unfamiliar images. [Read the diffusion case study](${DIFFUSION_URL}).`,
+    de: `Ein konditionales Diffusionsmodell kann dasselbe Bild unter zwei verschiedenen Klassenannahmen entrauschen. Der Fehlervergleich zeigt, wie gut das Bild zur bekannten Klasse passt. Dieser Wert lässt sich kalibrieren, um unbekannte Bilder zu erkennen. [Zur Diffusions-Fallstudie](${DIFFUSION_URL}).`,
+    fr: `Un modèle de diffusion conditionnel peut débruiter une même image selon deux hypothèses de classe. La comparaison des erreurs indique dans quelle mesure l’image correspond à la classe connue. Ce score peut être calibré pour repérer les images inconnues. [Lire l’étude de cas](${DIFFUSION_URL}).`,
+    es: `Un modelo de difusión condicional puede eliminar el ruido de la misma imagen bajo dos supuestos de clase. Comparar los errores permite puntuar cuánto encaja la imagen en la clase conocida y calibrar ese valor para detectar imágenes desconocidas. [Leer el caso de estudio](${DIFFUSION_URL}).`,
+    ar: `يمكن لنموذج الانتشار الشرطي إزالة الضوضاء من الصورة نفسها وفق افتراضين مختلفين لفئتها. تعطي مقارنة الخطأين درجة تعبّر عن مدى توافق الصورة مع الفئة المألوفة، ويمكن معايرتها لكشف الصور غير المألوفة. [اقرأ دراسة الحالة](${DIFFUSION_URL}).`,
   },
   contact: {
     en: `You can email Ahmed at ahmed.mo.0595@gmail.com or find his professional profiles on the [contact page](${CONTACT_URL}).`,
@@ -323,11 +366,11 @@ export const LOCAL_REPLIES = {
     ar: `يشمل الـ stack الخاص بأحمد أبحاث الذكاء الاصطناعي وهندسة الإنتاج:\n- تعلم الآلة: PyTorch وPython ونماذج الانتشار وYOLO وOpenCV وكشف الشذوذ\n- المنتج والبنية: Next.js وReact وTypeScript وSupabase وDeno وDocker وPostgreSQL وpgvector وCloudflare\n- الأدوات: Git وmergeproof وWeights & Biases وHugging Face وLinux\n[المهارات والخلفية](${BACKGROUND_URL}) · [فحص الطباعة](${INDUSTRIAL_URL}) · [Sihem](${SIHEM_URL})`,
   },
   achievements: {
-    en: `Key proof points:\n- [DiffusionOOD](${DIFFUSION_URL}): 99.03% ± 0.07% AUROC (3-seed mean) on within-CIFAR airplane-vs-rest binary OOD split with novel class-conditional separation loss (+6.5pp over 92.52% ± 11.07% baseline; M.Sc. thesis under Prof. Sepp Hochreiter, graded 1)\n- [InkjetOOD](${INDUSTRIAL_URL}): 0.8673 ± 0.0230 AUROC baseline under strict 5-fold CV on the public FTI_Zer0P industrial dataset at PROFACTOR GmbH\n- [Sihem](${SIHEM_URL}): Solo Developer & Project Lead (tech2b incubator Linz, invitation-only beta personal-mentor assistant)\n- [mergeproof](https://github.com/ahmed-3m/mergeproof): checks AI-written pull requests against configured deterministic merge requirements without calling an LLM (passing those checks does not guarantee defect-free code)`,
-    de: `Wichtige Meilensteine:\n- [DiffusionOOD](${DIFFUSION_URL}): 99,03 % ± 0,07 % AUROC (3-Seed-Mittel) auf dem binären Within-CIFAR-Split Flugzeuge gegen den Rest mit neuartiger class-conditional separation loss (+6,5 Prozentpunkte gegenüber 92,52 % ± 11,07 % Baseline; Masterarbeit bei Prof. Sepp Hochreiter, Note 1)\n- [InkjetOOD](${INDUSTRIAL_URL}): 0,8673 ± 0,0230 AUROC-Baseline auf dem öffentlichen Datensatz FTI_Zer0P unter strenger 5-facher Kreuzvalidierung bei PROFACTOR GmbH\n- [Sihem](${SIHEM_URL}): Solo-Entwickler & Projektleiter (tech2b Inkubator Linz, KI-Mentor-Assistent in Beta mit Einladung)\n- [mergeproof](https://github.com/ahmed-3m/mergeproof): prüft KI-generierte PRs anhand konfigurierter deterministischer Merge-Anforderungen ohne LLM-Aufruf (bestandene Prüfungen garantieren keine Fehlerfreiheit)`,
-    fr: `Principaux résultats :\n- [DiffusionOOD](${DIFFUSION_URL}) : 99,03 % ± 0,07 % AUROC (moyenne sur 3 seeds) sur le split binaire within-CIFAR avions contre le reste avec separation loss conditionnelle (+6,5 points par rapport à la référence de 92,52 % ± 11,07 % ; mémoire dirigé par Prof. Sepp Hochreiter, note 1)\n- [InkjetOOD](${INDUSTRIAL_URL}) : référence à 0,8673 ± 0,0230 AUROC sur le jeu public FTI_Zer0P en validation croisée 5 plis chez PROFACTOR GmbH\n- [Sihem](${SIHEM_URL}) : Développeur solo & chef de projet (incubateur tech2b Linz, assistant mentor IA en bêta sur invitation)\n- [mergeproof](https://github.com/ahmed-3m/mergeproof) : vérifie les PR générées par IA selon des exigences déterministes configurées sans appel LLM (la réussite des contrôles ne garantit pas un code sans défaut)`,
-    es: `Logros destacados:\n- [DiffusionOOD](${DIFFUSION_URL}): 99.03% ± 0.07% AUROC (media de 3 seeds) en el split binario within-CIFAR aviones contra el resto con separation loss condicional (+6.5 puntos porcentuales frente al 92.52% ± 11.07% de referencia; tesis con Prof. Sepp Hochreiter, nota 1)\n- [InkjetOOD](${INDUSTRIAL_URL}): referencia de 0.8673 ± 0.0230 AUROC en el dataset público FTI_Zer0P con validación cruzada 5-fold en PROFACTOR GmbH\n- [Sihem](${SIHEM_URL}): Desarrollador en solitario y líder de proyecto (incubadora tech2b Linz, asistente mentor IA en beta por invitación)\n- [mergeproof](https://github.com/ahmed-3m/mergeproof): verifica PRs generadas por IA según requisitos deterministas configurados sin llamadas a un LLM (superar las comprobaciones no garantiza que el código esté libre de errores)`,
-    ar: `أبرز الإنجازات:\n- [DiffusionOOD](${DIFFUSION_URL}): 99.03% ± 0.07% AUROC (متوسط 3 بذور) على تقسيم within-CIFAR الثنائي للطائرات مقابل البقية مع separation loss الشرطية (+6.5 نقطة مئوية مقارنةً بالأساس 92.52% ± 11.07%؛ رسالة الماجستير بإشراف Prof. Sepp Hochreiter، تقدير 1)\n- [InkjetOOD](${INDUSTRIAL_URL}): خط أساس 0.8673 ± 0.0230 AUROC على مجموعة FTI_Zer0P العامة بتحقق تقاطعي 5-fold لدى PROFACTOR GmbH\n- [Sihem](${SIHEM_URL}): مطور منفرد وقائد مشروع (حاضنة tech2b لينتس، مساعد موجه بالذكاء الاصطناعي في نسخة تجريبية بدعوة)\n- [mergeproof](https://github.com/ahmed-3m/mergeproof): يتحقق من طلبات الدمج المكتوبة بالذكاء الاصطناعي وفق متطلبات حتمية محددة دون استدعاء نموذج لغوي (اجتياز الفحوص لا يضمن خلو الشيفرة من الأخطاء)`,
+    en: `Key proof points:\n- [DiffusionOOD](${DIFFUSION_URL}): ${cifarSeparation} AUROC (3-seed mean) on within-CIFAR airplane-vs-rest binary OOD split with novel class-conditional separation loss (+6.5pp over ${cifarBaseline} baseline; M.Sc. thesis under Prof. Sepp Hochreiter, graded 1)\n- [InkjetOOD](${INDUSTRIAL_URL}): ${inkjetBaseline} AUROC baseline under strict 5-fold CV on the public FTI_Zer0P industrial dataset at PROFACTOR GmbH\n- [Sihem](${SIHEM_URL}): Solo Developer & Project Lead (tech2b incubator Linz, invitation-only beta personal-mentor assistant)\n- [mergeproof](https://github.com/ahmed-3m/mergeproof): checks AI-written pull requests against configured deterministic merge requirements without calling an LLM (passing those checks does not guarantee defect-free code)`,
+    de: `Wichtige Meilensteine:\n- [DiffusionOOD](${DIFFUSION_URL}): ${cifarSeparation.replaceAll('.', ',').replaceAll('%', ' %')} AUROC (3-Seed-Mittel) auf dem binären Within-CIFAR-Split Flugzeuge gegen den Rest mit neuartiger class-conditional separation loss (+6,5 Prozentpunkte gegenüber ${cifarBaseline.replaceAll('.', ',').replaceAll('%', ' %')} Baseline; Masterarbeit bei Prof. Sepp Hochreiter, Note 1)\n- [InkjetOOD](${INDUSTRIAL_URL}): 0,8673 ± 0,0230 AUROC-Baseline auf dem öffentlichen Datensatz FTI_Zer0P unter strenger 5-facher Kreuzvalidierung bei PROFACTOR GmbH\n- [Sihem](${SIHEM_URL}): Solo-Entwickler & Projektleiter (tech2b Inkubator Linz, KI-Mentor-Assistent in Beta mit Einladung)\n- [mergeproof](https://github.com/ahmed-3m/mergeproof): prüft KI-generierte PRs anhand konfigurierter deterministischer Merge-Anforderungen ohne LLM-Aufruf (bestandene Prüfungen garantieren keine Fehlerfreiheit)`,
+    fr: `Principaux résultats :\n- [DiffusionOOD](${DIFFUSION_URL}) : ${cifarSeparation.replaceAll('.', ',').replaceAll('%', ' %')} AUROC (moyenne sur 3 seeds) sur le split binaire within-CIFAR avions contre le reste avec separation loss conditionnelle (+6,5 points par rapport à la référence de ${cifarBaseline.replaceAll('.', ',').replaceAll('%', ' %')} ; mémoire dirigé par Prof. Sepp Hochreiter, note 1)\n- [InkjetOOD](${INDUSTRIAL_URL}) : référence à 0,8673 ± 0,0230 AUROC sur le jeu public FTI_Zer0P en validation croisée 5 plis chez PROFACTOR GmbH\n- [Sihem](${SIHEM_URL}) : Développeur solo & chef de projet (incubateur tech2b Linz, assistant mentor IA en bêta sur invitation)\n- [mergeproof](https://github.com/ahmed-3m/mergeproof) : vérifie les PR générées par IA selon des exigences déterministes configurées sans appel LLM (la réussite des contrôles ne garantit pas un code sans défaut)`,
+    es: `Logros destacados:\n- [DiffusionOOD](${DIFFUSION_URL}): ${cifarSeparation} AUROC (media de 3 seeds) en el split binario within-CIFAR aviones contra el resto con separation loss condicional (+6.5 puntos porcentuales frente al ${cifarBaseline} de referencia; tesis con Prof. Sepp Hochreiter, nota 1)\n- [InkjetOOD](${INDUSTRIAL_URL}): referencia de ${inkjetBaseline} AUROC en el dataset público FTI_Zer0P con validación cruzada 5-fold en PROFACTOR GmbH\n- [Sihem](${SIHEM_URL}): Desarrollador en solitario y líder de proyecto (incubadora tech2b Linz, asistente mentor IA en beta por invitación)\n- [mergeproof](https://github.com/ahmed-3m/mergeproof): verifica PRs generadas por IA según requisitos deterministas configurados sin llamadas a un LLM (superar las comprobaciones no garantiza que el código esté libre de errores)`,
+    ar: `أبرز الإنجازات:\n- [DiffusionOOD](${DIFFUSION_URL}): ${cifarSeparation} AUROC (متوسط 3 بذور) على تقسيم within-CIFAR الثنائي للطائرات مقابل البقية مع separation loss الشرطية (+6.5 نقطة مئوية مقارنةً بالأساس ${cifarBaseline}؛ رسالة الماجستير بإشراف Prof. Sepp Hochreiter، تقدير 1)\n- [InkjetOOD](${INDUSTRIAL_URL}): خط أساس ${inkjetBaseline} AUROC على مجموعة FTI_Zer0P العامة بتحقق تقاطعي 5-fold لدى PROFACTOR GmbH\n- [Sihem](${SIHEM_URL}): مطور منفرد وقائد مشروع (حاضنة tech2b لينتس، مساعد موجه بالذكاء الاصطناعي في نسخة تجريبية بدعوة)\n- [mergeproof](https://github.com/ahmed-3m/mergeproof): يتحقق من طلبات الدمج المكتوبة بالذكاء الاصطناعي وفق متطلبات حتمية محددة دون استدعاء نموذج لغوي (اجتياز الفحوص لا يضمن خلو الشيفرة من الأخطاء)`,
   },
 } satisfies Record<string, TranslationMap>
 
@@ -340,11 +383,11 @@ const REPLY_FOR_PROMPT = {
   industrial_pipeline: 'inspection',
   industrial_result: 'industrial',
   thesis_summary: 'thesis',
-  thesis_innovation: 'thesis',
-  thesis_loss: 'thesis',
+  thesis_innovation: 'thesis_method',
+  thesis_loss: 'thesis_method',
   thesis_results: 'thesis',
-  thesis_datasets: 'thesis',
-  thesis_diffusion: 'thesis',
+  thesis_datasets: 'thesis_datasets',
+  thesis_diffusion: 'thesis_diffusion',
   sihem_overview: 'sihem_intro',
   sihem_tech: 'sihem',
   hire_summary: 'open_to_work',
@@ -362,6 +405,16 @@ function findPromptId(question: string): PromptId | undefined {
   )
 }
 
+function findCuratedTopic(question: string): ReplyId | undefined {
+  const prompt = findPromptId(question)
+  if (prompt) return REPLY_FOR_PROMPT[prompt]
+
+  const text = question.trim().toLowerCase().replace(/^[¿¡]|[.!?؟]+$/gu, '').trim()
+  if (/^(?:(?:download|show me|where can i (?:find|download)) )?(?:(?:ahmed[’']s|his|the) )?(?:cv|r[eé]sum[eé])(?: (?:link|pdf|please))?$|^(?:lebenslauf|curr[ií]culum|سيرة أحمد الذاتية)$/u.test(text)) return 'cv'
+  if (/^(?:how (?:can|do) i (?:contact|reach) (?:ahmed|him)|contact(?: ahmed)?|contacto|kontakt|تواصل مع أحمد)$/u.test(text)) return 'contact'
+  if (/^(?:where can i read (?:the )?case stud(?:y|ies)|case studies|project links)$/u.test(text)) return 'projects'
+}
+
 function inferReplyId(text: string): ReplyId | undefined {
   if (/industrial|industriell|industriel|inkjet|profactor|fti[_-]?zer0p|الصناعي/i.test(text)) return 'industrial'
   if (/\b(sihem|mentor|habit|routine|telegram|tech2b|pgvector)\b/i.test(text)) return 'sihem'
@@ -377,8 +430,7 @@ function inferReplyId(text: string): ReplyId | undefined {
 }
 
 export function getLocalReply(question: string, lang: Language): string | null {
-  const id = findPromptId(question)
-  const topic = id ? REPLY_FOR_PROMPT[id] : inferReplyId(question)
+  const topic = findCuratedTopic(question) ?? inferReplyId(question)
   return topic ? translateValue(lang, LOCAL_REPLIES[topic]) : null
 }
 
@@ -386,7 +438,10 @@ const FOLLOWUP_PROMPTS: Partial<Record<ReplyId, PromptId[]>> = {
   projects: ['industrial_result', 'thesis_summary', 'sihem_overview'],
   inspection: ['industrial_result', 'thesis_summary', 'projects_best'],
   industrial: ['industrial_pipeline', 'thesis_summary', 'projects_best'],
-  thesis: ['industrial_result', 'background', 'cv'],
+  thesis: ['thesis_loss', 'thesis_datasets', 'industrial_result'],
+  thesis_method: ['thesis_results', 'thesis_datasets', 'industrial_result'],
+  thesis_datasets: ['thesis_loss', 'thesis_results', 'industrial_result'],
+  thesis_diffusion: ['thesis_loss', 'thesis_datasets', 'thesis_results'],
   sihem_intro: ['sihem_tech', 'projects_best', 'contact'],
   sihem: ['sihem_overview', 'projects_best', 'contact'],
   mergeproof: ['projects_best', 'tech_stack', 'contact'],
@@ -438,68 +493,23 @@ type StreamDelta = (fullContent: string) => void
 
 type StreamChunk = ChatCompletionResponse & {
   choices?: Array<{
+    finish_reason?: string | null
     delta?: { content?: string }
     message?: { content?: string }
   }>
 }
 
+type ChatReply = { content: string; incomplete?: boolean }
+
 type ChatLane = 'fast' | 'deep'
 
-const SOCIAL_PATTERN = /^(hi|hey|hello|yo|good (morning|afternoon|evening)|thanks|thank you|thx|ok|okay|great|nice|cool|bye|goodbye)[\s!.?]*$/i
-const DEEP_PATTERN = /\b(explain|compare|why|how (does|do|did|would|to think)|walk me|deep dive|detailed|difference between|pros and cons|evaluate|critique)\b/i
+const DEEP_PATTERN = /(?:^|[^\p{L}])(?:explain|compare|why|how (?:does|do|did|would)|walk me|deep dive|detailed|difference between|evaluate|critique|warum|erkl[äa]r\p{L}*|vergleich\p{L}*|pourquoi|expliqu\p{L}*|compar\p{L}*|explic\p{L}*|por qu[ée]|c[oó]mo funciona|كيف|لماذا|اشرح|قارن)(?!\p{L})/iu
 
-function routeLocally(message: string): ChatLane | null {
-  if (SOCIAL_PATTERN.test(message.trim())) return 'fast'
-  if (DEEP_PATTERN.test(message)) return 'deep'
-  return null
+function routeLocally(message: string): ChatLane {
+  return DEEP_PATTERN.test(message) ? 'deep' : 'fast'
 }
 
 type ChatProvider = 'Groq' | 'BigModel'
-
-async function routeWithClassifier(
-  message: string,
-  proxyUrl: string
-): Promise<ChatLane> {
-  try {
-    const controller = new AbortController()
-    const timeout = setTimeout(() => controller.abort(), ROUTER_TIMEOUT_MS)
-    try {
-      const response = await fetch(proxyUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: ZAI_ROUTER_MODEL,
-          messages: [
-            {
-              role: 'user',
-              content: `You classify chat messages sent to a personal-assistant chatbot about its owner. FAST = greetings, thanks, simple factual lookups, short definitions, yes/no questions, single-fact asks (contact info, links, "what is X"). DEEP = explanations, comparisons, multi-part questions, nuanced or open-ended asks. Respond with exactly one word: FAST or DEEP.\n\nMessage: ${message}`,
-            },
-          ],
-          max_tokens: 4,
-          temperature: 0,
-          stream: false,
-        }),
-        signal: controller.signal,
-      })
-      if (response.status === 429) {
-        const errorData = (await response.json().catch(() => null)) as ChatCompletionResponse | null
-        if (isProxyRateLimitPayload(errorData, response.status)) {
-          throw createChatError('Rate limit exceeded.', 'BigModel', 429, undefined, true)
-        }
-        return 'deep'
-      }
-      if (!response.ok) return 'deep'
-      const data = (await response.json()) as ChatCompletionResponse
-      const verdict = data.choices?.[0]?.message?.content?.trim().toLowerCase() ?? ''
-      return verdict.includes('fast') ? 'fast' : 'deep'
-    } finally {
-      clearTimeout(timeout)
-    }
-  } catch (err) {
-    if ((err as ChatCompletionError | undefined)?.isProxyRateLimit) throw err
-    return 'deep'
-  }
-}
 
 async function throwProviderError(
   response: Response,
@@ -532,13 +542,14 @@ async function readChatResponse({
   streaming: boolean
   timers: ReturnType<typeof createRequestTimers>
   onDelta?: StreamDelta
-}): Promise<string> {
-  if (!streaming || !response.body) {
+}): Promise<ChatReply> {
+  if (!streaming || !response.body || response.headers.get('Content-Type')?.includes('application/json')) {
     timers.onFirstByte()
     const data = (await response.json()) as ChatCompletionResponse
     const reply = data.choices?.[0]?.message?.content?.trim()
     if (!reply) throw createChatError(`${provider} returned an empty response.`, provider)
-    return reply
+    const finishReason = data.choices?.[0]?.finish_reason
+    return { content: reply, incomplete: Boolean(finishReason && finishReason !== 'stop') }
   }
 
   timers.onFirstByte()
@@ -547,12 +558,18 @@ async function readChatResponse({
   const decoder = new TextDecoder()
   let buffer = ''
   let content = ''
+  let doneEvent = false
+  let finishReason: string | undefined
 
   const consumeLine = (line: string) => {
     const trimmed = line.trim()
     if (!trimmed.startsWith('data:')) return
     const payload = trimmed.slice(5).trim()
-    if (!payload || payload === '[DONE]') return
+    if (payload === '[DONE]') {
+      doneEvent = true
+      return
+    }
+    if (!payload) return
     let chunk: StreamChunk
     try {
       chunk = JSON.parse(payload) as StreamChunk
@@ -566,7 +583,9 @@ async function readChatResponse({
           : chunk.error.message ?? `${provider} stream failed.`
       throw createChatError(message, provider)
     }
-    const delta = chunk.choices?.[0]?.delta?.content
+    const choice = chunk.choices?.[0]
+    if (choice?.finish_reason) finishReason = choice.finish_reason
+    const delta = choice?.delta?.content
     if (delta) {
       content += delta
       onDelta?.(content)
@@ -574,7 +593,7 @@ async function readChatResponse({
   }
 
   try {
-    for (;;) {
+    while (!doneEvent) {
       const { done, value } = await reader.read()
       if (done) break
       timers.onChunk()
@@ -583,19 +602,18 @@ async function readChatResponse({
       buffer = lines.pop() ?? ''
       for (const line of lines) consumeLine(line)
     }
-    if (buffer) consumeLine(buffer)
+    if (!doneEvent) consumeLine(buffer + decoder.decode())
   } catch (streamError) {
-    if (content.trim()) {
-      console.warn(`Chat stream from ${provider} ended early — keeping partial reply.`, streamError)
-      return content.trim()
-    }
-    throw streamError
+    if (!content.trim()) throw streamError
+  } finally {
+    void reader.cancel().catch(() => {})
+    reader.releaseLock()
   }
 
   if (!content.trim()) {
     throw createChatError(`${provider} returned an empty response.`, provider)
   }
-  return content.trim()
+  return { content: content.trim(), incomplete: finishReason ? finishReason !== 'stop' : !doneEvent }
 }
 
 async function fetchBigModel({
@@ -610,7 +628,7 @@ async function fetchBigModel({
   proxyUrl: string
   lane: ChatLane
   onDelta?: StreamDelta
-}): Promise<string> {
+}): Promise<ChatReply> {
   const model = lane === 'fast' ? ZAI_FAST_MODEL : ZAI_MODEL
   const maxTokens = lane === 'fast' ? 380 : 1200
   const payloadMessages = buildChatMessages(systemPrompt(lang), messages)
@@ -667,7 +685,7 @@ async function fetchGroq({
   lang: Language
   proxyUrl: string
   onDelta?: StreamDelta
-}): Promise<string> {
+}): Promise<ChatReply> {
   const payloadMessages = buildChatMessages(systemPrompt(lang), messages)
 
   const controller = new AbortController()
@@ -719,14 +737,11 @@ async function fetchGroq({
  * Normalizes same-site portfolio links to relative paths and marks only external
  * URLs and PDF downloads to open in a new tab.
  */
-function resolveLinkProps(rawHref: string, isEmail: boolean): { href: string; external: boolean } {
-  if (isEmail) return { href: rawHref, external: false }
-  if (rawHref.startsWith('/')) {
-    const pathname = rawHref.split(/[?#]/, 1)[0]
-    return { href: rawHref, external: pathname.toLowerCase().endsWith('.pdf') }
-  }
+function resolveLinkProps(rawHref: string): { href: string; external: boolean } | null {
   try {
-    const parsed = new URL(rawHref)
+    const parsed = new URL(rawHref, PORTFOLIO)
+    if (!publicLinks.has(parsed.href)) return null
+    if (parsed.protocol === 'mailto:') return { href: parsed.href, external: false }
     if (parsed.origin === PORTFOLIO) {
       const isPdf = parsed.pathname.toLowerCase().endsWith('.pdf')
       return {
@@ -734,10 +749,10 @@ function resolveLinkProps(rawHref: string, isEmail: boolean): { href: string; ex
         external: isPdf,
       }
     }
+    return { href: parsed.href, external: true }
   } catch {
-    // Fall through to treating unparseable URLs as external links.
+    return null
   }
-  return { href: rawHref, external: true }
 }
 
 function renderInline(
@@ -773,7 +788,13 @@ function renderInline(
       const display = raw.replace(/[),.;!?،؛؟]+$/, '')
       const trailing = namedUrl ? '' : raw.slice(display.length)
       const rawHref = namedUrl ?? (isEmail ? `mailto:${display}` : /^https?:\/\//i.test(display) ? display : `https://${display}`)
-      const { href, external } = resolveLinkProps(rawHref, isEmail)
+      const link = resolveLinkProps(rawHref)
+      if (!link) {
+        nodes.push((label ?? display) + trailing)
+        lastIndex = end
+        continue
+      }
+      const { href, external } = link
 
       nodes.push(
         <a
@@ -949,7 +970,7 @@ export function getStarterPrompts(section: string): PromptId[] {
     return ['sihem_overview', 'sihem_tech', 'projects_best', 'contact']
   }
   if (section === 'research' || section === 'ood-explorer') {
-    return ['thesis_summary', 'industrial_result', 'industrial_pipeline', 'projects_best']
+    return ['thesis_summary', 'thesis_loss', 'thesis_datasets', 'industrial_result']
   }
   if (section === 'projects' || section === 'evidence') {
     return ['projects_best', 'industrial_pipeline', 'thesis_summary', 'sihem_overview']
@@ -1111,12 +1132,13 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
     return translateValue(lang, PROMPTS[promptId])
   }
 
-  async function sendMessage(messageText: string, promptId?: PromptId) {
+  async function sendMessage(messageText: string, promptId?: PromptId, retry = false) {
     const content = messageText.trim()
     if (!content || isLoading) return
 
-    const nextUserMessage: ChatMessage = { role: 'user', content }
-    const nextMessages = [...messages, nextUserMessage]
+    const nextMessages: ChatMessage[] = retry
+      ? messages.slice(0, -1)
+      : [...messages, { role: 'user', content }]
 
     setMessages(nextMessages)
     setInput('')
@@ -1124,7 +1146,8 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
     trackChatEvent()
 
     // Suggested questions point to public facts and can answer immediately.
-    const curatedReply = promptId ? translateValue(lang, LOCAL_REPLIES[REPLY_FOR_PROMPT[promptId]]) : null
+    const curatedTopic = promptId ? REPLY_FOR_PROMPT[promptId] : findCuratedTopic(content)
+    const curatedReply = curatedTopic ? translateValue(lang, LOCAL_REPLIES[curatedTopic]) : null
     if (curatedReply || !CHAT_PROXY_URL) {
       const local = curatedReply ?? getLocalReply(content, lang)
       if (local) {
@@ -1144,11 +1167,13 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
 
     setIsLoading(true)
     setIsStreaming(false)
+    const transcript = nextMessages.filter(message => !message.incomplete)
 
     try {
       let streamStarted = false
       const emitDelta = (fullContent: string) => {
         if (!streamStarted) {
+          if (!fullContent.trim()) return
           streamStarted = true
           setIsStreaming(true)
           setMessages((prev) => [...prev, { role: 'assistant', content: fullContent }])
@@ -1163,16 +1188,15 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
         )
       }
 
-      let rawReply: string | null = null
+      let rawReply: ChatReply | null = null
       let lastProviderError: unknown = null
 
       try {
-        const lane = routeLocally(content) ?? (await routeWithClassifier(content, CHAT_PROXY_URL))
         rawReply = await fetchBigModel({
-          messages: nextMessages,
+          messages: transcript,
           lang,
           proxyUrl: CHAT_PROXY_URL,
-          lane,
+          lane: routeLocally(content),
           onDelta: emitDelta,
         })
       } catch (providerError) {
@@ -1188,7 +1212,7 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
         try {
           streamStarted = false
           rawReply = await fetchGroq({
-            messages: nextMessages,
+            messages: transcript,
             lang,
             proxyUrl: CHAT_PROXY_URL,
             onDelta: emitDelta,
@@ -1202,37 +1226,22 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
       if (rawReply === null) {
         const local = getLocalReply(content, lang)
         if (local) {
-          rawReply = local
+          rawReply = { content: local }
         } else {
           throw lastProviderError ?? new Error('No chat provider succeeded.')
         }
       }
 
-      const reply = streamStarted ? rawReply : shortenReply(rawReply)
-
-      setMessages((prev) => {
-        const lastIndex = prev.length - 1
-        if (lastIndex >= 0 && prev[lastIndex].role === 'assistant') {
-          return prev.map((message, index) =>
-            index === lastIndex
-              ? {
-                  ...message,
-                  content: reply,
-                  followUps: pickFollowUpIds(reply, content, currentSection),
-                }
-              : message
-          )
-        }
-        return [
-          ...prev,
-          {
-            role: 'assistant',
-            content: reply,
-            followUps: pickFollowUpIds(reply, content, currentSection),
-          },
-        ]
-      })
+      const reply = streamStarted ? rawReply.content : shortenReply(rawReply.content)
+      const finalMessage: ChatMessage = {
+        role: 'assistant',
+        content: reply,
+        incomplete: rawReply.incomplete,
+        followUps: rawReply.incomplete ? undefined : pickFollowUpIds(reply, content, currentSection),
+      }
+      setMessages(prev => [...(streamStarted ? prev.slice(0, -1) : prev), finalMessage])
     } catch (caughtError) {
+      if (retry) setMessages(messages)
       console.error('Chat failed across all configured providers:', caughtError)
       const status = (caughtError as ChatCompletionError | undefined)?.status
       setError(t(status === 429 ? CHAT_COPY.rateLimited : CHAT_COPY.genericError))
@@ -1340,6 +1349,21 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
                       : message.content}
                   </div>
                 </div>
+
+                {message.incomplete && (
+                  <div className="flex flex-wrap items-center gap-2 text-xs" style={{ color: 'var(--cd-warn)' }}>
+                    <span>{t(CHAT_COPY.incompleteReply)}</span>
+                    {index === messages.length - 1 && !isLoading && (
+                      <button
+                        type="button"
+                        className="rounded-md px-2 py-1 underline"
+                        onClick={() => void sendMessage(messages[index - 1].content, undefined, true)}
+                      >
+                        {t(CHAT_COPY.retryReply)}
+                      </button>
+                    )}
+                  </div>
+                )}
 
                 {isLastAssistant && !isLoading && message.followUps && message.followUps.length > 0 && (
                   <SuggestedQuestions
