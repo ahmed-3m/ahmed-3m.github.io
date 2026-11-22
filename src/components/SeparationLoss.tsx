@@ -4,6 +4,7 @@ import ResearchFigure from '@/components/ResearchFigure'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { CIFAR_LAMBDA_SWEEP } from '@/lib/ood-explorer-data'
 import { separationNoiseTraining } from '@/lib/research-figures'
+import { useTheme } from '@/lib/ThemeContext'
 
 const baseline = CIFAR_LAMBDA_SWEEP.find(({ lambda }) => lambda === '0.0')
 const withSeparation = CIFAR_LAMBDA_SWEEP.find(({ lambda }) => lambda === '0.02')
@@ -73,6 +74,11 @@ const copy = {
 
 export default function SeparationLoss() {
   const { t } = useI18n()
+  const { theme } = useTheme()
+  const trainingFigure = {
+    ...separationNoiseTraining,
+    src: theme === 'light' ? separationNoiseTraining.lightSrc : separationNoiseTraining.src,
+  }
 
   return (
     <section className="cd-rf-formula-box" aria-labelledby="separation-loss">
@@ -99,7 +105,7 @@ export default function SeparationLoss() {
       <ol className="cd-rfc-flow" role="list">
         <li>
           <h5>{t(copy.predict)}</h5>
-          <ResearchFigure figure={separationNoiseTraining} />
+          <ResearchFigure figure={trainingFigure} />
           <p>{t(separationNoiseTraining.caption)}</p>
         </li>
         <li>

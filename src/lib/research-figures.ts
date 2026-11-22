@@ -103,6 +103,7 @@ export const industrialCharts: ResearchFigureData[] = [
 
 export const separationNoiseTraining = {
   src: '/research/separation-noise-training.webp',
+  lightSrc: '/research/separation-noise-training-light.webp',
   width: 960,
   height: 640,
   alt: {
@@ -119,4 +120,4 @@ export const separationNoiseTraining = {
     es: 'Añade ruido conocido a una imagen de entrenamiento. Con la clase real de la imagen, el modelo aprende a predecir el ruido añadido.',
     ar: 'أضف ضوضاء معروفة إلى صورة تدريبية. يتعلّم النموذج التنبؤ بالضوضاء المضافة عند تزويده بالفئة الفعلية للصورة.',
   },
-} satisfies ResearchFigureData
+} satisfies ResearchFigureData & { lightSrc: string }
