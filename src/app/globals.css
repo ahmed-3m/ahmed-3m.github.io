@@ -1343,7 +1343,7 @@ body::before {
 .cd-rfc-result > div:last-child dd { color: var(--cd-accent); }
 .cd-rfc-evidence > p { margin-block-start: 6px; color: var(--cd-fg2); font-size: 12px; }
 .cd-rfc-flow {
-  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)) minmax(0, 1.2fr); gap: 12px;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;
   list-style: none; margin-block-end: 16px; padding: 0;
 }
 .cd-rfc-flow > li {
@@ -1369,19 +1369,54 @@ body::before {
   box-shadow: 0 0 0 2px var(--cd-accent), 0 14px 32px color-mix(in srgb, var(--cd-bg) 28%, transparent);
   transform: translateY(-2px);
 }
-.cd-rfc-chart {
-  min-width: 0; padding: 6px 10px 10px; border-radius: 6px;
-  border: 1px solid var(--cd-b0); background: var(--cd-bg);
+.cd-rfc-rule {
+  display: grid; align-content: center; justify-items: center;
+  inline-size: 100%; min-inline-size: 0; aspect-ratio: 3 / 2;
+  padding: 12px 8px; text-align: center;
+  border: 1px solid var(--cd-b0); border-radius: 6px; background: var(--cd-bg);
+  font-size: 12px; line-height: 1.35; color: var(--cd-fg1);
 }
-.cd-rfc-chart .cd-signal-plot svg { height: clamp(94px, 10vw, 130px); }
-.cd-rfc-chart .cd-signal-id, .cd-rfc-chart .cd-signal-ood, .cd-rfc-chart .cd-signal-flag { animation: none; }
-.cd-rfc-chart .cd-signal-ood { stroke-dasharray: 4 2; }
-.cd-rfc-chart .cd-signal-legend { gap: 4px 8px; margin: 6px 0; font-size: 11px; }
-.cd-rfc-chart .sw-ood { border-style: dashed; }
-.cd-rfc-overlap { fill: color-mix(in srgb, var(--cd-fg1) 55%, transparent); }
-.cd-rfc-chart .sw-overlap { border-color: var(--cd-fg2); background: color-mix(in srgb, var(--cd-fg1) 55%, transparent); }
-.cd-rfc-chart figcaption { color: var(--cd-fg2); font-size: 11px; line-height: 1.5; }
-.cd-rfc-chart figcaption bdi { white-space: nowrap; }
+.cd-rfc-rule bdi {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-weight: 650; white-space: nowrap;
+}
+.cd-rfc-score {
+  display: grid; gap: 2px; padding: 6px 14px;
+  border: 1px solid var(--cd-b1); border-radius: 6px; background: var(--cd-surf);
+  color: var(--cd-fg2);
+}
+.cd-rfc-score bdi { color: var(--cd-fg1); font-size: 16px; }
+.cd-rfc-compare {
+  display: grid; grid-auto-flow: column; align-items: baseline; gap: 4px;
+  position: relative; margin-block: 10px; padding: 5px 8px;
+  border: 1px solid var(--cd-b1); border-radius: 6px; background: var(--cd-surf);
+}
+.cd-rfc-compare::before,
+.cd-rfc-compare::after,
+.cd-rfc-outcomes > div::before {
+  content: ''; position: absolute; inset-inline-start: calc(50% - 0.5px);
+  inline-size: 1px; block-size: 11px; background: var(--cd-fg3);
+}
+.cd-rfc-compare::before, .cd-rfc-outcomes > div::before { inset-block-end: 100%; }
+.cd-rfc-compare::after { inset-block-start: 100%; }
+.cd-rfc-outcomes {
+  position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  inline-size: min(100%, 26rem); padding-block-start: 10px;
+}
+.cd-rfc-outcomes::before {
+  content: ''; position: absolute; inset-block-start: 0; inset-inline: 25%;
+  border-block-start: 1px solid var(--cd-fg3);
+}
+.cd-rfc-outcomes > div {
+  --outcome-color: var(--cd-accent);
+  position: relative; display: grid; align-content: start; gap: 3px;
+  margin-inline: 4px; padding: 6px 4px;
+  border: 1px solid color-mix(in srgb, var(--outcome-color) 55%, var(--cd-b1)); border-radius: 6px;
+  background: color-mix(in srgb, var(--outcome-color) 7%, var(--cd-bg));
+  overflow-wrap: anywhere;
+}
+.cd-rfc-outcomes > div:last-child { --outcome-color: var(--cd-warn); }
+.cd-rfc-outcomes bdi { color: var(--outcome-color); font-size: 15px; }
 .cd-rfc-actions { display: grid; gap: 12px; justify-items: start; }
 .cd-rfc-actions details { max-width: 100%; color: var(--cd-fg2); font-size: 13px; }
 .cd-rfc-actions summary { cursor: pointer; color: var(--cd-fg1); font-weight: 600; }
@@ -1396,6 +1431,7 @@ body::before {
 @media (min-width: 769px) and (max-width: 960px) {
   .cd-rfc-flow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .cd-rfc-decision { grid-column: 1 / -1; }
+  .cd-rfc-rule { aspect-ratio: auto; }
 }
 
 /* ── WRITING SECTION ── */

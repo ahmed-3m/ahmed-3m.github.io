@@ -126,11 +126,11 @@ export const separationIllustrations = [
     width: 960,
     height: 640,
     alt: {
-      en: 'A double-headed arrow marks a widening gap between the two noise predictions for the same airplane image.',
-      de: 'Ein Doppelpfeil zeigt den größer werdenden Abstand zwischen den beiden Rauschvorhersagen für dasselbe Flugzeugbild.',
-      fr: 'Une flèche à deux pointes montre l’écart croissant entre les deux prédictions de bruit pour la même image d’avion.',
-      es: 'Una flecha de doble punta muestra la distancia creciente entre las dos predicciones de ruido para la misma imagen del avión.',
-      ar: 'يشير سهم برأسين إلى اتساع المسافة بين تنبؤي الضوضاء للصورة نفسها.',
+      en: 'Two noise patterns sit side by side with a large horizontal arrow pointing outward toward both patterns, showing the growing difference.',
+      de: 'Zwei Rauschmuster stehen nebeneinander. Ein großer waagerechter Doppelpfeil zeigt den wachsenden Abstand zwischen ihnen.',
+      fr: 'Deux motifs de bruit sont côte à côte. Une grande flèche horizontale à deux pointes montre l’écart croissant entre eux.',
+      es: 'Dos patrones de ruido aparecen lado a lado. Una gran flecha horizontal de doble punta muestra la separación creciente.',
+      ar: 'يظهر نمطان من الضوضاء جنبًا إلى جنب، وبينهما سهم أفقي كبير برأسين يوضح اتساع الفرق بينهما.',
     },
     caption: {
       en: 'During training, separation loss increases the difference between the two noise predictions.',

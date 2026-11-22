@@ -1,6 +1,5 @@
 'use client'
 
-import { OodScoreHistogram } from '@/components/HeroSignal'
 import ResearchFigure from '@/components/ResearchFigure'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { CIFAR_LAMBDA_SWEEP } from '@/lib/ood-explorer-data'
@@ -36,19 +35,22 @@ const copy = {
   predict: { en: 'Predict the noise twice', de: 'Rauschen zweimal vorhersagen', fr: 'Prédire le bruit deux fois', es: 'Predecir el ruido dos veces', ar: 'تنبّأ بالضوضاء مرتين' },
   separate: { en: 'Separate the predictions', de: 'Vorhersagen trennen', fr: 'Séparer les prédictions', es: 'Separar las predicciones', ar: 'افصل بين التنبؤين' },
   decide: { en: 'Apply the threshold', de: 'Schwelle anwenden', fr: 'Appliquer le seuil', es: 'Aplicar el umbral', ar: 'طبّق العتبة' },
-  chartCaption: {
-    en: 'Recorded scores · seed 42',
-    de: 'Aufgezeichnete Scores · Seed 42',
-    fr: 'Scores enregistrés · graine 42',
-    es: 'Puntuaciones registradas · semilla 42',
-    ar: 'الدرجات المسجلة · البذرة 42',
+  score: { en: 'Anomaly score', de: 'Anomaliewert', fr: 'Score d’anomalie', es: 'Puntuación de anomalía', ar: 'درجة الشذوذ' },
+  compare: {
+    en: 'Compare with threshold',
+    de: 'Mit Schwelle vergleichen',
+    fr: 'Comparer au seuil',
+    es: 'Comparar con el umbral',
+    ar: 'قارن بالعتبة',
   },
+  familiar: { en: 'Familiar', de: 'Vertraut', fr: 'Familière', es: 'Familiar', ar: 'مألوفة' },
+  unfamiliar: { en: 'Flag as unfamiliar', de: 'Als unbekannt markieren', fr: 'Signaler comme inconnue', es: 'Marcar como desconocida', ar: 'صنّفها كغير مألوفة' },
   decision: {
-    en: 'A score at or above the calibrated threshold is flagged as unfamiliar. The shaded overlap shows where either group can produce similar scores.',
-    de: 'Ein Wert ab der kalibrierten Schwelle wird als unbekannt markiert. Die schattierte Überlappung zeigt, wo beide Gruppen ähnliche Werte erzielen können.',
-    fr: 'Un score égal ou supérieur au seuil calibré signale une image inconnue. La zone ombrée indique où les deux groupes peuvent obtenir des scores similaires.',
-    es: 'Una puntuación igual o superior al umbral calibrado señala una imagen desconocida. La zona sombreada muestra dónde ambos grupos pueden obtener puntuaciones similares.',
-    ar: 'تُصنَّف الصورة على أنها غير مألوفة إذا بلغت درجتها العتبة المعايرة أو تجاوزتها. وتوضح المنطقة المظللة أين يمكن أن تحصل المجموعتان على درجات متقاربة.',
+    en: 'Subtract the two noise prediction errors to get the score, then compare it with the calibrated threshold.',
+    de: 'Ziehe die beiden Fehler der Rauschvorhersage voneinander ab und vergleiche den Wert mit der kalibrierten Schwelle.',
+    fr: 'Soustraire les deux erreurs de prédiction du bruit pour obtenir le score, puis le comparer au seuil calibré.',
+    es: 'Resta los dos errores de predicción del ruido para obtener la puntuación y compárala con el umbral calibrado.',
+    ar: 'احسب الفرق بين خطأَي التنبؤ بالضوضاء للحصول على الدرجة، ثم قارنها بالعتبة المعايرة.',
   },
   details: { en: 'Technical details', de: 'Technische Details', fr: 'Détails techniques', es: 'Detalles técnicos', ar: 'التفاصيل التقنية' },
   symbols: {
@@ -101,10 +103,23 @@ export default function SeparationLoss() {
         ))}
         <li className="cd-rfc-decision">
           <h5>{t(copy.decide)}</h5>
-          <figure className="cd-rfc-chart">
-            <OodScoreHistogram showOverlap />
-            <figcaption>{t(copy.chartCaption)} · <bdi dir="ltr">CIFAR-10 · λ = 0.02 · K = 100</bdi></figcaption>
-          </figure>
+          <div className="cd-rfc-rule">
+            <div className="cd-rfc-score">
+              <span>{t(copy.score)}</span>
+              <bdi dir="ltr">e₀ − e₁</bdi>
+            </div>
+            <div className="cd-rfc-compare">{t(copy.compare)} <bdi>τ</bdi></div>
+            <div className="cd-rfc-outcomes">
+              <div>
+                <bdi dir="ltr">&lt; τ</bdi>
+                <span>{t(copy.familiar)}</span>
+              </div>
+              <div>
+                <bdi dir="ltr">≥ τ</bdi>
+                <span>{t(copy.unfamiliar)}</span>
+              </div>
+            </div>
+          </div>
           <p>{t(copy.decision)}</p>
         </li>
       </ol>
@@ -114,7 +129,7 @@ export default function SeparationLoss() {
           <summary>{t(copy.details)}</summary>
           <div className="cd-rfc-compact-formula" dir="ltr">
             <span>L<sub>total</sub> = L<sub>denoise</sub> + λ L<sub>sep</sub></span>
-            <span>s<sub>OOD</sub>(x) = e₀(x) − e₁(x) ≥ τ</span>
+            <span>s<sub>OOD</sub>(x) = e₀(x) − e₁(x)</span>
           </div>
           <p>{t(copy.symbols)}</p>
         </details>
