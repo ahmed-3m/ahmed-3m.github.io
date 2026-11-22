@@ -96,6 +96,20 @@ export const CHAT_COPY = {
     es: 'Demasiadas solicitudes en este momento. Espera un momento antes de hacer otra pregunta abierta o prueba las preguntas sugeridas.',
     ar: 'تم تجاوز حد الطلبات حاليًا. يُرجى الانتظار قليلًا قبل طرح سؤال مفتوح جديد، أو تجربة الأسئلة المقترحة.',
   },
+  incompleteReply: {
+    en: 'The reply was cut short.',
+    de: 'Die Antwort wurde unterbrochen.',
+    fr: 'La réponse a été interrompue.',
+    es: 'La respuesta se interrumpió.',
+    ar: 'انقطع الرد قبل اكتماله.',
+  },
+  retryReply: {
+    en: 'Try again',
+    de: 'Erneut versuchen',
+    fr: 'Réessayer',
+    es: 'Volver a intentar',
+    ar: 'أعد المحاولة',
+  },
   genericError: {
     en: 'Something went wrong while contacting the assistant.',
     de: 'Beim Kontakt mit dem Assistenten ist etwas schiefgelaufen.',
