@@ -155,6 +155,13 @@ const copy = {
     es: 'Abrir laboratorio interactivo de tesis',
     ar: 'تشغيل مختبر الأطروحة التفاعلي',
   },
+  tryExplorer: {
+    en: 'Try the explorer',
+    de: 'Explorer ausprobieren',
+    fr: 'Essayer l’explorateur',
+    es: 'Probar el explorador',
+    ar: 'جرّب المستكشف',
+  },
 } satisfies Record<string, TranslationMap>
 
 const publications: Array<{ title: string; venue: TranslationMap; href: string }> = [
@@ -267,6 +274,20 @@ export default function Research() {
             </div>
           </div>
 
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-3 px-4 pb-4 min-[481px]:px-6 min-[769px]:px-8">
+            <a href="/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf" target="_blank" rel="noopener noreferrer" className="cd-proj-link">
+              {t(copy.thesisPdf)} <RtlArrow />
+            </a>
+            <a href="https://github.com/ahmed-3m/DiffusionOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link">
+              {t(copy.diffusionCode)} <RtlArrow />
+            </a>
+            <a href="#ood-explorer" className="cd-proj-link" onClick={() => setShouldRenderLab(true)}>
+              {t(copy.tryExplorer)} <span aria-hidden="true">&darr;</span>
+            </a>
+          </div>
+
+          <SeparationLoss />
+
           <div className="px-4 min-[481px]:px-6 min-[769px]:px-8">
             <div className="cd-band-eyebrow" style={{ marginTop: 20, marginBottom: 10 }}>
               {t(copy.chartHeading)}
@@ -274,8 +295,6 @@ export default function Research() {
 
             <ResearchCharts track="cifar" />
           </div>
-
-          <SeparationLoss />
 
           <div id="ood-explorer" className="scroll-mt-24" ref={labContainerRef} style={{ minHeight: shouldRenderLab ? undefined : 720 }}>
             {shouldRenderLab ? (
@@ -301,15 +320,9 @@ export default function Research() {
           </div>
 
           <div className="cd-rf-footer" style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center' }}>
-            <a href="/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf" target="_blank" rel="noopener noreferrer" className="cd-proj-link">
-              {t(copy.thesisPdf)} <RtlArrow />
-            </a>
             <Link href="/case-studies/diffusion-ood/" className="cd-proj-link">
               {t(copy.diffusionCaseStudy)} <RtlArrow />
             </Link>
-            <a href="https://github.com/ahmed-3m/DiffusionOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link">
-              {t(copy.diffusionCode)} <RtlArrow />
-            </a>
             <a href="https://huggingface.co/ahmed-3m/DiffusionOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link">
               {t(copy.diffusionHf)} <RtlArrow />
             </a>
