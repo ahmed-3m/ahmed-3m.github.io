@@ -24,24 +24,59 @@ interface I18nContextType {
 
 const I18nContext = createContext<I18nContextType | undefined>(undefined)
 
+function readStoredLanguage(): Language | null {
+  try {
+    const saved = window.localStorage.getItem(LANGUAGE_STORAGE_KEY)
+    return isLanguage(saved) ? saved : null
+  } catch {
+    try {
+      const prefix = `${LANGUAGE_COOKIE}=`
+      const match = document.cookie
+        .split(';')
+        .map((part) => part.trim())
+        .find((part) => part.startsWith(prefix))
+      const cookieLang = match?.slice(prefix.length)
+      return isLanguage(cookieLang) ? cookieLang : null
+    } catch {
+      return null
+    }
+  }
+}
+
+function writeStoredLanguage(nextLang: Language): void {
+  try {
+    window.localStorage.setItem(LANGUAGE_STORAGE_KEY, nextLang)
+  } catch {
+    // Ignore SecurityError / QuotaExceededError; React state holds the active language.
+  }
+}
+
+function writeLanguageCookie(nextLang: Language): void {
+  try {
+    document.cookie = `${LANGUAGE_COOKIE}=${nextLang}; path=/; max-age=31536000; samesite=lax`
+  } catch {
+    // Ignore SecurityError when cookies are disabled or blocked.
+  }
+}
+
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [lang, setLang] = useState<Language>('en')
 
   useEffect(() => {
-    const saved = localStorage.getItem(LANGUAGE_STORAGE_KEY)
+    const saved = readStoredLanguage()
     // eslint-disable-next-line react-hooks/set-state-in-effect -- localStorage is unavailable during static-export build, so the initial render must default to 'en' and we hydrate the saved language on mount.
-    if (isLanguage(saved)) setLang(saved)
+    if (saved) setLang(saved)
   }, [])
 
   useEffect(() => {
     document.documentElement.lang = lang
     document.documentElement.dir = getDirection(lang)
-    document.cookie = `${LANGUAGE_COOKIE}=${lang}; path=/; max-age=31536000; samesite=lax`
+    writeLanguageCookie(lang)
   }, [lang])
 
   const setLanguage = (nextLang: Language) => {
     setLang(nextLang)
-    localStorage.setItem(LANGUAGE_STORAGE_KEY, nextLang)
+    writeStoredLanguage(nextLang)
   }
 
   const toggleLang = () => {

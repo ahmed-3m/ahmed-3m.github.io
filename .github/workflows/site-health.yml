@@ -43,7 +43,8 @@ jobs:
             "/sitemap-pages.xml"
             "/case-studies/diffusion-ood/"
             "/case-studies/inkjet-ood/"
-            "/case-studies/faultrix/"
+            "/about/"
+            "/research/"
             "/case-studies/sihem/"
           )
           fail=0

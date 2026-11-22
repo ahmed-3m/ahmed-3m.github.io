@@ -30,6 +30,7 @@ import { resolve } from 'node:path'
 const FILE = 'src/lib/news-items.json'
 const TIMEOUT_MS = 12000
 const MAX_REDIRECTS = 5
+const PROBE_CONCURRENCY = 8
 const UA =
   'Mozilla/5.0 (compatible; ahmed-3m-news-linkcheck/1.0; +https://ahmed-3m.github.io/news)'
 
@@ -194,6 +195,24 @@ async function selfTest() {
   console.log('self-test OK: link classification matches the documented policy.')
 }
 
+async function mapWithConcurrency(items, limit, worker) {
+  const results = new Array(items.length)
+  let nextIndex = 0
+  const workerCount = Math.min(limit, items.length)
+
+  await Promise.all(
+    Array.from({ length: workerCount }, async () => {
+      while (nextIndex < items.length) {
+        const currentIndex = nextIndex
+        nextIndex += 1
+        results[currentIndex] = await worker(items[currentIndex], currentIndex)
+      }
+    }),
+  )
+
+  return results
+}
+
 async function checkCatalog() {
   const src = await readFile(FILE, 'utf8')
   let catalog
@@ -222,7 +241,8 @@ async function checkCatalog() {
     process.exit(1)
   }
 
-  const results = await Promise.all([...new Set(urls)].map((u) => probe(u)))
+  const uniqueUrls = [...new Set(urls)]
+  const results = await mapWithConcurrency(uniqueUrls, PROBE_CONCURRENCY, (u) => probe(u))
 
   const failures = results.filter(isHardFail)
   const warnings = results.filter((r) => !isHardFail(r) && (r.status === 0 || r.status >= 400))

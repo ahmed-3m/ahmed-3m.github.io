@@ -16,10 +16,16 @@ export const MAX_MESSAGES = 24
 export const MAX_CONTENT_CHARS = 16_000
 export const MAX_TOKENS_CAP = 1_200
 
-export const ALLOWED_ORIGINS = new Set([
-  'https://ahmed-3m.github.io',
-  'http://localhost:3000',
-])
+export const PROD_ORIGIN = 'https://ahmed-3m.github.io'
+export const LOCALHOST_ORIGIN = 'http://localhost:3000'
+
+export const ALLOWED_ORIGINS = new Set([PROD_ORIGIN])
+
+export function isAllowedOrigin(origin, env) {
+  if (!origin) return false
+  if (ALLOWED_ORIGINS.has(origin)) return true
+  return env?.ALLOW_LOCALHOST === 'true' && origin === LOCALHOST_ORIGIN
+}
 
 export const ALLOWED_ROLES = new Set(['system', 'user', 'assistant'])
 
@@ -30,25 +36,25 @@ export const ALLOWED_MODELS = {
 
 export const ALLOWED_REASONING_EFFORT = new Set(['low', 'medium', 'high'])
 
-export function corsHeaders(origin) {
+export function corsHeaders(origin, env) {
   const headers = {
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Max-Age': '86400',
     Vary: 'Origin',
   }
-  if (origin && ALLOWED_ORIGINS.has(origin)) {
+  if (isAllowedOrigin(origin, env)) {
     headers['Access-Control-Allow-Origin'] = origin
   }
   return headers
 }
 
-function jsonResponse(body, status, origin, extraHeaders = {}) {
+function jsonResponse(body, status, origin, env, extraHeaders = {}) {
   return new Response(JSON.stringify(body), {
     status,
     headers: {
       'Content-Type': 'application/json',
-      ...corsHeaders(origin),
+      ...corsHeaders(origin, env),
       ...extraHeaders,
     },
   })
@@ -69,10 +75,10 @@ export default {
     const origin = request.headers.get('Origin') || ''
 
     if (request.method === 'OPTIONS') {
-      if (origin && !ALLOWED_ORIGINS.has(origin)) {
+      if (!origin || !isAllowedOrigin(origin, env)) {
         return forbiddenOrigin()
       }
-      return new Response(null, { status: 204, headers: corsHeaders(origin) })
+      return new Response(null, { status: 204, headers: corsHeaders(origin, env) })
     }
 
     if (request.method !== 'POST') {
@@ -80,11 +86,12 @@ export default {
         { error: 'Method not allowed. Use POST.' },
         405,
         origin,
+        env,
         { Allow: 'POST, OPTIONS' }
       )
     }
 
-    if (origin && !ALLOWED_ORIGINS.has(origin)) {
+    if (!origin || !isAllowedOrigin(origin, env)) {
       return forbiddenOrigin()
     }
 
@@ -95,9 +102,10 @@ export default {
       const { success } = await limiter.limit({ key: ip })
       if (success === false) {
         return jsonResponse(
-          { error: 'Rate limit exceeded. Please try again later.' },
+          { error: 'Rate limit exceeded. Please try again later.', scope: 'proxy' },
           429,
-          origin
+          origin,
+          env
         )
       }
     } else if (env?.CHAT_RATE_KV && typeof env.CHAT_RATE_KV.get === 'function') {
@@ -128,16 +136,17 @@ export default {
 
       if (record.count > RATE_LIMIT_PER_HOUR) {
         return jsonResponse(
-          { error: 'Rate limit exceeded. Please try again later.' },
+          { error: 'Rate limit exceeded. Please try again later.', scope: 'proxy' },
           429,
-          origin
+          origin,
+          env
         )
       }
     }
 
     // Reject declared oversize bodies before reading; enforce actual byte count too.
     if (Number(request.headers.get('Content-Length')) > MAX_BODY_BYTES) {
-      return jsonResponse({ error: 'Payload too large.' }, 413, origin)
+      return jsonResponse({ error: 'Payload too large.' }, 413, origin, env)
     }
     let raw
     try {
@@ -152,7 +161,7 @@ export default {
             size += value.byteLength
             if (size > MAX_BODY_BYTES) {
               void reader.cancel().catch(() => {})
-              return jsonResponse({ error: 'Payload too large.' }, 413, origin)
+              return jsonResponse({ error: 'Payload too large.' }, 413, origin, env)
             }
             chunks.push(value)
           }
@@ -168,47 +177,59 @@ export default {
       }
       raw = new TextDecoder().decode(bytes)
     } catch {
-      return jsonResponse({ error: 'Failed to read request body.' }, 400, origin)
+      return jsonResponse({ error: 'Failed to read request body.' }, 400, origin, env)
     }
 
     let body
     try {
       body = JSON.parse(raw)
     } catch {
-      return jsonResponse({ error: 'Invalid JSON body.' }, 400, origin)
+      return jsonResponse({ error: 'Invalid JSON body.' }, 400, origin, env)
     }
 
     if (!body || typeof body !== 'object') {
-      return jsonResponse({ error: 'Request body must be a JSON object.' }, 400, origin)
+      return jsonResponse({ error: 'Request body must be a JSON object.' }, 400, origin, env)
     }
 
     if (!Array.isArray(body.messages) || body.messages.length < 1 || body.messages.length > MAX_MESSAGES) {
       return jsonResponse(
         { error: `Request body must include a "messages" array of length 1–${MAX_MESSAGES}.` },
         400,
-        origin
+        origin,
+        env
       )
     }
 
-    for (const message of body.messages) {
+    for (let i = 0; i < body.messages.length; i++) {
+      const message = body.messages[i]
       if (!message || typeof message !== 'object') {
-        return jsonResponse({ error: 'Each message must be an object.' }, 400, origin)
+        return jsonResponse({ error: 'Each message must be an object.' }, 400, origin, env)
       }
       if (!ALLOWED_ROLES.has(message.role)) {
         return jsonResponse(
           { error: 'Each message role must be system, user, or assistant.' },
           400,
-          origin
+          origin,
+          env
+        )
+      }
+      if (message.role === 'system' && i !== 0) {
+        return jsonResponse(
+          { error: 'A system message is only allowed once as the first message.' },
+          400,
+          origin,
+          env
         )
       }
       if (typeof message.content !== 'string') {
-        return jsonResponse({ error: 'Each message content must be a string.' }, 400, origin)
+        return jsonResponse({ error: 'Each message content must be a string.' }, 400, origin, env)
       }
       if (message.content.length > MAX_CONTENT_CHARS) {
         return jsonResponse(
           { error: `Each message content must be at most ${MAX_CONTENT_CHARS} characters.` },
           400,
-          origin
+          origin,
+          env
         )
       }
     }
@@ -219,7 +240,7 @@ export default {
     const isGroq = ALLOWED_MODELS.groq.has(requestedModel)
 
     if (!isZai && !isGroq) {
-      return jsonResponse({ error: `Disallowed model: ${requestedModel}` }, 400, origin)
+      return jsonResponse({ error: `Disallowed model: ${requestedModel}` }, 400, origin, env)
     }
 
     const model = requestedModel
@@ -229,7 +250,8 @@ export default {
         return jsonResponse(
           { error: 'Server is not configured: missing GROQ_API_KEY secret.' },
           500,
-          origin
+          origin,
+          env
         )
       }
     } else {
@@ -237,7 +259,8 @@ export default {
         return jsonResponse(
           { error: 'Server is not configured: missing ZAI_API_KEY secret.' },
           500,
-          origin
+          origin,
+          env
         )
       }
     }
@@ -284,14 +307,15 @@ export default {
             upstream.headers.get('Content-Type') ||
             (upstreamPayload.stream ? 'text/event-stream' : 'application/json'),
           ...(upstreamPayload.stream ? { 'Cache-Control': 'no-cache' } : {}),
-          ...corsHeaders(origin),
+          ...corsHeaders(origin, env),
         },
       })
     } catch {
       return jsonResponse(
         { error: 'Failed to reach the model provider.' },
         502,
-        origin
+        origin,
+        env
       )
     }
   },

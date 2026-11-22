@@ -87,6 +87,7 @@ export default function BlogPageClient() {
                     year: 'numeric',
                     month: 'short',
                     day: 'numeric',
+                    timeZone: 'UTC',
                   })}
                 </time>
                 <span className="flex items-center gap-1">
