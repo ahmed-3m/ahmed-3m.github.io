@@ -432,15 +432,13 @@ function createChatError(
 }
 
 function isProxyRateLimitPayload(
-  data: ChatCompletionResponse,
+  data: ChatCompletionResponse | null,
   status: number,
   useProxy: boolean
 ): boolean {
-  if (!useProxy || status !== 429) return false
-  return (
-    data.scope === 'proxy' ||
-    (typeof data.error === 'string' && data.error === 'Rate limit exceeded. Please try again later.')
-  )
+  if (!useProxy || status !== 429 || !data) return false
+  if (data.scope !== undefined) return data.scope === 'proxy'
+  return data.error === 'Rate limit exceeded. Please try again later.'
 }
 
 type StreamDelta = (fullContent: string) => void
@@ -494,7 +492,7 @@ async function routeWithClassifier(
         signal: controller.signal,
       })
       if (auth.useProxy && response.status === 429) {
-        const errorData = (await response.json().catch(() => ({}))) as ChatCompletionResponse
+        const errorData = (await response.json().catch(() => null)) as ChatCompletionResponse | null
         if (isProxyRateLimitPayload(errorData, response.status, auth.useProxy)) {
           throw createChatError('Rate limit exceeded.', 'BigModel', 429, undefined, true)
         }
@@ -519,11 +517,12 @@ async function throwProviderError(
   useProxy: boolean,
   status503Message?: string
 ): Promise<never> {
-  const data = (await response.json().catch(() => ({}))) as ChatCompletionResponse
-  const errorDetail = typeof data.error === 'string' ? undefined : data.error
+  const data = (await response.json().catch(() => null)) as ChatCompletionResponse | null
+  const detail = data?.error
+  const errorDetail = typeof detail === 'string' ? undefined : detail
   const message =
-    typeof data.error === 'string'
-      ? data.error
+    typeof detail === 'string'
+      ? detail
       : errorDetail?.message ?? `${provider} could not respond right now.`
   const isProxyRateLimit = isProxyRateLimitPayload(data, response.status, useProxy)
   if (status503Message && response.status === 503) {
@@ -1306,6 +1305,7 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
   }
 
   function handleInternalLinkClick(href: string, event: MouseEvent<HTMLAnchorElement>) {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
     if (!href.includes('#')) return
     const [linkPath, linkHash] = href.split('#')
     const normCurrent = pathname.replace(/\/$/, '') || '/'
