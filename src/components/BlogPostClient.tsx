@@ -20,7 +20,7 @@ function formatContent(content: string | undefined) {
 
     while (url !== previousUrl) {
       previousUrl = url
-      url = url.replace(/[.,;:!?*`]+$/, '')
+      url = url.replace(/[.,;:!?`]+$/, '')
       const openParentheses = (url.match(/\(/g) ?? []).length
       let closeParentheses = (url.match(/\)/g) ?? []).length
 
@@ -53,14 +53,20 @@ function formatContent(content: string | undefined) {
       return `\0LINK_${idx}\0`
     })
 
-    // 3. Bare URLs: https://...
-    s = s.replace(/(https?:\/\/[^\s<>"]+)/g, (rawUrl) => {
+    // 3. Match bold spans and bare URLs from left to right so stars inside a URL
+    // remain part of the link unless an opening bold delimiter came first.
+    const bareUrl = /https?:\/\/[^\s<>"\0]+/g
+    const saveBareUrl = (rawUrl: string) => {
       const url = cleanUrl(rawUrl)
       const trailing = rawUrl.slice(url.length)
       const idx = links.length
       links.push(`<a href="${escapeHtml(url)}" class="text-[var(--cd-accent)] underline underline-offset-2 hover:underline" target="_blank" rel="noopener noreferrer">${escapeHtml(url)}</a>`)
       return `\0LINK_${idx}\0${trailing}`
-    })
+    }
+    const boldOrBareUrl = new RegExp(`\\*\\*(.+?)\\*\\*(?!\\*)|${bareUrl.source}`, 'g')
+    s = s.replace(boldOrBareUrl, (match, bold: string | undefined) =>
+      bold === undefined ? saveBareUrl(match) : `**${bold.replace(bareUrl, saveBareUrl)}**`
+    )
 
     // 4. Escape raw HTML in surrounding prose before applying bold or restoring spans
     s = escapeHtml(s)
