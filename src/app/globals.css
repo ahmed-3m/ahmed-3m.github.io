@@ -1369,54 +1369,60 @@ body::before {
   box-shadow: 0 0 0 2px var(--cd-accent), 0 14px 32px color-mix(in srgb, var(--cd-bg) 28%, transparent);
   transform: translateY(-2px);
 }
-.cd-rfc-rule {
+.cd-rfc-diagram {
   display: grid; align-content: center; justify-items: center;
   inline-size: 100%; min-inline-size: 0; aspect-ratio: 3 / 2;
   padding: 12px 8px; text-align: center;
   border: 1px solid var(--cd-b0); border-radius: 6px; background: var(--cd-bg);
   font-size: 12px; line-height: 1.35; color: var(--cd-fg1);
 }
-.cd-rfc-rule bdi {
+.cd-rfc-diagram bdi {
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-weight: 650; white-space: nowrap;
 }
-.cd-rfc-score {
-  display: grid; gap: 2px; padding: 6px 14px;
-  border: 1px solid var(--cd-b1); border-radius: 6px; background: var(--cd-surf);
-  color: var(--cd-fg2);
+.cd-rfc-distance { gap: 16px; }
+.cd-rfc-gap-row { display: grid; justify-items: center; gap: 5px; inline-size: 100%; }
+.cd-rfc-gap {
+  position: relative; display: flex; justify-content: space-between; align-items: center;
+  inline-size: max(52%, 100px);
 }
-.cd-rfc-score bdi { color: var(--cd-fg1); font-size: 16px; }
-.cd-rfc-compare {
-  display: grid; grid-auto-flow: column; align-items: baseline; gap: 4px;
-  position: relative; margin-block: 10px; padding: 5px 8px;
-  border: 1px solid var(--cd-b1); border-radius: 6px; background: var(--cd-surf);
-}
-.cd-rfc-compare::before,
-.cd-rfc-compare::after,
-.cd-rfc-outcomes > div::before {
-  content: ''; position: absolute; inset-inline-start: calc(50% - 0.5px);
-  inline-size: 1px; block-size: 11px; background: var(--cd-fg3);
-}
-.cd-rfc-compare::before, .cd-rfc-outcomes > div::before { inset-block-end: 100%; }
-.cd-rfc-compare::after { inset-block-start: 100%; }
-.cd-rfc-outcomes {
-  position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
-  inline-size: min(100%, 26rem); padding-block-start: 10px;
-}
-.cd-rfc-outcomes::before {
-  content: ''; position: absolute; inset-block-start: 0; inset-inline: 25%;
+.cd-rfc-gap-wide { inline-size: 90%; }
+.cd-rfc-gap::before {
+  content: ''; position: absolute; inset-inline: 0;
   border-block-start: 1px solid var(--cd-fg3);
 }
-.cd-rfc-outcomes > div {
-  --outcome-color: var(--cd-accent);
-  position: relative; display: grid; align-content: start; gap: 3px;
-  margin-inline: 4px; padding: 6px 4px;
-  border: 1px solid color-mix(in srgb, var(--outcome-color) 55%, var(--cd-b1)); border-radius: 6px;
-  background: color-mix(in srgb, var(--outcome-color) 7%, var(--cd-bg));
-  overflow-wrap: anywhere;
+.cd-rfc-gap bdi {
+  position: relative; padding: 4px 6px; border: 1px solid currentColor;
+  border-radius: 4px; background: var(--cd-bg); color: var(--cd-accent);
 }
-.cd-rfc-outcomes > div:last-child { --outcome-color: var(--cd-warn); }
-.cd-rfc-outcomes bdi { color: var(--outcome-color); font-size: 15px; }
+.cd-rfc-gap bdi:last-child { color: var(--cd-warn); border-style: dashed; }
+.cd-rfc-rule { gap: 8px; }
+.cd-rfc-example { color: var(--cd-fg2); }
+.cd-rfc-score, .cd-rfc-check { display: grid; gap: 2px; color: var(--cd-fg2); }
+.cd-rfc-score bdi, .cd-rfc-check bdi { color: var(--cd-fg1); font-size: 15px; }
+.cd-rfc-check { border-block-start: 1px solid var(--cd-b1); padding-block-start: 7px; }
+.cd-rfc-threshold-track {
+  --example-cutoff: 71%;
+  position: relative; inline-size: min(82%, 220px); block-size: 6px;
+  margin-block: 3px; border-radius: 3px;
+  background: linear-gradient(to right, var(--cd-accent) var(--example-cutoff), var(--cd-warn) 0);
+}
+.cd-rfc-threshold-track::before, .cd-rfc-threshold-track::after {
+  content: ''; position: absolute; inset-block-start: 50%; translate: -50% -50%;
+}
+.cd-rfc-threshold-track::before {
+  inset-inline-start: var(--example-cutoff); inline-size: 2px; block-size: 14px;
+  background: var(--cd-fg1);
+}
+.cd-rfc-threshold-track::after {
+  inset-inline-start: 57%; inline-size: 12px; block-size: 12px;
+  border: 2px solid var(--cd-bg); border-radius: 50%; background: var(--cd-fg1);
+}
+.cd-rfc-verdict {
+  padding: 4px 8px; border: 1px solid color-mix(in srgb, var(--cd-accent) 55%, var(--cd-b1));
+  border-radius: 6px; background: color-mix(in srgb, var(--cd-accent) 7%, var(--cd-bg));
+  color: var(--cd-accent); font-weight: 650;
+}
 .cd-rfc-actions { display: grid; gap: 12px; justify-items: start; }
 .cd-rfc-actions details { max-width: 100%; color: var(--cd-fg2); font-size: 13px; }
 .cd-rfc-actions summary { cursor: pointer; color: var(--cd-fg1); font-weight: 600; }

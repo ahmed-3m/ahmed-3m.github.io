@@ -3,7 +3,7 @@
 import ResearchFigure from '@/components/ResearchFigure'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { CIFAR_LAMBDA_SWEEP } from '@/lib/ood-explorer-data'
-import { separationIllustrations } from '@/lib/research-figures'
+import { separationNoiseTraining } from '@/lib/research-figures'
 
 const baseline = CIFAR_LAMBDA_SWEEP.find(({ lambda }) => lambda === '0.0')
 const withSeparation = CIFAR_LAMBDA_SWEEP.find(({ lambda }) => lambda === '0.02')
@@ -32,41 +32,44 @@ const copy = {
     es: 'CIFAR-10: aviones frente a las otras nueve clases · AUROC, media ± desviación estándar de tres pruebas',
     ar: 'CIFAR-10، الطائرات مقابل الفئات التسع الأخرى · AUROC، المتوسط ± الانحراف المعياري عبر ثلاث تجارب',
   },
-  predict: { en: 'Predict the noise twice', de: 'Rauschen zweimal vorhersagen', fr: 'Prédire le bruit deux fois', es: 'Predecir el ruido dos veces', ar: 'تنبّأ بالضوضاء مرتين' },
+  predict: { en: 'Learn to predict noise', de: 'Rauschen vorhersagen lernen', fr: 'Apprendre à prédire le bruit', es: 'Aprender a predecir el ruido', ar: 'تعلّم التنبؤ بالضوضاء' },
   separate: { en: 'Separate the predictions', de: 'Vorhersagen trennen', fr: 'Séparer les prédictions', es: 'Separar las predicciones', ar: 'افصل بين التنبؤين' },
-  decide: { en: 'Apply the threshold', de: 'Schwelle anwenden', fr: 'Appliquer le seuil', es: 'Aplicar el umbral', ar: 'طبّق العتبة' },
-  score: { en: 'Anomaly score', de: 'Anomaliewert', fr: 'Score d’anomalie', es: 'Puntuación de anomalía', ar: 'درجة الشذوذ' },
-  compare: {
-    en: 'Compare with threshold',
-    de: 'Mit Schwelle vergleichen',
-    fr: 'Comparer au seuil',
-    es: 'Comparar con el umbral',
-    ar: 'قارن بالعتبة',
+  denoisingOnly: { en: 'Denoising loss alone', de: 'Nur Entrauschungsverlust', fr: 'Perte de débruitage seule', es: 'Solo pérdida de eliminación de ruido', ar: 'خسارة إزالة الضوضاء وحدها' },
+  distance: {
+    en: 'For the same noisy input, the model predicts noise under the airplane condition (c = 0) and the other classes (c = 1). Separation loss pushes the predictions farther apart, as sketched above.',
+    de: 'Für dieselbe verrauschte Eingabe sagt das Modell das Rauschen für Flugzeuge (c = 0) und für die übrigen Klassen (c = 1) voraus. Die Separation Loss vergrößert den Abstand, wie oben skizziert.',
+    fr: 'Pour la même image bruitée, le modèle prédit le bruit sous la condition « avion » (c = 0) et celle des autres classes (c = 1). Le schéma illustre comment la perte de séparation éloigne les prédictions.',
+    es: 'Con la misma imagen ruidosa, el modelo predice el ruido para la condición de avión (c = 0) y para las demás clases (c = 1). El esquema ilustra cómo la pérdida de separación aleja las predicciones.',
+    ar: 'للصورة المشوشة نفسها، يتنبأ النموذج بالضوضاء تحت شرط الطائرة (c = 0) وشرط الفئات الأخرى (c = 1). يوضّح الرسم كيف تزيد خسارة الفصل المسافة بين التنبؤين.',
   },
-  familiar: { en: 'Familiar', de: 'Vertraut', fr: 'Familière', es: 'Familiar', ar: 'مألوفة' },
-  unfamiliar: { en: 'Flag as unfamiliar', de: 'Als unbekannt markieren', fr: 'Signaler comme inconnue', es: 'Marcar como desconocida', ar: 'صنّفها كغير مألوفة' },
+  decide: { en: 'Score and classify the image', de: 'Bild bewerten und einordnen', fr: 'Calculer le score et classer l’image', es: 'Puntuar y clasificar la imagen', ar: 'احسب درجة الصورة وصنّفها' },
+  example: { en: 'Illustrative example', de: 'Rechenbeispiel', fr: 'Exemple illustratif', es: 'Ejemplo ilustrativo', ar: 'مثال توضيحي' },
+  score: { en: 'Anomaly score', de: 'Anomaliewert', fr: 'Score d’anomalie', es: 'Puntuación de anomalía', ar: 'درجة الشذوذ' },
+  belowThreshold: {
+    en: 'Below the calibrated threshold',
+    de: 'Unter der kalibrierten Schwelle',
+    fr: 'Sous le seuil calibré',
+    es: 'Por debajo del umbral calibrado',
+    ar: 'أقل من العتبة المعايرة',
+  },
+  familiar: { en: 'Classified as familiar', de: 'Als vertraut eingestuft', fr: 'Classée comme familière', es: 'Clasificada como familiar', ar: 'صُنّفت على أنها مألوفة' },
   decision: {
-    en: 'Subtract the two noise prediction errors to get the score, then compare it with the calibrated threshold.',
-    de: 'Ziehe die beiden Fehler der Rauschvorhersage voneinander ab und vergleiche den Wert mit der kalibrierten Schwelle.',
-    fr: 'Soustraire les deux erreurs de prédiction du bruit pour obtenir le score, puis le comparer au seuil calibré.',
-    es: 'Resta los dos errores de predicción del ruido para obtener la puntuación y compárala con el umbral calibrado.',
-    ar: 'احسب الفرق بين خطأَي التنبؤ بالضوضاء للحصول على الدرجة، ثم قارنها بالعتبة المعايرة.',
+    en: 'Subtract the two average noise-prediction errors. Flag the image as unfamiliar when the score reaches or exceeds the calibrated threshold.',
+    de: 'Ziehe die beiden mittleren Fehler der Rauschvorhersage voneinander ab. Erreicht oder überschreitet der Wert die kalibrierte Schwelle, wird das Bild als unbekannt markiert.',
+    fr: 'Soustraire les deux erreurs moyennes de prédiction du bruit. Signaler l’image comme inconnue si le score atteint ou dépasse le seuil calibré.',
+    es: 'Resta los dos errores medios de predicción del ruido. Marca la imagen como desconocida si la puntuación alcanza o supera el umbral calibrado.',
+    ar: 'احسب الفرق بين متوسّطَي خطأ التنبؤ بالضوضاء. صنّف الصورة على أنها غير مألوفة إذا بلغت الدرجة العتبة المعايرة أو تجاوزتها.',
   },
   details: { en: 'Technical details', de: 'Technische Details', fr: 'Détails techniques', es: 'Detalles técnicos', ar: 'التفاصيل التقنية' },
   symbols: {
-    en: 'During inference, e₀ and e₁ are the noise prediction errors under the familiar and other conditions. The calibrated threshold τ can be positive or negative.',
-    de: 'Bei der Inferenz sind e₀ und e₁ die Fehler der Rauschvorhersage unter der vertrauten bzw. der anderen Bedingung. Die kalibrierte Schwelle τ kann positiv oder negativ sein.',
-    fr: 'À l’inférence, e₀ et e₁ sont les erreurs de prédiction du bruit sous les conditions familière et autre. Le seuil calibré τ peut être positif ou négatif.',
-    es: 'En la inferencia, e₀ y e₁ son los errores de predicción del ruido bajo las condiciones familiar y otra. El umbral calibrado τ puede ser positivo o negativo.',
-    ar: 'عند الاستدلال، يمثّل e₀ وe₁ خطأَي التنبؤ بالضوضاء تحت الشرطين المألوف والآخر. وقد تكون العتبة المعايرة τ موجبة أو سالبة.',
+    en: 'At inference, e₀ and e₁ are the average squared prediction errors against the known added noise under the two conditions. Both use the same noise and timestep in each trial. The calibrated threshold τ can be positive or negative.',
+    de: 'Bei der Inferenz sind e₀ und e₁ die mittleren quadratischen Vorhersagefehler gegenüber dem bekannten hinzugefügten Rauschen. Beide Bedingungen nutzen in jedem Versuch dasselbe Rauschen und denselben Zeitschritt. Die kalibrierte Schwelle τ kann positiv oder negativ sein.',
+    fr: 'À l’inférence, e₀ et e₁ sont les erreurs quadratiques moyennes par rapport au bruit connu ajouté, sous les deux conditions. Chaque essai utilise le même bruit et le même pas de temps pour les deux. Le seuil calibré τ peut être positif ou négatif.',
+    es: 'En la inferencia, e₀ y e₁ son los errores cuadráticos medios respecto al ruido conocido añadido bajo las dos condiciones. Ambas usan el mismo ruido y paso temporal en cada ensayo. El umbral calibrado τ puede ser positivo o negativo.',
+    ar: 'عند الاستدلال، يمثّل e₀ وe₁ متوسّطَي مربّع خطأ التنبؤ مقارنةً بالضوضاء المضافة المعروفة تحت الشرطين. يستخدم الشرطان الضوضاء نفسها والخطوة الزمنية نفسها في كل تجربة. وقد تكون العتبة المعايرة τ موجبة أو سالبة.',
   },
   explore: { en: 'Try the threshold yourself', de: 'Schwelle selbst ausprobieren', fr: 'Essayer le seuil', es: 'Probar el umbral', ar: 'جرّب العتبة بنفسك' },
 } satisfies Record<string, TranslationMap>
-
-const trainingSteps = [copy.predict, copy.separate].map((title, index) => ({
-  title,
-  figure: separationIllustrations[index],
-}))
 
 export default function SeparationLoss() {
   const { t } = useI18n()
@@ -94,31 +97,39 @@ export default function SeparationLoss() {
       )}
 
       <ol className="cd-rfc-flow" role="list">
-        {trainingSteps.map(({ title, figure }) => (
-          <li key={figure.src}>
-            <h5>{t(title)}</h5>
-            <ResearchFigure figure={figure} />
-            <p>{t(figure.caption)}</p>
-          </li>
-        ))}
+        <li>
+          <h5>{t(copy.predict)}</h5>
+          <ResearchFigure figure={separationNoiseTraining} />
+          <p>{t(separationNoiseTraining.caption)}</p>
+        </li>
+        <li>
+          <h5>{t(copy.separate)}</h5>
+          <div className="cd-rfc-diagram cd-rfc-distance" aria-hidden="true">
+            <div className="cd-rfc-gap-row">
+              <span>{t(copy.denoisingOnly)}</span>
+              <div className="cd-rfc-gap" dir="ltr"><bdi>c = 0</bdi><bdi>c = 1</bdi></div>
+            </div>
+            <div className="cd-rfc-gap-row">
+              <span>{t(copy.separation)}</span>
+              <div className="cd-rfc-gap cd-rfc-gap-wide" dir="ltr"><bdi>c = 0</bdi><bdi>c = 1</bdi></div>
+            </div>
+          </div>
+          <p>{t(copy.distance)}</p>
+        </li>
         <li className="cd-rfc-decision">
           <h5>{t(copy.decide)}</h5>
-          <div className="cd-rfc-rule">
+          <div className="cd-rfc-diagram cd-rfc-rule">
+            <span className="cd-rfc-example">{t(copy.example)}</span>
             <div className="cd-rfc-score">
               <span>{t(copy.score)}</span>
-              <bdi dir="ltr">e₀ − e₁</bdi>
+              <bdi dir="ltr">0.7 − 0.5 = +0.2</bdi>
             </div>
-            <div className="cd-rfc-compare">{t(copy.compare)} <bdi>τ</bdi></div>
-            <div className="cd-rfc-outcomes">
-              <div>
-                <bdi dir="ltr">&lt; τ</bdi>
-                <span>{t(copy.familiar)}</span>
-              </div>
-              <div>
-                <bdi dir="ltr">≥ τ</bdi>
-                <span>{t(copy.unfamiliar)}</span>
-              </div>
+            <div className="cd-rfc-check">
+              <bdi dir="ltr">+0.2 &lt; +0.3</bdi>
+              <span>{t(copy.belowThreshold)}</span>
             </div>
+            <div className="cd-rfc-threshold-track" dir="ltr" aria-hidden="true" />
+            <span className="cd-rfc-verdict">{t(copy.familiar)}</span>
           </div>
           <p>{t(copy.decision)}</p>
         </li>
@@ -129,6 +140,7 @@ export default function SeparationLoss() {
           <summary>{t(copy.details)}</summary>
           <div className="cd-rfc-compact-formula" dir="ltr">
             <span>L<sub>total</sub> = L<sub>denoise</sub> + λ L<sub>sep</sub></span>
+            <span>L<sub>sep</sub> = −MSE(ε̂₀, ε̂₁)</span>
             <span>s<sub>OOD</sub>(x) = e₀(x) − e₁(x)</span>
           </div>
           <p>{t(copy.symbols)}</p>

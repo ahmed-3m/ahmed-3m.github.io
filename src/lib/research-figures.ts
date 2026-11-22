@@ -101,43 +101,22 @@ export const industrialCharts: ResearchFigureData[] = [
   },
 ]
 
-export const separationIllustrations = [
-  {
-    src: '/research/separation-two-predictions.webp',
-    width: 960,
-    height: 640,
-    alt: {
-      en: 'A noisy airplane image branches into two noise predictions, one on a solid line and one on a dashed line.',
-      de: 'Ein verrauschtes Flugzeugbild führt zu zwei Rauschvorhersagen, eine über eine durchgezogene und eine über eine gestrichelte Linie.',
-      fr: 'Une image d’avion bruitée mène à deux prédictions de bruit par un trait plein et un trait pointillé.',
-      es: 'Una imagen ruidosa de un avión se bifurca en dos predicciones de ruido, una con línea continua y otra discontinua.',
-      ar: 'تتفرع صورة طائرة مشوشة إلى تنبؤين بالضوضاء، أحدهما بخط متصل والآخر بخط متقطّع.',
-    },
-    caption: {
-      en: 'Both predictions use the same noisy image. The solid line is the familiar condition and the dashed line is the other condition.',
-      de: 'Beide Vorhersagen nutzen dasselbe verrauschte Bild. Die durchgezogene Linie zeigt die vertraute Bedingung, die gestrichelte die andere.',
-      fr: 'Les deux prédictions utilisent la même image bruitée. Le trait plein indique la condition familière et le trait pointillé l’autre condition.',
-      es: 'Ambas predicciones usan la misma imagen ruidosa. La línea continua indica la condición familiar y la discontinua, la otra.',
-      ar: 'يستخدم التنبؤان الصورة المشوشة نفسها. يشير الخط المتصل إلى الشرط المألوف والخط المتقطّع إلى الشرط الآخر.',
-    },
+export const separationNoiseTraining = {
+  src: '/research/separation-noise-training.webp',
+  width: 960,
+  height: 640,
+  alt: {
+    en: 'An arrow leads from a clean airplane photo to the same photo with fine noise added.',
+    de: 'Ein Pfeil führt von einem unverrauschten Flugzeugfoto zum selben Foto mit hinzugefügtem Rauschen.',
+    fr: 'Une flèche relie une photo d’avion nette à la même photo avec du bruit ajouté.',
+    es: 'Una flecha conecta una foto nítida de un avión con la misma foto tras añadirle ruido.',
+    ar: 'يشير سهم من صورة طائرة واضحة إلى الصورة نفسها بعد إضافة الضوضاء إليها.',
   },
-  {
-    src: '/research/separation-prediction-gap.webp',
-    width: 960,
-    height: 640,
-    alt: {
-      en: 'Two noise patterns sit side by side with a large horizontal arrow pointing outward toward both patterns, showing the growing difference.',
-      de: 'Zwei Rauschmuster stehen nebeneinander. Ein großer waagerechter Doppelpfeil zeigt den wachsenden Abstand zwischen ihnen.',
-      fr: 'Deux motifs de bruit sont côte à côte. Une grande flèche horizontale à deux pointes montre l’écart croissant entre eux.',
-      es: 'Dos patrones de ruido aparecen lado a lado. Una gran flecha horizontal de doble punta muestra la separación creciente.',
-      ar: 'يظهر نمطان من الضوضاء جنبًا إلى جنب، وبينهما سهم أفقي كبير برأسين يوضح اتساع الفرق بينهما.',
-    },
-    caption: {
-      en: 'During training, separation loss increases the difference between the two noise predictions.',
-      de: 'Beim Training vergrößert die Separation Loss den Unterschied zwischen den beiden Rauschvorhersagen.',
-      fr: 'Pendant l’entraînement, la perte de séparation augmente l’écart entre les deux prédictions de bruit.',
-      es: 'Durante el entrenamiento, la pérdida de separación aumenta la diferencia entre las dos predicciones de ruido.',
-      ar: 'تزيد خسارة الفصل أثناء التدريب الفرق بين تنبؤَي الضوضاء.',
-    },
+  caption: {
+    en: 'Add known noise to a training image. Under its true class condition, the model learns to predict the noise that was added.',
+    de: 'Füge einem Trainingsbild bekanntes Rauschen hinzu. Das Modell lernt, dieses Rauschen unter der tatsächlichen Klassenbedingung vorherzusagen.',
+    fr: 'Ajouter un bruit connu à une image d’entraînement. Avec la classe réelle de l’image, le modèle apprend à prédire le bruit ajouté.',
+    es: 'Añade ruido conocido a una imagen de entrenamiento. Con la clase real de la imagen, el modelo aprende a predecir el ruido añadido.',
+    ar: 'أضف ضوضاء معروفة إلى صورة تدريبية. يتعلّم النموذج التنبؤ بالضوضاء المضافة عند تزويده بالفئة الفعلية للصورة.',
   },
-] satisfies ResearchFigureData[]
+} satisfies ResearchFigureData
