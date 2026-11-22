@@ -5,8 +5,7 @@ import Link from 'next/link'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { useReveal } from '@/lib/useReveal'
 import ResearchCharts from '@/components/ResearchCharts'
-import ResearchFigure from '@/components/ResearchFigure'
-import { formulaVisuals } from '@/lib/research-figures'
+import SeparationLoss from '@/components/SeparationLoss'
 
 const OodDemo = dynamic(() => import('@/components/OodDemo'))
 
@@ -59,31 +58,6 @@ const copy = {
     es: 'Barrido del peso de separación · Calibración del umbral · Error de reconstrucción',
     ar: 'مسح وزن الفصل · معايرة العتبة · خطأ إعادة البناء',
   },
-  formulaLabel: { en: 'Novel contribution - separation loss', de: 'Neuer Beitrag - Separation Loss', fr: 'Contribution nouvelle - separation loss', es: 'Contribución nueva - separation loss', ar: 'المساهمة الجديدة - خسارة الفصل' },
-  plainIdea: {
-    en: 'Plain idea: train with L_sep so c=0 ("normal") and c=1 ("other") diverge, shifting ID scores e_0(x) - e_1(x) lower and OOD scores higher with some overlap. At inference, classify as OOD when s_OOD(x) = e_0(x) - e_1(x) >= tau (calibrated threshold tau may be positive or negative).',
-    de: 'Grundidee: Training mit L_sep trennt c=0 („normal“) und c=1 („andere“), sodass ID-Scores e_0(x) - e_1(x) niedriger und OOD-Scores höher liegen (bei möglicher Überlappung). Bei Inferenz gilt OOD wenn s_OOD(x) = e_0(x) - e_1(x) >= tau (das kalibrierte tau kann positiv oder negativ sein).',
-    fr: "Idée clé : L_sep éloigne c=0 (« normal ») et c=1 (« autre »), décalant les scores ID e_0(x) - e_1(x) vers le bas et les scores OOD vers le haut, avec un certain chevauchement. À l'inférence, un exemple est classé OOD si s_OOD(x) = e_0(x) - e_1(x) >= tau (le seuil calibré tau peut être positif ou négatif).",
-    es: 'Idea clave: L_sep separa c=0 («normal») y c=1 («otras»), desplazando los puntajes ID e_0(x) - e_1(x) hacia abajo y los OOD hacia arriba, con cierto solapamiento. En inferencia se clasifica como OOD cuando s_OOD(x) = e_0(x) - e_1(x) >= tau (el umbral calibrado tau puede ser positivo o negativo).',
-    ar: 'الفكرة باختصار: تدريب L_sep يفصل بين c=0 (طبيعي) وc=1 (غيره)، فتنزاح درجات البيانات الطبيعية e_0(x) - e_1(x) نحو قيم أقل ودرجات OOD نحو قيم أعلى مع بقاء بعض التداخل. عند الاستدلال، تُصنَّف العينة كـ OOD إذا كان s_OOD(x) = e_0(x) - e_1(x) >= tau (وقد تكون العتبة المعايرة tau موجبة أو سالبة).',
-  },
-  workflow: { en: 'Separation loss workflow', de: 'Ablauf der Separation Loss', fr: 'Étapes de la perte de séparation', es: 'Flujo de la pérdida de separación', ar: 'خطوات تطبيق خسارة الفصل' },
-  step1: { en: 'Learn to denoise', de: 'Entrauschen lernen', fr: 'Apprendre à dénoiser', es: 'Aprender a limpiar ruido', ar: 'تعلم إزالة الضوضاء' },
-  step1Text: { en: 'Denoise x under c=0 (normal) and c=1 (other).', de: 'Entrausche x unter c=0 (normal) und c=1 (andere).', fr: 'Débruiter x sous c=0 (normal) et c=1 (autre).', es: 'Limpiar ruido de x bajo c=0 (normal) y c=1 (otras).', ar: 'إزالة الضوضاء تحت الشرطين c=0 وc=1.' },
-  step2: { en: 'Push explanations apart', de: 'Erklärungen trennen', fr: 'Éloigner les explications', es: 'Separar explicaciones', ar: 'إبعاد التفسيرات' },
-  step2Text: { en: 'Maximize distance between c=0 and c=1 noise predictions during training (L_sep).', de: 'Maximiere im Training den Abstand zwischen den Vorhersagen c=0 und c=1 (L_sep).', fr: "Maximiser l'écart entre les prédictions c=0 et c=1 à l'entraînement (L_sep).", es: 'Maximizar la distancia entre predicciones c=0 y c=1 al entrenar (L_sep).', ar: 'زيادة المسافة بين تنبؤات الضوضاء لـ c=0 وc=1 أثناء التدريب (L_sep).' },
-  step3: { en: 'Score s_OOD(x) = e_0 - e_1', de: 'Score s_OOD(x) = e_0 - e_1', fr: 'Score s_OOD(x) = e_0 - e_1', es: 'Score s_OOD(x) = e_0 - e_1', ar: 'الدرجة s_OOD(x) = e_0 - e_1' },
-  step3Text: {
-    en: 'Compare s_OOD(x) = e_0(x) - e_1(x) against calibrated threshold tau (which may be + or -, as distributions overlap): flag OOD when s_OOD(x) >= tau.',
-    de: 'Vergleiche s_OOD(x) = e_0(x) - e_1(x) mit der kalibrierten Schwelle tau (kann + oder - sein, da Verteilungen überlappen): OOD ab s_OOD(x) >= tau.',
-    fr: 'Comparer s_OOD(x) = e_0(x) - e_1(x) au seuil calibré tau (+ ou - possible car les distributions se chevauchent) : OOD si s_OOD(x) >= tau.',
-    es: 'Comparar s_OOD(x) = e_0(x) - e_1(x) con el umbral calibrado tau (puede ser + o -, pues hay solapamiento): OOD si s_OOD(x) >= tau.',
-    ar: 'قارن s_OOD(x) = e_0(x) - e_1(x) مع العتبة المعايرة tau (قد تكون + أو - مع وجود تداخل): تُعد العينة OOD عندما s_OOD(x) >= tau.',
-  },
-  totalLoss: { en: 'Training loss L_total', de: 'Trainingsverlust L_total', fr: "Perte d'entraînement L_total", es: 'Pérdida de entrenamiento L_total', ar: 'خسارة التدريب L_total' },
-  denoiseLoss: { en: 'L_denoise (MSE)', de: 'L_denoise (MSE)', fr: 'L_denoise (MSE)', es: 'L_denoise (MSE)', ar: 'L_denoise (MSE)' },
-  sepLoss: { en: 'lambda * L_sep  |  Inference: s_OOD(x) = e_0(x) - e_1(x)', de: 'lambda * L_sep  |  Inferenz: s_OOD(x) = e_0(x) - e_1(x)', fr: 'lambda * L_sep  |  Inférence : s_OOD(x) = e_0(x) - e_1(x)', es: 'lambda * L_sep  |  Inferencia: s_OOD(x) = e_0(x) - e_1(x)', ar: 'lambda * L_sep  |  الاستدلال: s_OOD(x) = e_0(x) - e_1(x)' },
-  latest: { en: 'Latest thesis result: lambda = 0.02 reached 99.03% ± 0.07% AUROC, a +6.5pp gain over no separation loss.', de: 'Aktuelles Thesis-Ergebnis: lambda = 0.02 erreicht 99.03% ± 0.07% AUROC, +6.5pp gegenüber ohne Separation Loss.', fr: 'Résultat thèse récent : lambda = 0.02 atteint 99.03% ± 0.07% AUROC, +6.5pp vs sans separation loss.', es: 'Resultado reciente: lambda = 0.02 alcanzó 99.03% ± 0.07% AUROC, +6.5pp frente a sin separation loss.', ar: 'آخر نتيجة في الرسالة: lambda = 0.02 حققت 99.03% ± 0.07% AUROC، بزيادة +6.5pp مقارنة بدون خسارة الفصل.' },
   thesisPdf: { en: 'View Full Thesis (PDF)', de: 'Vollständige Thesis ansehen (PDF)', fr: 'Voir le mémoire complet (PDF)', es: 'Ver tesis completa (PDF)', ar: 'عرض الرسالة كاملة (PDF)' },
   track2: { en: "Master's Thesis (Track 2) - JKU Linz - 2026", de: 'Masterarbeit (Track 2) - JKU Linz - 2026', fr: 'Mémoire de master (Track 2) - JKU Linz - 2026', es: 'Tesis de máster (Track 2) - JKU Linz - 2026', ar: 'رسالة ماجستير (المسار 2) - JKU لينتس - 2026' },
   track2Title: { en: 'Rigorous Cross-Domain Transfer & FTI_Zer0P Benchmark', de: 'Strenger Cross-Domain Transfer & FTI_Zer0P Benchmark', fr: 'Transfert cross-domain rigoureux & benchmark FTI_Zer0P', es: 'Transferencia cross-domain rigurosa y benchmark FTI_Zer0P', ar: 'انتقال صارم بين المجالات ومعيار FTI_Zer0P' },
@@ -301,34 +275,7 @@ export default function Research() {
             <ResearchCharts track="cifar" />
           </div>
 
-          <div className="cd-rf-formula-box">
-            <div className="cd-rfc-simple-label">{t(copy.formulaLabel)}</div>
-            <div className="cd-rfc-summary">{t(copy.plainIdea)}</div>
-            <div className="cd-rfc-flow" role="group" aria-label={t(copy.workflow)}>
-              <div>
-                <ResearchFigure figure={formulaVisuals[0]} />
-                <span className="cd-rfc-step">1</span>
-                <strong>{t(copy.step1)}</strong>
-                <span>{t(copy.step1Text)}</span>
-              </div>
-              <div>
-                <ResearchFigure figure={formulaVisuals[1]} />
-                <span className="cd-rfc-step">2</span>
-                <strong>{t(copy.step2)}</strong>
-                <span>{t(copy.step2Text)}</span>
-              </div>
-              <div>
-                <ResearchFigure figure={formulaVisuals[2]} />
-                <span className="cd-rfc-step">3</span>
-                <strong>{t(copy.step3)}</strong>
-                <span>{t(copy.step3Text)}</span>
-              </div>
-            </div>
-            <div className="cd-rfc-compact-formula">
-              <span>{t(copy.totalLoss)}</span><strong>=</strong><span>{t(copy.denoiseLoss)}</span><strong>+</strong><span>{t(copy.sepLoss)}</span>
-            </div>
-            <div className="cd-rfc-result">{t(copy.latest)}</div>
-          </div>
+          <SeparationLoss />
 
           <div id="ood-explorer" className="scroll-mt-24" ref={labContainerRef} style={{ minHeight: shouldRenderLab ? undefined : 720 }}>
             {shouldRenderLab ? (

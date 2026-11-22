@@ -101,65 +101,23 @@ export const industrialCharts: ResearchFigureData[] = [
   },
 ]
 
-export const formulaVisuals: ResearchFigureData[] = [
-  {
-    previewSrc: '/research/separation-denoise-preview.webp',
-    src: '/research/separation-denoise-clean.png',
-    width: 800,
-    height: 450,
-    alt: {
-      en: 'Noisy image becoming clean through denoising under c=0 and c=1',
-      de: 'Verrauschtes Bild wird durch Entrauschen unter c=0 und c=1 klar',
-      fr: 'Image bruitée devenant nette par débruitage sous c=0 et c=1',
-      es: 'Imagen ruidosa volviéndose limpia mediante reducción de ruido bajo c=0 y c=1',
-      ar: 'صورة مشوشة تصبح نقية عبر إزالة الضوضاء تحت الشرطين c=0 وc=1',
-    },
-    caption: {
-      en: 'Step 1: denoise the image under both class conditions (c=0 normal vs. c=1 other)',
-      de: 'Schritt 1: Bild unter beiden Klassenbedingungen entrauschen (c=0 normal vs. c=1 andere)',
-      fr: "Étape 1 : débruiter l'image sous les deux conditions (c=0 normal vs c=1 autre)",
-      es: 'Paso 1: reducir ruido bajo ambas condiciones de clase (c=0 normal vs. c=1 otras)',
-      ar: 'الخطوة 1: إزالة الضوضاء تحت كلا الشرطين (c=0 طبيعي مقابل c=1 آخر)',
-    },
+export const separationNoiseTraining = {
+  src: '/research/separation-noise-training.webp',
+  lightSrc: '/research/separation-noise-training-light.webp',
+  width: 960,
+  height: 640,
+  alt: {
+    en: 'An arrow leads from a clean airplane photo to the same photo with fine noise added.',
+    de: 'Ein Pfeil führt von einem unverrauschten Flugzeugfoto zum selben Foto mit hinzugefügtem Rauschen.',
+    fr: 'Une flèche relie une photo d’avion nette à la même photo avec du bruit ajouté.',
+    es: 'Una flecha conecta una foto nítida de un avión con la misma foto tras añadirle ruido.',
+    ar: 'يشير سهم من صورة طائرة واضحة إلى الصورة نفسها بعد إضافة الضوضاء إليها.',
   },
-  {
-    previewSrc: '/research/separation-apart-preview.webp',
-    src: '/research/separation-apart-clean.png',
-    width: 800,
-    height: 450,
-    alt: {
-      en: 'Training loss L_sep pushing c=0 and c=1 noise predictions apart',
-      de: 'Trainingsverlust L_sep drückt Rauschvorhersagen c=0 und c=1 auseinander',
-      fr: "La perte d'entraînement L_sep éloigne les prédictions de bruit c=0 et c=1",
-      es: 'La pérdida de entrenamiento L_sep separa las predicciones de ruido c=0 y c=1',
-      ar: 'دالة خسارة التدريب L_sep تبعد تنبؤات الضوضاء بين c=0 وc=1',
-    },
-    caption: {
-      en: 'Step 2: training loss L_sep pushes conditional noise predictions apart',
-      de: 'Schritt 2: L_sep drückt konditionale Rauschvorhersagen im Training auseinander',
-      fr: "Étape 2 : L_sep éloigne les prédictions conditionnelles pendant l'entraînement",
-      es: 'Paso 2: L_sep separa las predicciones condicionales durante el entrenamiento',
-      ar: 'الخطوة 2: خسارة التدريب L_sep تبعد التنبؤات الشرطية عن بعضها',
-    },
+  caption: {
+    en: 'Add known noise to a training image. Under its true class condition, the model learns to predict the noise that was added.',
+    de: 'Füge einem Trainingsbild bekanntes Rauschen hinzu. Das Modell lernt, dieses Rauschen unter der tatsächlichen Klassenbedingung vorherzusagen.',
+    fr: 'Ajouter un bruit connu à une image d’entraînement. Avec la classe réelle de l’image, le modèle apprend à prédire le bruit ajouté.',
+    es: 'Añade ruido conocido a una imagen de entrenamiento. Con la clase real de la imagen, el modelo aprende a predecir el ruido añadido.',
+    ar: 'أضف ضوضاء معروفة إلى صورة تدريبية. يتعلّم النموذج التنبؤ بالضوضاء المضافة عند تزويده بالفئة الفعلية للصورة.',
   },
-  {
-    previewSrc: '/research/separation-gap-preview.webp',
-    src: '/research/separation-gap-score.png',
-    width: 800,
-    height: 450,
-    alt: {
-      en: 'Empirical score distributions and threshold decision rule s_OOD(x) = e_0(x) - e_1(x) >= tau showing ID/OOD overlap and positive or negative calibrated thresholds tau',
-      de: 'Empirische Score-Verteilungen und Schwellenregel s_OOD(x) = e_0(x) - e_1(x) >= tau mit Überlappung sowie positiven oder negativen Schwellenwerten tau',
-      fr: 'Distributions empiriques et règle de décision s_OOD(x) = e_0(x) - e_1(x) >= tau montrant le chevauchement ID/OOD et des seuils tau positifs ou négatifs',
-      es: 'Distribuciones empíricas y regla de decisión s_OOD(x) = e_0(x) - e_1(x) >= tau con solapamiento y umbrales tau positivos o negativos',
-      ar: 'توزيعات الدرجات التجريبية وقاعدة القرار s_OOD(x) = e_0(x) - e_1(x) >= tau مع توضيح التداخل وإمكانية كون العتبة tau موجبة أو سالبة',
-    },
-    caption: {
-      en: 'Step 3: score s_OOD(x) = e_0(x) - e_1(x) flags OOD when >= calibrated threshold tau (may be + or -)',
-      de: 'Schritt 3: s_OOD(x) = e_0(x) - e_1(x) erkennt OOD ab kalibrierter Schwelle tau (+ oder - möglich)',
-      fr: 'Étape 3 : s_OOD(x) = e_0(x) - e_1(x) signale OOD si >= seuil calibré tau (+ ou - possible)',
-      es: 'Paso 3: s_OOD(x) = e_0(x) - e_1(x) detecta OOD si >= umbral calibrado tau (+ o -)',
-      ar: 'الخطوة 3: تصنّف s_OOD(x) = e_0(x) - e_1(x) العينة كـ OOD عند >= العتبة المعايرة tau (موجبة أو سالبة)',
-    },
-  },
-]
+} satisfies ResearchFigureData & { lightSrc: string }
