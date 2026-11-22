@@ -1,31 +1,5 @@
 [
   {
-    "id": "openai-gpt-5-6-sol-factual-reliability-update",
-    "date": "2026-08-06",
-    "category": "ai",
-    "headline": {
-      "en": "Improving GPT-5.6 Sol in ChatGPT—and expanding access to GPT-5.6 Luna for free users",
-      "de": "GPT-5.6 Sol in ChatGPT wird besser — und GPT-5.6 Luna für Gratis-Nutzer ausgeweitet",
-      "fr": "Améliorer GPT-5.6 Sol dans ChatGPT — et élargir l'accès à GPT-5.6 Luna pour les utilisateurs gratuits",
-      "es": "Mejorando GPT-5.6 Sol en ChatGPT — y ampliando el acceso a GPT-5.6 Luna para usuarios gratuitos",
-      "ar": "تحسين GPT-5.6 Sol في ChatGPT وتوسيع الوصول إلى GPT-5.6 Luna للمستخدمين المجانيين"
-    },
-    "source": "OpenAI",
-    "url": "https://openai.com/index/improving-gpt-5-6-sol-in-chatgpt/",
-    "take": {
-      "en": "OpenAI making “fewer mistakes, especially when answers depend on dates, numbers, sources, rules, or assumptions” the headline of a frontier-model update is the right instinct — factual grounding on retrieved sources is exactly the axis a production system is graded on, and it’s the one vendor charts consistently hide. The reasoning slider is a user-facing lever for the compute knob that already existed, not a new capability, and shipping a Chat-tuned Sol separate from the Work/Codex Sol is an honest admission that optimizing for a chatty interface and optimizing for a long-horizon agent are no longer the same model.",
-      "de": "Dass OpenAI „weniger Fehler, besonders wenn Antworten von Daten, Zahlen, Quellen, Regeln oder Annahmen abhängen“ zum Kopf einer Frontier-Modell-Updates macht, ist der richtige Instinkt — faktisches Grounding auf abgerufenen Quellen ist exakt die Achse, auf der ein Produktionssystem benotet wird, und genau diese verstecken Vendor-Charts konsequent. Der Reasoning-Slider ist ein Nutzer-Hebel für den Compute-Knopf, den es schon gab — keine neue Fähigkeit. Und einen Chat-getunten Sol getrennt vom Work/Codex-Sol auszuliefern ist das ehrliche Eingeständnis, dass Optimierung für eine Plauder-Oberfläche und Optimierung für einen Long-Horizon-Agenten nicht mehr dasselbe Modell sind.",
-      "fr": "Qu'OpenAI fasse de « moins d'erreurs, surtout quand les réponses dépendent de dates, de chiffres, de sources, de règles ou d'hypothèses » le titre d'une mise à jour de modèle de pointe, c'est le bon instinct — l'ancrage factuel sur les sources récupérées est exactement l'axe sur lequel un système de production est noté, et c'est celui que les graphiques de fournisseurs cachent systématiquement. Le curseur de raisonnement est un levier utilisateur pour le bouton de calcul qui existait déjà, pas une capacité nouvelle, et livrer un Sol ajusté pour le Chat séparé du Sol Work/Codex est l'aveu honnête qu'optimiser pour une interface bavarde et optimiser pour un agent de long horizon ne sont plus le même modèle.",
-      "es": "Que OpenAI ponga «menos errores, especialmente cuando las respuestas dependen de fechas, números, fuentes, reglas o suposiciones» como titular de una actualización de modelo frontier es el instinto correcto — el anclaje factual sobre fuentes recuperadas es exactamente el eje por el que se califica a un sistema de producción, y es el que los gráficos de proveedores esconden sistemáticamente. El deslizador de razonamiento es una palanca visible para el mando de cómputo que ya existía, no una capacidad nueva, y publicar un Sol ajustado para Chat separado del Sol Work/Codex es una admisión honesta de que optimizar para una interfaz conversadora y optimizar para un agente de horizonte largo ya no son el mismo modelo.",
-      "ar": "جعل OpenAI عبارة «أخطاء أقل، خصوصًا عندما تعتمد الإجابات على تواريخ أو أرقام أو مصادر أو قواعد أو افتراضات» عنوانًا لتحديث نموذج حدودي هو الغريزة الصحيحة — فالتأسيس الواقعي على المصادر المسترجعة هو بالضبط المحور الذي يُقيَّم عليه نظام الإنتاج، وهو ذاته الذي تخفيه مخططات المورّدين باستمرار. ومزلقة الاستدلال رافعة للمستخدم على مقبض الحوسبة الموجود أصلًا لا قدرة جديدة، وإطلاق Sol مُضبَط للمحادثة منفصلًا عن Sol الخاص بالعمل/Codex اعترافٌ صادق بأن تحسين واجهة دردارية وتحسين وكيل طويل الأفق لم يعودا النموذج ذاته."
-    },
-    "tags": [
-      "models",
-      "reliability",
-      "evaluation"
-    ]
-  },
-  {
     "id": "openai-astra-critical-cyber-preparedness-pause",
     "date": "2026-08-07",
     "category": "agentic",
@@ -49,81 +23,6 @@
       "agent-safety",
       "evaluation",
       "governance"
-    ]
-  },
-  {
-    "id": "aws-dogwood-runtime-verification-agents",
-    "date": "2026-08-06",
-    "category": "agentic",
-    "headline": {
-      "en": "Introducing Dogwood: runtime verification for AI agents",
-      "de": "Dogwood vorgestellt: Runtime-Verifikation für KI-Agenten",
-      "fr": "Présentation de Dogwood : la vérification à l'exécution pour les agents IA",
-      "es": "Presentamos Dogwood: verificación en runtime para agentes de IA",
-      "ar": "تقديم Dogwood: تحقق أثناء التشغيل لوكلاء الذكاء الاصطناعي"
-    },
-    "source": "AWS Open Source",
-    "url": "https://aws.amazon.com/blogs/opensource/introducing-dogwood-runtime-verification-for-ai-agents/",
-    "take": {
-      "en": "Dogwood's bet — governing sequences of agent actions rather than each call in isolation — is exactly the gap point-in-time authorization like Cedar leaves open, and grounding it in metric temporal logic turns \"don't do X after you've done Y\" from a prompt into a checkable property. The trade AWS itself names is the one to respect: temporal policies cost stateful event-log evaluation and give up Cedar's automated-reasoning guarantees, so this is the right primitive for long agent trajectories, not a replacement for the per-call authz you still need underneath.",
-      "de": "Dogwoods Wette — Sequenzen von Agenten-Aktionen zu governen statt jeden Call isoliert —, trifft exakt die Lücke, die punktuelle Autorisierung wie Cedar offen lässt, und die Verankerung in metrischer temporaler Logik macht „tue X nicht, nachdem du Y getan hast“ aus einem Prompt eine prüfbare Property. Der Trade-off, den AWS selbst nennt, ist der zu respektierende: Temporale Policies kosten zustandsbehaftete Event-Log-Evaluation und geben Cedars Automated-Reasoning-Garantien auf — das richtige Primitiv für lange Agenten-Trajektorien, kein Ersatz für die Per-Call-Authz, die man darunter weiterhin braucht.",
-      "fr": "Le pari de Dogwood — gouverner des séquences d'actions d'agent plutôt que chaque appel isolément — comble exactement le vide que laisse une autorisation ponctuelle comme Cedar, et son ancrage dans la logique temporelle métrique transforme « ne fais pas X après avoir fait Y » d'un prompt en une propriété vérifiable. Le compromis qu'AWS nomme lui-même est celui à respecter : les politiques temporelles coûtent une évaluation avec état des journaux d'événements et renoncent aux garanties de raisonnement automatisé de Cedar — le bon primitif pour les longues trajectoires d'agents, pas un remplacement de l'autorisation par appel qu'il faut toujours en dessous.",
-      "es": "La apuesta de Dogwood — gobernar secuencias de acciones del agente en lugar de cada llamada aislada — cubre exactamente el hueco que deja una autorización puntual como Cedar, y anclarla en lógica temporal métrica convierte «no hagas X después de haber hecho Y» de prompt en una propiedad verificable. El compromiso que el propio AWS nombra es el que hay que respetar: las políticas temporales cuestan evaluación con estado de registros de eventos y renuncian a las garantías de razonamiento automatizado de Cedar — el primitivo correcto para trayectorias largas de agentes, no un sustituto de la autorización por llamada que aún se necesita debajo.",
-      "ar": "رهان Dogwood — حوكمة تسلسلات أفعال الوكيل بدلًا من كل استدعاء منفردًا — يسدّ بالضبط الفجوة التي تتركها التفويضات اللحظية مثل Cedar، وتأسيسه في المنطق الزمني المتري يحوّل «لا تفعل X بعد أن فعلت Y» من موجِه إلى خاصية قابلة للفحص. والمقايضة التي يسمّيها AWS نفسه هي الواجب احترامها: السياسات الزمنية تكلّف تقييمًا ذا حالة لسجلات الأحداث وتتخلى عن ضمانات الاستدلال الآلي لدى Cedar — فهو الأداة الأولية الصحيحة للمسارات الوكيلية الطويلة، لا بديلًا عن تفويض الاستدعاء الفردي الذي ما يزال لازمًا تحتها."
-    },
-    "tags": [
-      "agent-safety",
-      "runtime-verification",
-      "governance"
-    ]
-  },
-  {
-    "id": "agent-plugins-open-standard-portable",
-    "date": "2026-08-06",
-    "category": "agentic",
-    "headline": {
-      "en": "Agent Plugins package your skills, tools, and more",
-      "de": "Agent Plugins verpacken Skills, Tools und mehr",
-      "fr": "Agent Plugins empaquettent vos compétences, outils et plus",
-      "es": "Agent Plugins empaquetan tus skills, herramientas y más",
-      "ar": "إضافات الوكلاء (Agent Plugins) تغلّف مهاراتك وأدواتك والمزيد"
-    },
-    "source": "Google Developers Blog",
-    "url": "https://developers.googleblog.com/agent-plugins-package-your-skills-tools-and-more/",
-    "take": {
-      "en": "A vendor-neutral packaging format for agent skills and MCP servers — backed by a TSC from Amazon, Cursor, Microsoft, OpenAI, and Vercel, with Google now joining — is the boring standardization layer that decides whether an extension you write once actually runs across Claude Code, Cursor, and Kiro or has to be re-packaged per client. What makes it worth watching is the layering discipline: Agent Plugins sits cleanly above MCP and Skills without competing with either, and the discovery protocol front-loads \"what's available for this task?\" before any tool fires — the catalog-your-capabilities-then-route discipline that keeps a growing agent stack from collapsing into integration glue.",
-      "de": "Ein herstellerneutrales Paketformat für Agent-Skills und MCP-Server — getragen von einem TSC aus Amazon, Cursor, Microsoft, OpenAI und Vercel, mit Google jetzt dabei —, ist die langweilige Standardisierungsschicht, die entscheidet, ob eine einmal geschriebene Extension wirklich über Claude Code, Cursor und Kiro läuft oder pro Client neu verpackt werden muss. Bemerkenswert ist die Layering-Disziplin: Agent Plugins liegt sauber über MCP und Skills, ohne mit beiden zu konkurrieren, und das Discovery-Protokoll stellt „was steht für diese Aufgabe bereit?“ vor jeden Tool-Call — die Katalogisiere-deine-Fähigkeiten-und-route-dann-Disziplin, die einen wachsenden Agenten-Stack davor bewahrt, zu Integrationskleber zu kollabieren.",
-      "fr": "Un format d'empaquetage neutre vis-à-vis des fournisseurs pour les compétences d'agents et serveurs MCP — porté par un TSC d'Amazon, Cursor, Microsoft, OpenAI et Vercel, Google le rejoignant désormais —, c'est la couche de standardisation ennuyeuse qui décide si une extension écrite une fois tourne réellement sur Claude Code, Cursor et Kiro ou doit être réempaquetée par client. Ce qui la rend digne d'attention, c'est la discipline de superposition : Agent Plugins se place proprement au-dessus de MCP et Skills sans concurrencer aucun des deux, et le protocole de découverte pose d'abord « qu'est-ce qui est disponible pour cette tâche ? » avant tout appel d'outil — la discipline catalogue-d'abord-tes-capacités-puis-route qui empêche une pile d'agents grandissante de s'effondrer en colle d'intégration.",
-      "es": "Un formato de empaquetado neutral respecto al proveedor para skills de agentes y servidores MCP — respaldado por un TSC de Amazon, Cursor, Microsoft, OpenAI y Vercel, con Google uniéndose ahora — es la capa de estandarización aburrida que decide si una extensión que escribes una vez funciona de verdad en Claude Code, Cursor y Kiro o hay que reempaquetarla por cliente. Lo que lo hace digno de vigilar es la disciplina de capas: Agent Plugins se sitúa limpiamente sobre MCP y Skills sin competir con ninguno, y el protocolo de descubrimiento prioriza «¿qué hay disponible para esta tarea?» antes de que dispare cualquier herramienta — la disciplina de catalogar-tus-capacidades-y-luego-enrutar que evita que un stack de agentes creciente colapse en pegamento de integración.",
-      "ar": "صيغة تغليف محايدة تجاه المورّدين لمهارات الوكلاء وخوادم MCP — مدعومة بلجنة TSC من Amazon وCursor وMicrosoft وOpenAI وVercel والتحاق Google الآن — هي طبقة التقييس «المملة» التي تقرر إن كانت إضافة تكتبها مرة واحدة تعمل فعلًا عبر Claude Code وCursor وKiro أم يلزم إعادة تغليفها لكل عميل. وما يستحق المراقبة هو انضباط الطبقات: يقع Agent Plugins بنظافة فوق MCP وSkills دون منافسة أيٍّ منهما، وبروتوكول الاكتشاف يقدّم سؤال «ما المتاح لهذه المهمة؟» قبل إطلاق أي أداة — انضباط فهرسة قدراتك أولًا ثم التوجيه الذي يمنع منظومة وكلاء متنامية من الانهيار إلى غراء تكامل."
-    },
-    "tags": [
-      "mcp"
-    ]
-  },
-  {
-    "id": "google-weathernext-cyclone-forecasting",
-    "date": "2026-08-06",
-    "category": "ai",
-    "headline": {
-      "en": "WeatherNext: AI model achieves breakthrough in forecasting cyclones",
-      "de": "WeatherNext: KI-Modell erreicht Durchbruch bei der Zyklonvorhersage",
-      "fr": "WeatherNext : un modèle IA réalise une percée dans la prévision des cyclones",
-      "es": "WeatherNext: un modelo de IA logra un avance en la predicción de ciclones",
-      "ar": "WeatherNext: نموذج ذكاء اصطناعي يحقق اختراقًا في التنبؤ بالأعاصير"
-    },
-    "source": "Google DeepMind",
-    "url": "https://deepmind.google/blog/weathernext-ai-model-achieves-breakthrough-in-forecasting-cyclones/",
-    "take": {
-      "en": "A single model buying forecasters roughly a day of extra cyclone lead time — about a decade of meteorological progress — is the kind of measured, falsifiable claim I'll take seriously, especially with a Nature paper behind it instead of a vendor chart. The part that matters for production is the release terms: Apache 2.0 code and CC-BY 4.0 weights with commercial use permitted, which finally lets forecasting vendors, insurers, and energy traders build on the weights instead of the non-commercial license that locked down GraphCast and GenCast.",
-      "de": "Ein einziges Modell, das Vorhersagern grob einen Tag zusätzliche Zyklon-Vorlaufzeit kauft — etwa ein Jahrzehnt meteorologischen Fortschritts —, ist die Art gemessener, falsifizierbarer Behauptung, die ich ernst nehme, zumal mit Nature-Paper dahinter statt einem Vendor-Chart. Für die Produktion zählen die Release-Bedingungen: Apache-2.0-Code und CC-BY-4.0-Gewichte mit kommerzieller Nutzung erlaubt — das lässt Vorhersageanbieter, Versicherer und Energiehändler endlich auf den Gewichten aufbauen, statt an die nicht-kommerzielle Lizenz gebunden zu sein, die GraphCast und GenCast einsperrte.",
-      "fr": "Un seul modèle offrant aux prévisionnistes environ un jour de délai d'anticipation cyclonique supplémentaire — près d'une décennie de progrès météorologique —, c'est le genre d'affirmation mesurée et falsifiable que je prends au sérieux, surtout avec un article de Nature derrière plutôt qu'un graphique de fournisseur. Ce qui compte pour la production, ce sont les conditions de publication : code Apache 2.0 et poids CC-BY 4.0 avec usage commercial permis, ce qui permet enfin aux fournisseurs de prévisions, assureurs et traders d'énergie de bâtir sur les poids au lieu de la licence non commerciale qui verrouillait GraphCast et GenCast.",
-      "es": "Que un solo modelo compre a los meteorólogos aproximadamente un día extra de antelación sobre ciclones — cerca de una década de progreso meteorológico — es el tipo de afirmación medida y falsable que me tomo en serio, más aún con un artículo de Nature detrás en lugar de un gráfico de proveedor. Lo que importa para producción son las condiciones de publicación: código Apache 2.0 y pesos CC-BY 4.0 con uso comercial permitido, lo que por fin permite a proveedores de previsión, aseguradoras y traders de energía construir sobre los pesos en vez de sobre la licencia no comercial que bloqueó a GraphCast y GenCast.",
-      "ar": "نموذج واحد يمنح مقدّري الطقس نحو يوم كامل إضافي من مهلة الإنذار بالأعاصير — أي ما يقارب عقدًا من التقدم الأرصادي — هو نوع الادعاء المقيس القابل للتكذيب الذي آخذه بجدية، خصوصًا مع ورقة في Nature خلفه بدلًا من مخطط مورّد. والذي يهم للإنتاج هو شروط الإصدار: شيفرة Apache 2.0 وأوزان CC-BY 4.0 باستخدام تجاري مسموح، وهو ما يتيح أخيرًا لمزوّدي التنبؤ وشركات التأمين ومتداولي الطاقة البناء على الأوزان بدلًا من الترخيص غير التجاري الذي قيّد GraphCast وGenCast."
-    },
-    "tags": [
-      "applied-ai",
-      "open-weights"
     ]
   },
   {
@@ -5038,6 +4937,107 @@
       "open-weights",
       "agentic-coding",
       "on-device"
+    ]
+  },
+  {
+    "id": "cairn-ai-agents-zero-day-wild",
+    "date": "2026-11-20",
+    "category": "agentic",
+    "headline": {
+      "en": "Chinese-nexus actor's Cairn AI agents found a zero-day on their own",
+      "de": "Cairn-KI-Agenten eines Akteurs mit China-Bezug fanden eigenständig einen Zero-Day",
+      "fr": "Les agents IA de Cairn d'un acteur lié à la Chine ont trouvé un zero-day par eux-mêmes",
+      "es": "Los agentes de IA de Cairn de un actor vinculado a China encontraron un zero-day por su cuenta",
+      "ar": "وكلاء ذكاء اصطناعي من إطار Cairn تابعون لجهة مرتبطة بالصين يعثرون بأنفسهم على ثغرة Zero-Day"
+    },
+    "source": "AWS Security Blog",
+    "url": "https://aws.amazon.com/blogs/security/chinese-nexus-actors-cairn-ai-agents-found-a-zero-day-on-their-own/",
+    "take": {
+      "en": "Amazon's forensics show agentic offense is no longer a demo: pointed at a single goal, Cairn's agents adapted for 16 hours straight and went from API mapping to a root shell in about 11 minutes. Defenders should treat this as an SLA problem — human triage is now slower than the attack, which pushes real response toward automated, high-confidence detections.",
+      "de": "Amazons forensische Analyse zeigt, dass agentic Offense keine Demo mehr ist: Mit einem einzigen Ziel ausgestattet, passten sich Cairns Agenten 16 Stunden lang kontinuierlich an und schafften es in rund 11 Minuten vom API-Mapping zur Root-Shell. Verteidiger sollten das als SLA-Problem begreifen — menschliches Triaging ist inzwischen langsamer als der Angriff, was die echte Reaktion zu automatisierten Erkennungen mit hoher Trefferquote drängt.",
+      "fr": "La forensic d'Amazon montre que l'offensive agentique n'est plus une démo : avec un seul objectif, les agents de Cairn se sont adaptés pendant 16 heures d'affilée et sont passés du mapping d'API à un shell root en environ 11 minutes. Les défenseurs devraient y voir un problème de SLA — le triage humain est désormais plus lent que l'attaque, ce qui pousse la réponse réelle vers des détections automatisées à haute confiance.",
+      "es": "La forense de Amazon muestra que el ataque ofensivo agéntico ya no es una demo: con un único objetivo, los agentes de Cairn se adaptaron durante 16 horas seguidas y pasaron de mapear una API a obtener una root shell en unos 11 minutos. Los defensores deberían tratarlo como un problema de SLA: el triaje humano ya es más lento que el ataque, lo que empuja la respuesta real hacia detecciones automatizadas de alta confianza.",
+      "ar": "تُظهر التحقيقات الجنائية لدى Amazon أن الهجوم الوكيلي لم يبقَ عرضًا تجريبيًا: بهدف واحد فقط، تكيّف وكلاء Cairn على مدى 16 ساعة متواصلة وانتقلوا من رسم خريطة واجهة API إلى صلاحية root في نحو 11 دقيقة. ينبغي للمدافعين اعتبار ذلك مشكلة مستوى خدمة، فالفرز البشري أصبح أبطأ من الهجوم نفسه، وهذا يدفع الاستجابة الفعلية نحو كشف آلي عالي الثقة."
+    },
+    "tags": [
+      "agent-security",
+      "incidents"
+    ]
+  },
+  {
+    "id": "nebusec-muse-sandbox-escape-chain",
+    "date": "2026-11-20",
+    "category": "agentic",
+    "headline": {
+      "en": "Inside Meta Muse: Browser, Sentinel and the Shared-Kernel Boundary",
+      "de": "Blick in Meta Muse: Browser, Sentinel und die Grenze des gemeinsam genutzten Kernels",
+      "fr": "Au cœur de Meta Muse : le navigateur, Sentinel et la frontière du noyau partagé",
+      "es": "Dentro de Meta Muse: el navegador, Sentinel y el límite del kernel compartido",
+      "ar": "داخل Meta Muse: المتصفح وSentinel وحدود النواة المشتركة"
+    },
+    "source": "NebuSec",
+    "url": "https://nebusec.ai/research/inside-meta-muse/",
+    "take": {
+      "en": "One stale renderer bug in the bundled Chromium plus a kernel escape was enough to exfiltrate Muse's conversation history and stored memories without a single approval prompt, and the kernel exploits succeeded over 99.9% of the time. An agent sandbox is a stack — your real security boundary is the oldest component you forgot to update.",
+      "de": "Ein einzelner veralteter Renderer-Bug im mitgelieferten Chromium reichte zusammen mit einem Kernel-Escape aus, um Muse' Gesprächshistorie und gespeicherte Erinnerungen ohne eine einzige Freigabeaufforderung zu exfiltrieren, und die Kernel-Exploits schlugen in über 99,9 % der Läufe an. Ein Agenten-Sandbox ist ein Stack — die echte Sicherheitsgrenze ist die älteste Komponente, deren Update man vergessen hat.",
+      "fr": "Un seul bug de renderer obsolète dans le Chromium embarqué, plus une évasion de noyau, a suffi à exfiltrer l'historique de conversation et les souvenirs stockés de Muse sans la moindre demande d'approbation, et les exploits noyau réussissaient plus de 99,9 % du temps. Un sandbox d'agent est une pile — votre véritable frontière de sécurité est la plus vieille composante que vous avez oublié de mettre à jour.",
+      "es": "Un solo bug de renderer desactualizado en el Chromium incluido, más una escalada al kernel, bastó para exfiltrar el historial de conversaciones y los recuerdos almacenados de Muse sin ni una sola solicitud de aprobación, y los exploits del kernel funcionaron más del 99,9 % de las veces. El sandbox de un agente es una pila: tu verdadera frontera de seguridad es el componente más antiguo que olvidaste actualizar.",
+      "ar": "اكتفت سلسلة الاستغلال بثغرة قديمة في العارض المدمج من Chromium مع تجاوز للنواة لتسريب محفوظات محادثات Muse وذكرياتها المخزنة دون أي طلب موافقة، ونجحت ثغرات النواة في أكثر من 99.9٪ من المحاولات. إن بيئة العزل الخاصة بالوكيل طبقات متراكبة، وحدّك الأمني الحقيقي هو أقدم مكوّن نسيت تحديثه."
+    },
+    "tags": [
+      "agent-security",
+      "containment",
+      "personal-agents"
+    ]
+  },
+  {
+    "id": "google-agent-compute-engine-microvms",
+    "date": "2026-11-22",
+    "category": "agentic",
+    "headline": {
+      "en": "Google Announces Agent Compute Engine for Secure AI Agent Execution",
+      "de": "Google kündigt Agent Compute Engine für die sichere Ausführung von KI-Agenten an",
+      "fr": "Google annonce Agent Compute Engine pour l'exécution sécurisée des agents IA",
+      "es": "Google anuncia Agent Compute Engine para la ejecución segura de agentes de IA",
+      "ar": "تعلن Google عن Agent Compute Engine لتنفيذ وكلاء الذكاء الاصطناعي بأمان"
+    },
+    "source": "InfoQ",
+    "url": "https://www.infoq.com/news/2026/11/google-agent-compute-engine/",
+    "take": {
+      "en": "Keeping credentials and OAuth tokens outside the sandbox and injecting them through an external gateway is exactly the trust boundary production agents need — a mistake inside the sandbox stops being fatal. The numbers that actually decide adoption (boot time, price, density) are precisely what Google hasn't published yet.",
+      "de": "Zugangsdaten und OAuth-Tokens außerhalb der Sandbox zu halten und über ein externes Gateway zu injizieren ist genau die Vertrauensgrenze, die Produktions-Agenten brauchen — ein Fehler innerhalb der Sandbox ist dann nicht mehr zwangsläufig fatal. Doch die Zahlen, die über die Adoption entscheiden (Boot-Zeit, Preis, Dichte), hat Google ausgerechnet bisher nicht veröffentlicht.",
+      "fr": "Garder les identifiants et jetons OAuth hors du sandbox et les injecter via une passerelle externe, c'est exactement la frontière de confiance dont les agents en production ont besoin — une erreur dans le sandbox cesse d'être fatale. Mais les chiffres qui décideront réellement de l'adoption (temps de démarrage, prix, densité) sont précisément ceux que Google n'a pas encore publiés.",
+      "es": "Mantener las credenciales y los tokens de OAuth fuera del sandbox e inyectarlos mediante una pasarela externa es exactamente el límite de confianza que necesitan los agentes en producción: un error dentro del sandbox deja de ser fatal. Pero las cifras que realmente decidirán la adopción (tiempo de arranque, precio, densidad) son precisamente las que Google aún no ha publicado.",
+      "ar": "إبقاء بيانات الاعتماد ورموز OAuth خارج بيئة العزل وحقنها عبر بوابة خارجية هو تحديدًا حد الثقة الذي يحتاجه الوكلاء في الإنتاج، فالخطأ داخل بيئة العزل لم يعد قاتلًا. لكن الأرقام التي ستحدد التبني فعلًا (زمن الإقلاع، السعر، الكثافة) هي بالضبط ما لم تنشره Google بعد."
+    },
+    "tags": [
+      "agent-harness",
+      "production"
+    ]
+  },
+  {
+    "id": "mr-beam-andon-autonomy-evaluation",
+    "date": "2026-11-20",
+    "category": "agentic",
+    "headline": {
+      "en": "Mr. Beam: Partnering with Andon Labs to evaluate Beam's autonomy risk in a live, real-world deployment",
+      "de": "Mr. Beam: Partnerschaft mit Andon Labs zur Bewertung von Beams Autonomierisiko in einem realen Live-Einsatz",
+      "fr": "Mr. Beam : un partenariat avec Andon Labs pour évaluer le risque d'autonomie de Beam dans un déploiement en conditions réelles",
+      "es": "Mr. Beam: colaboración con Andon Labs para evaluar el riesgo de autonomía de Beam en un despliegue real en producción",
+      "ar": "Mr. Beam: شراكة مع Andon Labs لتقييم مخاطر استقلالية Beam في نشر حقيقي ميداني"
+    },
+    "source": "Reflection",
+    "url": "https://reflection.ai/blog/mr-beam-partnering-with-andon-labs",
+    "take": {
+      "en": "The most honest autonomy evaluation I've read: a real vending business, adversarial customers, and every human intervention logged — 23 of them — instead of a single jailbreak score. The finding mirrors production reality: Beam resisted direct attacks but fumbled multi-step execution, and one unverified customer claim silently became a rule in persistent memory.",
+      "de": "Die ehrlichste Autonomie-Evaluation, die ich gelesen habe: ein echtes Verkaufsautomaten-Geschäft, adversarische Kunden und jedes menschliche Eingreifen protokolliert — 23 an der Zahl — statt eines einzelnen Jailbreak-Scores. Das Ergebnis spiegelt die Produktionsrealität: Beam hielt direkten Angriffen stand, patzte aber bei der mehrstufigen Ausführung, und eine unbelegte Kundenbehauptung wurde stillschweigend zu einer Regel im persistenten Gedächtnis.",
+      "fr": "L'évaluation d'autonomie la plus honnête que j'aie lue : un vrai commerce de distributeurs automatiques, des clients adversariaux et chaque intervention humaine consignée — 23 au total — au lieu d'un simple score de jailbreak. La conclusion reflète la réalité de la production : Beam a résisté aux attaques directes mais a cafouillé sur l'exécution multi-étapes, et une affirmation client non vérifiée est devenue silencieusement une règle en mémoire persistante.",
+      "es": "La evaluación de autonomía más honesta que he leído: un negocio real de máquinas expendedoras, clientes adversariales y cada intervención humana registrada —23 en total— en lugar de una sola puntuación de jailbreak. El hallazgo refleja la realidad de producción: Beam resistió los ataques directos pero falló en la ejecución multipaso, y una afirmación de cliente sin verificar se convirtió silenciosamente en una regla en la memoria persistente.",
+      "ar": "أصدق تقييم للاستقلالية قرأته: عمل حقيقي لآلات البيع، وعملاء خصوم، وتوثيق لكل تدخل بشري — 23 تدخلًا — بدلًا من مجرد نتيجة واحدة لاختراق القيود. النتيجة تعكس واقع الإنتاج: قاوم Beam الهجمات المباشرة لكنه تعثر في التنفيذ متعدد الخطوات، وتحوّل ادّعاء عميل واحد غير موثّق بصمت إلى قاعدة في الذاكرة الدائمة."
+    },
+    "tags": [
+      "evaluation",
+      "reliability"
     ]
   }
 ]
