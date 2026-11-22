@@ -31,14 +31,16 @@ I'm an AI/ML engineer in **Linz, Austria**. I build systems that inspect images,
 
 | When | Role | Where |
 | :--- | :--- | :--- |
-| May 2026 – now | **Solo developer & project lead**: Sihem, a habits and daily-routine assistant (Telegram bot + web app), invitation-only beta | tech2b incubator, Linz |
-| Apr 2024 – Jul 2026 | **M.Sc. thesis researcher, machine vision**: diffusion-based OOD detection and industrial inkjet defect inspection | JKU Institute for Machine Learning with PROFACTOR GmbH |
+| May 2026 – present | **Freelance AI consultant** for small and medium-sized businesses, covering AI integration, workflow automation, and LLM applications | Remote |
+| May 2026 – present | **Solo developer & project lead** for Sihem, a planning and daily-routine assistant | tech2b incubator, Linz |
+| Jul 2026 | **M.Sc. thesis submitted** on diffusion-based OOD detection for inkjet print quality control | Johannes Kepler University Linz |
+| Apr – Nov 2024 | **Machine vision research contract** on the Zer0P project. Built a two-stage pipeline for inspecting experimental inkjet prints. | PROFACTOR GmbH, Steyr (remote) |
 | Aug – Oct 2023 | **AI research intern**: RNN/CNN models for EEG motor-imagery classification | Karunya Institute of Technology and Sciences, India |
 | Sep 2018 – Oct 2020 | **Electronics technician**: PCB assembly, circuit build-up, fault finding and test | Ledzone, Istanbul |
 
 <sub><code>// Projects</code></sub>
 
-## Research that ships.
+## Selected work
 
 <table>
   <tr>
@@ -47,18 +49,17 @@ I'm an AI/ML engineer in **Linz, Austria**. I build systems that inspect images,
       <h3>DiffusionOOD</h3>
       Trains an image model to flag pictures from outside a familiar category. A class-conditional separation loss made results stable across random seeds.<br><br>
       <b>99.03% ± 0.07% AUROC</b><br>
-      <sub>CIFAR-10 airplane vs. the other 9 classes (binary) · 3-seed mean · +6.5 pp over 92.52% ± 11.07%</sub><br><br>
+      <sub>CIFAR-10 airplane vs. the other 9 classes (binary) · 3-seed mean · +6.5 pp over 92.52% ± 11.07% · <a href="https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf">Thesis PDF</a></sub><br><br>
       <a href="https://ahmed-3m.github.io/case-studies/diffusion-ood/">Case study</a> ·
       <a href="https://github.com/ahmed-3m/DiffusionOOD">Code</a> ·
-      <a href="https://huggingface.co/ahmed-3m/DiffusionOOD">Weights</a> ·
-      <a href="https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf">Thesis PDF</a>
+      <a href="https://huggingface.co/ahmed-3m/DiffusionOOD">Weights and raw scores</a>
     </td>
     <td width="50%" valign="top">
       <sub><code>THESIS TRACK 2 · INDUSTRIAL CV · PROFACTOR</code></sub>
       <h3>InkjetOOD</h3>
       A two-stage system for defects in industrial inkjet printing: YOLOv8m localizes 8 print feature types into 6,408 128×128 crops across 573 source-image groups, then a multi-head conditional diffusion model scores each crop.<br><br>
       <b>0.8673 ± 0.0230 AUROC</b><br>
-      <sub>Public FTI_Zer0P dataset · 5-fold cross-validation · λ = 0 baseline; the separation loss did not transfer here (documented in the thesis)</sub><br><br>
+      <sub>Public FTI_Zer0P dataset · five-fold cross-validation · λ = 0 baseline. The separation loss showed no reliable gain in this evaluation.</sub><br><br>
       <a href="https://ahmed-3m.github.io/case-studies/inkjet-ood/">Case study</a> ·
       <a href="https://github.com/ahmed-3m/InkjetOOD">Code</a> ·
       <a href="https://huggingface.co/ahmed-3m/InkjetOOD">Weights</a>
@@ -66,9 +67,9 @@ I'm an AI/ML engineer in **Linz, Austria**. I build systems that inspect images,
   </tr>
   <tr>
     <td width="50%" valign="top">
-      <sub><code>LLM PRODUCT · TECH2B INCUBATOR · INVITATION-ONLY BETA</code></sub>
+      <sub><code>INDEPENDENT PROJECT · TECH2B INCUBATOR</code></sub>
       <h3>Sihem</h3>
-      A personal assistant for weekly planning and daily routines through Telegram and a web app: scheduling, long-term memory, morning briefings, evening reviews and adaptive check-ins.<br><br>
+      A personal assistant for weekly planning and daily routines, with scheduling, long-term memory, morning briefings, evening reviews, and adaptive check-ins. The Telegram bot and web app are in invitation-only beta. The native Android app is in private testing.<br><br>
       <a href="https://ahmed-3m.github.io/case-studies/sihem/">Case study</a> ·
       <a href="https://t.me/sihem_ai_bot">Telegram (invite only)</a> ·
       <a href="https://sihem-pwa.pages.dev/">Web app (invite only)</a>
@@ -76,8 +77,9 @@ I'm an AI/ML engineer in **Linz, Austria**. I build systems that inspect images,
     <td width="50%" valign="top">
       <sub><code>DEVELOPER TOOL · OPEN SOURCE</code></sub>
       <h3>mergeproof</h3>
-      A deterministic merge gate for AI-agent pull requests. It checks CI, diff scope, review threads and secrets in plain code, with no LLM calls, and returns MERGE, RETRY or HUMAN.<br><br>
+      A deterministic merge gate for AI-agent pull requests. It uses no LLM calls and returns MERGE, RETRY, or HUMAN. For example, a change to an existing test flags the PR for human review.<br><br>
       <a href="https://github.com/ahmed-3m/mergeproof">Code</a> ·
+      <a href="https://github.com/ahmed-3m/mergeproof#quick-start">See example</a> ·
       <a href="https://www.npmjs.com/package/@ahmed-3m/mergeproof">npm</a>
     </td>
   </tr>
@@ -105,7 +107,7 @@ The model scores an image by how well a class-conditional diffusion model recons
 
 </div>
 
-<sub>The task is binary with a single in-distribution class, so these numbers are not comparable to multi-class CIFAR-10 OOD leaderboards. All figures come from the thesis and are mirrored in <a href="src/lib/ood-explorer-data.ts"><code>src/lib/ood-explorer-data.ts</code></a>. See the <a href="https://ahmed-3m.github.io/research/">research overview</a> or drag the threshold yourself in the <a href="https://ahmed-3m.github.io/case-studies/diffusion-ood/">interactive explorer</a>.</sub>
+<sub>These are binary detection scores with CIFAR-10 airplanes as the in-distribution class. The external datasets supply out-of-distribution images for the single-seed runs. All figures come from the <a href="https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf">thesis</a> and are mirrored in <a href="src/lib/ood-explorer-data.ts"><code>src/lib/ood-explorer-data.ts</code></a>. See the <a href="https://ahmed-3m.github.io/research/">research overview</a> or drag the threshold yourself in the <a href="https://ahmed-3m.github.io/case-studies/diffusion-ood/#ood-explorer">interactive explorer</a>.</sub>
 
 <sub><code>// Stack</code></sub>
 
@@ -150,5 +152,5 @@ The model scores an image by how well a class-conditional diffusion model recons
 ---
 
 <p align="center">
-  <b>Let's talk.</b> <a href="mailto:ahmed.mo.0595@gmail.com">ahmed.mo.0595@gmail.com</a> · <a href="https://www.linkedin.com/in/ahmed-3m/">LinkedIn</a> · <a href="https://github.com/ahmed-3m">GitHub</a> · <a href="https://orcid.org/0009-0004-8934-1270">ORCID</a> · <a href="https://ahmed-3m.github.io/#contact">Book a call</a>
+  <b>Let's talk.</b> <a href="mailto:ahmed.mo.0595@gmail.com">ahmed.mo.0595@gmail.com</a> · <a href="https://www.linkedin.com/in/ahmed-3m/">LinkedIn</a> · <a href="https://github.com/ahmed-3m">GitHub</a> · <a href="https://orcid.org/0009-0004-8934-1270">ORCID</a> · <a href="https://calendly.com/ahmed-3m">Book a call</a>
 </p>
