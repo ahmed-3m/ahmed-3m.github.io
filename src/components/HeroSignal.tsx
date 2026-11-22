@@ -44,6 +44,8 @@ const copy = {
     ar: 'خارج التوزيع · 9 فئات أخرى',
   },
   threshold: { en: 'τ @ TPR 95', de: 'τ @ TPR 95', fr: 'τ @ TPR 95', es: 'τ @ TPR 95', ar: 'τ @ TPR 95' },
+  calibratedThreshold: { en: 'Calibrated threshold', de: 'Kalibrierte Schwelle', fr: 'Seuil calibré', es: 'Umbral calibrado', ar: 'العتبة المعايرة' },
+  overlap: { en: 'Score overlap', de: 'Überlappung', fr: 'Chevauchement', es: 'Solapamiento', ar: 'تداخل الدرجات' },
   axis: {
     en: 'anomaly score →',
     de: 'Anomaliescore →',
@@ -106,12 +108,43 @@ function stepArea(pct: readonly number[], yMax: number): string {
   return d
 }
 
-export default function HeroSignal() {
+export function OodScoreHistogram({ showOverlap = false }: { showOverlap?: boolean }) {
   const { lang, t } = useI18n()
   const ds = BENCHMARK_DATASETS.within_cifar
   const h = ds.histogram
   const yMax = Math.max(...h.id_pct, ...h.ood_pct)
   const tauX = PAD_X + ((ds.tauTpr95 - h.lo) / (h.hi - h.lo)) * (W - PAD_X * 2)
+
+  return (
+    <div dir="ltr">
+      <div className="cd-signal-plot">
+        <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={t(copy.chartLabel)} preserveAspectRatio="none">
+          {[0.25, 0.5, 0.75].map((f) => (
+            <line key={f} x1={PAD_X} x2={W - PAD_X} y1={BASE - f * (BASE - 8)} y2={BASE - f * (BASE - 8)} className="cd-signal-grid" />
+          ))}
+          <rect x={tauX} y={0} width={W - PAD_X - tauX} height={BASE} className="cd-signal-flag" />
+          <path d={stepArea(h.ood_pct, yMax)} className="cd-signal-ood" />
+          <path d={stepArea(h.id_pct, yMax)} className="cd-signal-id" />
+          {showOverlap && <path d={stepArea(h.id_pct.map((value, index) => Math.min(value, h.ood_pct[index])), yMax)} className="cd-rfc-overlap" />}
+          <line x1={PAD_X} x2={W - PAD_X} y1={BASE} y2={BASE} className="cd-signal-axis" />
+          <line x1={tauX} x2={tauX} y1={2} y2={BASE} className="cd-signal-tau" />
+        </svg>
+        <span className="cd-signal-tau-label" style={{ left: `${(tauX / W) * 100}%` }}>{t(showOverlap ? copy.calibratedThreshold : copy.threshold)}</span>
+      </div>
+      <div className="cd-signal-axis-label">{t(copy.axis)}</div>
+
+      <ul className="cd-signal-legend" dir={showOverlap && lang === 'ar' ? 'rtl' : undefined}>
+        <li><span className="sw sw-id" aria-hidden="true" />{t(copy.id)}</li>
+        <li><span className="sw sw-ood" aria-hidden="true" />{t(copy.ood)}</li>
+        {showOverlap && <li><span className="sw sw-overlap" aria-hidden="true" />{t(copy.overlap)}</li>}
+      </ul>
+    </div>
+  )
+}
+
+export default function HeroSignal() {
+  const { lang, t } = useI18n()
+  const ds = BENCHMARK_DATASETS.within_cifar
 
   return (
     <figure className="cd-signal" dir="ltr">
@@ -124,25 +157,7 @@ export default function HeroSignal() {
       </div>
       <p className="cd-signal-title">{t(copy.title)}</p>
 
-      <div className="cd-signal-plot">
-        <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={t(copy.chartLabel)} preserveAspectRatio="none">
-          {[0.25, 0.5, 0.75].map((f) => (
-            <line key={f} x1={PAD_X} x2={W - PAD_X} y1={BASE - f * (BASE - 8)} y2={BASE - f * (BASE - 8)} className="cd-signal-grid" />
-          ))}
-          <rect x={tauX} y={0} width={W - PAD_X - tauX} height={BASE} className="cd-signal-flag" />
-          <path d={stepArea(h.ood_pct, yMax)} className="cd-signal-ood" />
-          <path d={stepArea(h.id_pct, yMax)} className="cd-signal-id" />
-          <line x1={PAD_X} x2={W - PAD_X} y1={BASE} y2={BASE} className="cd-signal-axis" />
-          <line x1={tauX} x2={tauX} y1={2} y2={BASE} className="cd-signal-tau" />
-        </svg>
-        <span className="cd-signal-tau-label" style={{ left: `${(tauX / W) * 100}%` }}>{t(copy.threshold)}</span>
-      </div>
-      <div className="cd-signal-axis-label">{t(copy.axis)}</div>
-
-      <ul className="cd-signal-legend">
-        <li><span className="sw sw-id" aria-hidden="true" />{t(copy.id)}</li>
-        <li><span className="sw sw-ood" aria-hidden="true" />{t(copy.ood)}</li>
-      </ul>
+      <OodScoreHistogram />
 
       {SWEEP_002 && (
         <div className="cd-signal-mean">
