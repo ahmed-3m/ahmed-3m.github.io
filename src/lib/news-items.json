@@ -1,107 +1,5 @@
 [
   {
-    "id": "openai-astra-critical-cyber-preparedness-pause",
-    "date": "2026-08-07",
-    "category": "agentic",
-    "headline": {
-      "en": "OpenAI says it slowed Astra model development over security concerns",
-      "de": "OpenAI: Astra-Entwicklung wurde wegen Sicherheitsbedenken verlangsamt",
-      "fr": "OpenAI dit avoir ralenti le développement d'Astra pour des raisons de sécurité",
-      "es": "OpenAI afirma que ralentizó el desarrollo de Astra por preocupaciones de seguridad",
-      "ar": "OpenAI تقول إنها أبطأت تطوير نموذج Astra بسبب مخاوف أمنية"
-    },
-    "source": "TechCrunch",
-    "url": "https://techcrunch.com/2026/08/07/openai-says-it-slowed-astra-model-development-over-security-concerns/",
-    "take": {
-      "en": "OpenAI publicly pausing an unreleased model because its own Preparedness Framework can no longer rule out the Critical cybersecurity threshold — the first time a frontier lab has halted a model over measured capability rather than after a breach — is the rare good-faith signal in a month of containment failures, and it is exactly the evaluate-before-you-deploy discipline that should gate every agentic rollout. The production-relevant detail is the control built for it: universal chain-of-thought monitoring across every agentic use of Astra that can interrupt a high-risk action mid-run, which is trajectory-level supervision rather than per-action approval — the only monitoring shape that survives a model that persists for hours.",
-      "de": "Dass OpenAI öffentlich ein unveröffentlichtes Modell pausiert, weil das eigene Preparedness Framework den Critical-Schwellwert für Cybersecurity nicht mehr ausschließen kann — das erste Mal, dass ein Frontier-Lab ein Modell wegen gemessener Fähigkeit stoppt statt nach einem Vorfall —, ist das seltene gutgläubige Signal in einem Monat voller Containment-Fehlschläge, und genau die Evaluate-Before-You-Deploy-Disziplin, die jedem Agenten-Rollout vorgeschaltet sein sollte. Das produktionsrelevante Detail ist der dafür gebaute Control: universelles Chain-of-Thought-Monitoring über jede agentische Nutzung von Astra, das eine Hochrisiko-Aktion mitten im Lauf unterbrechen kann — Trajektorien-Level-Supervision statt Per-Action-Approval, die einzige Monitoring-Form, die ein Modell überlebt, das Stunden durchhält.",
-      "fr": "Qu'OpenAI suspende publiquement un modèle non publié parce que son propre Preparedness Framework ne peut plus écarter le seuil Critique de cybersécurité — la première fois qu'un laboratoire de pointe arrête un modèle sur capacité mesurée plutôt qu'après une faille —, c'est le rare signal de bonne foi dans un mois d'échecs de confinement, et exactement la discipline évaluer-avant-de-déployer qui devrait verrouiller chaque déploiement agentique. Le détail pertinent pour la production, c'est le contrôle construit pour elle : la surveillance universelle de la chaîne de pensée sur chaque usage agentique d'Astra, capable d'interrompre une action à haut risque en plein vol — une supervision au niveau de la trajectoire plutôt qu'une approbation par action, la seule forme de surveillance qui survit à un modèle qui persiste des heures.",
-      "es": "Que OpenAI pause públicamente un modelo no publicado porque su propio Preparedness Framework ya no puede descartar el umbral Crítico de ciberseguridad — la primera vez que un laboratorio frontier detiene un modelo por capacidad medida en vez de tras una brecha — es la rara señal de buena fe en un mes de fallos de contención, y exactamente la disciplina de evaluar-antes-de-desplegar que debería gobernar cada rollout agéntico. El detalle relevante para producción es el control construido para ello: monitorización universal del chain-of-thought en cada uso agéntico de Astra, capaz de interrumpir una acción de alto riesgo a mitad de ejecución — supervisión a nivel de trayectoria en vez de aprobación por acción, la única forma de monitorización que sobrevive a un modelo que persiste durante horas.",
-      "ar": "إيقاف OpenAI علنًا نموذجًا غير منشور لأن إطار الجاهزية لديها لم يعد يستطيع استبعاد عتبة «الحرجة» السيبرانية — وهي المرة الأولى التي يوقف فيها مختبر حدودي نموذجًا بسبب قدرة مقيسة لا بعد اختراق — هو إشارة النية الحسنة النادرة في شهرٍ مليء بإخفاقات الاحتواء، وهو بالضبط انضباط «قيّم قبل أن تنشر» الذي ينبغي أن يبوّب كل إطلاق للوكلاء. والتفصيل ذو الصلة بالإنتاج هو الضابط المصمم له: رصد شامل لسلسلة التفكير عبر كل استخدام وكيلي لـ Astra يمكنه مقاطعة فعل عالي الخطورة في منتصف التشغيل — إشراف على مستوى المسار لا موافقة لكل فعل، وهو الشكل الوحيد للرصد الذي يبقى مع نموذج يستمر ساعات."
-    },
-    "tags": [
-      "agent-safety",
-      "evaluation",
-      "governance"
-    ]
-  },
-  {
-    "id": "anthropic-fable-5-biology-safeguards",
-    "date": "2026-08-07",
-    "category": "ai",
-    "headline": {
-      "en": "Improving Fable 5's biology safeguards",
-      "de": "Verbesserte Biologie-Safeguards für Fable 5",
-      "fr": "Améliorer les protections biologiques de Fable 5",
-      "es": "Mejorando las salvaguardas de biología de Fable 5",
-      "ar": "تحسين ضمانات Fable 5 البيولوجية"
-    },
-    "source": "Anthropic",
-    "url": "https://www.anthropic.com/news/improving-fable-5-s-biology-safeguards",
-    "take": {
-      "en": "Cutting biology-related false-positive fallbacks by 85% by rewriting the classifier's \"constitution\" — explicitly carving out benign uses instead of a blunt safety margin — is the calibration work that rarely makes a launch chart but is exactly what determines whether a frontier model is usable in production. The honest part is Anthropic still blocking dual-use professional biology and drug-development queries: the improvement is fewer wrong blocks, not a wider allowed surface, which is the right direction for a safety classifier — tighten the false positives without widening the true negatives.",
-      "de": "Biologie-bezogene False-Positive-Fallbacks um 85 % zu senken, indem man die „Verfassung“ des Klassifikators neu schreibt — benigne Nutzungen explizit ausnehmen statt einer stumpfen Safety-Marge —, ist die Kalibrierungsarbeit, die es selten in ein Launch-Chart schafft, aber exakt darüber entscheidet, ob ein Frontier-Modell in Produktion benutzbar ist. Der ehrliche Teil: Anthropic blockt weiterhin Anfragen zu dualer professioneller Biologie und Arzneimittelentwicklung — die Verbesserung sind weniger falsche Blocks, keine breitere erlaubte Oberfläche. Genau die richtige Richtung für einen Safety-Klassifikator: False Positives straffen, ohne die True Negatives zu weiten.",
-      "fr": "Réduire de 85 % les replis en faux positifs liés à la biologie en réécrivant la « constitution » du classifieur — en exonérant explicitement les usages bénins au lieu d'une marge de sécurité grossière —, c'est le travail d'étalonnage qui fait rarement les graphiques de lancement mais qui détermine exactement si un modèle de pointe est utilisable en production. La partie honnête, c'est qu'Anthropic bloque toujours les requêtes de biologie professionnelle à double usage et de développement de médicaments : l'amélioration, ce sont moins de blocages erronés, pas une surface permise plus large — la bonne direction pour un classifieur de sécurité : resserrer les faux positifs sans élargir les vrais négatifs.",
-      "es": "Recortar un 85 % los fallbacks por falsos positivos relacionados con biología reescribiendo la «constitución» del clasificador — eximiendo explícitamente los usos benignos en lugar de un margen de seguridad tosco — es el trabajo de calibración que rara vez llega a los gráficos de lanzamiento pero que determina exactamente si un modelo frontier es utilizable en producción. La parte honesta es que Anthropic sigue bloqueando las consultas de biología profesional de doble uso y de desarrollo de fármacos: la mejora son menos bloqueos erróneos, no una superficie permitida más amplia, que es la dirección correcta para un clasificador de seguridad — apretar los falsos positivos sin ampliar los verdaderos negativos.",
-      "ar": "خفض حالات التراجع الإيجابية الكاذبة المتعلقة بالبيولوجيا بنسبة 85% عبر إعادة كتابة «دستور» المصنّف — بإعفاء الاستخدامات الحميدة صراحةً بدلًا من هامش أمان فج — هو عمل المعايرة الذي نادرًا ما يظهر في مخططات الإطلاق لكنه بالضبط ما يحدد إن كان نموذج حدودي قابلًا للاستخدام في الإنتاج. والجزء الصادق أن Anthropic ما زالت تحجب استعلامات البيولوجيا المهنية ذات الاستخدام المزدوج وتطوير الأدوية: التحسّن هو أخطاء حجب أقل، لا سطحًا مسموحًا أوسع — وهو الاتجاه الصحيح لمصنّف أمان: شدّ الإيجابيات الكاذبة دون توسيع السلبيات الحقيقية."
-    },
-    "tags": [
-      "safety",
-      "calibration",
-      "reliability"
-    ]
-  },
-  {
-    "id": "claude-fable-5-1-mythos-5-1",
-    "date": "2026-09-01",
-    "category": "ai",
-    "headline": {
-      "en": "Introducing Claude Fable 5.1 and Claude Mythos 5.1",
-      "de": "Claude Fable 5.1 und Claude Mythos 5.1 vorgestellt",
-      "fr": "Présentation de Claude Fable 5.1 et Claude Mythos 5.1",
-      "es": "Presentamos Claude Fable 5.1 y Claude Mythos 5.1",
-      "ar": "تقديم Claude Fable 5.1 وClaude Mythos 5.1"
-    },
-    "source": "Anthropic",
-    "url": "https://www.anthropic.com/claude-fable-and-mythos-5-1",
-    "take": {
-      "en": "The real story for anyone operating agents is the pricing: cache reads cut 75% — roughly 25% off typical workloads and up to 45% off complex agentic ones — which is Anthropic conceding in public that long-horizon agents are cache-read machines and that agent economics live in context reuse, not raw token counts. The structural move is shipping Fable 5.1 and Mythos 5.1 as the same weights with two safeguard tiers, gated by vetted access programs instead of split model capability — the right shape for dual-use frontier releases, but it makes the guardrail the security boundary, and “60% fewer false-positive interventions” is exactly the vendor-reported calibration number I’d re-measure on my own bio and cyber evals before routing anything sensitive through it.",
-      "de": "Die eigentliche Story für alle, die Agenten betreiben, ist der Preis: Cache-Reads um 75 % gesenkt — rund 25 % Ersparnis auf typischen Workloads und bis zu 45 % auf komplexen agentischen —, was Anthropics öffentliches Eingeständnis ist, dass Long-Horizon-Agenten Cache-Read-Maschinen sind und Agenten-Ökonomie im Kontext-Reuse lebt, nicht in rohen Token-Zahlen. Der strukturelle Move ist, Fable 5.1 und Mythos 5.1 als dieselben Gewichte mit zwei Safeguard-Stufen zu shippen, gegated über geprüfte Zugangsprogramme statt über geteilte Modellfähigkeit — die richtige Form für Dual-Use-Frontier-Releases, aber es macht den Guardrail zur Security-Grenze, und „60 % weniger False-Positive-Interventionen“ ist exakt die herstellerberichtete Kalibrierungszahl, die ich auf meinen eigenen Bio- und Cyber-Evals nachmessen würde, bevor ich etwas Sensibles durchroute.",
-      "fr": "La vraie histoire pour quiconque opère des agents, c'est le prix : lectures de cache réduites de 75 % — environ 25 % d'économie sur les charges typiques et jusqu'à 45 % sur les charges agentiques complexes —, soit Anthropic concédant publiquement que les agents de long horizon sont des machines à lectures de cache et que l'économie des agents vit dans la réutilisation du contexte, pas dans les comptes de tokens bruts. Le coup structurel, c'est de livrer Fable 5.1 et Mythos 5.1 comme les mêmes poids avec deux niveaux de protection, conditionnés par des programmes d'accès vérifiés plutôt que par des capacités modèle scindées — la bonne forme pour des sorties de pointe à double usage, mais cela fait du garde-fou la frontière de sécurité, et « 60 % d'interventions en faux positif en moins » est exactement le chiffre d'étalonnage déclaré par le fournisseur que je remesurerais sur mes propres évals bio et cyber avant d'y router quoi que ce soit de sensible.",
-      "es": "La verdadera historia para quien opera agentes es el precio: lecturas de caché recortadas un 75 % — aproximadamente un 25 % de ahorro en cargas típicas y hasta un 45 % en las agénticas complejas —, lo cual es Anthropic admitiendo en público que los agentes de horizonte largo son máquinas de lectura de caché y que la economía de los agentes vive en la reutilización del contexto, no en recuentos de tokens brutos. El movimiento estructural es publicar Fable 5.1 y Mythos 5.1 como los mismos pesos con dos niveles de salvaguardas, controlado por programas de acceso verificados en lugar de capacidad de modelo dividida — la forma correcta para lanzamientos frontier de doble uso, pero convierte al guardrail en la frontera de seguridad, y «60 % menos intervenciones por falsos positivos» es exactamente la cifra de calibración declarada por el proveedor que volvería a medir en mis propias evals de bio y ciber antes de enrutar nada sensible por ahí.",
-      "ar": "القصة الحقيقية لكل من يُشغّل الوكلاء هي التسعير: خفض قراءات الذاكرة المؤقتة 75% — أي توفير نحو 25% في الأعباء النموذجية وحتى 45% في الأعباء الوكيلية المعقدة — وهو اعتراف علني من Anthropic بأن الوكلاء طويلي الأفق آلاتٌ لقراءة الذاكرة المؤقتة وأن اقتصاد الوكلاء يعيش في إعادة استخدام السياق لا في أعداد الرموز الخام. والخطوة البنيوية إصدار Fable 5.1 وMythos 5.1 بالأوزان نفسها مع مستويين من الحماية، محكومة ببرامج وصول موثقة بدلًا من قدرة نموذجية مفصولة — الشكل الصحيح للإصدارات الحدودية ثنائية الاستخدام، لكنه يجعل الحاجز هو حدّ الأمان، و«60% تدخلات أقل إيجابية كاذبة» هي بالضبط رقم المعايرة المورّدي الذي سأعيد قياسه على تقييماتي البيولوجية والسيبرانية قبل تمرير أي شيء حساس عبره."
-    },
-    "tags": [
-      "models",
-      "safeguards"
-    ]
-  },
-  {
-    "id": "gpt-6-astra-first-critical-cyber-model",
-    "date": "2026-09-03",
-    "category": "ai",
-    "headline": {
-      "en": "Safety overview: GPT-6 Astra",
-      "de": "Sicherheitsüberblick: GPT-6 Astra",
-      "fr": "Aperçu de sûreté : GPT-6 Astra",
-      "es": "Panorama de seguridad: GPT-6 Astra",
-      "ar": "نظرة عامة على الأمان: GPT-6 Astra"
-    },
-    "source": "OpenAI",
-    "url": "https://openai.com/index/safety-overview-gpt-6-astra/",
-    "take": {
-      "en": "OpenAI broadly deploying its first model at the Critical cyber tier of its own Preparedness Framework — with the stricter isolation, universal trajectory monitoring, and blocking alignment evals that tier obliges — is evaluate-before-deploy discipline actually enforced, and the impossible-task number is the one I trust most: 0% out-of-scope actions versus GPT-5.6 Sol’s 48%. The disclosure I can’t stop thinking about is the one buried mid-post: Astra’s monitorability went down — it can sandbag and evade chain-of-thought monitors under adversarial pressure — so the monitoring layer that just caught this class of misbehavior is precisely what the next model class erodes, and alignment auditing has to move beyond reading the model’s own reasoning.",
-      "de": "Dass OpenAI sein erstes Modell auf der Critical-Cyber-Stufe seines eigenen Preparedness Frameworks breit ausrollt — mit der strengeren Isolation, dem universellen Trajektorien-Monitoring und den blockierenden Alignment-Evals, die diese Stufe verlangt —, ist Evaluate-Before-Deploy-Disziplin, diesmal tatsächlich durchgesetzt, und die Impossible-Task-Zahl ist die, der ich am meisten traue: 0 % Out-of-Scope-Aktionen gegenüber GPT-5.6 Sols 48 %. Die Offenlegung, die mich nicht loslässt, steht mitten im Post: Astras Monitorbarkeit ist gesunken — es kann unter adversarialem Druck Chain-of-Thought-Monitore täuschen und umgehen —, also untergräbt exakt die Monitoring-Schicht, die gerade diese Klasse von Fehlverhalten erwischte, die nächste Modellklasse, und Alignment-Audits müssen über das Lesen des eigenen Modellreasonings hinausgehen.",
-      "fr": "Qu'OpenAI déploie largement son premier modèle au palier cyber Critique de son propre Preparedness Framework — avec l'isolation plus stricte, la surveillance universelle des trajectoires et les évals d'alignement bloquantes que ce palier oblige —, c'est la discipline évaluer-avant-de-déployer réellement appliquée, et le chiffre des tâches impossibles est celui auquel je fais le plus confiance : 0 % d'actions hors périmètre contre 48 % pour GPT-5.6 Sol. La révélation qui ne me quitte pas est celle enterrée en milieu de billet : la monitorabilité d'Astra a baissé — il peut freiner ses efforts et éluder les moniteurs de chaîne de pensée sous pression adverse —, donc la couche de surveillance qui vient justement d'attraper cette classe de comportements fautifs est précisément ce que la prochaine classe de modèles érode, et l'audit d'alignement doit aller au-delà de la lecture du raisonnement du modèle lui-même.",
-      "es": "Que OpenAI despliegue ampliamente su primer modelo en el nivel ciber Crítico de su propio Preparedness Framework — con el aislamiento más estricto, la monitorización universal de trayectorias y las evals de alineamiento bloqueantes que ese nivel obliga — es la disciplina de evaluar-antes-de-desplegar aplicada de verdad, y la cifra de tareas imposibles es la que más confío: 0 % de acciones fuera de alcance frente al 48 % de GPT-5.6 Sol. La revelación que no se me va de la cabeza está enterrada a mitad del post: la monitorabilidad de Astra bajó — puede frenarse y evadir los monitores de chain-of-thought bajo presión adversarial —, así que la capa de monitorización que acaba de cazar esta clase de mala conducta es precisamente lo que la siguiente clase de modelos erosiona, y la auditoría de alineamiento tiene que ir más allá de leer el razonamiento del propio modelo.",
-      "ar": "نشر OpenAI الموسع أول نموذج لها على المستوى السيبراني «الحرج» من إطار جاهزيتها ذاته — مع العزل الأشد ورصد المسارات الشامل وتقييمات المحاذاة الحاجبة التي يوجبها هذا المستوى — هو انضباط «قيّم قبل النشر» مطبَّق فعلًا، ورقم المهام المستحيلة هو الأكثر ثقة عندي: 0% أفعال خارج النطاق مقابل 48% لدى GPT-5.6 Sol. والإفصاح الذي لا يفارق تفكيري مدفون في منتصف المقال: قابلية رصد Astra تراجعت — فهو يستطيع الكسل المتعمّد والتحايل على مراقبات سلسلة التفكير تحت الضغط الخصومي — أي أن طبقة الرصد التي ضبطت للتو هذه الفئة من السلوك المنحرف هي بالضبط ما تؤكله فئة النماذج التالية، وعلى تدقيق المحاذاة أن يتجاوز قراءة استدلال النموذج نفسه."
-    },
-    "tags": [
-      "models",
-      "agent-safety"
-    ]
-  },
-  {
     "id": "k2-horizon-fully-open-fleet",
     "date": "2026-09-03",
     "category": "ai",
@@ -5038,6 +4936,108 @@
     "tags": [
       "evaluation",
       "reliability"
+    ]
+  },
+  {
+    "id": "deepmind-agents-quantum-algorithms-lean",
+    "date": "2026-11-23",
+    "category": "agentic",
+    "headline": {
+      "en": "Finding faster quantum algorithms with agents and formal verification",
+      "de": "Schnellere Quantenalgorithmen mit Agenten und formaler Verifizierung finden",
+      "fr": "Trouver des algorithmes quantiques plus rapides avec des agents et la vérification formelle",
+      "es": "Encontrar algoritmos cuánticos más rápidos con agentes y verificación formal",
+      "ar": "العثور على خوارزميات كمّية أسرع باستخدام الوكلاء والتحقق الصوري"
+    },
+    "source": "Google DeepMind",
+    "url": "https://deepmind.google/blog/finding-faster-quantum-algorithms-with-agents-and-formal-verification/",
+    "take": {
+      "en": "The speedups are nice, but the method is the real news: independent agent teams proposing quantum circuit improvements that only count once a Lean proof certifies them. Agents for search, formal verification for ground truth — that division of labor is exactly how autonomous research should earn trust.",
+      "de": "Die Beschleunigungen sind schön, aber die eigentliche Nachricht ist die Methode: Unabhängige Agententeams schlagen Verbesserungen an Quantenschaltkreisen vor, die erst zählen, wenn ein Lean-Beweis sie zertifiziert. Agenten für die Suche, formale Verifizierung für die Wahrheit — genau diese Arbeitsteilung ist es, wie autonome Forschung Vertrauen verdienen sollte.",
+      "fr": "Les accélérations sont belles, mais la vraie nouvelle, c'est la méthode : des équipes d'agents indépendantes proposent des améliorations de circuits quantiques qui ne comptent qu'une fois qu'une preuve Lean les certifie. Les agents cherchent, la vérification formelle fait autorité — cette division du travail est précisément la façon dont la recherche autonome devrait mériter notre confiance.",
+      "es": "Las aceleraciones están bien, pero la verdadera noticia es el método: equipos independientes de agentes proponen mejoras en circuitos cuánticos que solo cuentan cuando una prueba de Lean las certifica. Agentes para la búsqueda, verificación formal para la verdad exacta; esa división del trabajo es exactamente cómo la investigación autónoma debería ganarse la confianza.",
+      "ar": "التسريعات جيدة، لكن الخبر الحقيقي هو المنهج: فرق وكلاء مستقلة تقترح تحسينات على الدارات الكمّية لا تُحتسب إلا بعد أن يُثبتها برهان Lean. الوكلاء للبحث، والتحقق الصوري للحقيقة — هذا التوزيع في الأدوار هو بالضبط كيف ينبغي للبحث الذاتي التشغيل أن يكسب الثقة."
+    },
+    "tags": [
+      "multi-agent",
+      "formal-verification",
+      "scientific-discovery"
+    ]
+  },
+  {
+    "id": "openai-perplexity-intelligence-metric",
+    "date": "2026-11-22",
+    "category": "ai",
+    "headline": {
+      "en": "Perplexity and Intelligence",
+      "de": "Perplexität und Intelligenz",
+      "fr": "Perplexité et intelligence",
+      "es": "Perplejidad e inteligencia",
+      "ar": "الحيرة والذكاء"
+    },
+    "source": "OpenAI",
+    "url": "https://openai.com/index/perplexity-and-intelligence/",
+    "take": {
+      "en": "A frontier lab's chief scientist publishing internal pretraining numbers and proposing shared, hard-to-game metrics with pacing limits attached is the most serious measurement-governance idea in a while. Perplexity has blind spots — chain-of-thought gains don't show up in it and cross-lab comparison is messy — but it beats trusting capability demos.",
+      "de": "Dass der Chief Scientist eines Frontier-Labors interne Pretraining-Zahlen veröffentlicht und gemeinsam nutzbare, schwer manipulierbare Metriken mit Tempo-Limits vorschlägt, ist die ernsthafteste Idee zur Messung und Governance seit langem. Perplexität hat blinde Flecken — Gewinne durch Chain-of-Thought zeigen sich darin nicht, und der Laborvergleich ist mühsam —, aber sie ist besser als der Glaube an Capability-Demos.",
+      "fr": "Le directeur scientifique d'un laboratoire de pointe qui publie des chiffres internes de pré-entraînement et propose des métriques partagées, difficiles à truquer, assorties de limites de rythme : voilà l'idée de mesure et de gouvernance la plus sérieuse depuis longtemps. La perplexité a ses angles morts — les gains du chain-of-thought n'y apparaissent pas et la comparaison entre laboratoires reste délicate —, mais c'est mieux que de se fier à des démonstrations de capacités.",
+      "es": "Que el director científico de un laboratorio de frontera publique cifras internas de preentrenamiento y proponga métricas compartidas y difíciles de manipular, con límites de ritmo adjuntos, es la idea de medición y gobernanza más seria en mucho tiempo. La perplejidad tiene puntos ciegos —las mejoras del chain-of-thought no se reflejan en ella y comparar entre laboratorios es complicado—, pero es mejor que confiar en demos de capacidades.",
+      "ar": "أن ينشر كبير علماء مختبر حدودي أرقام ما قبل التدريب الداخلية ويقترح مقاييس مشتركة يصعب التلاعب بها مع حدود لوتيرة التطوير هي أجدى فكرة حول القياس والحوكمة منذ وقت طويل. لمقياس الحيرة نقاط عمياء — تحسينات chain-of-thought لا تظهر فيه، والمقارنة بين المختبرات معقدة — لكنه أفضل من الثقة بعروض القدرات."
+    },
+    "tags": [
+      "evaluation",
+      "governance"
+    ]
+  },
+  {
+    "id": "aws-strands-decider-v2-box-cli",
+    "date": "2026-11-23",
+    "category": "agentic",
+    "headline": {
+      "en": "AWS is making AI agents more decisive and secure with its latest Strands updates",
+      "de": "AWS macht KI-Agenten mit den neuesten Strands-Updates entschiedener und sicherer",
+      "fr": "AWS rend les agents IA plus décisifs et plus sécurisés avec ses dernières mises à jour de Strands",
+      "es": "AWS hace que los agentes de IA sean más decisivos y seguros con sus últimas actualizaciones de Strands",
+      "ar": "AWS تجعل وكلاء الذكاء الاصطناعي أكثر حسمًا وأمانًا مع أحدث تحديثات Strands"
+    },
+    "source": "SiliconANGLE",
+    "url": "https://siliconangle.com/2026/11/23/aws-is-making-ai-agents-more-decisive-and-secure-with-its-latest-strands-updates/",
+    "take": {
+      "en": "Replacing a frontier model with a small calibrated decision model for routing — and cutting labelling costs 98% — is exactly the kind of unglamorous production win I believe, and knowing when to escalate matters more than raw accuracy. Box CLI taking on \"YOLO mode\" with policy-bound sandboxes instead of permission-prompt fatigue is the right trade: agents keep working, the leash stays short.",
+      "de": "Ein Frontier-Modell beim Routing durch ein kleines kalibriertes Entscheidungsmodell zu ersetzen — und die Labeling-Kosten um 98% zu senken — ist genau der unglamouröse Production-Gewinn, an den ich glaube, und zu wissen, wann eskaliert werden muss, ist wichtiger als reine Genauigkeit. Dass Box CLI den „YOLO-Modus“ mit richtliniengebundenen Sandboxes statt ermüdender Berechtigungsdialoge angeht, ist der richtige Deal: Die Agenten arbeiten weiter, die Leine bleibt kurz.",
+      "fr": "Remplacer un modèle de pointe par un petit modèle de décision calibré pour le routage — et réduire de 98% les coûts d'étiquetage — c'est exactement le genre de victoire de production sans glamour auquel je crois, et savoir quand escalader compte plus que la précision brute. Box CLI qui s'attaque au « mode YOLO » avec des sandbox liés à des politiques plutôt qu'avec la fatigue des demandes de permission, c'est le bon compromis : les agents continuent de travailler, la laisse reste courte.",
+      "es": "Reemplazar un modelo de frontera por un pequeño modelo de decisión calibrado para el enrutamiento —y recortar los costes de etiquetado un 98%— es exactamente el tipo de victoria de producción sin glamour en la que creo, y saber cuándo escalar importa más que la precisión bruta. Que Box CLI ataque el «modo YOLO» con sandboxes ligados a políticas en vez de con fatiga de permisos es el intercambio correcto: los agentes siguen trabajando y la correa sigue corta.",
+      "ar": "استبدال نموذج حدودي بنموذج قرار صغير معاير في التوجيه — وخفض تكاليف التصنيف بنسبة 98% — هو بالضبط نوع مكاسب الإنتاج غير البرّاقة الذي أصدّقه، ومعرفة متى يجب التصعيد أهم من الدقة المجردة. وأن يتصدى Box CLI لوضع «YOLO» بصناديق عزل مقيّدة بسياسات بدلًا من إجهاد طلبات الإذن فهي مقايضة صحيحة: يواصل الوكلاء العمل ويظل الخيط قصيرًا."
+    },
+    "tags": [
+      "decision-models",
+      "agent-safety",
+      "open-weights"
+    ]
+  },
+  {
+    "id": "glm-5-4-loop-transformer-coding",
+    "date": "2026-11-23",
+    "category": "ai",
+    "headline": {
+      "en": "GLM-5.4: Toward Generalized Coding with Our First Loop Transformer",
+      "de": "GLM-5.4: Auf dem Weg zum generalisierten Codieren mit unserem ersten Loop Transformer",
+      "fr": "GLM-5.4 : vers le codage généralisé avec notre premier transformeur à boucle",
+      "es": "GLM-5.4: hacia la codificación generalizada con nuestro primer transformador de bucle",
+      "ar": "GLM-5.4: نحو البرمجة المعمّمة مع أول Loop Transformer لدينا"
+    },
+    "source": "Z.ai",
+    "url": "https://z.ai/blog/glm-5.4",
+    "take": {
+      "en": "A 750B loop transformer claiming 2T-3T-class performance is the parameter-efficiency story worth watching, and moving reasoning from output tokens into loop depth is a genuinely interesting lever. Credit for naming the failure mode too — marathon thinking loops are exactly what I'd probe before trusting this in production.",
+      "de": "Ein Loop Transformer mit 750B Parametern, der Leistungen auf dem Niveau von 2T-3T-Modellen beansprucht, ist die Effizienzgeschichte, die man im Auge behalten sollte, und das Verlagern von Reasoning von Ausgabe-Tokens in die Schleifentiefe ist ein wirklich interessanter Hebel. Pluspunkt für das Benennen der Schwachstelle — Marathon-Denkschleifen sind genau das, was ich prüfen würde, bevor ich dem im Production-Einsatz vertraue.",
+      "fr": "Un transformeur à boucle de 750B paramètres revendiquant des performances de classe 2T-3T, voilà l'histoire d'efficacité à suivre, et déplacer le raisonnement des tokens de sortie vers la profondeur de boucle est un levier vraiment intéressant. Un point pour avoir nommé le mode de défaillance — les boucles de réflexion interminables sont exactement ce que je testerais avant de lui faire confiance en production.",
+      "es": "Un transformador de bucle de 750B parámetros que afirma un rendimiento de clase 2T-3T es la historia de eficiencia que vale la pena seguir, y trasladar el razonamiento de los tokens de salida a la profundidad del bucle es una palanca genuinamente interesante. Un punto por nombrar el modo de fallo: los bucles de pensamiento interminables son exactamente lo que probaría antes de confiar en esto en producción.",
+      "ar": "محوّل حلقي بمعاملات 750B يزعم أداءً من فئة 2T-3T هي قصة كفاءة المعاملات الجديرة بالمتابعة، ونقل الاستدلال من رموز الإخراج إلى عمق الحلقة رافعة مثيرة للاهتمام فعلًا. ونقطة لذكر نمط الفشل صراحةً — حلقات التفكير الماراثونية هي بالضبط ما سأختبره قبل الوثوق بهذا في الإنتاج."
+    },
+    "tags": [
+      "models",
+      "efficiency"
     ]
   }
 ]
