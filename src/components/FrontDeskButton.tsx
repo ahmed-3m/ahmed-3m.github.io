@@ -3,9 +3,17 @@
 import { useId, useRef, useSyncExternalStore } from 'react'
 import { createPortal } from 'react-dom'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
+import { useTheme } from '@/lib/ThemeContext'
 
 const DEFAULT_FRONT_DESK_URL = 'https://pilot-voice.a3m201493.workers.dev/'
 const FRONT_DESK_URL = process.env.NEXT_PUBLIC_FRONT_DESK_URL || DEFAULT_FRONT_DESK_URL
+
+/** The call page opens in the same light or dark theme the visitor uses here. */
+function frontDeskUrl(theme: 'light' | 'dark') {
+  const url = new URL(FRONT_DESK_URL)
+  url.searchParams.set('theme', theme)
+  return url.toString()
+}
 
 const copy = {
   label: {
@@ -76,6 +84,7 @@ export default function FrontDeskButton({
   compact?: boolean
 }) {
   const { t } = useI18n()
+  const { theme } = useTheme()
   const dialog = useRef<HTMLDialogElement>(null)
   const trigger = useRef<HTMLButtonElement>(null)
   const titleId = useId()
@@ -121,7 +130,7 @@ export default function FrontDeskButton({
             </div>
             <div className="front-desk-actions">
               <a
-                href={FRONT_DESK_URL}
+                href={frontDeskUrl(theme)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="cd-btn-primary"
