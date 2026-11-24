@@ -1805,6 +1805,13 @@ body {
   color: var(--cd-accent);
 }
 
+.legal-page .legal-note {
+  margin: -1rem 0 1.5rem;
+  color: var(--cd-fg3);
+  font-size: 0.88rem;
+  font-style: italic;
+}
+
 .legal-page .legal-updated {
   margin-block-start: 2.5rem;
   color: var(--cd-fg3);
