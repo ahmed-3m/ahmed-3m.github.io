@@ -1,6 +1,6 @@
 'use client'
+import Image from 'next/image'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
-import { useReveal } from '@/lib/useReveal'
 
 const copy = {
   eyebrow: { en: '// About', de: '// Profil', fr: '// Profil', es: '// Perfil', ar: '// نبذة' },
@@ -134,7 +134,6 @@ const skillCategories: { title: TranslationMap; skills: (string | TranslationMap
 ]
 
 export default function About() {
-  useReveal()
   const { t } = useI18n()
 
   const education = [
@@ -157,7 +156,7 @@ export default function About() {
     },
     {
       name: { en: 'English', de: 'Englisch', fr: 'Anglais', es: 'Inglés', ar: 'الإنجليزية' },
-      level: t({ en: 'B2 - Professional', de: 'B2 - Professionell', fr: 'B2 - professionnel', es: 'B2 - profesional', ar: 'B2 - مهني' }),
+      level: t({ en: 'Professional working proficiency', de: 'Verhandlungssicher im Beruf', fr: 'Maîtrise professionnelle', es: 'Competencia profesional', ar: 'إتقان مهني' }),
     },
     {
       name: { en: 'German', de: 'Deutsch', fr: 'Allemand', es: 'Alemán', ar: 'الألمانية' },
@@ -169,15 +168,14 @@ export default function About() {
     <section id="about" className="cd-section">
       <div className="cd-container">
         <div className="cd-section-eyebrow">{t(copy.eyebrow)}</div>
-        <div className="cd-about-bio-row reveal">
+        <div className="cd-about-bio-row">
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginBottom: 24, flexWrap: 'wrap' }}>
-              <img
+              <Image
                 src="/headshot.jpg"
                 alt="Ahmed Mohammed"
                 width={120}
                 height={120}
-                loading="lazy"
                 style={{
                   width: 120,
                   height: 120,
@@ -208,7 +206,7 @@ export default function About() {
           </div>
         </div>
 
-        <div className="cd-about-band reveal">
+        <div className="cd-about-band">
           <div className="cd-band-eyebrow">{t(copy.education)}</div>
           <div className="cd-education-grid">
             {education.map(edu => (
@@ -224,7 +222,7 @@ export default function About() {
           </div>
         </div>
 
-        <div className="cd-about-band reveal">
+        <div className="cd-about-band">
           <div className="cd-band-eyebrow">{t(copy.skills)}</div>
           <div className="cd-skills-grid">
             {skillCategories.map((cat, i) => (
@@ -238,7 +236,7 @@ export default function About() {
           </div>
         </div>
 
-        <div className="cd-about-band reveal">
+        <div className="cd-about-band">
           <div className="cd-band-eyebrow">{t(copy.languages)}</div>
           <div className="cd-lang-row">
             {languages.map(lang => (

@@ -5,11 +5,11 @@ export const diffusionExplorerHref = '/case-studies/diffusion-ood/#ood-explorer'
 export const portfolioCopy = {
   role: { en: 'AI/ML Engineer', de: 'KI- und ML-Ingenieur', fr: 'Ingénieur IA et ML', es: 'Ingeniero de IA y ML', ar: 'مهندس ذكاء اصطناعي وتعلّم آلي' },
   lede: {
-    en: 'I build AI systems that inspect manufactured products and recognize unfamiliar images.',
-    de: 'Ich entwickle KI-Systeme, die Industrieprodukte prüfen und unbekannte Bilder erkennen.',
-    fr: 'Je développe des systèmes d’IA qui contrôlent des produits manufacturés et détectent les images inhabituelles.',
-    es: 'Desarrollo sistemas de IA que inspeccionan productos fabricados y detectan imágenes desconocidas.',
-    ar: 'أبني أنظمة ذكاء اصطناعي تفحص المنتجات المصنّعة وتتعرف على الصور غير المألوفة.',
+    en: 'I build reliable vision and agentic AI systems pairing probabilistic models with deterministic guardrails across print inspection, diffusion OOD detection, and LLM/agent tooling.',
+    de: 'Ich entwickle zuverlässige Bildverarbeitungs- und agentische KI-Systeme, die probabilistische Modelle mit deterministischen Guardrails verbinden – von Druckprüfung und Diffusions-OOD-Erkennung bis zu LLM- und Agent-Tooling.',
+    fr: 'Je conçois des systèmes fiables de vision et d’IA agentique alliant modèles probabilistes et garde-fous déterministes, de l’inspection d’impression à la détection OOD par diffusion et à l’outillage LLM/agents.',
+    es: 'Desarrollo sistemas fiables de visión e IA agéntica que combinan modelos probabilísticos con controles deterministas, desde inspección de impresión y detección OOD por difusión hasta herramientas para LLM y agentes.',
+    ar: 'أبني أنظمة موثوقة للرؤية والذكاء الاصطناعي الوكيلي تجمع بين النماذج الاحتمالية والضوابط الحتمية، من فحص الطباعة وكشف \u2066OOD\u2069 بالانتشار إلى أدوات \u2066LLM\u2069 والوكلاء.',
   },
   location: { en: 'Linz, Austria', de: 'Linz, Österreich', fr: 'Linz, Autriche', es: 'Linz, Austria', ar: 'لينتس، النمسا' },
   availability: { en: 'Open to AI/ML roles', de: 'Offen für KI- und ML-Stellen', fr: 'Ouvert aux postes en IA et ML', es: 'Abierto a puestos de IA y ML', ar: 'منفتح على وظائف الذكاء الاصطناعي والتعلّم الآلي' },

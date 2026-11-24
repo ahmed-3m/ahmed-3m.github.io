@@ -2,7 +2,6 @@
 import Link from 'next/link'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { getAllBlogPostsMeta } from '@/lib/blog-posts-meta'
-import { useReveal } from '@/lib/useReveal'
 
 const copy = {
   eyebrow: { en: '// Writing', de: '// Schreiben', fr: '// Écriture', es: '// Escritura', ar: '// الكتابة' },
@@ -19,7 +18,6 @@ const copy = {
 } satisfies Record<string, TranslationMap>
 
 export default function Writing() {
-  useReveal()
   const { lang, t } = useI18n()
   const posts = getAllBlogPostsMeta(lang).slice(0, 3)
 
@@ -37,7 +35,7 @@ export default function Writing() {
             <Link
               key={post.slug}
               href={`/blog/${post.slug}/`}
-              className="cd-writing-card reveal"
+              className="cd-writing-card"
               style={{ animationDelay: `${i * 60}ms` }}
             >
               <div className="cd-wc-tags">

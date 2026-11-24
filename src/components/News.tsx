@@ -2,7 +2,6 @@
 import Link from 'next/link'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { getHomepageNews, homepageCategoryLabels } from '@/lib/news-homepage'
-import { useReveal } from '@/lib/useReveal'
 
 const copy = {
   eyebrow: { en: '// News', de: '// News', fr: '// Actualités', es: '// Noticias', ar: '// الأخبار' },
@@ -19,7 +18,6 @@ const copy = {
 } satisfies Record<string, TranslationMap>
 
 export default function News() {
-  useReveal()
   const { lang, t } = useI18n()
   // Already the newest 3 — capped by tools/emit-homepage-news.mjs at build time.
   const items = getHomepageNews(lang)
@@ -34,14 +32,13 @@ export default function News() {
         </p>
 
         <div className="cd-writing-grid">
-          {items.map((item, i) => (
+          {items.map((item) => (
             <a
               key={item.id}
               href={item.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="cd-writing-card reveal"
-              style={{ animationDelay: `${i * 60}ms` }}
+              className="cd-writing-card"
             >
               <div className="cd-wc-tags">
                 <span className="cd-wc-tag">{t(homepageCategoryLabels[item.category])}</span>
@@ -49,7 +46,7 @@ export default function News() {
               </div>
               <div className="cd-wc-title">{item.headline}</div>
               <div className="cd-wc-excerpt">
-                {item.take.length > 140 ? `${item.take.slice(0, 140)}...` : item.take}
+                {item.take}
               </div>
               <div className="cd-wc-footer">
                 <span className="cd-wc-time">{item.date}</span>

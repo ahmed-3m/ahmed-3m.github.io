@@ -145,7 +145,7 @@ export default function NewsPageClient() {
               {visibleItems.map((item) => (
                 <article
                   key={item.id}
-                  className="card-3d rounded-xl border border-[var(--cd-b0)] bg-[var(--cd-surf)] p-6 transition-shadow"
+                  className="portfolio-feed-card"
                 >
                   <div className="mb-3 flex flex-wrap items-center gap-4 text-sm text-[var(--cd-fg3)]">
                     <time dateTime={item.date} className="flex items-center gap-1">

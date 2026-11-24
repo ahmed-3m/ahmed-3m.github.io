@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
-import { useReveal } from '@/lib/useReveal'
 import ResearchCharts from '@/components/ResearchCharts'
 import SeparationLoss from '@/components/SeparationLoss'
 
@@ -199,7 +198,6 @@ function RtlArrow() {
  * interactive thesis explorer.
  */
 export default function Research() {
-  useReveal()
   const { t } = useI18n()
   const [shouldRenderLab, setShouldRenderLab] = useState(false)
   const labContainerRef = useRef<HTMLDivElement>(null)
@@ -231,7 +229,6 @@ export default function Research() {
         <h2 className="cd-section-title" style={{ marginBottom: 32 }}>{t(copy.title)}</h2>
 
         <div
-          className="reveal"
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))',
@@ -255,7 +252,7 @@ export default function Research() {
           ))}
         </div>
 
-        <div className="cd-research-featured reveal" itemScope itemType="https://schema.org/Thesis">
+        <div className="cd-research-featured" itemScope itemType="https://schema.org/Thesis">
           <div className="cd-rf-header">
             <div className="cd-rf-left">
               <div className="cd-rf-label">{t(copy.track1)}</div>
@@ -329,7 +326,7 @@ export default function Research() {
           </div>
         </div>
 
-        <div className="cd-research-featured reveal">
+        <div className="cd-research-featured">
           <div className="cd-rf-header">
             <div className="cd-rf-left">
               <div className="cd-rf-label">{t(copy.track2)}</div>
@@ -361,7 +358,7 @@ export default function Research() {
 
         <div className="cd-pub-list">
           {publications.map(pub => (
-            <a key={pub.href} href={pub.href} target="_blank" rel="noopener noreferrer" className="cd-pub-item reveal">
+            <a key={pub.href} href={pub.href} target="_blank" rel="noopener noreferrer" className="cd-pub-item">
               <div>
                 <div className="cd-pub-title">{pub.title}</div>
                 <div className="cd-pub-venue">{t(pub.venue)}</div>

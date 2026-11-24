@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, type KeyboardEvent } from 'react'
+import { useRef, useState, type KeyboardEvent, type ReactNode } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, ArrowUpRight, Layers } from 'lucide-react'
@@ -35,11 +35,112 @@ function stepAreaPath(pct: readonly number[], yMax: number): string {
   return d
 }
 
-const sihemSteps = [
-  { labelKey: 'sihemStep1Label', descKey: 'sihemStep1Desc', hasArrow: true },
-  { labelKey: 'sihemStep2Label', descKey: 'sihemStep2Desc', hasArrow: true },
-  { labelKey: 'sihemStep3Label', descKey: 'sihemStep3Desc', hasArrow: false },
-] as const
+const sihemArchAria: TranslationMap = {
+  en: 'Sihem 4-stage architecture pipeline: 1. Signals (Calendar and routines) feed 2. Deterministic Arbiter (Rules and pgvector RAG), then 3. LLM Composer and Failover (Multi-provider routing), delivering 4. Check-in (Telegram and PWA).',
+  de: 'Vierstufige Architektur von Sihem: 1. Signale (Kalender und Routinen) speisen 2. Deterministischer Arbiter (Regeln und pgvector-RAG), weiter zu 3. LLM-Composer & Failover (Multi-Provider-Routing) bis 4. Check-in (Telegram und PWA).',
+  fr: 'Pipeline d’architecture de Sihem en 4 étapes : 1. Signaux (calendrier et routines) vers 2. Arbitre déterministe (règles et RAG pgvector), puis 3. Compositeur LLM et bascule (routage multi-fournisseurs), jusqu’à 4. Suivi (Telegram et PWA).',
+  es: 'Pipeline de arquitectura de Sihem en 4 etapas: 1. Señales (calendario y rutinas) alimentan a 2. Árbitro determinista (reglas y RAG pgvector), luego 3. Compositor LLM y respaldo (enrutamiento multiproveedor) y 4. Seguimiento (Telegram y PWA).',
+  ar: 'مخطط معمارية \u2066Sihem\u2069 من \u20664\u2069 مراحل: 1. الإشارات (التقويم والروتين) تغذّي 2. المحكّم الحتمي (القواعد وذاكرة \u2066pgvector RAG\u2069)، ثم 3. صياغة \u2066LLM\u2069 والتبديل التلقائي (توجيه متعدد المزوّدين)، وصولاً إلى 4. المتابعة (\u2066Telegram + PWA\u2069).',
+}
+
+const sihemStages = [
+  {
+    num: '01',
+    tone: 'signal' as const,
+    title: { en: 'Signals', de: 'Signale', fr: 'Signaux', es: 'Señales', ar: 'الإشارات' },
+    sub: {
+      en: 'Calendar · Routines',
+      de: 'Kalender · Routinen',
+      fr: 'Calendrier · Routines',
+      es: 'Calendario · Rutinas',
+      ar: 'التقويم · الروتين',
+    },
+    icon: (
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="4.5" width="14" height="12.5" rx="2" />
+        <line x1="3" y1="8.5" x2="17" y2="8.5" />
+        <line x1="7" y1="2.5" x2="7" y2="5.5" />
+        <line x1="13" y1="2.5" x2="13" y2="5.5" />
+        <path d="M6.5 13h2l1.2-2 1.6 3.2 1.2-1.2h1.5" />
+      </svg>
+    ),
+  },
+  {
+    num: '02',
+    tone: 'gate' as const,
+    title: {
+      en: 'Deterministic Arbiter',
+      de: 'Deterministischer Arbiter',
+      fr: 'Arbitre déterministe',
+      es: 'Árbitro determinista',
+      ar: 'المحكّم الحتمي',
+    },
+    sub: {
+      en: 'Rules + pgvector RAG',
+      de: 'Regeln + pgvector-RAG',
+      fr: 'Règles + RAG pgvector',
+      es: 'Reglas + RAG pgvector',
+      ar: 'قواعد + \u2066pgvector RAG\u2069',
+    },
+    icon: (
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M10 2.5L16.5 5.2v4.6c0 3.7-2.7 6.5-6.5 7.7-3.8-1.2-6.5-4-6.5-7.7V5.2L10 2.5z" />
+        <path d="M7.3 10.2l1.8 1.8 3.6-3.7" />
+      </svg>
+    ),
+  },
+  {
+    num: '03',
+    tone: 'router' as const,
+    title: {
+      en: 'LLM Composer & Failover',
+      de: 'LLM-Composer & Failover',
+      fr: 'Compositeur LLM & bascule',
+      es: 'Compositor LLM y respaldo',
+      ar: 'صياغة \u2066LLM\u2069 والتبديل التلقائي',
+    },
+    sub: {
+      en: 'Multi-provider routing',
+      de: 'Multi-Provider-Routing',
+      fr: 'Routage multi-fournisseurs',
+      es: 'Enrutamiento multiproveedor',
+      ar: 'توجيه متعدد المزوّدين',
+    },
+    icon: (
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="4.5" cy="10" r="2" />
+        <circle cx="15.5" cy="5.5" r="2" />
+        <circle cx="15.5" cy="14.5" r="2" />
+        <path d="M6.5 10h3l4-4.5M9.5 10l4 4.5" />
+      </svg>
+    ),
+  },
+  {
+    num: '04',
+    tone: 'out' as const,
+    title: { en: 'Check-in', de: 'Check-in', fr: 'Suivi', es: 'Seguimiento', ar: 'المتابعة' },
+    sub: {
+      en: 'Telegram + PWA',
+      de: 'Telegram + PWA',
+      fr: 'Telegram + PWA',
+      es: 'Telegram + PWA',
+      ar: '\u2066Telegram + PWA\u2069',
+    },
+    icon: (
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h7A2.5 2.5 0 0 1 16 5.5v6A2.5 2.5 0 0 1 13.5 14H8l-4 3v-3.5" />
+        <line x1="7.5" y1="7.5" x2="12.5" y2="7.5" />
+        <line x1="7.5" y1="10.2" x2="10.8" y2="10.2" />
+      </svg>
+    ),
+  },
+] as const satisfies ReadonlyArray<{
+  num: string
+  tone: 'signal' | 'gate' | 'router' | 'out'
+  title: TranslationMap
+  sub: TranslationMap
+  icon: ReactNode
+}>
 
 const exploreItems = [
   { id: 'research', href: '/research/', titleKey: 'research', descKey: 'exploreResearchDesc' },
@@ -114,6 +215,9 @@ export default function PortfolioAbstract() {
         </p>
 
         <div className="stage-dock">
+          <a className="stage-cta-cv" href="/cv.pdf">
+            {t(copy.cv)}
+          </a>
           <button
             type="button"
             className="stage-cta-full"
@@ -126,9 +230,6 @@ export default function PortfolioAbstract() {
             <span>{t(copy.fullPortfolio)}</span>
             <ArrowRight size={16} strokeWidth={2.2} className="stage-cta-arrow rtl:rotate-180" aria-hidden="true" />
           </button>
-          <a className="stage-cta-cv" href="/cv.pdf">
-            {t(copy.cv)}
-          </a>
           <Link className="stage-cta-contact" href="#contact">
             {t(copy.contact)}
           </Link>
@@ -384,20 +485,51 @@ export default function PortfolioAbstract() {
                       </div>
 
                       <div className="stage-canvas-body">
-                        <ol className="stage-sihem-schematic" aria-label={t(copy.sihemLoopAria)}>
-                          {sihemSteps.map((step) => (
-                            <li key={step.labelKey} className="stage-sihem-step">
-                              <div className="stage-sihem-head">
-                                <span className="stage-sihem-dot" aria-hidden="true" />
-                                <span className="stage-sihem-label">{t(copy[step.labelKey])}</span>
-                                {step.hasArrow && (
-                                  <ArrowRight size={14} className="stage-sihem-arrow rtl:rotate-180" aria-hidden="true" />
-                                )}
-                              </div>
-                              <p className="stage-sihem-desc">{t(copy[step.descKey])}</p>
-                            </li>
-                          ))}
-                        </ol>
+                        <div
+                          className="stage-sihem-schematic"
+                          role="region"
+                          aria-label={t(sihemArchAria)}
+                        >
+                          <svg
+                            className="stage-sihem-bus"
+                            viewBox="0 0 600 42"
+                            fill="none"
+                            aria-hidden="true"
+                          >
+                            <path
+                              d="M525 22 C525 6, 75 6, 75 22"
+                              className="stage-sihem-bus-loop"
+                            />
+                            <line x1="75" y1="26" x2="525" y2="26" className="stage-sihem-bus-track" />
+                            <path d="M146 22 L152 26 L146 30" className="stage-sihem-bus-chevron" />
+                            <path d="M296 22 L302 26 L296 30" className="stage-sihem-bus-chevron" />
+                            <path d="M446 22 L452 26 L446 30" className="stage-sihem-bus-chevron" />
+                            <circle cx="75" cy="26" r="4.5" className="stage-sihem-bus-node" />
+                            <circle cx="225" cy="26" r="5.5" className="stage-sihem-bus-node is-gate" />
+                            <circle cx="375" cy="26" r="4.5" className="stage-sihem-bus-node" />
+                            <circle cx="525" cy="26" r="4.5" className="stage-sihem-bus-node is-out" />
+                          </svg>
+
+                          <ol className="stage-sihem-grid">
+                            {sihemStages.map((stage) => (
+                              <li
+                                key={stage.num}
+                                className={`stage-sihem-step stage-sihem-step--${stage.tone}`}
+                              >
+                                <div className="stage-sihem-head">
+                                  <span className="stage-sihem-index">
+                                    <bdi dir="ltr">{stage.num}</bdi>
+                                  </span>
+                                  <span className="stage-sihem-icon" aria-hidden="true">
+                                    {stage.icon}
+                                  </span>
+                                </div>
+                                <span className="stage-sihem-label">{t(stage.title)}</span>
+                                <p className="stage-sihem-desc">{t(stage.sub)}</p>
+                              </li>
+                            ))}
+                          </ol>
+                        </div>
                       </div>
 
                       <dl className="stage-telemetry-grid">

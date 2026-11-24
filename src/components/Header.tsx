@@ -131,7 +131,7 @@ function ViewModeToggle({ isHome, onAfterClick }: { isHome: boolean; onAfterClic
     return (
       <button
         type="button"
-        className={isConcise ? 'cd-nav-view-toggle cd-nav-view-toggle--featured' : 'cd-nav-view-toggle'}
+        className="cd-nav-view-toggle"
         onClick={() => {
           toggleView()
           window.scrollTo({ top: 0 })
@@ -148,7 +148,7 @@ function ViewModeToggle({ isHome, onAfterClick }: { isHome: boolean; onAfterClic
   return (
     <Link
       href="/?view=full"
-      className="cd-nav-view-toggle cd-nav-view-toggle--featured"
+      className="cd-nav-view-toggle"
       onClick={() => {
         setPortfolioView('full', false)
         onAfterClick?.()

@@ -38,6 +38,149 @@ export interface LocalizedBlogPostMeta extends BlogPostMetaTranslation {
 
 export const blogPostsMeta: BlogPostMeta[] = [
   {
+    "slug": "deterministic-guardrails-for-llm-and-agent-systems",
+    "date": "2026-11-25",
+    "ogImage": "/og-sihem.png",
+    "lastModified": "2026-11-25",
+    "translations": {
+      "en": {
+        "title": "Deterministic Guardrails for LLM and Agent Systems: Sihem's Arbiter and mergeproof",
+        "excerpt": "Why probabilistic language models need deterministic boundaries around scheduling, state, and verification—illustrated through Sihem's generators-arbiter-composer pipeline and mergeproof's zero-LLM pull-request gate.",
+        "tags": [
+          "Agentic AI",
+          "LLM Systems",
+          "Deterministic Guardrails",
+          "Sihem",
+          "mergeproof",
+          "Supabase"
+        ],
+        "readingTime": "9 min read",
+        "faq": [
+          {
+            "question": "How does Sihem separate deterministic decisions from LLM generation?",
+            "answer": "Sihem splits execution into generators, a deterministic arbiter, and a composer. Deterministic scheduling and trigger rules evaluate calendar shifts and routines before an LLM composes the Telegram or PWA check-in."
+          },
+          {
+            "question": "What stage is Sihem currently in?",
+            "answer": "Sihem is in invitation-only beta on Telegram (@sihem_ai_bot) and an installable PWA (sihem-pwa.pages.dev) within the tech2b incubator in Linz, alongside a native Android client (Kotlin/Jetpack Compose) in private testing."
+          },
+          {
+            "question": "What does mergeproof check, and what are its limits?",
+            "answer": "mergeproof (@ahmed-3m/mergeproof, zero dependencies, MIT) checks AI-written pull requests against configured deterministic merge requirements—such as flagging modified existing tests for human review—with 0 LLM calls. Passing deterministic checks does not guarantee defect-free code."
+          }
+        ]
+      },
+      "de": {
+        "title": "Deterministische Guardrails für LLM- und Agentensysteme: Sihems Arbiter und mergeproof",
+        "excerpt": "Warum probabilistische Sprachmodelle deterministische Grenzen bei Zeitplanung, Zustand und Verifikation brauchen – gezeigt an Sihems Generators-Arbiter-Composer-Pipeline und dem LLM-freien PR-Gate mergeproof.",
+        "tags": [
+          "Agentic AI",
+          "LLM-Systeme",
+          "Deterministische Guardrails",
+          "Sihem",
+          "mergeproof",
+          "Supabase"
+        ],
+        "readingTime": "9 Min. Lesezeit",
+        "faq": [
+          {
+            "question": "Wie trennt Sihem deterministische Entscheidungen von der LLM-Generierung?",
+            "answer": "Sihem teilt die Ausführung in Generatoren, einen deterministischen Arbiter und einen Komponisten. Deterministische Planungs- und Trigger-Regeln prüfen Kalenderänderungen und Routinen, bevor ein LLM die Telegram- oder PWA-Nachricht formuliert."
+          },
+          {
+            "question": "In welcher Phase befindet sich Sihem aktuell?",
+            "answer": "Sihem läuft als Beta mit Einladung auf Telegram (@sihem_ai_bot) und als installierbare PWA (sihem-pwa.pages.dev) im tech2b-Inkubator in Linz; ein nativer Android-Client (Kotlin/Jetpack Compose) befindet sich im privaten Test."
+          },
+          {
+            "question": "Was prüft mergeproof, und wo liegen die Grenzen?",
+            "answer": "mergeproof (@ahmed-3m/mergeproof, ohne Abhängigkeiten, MIT) prüft KI-generierte Pull Requests gegen konfigurierte deterministische Merge-Anforderungen – etwa das Markieren geänderter bestehender Tests zur menschlichen Prüfung – mit 0 LLM-Aufrufen. Bestandene Prüfungen garantieren keinen fehlerfreien Code."
+          }
+        ]
+      },
+      "fr": {
+        "title": "Garde-fous déterministes pour systèmes LLM et agents : l'arbitre de Sihem et mergeproof",
+        "excerpt": "Pourquoi les modèles de langage probabilistes ont besoin de frontières déterministes pour la planification, l'état et la vérification — illustré par l'architecture générateurs-arbitre-compositeur de Sihem et le contrôle de PR sans LLM mergeproof.",
+        "tags": [
+          "IA agentique",
+          "Systèmes LLM",
+          "Garde-fous déterministes",
+          "Sihem",
+          "mergeproof",
+          "Supabase"
+        ],
+        "readingTime": "9 min de lecture",
+        "faq": [
+          {
+            "question": "Comment Sihem sépare-t-il les décisions déterministes de la génération LLM ?",
+            "answer": "Sihem sépare l'exécution en générateurs, un arbitre déterministe et un compositeur. Des règles déterministes évaluent les changements d'agenda et les habitudes avant qu'un LLM ne rédige le message Telegram ou PWA."
+          },
+          {
+            "question": "À quel stade se trouve Sihem actuellement ?",
+            "answer": "Sihem est en bêta sur invitation sur Telegram (@sihem_ai_bot) et en PWA installable (sihem-pwa.pages.dev) au sein de l'incubateur tech2b à Linz, avec un client Android natif (Kotlin/Jetpack Compose) en test privé."
+          },
+          {
+            "question": "Que vérifie mergeproof et quelles sont ses limites ?",
+            "answer": "mergeproof (@ahmed-3m/mergeproof, zéro dépendance, licence MIT) vérifie les pull requests écrites par IA selon des critères de fusion déterministes — par exemple signaler les tests existants modifiés pour revue humaine — avec 0 appel LLM. Réussir ces vérifications ne garantit pas un code sans défaut."
+          }
+        ]
+      },
+      "es": {
+        "title": "Controles deterministas para sistemas LLM y agentes: el árbitro de Sihem y mergeproof",
+        "excerpt": "Por qué los modelos de lenguaje probabilísticos necesitan límites deterministas en planificación, estado y verificación, ilustrado con la arquitectura generadores-árbitro-compositor de Sihem y la puerta de PR sin LLM mergeproof.",
+        "tags": [
+          "IA agéntica",
+          "Sistemas LLM",
+          "Controles deterministas",
+          "Sihem",
+          "mergeproof",
+          "Supabase"
+        ],
+        "readingTime": "9 min de lectura",
+        "faq": [
+          {
+            "question": "¿Cómo separa Sihem las decisiones deterministas de la generación con LLM?",
+            "answer": "Sihem divide la ejecución en generadores, un árbitro determinista y un compositor. Reglas deterministas evalúan los cambios de calendario y las rutinas antes de que un LLM redacte el aviso por Telegram o PWA."
+          },
+          {
+            "question": "¿En qué fase se encuentra Sihem actualmente?",
+            "answer": "Sihem está en beta por invitación en Telegram (@sihem_ai_bot) y como PWA instalable (sihem-pwa.pages.dev) dentro de la incubadora tech2b en Linz, junto con un cliente nativo de Android (Kotlin/Jetpack Compose) en pruebas privadas."
+          },
+          {
+            "question": "¿Qué comprueba mergeproof y cuáles son sus límites?",
+            "answer": "mergeproof (@ahmed-3m/mergeproof, cero dependencias, licencia MIT) valida pull requests escritos por IA frente a requisitos de fusión deterministas configurados —por ejemplo, marcar pruebas existentes modificadas para revisión humana— con 0 llamadas LLM. Superar estas comprobaciones no garantiza código sin errores."
+          }
+        ]
+      },
+      "ar": {
+        "title": "الضوابط الحتمية لأنظمة LLM والوكلاء: محكّم Sihem وأداة mergeproof",
+        "excerpt": "لماذا تحتاج نماذج اللغة الاحتمالية إلى حدود حتمية حول الجدولة والحالة والتحقق — كما يتضح في بنية المولدات والمحكّم والمؤلف في Sihem وبوابة فحص طلبات الدمج mergeproof الخالية من LLM.",
+        "tags": [
+          "الذكاء الوكيلي",
+          "أنظمة LLM",
+          "الضوابط الحتمية",
+          "Sihem",
+          "mergeproof",
+          "Supabase"
+        ],
+        "readingTime": "9 دقائق قراءة",
+        "faq": [
+          {
+            "question": "كيف يفصل Sihem القرارات الحتمية عن التوليد اللغوي؟",
+            "answer": "يقسّم Sihem التنفيذ إلى مولدات ثم محكّم حتمي ثم مؤلف. تقيّم قواعد الجدولة والتنبيه الحتمية تغيرات التقويم والروتين قبل أن يصيغ النموذج اللغوي رسالة المتابعة على تيليجرام أو PWA."
+          },
+          {
+            "question": "ما المرحلة الحالية لمشروع Sihem؟",
+            "answer": "يعمل Sihem في نسخة تجريبية بدعوة على تيليجرام (@sihem_ai_bot) وتطبيق ويب قابل للتثبيت (sihem-pwa.pages.dev) ضمن حاضنة tech2b في لينتس، إلى جانب تطبيق أندرويد أصلي (Kotlin/Jetpack Compose) قيد الاختبار الخاص."
+          },
+          {
+            "question": "ما الذي تفحصه أداة mergeproof وما حدودها؟",
+            "answer": "تفحص mergeproof (@ahmed-3m/mergeproof، بدون تبعيات، ترخيص MIT) طلبات الدمج المكتوبة بالذكاء الاصطناعي وفق متطلبات دمج حتمية محددة — مثل تنبيه المراجع البشري عند تعديل اختبارات قائمة — بـ 0 استدعاءات LLM. اجتياز هذه الفحوص لا يضمن خلو الشيفرة من الأخطاء."
+          }
+        ]
+      }
+    }
+  },
+  {
     "slug": "ood-diffusion-thesis",
     "date": "2026-07-12",
     "ogImage": "/og-diffusion-ood.png",
