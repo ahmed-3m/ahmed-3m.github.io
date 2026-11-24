@@ -8,6 +8,7 @@ import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { BENCHMARK_DATASETS, INKJET_OVERALL_SWEEP } from '@/lib/ood-explorer-data'
 import { diffusionExplorerHref, focusPillars, portfolioCopy as copy, selectedWork } from '@/lib/portfolio-copy'
 import { usePortfolioView } from '@/lib/portfolio-view'
+import FrontDeskButton from '@/components/FrontDeskButton'
 
 const specimenCopy = {
   legendGood: { en: 'Classified good', de: 'Als in Ordnung erkannt', fr: 'Classé conforme', es: 'Clasificada como correcta', ar: 'مصنفة سليمة' },
@@ -131,6 +132,7 @@ export default function PortfolioAbstract() {
           <Link className="stage-cta-contact" href="#contact">
             {t(copy.contact)}
           </Link>
+          <FrontDeskButton variant="link" compact className="stage-cta-contact" />
         </div>
 
         <div className="stage-telemetry-ribbon">

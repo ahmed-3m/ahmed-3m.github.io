@@ -3,6 +3,7 @@
 import { ArrowUpRight, Mail } from 'lucide-react'
 import RequestCvButton from '@/components/RequestCvButton'
 import ScheduleMeetingButton from '@/components/ScheduleMeetingButton'
+import FrontDeskButton from '@/components/FrontDeskButton'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 
 const socials = [
@@ -54,6 +55,7 @@ export default function Contact({ full = false }: { full?: boolean }) {
               </a>
             ))}
             <ScheduleMeetingButton variant="link" />
+            <FrontDeskButton variant="link" />
             <RequestCvButton variant="link" />
           </div>
 
@@ -91,6 +93,7 @@ export default function Contact({ full = false }: { full?: boolean }) {
           </a>
         ))}
         <ScheduleMeetingButton variant="link" compact className="portfolio-contact-chip" />
+        <FrontDeskButton variant="link" compact className="portfolio-contact-chip" />
         <RequestCvButton variant="link" compact className="portfolio-contact-chip" />
       </div>
     </section>

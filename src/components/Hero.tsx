@@ -2,6 +2,7 @@
 
 import RequestCvButton from '@/components/RequestCvButton'
 import ScheduleMeetingButton from '@/components/ScheduleMeetingButton'
+import FrontDeskButton from '@/components/FrontDeskButton'
 import HeroSignal from '@/components/HeroSignal'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { portfolioCopy } from '@/lib/portfolio-copy'
@@ -123,6 +124,8 @@ export default function Hero() {
             <div className="cd-hero-secondary">
               <span>{t(copy.or)}</span>
               <ScheduleMeetingButton variant="link" compact className="cd-hero-textlink" />
+              <span aria-hidden="true">&middot;</span>
+              <FrontDeskButton variant="link" compact className="cd-hero-textlink" />
               <span aria-hidden="true">&middot;</span>
               <a href="#contact" className="cd-hero-textlink">{t(copy.contact)}</a>
             </div>
