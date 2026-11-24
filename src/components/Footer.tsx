@@ -19,6 +19,8 @@ const copy = {
   news: { en: 'News', de: 'News', fr: 'Actualités', es: 'Noticias', ar: 'الأخبار' },
   caseStudies: { en: 'Case Studies', de: 'Fallstudien', fr: 'Études de cas', es: 'Casos de estudio', ar: 'دراسات الحالة' },
   email: { en: 'Email', de: 'E-Mail', fr: 'E-mail', es: 'Correo', ar: 'البريد الإلكتروني' },
+  impressum: { en: 'Impressum', de: 'Impressum', fr: 'Mentions légales', es: 'Aviso legal', ar: 'بيانات الناشر' },
+  privacy: { en: 'Privacy', de: 'Datenschutz', fr: 'Confidentialité', es: 'Privacidad', ar: 'الخصوصية' },
 } satisfies Record<string, TranslationMap>
 
 export default function Footer() {
@@ -41,6 +43,9 @@ export default function Footer() {
             <a href="https://github.com/ahmed-3m" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--cd-fg3)', fontSize: '0.8rem', textDecoration: 'none' }}>GitHub</a>
             <a href="https://huggingface.co/ahmed-3m" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--cd-fg3)', fontSize: '0.8rem', textDecoration: 'none' }}>HuggingFace</a>
             <a href="mailto:ahmed.mo.0595@gmail.com" style={{ color: 'var(--cd-fg3)', fontSize: '0.8rem', textDecoration: 'none' }}>{t(copy.email)}</a>
+            <span aria-hidden="true" style={{ color: 'var(--cd-fg3)', opacity: 0.35 }}>·</span>
+            <Link href="/impressum/" style={{ color: 'var(--cd-fg3)', fontSize: '0.8rem', textDecoration: 'none' }}>{t(copy.impressum)}</Link>
+            <Link href="/privacy/" style={{ color: 'var(--cd-fg3)', fontSize: '0.8rem', textDecoration: 'none' }}>{t(copy.privacy)}</Link>
           </nav>
           <div className="cd-footer-meta">{t(copy.meta)}</div>
         </div>

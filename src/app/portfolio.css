@@ -1775,3 +1775,45 @@ body {
   gap: 0.6rem;
   margin-block-start: 1rem;
 }
+
+/* ── Legal pages (Impressum, privacy notice) ── */
+.legal-page {
+  max-width: 46rem;
+  padding-block: 7rem 4rem;
+  color: var(--cd-fg2);
+  line-height: 1.65;
+}
+
+.legal-page h1 {
+  margin: 0 0 2rem;
+  color: var(--cd-fg1);
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  line-height: 1.2;
+}
+
+.legal-page h2 {
+  margin: 2rem 0 0.6rem;
+  color: var(--cd-fg1);
+  font-size: 1.1rem;
+}
+
+.legal-page p {
+  margin: 0 0 0.75rem;
+}
+
+.legal-page a {
+  color: var(--cd-accent);
+}
+
+.legal-page .legal-note {
+  margin: -1rem 0 1.5rem;
+  color: var(--cd-fg3);
+  font-size: 0.88rem;
+  font-style: italic;
+}
+
+.legal-page .legal-updated {
+  margin-block-start: 2.5rem;
+  color: var(--cd-fg3);
+  font-size: 0.88rem;
+}
