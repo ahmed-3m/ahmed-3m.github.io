@@ -7,7 +7,8 @@
 // has no prior record of forces a fresh fetch. The copy is generated at build
 // time, so it can never drift from the real sitemap.
 //
-// Both URLs are listed in robots.txt and checked by site-health.yml.
+// Only /sitemap.xml is listed in robots.txt (the alias was withdrawn from
+// Search Console on 2026-11-24); site-health.yml still checks both URLs.
 
 import { readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
