@@ -697,6 +697,27 @@ const copy = {
  * Interactive 3-tab thesis explorer backed by empirical raw PyTorch score histograms
  * (seed42_*.pt) and ablation JSON artefacts from ahmed-3m/DiffusionOOD.
  */
+// The histogram and ROC cards share these, so both render at the same size and line up.
+const CHART_CARD_STYLE: React.CSSProperties = {
+  display: 'grid',
+  gridTemplateRows: 'subgrid',
+  gridRow: 'span 3',
+  rowGap: 10,
+  alignContent: 'start',
+  padding: 16,
+  borderRadius: 12,
+  border: '1px solid var(--cd-border)',
+  background: 'var(--cd-bg)',
+  minWidth: 0,
+}
+
+const CHART_TITLE_STYLE: React.CSSProperties = {
+  fontFamily: 'var(--font-mono)',
+  fontSize: 11.5,
+  fontWeight: 600,
+  color: 'var(--cd-fg)',
+}
+
 export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; heading?: 'h2' | 'h3' }) {
   const { t, lang } = useI18n()
   const baseId = useId()
@@ -1205,10 +1226,12 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
         </div>
 
         {/* Side-by-Side Empirical Histogram SVG & ROC Curve SVG */}
+        {/* Each card spans three subgrid rows (title, plot, footer), so the plots and footers of both
+            cards start at the same height even when one title wraps to more lines than the other. */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 310px), 1fr))', gap: 16 }}>
           {/* 48-Bin Empirical Histogram */}
-          <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)', minWidth: 0 }}>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--cd-fg)', marginBottom: 10 }}>
+          <div style={CHART_CARD_STYLE}>
+            <div style={CHART_TITLE_STYLE}>
               {t(copy.histTitle)}
             </div>
             <div dir="ltr">
@@ -1273,7 +1296,7 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
                 </text>
               </svg>
             </div>
-            <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--cd-fg2)', marginTop: 6 }}>
+            <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--cd-fg2)' }}>
               <span>
                 <strong style={{ color: 'var(--cd-accent)' }}>■</strong> {t(copy.histLegendId)}{' '}
                 <bdi dir="ltr">(N={activeHist.n_id.toLocaleString(numberLocale)})</bdi>
@@ -1289,16 +1312,17 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
           </div>
 
           {/* Empirical ROC Curve */}
-          <div style={{ padding: 16, borderRadius: 12, border: '1px solid var(--cd-border)', background: 'var(--cd-bg)', minWidth: 0 }}>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 600, color: 'var(--cd-fg)', marginBottom: 10 }}>
+          <div style={CHART_CARD_STYLE}>
+            <div style={CHART_TITLE_STYLE}>
               {t(copy.rocTitle)}
             </div>
             <div dir="ltr">
-              <svg viewBox="0 0 320 230" style={{ width: '100%', height: 'auto', overflow: 'visible' }} role="img" aria-label={t(copy.rocAriaLabel)}>
-                <line x1="45" y1="195" x2="295" y2="195" stroke="var(--cd-border)" strokeWidth="1" />
-                <line x1="45" y1="20" x2="45" y2="195" stroke="var(--cd-border)" strokeWidth="1" />
+              <svg viewBox="0 0 520 230" style={{ width: '100%', height: 'auto', overflow: 'visible' }} role="img" aria-label={t(copy.rocAriaLabel)}>
+                {/* Same frame and plot box as the histogram (x 40-500, y 20-195), so both charts render at one size */}
+                <line x1="40" y1="195" x2="500" y2="195" stroke="var(--cd-border)" strokeWidth="1" />
+                <line x1="40" y1="20" x2="40" y2="195" stroke="var(--cd-border)" strokeWidth="1" />
                 {/* Diagonal chance line */}
-                <line x1="45" y1="195" x2="295" y2="20" stroke="var(--cd-border)" strokeWidth="1" strokeDasharray="4 4" />
+                <line x1="40" y1="195" x2="500" y2="20" stroke="var(--cd-border)" strokeWidth="1" strokeDasharray="4 4" />
 
                 {/* Empirical ROC Polyline */}
                 <polyline
@@ -1306,32 +1330,39 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
                   stroke="var(--cd-accent)"
                   strokeWidth="2.5"
                   points={activeHist.roc
-                    .map(([fpr, tpr]) => `${(45 + fpr * 250).toFixed(1)},${(195 - tpr * 175).toFixed(1)}`)
+                    .map(([fpr, tpr]) => `${(40 + fpr * 460).toFixed(1)},${(195 - tpr * 175).toFixed(1)}`)
                     .join(' ')}
                 />
 
                 {/* Active operating point */}
                 {(() => {
-                  const cx = 45 + (liveDiagnostics.fpr / 100) * 250
+                  const cx = 40 + (liveDiagnostics.fpr / 100) * 460
                   const cy = 195 - (liveDiagnostics.tpr / 100) * 175
                   return (
                     <g>
                       <line x1={cx} y1={cy} x2={cx} y2="195" stroke="var(--cd-warn)" strokeWidth="1" strokeDasharray="3 3" />
-                      <line x1="45" y1={cy} x2={cx} y2={cy} stroke="var(--cd-warn)" strokeWidth="1" strokeDasharray="3 3" />
+                      <line x1="40" y1={cy} x2={cx} y2={cy} stroke="var(--cd-warn)" strokeWidth="1" strokeDasharray="3 3" />
                       <circle cx={cx} cy={cy} r="5.5" fill="var(--cd-warn)" stroke="var(--cd-bg)" strokeWidth="1.5" />
                     </g>
                   )
                 })()}
 
-                <text x="170" y="214" textAnchor="middle" fill="var(--cd-fg2)" fontSize="10" fontFamily="monospace">
+                {/* X-axis labels, laid out like the histogram's */}
+                <text x="40" y="212" fill="var(--cd-fg3)" fontSize="10" fontFamily="monospace">
+                  0
+                </text>
+                <text x="270" y="212" textAnchor="middle" fill="var(--cd-fg2)" fontSize="10" fontFamily="monospace">
                   {t(copy.rocXAxis)}
                 </text>
-                <text x="16" y="110" textAnchor="middle" fill="var(--cd-fg2)" fontSize="10" fontFamily="monospace" transform="rotate(-90 16 110)">
+                <text x="500" y="212" textAnchor="end" fill="var(--cd-fg3)" fontSize="10" fontFamily="monospace">
+                  1
+                </text>
+                <text x="16" y="107.5" textAnchor="middle" fill="var(--cd-fg2)" fontSize="10" fontFamily="monospace" transform="rotate(-90 16 107.5)">
                   {t(copy.rocYAxis)}
                 </text>
               </svg>
             </div>
-            <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--cd-fg2)', marginTop: 6 }}>
+            <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--cd-fg2)' }}>
               {t(copy.operatingPointLabel)}:{' '}
               <bdi dir="ltr">
                 <strong>FPR = {liveDiagnostics.fpr.toFixed(1)}%</strong>, <strong>TPR = {liveDiagnostics.tpr.toFixed(1)}%</strong>
