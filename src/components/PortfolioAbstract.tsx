@@ -3,12 +3,30 @@
 import { useRef, useState, type KeyboardEvent, type ReactNode } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight, ArrowUpRight, Layers } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Layers, Terminal, X } from 'lucide-react'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { BENCHMARK_DATASETS, INKJET_OVERALL_SWEEP } from '@/lib/ood-explorer-data'
 import { diffusionExplorerHref, focusPillars, portfolioCopy as copy, selectedWork } from '@/lib/portfolio-copy'
 import { usePortfolioView } from '@/lib/portfolio-view'
 import FrontDeskButton from '@/components/FrontDeskButton'
+import MergeproofDemo from '@/components/MergeproofDemo'
+
+const gateCopy = {
+  tryGate: {
+    en: 'Try interactive gate',
+    de: 'Interaktives Gate testen',
+    fr: 'Tester la porte interactive',
+    es: 'Probar compuerta interactiva',
+    ar: 'جرّب البوابة التفاعلية',
+  },
+  closeGate: {
+    en: 'Close interactive gate',
+    de: 'Interaktives Gate schließen',
+    fr: 'Fermer la porte interactive',
+    es: 'Cerrar compuerta interactiva',
+    ar: 'إغلاق البوابة التفاعلية',
+  },
+} satisfies Record<string, TranslationMap>
 
 const specimenCopy = {
   legendGood: { en: 'Classified good', de: 'Als in Ordnung erkannt', fr: 'Classé conforme', es: 'Clasificada como correcta', ar: 'مصنفة سليمة' },
@@ -159,6 +177,9 @@ export default function PortfolioAbstract() {
   const specimenDialog = useRef<HTMLDialogElement>(null)
   const specimenTrigger = useRef<HTMLButtonElement>(null)
   const [specimenOpen, setSpecimenOpen] = useState(false)
+  const gateDialog = useRef<HTMLDialogElement>(null)
+  const gateTrigger = useRef<HTMLButtonElement>(null)
+  const [gateOpen, setGateOpen] = useState(false)
 
   const ds = BENCHMARK_DATASETS.within_cifar
   const hist = ds.histogram
@@ -598,17 +619,67 @@ export default function PortfolioAbstract() {
             <span className="stage-oss-name"><bdi dir="ltr">mergeproof</bdi></span>
             <span className="cd-proj-tag stage-tag--prose">{t(copy.ossBadge)}</span>
             <p className="stage-oss-summary">{t(copy.ossSummary)}</p>
-            <a
-              href="https://github.com/ahmed-3m/mergeproof"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="portfolio-inline-link"
-            >
-              <span>{t(copy.ossLink)}</span>
-              <ArrowUpRight size={15} className="rtl:-scale-x-100" aria-hidden="true" />
-            </a>
+            <div className="stage-oss-actions">
+              <button
+                ref={gateTrigger}
+                type="button"
+                className="stage-oss-try-btn"
+                aria-haspopup="dialog"
+                onClick={() => {
+                  const dialog = gateDialog.current
+                  if (typeof dialog?.showModal !== 'function') return
+                  setGateOpen(true)
+                  dialog.showModal()
+                }}
+              >
+                <Terminal size={14} strokeWidth={2.1} aria-hidden="true" />
+                <span>{t(gateCopy.tryGate)}</span>
+              </button>
+              <a
+                href="https://github.com/ahmed-3m/mergeproof"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="portfolio-inline-link"
+              >
+                <span>{t(copy.ossLink)}</span>
+                <ArrowUpRight size={15} className="rtl:-scale-x-100" aria-hidden="true" />
+              </a>
+            </div>
           </div>
         </div>
+
+        <dialog
+          ref={gateDialog}
+          className="portfolio-figure-dialog mp-dialog"
+          aria-labelledby="stage-mergeproof-dialog-title"
+          onClick={(event) => {
+            if (event.target === event.currentTarget) event.currentTarget.close()
+          }}
+          onClose={() => {
+            setGateOpen(false)
+            gateTrigger.current?.focus()
+          }}
+        >
+          <div className="mp-dialog-inner">
+            <div className="mp-dialog-bar">
+              <h3 id="stage-mergeproof-dialog-title" className="mp-dialog-title">
+                <bdi dir="ltr">mergeproof</bdi>
+                <span className="mp-dialog-sep" aria-hidden="true"> · </span>
+                <span>{t(gateCopy.tryGate)}</span>
+              </h3>
+              <button
+                type="button"
+                className="mp-dialog-close"
+                aria-label={t(gateCopy.closeGate)}
+                onClick={() => gateDialog.current?.close()}
+              >
+                <X size={16} strokeWidth={2.2} aria-hidden="true" />
+                <span>{t(gateCopy.closeGate)}</span>
+              </button>
+            </div>
+            {gateOpen && <MergeproofDemo />}
+          </div>
+        </dialog>
       </section>
 
       <div className="stage-closing-grid">
