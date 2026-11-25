@@ -11,7 +11,7 @@
   <a href="https://ahmed-3m.github.io/cv.pdf"><img src="https://img.shields.io/badge/CV-PDF-00d4ff?style=flat-square&labelColor=08090d&logo=readdotcv&logoColor=00d4ff" alt="CV (PDF)"></a>
   <a href="https://www.linkedin.com/in/ahmed-3m/"><img src="https://img.shields.io/badge/LinkedIn-ahmed--3m-00d4ff?style=flat-square&labelColor=08090d&logo=linkedin&logoColor=00d4ff" alt="LinkedIn"></a>
   <a href="https://huggingface.co/ahmed-3m"><img src="https://img.shields.io/badge/Hugging_Face-ahmed--3m-00d4ff?style=flat-square&labelColor=08090d&logo=huggingface&logoColor=00d4ff" alt="Hugging Face"></a>
-  <a href="mailto:ahmed.mo.0595@gmail.com"><img src="https://img.shields.io/badge/Email-ahmed.mo.0595%40gmail.com-00d4ff?style=flat-square&labelColor=08090d&logo=gmail&logoColor=00d4ff" alt="Email"></a>
+  <a href="mailto:ahmed.mu.0905@gmail.com"><img src="https://img.shields.io/badge/Email-ahmed.mu.0905%40gmail.com-00d4ff?style=flat-square&labelColor=08090d&logo=gmail&logoColor=00d4ff" alt="Email"></a>
   <a href="https://github.com/ahmed-3m/ahmed-3m.github.io/actions/workflows/deploy.yml"><img src="https://img.shields.io/github/actions/workflow/status/ahmed-3m/ahmed-3m.github.io/deploy.yml?branch=main&style=flat-square&labelColor=08090d&color=00ff88&label=deploy" alt="Deploy status"></a>
 </p>
 
@@ -161,5 +161,5 @@ The model scores an image by how well a class-conditional diffusion model recons
 ---
 
 <p align="center">
-  <b>Let's talk.</b> <a href="mailto:ahmed.mo.0595@gmail.com">ahmed.mo.0595@gmail.com</a> · <a href="https://www.linkedin.com/in/ahmed-3m/">LinkedIn</a> · <a href="https://github.com/ahmed-3m">GitHub</a> · <a href="https://wandb.ai/ahmed-mu-0593">W&amp;B</a> · <a href="https://orcid.org/0009-0004-8934-1270">ORCID</a> · <a href="https://calendly.com/ahmed-3m">Book a call</a>
+  <b>Let's talk.</b> <a href="mailto:ahmed.mu.0905@gmail.com">ahmed.mu.0905@gmail.com</a> · <a href="https://www.linkedin.com/in/ahmed-3m/">LinkedIn</a> · <a href="https://github.com/ahmed-3m">GitHub</a> · <a href="https://wandb.ai/ahmed-mu-0593">W&amp;B</a> · <a href="https://orcid.org/0009-0004-8934-1270">ORCID</a> · <a href="https://calendly.com/ahmed-3m">Book a call</a>
 </p>
