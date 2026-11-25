@@ -1480,6 +1480,7 @@ body {
 
 .portfolio-charts-featured {
   max-inline-size: 46rem;
+  margin-inline: auto;
 }
 
 .portfolio-chart-results {
