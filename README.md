@@ -19,11 +19,11 @@
 
 ## AI/ML engineer — research that ships.
 
-I'm an AI/ML engineer in **Linz, Austria**. I build systems that inspect images, support daily routines, and check AI-written code, and I combine carefully evaluated research with hands-on product work.
+I'm an AI/ML engineer in **Linz, Austria**. I build reliable vision and agentic AI systems that pair probabilistic models with deterministic guardrails — across industrial print inspection, diffusion OOD detection, and LLM/agent tooling.
 
 - **M.Sc. in Artificial Intelligence, JKU Linz** — graduated September 2026 (Defensio 25 Sep 2026). Thesis on conditional diffusion models for out-of-distribution (OOD) detection, supervised by **Prof. Sepp Hochreiter**, **graded 1** (top mark).
 - **Background:** mechatronics and electronics before AI, so I bring a hardware and systems view to computer vision and production ML.
-- **Open to:** AI/ML engineering roles and research collaborations. Available full time now (eligible for Austria's Rot-Weiß-Rot Karte für Studienabsolventen). Full background on <a href="https://ahmed-3m.github.io/about/">About</a>.
+- **Open to:** AI/ML engineering roles and research collaborations. Available full time now (eligible for Austria's Rot-Weiß-Rot Karte für Studienabsolventen — no labour-market test). Full background on <a href="https://ahmed-3m.github.io/about/">About</a>.
 
 <sub><code>// Experience</code></sub>
 
@@ -31,8 +31,8 @@ I'm an AI/ML engineer in **Linz, Austria**. I build systems that inspect images,
 
 | When | Role | Where |
 | :--- | :--- | :--- |
-| May 2026 – present | **Freelance AI consultant** for small and medium-sized businesses, covering AI integration, workflow automation, and LLM applications | Remote |
 | May 2026 – present | **Solo developer & project lead** for Sihem, a planning and daily-routine assistant | tech2b incubator, Linz |
+| May 2026 – present | **Freelance AI consultant** for small and medium-sized businesses, covering AI integration, workflow automation, and LLM applications | Remote |
 | Jul 2026 | **M.Sc. thesis submitted** on diffusion-based OOD detection for inkjet print quality control | Johannes Kepler University Linz |
 | Apr – Nov 2024 | **Machine vision research contract** on the Zer0P project. Built a two-stage pipeline for inspecting experimental inkjet prints. | PROFACTOR GmbH, Steyr (remote) |
 | Aug – Oct 2023 | **AI research intern**: RNN/CNN models for EEG motor-imagery classification | Karunya Institute of Technology and Sciences, India |
@@ -69,7 +69,7 @@ I'm an AI/ML engineer in **Linz, Austria**. I build systems that inspect images,
     <td width="50%" valign="top">
       <sub><code>INDEPENDENT PROJECT · TECH2B INCUBATOR</code></sub>
       <h3>Sihem</h3>
-      A personal assistant for weekly planning and daily routines, with scheduling, long-term memory, morning briefings, evening reviews, and adaptive check-ins. The Telegram bot and web app are in invitation-only beta. The native Android app is in private testing.<br><br>
+      A personal assistant for weekly planning and daily routines, built around a deterministic <code>generators → arbiter → composer</code> loop, Supabase PostgreSQL with row-level security, <code>pgvector</code> RAG long-term memory, and multi-provider LLM routing with failover. The Telegram bot and web app are in invitation-only beta; the native Android app (Kotlin / Jetpack Compose) is in private testing.<br><br>
       <a href="https://ahmed-3m.github.io/case-studies/sihem/">Case study</a> ·
       <a href="https://t.me/sihem_ai_bot">Telegram (invite only)</a> ·
       <a href="https://sihem-pwa.pages.dev/">Web app (invite only)</a>
@@ -77,7 +77,7 @@ I'm an AI/ML engineer in **Linz, Austria**. I build systems that inspect images,
     <td width="50%" valign="top">
       <sub><code>DEVELOPER TOOL · OPEN SOURCE</code></sub>
       <h3>mergeproof</h3>
-      A deterministic merge gate for AI-agent pull requests. It uses no LLM calls and returns MERGE, RETRY, or HUMAN. For example, a change to an existing test flags the PR for human review.<br><br>
+      A zero-dependency deterministic merge gate for AI-agent pull requests. It makes 0 LLM calls and returns <code>MERGE</code>, <code>RETRY</code>, or <code>HUMAN</code> against configured merge requirements — for example, flagging edits to existing tests for human review. Passing checks does not guarantee defect-free code.<br><br>
       <a href="https://github.com/ahmed-3m/mergeproof">Code</a> ·
       <a href="https://github.com/ahmed-3m/mergeproof#quick-start">See example</a> ·
       <a href="https://www.npmjs.com/package/@ahmed-3m/mergeproof">npm</a>
@@ -107,7 +107,16 @@ The model scores an image by how well a class-conditional diffusion model recons
 
 </div>
 
-<sub>These are binary detection scores with CIFAR-10 airplanes as the in-distribution class. The external datasets supply out-of-distribution images for the single-seed runs. All figures come from the <a href="https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf">thesis</a> and are mirrored in <a href="src/lib/ood-explorer-data.ts"><code>src/lib/ood-explorer-data.ts</code></a>. See the <a href="https://ahmed-3m.github.io/research/">research overview</a> or drag the threshold yourself in the <a href="https://ahmed-3m.github.io/case-studies/diffusion-ood/#ood-explorer">interactive explorer</a>.</sub>
+<sub>These are binary detection scores with CIFAR-10 airplanes as the in-distribution class. The external datasets supply out-of-distribution images for the single-seed runs. All figures come from the <a href="https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf">thesis</a> and are mirrored in <a href="src/lib/ood-explorer-data.ts"><code>src/lib/ood-explorer-data.ts</code></a>. See the <a href="https://ahmed-3m.github.io/research/">research overview</a>, the <a href="https://epub.jku.at/obvulihs/content/titleinfo/14374221">official JKU library record</a>, or drag the threshold yourself in the <a href="https://ahmed-3m.github.io/case-studies/diffusion-ood/#ood-explorer">interactive explorer</a>.</sub>
+
+<sub><code>// Writing</code></sub>
+
+## Selected writing.
+
+- **[Deterministic Guardrails for LLM and Agent Systems: Sihem's Arbiter and mergeproof](https://ahmed-3m.github.io/blog/deterministic-guardrails-for-llm-and-agent-systems/)** *(Nov 2026)* — Separating deterministic scheduling, state, and diff verification from probabilistic LLM synthesis.
+- **[How I Reached 99.03% AUROC on OOD Detection with Conditional Diffusion Models](https://ahmed-3m.github.io/blog/ood-diffusion-thesis/)** *(Jul 2026)* — Class-conditional separation loss, seed stability, and cross-domain boundary conditions.
+- **[Diffusion Models for Industrial Defect Detection at PROFACTOR GmbH](https://ahmed-3m.github.io/blog/diffusion-models-anomaly-detection/)** *(Nov 2024)* — Evaluating a two-stage YOLOv8m + conditional diffusion pipeline on `FTI_Zer0P` under 5-fold CV.
+- **[YOLOv8 for Industrial Quality Control: Decisions That Actually Moved the Needle](https://ahmed-3m.github.io/blog/computer-vision-yolo-mastery/)** *(Oct 2024)* — Feature extraction, stratified fold design, and edge-deployment trade-offs.
 
 <sub><code>// Stack</code></sub>
 
@@ -117,7 +126,7 @@ The model scores an image by how well a class-conditional diffusion model recons
 | :--- | :--- |
 | **ML & vision** | PyTorch, PyTorch Lightning, diffusion models (DDPM, UNet), YOLOv8, anomaly / OOD detection, Hugging Face |
 | **Evaluation** | AUROC, FPR95, cross-validation, seed sweeps, Hydra, Weights & Biases, CUDA |
-| **Product** | TypeScript, React, Next.js, PostgreSQL / Supabase, Deno, Cloudflare Workers, Telegram bots |
+| **Product & agents** | TypeScript, React, Next.js, PostgreSQL / Supabase, `pgvector`, Deno, Kotlin / Jetpack Compose, Cloudflare Workers, Telegram bots, `mergeproof` |
 | **Ops** | Docker, Linux, GitHub Actions CI/CD |
 
 <sub><code>// This repo</code></sub>
@@ -132,17 +141,17 @@ The model scores an image by how well a class-conditional diffusion model recons
     </td>
     <td valign="top" width="50%">
       <b>Design</b><br>
-      One token set (<code>--cd-*</code> in <a href="src/app/globals.css"><code>globals.css</code></a>) drives a dark theme and a warm light theme. Space Grotesk, Inter and JetBrains Mono.
+      Shared tokens (<code>--cd-*</code> and <code>--stage-glass-*</code> in <a href="src/app/globals.css"><code>globals.css</code></a> and <a href="src/app/portfolio.css"><code>portfolio.css</code></a>) drive a dark theme and a warm cream light theme. Space Grotesk, Inter, JetBrains Mono, and IBM Plex Sans Arabic.
     </td>
   </tr>
   <tr>
     <td valign="top">
       <b>Languages</b><br>
-      English, German, French, Spanish and Arabic, including a full right-to-left layout for Arabic.
+      English, German, French, Spanish, and Arabic, with pre-paint theme and <code>lang</code>/<code>dir</code> restoration and a full right-to-left layout for Arabic.
     </td>
     <td valign="top">
       <b>Live pieces</b><br>
-      Dedicated <a href="https://ahmed-3m.github.io/about/">About</a>, <a href="https://ahmed-3m.github.io/research/">Research</a>, <a href="https://ahmed-3m.github.io/blog/">Blog</a> and <a href="https://ahmed-3m.github.io/news/">News</a> routes, an interactive thesis explorer from recorded scores, a multilingual chat assistant with curated fallback answers and a <a href="worker/chat-proxy.js">Cloudflare Worker proxy</a>, and a daily AI-news feed added by an agent through reviewed PRs.
+      Dedicated <a href="https://ahmed-3m.github.io/about/">About</a>, <a href="https://ahmed-3m.github.io/research/">Research</a>, <a href="https://ahmed-3m.github.io/blog/">Blog</a>, <a href="https://ahmed-3m.github.io/news/">News</a>, <a href="https://ahmed-3m.github.io/impressum/">Impressum</a>, and <a href="https://ahmed-3m.github.io/privacy/">Privacy</a> routes, an interactive thesis explorer, a <a href="worker/chat-proxy.js">Cloudflare Worker–proxied</a> chat assistant (Genie) with curated fallback answers, a live AI front-desk voice/avatar call demo, <a href="public/llms.txt"><code>llms.txt</code></a> / <a href="public/llms-full.txt"><code>llms-full.txt</code></a> context files, and a daily agent-curated AI news feed.
     </td>
   </tr>
 </table>
@@ -152,5 +161,5 @@ The model scores an image by how well a class-conditional diffusion model recons
 ---
 
 <p align="center">
-  <b>Let's talk.</b> <a href="mailto:ahmed.mo.0595@gmail.com">ahmed.mo.0595@gmail.com</a> · <a href="https://www.linkedin.com/in/ahmed-3m/">LinkedIn</a> · <a href="https://github.com/ahmed-3m">GitHub</a> · <a href="https://orcid.org/0009-0004-8934-1270">ORCID</a> · <a href="https://calendly.com/ahmed-3m">Book a call</a>
+  <b>Let's talk.</b> <a href="mailto:ahmed.mo.0595@gmail.com">ahmed.mo.0595@gmail.com</a> · <a href="https://www.linkedin.com/in/ahmed-3m/">LinkedIn</a> · <a href="https://github.com/ahmed-3m">GitHub</a> · <a href="https://wandb.ai/ahmed-mu-0593">W&amp;B</a> · <a href="https://orcid.org/0009-0004-8934-1270">ORCID</a> · <a href="https://calendly.com/ahmed-3m">Book a call</a>
 </p>
