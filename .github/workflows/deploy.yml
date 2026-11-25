@@ -60,7 +60,7 @@ jobs:
   build:
     needs: quality
     if: github.event.action != 'closed' && (github.event.action != 'edited' || github.event.changes.base != null)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -87,6 +87,18 @@ jobs:
           # Privacy-hardened GA4 beacon (src/components/Analytics.tsx) — renders
           # nothing until the variable holds a G-XXXXXXX measurement ID.
           NEXT_PUBLIC_GA_MEASUREMENT_ID: ${{ vars.NEXT_PUBLIC_GA_MEASUREMENT_ID }}
+
+      - name: Verify static export
+        run: npm run verify:export
+
+      - name: Browser layout, theme, and RTL smoke check
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --prefix "$RUNNER_TEMP/pw" --no-save playwright@1.58.2
+          "$RUNNER_TEMP/pw/node_modules/.bin/playwright" install --with-deps chromium
+          PLAYWRIGHT_MODULE_ROOT="$RUNNER_TEMP/pw" NODE_PATH="$RUNNER_TEMP/pw/node_modules" node tools/playwright-smoke.mjs
 
       - name: Package Pages artifact
         shell: sh
