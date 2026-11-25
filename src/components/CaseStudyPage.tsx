@@ -8,6 +8,7 @@ import { caseStudyOverview } from '@/lib/case-study-overview'
 import { portfolioCopy, selectedWork } from '@/lib/portfolio-copy'
 import { CIFAR_LAMBDA_SWEEP, INKJET_OVERALL_SWEEP } from '@/lib/ood-explorer-data'
 import ResearchCharts from '@/components/ResearchCharts'
+import SihemWalkthrough from '@/components/SihemWalkthrough'
 
 const decisions = {
   'diffusion-ood': {
@@ -33,21 +34,11 @@ const decisions = {
   },
 } as const
 
-const sihemExample = {
-  title: { en: 'Example: A change of plans', de: 'Beispiel: Eine Planänderung', fr: 'Exemple : un changement de programme', es: 'Ejemplo: un cambio de planes', ar: 'مثال: تغيير في الخطة' },
-  context: {
-    en: 'Imagine a study session moves on your calendar. Sihem checks the updated schedule and your routines before deciding whether to send a Telegram check-in. If the rules trigger one, the language model writes the message.',
-    de: 'Angenommen, eine Lerneinheit wird in deinem Kalender verschoben. Sihem prüft den neuen Zeitplan und deine Routinen. Wenn die Regeln eine Nachfrage auslösen, schreibt das Sprachmodell die Nachricht für Telegram.',
-    fr: 'Imaginez qu’une séance d’étude soit déplacée dans votre calendrier. Sihem vérifie le nouvel horaire et vos habitudes. Si ses règles déclenchent un suivi, le modèle de langage rédige le message pour Telegram.',
-    es: 'Imagina que una sesión de estudio cambia de hora en tu calendario. Sihem comprueba el nuevo horario y tus rutinas. Si sus reglas activan un seguimiento, el modelo de lenguaje redacta el mensaje para Telegram.',
-    ar: 'تخيّل أن موعد جلسة مذاكرة تغيّر في تقويمك. يراجع Sihem الموعد الجديد وروتينك قبل أن يقرر إرسال رسالة متابعة على تيليجرام. إذا أشارت القواعد إلى الحاجة للمتابعة، يصوغ نموذج اللغة الرسالة.',
-  },
-} as const
-
 const OodDemo = dynamic(() => import('./OodDemo'))
 
 const labels = {
   back: { en: 'Back to portfolio', de: 'Zurück zum Portfolio', fr: 'Retour au portfolio', es: 'Volver al portfolio', ar: 'العودة إلى البورتفوليو' },
+  walkthrough: { en: 'Scenario walkthrough', de: 'Szenario-Walkthrough', fr: 'Parcours de scénarios', es: 'Recorrido de escenarios', ar: 'جولة السيناريوهات' },
   problem: { en: 'Problem', de: 'Problem', fr: 'Problème', es: 'Problema', ar: 'المشكلة' },
   contribution: { en: 'My contribution', de: 'Mein Beitrag', fr: 'Ma contribution', es: 'Mi contribución', ar: 'مساهمتي' },
   outcome: { en: 'Outcome', de: 'Ergebnis', fr: 'Résultat', es: 'Resultado', ar: 'النتيجة' },
@@ -109,6 +100,7 @@ export default function CaseStudyPage({ slug }: { slug: keyof typeof caseStudyOv
         </div>
 
         <div className="portfolio-case-links">
+          {slug === 'sihem' && <Link href="#walkthrough" className="portfolio-text-link">{t(labels.walkthrough)}</Link>}
           <Link href="#evaluation" className="portfolio-text-link">{t(labels.evaluation)}</Link>
           {track === 'cifar' && <Link href="#ood-explorer" className="portfolio-text-link">{t(portfolioCopy.explorer)}</Link>}
           <Link href="#artifacts" className="portfolio-text-link">{t(labels.artifacts)}</Link>
@@ -132,12 +124,7 @@ export default function CaseStudyPage({ slug }: { slug: keyof typeof caseStudyOv
           {study.stack && <p className="mt-4 text-sm"><bdi>{study.stack.join(' · ')}</bdi></p>}
         </section>
 
-        {slug === 'sihem' && (
-          <section className="portfolio-case-section">
-            <h2>{t(sihemExample.title)}</h2>
-            <p>{t(sihemExample.context)}</p>
-          </section>
-        )}
+        {slug === 'sihem' && <SihemWalkthrough />}
 
         <section className="portfolio-case-section" id="evaluation" aria-labelledby="evaluation-title">
           <h2 id="evaluation-title">{t(labels.evaluation)}</h2>
