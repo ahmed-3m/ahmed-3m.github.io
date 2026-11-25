@@ -212,7 +212,7 @@ const failures = []
 let checksRun = 0
 
 try {
-  browser = await chromium.launch({ headless: true })
+  browser = await chromium.launch({ headless: true, ...(process.env.PLAYWRIGHT_CHROMIUM_CHANNEL ? { channel: process.env.PLAYWRIGHT_CHROMIUM_CHANNEL } : {}) })
 
   for (const profile of PROFILES) {
     const context = await browser.newContext({

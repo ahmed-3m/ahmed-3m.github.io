@@ -87,7 +87,7 @@ function isExcludedFromCanonical(relHtml) {
 
 function stripExecutableBlocks(html) {
   return html
-    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '')
+    .replace(/(<script\b[^>]*>)[\s\S]*?<\/script>/gi, '$1</script>')
     .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, '')
 }
 

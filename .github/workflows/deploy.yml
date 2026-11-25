@@ -60,7 +60,7 @@ jobs:
   build:
     needs: quality
     if: github.event.action != 'closed' && (github.event.action != 'edited' || github.event.changes.base != null)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -96,7 +96,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          npm install --prefix "$RUNNER_TEMP/pw" --no-save playwright@1.52.0
+          npm install --prefix "$RUNNER_TEMP/pw" --no-save playwright@1.58.2
           "$RUNNER_TEMP/pw/node_modules/.bin/playwright" install --with-deps chromium
           PLAYWRIGHT_MODULE_ROOT="$RUNNER_TEMP/pw" NODE_PATH="$RUNNER_TEMP/pw/node_modules" node tools/playwright-smoke.mjs
 
