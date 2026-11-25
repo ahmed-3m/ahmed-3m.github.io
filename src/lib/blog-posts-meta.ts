@@ -40,7 +40,7 @@ export const blogPostsMeta: BlogPostMeta[] = [
   {
     "slug": "deterministic-guardrails-for-llm-and-agent-systems",
     "date": "2026-11-25",
-    "ogImage": "/og-sihem.png",
+    "ogImage": "/og-deterministic-guardrails.png",
     "lastModified": "2026-11-25",
     "translations": {
       "en": {
@@ -183,7 +183,7 @@ export const blogPostsMeta: BlogPostMeta[] = [
   {
     "slug": "ood-diffusion-thesis",
     "date": "2026-07-12",
-    "ogImage": "/og-diffusion-ood.png",
+    "ogImage": "/og-ood-diffusion-thesis.png",
     "lastModified": "2026-11-13",
     "citation": {
       "title": "Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control",

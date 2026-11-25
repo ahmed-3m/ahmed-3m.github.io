@@ -70,7 +70,7 @@ function card({ eyebrow, title, sub, stat }) {
   <text x="72" y="302" font-family="${SANS}" font-size="29" fill="${DIM}">${sub}</text>
   <rect x="72" y="366" width="${pillWidth}" height="64" rx="10" fill="#0d1017" stroke="#1c2536"/>
   <text x="100" y="406" font-family="${MONO}" font-size="25" fill="${ACCENT}">${stat}</text>
-  <text x="72" y="560" font-family="${MONO}" font-size="22" fill="${DIM}">Ahmed Mohammed · AI/ML &amp; CV Engineer</text>
+  <text x="72" y="560" font-family="${MONO}" font-size="22" fill="${DIM}">Ahmed Mohammed · AI/ML Engineer · Linz, Austria</text>
 </svg>`
 }
 
@@ -78,8 +78,8 @@ const CARDS = {
   'og-image.png': {
     eyebrow: 'ahmed-3m.github.io',
     title: 'Ahmed Mohammed',
-    sub: 'AI/ML & Computer Vision Engineer · M.Sc. Thesis Graded 1',
-    stat: 'Computer vision · Industrial ML · Diffusion research',
+    sub: 'AI/ML Engineer · Linz, Austria · M.Sc. Thesis Graded 1',
+    stat: 'Industrial CV · Diffusion OOD · Reliable LLM & Agent Systems',
   },
   'og-news.png': {
     eyebrow: 'ahmed-3m.github.io/news',
@@ -103,7 +103,19 @@ const CARDS = {
     eyebrow: 'ahmed-3m.github.io/case-studies/sihem',
     title: 'Sihem — Case Study',
     sub: 'Personal AI assistant · Telegram + PWA',
-    stat: 'tech2b incubator · live beta',
+    stat: 'tech2b incubator · invitation-only beta',
+  },
+  'og-ood-diffusion-thesis.png': {
+    eyebrow: 'ahmed-3m.github.io/blog/ood-diffusion-thesis',
+    title: 'Conditional Diffusion for OOD',
+    sub: 'Class-conditional separation loss · binary airplane-vs-rest',
+    stat: '99.03% ± 0.07% AUROC · 3-seed mean (+6.5pp)',
+  },
+  'og-deterministic-guardrails.png': {
+    eyebrow: 'ahmed-3m.github.io/blog/deterministic-guardrails-for-llm-and-agent-systems',
+    title: 'Deterministic AI Guardrails',
+    sub: "Sihem's arbiter loop & mergeproof's zero-LLM PR gate",
+    stat: 'Probabilistic synthesis · Deterministic boundaries',
   },
   'og-diffusion-models-anomaly-detection.png': {
     eyebrow: 'ahmed-3m.github.io/blog/diffusion-models-anomaly-detection',

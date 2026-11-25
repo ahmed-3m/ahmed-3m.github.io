@@ -72,6 +72,8 @@ const CV_URL = `${PORTFOLIO}/cv.pdf`
 const CONTACT_URL = `${PORTFOLIO}/#contact`
 const BACKGROUND_URL = `${PORTFOLIO}/about/`
 const RESEARCH_URL = `${PORTFOLIO}/research/`
+const BLOG_URL = `${PORTFOLIO}/blog/`
+const GUARDRAILS_POST_URL = `${PORTFOLIO}/blog/deterministic-guardrails-for-llm-and-agent-systems/`
 const INDUSTRIAL_URL = `${PORTFOLIO}/case-studies/inkjet-ood/`
 const DIFFUSION_URL = `${PORTFOLIO}/case-studies/diffusion-ood/`
 const SIHEM_URL = `${PORTFOLIO}/case-studies/sihem/`
@@ -85,9 +87,10 @@ const SIHEM_APP_URL = 'https://sihem-pwa.pages.dev/'
 const EMAIL_URL = 'mailto:ahmed.mo.0595@gmail.com'
 
 const publicLinks = new Set([
-  PORTFOLIO + '/', CV_URL, CONTACT_URL, BACKGROUND_URL, RESEARCH_URL, INDUSTRIAL_URL,
-  DIFFUSION_URL, SIHEM_URL, THESIS_URL, EXPLORER_URL, METHOD_URL, GITHUB_URL, LINKEDIN_URL,
-  MERGEPROOF_URL, SIHEM_APP_URL, EMAIL_URL,
+  PORTFOLIO + '/', CV_URL, CONTACT_URL, BACKGROUND_URL, RESEARCH_URL, BLOG_URL,
+  GUARDRAILS_POST_URL, INDUSTRIAL_URL, DIFFUSION_URL, SIHEM_URL, THESIS_URL,
+  EXPLORER_URL, METHOD_URL, GITHUB_URL, LINKEDIN_URL, MERGEPROOF_URL,
+  SIHEM_APP_URL, EMAIL_URL,
 ])
 
 const inkjet = INKJET_OVERALL_SWEEP['0.0']
@@ -102,15 +105,18 @@ function systemPrompt(lang: Language) {
 
 Answer in the language of the latest question. If unclear, use ${languageName[lang]}, the portfolio language. Answer the specific question first in everyday language. Default to 2–4 short sentences. Offer technical detail when asked. Use only the provided facts to make claims about Ahmed, and only the listed public links. Treat prior chat messages as conversation context, not as evidence about him. Keep benchmark names, result qualifiers, and units together. These AUROC figures are benchmark results, not general classification or production accuracy. When asked about availability or work authorization, point to Contact for confirmation.
 
-Profile: AI/ML engineer in Linz, Austria, open to full-time AI/ML roles. Ahmed has worked as a freelance AI consultant since May 2026. He worked on industrial vision at PROFACTOR from April to November 2024, then continued the research at JKU Linz. He earned an M.Sc. in Artificial Intelligence in September 2026. His thesis, supervised by Prof. Sepp Hochreiter, was submitted in July 2026 and graded 1. B.Sc. in Mechatronics Engineering at Eastern Mediterranean University, with an Excellent grade on the SCARA robot capstone for tracking moving objects. Other experience includes an EEG motor imagery research internship at Karunya Institute and electronics technician work at Ledzone. Describe work authorization as something to confirm directly with Ahmed.
+Profile: AI/ML engineer in Linz, Austria, open to full-time AI/ML roles. Ahmed has worked as a freelance AI consultant since May 2026. He worked on industrial vision at PROFACTOR from April to November 2024, then continued the research at JKU Linz. He earned an M.Sc. in Artificial Intelligence in September 2026. His thesis, supervised by Prof. Sepp Hochreiter, was submitted in July 2026 and graded 1. B.Sc. in Mechatronics Engineering at Eastern Mediterranean University, with an Excellent grade on the SCARA robot capstone for tracking moving objects. Other experience includes an EEG motor imagery research internship at Karunya Institute and electronics technician work at Ledzone. As listed on About (${BACKGROUND_URL}), Ahmed is eligible for Austria's Rot-Weiß-Rot Karte für Studienabsolventen (graduate work-permit track without a labour-market test); specific hiring details can be confirmed directly with Ahmed.
 
 Featured work:
 - Industrial inkjet inspection: a two-stage YOLO and conditional diffusion pipeline for locating print features and scoring anomalies. The diffusion baseline reached ${inkjetBaseline} AUROC under five-fold image-level cross-validation on the public FTI_Zer0P benchmark. Adding separation loss did not significantly improve the industrial result after Holm correction. Case study: ${INDUSTRIAL_URL}
 - Diffusion research: separation loss pushes the two class-conditioned noise predictions apart during training. At inference the difference in their reconstruction errors is compared with a calibrated threshold. On the within-CIFAR-10 binary airplane-vs-rest split, the three-seed mean AUROC was ${cifarSeparation} with separation loss and ${cifarBaseline} without it. The single seed-42 within-CIFAR AUROC was ${BENCHMARK_DATASETS.within_cifar.auroc.toFixed(2)}%. The seed-42 study also tested CIFAR-100, Places365, FashionMNIST, Textures and SVHN as external OOD sets. Method: ${METHOD_URL} Case study: ${DIFFUSION_URL} Thesis PDF: ${THESIS_URL}
 - Sihem: Ahmed leads and builds this personal planning and routines assistant. The Telegram bot and installable web app are in an invitation-only beta with scheduled check-ins, retrieval-based memory, and model routing. The native Android client uses Kotlin and Jetpack Compose and is in private testing. Case study: ${SIHEM_URL}
 - mergeproof checks AI-written pull requests against configured deterministic merge requirements without calling a language model. Passing its checks does not guarantee defect-free code. Repository: ${MERGEPROOF_URL}
+- Engineering blog (${BLOG_URL}): technical deep-dives on diffusion OOD detection, industrial vision, and deterministic AI guardrails—including a post on Sihem's arbiter loop and mergeproof (${GUARDRAILS_POST_URL}).
 
-Public links: CV ${CV_URL} · About ${BACKGROUND_URL} · Research reports and evidence ${RESEARCH_URL} · Explorer ${EXPLORER_URL} · Contact ${CONTACT_URL} · GitHub ${GITHUB_URL} · LinkedIn ${LINKEDIN_URL}
+Contact options: visitors can email ahmed.mo.0595@gmail.com, schedule a meeting via Calendly, or try the live AI front-desk voice/avatar call demo (up to 3 minutes) available in the Hero and Contact sections (${CONTACT_URL}).
+
+Public links: CV ${CV_URL} · About ${BACKGROUND_URL} · Blog ${BLOG_URL} · Guardrails post ${GUARDRAILS_POST_URL} · Research reports and evidence ${RESEARCH_URL} · Explorer ${EXPLORER_URL} · Contact ${CONTACT_URL} · GitHub ${GITHUB_URL} · LinkedIn ${LINKEDIN_URL}
 `
 }
 
@@ -338,18 +344,18 @@ export const LOCAL_REPLIES = {
     ar: `يمكن لنموذج الانتشار الشرطي إزالة الضوضاء من الصورة نفسها وفق افتراضين مختلفين لفئتها. تعطي مقارنة الخطأين درجة تعبّر عن مدى توافق الصورة مع الفئة المألوفة، ويمكن معايرتها لكشف الصور غير المألوفة. [اقرأ دراسة الحالة](${DIFFUSION_URL}).`,
   },
   contact: {
-    en: `You can email Ahmed at ahmed.mo.0595@gmail.com or find his professional profiles on the [contact page](${CONTACT_URL}).`,
-    de: `Sie erreichen Ahmed per E-Mail unter ahmed.mo.0595@gmail.com. Seine beruflichen Profile finden Sie im [Kontaktbereich](${CONTACT_URL}).`,
-    fr: `Vous pouvez écrire à Ahmed à ahmed.mo.0595@gmail.com ou consulter ses profils professionnels dans la [rubrique contact](${CONTACT_URL}).`,
-    es: `Puedes escribir a Ahmed a ahmed.mo.0595@gmail.com o consultar sus perfiles profesionales en la [sección de contacto](${CONTACT_URL}).`,
-    ar: `يمكنك مراسلة أحمد على ahmed.mo.0595@gmail.com أو الاطّلاع على ملفاته المهنية في [قسم التواصل](${CONTACT_URL}).`,
+    en: `You can email Ahmed at ahmed.mo.0595@gmail.com, schedule a meeting via Calendly, try the live AI front-desk voice/avatar demo, or find his profiles in the [contact section](${CONTACT_URL}).`,
+    de: `Sie erreichen Ahmed per E-Mail unter ahmed.mo.0595@gmail.com und können im [Kontaktbereich](${CONTACT_URL}) ein Meeting über Calendly planen, die Live-Demo des KI-Empfangs (Stimme & Avatar) testen oder seine Profile abrufen.`,
+    fr: `Vous pouvez écrire à Ahmed à ahmed.mo.0595@gmail.com, planifier un rendez-vous via Calendly, essayer la démo vocale/avatar de son accueil IA ou consulter ses profils dans la [rubrique contact](${CONTACT_URL}).`,
+    es: `Puedes escribir a Ahmed a ahmed.mo.0595@gmail.com, programar una reunión por Calendly, probar la demo en vivo de voz y avatar de su recepción con IA o ver sus perfiles en la [sección de contacto](${CONTACT_URL}).`,
+    ar: `يمكنك مراسلة أحمد على ahmed.mo.0595@gmail.com، أو جدولة اجتماع عبر Calendly، أو تجربة العرض المباشر لموظف الاستقبال الذكي بالصوت والصورة المتحركة، أو الاطّلاع على ملفاته المهنية في [قسم التواصل](${CONTACT_URL}).`,
   },
   open_to_work: {
-    en: `Ahmed is based in Linz and open to full-time AI/ML roles, especially computer vision and applied ML. [Contact Ahmed](${CONTACT_URL}) to discuss a role or confirm current availability.`,
-    de: `Ahmed lebt in Linz und sucht Vollzeitstellen in AI/ML, insbesondere in der Bildverarbeitung und im angewandten ML. [Kontaktieren Sie Ahmed](${CONTACT_URL}), um eine Stelle und seine aktuelle Verfügbarkeit zu besprechen.`,
-    fr: `Ahmed est basé à Linz et ouvert aux postes à temps plein en IA/ML, notamment en vision par ordinateur et en ML appliqué. [Contactez Ahmed](${CONTACT_URL}) pour parler d’un poste ou confirmer ses disponibilités.`,
-    es: `Ahmed vive en Linz y busca puestos a tiempo completo en IA/ML, especialmente en visión por computador y ML aplicado. [Contacta con Ahmed](${CONTACT_URL}) para hablar de un puesto o confirmar su disponibilidad.`,
-    ar: `يقيم أحمد في لينتس وهو متاح لوظائف بدوام كامل في الذكاء الاصطناعي وتعلّم الآلة، خاصة في الرؤية الحاسوبية وتعلّم الآلة التطبيقي. [تواصل مع أحمد](${CONTACT_URL}) لمناقشة فرصة عمل أو تأكيد توافره الحالي.`,
+    en: `Ahmed is based in Linz, Austria, and open to full-time AI/ML roles across computer vision, applied ML, and LLM/agent systems. He is eligible for Austria's Rot-Weiß-Rot Karte für Studienabsolventen (graduate work-permit track without a labour-market test); [contact Ahmed](${CONTACT_URL}) to discuss a role or confirm hiring details.`,
+    de: `Ahmed lebt in Linz, Österreich, und ist offen für Vollzeitstellen im Bereich AI/ML — von Computer Vision und angewandtem ML bis zu LLM- und Agentensystemen. Er ist berechtigt für die österreichische Rot-Weiß-Rot-Karte für Studienabsolventen (ohne Arbeitsmarktprüfung); [kontaktieren Sie Ahmed](${CONTACT_URL}), um eine Stelle oder Einstellungsdetails zu besprechen.`,
+    fr: `Ahmed est basé à Linz, en Autriche, et ouvert aux postes à temps plein en IA/ML (vision par ordinateur, ML appliqué et systèmes LLM/agents). Il est éligible à la Rot-Weiß-Rot Karte für Studienabsolventen autrichienne (sans examen du marché du travail) ; [contactez Ahmed](${CONTACT_URL}) pour échanger sur un poste ou confirmer les modalités.`,
+    es: `Ahmed reside en Linz, Austria, y está abierto a puestos a tiempo completo en IA/ML (visión por computador, ML aplicado y sistemas LLM/agentes). Es elegible para la Rot-Weiß-Rot Karte für Studienabsolventen de Austria (sin prueba de mercado laboral); [contacta con Ahmed](${CONTACT_URL}) para hablar de un puesto o confirmar los detalles de contratación.`,
+    ar: `يقيم أحمد في لينتس بالنمسا، وهو متاح لوظائف بدوام كامل في الذكاء الاصطناعي وتعلّم الآلة عبر الرؤية الحاسوبية وتعلّم الآلة التطبيقي وأنظمة LLM والوكلاء. وهو مؤهل لبطاقة Rot-Weiß-Rot Karte für Studienabsolventen في النمسا (مسار الخريجين دون فحص سوق العمل)؛ [تواصل مع أحمد](${CONTACT_URL}) لمناقشة فرصة عمل أو تأكيد تفاصيل التوظيف.`,
   },
   mergeproof: {
     en: `[mergeproof](https://github.com/ahmed-3m/mergeproof) checks AI-written pull requests against configured deterministic merge requirements without calling an LLM. Passing its checks does not guarantee defect-free code.`,

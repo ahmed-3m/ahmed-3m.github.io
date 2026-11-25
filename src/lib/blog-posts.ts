@@ -33,7 +33,7 @@ const blogPosts: BlogPost[] = [
   {
     slug: 'deterministic-guardrails-for-llm-and-agent-systems',
     date: '2026-11-25',
-    ogImage: '/og-sihem.png',
+    ogImage: '/og-deterministic-guardrails.png',
     lastModified: '2026-11-25',
     translations: {
       en: {
@@ -471,7 +471,7 @@ Signals (calendar, routines, activity logs)
   {
     slug: 'ood-diffusion-thesis',
     date: '2026-07-12',
-    ogImage: '/og-diffusion-ood.png',
+    ogImage: '/og-ood-diffusion-thesis.png',
     lastModified: '2026-11-13',
     citation: {
       title:
