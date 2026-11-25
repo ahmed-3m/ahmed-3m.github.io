@@ -84,7 +84,7 @@ const GITHUB_URL = 'https://github.com/ahmed-3m'
 const LINKEDIN_URL = 'https://www.linkedin.com/in/ahmed-3m/'
 const MERGEPROOF_URL = `${GITHUB_URL}/mergeproof`
 const SIHEM_APP_URL = 'https://sihem-pwa.pages.dev/'
-const EMAIL_URL = 'mailto:ahmed.mo.0595@gmail.com'
+const EMAIL_URL = 'mailto:ahmed.mu.0905@gmail.com'
 
 const publicLinks = new Set([
   PORTFOLIO + '/', CV_URL, CONTACT_URL, BACKGROUND_URL, RESEARCH_URL, BLOG_URL,
@@ -114,7 +114,7 @@ Featured work:
 - mergeproof checks AI-written pull requests against configured deterministic merge requirements without calling a language model. Passing its checks does not guarantee defect-free code. Repository: ${MERGEPROOF_URL}
 - Engineering blog (${BLOG_URL}): technical deep-dives on diffusion OOD detection, industrial vision, and deterministic AI guardrails—including a post on Sihem's arbiter loop and mergeproof (${GUARDRAILS_POST_URL}).
 
-Contact options: visitors can email ahmed.mo.0595@gmail.com, schedule a meeting via Calendly, or try the live AI front-desk voice/avatar call demo (up to 3 minutes) available in the Hero and Contact sections (${CONTACT_URL}).
+Contact options: visitors can email ahmed.mu.0905@gmail.com, schedule a meeting via Calendly, or try the live AI front-desk voice/avatar call demo (up to 3 minutes) available in the Hero and Contact sections (${CONTACT_URL}).
 
 Public links: CV ${CV_URL} · About ${BACKGROUND_URL} · Blog ${BLOG_URL} · Guardrails post ${GUARDRAILS_POST_URL} · Research reports and evidence ${RESEARCH_URL} · Explorer ${EXPLORER_URL} · Contact ${CONTACT_URL} · GitHub ${GITHUB_URL} · LinkedIn ${LINKEDIN_URL}
 `
@@ -344,11 +344,11 @@ export const LOCAL_REPLIES = {
     ar: `يمكن لنموذج الانتشار الشرطي إزالة الضوضاء من الصورة نفسها وفق افتراضين مختلفين لفئتها. تعطي مقارنة الخطأين درجة تعبّر عن مدى توافق الصورة مع الفئة المألوفة، ويمكن معايرتها لكشف الصور غير المألوفة. [اقرأ دراسة الحالة](${DIFFUSION_URL}).`,
   },
   contact: {
-    en: `You can email Ahmed at ahmed.mo.0595@gmail.com, schedule a meeting via Calendly, try the live AI front-desk voice/avatar demo, or find his profiles in the [contact section](${CONTACT_URL}).`,
-    de: `Sie erreichen Ahmed per E-Mail unter ahmed.mo.0595@gmail.com und können im [Kontaktbereich](${CONTACT_URL}) ein Meeting über Calendly planen, die Live-Demo des KI-Empfangs (Stimme & Avatar) testen oder seine Profile abrufen.`,
-    fr: `Vous pouvez écrire à Ahmed à ahmed.mo.0595@gmail.com, planifier un rendez-vous via Calendly, essayer la démo vocale/avatar de son accueil IA ou consulter ses profils dans la [rubrique contact](${CONTACT_URL}).`,
-    es: `Puedes escribir a Ahmed a ahmed.mo.0595@gmail.com, programar una reunión por Calendly, probar la demo en vivo de voz y avatar de su recepción con IA o ver sus perfiles en la [sección de contacto](${CONTACT_URL}).`,
-    ar: `يمكنك مراسلة أحمد على ahmed.mo.0595@gmail.com، أو جدولة اجتماع عبر Calendly، أو تجربة العرض المباشر لموظف الاستقبال الذكي بالصوت والصورة المتحركة، أو الاطّلاع على ملفاته المهنية في [قسم التواصل](${CONTACT_URL}).`,
+    en: `You can email Ahmed at ahmed.mu.0905@gmail.com, schedule a meeting via Calendly, try the live AI front-desk voice/avatar demo, or find his profiles in the [contact section](${CONTACT_URL}).`,
+    de: `Sie erreichen Ahmed per E-Mail unter ahmed.mu.0905@gmail.com und können im [Kontaktbereich](${CONTACT_URL}) ein Meeting über Calendly planen, die Live-Demo des KI-Empfangs (Stimme & Avatar) testen oder seine Profile abrufen.`,
+    fr: `Vous pouvez écrire à Ahmed à ahmed.mu.0905@gmail.com, planifier un rendez-vous via Calendly, essayer la démo vocale/avatar de son accueil IA ou consulter ses profils dans la [rubrique contact](${CONTACT_URL}).`,
+    es: `Puedes escribir a Ahmed a ahmed.mu.0905@gmail.com, programar una reunión por Calendly, probar la demo en vivo de voz y avatar de su recepción con IA o ver sus perfiles en la [sección de contacto](${CONTACT_URL}).`,
+    ar: `يمكنك مراسلة أحمد على ahmed.mu.0905@gmail.com، أو جدولة اجتماع عبر Calendly، أو تجربة العرض المباشر لموظف الاستقبال الذكي بالصوت والصورة المتحركة، أو الاطّلاع على ملفاته المهنية في [قسم التواصل](${CONTACT_URL}).`,
   },
   open_to_work: {
     en: `Ahmed is based in Linz, Austria, and open to full-time AI/ML roles across computer vision, applied ML, and LLM/agent systems. He is eligible for Austria's Rot-Weiß-Rot Karte für Studienabsolventen (graduate work-permit track without a labour-market test); [contact Ahmed](${CONTACT_URL}) to discuss a role or confirm hiring details.`,
