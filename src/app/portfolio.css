@@ -1052,7 +1052,7 @@ body {
   border: 1px solid var(--cd-b0);
   border-radius: 0.75rem;
   background: var(--cd-surf);
-  box-shadow: 0 4px 14px -8px rgba(0, 0, 0, 0.35);
+  box-shadow: var(--glass-subtle-shadow);
   transition:
     border-color 220ms var(--cd-ease, cubic-bezier(0.16, 1, 0.3, 1)),
     box-shadow 220ms var(--cd-ease, cubic-bezier(0.16, 1, 0.3, 1)),
@@ -1063,21 +1063,9 @@ body {
 .portfolio-feed-card:focus-within {
   border-color: var(--cd-b-accent);
   box-shadow:
-    0 14px 36px rgba(0, 0, 0, 0.24),
+    var(--glass-medium-shadow),
     0 0 0 1px var(--cd-accent-dim);
   transform: translateY(-2px);
-}
-
-[data-theme="light"] .portfolio-feed-card {
-  box-shadow: 0 4px 16px -8px rgba(87, 64, 38, 0.14);
-}
-
-[data-theme="light"] .portfolio-feed-card:hover,
-[data-theme="light"] .portfolio-feed-card:focus-within {
-  border-color: var(--cd-b-accent);
-  box-shadow:
-    0 14px 32px -12px rgba(87, 64, 38, 0.22),
-    0 0 0 1px var(--cd-accent-dim);
 }
 
 .portfolio-inline-link {
