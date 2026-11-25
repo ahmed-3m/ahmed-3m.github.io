@@ -1080,13 +1080,48 @@ body::before {
   padding: 32px 0 max(88px, calc(72px + env(safe-area-inset-bottom)));
   position: relative; z-index: 1;
 }
-.cd-footer-inner { display: flex; justify-content: space-between; align-items: center; }
+.cd-footer-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+.cd-footer-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 20px;
+}
 .cd-footer-brand {
   font-family: var(--font-display, 'Space Grotesk', sans-serif);
   font-size: 15px; font-weight: 700; color: var(--cd-fg2);
   direction: ltr; unicode-bidi: isolate;
+  flex-shrink: 0;
 }
 .cd-footer-brand span { color: var(--cd-accent); }
+.cd-footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px 16px;
+}
+.cd-footer-link {
+  color: var(--cd-fg3);
+  font-size: 0.8rem;
+  text-decoration: none;
+  transition: color 150ms;
+}
+.cd-footer-link:hover { color: var(--cd-fg1); }
+.cd-footer-sep {
+  color: var(--cd-fg3);
+  opacity: 0.35;
+  font-size: 0.8rem;
+  pointer-events: none;
+  user-select: none;
+}
 .cd-footer-meta {
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 11px; color: var(--cd-fg3);
@@ -1545,8 +1580,10 @@ body::before {
   .cd-rf-formula-box { padding: 16px; }
   .cd-rfc-flow { grid-template-columns: minmax(0, 1fr); }
 
-  /* Footer */
-  .cd-footer-inner { flex-direction: column; gap: 8px; text-align: center; }
+  /* Footer — already column/centered by default; compact gap on small screens */
+  .cd-footer-inner { gap: 8px; }
+  .cd-footer-top { gap: 6px 12px; }
+  .cd-footer-nav { gap: 4px 10px; }
 }
 
   /* ── Reduced motion ── */
