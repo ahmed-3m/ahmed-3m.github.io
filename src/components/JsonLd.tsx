@@ -18,7 +18,7 @@ export function PersonSchema() {
     givenName: 'Ahmed',
     familyName: 'Mohammed',
     jobTitle: 'AI/ML Engineer',
-    description: 'AI/ML Engineer building AI systems end to end: computer vision, industrial ML, anomaly detection, diffusion models, LLM products, and deterministic agent tooling. Builder of Sihem (LLM assistant in invitation-only beta) and mergeproof (checks AI-written pull requests against configured deterministic merge requirements without calling an LLM; passing those checks does not guarantee defect-free code). M.Sc. Artificial Intelligence (thesis submitted Jun 2026, degree completed 25 Sep 2026; thesis graded 1) from Johannes Kepler University Linz, supervised by Prof. Sepp Hochreiter. Achieved 99.03% ± 0.07% AUROC (3-seed mean) on a within-CIFAR airplane-vs-rest binary OOD split (single ID class; not comparable to multi-class CIFAR-10 OOD benchmarks) and 0.8673 ± 0.0230 AUROC (5-fold CV) on the public FTI_Zer0P industrial benchmark.',
+    description: 'AI/ML Engineer building AI systems end to end: computer vision, industrial ML, anomaly detection, diffusion models, LLM products, and deterministic agent tooling. Builder of Sihem (LLM assistant in invitation-only beta) and mergeproof (checks AI-written pull requests against configured deterministic merge requirements without calling an LLM; passing those checks does not guarantee defect-free code). M.Sc. Artificial Intelligence (thesis submitted Jul 2026, degree completed 25 Sep 2026; thesis graded 1) from Johannes Kepler University Linz, supervised by Prof. Sepp Hochreiter. Achieved 99.03% ± 0.07% AUROC (3-seed mean) on a within-CIFAR airplane-vs-rest binary OOD split (single ID class; not comparable to multi-class CIFAR-10 OOD benchmarks) and 0.8673 ± 0.0230 AUROC (5-fold CV) on the public FTI_Zer0P industrial benchmark.',
     url: 'https://ahmed-3m.github.io',
     image: 'https://ahmed-3m.github.io/headshot.jpg',
     email: 'ahmed.mo.0595@gmail.com',
@@ -96,7 +96,7 @@ export function PersonSchema() {
           name: 'Johannes Kepler University Linz',
         },
         // dateCreated is the submission window, not conferral — the degree was conferred 25 Sep 2026 (validFrom).
-        dateCreated: '2026-06',
+        dateCreated: '2026-07',
         validFrom: '2026-09-25',
       },
       {
@@ -148,7 +148,7 @@ export function WebsiteSchema() {
     '@type': 'WebSite',
     name: 'Ahmed Mohammed — AI/ML Engineer',
     url: 'https://ahmed-3m.github.io',
-    description: 'Portfolio of Ahmed Mohammed — AI/ML Engineer building AI systems end to end: computer vision, industrial ML, diffusion models, OOD detection, LLM products, and agent tooling. Builder of Sihem and mergeproof. 99.03% ± 0.07% AUROC on a within-CIFAR airplane-vs-rest binary OOD split (single ID class, 3-seed mean); 0.8673 ± 0.0230 AUROC on public FTI_Zer0P (5-fold CV). M.Sc. AI (thesis submitted Jun 2026, degree completed 25 Sep 2026, graded 1) from JKU Linz.',
+    description: 'Portfolio of Ahmed Mohammed — AI/ML Engineer building AI systems end to end: computer vision, industrial ML, diffusion models, OOD detection, LLM products, and agent tooling. Builder of Sihem and mergeproof. 99.03% ± 0.07% AUROC on a within-CIFAR airplane-vs-rest binary OOD split (single ID class, 3-seed mean); 0.8673 ± 0.0230 AUROC on public FTI_Zer0P (5-fold CV). M.Sc. AI (thesis submitted Jul 2026, degree completed 25 Sep 2026, graded 1) from JKU Linz.',
     author: {
       '@type': 'Person',
       name: 'Ahmed Mohammed',
@@ -256,7 +256,7 @@ export function ResearchSchema() {
     url: 'https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf',
     // The JKU university library record is the authoritative bibliographic entry.
     sameAs: ['https://epub.jku.at/obvulihs/content/titleinfo/14374221'],
-    datePublished: '2026-06',
+    datePublished: '2026-07',
     inSupportOf: "Master's Degree in Artificial Intelligence",
     author: {
       '@type': 'Person',
