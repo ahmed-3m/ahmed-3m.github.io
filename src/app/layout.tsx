@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
+import { Space_Grotesk, Inter, JetBrains_Mono, IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 import "./portfolio.css";
 import { I18nProvider } from "@/lib/i18n";
@@ -30,6 +30,14 @@ const inter = Inter({
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
+  display: "swap",
+  preload: false,
+});
+
+const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
+  variable: "--font-arabic",
+  subsets: ["arabic"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
   preload: false,
 });
@@ -86,12 +94,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
           <script dangerouslySetInnerHTML={{ __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});` }} />
         )}
-        {/* Pre-paint theme restore. Must stay inline and blocking so returning
-            visitors never flash the default dark theme. Keep the attribute
-            names and fallbacks in sync with src/lib/ThemeContext.tsx. */}
+        {/* Pre-paint theme and language/direction restore. Must stay inline and
+            blocking so returning visitors never flash the default dark theme or
+            LTR layout. Keep attribute names and fallbacks in sync with
+            src/lib/ThemeContext.tsx and src/lib/i18n.tsx. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('theme');var resolved=(t==='light'||t==='dark')?t:((window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark');document.documentElement.setAttribute('data-theme',resolved);document.documentElement.style.colorScheme=resolved;var r=localStorage.getItem('reduceTransparency');if(r==='true'||r==='false'){document.documentElement.setAttribute('data-reduce-transparency',r);}else if(window.matchMedia&&window.matchMedia('(prefers-reduced-transparency: reduce)').matches){document.documentElement.setAttribute('data-reduce-transparency','true');}}catch(e){}})();`,
+            __html: `(function(){try{var t=localStorage.getItem('theme');var resolved=(t==='light'||t==='dark')?t:((window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark');document.documentElement.setAttribute('data-theme',resolved);document.documentElement.style.colorScheme=resolved;var r=localStorage.getItem('reduceTransparency');if(r==='true'||r==='false'){document.documentElement.setAttribute('data-reduce-transparency',r);}else if(window.matchMedia&&window.matchMedia('(prefers-reduced-transparency: reduce)').matches){document.documentElement.setAttribute('data-reduce-transparency','true');}}catch(e){}try{var l=null;try{l=localStorage.getItem('language');}catch(e){}if(l!=='en'&&l!=='de'&&l!=='fr'&&l!=='es'&&l!=='ar'){var m=document.cookie.match(/(?:^|;\\s*)(?:portfolio_lang|language)=([^;]+)/);l=m?m[1]:null;}if(l==='en'||l==='de'||l==='fr'||l==='es'||l==='ar'){document.documentElement.lang=l;document.documentElement.dir=(l==='ar'?'rtl':'ltr');}}catch(e){}})();`,
           }}
         />
         <link rel="manifest" href="/manifest.json" />
@@ -107,12 +116,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <WebsiteSchema />
       </head>
       <body
-        className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased`}
+        className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} ${ibmPlexSansArabic.variable} antialiased`}
         suppressHydrationWarning
       >
-        <noscript>
-          <style>{`.reveal { opacity: 1 !important; transform: none !important; animation: none !important; }`}</style>
-        </noscript>
         <ThemeProvider>
           <I18nProvider>
             <SkipLink />

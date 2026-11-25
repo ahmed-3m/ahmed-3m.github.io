@@ -31,6 +31,444 @@ export interface LocalizedBlogPost extends BlogPostTranslation {
 
 const blogPosts: BlogPost[] = [
   {
+    slug: 'deterministic-guardrails-for-llm-and-agent-systems',
+    date: '2026-11-25',
+    ogImage: '/og-sihem.png',
+    lastModified: '2026-11-25',
+    translations: {
+      en: {
+        title: "Deterministic Guardrails for LLM and Agent Systems: Sihem's Arbiter and mergeproof",
+        excerpt:
+          "Why probabilistic language models need deterministic boundaries around scheduling, state, and verification—illustrated through Sihem's generators-arbiter-composer pipeline and mergeproof's zero-LLM pull-request gate.",
+        tags: ['Agentic AI', 'LLM Systems', 'Deterministic Guardrails', 'Sihem', 'mergeproof', 'Supabase'],
+        readingTime: '9 min read',
+        faq: [
+          {
+            question: 'How does Sihem separate deterministic decisions from LLM generation?',
+            answer:
+              'Sihem splits execution into generators, a deterministic arbiter, and a composer. Deterministic scheduling and trigger rules evaluate calendar shifts and routines before an LLM composes the Telegram or PWA check-in.',
+          },
+          {
+            question: 'What stage is Sihem currently in?',
+            answer:
+              'Sihem is in invitation-only beta on Telegram (@sihem_ai_bot) and an installable PWA (sihem-pwa.pages.dev) within the tech2b incubator in Linz, alongside a native Android client (Kotlin/Jetpack Compose) in private testing.',
+          },
+          {
+            question: 'What does mergeproof check, and what are its limits?',
+            answer:
+              'mergeproof (@ahmed-3m/mergeproof, zero dependencies, MIT) checks AI-written pull requests against configured deterministic merge requirements—such as flagging modified existing tests for human review—with 0 LLM calls. Passing deterministic checks does not guarantee defect-free code.',
+          },
+        ],
+        content: `
+## The Reliability Gap in LLM and Agent Workflows
+
+Probabilistic models excel at messy interfaces: summarizing a shifting schedule, adapting tone to a tired user, or drafting a pull request across unfamiliar files. What they are poor at is enforcing hard invariants consistently over time.
+
+When an assistant decides **whether** to interrupt someone, or an automated reviewer decides **whether** an AI-written patch touches protected tests, letting a language model improvise the rule turns a deterministic policy question into a coin flip.
+
+Across two separate projects—[Sihem](https://ahmed-3m.github.io/case-studies/sihem/) (a proactive habits and planning assistant) and [mergeproof](https://github.com/ahmed-3m/mergeproof) (a zero-dependency pull-request gate)—I reached the same architectural rule: keep the probabilistic model inside the synthesis layer, and wrap state, scheduling, and policy checks in deterministic code.
+
+## Pattern 1: Sihem's Generators → Arbiter → Composer Split
+
+Sihem is an independent personal-mentor project accepted into the **tech2b** incubator in Linz. It is currently running in **invitation-only beta** via a Telegram bot ([t.me/sihem_ai_bot](https://t.me/sihem_ai_bot)) and an installable progressive web app ([sihem-pwa.pages.dev](https://sihem-pwa.pages.dev/)), alongside a native Android client built in Kotlin and Jetpack Compose in private testing.
+
+Early prototypes showed why putting scheduling logic inside a single LLM prompt breaks down: a model cannot reliably track quiet hours, avoid duplicate nudges, or weigh calendar shifts across days from prompt instructions alone.
+
+Instead, Sihem separates proactive outreach into three explicit stages:
+
+\`\`\`text
+Signals (calendar, routines, activity logs)
+   -> Generators (candidate check-ins)
+   -> Deterministic Arbiter (rules, cooldowns, schedule state)
+   -> Composer (pgvector RAG + multi-provider LLM)
+\`\`\`
+
+### 1. Generators
+
+Scheduled jobs driven by ` + '`pg_cron`' + ` inside Supabase inspect recent activity logs (workouts, medication, study sessions, custom habits, and Google Calendar sync) and propose candidate outreach moments—such as a morning briefing, an evening review, or a check-in after a shifted calendar event.
+
+### 2. Deterministic Arbiter
+
+The arbiter runs as plain TypeScript logic inside **Deno / Supabase Edge Functions** backed by **Supabase PostgreSQL with Row-Level Security (RLS)**. It applies deterministic scheduling and trigger rules before any text is generated:
+
+- Check whether a candidate trigger conflicts with quiet windows, recent check-ins, or already-completed items.
+- Enforce per-user isolation through PostgreSQL RLS policies before any context is assembled.
+- Suppress redundant notifications so the assistant stays non-spammy even when schedules move repeatedly.
+
+Only candidates that pass the arbiter reach the language model.
+
+### 3. Composer and Multi-Provider Failover
+
+Once the arbiter approves a trigger, the composer retrieves long-term user context from ` + '`pgvector`' + ` RAG memory and drafts the message. Because an outage from a single LLM API breaks daily habit continuity, Sihem routes calls across multiple providers (**GLM**, **Gemini**, and **Groq**) with escalation and automatic failover, optionally generating voice notes via **Cloudflare MeloTTS**.
+
+Even with deterministic scheduling, generated text still requires validation and can contain errors. And because Sihem is in invitation-only beta, I treat cohort testing in Linz as ongoing product validation rather than claiming measured user outcome gains.
+
+## Pattern 2: mergeproof — 0 LLM Calls at Merge Time
+
+The same boundary problem shows up when coding agents open pull requests. Asking an LLM reviewer to verify whether an AI-generated diff obeyed repo rules introduces latency, cost, and non-determinism into a check that should be purely mechanical.
+
+[mergeproof](https://github.com/ahmed-3m/mergeproof) (published on npm as ` + '`@ahmed-3m/mergeproof`' + `, zero dependencies, MIT license) takes the opposite approach:
+
+- **0 LLM calls:** every check runs deterministically against the diff and configured merge requirements.
+- **Flagging risky edits:** for example, if an AI-written pull request modifies an existing test file, ` + '`mergeproof`' + ` flags the PR for human review rather than letting a green test suite mask a weakened assertion.
+- **Explicit honesty about scope:** passing deterministic merge requirements does **not** guarantee defect-free code; it simply enforces repeatable baseline hygiene before a human spends review time.
+
+## Shared Design Principle
+
+1. **Let deterministic code own policy and timing:** trigger rules, RLS permissions, cooldowns, and diff-level merge gates belong in testable code, not prompts.
+2. **Let probabilistic models own synthesis:** natural phrasing, multimodal meal-photo interpretation, and semantic retrieval over ` + '`pgvector`' + ` embeddings are where LLMs add real flexibility.
+3. **Design for provider failure:** multi-provider routing with failover keeps user-facing assistants resilient without relaxing the upstream arbiter rules.
+
+Whether the domain is out-of-distribution vision detection or agentic software workflows, reliability comes from knowing where the model's authority stops.
+        `,
+      },
+      de: {
+        title: 'Deterministische Guardrails für LLM- und Agentensysteme: Sihems Arbiter und mergeproof',
+        excerpt:
+          'Warum probabilistische Sprachmodelle deterministische Grenzen bei Zeitplanung, Zustand und Verifikation brauchen – gezeigt an Sihems Generators-Arbiter-Composer-Pipeline und dem LLM-freien PR-Gate mergeproof.',
+        tags: ['Agentic AI', 'LLM-Systeme', 'Deterministische Guardrails', 'Sihem', 'mergeproof', 'Supabase'],
+        readingTime: '9 Min. Lesezeit',
+        faq: [
+          {
+            question: 'Wie trennt Sihem deterministische Entscheidungen von der LLM-Generierung?',
+            answer:
+              'Sihem teilt die Ausführung in Generatoren, einen deterministischen Arbiter und einen Komponisten. Deterministische Planungs- und Trigger-Regeln prüfen Kalenderänderungen und Routinen, bevor ein LLM die Telegram- oder PWA-Nachricht formuliert.',
+          },
+          {
+            question: 'In welcher Phase befindet sich Sihem aktuell?',
+            answer:
+              'Sihem läuft als Beta mit Einladung auf Telegram (@sihem_ai_bot) und als installierbare PWA (sihem-pwa.pages.dev) im tech2b-Inkubator in Linz; ein nativer Android-Client (Kotlin/Jetpack Compose) befindet sich im privaten Test.',
+          },
+          {
+            question: 'Was prüft mergeproof, und wo liegen die Grenzen?',
+            answer:
+              'mergeproof (@ahmed-3m/mergeproof, ohne Abhängigkeiten, MIT) prüft KI-generierte Pull Requests gegen konfigurierte deterministische Merge-Anforderungen – etwa das Markieren geänderter bestehender Tests zur menschlichen Prüfung – mit 0 LLM-Aufrufen. Bestandene Prüfungen garantieren keinen fehlerfreien Code.',
+          },
+        ],
+        content: `
+## Die Zuverlässigkeitslücke in LLM- und Agenten-Workflows
+
+Probabilistische Modelle sind stark an unstrukturierten Schnittstellen: einen verschobenen Tagesplan zusammenfassen, den Ton anpassen oder einen Pull Request über unbekannte Dateien entwerfen. Schwach sind sie darin, harte Invarianten dauerhaft und reproduzierbar durchzusetzen.
+
+Wenn ein Assistent entscheidet, **ob** er jemanden unterbrechen darf, oder ein automatisierter Review-Schritt prüft, **ob** ein KI-Patch bestehende Tests verändert hat, macht ein Sprachmodell aus einer klaren Regel schnell einen Zufallstreffer.
+
+In zwei Projekten – [Sihem](https://ahmed-3m.github.io/case-studies/sihem/) (ein proaktiver Gewohnheits- und Planungsassistent) und [mergeproof](https://github.com/ahmed-3m/mergeproof) (ein Pull-Request-Gate ohne Abhängigkeiten) – hat sich dasselbe Prinzip bewährt: Das probabilistische Modell bleibt in der Syntheseschicht, während Zustand, Zeitplanung und Policy-Prüfungen in deterministischem Code liegen.
+
+## Muster 1: Sihems Trennung in Generatoren → Arbiter → Komponist
+
+Sihem ist ein eigenständiges Nebenprojekt im **tech2b**-Inkubator in Linz. Es läuft aktuell als **Beta mit Einladung** über einen Telegram-Bot ([t.me/sihem_ai_bot](https://t.me/sihem_ai_bot)) und eine installierbare Web-App ([sihem-pwa.pages.dev](https://sihem-pwa.pages.dev/)); zusätzlich befindet sich ein nativer Android-Client in Kotlin und Jetpack Compose im privaten Test.
+
+Frühe Prototypen zeigten, warum Zeitplanlogik nicht in einen einzigen LLM-Prompt gehört: Ein Sprachmodell hält Ruhezeiten, Abkühlphasen gegen Spam oder verschobene Kalendereinträge über mehrere Tage nicht zuverlässig allein über Prompt-Anweisungen ein.
+
+Darum trennt Sihem proaktive Check-ins in drei klar abgegrenzte Stufen:
+
+\`\`\`text
+Signale (Kalender, Routinen, Aktivitätslogs)
+   -> Generatoren (Kandidaten für Check-ins)
+   -> Deterministischer Arbiter (Regeln, Cooldowns, Zeitplan-Zustand)
+   -> Komponist (pgvector RAG + Multi-Provider-LLM)
+\`\`\`
+
+### 1. Generatoren
+
+Geplante Jobs über ` + '`pg_cron`' + ` in Supabase werten aktuelle Aktivitätsdaten (Workouts, Medikation, Lerneinheiten, individuelle Gewohnheiten und Google-Kalender-Sync) aus und schlagen mögliche Zeitpunkte vor – etwa ein Morgenbriefing, ein Abendreview oder eine Nachfrage nach einem verschobenen Termin.
+
+### 2. Deterministischer Arbiter
+
+Der Arbiter läuft als regulärer TypeScript-Code in **Deno / Supabase Edge Functions** auf Basis von **Supabase PostgreSQL mit Row-Level Security (RLS)**. Er wendet deterministische Planungs- und Trigger-Regeln an, bevor überhaupt Text erzeugt wird:
+
+- Prüfung, ob ein Kandidat mit Ruhezeiten, kürzlichen Check-ins oder bereits erledigten Punkten kollidiert.
+- Strikte Datentrennung pro Nutzer durch PostgreSQL-RLS-Regeln vor dem Zusammenstellen des Kontexts.
+- Unterdrückung doppelter Impulse, damit der Assistent auch bei häufigen Terminänderungen nicht aufdringlich wird.
+
+Nur freigegebene Kandidaten erreichen das Sprachmodell.
+
+### 3. Komponist und Multi-Provider-Failover
+
+Sobald der Arbiter einen Impuls freigibt, lädt der Komponist langfristigen Kontext aus dem ` + '`pgvector`' + `-RAG-Speicher und formuliert die Nachricht. Da der Ausfall einer einzelnen LLM-API die Kontinuität sofort unterbricht, routet Sihem Anfragen über mehrere Anbieter (**GLM**, **Gemini** und **Groq**) mit Eskalation und automatischem Failover sowie optionaler Sprachausgabe über **Cloudflare MeloTTS**.
+
+Auch mit deterministischer Zeitplanung muss generierter Text validiert werden und kann Fehler enthalten. Da sich Sihem in einer Beta mit Einladung befindet, dienen die Tests in Linz der laufenden Produktvalidierung – ohne vorab gemessene Wirkungskennzahlen zu behaupten.
+
+## Muster 2: mergeproof – 0 LLM-Aufrufe beim Merge
+
+Dasselbe Abgrenzungsproblem entsteht, wenn Coding-Agenten Pull Requests öffnen. Ein LLM zu fragen, ob ein KI-Diff die Repo-Regeln einhält, bringt Latenz, Kosten und Nicht-Determinismus in eine Prüfung, die rein mechanisch sein sollte.
+
+[mergeproof](https://github.com/ahmed-3m/mergeproof) (auf npm als ` + '`@ahmed-3m/mergeproof`' + `, ohne Abhängigkeiten, MIT-Lizenz) geht den umgekehrten Weg:
+
+- **0 LLM-Aufrufe:** Jede Prüfung läuft deterministisch gegen den Diff und die konfigurierten Merge-Anforderungen.
+- **Riskante Änderungen markieren:** Ändert ein KI-Pull-Request beispielsweise eine bestehende Testdatei, markiert ` + '`mergeproof`' + ` den PR zur menschlichen Prüfung, statt eine abgeschwächte Assertion hinter grünen Tests zu verbergen.
+- **Klare Grenzen:** Bestandene deterministische Prüfungen garantieren **keinen** fehlerfreien Code – sie sichern lediglich wiederholbare Basis-Hygiene vor dem menschlichen Review.
+
+## Gemeinsames Architekturprinzip
+
+1. **Deterministischer Code besitzt Regeln und Timing:** Trigger-Logik, RLS-Berechtigungen, Cooldowns und Diff-Gates gehören in testbaren Code, nicht in Prompts.
+2. **Probabilistische Modelle besitzen die Synthese:** Natürliche Formulierungen, multimodale Mahlzeitenfoto-Auswertung und semantische Suche über ` + '`pgvector`' + ` sind die Stärken von LLMs.
+3. **Ausfälle einplanen:** Multi-Provider-Routing mit Failover hält Assistenten verfügbar, ohne die vorgelagerten Arbiter-Regeln aufzuweichen.
+
+Ob bei Out-of-Distribution-Erkennung in der Bildverarbeitung oder bei agentischen Workflows: Verlässlichkeit entsteht dort, wo die Zuständigkeit des Modells sauber begrenzt ist.
+        `,
+      },
+      fr: {
+        title: "Garde-fous déterministes pour systèmes LLM et agents : l'arbitre de Sihem et mergeproof",
+        excerpt:
+          "Pourquoi les modèles de langage probabilistes ont besoin de frontières déterministes pour la planification, l'état et la vérification — illustré par l'architecture générateurs-arbitre-compositeur de Sihem et le contrôle de PR sans LLM mergeproof.",
+        tags: ['IA agentique', 'Systèmes LLM', 'Garde-fous déterministes', 'Sihem', 'mergeproof', 'Supabase'],
+        readingTime: '9 min de lecture',
+        faq: [
+          {
+            question: 'Comment Sihem sépare-t-il les décisions déterministes de la génération LLM ?',
+            answer:
+              "Sihem sépare l'exécution en générateurs, un arbitre déterministe et un compositeur. Des règles déterministes évaluent les changements d'agenda et les habitudes avant qu'un LLM ne rédige le message Telegram ou PWA.",
+          },
+          {
+            question: 'À quel stade se trouve Sihem actuellement ?',
+            answer:
+              "Sihem est en bêta sur invitation sur Telegram (@sihem_ai_bot) et en PWA installable (sihem-pwa.pages.dev) au sein de l'incubateur tech2b à Linz, avec un client Android natif (Kotlin/Jetpack Compose) en test privé.",
+          },
+          {
+            question: 'Que vérifie mergeproof et quelles sont ses limites ?',
+            answer:
+              "mergeproof (@ahmed-3m/mergeproof, zéro dépendance, licence MIT) vérifie les pull requests écrites par IA selon des critères de fusion déterministes — par exemple signaler les tests existants modifiés pour revue humaine — avec 0 appel LLM. Réussir ces vérifications ne garantit pas un code sans défaut.",
+          },
+        ],
+        content: `
+## Le déficit de fiabilité dans les workflows LLM et agents
+
+Les modèles probabilistes excellent aux interfaces ambiguës : résumer un emploi du temps mouvant, adapter le ton ou rédiger une pull request dans un dépôt peu familier. En revanche, ils appliquent mal des invariants stricts dans la durée.
+
+Lorsqu'un assistant décide **s'il doit** interrompre quelqu'un, ou qu'un contrôle automatique vérifie **si** un correctif généré par IA modifie des tests existants, confier la règle à un modèle de langage transforme une politique déterministe en tirage aléatoire.
+
+Sur deux projets distincts — [Sihem](https://ahmed-3m.github.io/case-studies/sihem/) (assistant proactif d'habitudes et de planification) et [mergeproof](https://github.com/ahmed-3m/mergeproof) (porte de contrôle de PR sans dépendance) — j'ai appliqué la même séparation : laisser le modèle probabiliste dans la couche de synthèse, et confier l'état, la planification et la conformité à du code déterministe.
+
+## Modèle 1 : la séparation Générateurs → Arbitre → Compositeur de Sihem
+
+Sihem est un projet personnel accepté dans l'incubateur **tech2b** à Linz. Il fonctionne actuellement en **bêta sur invitation** via un bot Telegram ([t.me/sihem_ai_bot](https://t.me/sihem_ai_bot)) et une application web progressive installable ([sihem-pwa.pages.dev](https://sihem-pwa.pages.dev/)), avec un client Android natif en Kotlin et Jetpack Compose en test privé.
+
+Les premiers prototypes ont montré pourquoi la logique de planification ne doit pas vivre dans un prompt unique : un LLM ne garantit pas de manière fiable les plages de calme, la déduplication des rappels ni la gestion des décalages d'agenda sur plusieurs jours.
+
+Sihem découpe donc les relances proactives en trois étapes explicites :
+
+\`\`\`text
+Signaux (agenda, routines, journaux d'activité)
+   -> Générateurs (candidats de suivi)
+   -> Arbitre déterministe (règles, délais, état du planning)
+   -> Compositeur (RAG pgvector + LLM multi-fournisseurs)
+\`\`\`
+
+### 1. Générateurs
+
+Des tâches planifiées par ` + '`pg_cron`' + ` dans Supabase examinent les journaux récents (entraînements, médication, sessions d'étude, habitudes personnalisées et synchro Google Calendar) et proposent des moments candidats : briefing du matin, bilan du soir ou suivi après le déplacement d'un événement.
+
+### 2. Arbitre déterministe
+
+L'arbitre s'exécute en TypeScript pur dans des **Edge Functions Deno / Supabase** appuyées sur **Supabase PostgreSQL avec Row-Level Security (RLS)**. Il applique des règles déterministes de planification et de déclenchement avant toute génération de texte :
+
+- Vérifier qu'un déclencheur candidat n'entre pas en conflit avec les heures calmes, des rappels récents ou des tâches déjà accomplies.
+- Isoler strictement les données par utilisateur via les politiques RLS de PostgreSQL avant d'assembler le contexte.
+- Éviter les notifications redondantes même lorsque l'agenda change plusieurs fois de suite.
+
+Seuls les candidats validés par l'arbitre atteignent le modèle de langage.
+
+### 3. Compositeur et basculement multi-fournisseurs
+
+Une fois le déclenchement approuvé, le compositeur récupère le contexte long terme dans la mémoire RAG ` + '`pgvector`' + ` et rédige le message. Comme la panne d'une seule API LLM brise immédiatement la régularité des habitudes, Sihem route les appels entre plusieurs fournisseurs (**GLM**, **Gemini** et **Groq**) avec escalade et basculement automatique, plus des mémos vocaux via **Cloudflare MeloTTS**.
+
+Même avec une planification déterministe, le texte généré doit être validé et peut contenir des erreurs. Et comme Sihem reste en bêta sur invitation, les tests menés à Linz servent à la validation produit en cours, sans revendiquer de gains chiffrés d'impact utilisateur.
+
+## Modèle 2 : mergeproof — 0 appel LLM au moment de la fusion
+
+Le même problème de frontière apparaît lorsque des agents de code ouvrent des pull requests. Demander à un relecteur LLM si un diff généré par IA respecte les règles du dépôt ajoute latence, coût et variabilité à un contrôle qui doit rester purement mécanique.
+
+[mergeproof](https://github.com/ahmed-3m/mergeproof) (publié sur npm sous ` + '`@ahmed-3m/mergeproof`' + `, zéro dépendance, licence MIT) adopte l'approche inverse :
+
+- **0 appel LLM :** chaque vérification s'exécute de manière déterministe sur le diff et les exigences de fusion configurées.
+- **Signalement des modifications sensibles :** par exemple, si une pull request écrite par IA modifie un fichier de test existant, ` + '`mergeproof`' + ` signale la PR pour une revue humaine au lieu de laisser des tests verts masquer une assertion affaiblie.
+- **Portée explicite :** réussir les vérifications déterministes ne garantit **pas** un code sans défaut ; cela impose simplement une hygiène répétable avant la revue humaine.
+
+## Principe de conception partagé
+
+1. **Laisser au code déterministe les règles et le timing :** déclencheurs, permissions RLS, délais d'attente et portes de fusion sur diff appartiennent au code testable, pas aux prompts.
+2. **Laisser aux modèles probabilistes la synthèse :** formulation naturelle, analyse multimodale de photos de repas et recherche sémantique sur ` + '`pgvector`' + ` exploitent au mieux la souplesse des LLM.
+3. **Prévoir la panne des fournisseurs :** le routage multi-fournisseurs avec basculement préserve la disponibilité sans affaiblir les règles de l'arbitre en amont.
+
+De la détection OOD en vision par ordinateur aux workflows d'agents logiciels, la fiabilité vient d'une limite nette autour de l'autorité du modèle.
+        `,
+      },
+      es: {
+        title: 'Controles deterministas para sistemas LLM y agentes: el árbitro de Sihem y mergeproof',
+        excerpt:
+          'Por qué los modelos de lenguaje probabilísticos necesitan límites deterministas en planificación, estado y verificación, ilustrado con la arquitectura generadores-árbitro-compositor de Sihem y la puerta de PR sin LLM mergeproof.',
+        tags: ['IA agéntica', 'Sistemas LLM', 'Controles deterministas', 'Sihem', 'mergeproof', 'Supabase'],
+        readingTime: '9 min de lectura',
+        faq: [
+          {
+            question: '¿Cómo separa Sihem las decisiones deterministas de la generación con LLM?',
+            answer:
+              'Sihem divide la ejecución en generadores, un árbitro determinista y un compositor. Reglas deterministas evalúan los cambios de calendario y las rutinas antes de que un LLM redacte el aviso por Telegram o PWA.',
+          },
+          {
+            question: '¿En qué fase se encuentra Sihem actualmente?',
+            answer:
+              'Sihem está en beta por invitación en Telegram (@sihem_ai_bot) y como PWA instalable (sihem-pwa.pages.dev) dentro de la incubadora tech2b en Linz, junto con un cliente nativo de Android (Kotlin/Jetpack Compose) en pruebas privadas.',
+          },
+          {
+            question: '¿Qué comprueba mergeproof y cuáles son sus límites?',
+            answer:
+              'mergeproof (@ahmed-3m/mergeproof, cero dependencias, licencia MIT) valida pull requests escritos por IA frente a requisitos de fusión deterministas configurados —por ejemplo, marcar pruebas existentes modificadas para revisión humana— con 0 llamadas LLM. Superar estas comprobaciones no garantiza código sin errores.',
+          },
+        ],
+        content: `
+## La brecha de fiabilidad en flujos con LLM y agentes
+
+Los modelos probabilísticos brillan en interfaces ambiguas: resumir un horario cambiante, adaptar el tono o redactar un pull request en archivos poco conocidos. Donde fallan es en hacer cumplir invariantes estrictas de forma constante a lo largo del tiempo.
+
+Cuando un asistente decide **si debe** interrumpir a una persona, o una revisión automática comprueba **si** un parche escrito por IA ha tocado pruebas existentes, dejar la regla en manos de un modelo de lenguaje convierte una política determinista en una moneda al aire.
+
+En dos proyectos distintos —[Sihem](https://ahmed-3m.github.io/case-studies/sihem/) (un asistente proactivo de hábitos y planificación) y [mergeproof](https://github.com/ahmed-3m/mergeproof) (una puerta de pull requests sin dependencias)— apliqué el mismo principio: mantener el modelo probabilístico en la capa de síntesis y encerrar el estado, la programación horaria y las políticas en código determinista.
+
+## Patrón 1: separación Generadores → Árbitro → Compositor en Sihem
+
+Sihem es un proyecto independiente aceptado en la incubadora **tech2b** en Linz. Actualmente opera en **beta por invitación** mediante un bot de Telegram ([t.me/sihem_ai_bot](https://t.me/sihem_ai_bot)) y una aplicación web instalable ([sihem-pwa.pages.dev](https://sihem-pwa.pages.dev/)), junto con un cliente nativo de Android en Kotlin y Jetpack Compose en pruebas privadas.
+
+Los primeros prototipos mostraron por qué la lógica de horarios no debe vivir dentro de un único prompt: un LLM no respeta de forma fiable las horas de descanso, los enfriamientos anti-spam ni los cambios repetidos de calendario solo a partir de instrucciones en texto.
+
+Por eso Sihem divide los seguimientos proactivos en tres etapas explícitas:
+
+\`\`\`text
+Señales (calendario, rutinas, registros de actividad)
+   -> Generadores (candidatos de seguimiento)
+   -> Árbitro determinista (reglas, esperas, estado del horario)
+   -> Compositor (RAG pgvector + LLM multiproveedor)
+\`\`\`
+
+### 1. Generadores
+
+Tareas programadas mediante ` + '`pg_cron`' + ` en Supabase inspeccionan los registros recientes (entrenamientos, medicación, sesiones de estudio, hábitos personalizados y sincronización con Google Calendar) y proponen momentos candidatos, como un resumen matutino, una revisión nocturna o un seguimiento tras mover un evento.
+
+### 2. Árbitro determinista
+
+El árbitro se ejecuta como lógica TypeScript directa en **Deno / Supabase Edge Functions** sobre **Supabase PostgreSQL con Row-Level Security (RLS)**. Aplica reglas deterministas de programación y disparo antes de generar texto:
+
+- Comprobar si un candidato choca con franjas de silencio, avisos recientes o tareas ya completadas.
+- Aislar estrictamente los datos por usuario mediante políticas RLS de PostgreSQL antes de armar el contexto.
+- Suprimir notificaciones redundantes incluso cuando la agenda cambia varias veces.
+
+Solo los candidatos aprobados por el árbitro llegan al modelo de lenguaje.
+
+### 3. Compositor y failover multiproveedor
+
+Cuando el árbitro aprueba un disparo, el compositor recupera contexto a largo plazo desde la memoria RAG en ` + '`pgvector`' + ` y redacta el mensaje. Como la caída de una sola API LLM rompe de inmediato la constancia diaria, Sihem enruta las peticiones entre varios proveedores (**GLM**, **Gemini** y **Groq**) con escalado y failover automático, además de notas de voz opcionales con **Cloudflare MeloTTS**.
+
+Incluso con programación determinista, el texto generado requiere validación y puede contener errores. Y al estar Sihem en beta por invitación, las pruebas en Linz se enfocan en la validación continua del producto sin afirmar mejoras medidas en resultados de usuarios.
+
+## Patrón 2: mergeproof — 0 llamadas LLM al fusionar
+
+El mismo problema de límites aparece cuando los agentes de código abren pull requests. Pedir a un revisor LLM que verifique si un diff generado por IA cumplió las reglas del repositorio añade latencia, coste y variabilidad a una comprobación que debería ser puramente mecánica.
+
+[mergeproof](https://github.com/ahmed-3m/mergeproof) (publicado en npm como ` + '`@ahmed-3m/mergeproof`' + `, cero dependencias, licencia MIT) sigue el camino contrario:
+
+- **0 llamadas LLM:** cada comprobación se ejecuta de forma determinista sobre el diff y los requisitos de fusión configurados.
+- **Señalización de cambios sensibles:** por ejemplo, si un pull request escrito por IA modifica un archivo de prueba existente, ` + '`mergeproof`' + ` lo marca para revisión humana en lugar de dejar que una suite en verde oculte una aserción debilitada.
+- **Alcance explícito:** superar los requisitos deterministas no garantiza un código libre de defectos; simplemente impone una higiene repetible antes de invertir tiempo de revisión humana.
+
+## Principio de diseño compartido
+
+1. **El código determinista manda sobre políticas y tiempos:** reglas de disparo, permisos RLS, esperas y puertas sobre diffs pertenecen a código comprobable, no a prompts.
+2. **Los modelos probabilísticos mandan sobre la síntesis:** redacción natural, visión multimodal de fotos de comidas y recuperación semántica en ` + '`pgvector`' + ` aprovechan la flexibilidad de los LLM.
+3. **Diseñar para caídas de proveedores:** el enrutamiento multiproveedor con failover mantiene disponible al asistente sin relajar las reglas previas del árbitro.
+
+Tanto en visión por computador fuera de distribución como en flujos agénticos de software, la fiabilidad nace de saber dónde termina la autoridad del modelo.
+        `,
+      },
+      ar: {
+        title: 'الضوابط الحتمية لأنظمة LLM والوكلاء: محكّم Sihem وأداة mergeproof',
+        excerpt:
+          'لماذا تحتاج نماذج اللغة الاحتمالية إلى حدود حتمية حول الجدولة والحالة والتحقق — كما يتضح في بنية المولدات والمحكّم والمؤلف في Sihem وبوابة فحص طلبات الدمج mergeproof الخالية من LLM.',
+        tags: ['الذكاء الوكيلي', 'أنظمة LLM', 'الضوابط الحتمية', 'Sihem', 'mergeproof', 'Supabase'],
+        readingTime: '9 دقائق قراءة',
+        faq: [
+          {
+            question: 'كيف يفصل Sihem القرارات الحتمية عن التوليد اللغوي؟',
+            answer:
+              'يقسّم Sihem التنفيذ إلى مولدات ثم محكّم حتمي ثم مؤلف. تقيّم قواعد الجدولة والتنبيه الحتمية تغيرات التقويم والروتين قبل أن يصيغ النموذج اللغوي رسالة المتابعة على تيليجرام أو PWA.',
+          },
+          {
+            question: 'ما المرحلة الحالية لمشروع Sihem؟',
+            answer:
+              'يعمل Sihem في نسخة تجريبية بدعوة على تيليجرام (@sihem_ai_bot) وتطبيق ويب قابل للتثبيت (sihem-pwa.pages.dev) ضمن حاضنة tech2b في لينتس، إلى جانب تطبيق أندرويد أصلي (Kotlin/Jetpack Compose) قيد الاختبار الخاص.',
+          },
+          {
+            question: 'ما الذي تفحصه أداة mergeproof وما حدودها؟',
+            answer:
+              'تفحص mergeproof (@ahmed-3m/mergeproof، بدون تبعيات، ترخيص MIT) طلبات الدمج المكتوبة بالذكاء الاصطناعي وفق متطلبات دمج حتمية محددة — مثل تنبيه المراجع البشري عند تعديل اختبارات قائمة — بـ 0 استدعاءات LLM. اجتياز هذه الفحوص لا يضمن خلو الشيفرة من الأخطاء.',
+          },
+        ],
+        content: `
+## فجوة الموثوقية في أنظمة النماذج اللغوية والوكلاء
+
+تتفوق النماذج الاحتمالية عند التعامل مع الواجهات غير المهيكلة: تلخيص جدول متغيّر، أو تكييف الأسلوب، أو صياغة طلب دمج عبر ملفات متعددة. لكنها تضعف عندما يُطلب منها فرض قيود صارمة بثبات مع مرور الوقت.
+
+عندما يقرر المساعد **متى** يقاطع المستخدم، أو تتحقق أداة مراجعة آلية **مما إذا** كان تعديل كتبه وكيل ذكاء اصطناعي قد مسّ اختبارات قائمة، فإن ترك القرار لنموذج لغوي يحوّل السياسة الصارمة إلى احتمال غير مضمون.
+
+في مشروعين مختلفين — [Sihem](https://ahmed-3m.github.io/case-studies/sihem/) (مساعد استباقي للعادات والتخطيط) و[mergeproof](https://github.com/ahmed-3m/mergeproof) (بوابة فحص طلبات الدمج بدون تبعيات) — طبّقت المبدأ المعماري نفسه: إبقاء النموذج الاحتمالي في طبقة الصياغة والتوليد، ووضع الحالة والجدولة وقواعد التحقق داخل شيفرة حتمية.
+
+## النمط الأول: فصل المولدات ← المحكّم ← المؤلف في Sihem
+
+يُعدّ Sihem مشروعاً مستقلاً مقبولاً في حاضنة **tech2b** في لينتس. ويعمل حالياً في **نسخة تجريبية بدعوة** عبر بوت تيليجرام ([t.me/sihem_ai_bot](https://t.me/sihem_ai_bot)) وتطبيق ويب تقدمي قابل للتثبيت ([sihem-pwa.pages.dev](https://sihem-pwa.pages.dev/))، إلى جانب عميل أندرويد أصلي بلغة Kotlin وJetpack Compose في مرحلة الاختبار الخاص.
+
+أوضحت النماذج الأولية المبكرة سبب فشل وضع منطق الجدولة داخل موجه نصي واحد للـ LLM: لا يستطيع النموذج التزام ساعات الهدوء أو منع التنبيهات المكررة أو تتبع تحولات التقويم عبر الأيام بدقة من التعليمات النصية وحدها.
+
+لذلك يقسّم Sihem المتابعة الاستباقية إلى ثلاث مراحل واضحة:
+
+\`\`\`text
+Signals (calendar, routines, activity logs)
+   -> Generators (candidate check-ins)
+   -> Deterministic Arbiter (rules, cooldowns, schedule state)
+   -> Composer (pgvector RAG + multi-provider LLM)
+\`\`\`
+
+### 1. المولدات
+
+تفحص مهام مجدولة عبر ` + '`pg_cron`' + ` داخل Supabase سجلات النشاط الحديثة (التمارين، والأدوية، وجلسات الدراسة، والعادات المخصصة، ومزامنة Google Calendar) وتقترح نقاط متابعة مرشحة مثل الموجز الصباحي أو المراجعة المسائية أو المتابعة بعد تغيّر موعد في التقويم.
+
+### 2. المحكّم الحتمي
+
+يعمل المحكّم كشيفرة TypeScript حتمية داخل **Deno / Supabase Edge Functions** فوق **Supabase PostgreSQL مع أمان على مستوى الصفوف (RLS)**. ويطبّق قواعد الجدولة والتنبيه الحتمية قبل توليد أي نص:
+
+- التحقق من تعارض التنبيه المرشح مع فترات الهدوء أو التنبيهات القريبة أو العناصر المكتملة.
+- عزل بيانات كل مستخدم بصرامة عبر سياسات PostgreSQL RLS قبل تجميع السياق.
+- منع الإشعارات المكررة حتى عند تغيّر المواعيد بشكل متكرر.
+
+لا تصل إلى النموذج اللغوي إلا الحالات التي يجيزها المحكّم.
+
+### 3. المؤلف والتبديل التلقائي بين المزودين
+
+بعد موافقة المحكّم، يسترجع المؤلف السياق طويل المدى من ذاكرة ` + '`pgvector`' + ` RAG ويصوغ الرسالة. ولأن انقطاع واجهة LLM واحدة يكسر استمرارية العادات اليومية فوراً، يوجّه Sihem الطلبات عبر عدة مزودين (**GLM** و**Gemini** و**Groq**) مع تصعيد وتبديل تلقائي عند الأعطال، إضافةً إلى إمكانية توليد رسائل صوتية عبر **Cloudflare MeloTTS**.
+
+وحتى مع الجدولة الحتمية، يظل النص المولّد بحاجة إلى تحقق وقد يحتوي على أخطاء. وبما أن Sihem لا يزال في نسخة تجريبية بدعوة، فإن الاختبارات الجارية في لينتس تهدف إلى التحقق من المنتج دون الادعاء بقياس تحسّن رقمي في نتائج المستخدمين.
+
+## النمط الثاني: أداة mergeproof — صفر استدعاءات LLM عند الدمج
+
+تظهر مشكلة الحدود نفسها عندما يفتح وكلاء البرمجة طلبات دمج. طلب التحقق من التزام التعديلات بقواعد المستودع من مراجع LLM يضيف زمناً وتكلفةً وتذبذباً إلى فحص ينبغي أن يكون ميكانيكياً بالكامل.
+
+تعتمد أداة [mergeproof](https://github.com/ahmed-3m/mergeproof) (المنشورة على npm باسم ` + '`@ahmed-3m/mergeproof`' + `، بدون تبعيات وبترخيص MIT) النهج المعاكس:
+
+- **0 استدعاءات LLM:** كل فحص يعمل بشكل حتمي على الفروقات البرمجية ومتطلبات الدمج المحددة.
+- **تنبيه التعديلات الحساسة:** إذا عدّل طلب دمج مكتوب بالذكاء الاصطناعي ملف اختبار قائماً، تشير ` + '`mergeproof`' + ` إليه للمراجعة البشرية بدلاً من السماح لنجاح الاختبارات بإخفاء إضعاف الشروط.
+- **وضوح الحدود:** اجتياز الفحوصات الحتمية لا يضمن خلو الشيفرة من الأخطاء؛ بل يفرض فقط حداً أدنى متكرراً للانضباط قبل وقت المراجعة البشرية.
+
+## مبدأ التصميم المشترك
+
+1. **الشيفرة الحتمية تملك القواعد والتوقيت:** قواعد الإطلاق وصلاحيات RLS وفترات التهدئة وبوابات الدمج مكانها الشيفرة القابلة للاختبار، لا الموجهات النصية.
+2. **النماذج الاحتمالية تملك الصياغة:** الصياغة الطبيعية، وفهم صور الوجبات متعدد الوسائط، والاسترجاع الدلالي عبر ` + '`pgvector`' + ` هي مواضع قوة نماذج اللغة.
+3. **التصميم لتجاوز الأعطال:** التوجيه متعدد المزودين مع التبديل التلقائي يحافظ على توفر المساعد دون التنازل عن قواعد المحكّم السابقة.
+
+سواء في كشف الصور خارج التوزيع أو في مسارات عمل الوكلاء البرمجيين، تأتي الموثوقية من تحديد النقطة التي تتوقف عندها صلاحية النموذج.
+        `,
+      },
+    },
+  },
+  {
     slug: 'ood-diffusion-thesis',
     date: '2026-07-12',
     ogImage: '/og-diffusion-ood.png',

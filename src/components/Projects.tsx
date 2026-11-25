@@ -2,7 +2,6 @@
 import Link from 'next/link'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { portfolioCopy } from '@/lib/portfolio-copy'
-import { useReveal } from '@/lib/useReveal'
 
 const copy = {
   title: { en: 'Other projects and open source', de: 'Weitere Projekte und Open Source', fr: 'Autres projets et open source', es: 'Otros proyectos y código abierto', ar: 'مشاريع أخرى ومصادر مفتوحة' },
@@ -135,7 +134,7 @@ function AdditionalProjectCards() {
 
   return (
     <>
-      <article className="cd-project-card reveal">
+      <article className="cd-project-card">
         <div className="cd-pc-eyebrow">{t(copy.mergeproofEyebrow)}</div>
         <h3 className="cd-pc-title">mergeproof</h3>
         <div className="cd-pc-desc">{t(copy.mergeproofDesc)}</div>
@@ -151,7 +150,7 @@ function AdditionalProjectCards() {
         </div>
       </article>
 
-      <article className="cd-project-card reveal">
+      <article className="cd-project-card">
         <div className="cd-pc-eyebrow">{t(copy.bciEyebrow)}</div>
         <h3 className="cd-pc-title">{t(copy.eegTitle)}</h3>
         <div className="cd-pc-desc">{t(copy.eegDesc)}</div>
@@ -160,7 +159,7 @@ function AdditionalProjectCards() {
         </div>
       </article>
 
-      <article className="cd-project-card cd-project-card--full reveal">
+      <article className="cd-project-card cd-project-card--full">
         <div className="cd-pc-eyebrow">{t(copy.moreOssEyebrow)}</div>
         <div className="cd-pc-desc" style={{ maxWidth: 760 }}>
           <a href="https://github.com/ahmed-3m/Elbostan-Pazar-bot" target="_blank" rel="noopener noreferrer" className="cd-proj-link">Elbostan Pazar bot</a>
@@ -179,7 +178,6 @@ function AdditionalProjectCards() {
 }
 
 export function FullProjects() {
-  useReveal()
   const { t } = useI18n()
 
   return (
@@ -188,7 +186,7 @@ export function FullProjects() {
         <h2 className="cd-section-title">{t(portfolioCopy.work)}</h2>
 
         <div className="cd-projects-grid">
-          <article className="cd-project-featured reveal">
+          <article className="cd-project-featured">
             <div>
               <div className="cd-proj-eyebrow">{t(copy.thesis)}</div>
               <div className="cd-proj-title">{t(copy.oodTitle)}</div>
@@ -209,7 +207,7 @@ export function FullProjects() {
             </div>
           </article>
 
-          <article className="cd-project-card reveal">
+          <article className="cd-project-card">
             <div className="cd-pc-eyebrow">{t(copy.track2Eyebrow)}</div>
             <div className="cd-pc-title">{t(copy.inkjetTitle)}</div>
             <div className="cd-pc-desc">{t(copy.inkjetDesc)}</div>
@@ -220,7 +218,7 @@ export function FullProjects() {
             </div>
           </article>
 
-          <article className="cd-project-card reveal">
+          <article className="cd-project-card">
             <div className="cd-pc-eyebrow">{t(copy.sihemContext)}</div>
             <div className="cd-pc-title">{t(copy.sihemTitle)}</div>
             <div className="cd-pc-desc">{t(copy.sihemDesc)}</div>
@@ -249,7 +247,6 @@ export function FullProjects() {
 }
 
 export default function AdditionalProjects() {
-  useReveal()
   const { t } = useI18n()
 
   return (

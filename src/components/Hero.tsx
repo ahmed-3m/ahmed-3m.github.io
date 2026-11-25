@@ -7,7 +7,6 @@ import HeroSignal from '@/components/HeroSignal'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { portfolioCopy } from '@/lib/portfolio-copy'
 import { usePortfolioView } from '@/lib/portfolio-view'
-import { useReveal } from '@/lib/useReveal'
 
 const copy = {
   open: {
@@ -46,11 +45,11 @@ const copy = {
     ar: 'أنظمة ذكاء اصطناعي إنتاجية',
   },
   body: {
-    en: 'AI/ML engineer building systems that inspect images, support daily routines, and check AI-written code.',
-    de: 'AI/ML Engineer für Systeme, die Bilder prüfen, Alltagsroutinen unterstützen und KI-generierten Code kontrollieren.',
-    fr: 'Ingénieur IA/ML, je crée des systèmes qui inspectent des images, accompagnent les routines et vérifient le code généré par IA.',
-    es: 'Ingeniero de IA/ML. Creo sistemas para inspeccionar imágenes, apoyar rutinas y verificar código generado por IA.',
-    ar: 'مهندس ذكاء اصطناعي وتعلّم آلي. أبني أنظمة لفحص الصور ودعم الروتين اليومي والتحقق من الشيفرة التي يولّدها الذكاء الاصطناعي.',
+    en: 'AI/ML engineer building reliable vision and agentic AI systems by pairing probabilistic models with deterministic guardrails—across print inspection, diffusion OOD detection, and LLM/agent tooling.',
+    de: 'AI/ML Engineer für zuverlässige Bildverarbeitungs- und agentische KI-Systeme, die probabilistische Modelle mit deterministischen Guardrails verbinden – von Druckprüfung und Diffusions-OOD-Erkennung bis zu LLM- und Agent-Tooling.',
+    fr: 'Ingénieur IA/ML, je conçois des systèmes fiables de vision et d’IA agentique associant modèles probabilistes et garde-fous déterministes, entre inspection d’impression, détection OOD par diffusion et outillage LLM/agents.',
+    es: 'Ingeniero de IA/ML que construye sistemas fiables de visión e IA agéntica combinando modelos probabilísticos con controles deterministas, desde inspección de impresión y detección OOD por difusión hasta herramientas para LLM y agentes.',
+    ar: 'مهندس ذكاء اصطناعي وتعلّم آلي أبني أنظمة موثوقة للرؤية والذكاء الاصطناعي الوكيلي، أجمع فيها بين النماذج الاحتمالية والضوابط الحتمية من فحص الطباعة وكشف \u2066OOD\u2069 بالانتشار إلى أدوات \u2066LLM\u2069 والوكلاء.',
   },
   viewWork: { en: 'View work', de: 'Arbeiten ansehen', fr: 'Voir les projets', es: 'Ver trabajos', ar: 'عرض الأعمال' },
   sections: { en: 'Portfolio sections', de: 'Portfolio-Bereiche', fr: 'Sections du portfolio', es: 'Secciones del portafolio', ar: 'أقسام الملف الشخصي' },
@@ -78,7 +77,6 @@ const copy = {
 } satisfies Record<string, TranslationMap>
 
 export default function Hero() {
-  useReveal()
   const { t } = useI18n()
   const { setView } = usePortfolioView()
 

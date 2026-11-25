@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
-import { useReveal } from '@/lib/useReveal'
 
 const copy = {
   eyebrow: { en: '// Proof', de: '// Nachweise', fr: '// Preuves', es: '// Evidencia', ar: '// أدلة' },
@@ -103,7 +102,6 @@ const evidenceItems = [
 ]
 
 export default function Evidence() {
-  useReveal()
   const { t } = useI18n()
 
   return (
@@ -140,7 +138,7 @@ export default function Evidence() {
                 <Link
                   key={item.id}
                   href={item.href}
-                  className="cd-evidence-card reveal glass-surface glass-subtle"
+                  className="cd-evidence-card glass-surface glass-subtle"
                 >
                   {cardBody}
                 </Link>
@@ -152,7 +150,7 @@ export default function Evidence() {
                 href={item.href}
                 target={item.href.startsWith('http') ? '_blank' : undefined}
                 rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="cd-evidence-card reveal glass-surface glass-subtle"
+                className="cd-evidence-card glass-surface glass-subtle"
               >
                 {cardBody}
               </a>

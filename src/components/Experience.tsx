@@ -1,6 +1,5 @@
 'use client'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
-import { useReveal } from '@/lib/useReveal'
 
 const copy = {
   eyebrow: { en: '// Experience', de: '// Erfahrung', fr: '// Expérience', es: '// Experiencia', ar: '// الخبرة' },
@@ -19,19 +18,6 @@ const experiences: Array<{
 }> = [
   {
     date: copy.may2026ToPresent,
-    role: { en: 'AI Consultant, LLMs & AI Agents', de: 'KI-Berater für LLMs und KI-Agenten', fr: 'Consultant IA, LLM et agents IA', es: 'Consultor de IA, LLM y agentes de IA', ar: 'استشاري ذكاء اصطناعي، نماذج لغوية كبيرة ووكلاء ذكاء اصطناعي' },
-    company: { en: 'Freelance · Remote', de: 'Freiberuflich · Remote', fr: 'Indépendant · À distance', es: 'Autónomo · En remoto', ar: 'عمل حر · عن بُعد' },
-    desc: {
-      en: 'Advise small and medium-sized businesses on AI integration, workflow automation, and applications built with large language models.',
-      de: 'Berate kleine und mittlere Unternehmen bei der KI-Integration, der Automatisierung von Arbeitsabläufen und Anwendungen mit großen Sprachmodellen.',
-      fr: 'Je conseille les petites et moyennes entreprises sur l’intégration de l’IA, l’automatisation des processus et les applications fondées sur de grands modèles de langage.',
-      es: 'Asesoro a pequeñas y medianas empresas sobre integración de IA, automatización de flujos de trabajo y aplicaciones basadas en grandes modelos de lenguaje.',
-      ar: 'أقدّم المشورة للشركات الصغيرة والمتوسطة بشأن دمج الذكاء الاصطناعي وأتمتة سير العمل وتطبيقات النماذج اللغوية الكبيرة.',
-    },
-    active: true,
-  },
-  {
-    date: copy.may2026ToPresent,
     role: { en: 'Solo Developer & Project Lead', de: 'Solo-Entwickler & Projektleiter', fr: 'Développeur solo & chef de projet', es: 'Desarrollador en solitario y líder de proyecto', ar: 'مطور منفرد وقائد مشروع' },
     company: {
       en: 'Sihem (side project) · tech2b incubator, Linz',
@@ -48,6 +34,19 @@ const experiences: Array<{
       ar: 'أصمم وأشغّل كامل البنية السحابية لمساعد للعادات والروتين اليومي، يُقدَّم كبوت على تيليجرام وتطبيق ويب قابل للتثبيت: PostgreSQL مُدار مع أمان على مستوى الصفوف، ودوال serverless بلغة Deno/TypeScript، ومهام مجدولة، وذاكرة pgvector، ونشر عبر GitHub Actions. تُوجَّه استدعاءات LLM عبر عدة مزودين مع تصعيد وتبديل تلقائي.',
     },
     badge: { en: 'Invitation-only beta - @sihem_ai_bot', de: 'Beta mit Einladung - @sihem_ai_bot', fr: 'Bêta sur invitation - @sihem_ai_bot', es: 'Beta por invitación - @sihem_ai_bot', ar: 'نسخة تجريبية بدعوة - @sihem_ai_bot' },
+    active: true,
+  },
+  {
+    date: copy.may2026ToPresent,
+    role: { en: 'AI Consultant, LLMs & AI Agents', de: 'KI-Berater für LLMs und KI-Agenten', fr: 'Consultant IA, LLM et agents IA', es: 'Consultor de IA, LLM y agentes de IA', ar: 'استشاري ذكاء اصطناعي، نماذج لغوية كبيرة ووكلاء ذكاء اصطناعي' },
+    company: { en: 'Freelance · Remote', de: 'Freiberuflich · Remote', fr: 'Indépendant · À distance', es: 'Autónomo · En remoto', ar: 'عمل حر · عن بُعد' },
+    desc: {
+      en: 'Advise small and medium-sized businesses on AI integration, workflow automation, and applications built with large language models.',
+      de: 'Berate kleine und mittlere Unternehmen bei der KI-Integration, der Automatisierung von Arbeitsabläufen und Anwendungen mit großen Sprachmodellen.',
+      fr: 'Je conseille les petites et moyennes entreprises sur l’intégration de l’IA, l’automatisation des processus et les applications fondées sur de grands modèles de langage.',
+      es: 'Asesoro a pequeñas y medianas empresas sobre integración de IA, automatización de flujos de trabajo y aplicaciones basadas en grandes modelos de lenguaje.',
+      ar: 'أقدّم المشورة للشركات الصغيرة والمتوسطة بشأن دمج الذكاء الاصطناعي وأتمتة سير العمل وتطبيقات النماذج اللغوية الكبيرة.',
+    },
     active: true,
   },
   {
@@ -125,7 +124,6 @@ const experiences: Array<{
 ]
 
 export default function Experience() {
-  useReveal()
   const { t } = useI18n()
 
   return (
@@ -136,7 +134,7 @@ export default function Experience() {
 
         <div className="cd-timeline">
           {experiences.map((exp, i) => (
-            <div key={i} className="cd-tl-item reveal">
+            <div key={i} className="cd-tl-item">
               <div className="cd-tl-date" style={{ whiteSpace: 'pre-line' }}>{t(exp.date)}</div>
               <div className="cd-tl-spine">
                 <div className={`cd-tl-dot${exp.active ? '' : ' dim'}`} />
