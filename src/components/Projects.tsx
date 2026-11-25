@@ -1,7 +1,9 @@
 'use client'
+import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { portfolioCopy } from '@/lib/portfolio-copy'
+import MergeproofDemo from '@/components/MergeproofDemo'
 
 const copy = {
   title: { en: 'Other projects and open source', de: 'Weitere Projekte und Open Source', fr: 'Autres projets et open source', es: 'Otros proyectos y código abierto', ar: 'مشاريع أخرى ومصادر مفتوحة' },
@@ -11,6 +13,13 @@ const copy = {
   thesisPdf: { en: 'Thesis PDF', de: 'Thesis PDF', fr: 'PDF mémoire', es: 'PDF tesis', ar: 'PDF الرسالة' },
   code: { en: 'Code', de: 'Code', fr: 'Code', es: 'Código', ar: 'الكود' },
   mergeproofExample: { en: 'See example', de: 'Beispiel ansehen', fr: 'Voir un exemple', es: 'Ver ejemplo', ar: 'عرض مثال' },
+  mergeproofPlaygroundToggle: {
+    en: 'Try interactive PR gate',
+    de: 'Interaktives PR-Gate testen',
+    fr: 'Tester la porte PR interactive',
+    es: 'Probar compuerta PR interactiva',
+    ar: 'جرّب بوابة طلبات الدمج التفاعلية',
+  },
   oodMetric: {
     en: 'AUROC · CIFAR-10 airplanes vs. other classes · 3-run mean ± SD',
     de: 'AUROC · CIFAR-10: Flugzeuge gegen andere Klassen · Mittelwert ± Standardabweichung (3 Läufe)',
@@ -131,14 +140,30 @@ function RtlArrow() {
 
 function AdditionalProjectCards() {
   const { t } = useI18n()
+  const playgroundRef = useRef<HTMLDetailsElement>(null)
+
+  useEffect(() => {
+    const revealIfTargeted = () => {
+      if (window.location.hash !== '#mergeproof-playground') return
+      const details = playgroundRef.current
+      if (!details) return
+      const outer = details.closest<HTMLDetailsElement>('details.cd-additional-projects')
+      if (outer) outer.open = true
+      details.open = true
+      document.getElementById('mergeproof-playground')?.scrollIntoView({ behavior: 'instant' })
+    }
+    revealIfTargeted()
+    window.addEventListener('hashchange', revealIfTargeted)
+    return () => window.removeEventListener('hashchange', revealIfTargeted)
+  }, [])
 
   return (
     <>
-      <article className="cd-project-card">
+      <article className="cd-project-card mp-project-card">
         <div className="cd-pc-eyebrow">{t(copy.mergeproofEyebrow)}</div>
-        <h3 className="cd-pc-title">mergeproof</h3>
+        <h3 className="cd-pc-title"><bdi dir="ltr">mergeproof</bdi></h3>
         <div className="cd-pc-desc">{t(copy.mergeproofDesc)}</div>
-        <div className="cd-pc-metric">0<span> {t(copy.mergeproofMetric)}</span></div>
+        <div className="cd-pc-metric"><bdi dir="ltr">0</bdi><span> {t(copy.mergeproofMetric)}</span></div>
         <div className="cd-proj-tags" style={{ marginTop: 12 }}>
           {['JavaScript', t(copy.tagZeroDeps), t(copy.tagLlmFree), 'npm'].map(tag => (
             <span key={tag} className="cd-proj-tag">{tag}</span>
@@ -148,6 +173,14 @@ function AdditionalProjectCards() {
           <a href="https://github.com/ahmed-3m/mergeproof" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.code)} <RtlArrow /></a>
           <a href="https://github.com/ahmed-3m/mergeproof#quick-start" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.mergeproofExample)} <RtlArrow /></a>
         </div>
+        <details ref={playgroundRef} className="mp-inline-details">
+          <summary className="mp-inline-summary">
+            <span>{t(copy.mergeproofPlaygroundToggle)}</span>
+          </summary>
+          <div id="mergeproof-playground" className="mp-inline-body">
+            <MergeproofDemo />
+          </div>
+        </details>
       </article>
 
       <article className="cd-project-card">
