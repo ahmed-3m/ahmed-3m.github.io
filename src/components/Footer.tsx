@@ -31,24 +31,22 @@ export default function Footer() {
     <footer className="cd-footer">
       <div className="cd-container">
         <div className="cd-footer-inner">
-          <div className="cd-footer-top">
-            <div className="cd-footer-brand">Ahmed<span>.</span></div>
-            <nav aria-label={t(copy.footerNav)} className="cd-footer-nav">
-              <Link href="/about/" className="cd-footer-link">{t(copy.about)}</Link>
-              <Link href="/research/" className="cd-footer-link">{t(copy.research)}</Link>
-              <Link href="/blog/" className="cd-footer-link">{t(copy.blog)}</Link>
-              <Link href="/news/" className="cd-footer-link">{t(copy.news)}</Link>
-              <Link href={projectsHref} className="cd-footer-link">{t(copy.caseStudies)}</Link>
-              <span className="cd-footer-sep" aria-hidden="true">·</span>
-              <a href="https://www.linkedin.com/in/ahmed-3m/" target="_blank" rel="noopener noreferrer" className="cd-footer-link">LinkedIn</a>
-              <a href="https://github.com/ahmed-3m" target="_blank" rel="noopener noreferrer" className="cd-footer-link">GitHub</a>
-              <a href="https://huggingface.co/ahmed-3m" target="_blank" rel="noopener noreferrer" className="cd-footer-link">HuggingFace</a>
-              <a href="mailto:ahmed.mo.0595@gmail.com" className="cd-footer-link">{t(copy.email)}</a>
-              <span className="cd-footer-sep" aria-hidden="true">·</span>
-              <Link href="/impressum/" className="cd-footer-link">{t(copy.impressum)}</Link>
-              <Link href="/privacy/" className="cd-footer-link">{t(copy.privacy)}</Link>
-            </nav>
-          </div>
+          <div className="cd-footer-brand">Ahmed<span>.</span></div>
+          <nav aria-label={t(copy.footerNav)} className="cd-footer-nav">
+            <Link href="/about/" className="cd-footer-link">{t(copy.about)}</Link>
+            <Link href="/research/" className="cd-footer-link">{t(copy.research)}</Link>
+            <Link href="/blog/" className="cd-footer-link">{t(copy.blog)}</Link>
+            <Link href="/news/" className="cd-footer-link">{t(copy.news)}</Link>
+            <Link href={projectsHref} className="cd-footer-link">{t(copy.caseStudies)}</Link>
+            <span className="cd-footer-sep" aria-hidden="true">·</span>
+            <a href="https://www.linkedin.com/in/ahmed-3m/" target="_blank" rel="noopener noreferrer" className="cd-footer-link">LinkedIn</a>
+            <a href="https://github.com/ahmed-3m" target="_blank" rel="noopener noreferrer" className="cd-footer-link">GitHub</a>
+            <a href="https://huggingface.co/ahmed-3m" target="_blank" rel="noopener noreferrer" className="cd-footer-link">HuggingFace</a>
+            <a href="mailto:ahmed.mo.0595@gmail.com" className="cd-footer-link">{t(copy.email)}</a>
+            <span className="cd-footer-sep" aria-hidden="true">·</span>
+            <Link href="/impressum/" className="cd-footer-link">{t(copy.impressum)}</Link>
+            <Link href="/privacy/" className="cd-footer-link">{t(copy.privacy)}</Link>
+          </nav>
           <div className="cd-footer-meta">{t(copy.meta)}</div>
         </div>
       </div>
