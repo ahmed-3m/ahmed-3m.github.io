@@ -138,7 +138,7 @@ The model scores an image by how well a class-conditional diffusion model recons
   <tr>
     <td valign="top" width="50%">
       <b>Stack</b><br>
-      Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4, statically exported and deployed to GitHub Pages by <a href=".github/workflows/deploy.yml">GitHub Actions</a>, gated by an automated static-export integrity verifier (<code>npm run verify:export</code>) and a headless Chromium Playwright RTL/mobile smoke check.
+      Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4, statically exported and deployed to GitHub Pages by <a href=".github/workflows/deploy.yml">GitHub Actions</a>, gated by an automated static-export integrity verifier (<code>npm run verify:export</code>); pull requests also run a headless Chromium Playwright RTL/mobile smoke check.
     </td>
     <td valign="top" width="50%">
       <b>Design</b><br>
