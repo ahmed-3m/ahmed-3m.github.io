@@ -1084,7 +1084,7 @@ body::before {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10px 12px;
+  gap: 8px 10px;
 }
 .cd-footer-brand {
   font-family: var(--font-display, 'Space Grotesk', sans-serif);
@@ -1100,11 +1100,11 @@ body::before {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 4px 6px;
+  gap: 4px 5px;
 }
 .cd-footer-link {
   color: var(--cd-fg3);
-  font-size: 0.72rem;
+  font-size: 0.6875rem;
   text-decoration: none;
   white-space: nowrap;
   transition: color 150ms;
@@ -1114,13 +1114,13 @@ body::before {
 .cd-footer-sep {
   color: var(--cd-fg3);
   opacity: 0.35;
-  font-size: 0.72rem;
+  font-size: 0.6875rem;
   pointer-events: none;
   user-select: none;
 }
 .cd-footer-meta {
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
-  font-size: 10.5px; color: var(--cd-fg3);
+  font-size: 10px; color: var(--cd-fg3);
   white-space: nowrap;
   flex-shrink: 0;
 }
