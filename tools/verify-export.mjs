@@ -3,7 +3,9 @@
 //   1. Missing required routes, feeds, sitemaps, LLM manifests, or CV PDF
 //   2. Missing <link rel="canonical"> tags or malformed application/ld+json blocks
 //   3. Broken internal href/src paths (including %20-encoded PDFs) and #fragment anchors
-//   4. Regressions of retired unsourced metrics or leaked public API token identifiers
+//   4. Regressions of retired unsourced metrics, leaked public API token identifiers, or
+//      Google Analytics tags
+//   5. A privacy notice that disagrees with the build about the GoatCounter script
 
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
 import path from 'node:path'
@@ -63,7 +65,12 @@ const FORBIDDEN_SUBSTRINGS = [
   { label: 'retired NEXT_PUBLIC_GROQ_TOKEN', value: ['NEXT_PUBLIC_GROQ', '_TOKEN'].join('') },
   { label: 'retired NEXT_PUBLIC_ZAI_TOKEN', value: ['NEXT_PUBLIC_ZAI', '_TOKEN'].join('') },
   { label: 'Groq API key prefix', value: ['gsk', '_'].join('') },
+  // GA4 was replaced by GoatCounter; the privacy notice no longer covers Google Analytics.
+  { label: 'Google Analytics tag host', value: ['googletag', 'manager.com'].join('') },
+  { label: 'Google Analytics collector host', value: ['google-', 'analytics.com'].join('') },
 ]
+
+const GOATCOUNTER_SCRIPT = 'gc.zgo.at/count.js'
 
 function walkFiles(dir, prefix = '') {
   const results = []
@@ -317,6 +324,18 @@ for (const rel of scanTargets) {
   }
 }
 
+// 5. The privacy notice describes GoatCounter exactly when the build loads its script
+//    (src/lib/analytics.ts decides both from NEXT_PUBLIC_GOATCOUNTER_CODE).
+const analyticsLoaded = (htmlContents.get('index.html') ?? '').includes(GOATCOUNTER_SCRIPT)
+const privacyMentionsGoatCounter = (htmlContents.get('privacy/index.html') ?? '').includes('GoatCounter')
+if (analyticsLoaded !== privacyMentionsGoatCounter) {
+  errors.push(
+    analyticsLoaded
+      ? `out/index.html loads ${GOATCOUNTER_SCRIPT} but out/privacy/index.html does not mention GoatCounter`
+      : `out/privacy/index.html mentions GoatCounter but out/index.html does not load ${GOATCOUNTER_SCRIPT}`,
+  )
+}
+
 if (errors.length > 0) {
   console.error(`verify-export: FAILED with ${errors.length} error(s):`)
   for (const err of errors) {
@@ -329,5 +348,6 @@ console.log(
   `verify-export: OK (${REQUIRED_FILES.length} required files, ` +
     `${canonicalCount} canonical tags, ${jsonLdCount} JSON-LD blocks, ` +
     `${internalRefCount} internal refs, ${anchorCheckCount} anchors, ` +
-    `${scanTargets.length} HTML/JS bundles scanned)`,
+    `${scanTargets.length} HTML/JS bundles scanned, ` +
+    `analytics ${analyticsLoaded ? 'on' : 'off'} and privacy notice consistent)`,
 )

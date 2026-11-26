@@ -495,15 +495,6 @@ function renderMarkdown(
   return <>{result}</>
 }
 
-function trackChatEvent() {
-  if (typeof window !== 'undefined' && 'gtag' in window) {
-    // @ts-expect-error gtag is injected by analytics
-    window.gtag('event', 'chat_message', {
-      event_category: 'chatbot',
-    })
-  }
-}
-
 function useCurrentSection() {
   const pathname = usePathname()
   const routeSection = resolveSectionForPathname(pathname)
@@ -723,7 +714,6 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
     setMessages(nextMessages)
     setInput('')
     setError(null)
-    trackChatEvent()
 
     // Suggested questions point to public facts and can answer immediately.
     const curatedTopic = promptId ? REPLY_FOR_PROMPT[promptId] : findCuratedTopic(content)

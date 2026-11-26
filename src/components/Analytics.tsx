@@ -1,63 +1,45 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import Script from 'next/script';
+import { GOATCOUNTER_ENDPOINT, GOATCOUNTER_SCRIPT_SRC } from '@/lib/analytics';
 
-const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
-
-const GA_CONFIG = {
-  cookie_flags: 'SameSite=Strict',
-  enable_display_features: false,
-  anonymize_ip: true,
-  allow_google_signals: false,
-  cookie_domain: 'none',
-  storage: 'none',
-} as const;
-
-type GtagWindow = Window & {
-  gtag?: (...args: unknown[]) => void;
+type GoatCounterWindow = Window & {
+  goatcounter?: { count?: (vars: { path: string }) => void };
 };
 
+/**
+ * Counts one visit per page with GoatCounter. count.js runs with `no_onload`, so it
+ * counts nothing by itself: this component counts the first page once the script
+ * loads, then each client-side route change, which a plain page-load counter would miss.
+ */
 export function Analytics() {
   const pathname = usePathname();
-  const lastTrackedPath = useRef<string | null>(null);
+  const lastCounted = useRef<string | null>(null);
+
+  const countCurrentPage = useCallback(() => {
+    const count = (window as GoatCounterWindow).goatcounter?.count;
+    const path = window.location.pathname;
+    if (typeof count !== 'function' || lastCounted.current === path) return;
+    lastCounted.current = path;
+    count({ path });
+  }, []);
 
   useEffect(() => {
-    if (!GA_MEASUREMENT_ID) return;
-    if (lastTrackedPath.current === null) {
-      lastTrackedPath.current = pathname;
-      return;
-    }
-    if (lastTrackedPath.current === pathname) return;
-    lastTrackedPath.current = pathname;
+    if (GOATCOUNTER_ENDPOINT) countCurrentPage();
+  }, [pathname, countCurrentPage]);
 
-    const win = window as GtagWindow;
-    if (typeof win.gtag === 'function') {
-      win.gtag('config', GA_MEASUREMENT_ID, {
-        ...GA_CONFIG,
-        page_path: pathname,
-      });
-    }
-  }, [pathname]);
-
-  if (!GA_MEASUREMENT_ID) return null;
+  if (!GOATCOUNTER_ENDPOINT) return null;
 
   return (
-    <>
-      <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GA_MEASUREMENT_ID)}`}
-        strategy="afterInteractive"
-      />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          window.gtag = window.gtag || gtag;
-          gtag('js', new Date());
-          gtag('config', ${JSON.stringify(GA_MEASUREMENT_ID)}, Object.assign({ page_path: window.location.pathname }, ${JSON.stringify(GA_CONFIG)}));
-        `}
-      </Script>
-    </>
+    <Script
+      id="goatcounter"
+      src={GOATCOUNTER_SCRIPT_SRC}
+      strategy="afterInteractive"
+      data-goatcounter={GOATCOUNTER_ENDPOINT}
+      data-goatcounter-settings='{"no_onload":true}'
+      onLoad={countCurrentPage}
+    />
   );
 }
