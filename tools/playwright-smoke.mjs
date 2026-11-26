@@ -791,7 +791,24 @@ async function runInteractiveSmokeChecks(browser, origin, failures) {
             failures.push(`${label}: missing main#main landmark target`)
           } else {
             await page.keyboard.press('Tab')
-            await waitForSettledLayout(page)
+            try {
+              await page.waitForFunction(
+                () => {
+                  const el = document.querySelector('a.cd-skip-link[href="#main"]')
+                  if (!el || document.activeElement !== el) return false
+                  const style = getComputedStyle(el)
+                  return (
+                    style.clipPath === 'none' &&
+                    style.outlineStyle !== 'none' &&
+                    (parseFloat(style.outlineWidth) || 0) >= 2
+                  )
+                },
+                undefined,
+                { timeout: 2_000 },
+              )
+            } catch {
+              // Fall through so the assertion below reports the exact computed state.
+            }
             const focusInfo = await skipLink.evaluate((el) => {
               const style = getComputedStyle(el)
               return {
