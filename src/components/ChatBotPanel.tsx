@@ -6,22 +6,21 @@ import { ArrowUp, ChevronRight, RotateCcw, Square, X } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { useI18n } from '@/lib/i18n'
 import { translateValue, type Language } from '@/lib/i18n-config'
+import { CHAT_PROXY_URL } from '@/lib/genie/providers'
 import {
-  CHAT_PROXY_URL,
-  fetchBigModel,
-  fetchGroq,
-  shortenReply,
-  type ChatCompletionError,
-  type ChatReply,
-} from '@/lib/genie/providers'
+  buildFinalMessage,
+  chatErrorKind,
+  decideImmediateReply,
+  requestModelReply,
+  type ChatMessage,
+  type ChatRole,
+} from '@/lib/genie/reply'
 import { parseInlineTokens, type BidiSegment, type InlineToken } from '@/lib/genie/markdown'
 import {
   PROMPTS,
   PROMPT_LIBRARY,
   STARTER_PROMPT_IDS,
   LOCAL_REPLIES,
-  REPLY_FOR_PROMPT,
-  findCuratedTopic,
   getLocalReply,
   getStarterPrompts,
   pickFollowUpIds,
@@ -32,8 +31,7 @@ import {
 import { buildSystemPrompt } from '@/lib/genie/retriever'
 import { CHAT_COPY } from './chatbot-dictionaries'
 
-export type ChatRole = 'user' | 'assistant'
-export type { PromptId }
+export type { ChatMessage, ChatRole, PromptId }
 export {
   PROMPT_LIBRARY,
   PROMPTS,
@@ -42,13 +40,6 @@ export {
   getLocalReply,
   getStarterPrompts,
   pickFollowUpIds,
-}
-
-export type ChatMessage = {
-  role: ChatRole
-  content: string
-  followUps?: PromptId[]
-  incomplete?: boolean
 }
 
 function renderBidiSegments(segments: BidiSegment[], keyPrefix: string): ReactNode[] {
@@ -399,21 +390,19 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
     setError(null)
 
     // Suggested questions point to public facts and can answer immediately.
-    const curatedTopic = promptId ? REPLY_FOR_PROMPT[promptId] : findCuratedTopic(content)
-    const curatedReply = curatedTopic ? translateValue(lang, LOCAL_REPLIES[curatedTopic]) : null
-    if (curatedReply || !CHAT_PROXY_URL) {
-      const local = curatedReply ?? getLocalReply(content, lang)
-      if (local) {
-        setMessages((prev) => [
-          ...prev,
-          {
-            role: 'assistant',
-            content: local,
-            followUps: pickFollowUpIds(local, content, currentSection),
-          },
-        ])
-        return
-      }
+    const proxyUrl = CHAT_PROXY_URL
+    const immediate = decideImmediateReply({
+      content,
+      promptId,
+      lang,
+      proxyConfigured: Boolean(proxyUrl),
+      section: currentSection,
+    })
+    if (immediate.kind === 'answer') {
+      setMessages((prev) => [...prev, immediate.message])
+      return
+    }
+    if (immediate.kind === 'unavailable' || !proxyUrl) {
       setError(t(CHAT_COPY.limitedAnswers))
       return
     }
@@ -453,70 +442,29 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
         )
       }
 
-      let rawReply: ChatReply | null = null
-      let lastProviderError: unknown = null
-
-      try {
-        rawReply = await fetchBigModel({
-          messages: transcript,
-          systemPrompt,
-          proxyUrl: CHAT_PROXY_URL,
-          lane,
-          signal: requestAbort.signal,
-          onDelta: emitDelta,
-        })
-      } catch (providerError) {
-        if (stopRequestedRef.current) {
-          throw providerError
-        }
-        lastProviderError = providerError
-        console.error('Chat provider BigModel failed:', providerError)
-      }
-
-      const proxyRateLimited = Boolean(
-        (lastProviderError as ChatCompletionError | undefined)?.isProxyRateLimit
-      )
-
-      if (rawReply === null && !proxyRateLimited && !stopRequestedRef.current) {
-        try {
+      const rawReply = await requestModelReply({
+        content,
+        lang,
+        transcript,
+        systemPrompt,
+        proxyUrl,
+        lane,
+        signal: requestAbort.signal,
+        onDelta: emitDelta,
+        isStopped: () => stopRequestedRef.current,
+        onBeforeGroq: () => {
           streamStarted = false
-          rawReply = await fetchGroq({
-            messages: transcript,
-            systemPrompt,
-            proxyUrl: CHAT_PROXY_URL,
-            lane,
-            signal: requestAbort.signal,
-            onDelta: emitDelta,
-          })
-        } catch (providerError) {
-          if (stopRequestedRef.current) {
-            throw providerError
-          }
-          lastProviderError = providerError
-          console.error('Chat provider Groq failed:', providerError)
-        }
-      }
-
-      if (rawReply === null && !stopRequestedRef.current) {
-        const local = getLocalReply(content, lang)
-        if (local) {
-          rawReply = { content: local }
-        } else {
-          throw lastProviderError ?? new Error('No chat provider succeeded.')
-        }
-      }
+        },
+      })
 
       if (rawReply) {
-        const reply = streamStarted ? rawReply.content : shortenReply(rawReply.content)
-        const finalMessage: ChatMessage = {
-          role: 'assistant',
-          content: reply,
-          incomplete: stopRequestedRef.current || rawReply.incomplete,
-          followUps:
-            stopRequestedRef.current || rawReply.incomplete
-              ? undefined
-              : pickFollowUpIds(reply, content, currentSection),
-        }
+        const finalMessage = buildFinalMessage({
+          reply: rawReply,
+          streamed: streamStarted,
+          stopped: stopRequestedRef.current,
+          question: content,
+          section: currentSection,
+        })
         setMessages((prev) => [...(streamStarted ? prev.slice(0, -1) : prev), finalMessage])
       }
     } catch (caughtError) {
@@ -541,8 +489,7 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
       setMessages(messages)
       if (!retry) setInput((current) => current || content)
       console.error('Chat failed across all configured providers:', caughtError)
-      const status = (caughtError as ChatCompletionError | undefined)?.status
-      setError(t(status === 429 ? CHAT_COPY.rateLimited : CHAT_COPY.genericError))
+      setError(t(chatErrorKind(caughtError) === 'rate-limited' ? CHAT_COPY.rateLimited : CHAT_COPY.genericError))
     } finally {
       if (activeAbortRef.current === requestAbort) {
         activeAbortRef.current = null
