@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import CaseStudyPage from '@/components/CaseStudyPage'
+import { getRelatedPosts } from '@/lib/related-content'
 import { BreadcrumbSchema } from '@/components/JsonLd'
 import { ogImage } from '@/lib/seo'
 
@@ -38,7 +39,7 @@ export default function SihemCaseStudy() {
         ]}
       />
       <Header />
-      <CaseStudyPage slug="sihem" />
+      <CaseStudyPage slug="sihem" relatedPosts={getRelatedPosts('sihem')} />
       <Footer />
     </>
   )

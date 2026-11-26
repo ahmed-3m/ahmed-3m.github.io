@@ -1,7 +1,7 @@
 import { caseStudies } from '@/lib/case-studies';
 import { MetadataRoute } from 'next';
 import { getAllBlogPostsMeta } from '@/lib/blog-posts-meta';
-import { getLatestBlogDate, getLatestContentDate, getLatestNewsDate } from '@/lib/content-dates';
+import { getHomepageDate, getLatestBlogDate, getLatestNewsDate, PAGE_LAST_MODIFIED } from '@/lib/content-dates';
 
 export const dynamic = 'force-static';
 
@@ -10,11 +10,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const blogPosts = getAllBlogPostsMeta('en');
 
   // Real content dates instead of build time, so lastModified survives
-  // no-op rebuilds and means something to crawlers. Shared with the JSON-LD
-  // dateModified via @/lib/content-dates so the two cannot drift apart.
+  // no-op rebuilds and means something to crawlers (see @/lib/content-dates).
   const latestBlog = getLatestBlogDate();
   const latestNews = getLatestNewsDate();
-  const latestContent = getLatestContentDate();
 
   const blogPostEntries: MetadataRoute.Sitemap = blogPosts.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}/`,
@@ -26,17 +24,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
       url: `${baseUrl}/`,
-      lastModified: latestContent,
+      lastModified: getHomepageDate(),
       changeFrequency: 'weekly',
       priority: 1,
     },
     {
       url: `${baseUrl}/about/`,
+      lastModified: new Date(PAGE_LAST_MODIFIED.about),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
       url: `${baseUrl}/research/`,
+      lastModified: new Date(PAGE_LAST_MODIFIED.research),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
@@ -48,7 +48,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${baseUrl}/news/`,
-      lastModified: latestNews ? new Date(latestNews) : latestContent,
+      lastModified: latestNews ? new Date(latestNews) : latestBlog,
       changeFrequency: 'daily',
       priority: 0.8,
     },
@@ -61,12 +61,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${baseUrl}/privacy/`,
       changeFrequency: 'yearly',
       priority: 0.2,
-    },
-    {
-      url: `${baseUrl}/feed.xml`,
-      lastModified: latestBlog,
-      changeFrequency: 'weekly' as const,
-      priority: 0.4,
     },
     ...caseStudies.map((study) => ({
       url: `${baseUrl}/case-studies/${study.slug}/`,

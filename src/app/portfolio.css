@@ -1295,6 +1295,45 @@ body {
   translate: -3px 0;
 }
 
+.stage-dir-posts {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding-block-start: 0.55rem;
+  padding-inline: 0.25rem;
+  min-width: 0;
+}
+
+.stage-directory .stage-dir-posts h3 {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cd-fg3);
+}
+
+.stage-dir-posts ul {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Titles wrap to two lines, so a fixed 44px row would space them unevenly.
+   Block padding keeps each target above 24px instead. */
+.stage-dir-posts .portfolio-text-link {
+  display: inline;
+  min-height: 0;
+  font-weight: 600;
+}
+
+.stage-dir-posts li {
+  padding-block: 0.3rem;
+}
+
 /* ── Detail pages (/about/, /research/) ── */
 .portfolio-page-title {
   padding-block: clamp(2rem, 6vw, 4rem) 1.5rem;
