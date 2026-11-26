@@ -16,9 +16,13 @@ const ROUTES = [
   '/about/',
   '/research/',
   '/blog/',
+  '/blog/deterministic-guardrails-for-llm-and-agent-systems/',
   '/news/',
   '/case-studies/diffusion-ood/',
+  '/case-studies/inkjet-ood/',
   '/case-studies/sihem/',
+  '/impressum/',
+  '/privacy/',
 ]
 
 const PROFILES = [
@@ -38,6 +42,12 @@ const PROFILES = [
     name: 'mobile-en-ltr',
     viewport: { width: 375, height: 812 },
     theme: 'dark',
+    language: 'en',
+  },
+  {
+    name: 'mobile-light-en',
+    viewport: { width: 375, height: 812 },
+    theme: 'light',
     language: 'en',
   },
   {
@@ -404,6 +414,276 @@ async function runDesktopFooterChecks(browser, origin, failures) {
   return executed
 }
 
+function recordCollectedErrors(errors, label, failures) {
+  if (errors.pageErrors.length > 0) {
+    failures.push(`${label}: pageerror(s): ${errors.pageErrors.join(' | ')}`)
+  }
+  if (errors.consoleErrors.length > 0) {
+    failures.push(`${label}: console.error(s): ${errors.consoleErrors.join(' | ')}`)
+  }
+}
+
+async function createHermeticDesktopPage(browser, origin, { theme, language }) {
+  const context = await browser.newContext({
+    viewport: { width: 1280, height: 800 },
+    reducedMotion: 'reduce',
+  })
+
+  await context.addInitScript(
+    ({ initialTheme, initialLanguage }) => {
+      try {
+        window.localStorage.setItem('theme', initialTheme)
+        window.localStorage.setItem('language', initialLanguage)
+      } catch {
+        // Ignore storage errors on non-http initial about:blank.
+      }
+    },
+    { initialTheme: theme, initialLanguage: language },
+  )
+
+  const page = await context.newPage()
+  await attachHermeticRouting(page, origin)
+  const errors = attachErrorCollectors(page)
+  return { context, page, errors }
+}
+
+async function runInteractiveSmokeChecks(browser, origin, failures) {
+  let executed = 0
+
+  // 1) Genie interactive AR flow on `/` (ar, dark, desktop 1280x800).
+  {
+    const label = '[interactive-genie-ar] /'
+    executed += 1
+    const { context, page, errors } = await createHermeticDesktopPage(browser, origin, {
+      theme: 'dark',
+      language: 'ar',
+    })
+
+    try {
+      errors.reset()
+      const response = await page.goto(`${origin}/`, {
+        waitUntil: 'load',
+        timeout: 20_000,
+      })
+      if (!response || response.status() !== 200) {
+        failures.push(`${label}: expected HTTP 200, received ${response?.status() ?? 'no response'}`)
+      } else {
+        await waitForSettledLayout(page)
+        await page.locator('button[aria-controls="chatbot-dialog"]').click()
+
+        const formInput = page.locator('#ahmed-chatbot-panel form input').first()
+        await formInput.waitFor({ state: 'visible', timeout: 10_000 })
+        await formInput.fill('ما أفضل نتيجة AUROC؟')
+        await formInput.press('Enter')
+
+        await page.waitForFunction(
+          () => {
+            const log = document.querySelector('#ahmed-chatbot-panel [role="log"]')
+            if (!log) return false
+            const hasBdiPlusMinus = Array.from(log.querySelectorAll('bdi[dir="ltr"]')).some((el) =>
+              (el.textContent ?? '').includes('±'),
+            )
+            if (!hasBdiPlusMinus) return false
+            return Array.from(log.children).some((entry) => {
+              const text = entry.textContent ?? ''
+              return text.includes('±') && Boolean(entry.querySelector('bdi[dir="ltr"]'))
+            })
+          },
+          null,
+          { timeout: 10_000 },
+        )
+
+        await page.keyboard.press('Escape')
+        await page.waitForFunction(
+          () => document.querySelector('#chatbot-dialog')?.getAttribute('aria-hidden') === 'true',
+          null,
+          { timeout: 5_000 },
+        )
+      }
+      recordCollectedErrors(errors, label, failures)
+    } catch (err) {
+      failures.push(`${label}: ${err instanceof Error ? err.message : String(err)}`)
+      recordCollectedErrors(errors, label, failures)
+    } finally {
+      await context.close()
+    }
+  }
+
+  // 2–4) Desktop EN dark interactive flows (`MergeproofDemo`, `SihemWalkthrough`, `OodDemo`).
+  const { context, page, errors } = await createHermeticDesktopPage(browser, origin, {
+    theme: 'dark',
+    language: 'en',
+  })
+
+  try {
+    // 2) MergeproofDemo flow on `/` (en, dark, desktop 1280x800).
+    {
+      const label = '[interactive-mergeproof-en] /'
+      executed += 1
+      errors.reset()
+
+      try {
+        const response = await page.goto(`${origin}/`, {
+          waitUntil: 'load',
+          timeout: 20_000,
+        })
+        if (!response || response.status() !== 200) {
+          failures.push(`${label}: expected HTTP 200, received ${response?.status() ?? 'no response'}`)
+        } else {
+          await waitForSettledLayout(page)
+          await page.locator('.stage-oss-try-btn').click()
+
+          const dialog = page.locator('dialog.mp-dialog[open], [role="dialog"]:has(.mp-demo)').first()
+          await dialog.waitFor({ state: 'visible', timeout: 5_000 })
+
+          const demo = dialog.locator('.mp-demo').first()
+          await demo.waitFor({ state: 'visible', timeout: 5_000 })
+
+          const scenarioBtns = demo.locator('[role="tablist"] [role="tab"], .mp-scenario-btn')
+          const btnCount = await scenarioBtns.count()
+          if (btnCount < 2) {
+            failures.push(`${label}: expected at least 2 Mergeproof scenario buttons, got ${btnCount}`)
+          } else {
+            const panel = demo.locator('[role="tabpanel"], .mp-panel').first()
+            const beforeText = await panel.innerText()
+            await scenarioBtns.nth(1).click()
+
+            await page.waitForFunction(
+              (prev) => {
+                const dlg = document.querySelector('dialog.mp-dialog[open], [role="dialog"] .mp-demo')
+                const activePanel = dlg?.querySelector('[role="tabpanel"], .mp-panel')
+                if (!activePanel) return false
+                return activePanel.innerText.trim() !== prev.trim()
+              },
+              beforeText,
+              { timeout: 5_000 },
+            )
+          }
+
+          await page.keyboard.press('Escape')
+        }
+        recordCollectedErrors(errors, label, failures)
+      } catch (err) {
+        failures.push(`${label}: ${err instanceof Error ? err.message : String(err)}`)
+        recordCollectedErrors(errors, label, failures)
+      }
+    }
+
+    // 3) SihemWalkthrough flow on `/case-studies/sihem/` (en, dark, desktop 1280x800).
+    {
+      const label = '[interactive-sihem-en] /case-studies/sihem/'
+      executed += 1
+      errors.reset()
+
+      try {
+        const response = await page.goto(`${origin}/case-studies/sihem/`, {
+          waitUntil: 'load',
+          timeout: 20_000,
+        })
+        if (!response || response.status() !== 200) {
+          failures.push(`${label}: expected HTTP 200, received ${response?.status() ?? 'no response'}`)
+        } else {
+          await waitForSettledLayout(page)
+          const walkthrough = page.locator('#walkthrough, .sihem-wt-section').first()
+          const tabs = walkthrough.locator('[role="tablist"] [role="tab"]')
+          const tabCount = await tabs.count()
+          if (tabCount < 2) {
+            failures.push(`${label}: expected at least 2 walkthrough tabs, got ${tabCount}`)
+          } else {
+            const secondTab = tabs.nth(1)
+            await secondTab.click()
+
+            const selected = await secondTab.getAttribute('aria-selected')
+            if (selected !== 'true') {
+              failures.push(`${label}: expected 2nd tab aria-selected="true", got "${selected}"`)
+            }
+
+            const activePanel = walkthrough.locator('[role="tabpanel"]:not([hidden])').first()
+            await activePanel.waitFor({ state: 'visible', timeout: 5_000 })
+            const panelText = await activePanel.innerText()
+            if (!panelText.includes('0 LLM calls')) {
+              failures.push(`${label}: expected quiet-hours panel to include "0 LLM calls"`)
+            }
+          }
+        }
+        recordCollectedErrors(errors, label, failures)
+      } catch (err) {
+        failures.push(`${label}: ${err instanceof Error ? err.message : String(err)}`)
+        recordCollectedErrors(errors, label, failures)
+      }
+    }
+
+    // 4) OodDemo flow on `/research/` (en, dark, desktop 1280x800).
+    {
+      const label = '[interactive-ood-en] /research/'
+      executed += 1
+      errors.reset()
+
+      try {
+        const response = await page.goto(`${origin}/research/`, {
+          waitUntil: 'load',
+          timeout: 20_000,
+        })
+        if (!response || response.status() !== 200) {
+          failures.push(`${label}: expected HTTP 200, received ${response?.status() ?? 'no response'}`)
+        } else {
+          await waitForSettledLayout(page)
+          const explorer = page.locator('#ood-explorer, .ood-demo').first()
+          await explorer.scrollIntoViewIfNeeded()
+
+          const slider = explorer.locator('input[type="range"]').first()
+          try {
+            await slider.waitFor({ state: 'visible', timeout: 3_000 })
+          } catch {
+            const loadBtn = explorer.locator('button').first()
+            if (await loadBtn.isVisible()) {
+              await loadBtn.click()
+            }
+            await slider.waitFor({ state: 'visible', timeout: 5_000 })
+          }
+
+          const extractFpr = (text) => text.match(/FPR\s*=\s*([0-9]+(?:\.[0-9]+)?%)/)?.[1] ?? null
+          const beforeText = await explorer.innerText()
+          const beforeVal = await slider.inputValue()
+          const beforeFpr = extractFpr(beforeText)
+          await slider.focus()
+          await page.keyboard.press('PageDown')
+
+          await page.waitForFunction(
+            ({ prevVal, prevFpr }) => {
+              const root = document.querySelector('#ood-explorer, .ood-demo')
+              const range = root?.querySelector('input[type="range"]')
+              if (!root || !(root instanceof HTMLElement) || !(range instanceof HTMLInputElement)) {
+                return false
+              }
+              const nextFpr = root.innerText.match(/FPR\s*=\s*([0-9]+(?:\.[0-9]+)?%)/)?.[1] ?? null
+              return range.value !== prevVal && nextFpr !== null && nextFpr !== prevFpr
+            },
+            { prevVal: beforeVal, prevFpr: beforeFpr },
+            { timeout: 5_000 },
+          )
+
+          const afterText = await explorer.innerText()
+          const afterFpr = extractFpr(afterText)
+          if (!beforeFpr || !afterFpr || afterFpr === beforeFpr) {
+            failures.push(
+              `${label}: expected threshold-dependent FPR diagnostic to change (before=${beforeFpr}, after=${afterFpr})`,
+            )
+          }
+        }
+        recordCollectedErrors(errors, label, failures)
+      } catch (err) {
+        failures.push(`${label}: ${err instanceof Error ? err.message : String(err)}`)
+        recordCollectedErrors(errors, label, failures)
+      }
+    }
+  } finally {
+    await context.close()
+  }
+
+  return executed
+}
+
 if (!existsSync(outDir) || !statSync(outDir).isDirectory()) {
   console.error(`playwright-smoke: missing export directory ${outDir} (run \`npm run build\` first).`)
   process.exit(1)
@@ -526,6 +806,7 @@ try {
   }
 
   checksRun += await runDesktopFooterChecks(browser, origin, failures)
+  checksRun += await runInteractiveSmokeChecks(browser, origin, failures)
 } finally {
   if (browser) {
     await browser.close()
@@ -542,5 +823,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-  `playwright-smoke: OK (${checksRun} checks: ${PROFILES.length} profiles × ${ROUTES.length} routes + ${FOOTER_LOCALES.length} desktop footer locales + /research/ chart centering)`,
+  `playwright-smoke: OK (${checksRun} checks: ${PROFILES.length} profiles × ${ROUTES.length} routes + ${FOOTER_LOCALES.length} desktop footer locales + /research/ chart centering + 4 interactive flows)`,
 )

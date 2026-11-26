@@ -40,7 +40,7 @@ export const cifarCharts: ResearchFigureData[] = [
     },
   },
   {
-    src: '/fig_per_timestep_error.png',
+    src: '/fig_per_timestep_error.webp',
     width: 2176,
     height: 1292,
     alt: {
