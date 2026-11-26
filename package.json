@@ -10,8 +10,9 @@
     "postbuild": "node tools/emit-sitemap-alias.mjs",
     "verify:export": "node tools/verify-export.mjs",
     "start": "next start",
-    "lint": "eslint src",
-    "typecheck": "tsc --noEmit"
+    "lint": "eslint src tests",
+    "typecheck": "tsc --noEmit",
+    "test": "node --import ./tools/test-hooks.mjs --test \"tests/**/*.test.ts\""
   },
   "dependencies": {
     "lucide-react": "^1.73.0",
