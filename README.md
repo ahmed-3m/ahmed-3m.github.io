@@ -161,5 +161,5 @@ The model scores an image by how well a class-conditional diffusion model recons
 ---
 
 <p align="center">
-  <b>Let's talk.</b> <a href="mailto:ahmed.mu.0905@gmail.com">ahmed.mu.0905@gmail.com</a> · <a href="https://www.linkedin.com/in/ahmed-3m/">LinkedIn</a> · <a href="https://github.com/ahmed-3m">GitHub</a> · <a href="https://wandb.ai/ahmed-mu-0593">W&amp;B</a> · <a href="https://orcid.org/0009-0004-8934-1270">ORCID</a> · <a href="https://calendly.com/ahmed-3m">Book a call</a>
+  <b>Let's talk.</b> <a href="mailto:ahmed.mu.0905@gmail.com">ahmed.mo.0595@gmail.com</a> · <a href="https://www.linkedin.com/in/ahmed-3m/">LinkedIn</a> · <a href="https://github.com/ahmed-3m">GitHub</a> · <a href="https://wandb.ai/ahmed-mu-0593">W&amp;B</a> · <a href="https://orcid.org/0009-0004-8934-1270">ORCID</a> · <a href="https://calendly.com/ahmed-3m">Book a call</a>
 </p>
