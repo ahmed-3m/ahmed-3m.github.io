@@ -69,15 +69,16 @@ I'm an AI/ML engineer in **Linz, Austria**. I build reliable vision and agentic 
     <td width="50%" valign="top">
       <sub><code>INDEPENDENT PROJECT · TECH2B INCUBATOR</code></sub>
       <h3>Sihem</h3>
-      A personal assistant for weekly planning and daily routines, built around a deterministic <code>generators → arbiter → composer</code> loop, Supabase PostgreSQL with row-level security, <code>pgvector</code> RAG long-term memory, and multi-provider LLM routing with failover. The Telegram bot and web app are in invitation-only beta; the native Android app (Kotlin / Jetpack Compose) is in private testing.<br><br>
-      <a href="https://ahmed-3m.github.io/case-studies/sihem/">Case study</a> ·
+      A personal assistant for weekly planning and daily routines, built around a deterministic <code>generators → arbiter → composer</code> loop, Supabase PostgreSQL with row-level security, <code>pgvector</code> RAG long-term memory, and multi-provider LLM routing with failover. The Telegram bot and web app are in invitation-only beta; the native Android app (Kotlin / Jetpack Compose) is in private testing. The case study includes an interactive 3-scenario illustrative walkthrough of the invitation-only beta.<br><br>
+      <a href="https://ahmed-3m.github.io/case-studies/sihem/">Case study &amp; walkthrough</a> ·
       <a href="https://t.me/sihem_ai_bot">Telegram (invite only)</a> ·
       <a href="https://sihem-pwa.pages.dev/">Web app (invite only)</a>
     </td>
     <td width="50%" valign="top">
       <sub><code>DEVELOPER TOOL · OPEN SOURCE</code></sub>
       <h3>mergeproof</h3>
-      A zero-dependency deterministic merge gate for AI-agent pull requests. It makes 0 LLM calls and returns <code>MERGE</code>, <code>RETRY</code>, or <code>HUMAN</code> against configured merge requirements — for example, flagging edits to existing tests for human review. Passing checks does not guarantee defect-free code.<br><br>
+      A zero-dependency deterministic merge gate for AI-agent pull requests. It makes 0 LLM calls and returns <code>MERGE</code>, <code>RETRY</code>, or <code>HUMAN</code> against configured merge requirements — for example, flagging edits to existing tests for human review. Try it in the live client-side PR gate playground on the portfolio (0 LLM calls). Passing checks does not guarantee defect-free code.<br><br>
+      <a href="https://ahmed-3m.github.io/?view=full#mergeproof-playground">Interactive playground</a> ·
       <a href="https://github.com/ahmed-3m/mergeproof">Code</a> ·
       <a href="https://github.com/ahmed-3m/mergeproof#quick-start">See example</a> ·
       <a href="https://www.npmjs.com/package/@ahmed-3m/mergeproof">npm</a>
@@ -137,7 +138,7 @@ The model scores an image by how well a class-conditional diffusion model recons
   <tr>
     <td valign="top" width="50%">
       <b>Stack</b><br>
-      Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4, statically exported and deployed to GitHub Pages by <a href=".github/workflows/deploy.yml">GitHub Actions</a>.
+      Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4, statically exported and deployed to GitHub Pages by <a href=".github/workflows/deploy.yml">GitHub Actions</a>, gated by an automated static-export integrity verifier (<code>npm run verify:export</code>) and a headless Chromium Playwright RTL/mobile smoke check.
     </td>
     <td valign="top" width="50%">
       <b>Design</b><br>
@@ -151,7 +152,7 @@ The model scores an image by how well a class-conditional diffusion model recons
     </td>
     <td valign="top">
       <b>Live pieces</b><br>
-      Dedicated <a href="https://ahmed-3m.github.io/about/">About</a>, <a href="https://ahmed-3m.github.io/research/">Research</a>, <a href="https://ahmed-3m.github.io/blog/">Blog</a>, <a href="https://ahmed-3m.github.io/news/">News</a>, <a href="https://ahmed-3m.github.io/impressum/">Impressum</a>, and <a href="https://ahmed-3m.github.io/privacy/">Privacy</a> routes, an interactive thesis explorer, a <a href="worker/chat-proxy.js">Cloudflare Worker–proxied</a> chat assistant (Genie) with curated fallback answers, a live AI front-desk voice/avatar call demo, <a href="public/llms.txt"><code>llms.txt</code></a> / <a href="public/llms-full.txt"><code>llms-full.txt</code></a> context files, and a daily agent-curated AI news feed.
+      Dedicated <a href="https://ahmed-3m.github.io/about/">About</a>, <a href="https://ahmed-3m.github.io/research/">Research</a>, <a href="https://ahmed-3m.github.io/blog/">Blog</a>, <a href="https://ahmed-3m.github.io/news/">News</a>, <a href="https://ahmed-3m.github.io/impressum/">Impressum</a>, and <a href="https://ahmed-3m.github.io/privacy/">Privacy</a> routes, an interactive thesis explorer, a live client-side <a href="https://ahmed-3m.github.io/?view=full#mergeproof-playground"><code>mergeproof</code> PR gate playground</a> (0 LLM calls), an interactive 3-scenario illustrative Sihem beta walkthrough on <a href="https://ahmed-3m.github.io/case-studies/sihem/"><code>/case-studies/sihem/</code></a>, a <a href="worker/chat-proxy.js">Cloudflare Worker–proxied</a> chat assistant (Genie) with curated fallback answers, a live AI front-desk voice/avatar call demo, <a href="public/llms.txt"><code>llms.txt</code></a> / <a href="public/llms-full.txt"><code>llms-full.txt</code></a> context files, and a daily agent-curated AI news feed.
     </td>
   </tr>
 </table>
