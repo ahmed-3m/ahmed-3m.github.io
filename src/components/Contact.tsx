@@ -29,6 +29,13 @@ const copy = {
     es: 'Abierto a roles de IA/ML, colaboraciones de investigación y alianzas de producto.',
     ar: 'متاح لأدوار الذكاء الاصطناعي، وتعاونات البحث، وشراكات المنتجات.',
   },
+  workPermit: {
+    en: 'Based in Linz, Austria · Eligible for Austria’s Rot-Weiß-Rot Karte für Studienabsolventen (no labour-market test).',
+    de: 'Standort Linz, Österreich · Berechtigt für die Rot-Weiß-Rot-Karte für Studienabsolventen (ohne Arbeitsmarktprüfung).',
+    fr: 'Basé à Linz, Autriche · Éligible à la Rot-Weiß-Rot Karte für Studienabsolventen (sans test du marché du travail).',
+    es: 'Con base en Linz, Austria · Elegible para la Rot-Weiß-Rot Karte für Studienabsolventen (sin prueba del mercado laboral).',
+    ar: 'مقيم في لينتس، النمسا · مؤهل لبطاقة Rot-Weiß-Rot Karte für Studienabsolventen (دون اختبار سوق العمل).',
+  },
 } satisfies Record<string, TranslationMap>
 
 export default function Contact({ full = false }: { full?: boolean }) {
@@ -46,7 +53,8 @@ export default function Contact({ full = false }: { full?: boolean }) {
             {t(copy.titleA)} <span className="outline">{t(copy.titleB)}</span> {t(copy.titleC)}
           </h2>
 
-          <p className="cd-contact-sub">{t(copy.sub)}</p>
+          <p className="cd-contact-sub" style={{ marginBottom: 8 }}>{t(copy.sub)}</p>
+          <p className="mb-9 text-sm text-[var(--cd-fg3)]">{t(copy.workPermit)}</p>
 
           <div className="cd-contact-links">
             {socials.map((social) => (
@@ -73,6 +81,7 @@ export default function Contact({ full = false }: { full?: boolean }) {
         <div>
           <h2 id="portfolio-contact-title">{t(copy.title)}</h2>
           <p className="portfolio-contact-sub">{t(copy.sub)}</p>
+          <p className="mt-1.5 max-w-[56ch] text-sm leading-snug text-[var(--cd-fg3)]">{t(copy.workPermit)}</p>
         </div>
         <a href="mailto:ahmed.mu.0905@gmail.com" className="portfolio-contact-email">
           <Mail size={16} strokeWidth={2.1} aria-hidden="true" />
