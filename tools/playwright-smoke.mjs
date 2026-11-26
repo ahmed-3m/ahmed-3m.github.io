@@ -48,6 +48,8 @@ const PROFILES = [
   },
 ]
 
+const FOOTER_LOCALES = ['en', 'de', 'fr', 'es', 'ar']
+
 const MIME_TYPES = {
   '.css': 'text/css; charset=utf-8',
   '.gif': 'image/gif',
@@ -200,6 +202,208 @@ function closeServer(server) {
   })
 }
 
+async function attachHermeticRouting(page, origin) {
+  // Keep the smoke gate 100% hermetic: intercept any external http(s) calls so
+  // optional third-party scripts (e.g. GA4 when NEXT_PUBLIC_GA_MEASUREMENT_ID is set)
+  // never touch the network or emit ERR_FAILED console noise.
+  await page.route(/^https?:\/\//i, async (route) => {
+    const url = new URL(route.request().url())
+    if (url.origin === origin) {
+      await route.continue()
+      return
+    }
+    if (route.request().resourceType() === 'script') {
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/javascript; charset=utf-8',
+        body: '',
+      })
+      return
+    }
+    await route.fulfill({ status: 204, body: '' })
+  })
+}
+
+function attachErrorCollectors(page) {
+  const pageErrors = []
+  const consoleErrors = []
+  page.on('pageerror', (err) => {
+    pageErrors.push(err instanceof Error ? err.message : String(err))
+  })
+  page.on('console', (msg) => {
+    if (msg.type() === 'error') {
+      consoleErrors.push(msg.text())
+    }
+  })
+  return {
+    pageErrors,
+    consoleErrors,
+    reset() {
+      pageErrors.length = 0
+      consoleErrors.length = 0
+    },
+  }
+}
+
+async function waitForSettledLayout(page) {
+  // Allow fonts and post-hydration useEffect / useLayoutEffect hooks (language/theme/view sync) to settle.
+  await page.evaluate(
+    () =>
+      Promise.resolve(document.fonts?.ready)
+        .catch(() => {})
+        .then(
+          () =>
+            new Promise((resolve) => {
+              requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
+            }),
+        ),
+  )
+}
+
+async function checkFeaturedResearchChartCentering(page, label, failures) {
+  const result = await page.evaluate(() => {
+    const container = document.querySelector('.cd-research-featured')
+    if (!container) return { ok: false, reason: 'missing .cd-research-featured' }
+    const chart = container.querySelector('.portfolio-charts-featured')
+    if (!chart) return { ok: false, reason: 'missing .portfolio-charts-featured inside .cd-research-featured' }
+    const containerRect = container.getBoundingClientRect()
+    const chartRect = chart.getBoundingClientRect()
+    if (containerRect.width <= 0 || chartRect.width <= 0 || chartRect.height <= 0) {
+      return {
+        ok: false,
+        reason: `zero-sized rect (containerWidth=${containerRect.width.toFixed(1)}, chart=${chartRect.width.toFixed(1)}x${chartRect.height.toFixed(1)})`,
+      }
+    }
+    const containerCenter = (containerRect.left + containerRect.right) / 2
+    const chartCenter = (chartRect.left + chartRect.right) / 2
+    const delta = Math.abs(chartCenter - containerCenter)
+    return { ok: delta <= 2, delta, chartCenter, containerCenter }
+  })
+
+  if (!result.ok) {
+    failures.push(
+      `${label}: featured research chart centering failed: ${
+        result.reason ??
+        `|chartCenter - containerCenter|=${result.delta.toFixed(2)}px > 2px (chart=${result.chartCenter.toFixed(1)}, container=${result.containerCenter.toFixed(1)})`
+      }`,
+    )
+  }
+}
+
+async function runDesktopFooterChecks(browser, origin, failures) {
+  const context = await browser.newContext({
+    viewport: { width: 1440, height: 900 },
+    reducedMotion: 'reduce',
+  })
+
+  await context.addInitScript(() => {
+    try {
+      window.localStorage.setItem('theme', 'dark')
+      if (!window.localStorage.getItem('language')) {
+        window.localStorage.setItem('language', 'en')
+      }
+    } catch {
+      // Ignore storage errors on non-http initial about:blank.
+    }
+  })
+
+  const page = await context.newPage()
+  await attachHermeticRouting(page, origin)
+  const errors = attachErrorCollectors(page)
+  let executed = 0
+
+  try {
+    for (const locale of FOOTER_LOCALES) {
+      executed += 1
+      errors.reset()
+      const label = `[desktop-footer-1440-${locale}] /`
+
+      if (page.url().startsWith(origin)) {
+        await page.evaluate((loc) => {
+          window.localStorage.setItem('theme', 'dark')
+          window.localStorage.setItem('language', loc)
+        }, locale)
+      }
+
+      const response = await page.goto(`${origin}/`, {
+        waitUntil: 'load',
+        timeout: 20_000,
+      })
+      if (!response || response.status() !== 200) {
+        failures.push(`${label}: expected HTTP 200, received ${response?.status() ?? 'no response'}`)
+        continue
+      }
+
+      await waitForSettledLayout(page)
+
+      if (errors.pageErrors.length > 0) {
+        failures.push(`${label}: pageerror(s): ${errors.pageErrors.join(' | ')}`)
+      }
+      if (errors.consoleErrors.length > 0) {
+        failures.push(`${label}: console.error(s): ${errors.consoleErrors.join(' | ')}`)
+      }
+
+      const footer = await page.evaluate((expectedLocale) => {
+        const docEl = document.documentElement
+        const expectedDir = expectedLocale === 'ar' ? 'rtl' : 'ltr'
+        const nav = document.querySelector('.cd-footer-nav')
+        const links = nav ? Array.from(nav.querySelectorAll('.cd-footer-link')) : []
+        const tops = links.map((el) => el.getBoundingClientRect().top)
+        const navSpread = tops.length > 0 ? Math.max(...tops) - Math.min(...tops) : null
+
+        const meta = document.querySelector('.cd-footer-meta')
+        let metaRectCount = null
+        let metaHeight = null
+        if (meta) {
+          const range = document.createRange()
+          range.selectNodeContents(meta)
+          metaRectCount = range.getClientRects().length
+          metaHeight = meta.getBoundingClientRect().height
+        }
+
+        return {
+          lang: docEl.lang,
+          dir: docEl.dir,
+          expectedDir,
+          hasNav: Boolean(nav),
+          linkCount: links.length,
+          navSpread,
+          hasMeta: Boolean(meta),
+          metaRectCount,
+          metaHeight,
+        }
+      }, locale)
+
+      if (footer.lang !== locale || footer.dir !== footer.expectedDir) {
+        failures.push(
+          `${label}: expected html[lang="${locale}"][dir="${footer.expectedDir}"], got lang="${footer.lang}" dir="${footer.dir}"`,
+        )
+      }
+      if (!footer.hasNav || footer.linkCount === 0) {
+        failures.push(`${label}: missing .cd-footer-nav or .cd-footer-link elements`)
+      } else if (footer.navSpread > 4) {
+        failures.push(
+          `${label}: .cd-footer-nav wrapped across multiple rows (top spread=${footer.navSpread.toFixed(1)}px > 4px)`,
+        )
+      }
+      if (!footer.hasMeta) {
+        failures.push(`${label}: missing .cd-footer-meta`)
+      } else if (
+        footer.metaHeight <= 0 ||
+        (footer.metaRectCount !== 1 && footer.metaHeight > 24)
+      ) {
+        failures.push(
+          `${label}: .cd-footer-meta wrapped or empty (clientRects=${footer.metaRectCount}, height=${footer.metaHeight.toFixed(1)}px)`,
+        )
+      }
+    }
+  } finally {
+    await context.close()
+  }
+
+  return executed
+}
+
 if (!existsSync(outDir) || !statSync(outDir).isDirectory()) {
   console.error(`playwright-smoke: missing export directory ${outDir} (run \`npm run build\` first).`)
   process.exit(1)
@@ -233,43 +437,12 @@ try {
     )
 
     const page = await context.newPage()
-
-    // Keep the smoke gate 100% hermetic: intercept any external http(s) calls so
-    // optional third-party scripts (e.g. GA4 when NEXT_PUBLIC_GA_MEASUREMENT_ID is set)
-    // never touch the network or emit ERR_FAILED console noise.
-    await page.route(/^https?:\/\//i, async (route) => {
-      const url = new URL(route.request().url())
-      if (url.origin === origin) {
-        await route.continue()
-        return
-      }
-      if (route.request().resourceType() === 'script') {
-        await route.fulfill({
-          status: 200,
-          contentType: 'application/javascript; charset=utf-8',
-          body: '',
-        })
-        return
-      }
-      await route.fulfill({ status: 204, body: '' })
-    })
-
-    let activePageErrors = []
-    let activeConsoleErrors = []
-
-    page.on('pageerror', (err) => {
-      activePageErrors.push(err instanceof Error ? err.message : String(err))
-    })
-    page.on('console', (msg) => {
-      if (msg.type() === 'error') {
-        activeConsoleErrors.push(msg.text())
-      }
-    })
+    await attachHermeticRouting(page, origin)
+    const errors = attachErrorCollectors(page)
 
     for (const routePath of ROUTES) {
       checksRun += 1
-      activePageErrors = []
-      activeConsoleErrors = []
+      errors.reset()
       const label = `[${profile.name}] ${routePath}`
 
       const response = await page.goto(`${origin}${routePath}`, {
@@ -282,13 +455,7 @@ try {
         continue
       }
 
-      // Allow post-hydration useEffect / useLayoutEffect hooks (language/theme/view sync) to settle.
-      await page.evaluate(
-        () =>
-          new Promise((resolve) => {
-            requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
-          }),
-      )
+      await waitForSettledLayout(page)
 
       const metrics = await page.evaluate(() => {
         const docEl = document.documentElement
@@ -301,11 +468,11 @@ try {
         }
       })
 
-      if (activePageErrors.length > 0) {
-        failures.push(`${label}: pageerror(s): ${activePageErrors.join(' | ')}`)
+      if (errors.pageErrors.length > 0) {
+        failures.push(`${label}: pageerror(s): ${errors.pageErrors.join(' | ')}`)
       }
-      if (activeConsoleErrors.length > 0) {
-        failures.push(`${label}: console.error(s): ${activeConsoleErrors.join(' | ')}`)
+      if (errors.consoleErrors.length > 0) {
+        failures.push(`${label}: console.error(s): ${errors.consoleErrors.join(' | ')}`)
       }
       if (metrics.theme !== profile.theme) {
         failures.push(`${label}: expected data-theme="${profile.theme}", got "${metrics.theme}"`)
@@ -348,10 +515,17 @@ try {
             (culprits.length ? ` [${culprits.join('; ')}]` : ''),
         )
       }
+
+      if (profile.name === 'desktop-dark-en' && routePath === '/research/') {
+        checksRun += 1
+        await checkFeaturedResearchChartCentering(page, label, failures)
+      }
     }
 
     await context.close()
   }
+
+  checksRun += await runDesktopFooterChecks(browser, origin, failures)
 } finally {
   if (browser) {
     await browser.close()
@@ -368,5 +542,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-  `playwright-smoke: OK (${checksRun} route-state checks across ${PROFILES.length} profiles × ${ROUTES.length} routes)`,
+  `playwright-smoke: OK (${checksRun} checks: ${PROFILES.length} profiles × ${ROUTES.length} routes + ${FOOTER_LOCALES.length} desktop footer locales + /research/ chart centering)`,
 )
