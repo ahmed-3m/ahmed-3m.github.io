@@ -40,7 +40,7 @@ Last updated: 2026-11-25
 
 ## Education
 
-- **M.Sc. Artificial Intelligence** — Johannes Kepler University Linz, Austria (Oct 2020 – Sep 2026; graduated 25 Sep 2026, Defensio; thesis graded 1). Supervisor: Prof. Sepp Hochreiter. Thesis: Conditional Diffusion Models for OOD Detection.
+- **M.Sc. Artificial Intelligence** — Johannes Kepler University Linz, Austria (Oct 2020 – Sep 2026; graduated 25 Sep 2026, Defensio; thesis graded 1). Supervisor: Prof. Sepp Hochreiter. Thesis: Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control.
 - **B.Sc. Mechatronics Engineering** — Eastern Mediterranean University, Famagusta, Cyprus (Feb 2015 – Jan 2018). Capstone project (grade: Excellent): SCARA robotic system for dynamic object tracking.
 
 ## Experience
