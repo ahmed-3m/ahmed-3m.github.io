@@ -57,8 +57,8 @@ jobs:
       - name: Chat proxy self-test
         run: node worker/chat-proxy.selftest.mjs
 
-      - name: Genie self-test
-        run: node tools/genie-selftest.mjs
+      - name: Unit tests
+        run: npm test
 
   build:
     needs: quality

@@ -32,8 +32,9 @@ TypeScript + Tailwind v4, statically exported to GitHub Pages.
 npm ci              # install (lockfile is committed — use ci, not install)
 npm run dev         # local dev server on http://localhost:3000
 npm run build       # production static export to out/ — MUST pass before pushing
-npm run lint        # eslint (src/)
+npm run lint        # eslint (src/, tests/)
 npm run typecheck   # tsc --noEmit
+npm test            # unit tests: node --test over tests/**/*.test.ts (no extra deps)
 node .github/news/news-selftest.mjs   # news catalog + link-validator self-test
 node worker/chat-proxy.selftest.mjs   # Cloudflare Worker chat-proxy self-test
 ```
@@ -61,7 +62,8 @@ Build notes:
 | `src/lib/news-items.json` | News catalog (see the news protocol below) |
 | `public/` | Static assets, CV, thesis PDF, research figures, `llms.txt` |
 | `worker/` | Cloudflare Worker chat proxy (`chat-proxy.js`, `wrangler.toml`) and self-test |
-| `tools/` | Build-time emitters (homepage news, sitemap alias) |
+| `tools/` | Build-time emitters (homepage news, sitemap alias), export verifier, Playwright smoke gate, and `test-hooks.mjs` (maps the `@/` alias for `npm test`) |
+| `tests/` | Unit tests (`node:test`, run with `npm test`). Name files `*.test.ts`; they import the TypeScript sources directly through `@/…` |
 | `specs/NNN-*/` | Spec Kit feature specs (spec / tasks / reports); `.specify/memory/constitution.md` holds the project principles |
 | `.github/` | Workflows (`deploy`, `news-update`, `news-update-monitor`, `site-health`, `claude`) and the news agent's task, validators and self-tests |
 
