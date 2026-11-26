@@ -15,7 +15,7 @@ export type CaseStudy = {
 export const caseStudies: CaseStudy[] = [
   {
     slug: 'diffusion-ood',
-    lastModified: '2026-11-22',
+    lastModified: '2026-11-26',
     stack: ['PyTorch', 'PyTorch Lightning', 'Hydra', 'DDPM / UNet', 'W&B', 'CIFAR-10'],
     pipelineStages: [
       {
@@ -101,7 +101,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: 'inkjet-ood',
-    lastModified: '2026-11-22',
+    lastModified: '2026-11-26',
     stack: ['YOLOv8m', 'PyTorch', 'Roboflow', 'OpenCV', 'Hydra', 'FTI_Zer0P'],
     pipelineStages: [
       {
@@ -188,7 +188,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: 'sihem',
-    lastModified: '2026-11-21',
+    lastModified: '2026-11-26',
     stack: [
       'Deno / TypeScript',
       'Supabase Edge Functions',

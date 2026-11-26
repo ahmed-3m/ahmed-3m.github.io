@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import BlogPostClient from '@/components/BlogPostClient'
+import { getRelatedCaseStudies } from '@/lib/related-content'
 import { getAllBlogPosts, getBlogPost, getRawBlogPost } from '@/lib/blog-posts'
 
 interface BlogPostPageProps {
@@ -77,7 +78,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   return (
     <>
       <Header />
-      <BlogPostClient slug={slug} />
+      <BlogPostClient slug={slug} relatedCaseStudies={getRelatedCaseStudies(slug)} />
       <Footer />
     </>
   )

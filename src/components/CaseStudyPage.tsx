@@ -7,6 +7,7 @@ import { getCaseStudy } from '@/lib/case-studies'
 import { caseStudyOverview } from '@/lib/case-study-overview'
 import { portfolioCopy, selectedWork } from '@/lib/portfolio-copy'
 import { CIFAR_LAMBDA_SWEEP, INKJET_OVERALL_SWEEP } from '@/lib/ood-explorer-data'
+import type { RelatedLink } from '@/lib/related-content'
 import ResearchCharts from '@/components/ResearchCharts'
 import SihemWalkthrough from '@/components/SihemWalkthrough'
 
@@ -67,9 +68,17 @@ const labels = {
   },
   approach: { en: 'Approach', de: 'Ansatz', fr: 'Approche', es: 'Enfoque', ar: 'المنهج' },
   artifacts: { en: 'Artifacts', de: 'Artefakte', fr: 'Artefacts', es: 'Artefactos', ar: 'الروابط' },
+  relatedWriting: { en: 'Related writing', de: 'Passende Beiträge', fr: 'Articles liés', es: 'Artículos relacionados', ar: 'مقالات ذات صلة' },
 } as const
 
-export default function CaseStudyPage({ slug }: { slug: keyof typeof caseStudyOverview }) {
+export default function CaseStudyPage({
+  slug,
+  relatedPosts = [],
+}: {
+  slug: keyof typeof caseStudyOverview
+  /** From getRelatedPosts() in the server page, so the post catalog stays out of this bundle. */
+  relatedPosts?: RelatedLink[]
+}) {
   const { t } = useI18n()
   const study = getCaseStudy(slug)
   const project = selectedWork.find((work) => work.slug === slug)
@@ -189,6 +198,19 @@ export default function CaseStudyPage({ slug }: { slug: keyof typeof caseStudyOv
             })}
           </div>
         </section>
+
+        {relatedPosts.length > 0 && (
+          <section className="portfolio-case-section" aria-labelledby="related-writing-title">
+            <h2 id="related-writing-title">{t(labels.relatedWriting)}</h2>
+            <ul className="list-disc space-y-2 ps-5">
+              {relatedPosts.map((post) => (
+                <li key={post.href}>
+                  <Link href={post.href} className="portfolio-text-link">{t(post.title)}</Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         {track === 'cifar' && <OodDemo id="ood-explorer" heading="h2" />}
       </article>

@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, ArrowUpRight, Layers, Terminal, X } from 'lucide-react'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
+import { getAllBlogPostsMeta } from '@/lib/blog-posts-meta'
 import { BENCHMARK_DATASETS, INKJET_OVERALL_SWEEP } from '@/lib/ood-explorer-data'
 import { diffusionExplorerHref, focusPillars, portfolioCopy as copy, selectedWork } from '@/lib/portfolio-copy'
 import { usePortfolioView } from '@/lib/portfolio-view'
@@ -167,8 +168,13 @@ const exploreItems = [
   { id: 'news', href: '/news/', titleKey: 'news', descKey: 'exploreNewsDesc' },
 ] as const
 
+const latestWritingCopy = {
+  title: { en: 'Latest writing', de: 'Neueste Beiträge', fr: 'Derniers articles', es: 'Últimos artículos', ar: 'أحدث المقالات' },
+} satisfies Record<string, TranslationMap>
+
 export default function PortfolioAbstract() {
-  const { t } = useI18n()
+  const { lang, t } = useI18n()
+  const latestPosts = getAllBlogPostsMeta(lang).slice(0, 3)
   const { setView } = usePortfolioView()
   const [activeTab, setActiveTab] = useState<(typeof focusPillars)[number]['id']>('diffusion-ood')
   const [hasVisitedInkjet, setHasVisitedInkjet] = useState(false)
@@ -712,6 +718,18 @@ export default function PortfolioAbstract() {
                 <ArrowRight size={15} className="stage-dir-arrow rtl:rotate-180" aria-hidden="true" />
               </Link>
             ))}
+          </div>
+          {/* Plain links to individual posts: the concise homepage is the page crawlers revisit most,
+              and the full Writing section only renders in the client-side full view. */}
+          <div className="stage-dir-posts">
+            <h3 id="portfolio-latest-writing">{t(latestWritingCopy.title)}</h3>
+            <ul aria-labelledby="portfolio-latest-writing">
+              {latestPosts.map((post) => (
+                <li key={post.slug}>
+                  <Link className="portfolio-text-link" href={`/blog/${post.slug}/`}>{post.title}</Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </nav>
       </div>

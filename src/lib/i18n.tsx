@@ -61,18 +61,25 @@ function writeLanguageCookie(nextLang: Language): void {
 
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [lang, setLang] = useState<Language>('en')
+  const [restored, setRestored] = useState(false)
 
   useEffect(() => {
     const saved = readStoredLanguage()
     // eslint-disable-next-line react-hooks/set-state-in-effect -- localStorage is unavailable during static-export build, so the initial render must default to 'en' and we hydrate the saved language on mount.
     if (saved) setLang(saved)
+    // Batched with setLang above, so the sync effect below first runs with the restored language.
+    setRestored(true)
   }, [])
 
   useEffect(() => {
+    // Before the saved language is restored, `lang` is only the build-time default.
+    // Writing it here would undo the pre-paint script in layout.tsx and show a saved
+    // RTL language as LTR until the next render.
+    if (!restored) return
     document.documentElement.lang = lang
     document.documentElement.dir = getDirection(lang)
     writeLanguageCookie(lang)
-  }, [lang])
+  }, [lang, restored])
 
   const setLanguage = (nextLang: Language) => {
     setLang(nextLang)

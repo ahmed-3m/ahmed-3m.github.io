@@ -5,6 +5,7 @@ import { ArrowLeft, Calendar, Clock, Tag } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
 import { languageLocale } from '@/lib/i18n-config'
 import { getBlogPost } from '@/lib/blog-posts'
+import type { RelatedLink } from '@/lib/related-content'
 import { serializeJsonLd } from '@/lib/serialize-json-ld'
 
 function formatContent(content: string | undefined) {
@@ -151,11 +152,25 @@ const copy = {
     es: 'Escrito por Ahmed Mohammed',
     ar: 'بقلم أحمد محمد',
   },
+  relatedCaseStudy: {
+    en: 'Related case study',
+    de: 'Passende Fallstudie',
+    fr: 'Étude de cas liée',
+    es: 'Caso de estudio relacionado',
+    ar: 'دراسة حالة ذات صلة',
+  },
   home: { en: 'Home', de: 'Startseite', fr: 'Accueil', es: 'Inicio', ar: 'الرئيسية' },
   blog: { en: 'Blog', de: 'Blog', fr: 'Blog', es: 'Blog', ar: 'المدونة' },
 } as const
 
-export default function BlogPostClient({ slug }: { slug: string }) {
+export default function BlogPostClient({
+  slug,
+  relatedCaseStudies = [],
+}: {
+  slug: string
+  /** From getRelatedCaseStudies() in the server page, so the project catalog stays out of this bundle. */
+  relatedCaseStudies?: RelatedLink[]
+}) {
   const { lang, t } = useI18n()
   const locale = languageLocale[lang]
   const post = getBlogPost(slug, lang)
@@ -335,6 +350,21 @@ export default function BlogPostClient({ slug }: { slug: string }) {
                 </div>
               ))}
             </div>
+          </section>
+        )}
+
+        {relatedCaseStudies.length > 0 && (
+          <section className="mt-12 border-t border-[var(--cd-b0)] pt-8" aria-labelledby="related-case-study-title">
+            <h2 id="related-case-study-title" className="mb-4 text-2xl font-bold">{t(copy.relatedCaseStudy)}</h2>
+            <ul className="space-y-2">
+              {relatedCaseStudies.map((study) => (
+                <li key={study.href}>
+                  <Link href={study.href} className="font-medium text-[var(--cd-accent)]">
+                    {t(study.title)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </section>
         )}
 
