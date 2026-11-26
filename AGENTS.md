@@ -239,6 +239,6 @@ sanctioned exception to the "agents never merge their own PRs" rule.
 
 - Run `npm run dev` and check desktop **and** 375 px mobile, in light and dark, in
   English and Arabic. Also check that the console has no errors.
-- Known pre-existing issue (not a regression): on mobile the education cards overflow
-  horizontally by about 70 px. (`npm run lint` currently passes with warnings only —
-  any lint *error* is a real regression, not a known issue.)
+- `npm run lint` passes with zero errors and zero warnings; `npm run verify:export`
+  and `tools/playwright-smoke.mjs` guard mobile overflow, dark/light themes,
+  Arabic RTL, and interactive flows in CI.
