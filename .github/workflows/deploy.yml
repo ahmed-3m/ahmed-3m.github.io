@@ -57,6 +57,9 @@ jobs:
       - name: Chat proxy self-test
         run: node worker/chat-proxy.selftest.mjs
 
+      - name: Genie self-test
+        run: node tools/genie-selftest.mjs
+
   build:
     needs: quality
     if: github.event.action != 'closed' && (github.event.action != 'edited' || github.event.changes.base != null)
