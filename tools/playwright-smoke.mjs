@@ -791,6 +791,7 @@ async function runInteractiveSmokeChecks(browser, origin, failures) {
             failures.push(`${label}: missing main#main landmark target`)
           } else {
             await page.keyboard.press('Tab')
+            await waitForSettledLayout(page)
             const focusInfo = await skipLink.evaluate((el) => {
               const style = getComputedStyle(el)
               return {
