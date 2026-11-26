@@ -117,4 +117,18 @@ export const CHAT_COPY = {
     es: 'Ocurrió un problema al contactar al asistente.',
     ar: 'حدث خطأ أثناء الاتصال بالمساعد.',
   },
+  newChat: {
+    en: 'New chat',
+    de: 'Neuer Chat',
+    fr: 'Nouvelle conversation',
+    es: 'Nuevo chat',
+    ar: 'محادثة جديدة',
+  },
+  stopGenerating: {
+    en: 'Stop generating',
+    de: 'Antwort stoppen',
+    fr: 'Arrêter la génération',
+    es: 'Detener respuesta',
+    ar: 'إيقاف التوليد',
+  },
 } satisfies Record<string, TranslationMap>
