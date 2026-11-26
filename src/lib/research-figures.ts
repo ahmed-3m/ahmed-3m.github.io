@@ -2,7 +2,7 @@ import type { ResearchFigureData } from '@/components/ResearchFigure'
 
 export const cifarCharts: ResearchFigureData[] = [
   {
-    src: '/fig_lambda_sweep.png',
+    src: '/fig_lambda_sweep.webp',
     width: 2499,
     height: 1024,
     alt: {
@@ -21,7 +21,7 @@ export const cifarCharts: ResearchFigureData[] = [
     },
   },
   {
-    src: '/fig_calibration.png',
+    src: '/fig_calibration.webp',
     width: 1824,
     height: 1072,
     alt: {
@@ -62,7 +62,7 @@ export const cifarCharts: ResearchFigureData[] = [
 
 export const industrialCharts: ResearchFigureData[] = [
   {
-    src: '/fig_cross_domain_comparison.png',
+    src: '/fig_cross_domain_comparison.webp',
     width: 1905,
     height: 1027,
     alt: {
@@ -81,7 +81,7 @@ export const industrialCharts: ResearchFigureData[] = [
     },
   },
   {
-    src: '/fig_inkjet_lambda.png',
+    src: '/fig_inkjet_lambda.webp',
     width: 2577,
     height: 978,
     alt: {
