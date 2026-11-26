@@ -642,29 +642,33 @@ async function runInteractiveSmokeChecks(browser, origin, failures) {
             await slider.waitFor({ state: 'visible', timeout: 5_000 })
           }
 
+          const extractFpr = (text) => text.match(/FPR\s*=\s*([0-9]+(?:\.[0-9]+)?%)/)?.[1] ?? null
           const beforeText = await explorer.innerText()
           const beforeVal = await slider.inputValue()
+          const beforeFpr = extractFpr(beforeText)
           await slider.focus()
-          for (let stepIdx = 0; stepIdx < 5; stepIdx += 1) {
-            await page.keyboard.press('ArrowRight')
-          }
+          await page.keyboard.press('PageDown')
 
           await page.waitForFunction(
-            ({ prevText, prevVal }) => {
+            ({ prevVal, prevFpr }) => {
               const root = document.querySelector('#ood-explorer, .ood-demo')
               const range = root?.querySelector('input[type="range"]')
               if (!root || !(root instanceof HTMLElement) || !(range instanceof HTMLInputElement)) {
                 return false
               }
-              return range.value !== prevVal && root.innerText.trim() !== prevText.trim()
+              const nextFpr = root.innerText.match(/FPR\s*=\s*([0-9]+(?:\.[0-9]+)?%)/)?.[1] ?? null
+              return range.value !== prevVal && nextFpr !== null && nextFpr !== prevFpr
             },
-            { prevText: beforeText, prevVal: beforeVal },
+            { prevVal: beforeVal, prevFpr: beforeFpr },
             { timeout: 5_000 },
           )
 
           const afterText = await explorer.innerText()
-          if (!/\d+(?:\.\d+)?%/.test(afterText)) {
-            failures.push(`${label}: expected numeric percentage metrics in OodDemo after threshold change`)
+          const afterFpr = extractFpr(afterText)
+          if (!beforeFpr || !afterFpr || afterFpr === beforeFpr) {
+            failures.push(
+              `${label}: expected threshold-dependent FPR diagnostic to change (before=${beforeFpr}, after=${afterFpr})`,
+            )
           }
         }
         recordCollectedErrors(errors, label, failures)
