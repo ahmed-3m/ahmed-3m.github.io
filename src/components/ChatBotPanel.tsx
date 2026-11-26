@@ -786,6 +786,48 @@ function resolveLinkProps(rawHref: string): { href: string; external: boolean } 
   }
 }
 
+const NUMERIC_BIDI_PATTERN =
+  /(?:[+-])?\d+(?:[.,]\d+)?(?:[ \u00A0]*%|pp(?![\p{L}\p{N}]))?[ \u00A0]*±[ \u00A0]*\d+(?:[.,]\d+)?(?:[ \u00A0]*%|pp(?![\p{L}\p{N}]))?|[+-]\d+(?:[.,]\d+)?(?:[ \u00A0]*%|pp(?![\p{L}\p{N}]))?/gu
+
+/**
+ * Isolates LTR numeric ± intervals and signed deltas inside RTL/mixed prose
+ * without altering adjacent whitespace or punctuation.
+ */
+function renderBidiNumbers(segment: string, keyPrefix: string): ReactNode[] {
+  const nodes: ReactNode[] = []
+  let lastIndex = 0
+  let bidiIndex = 0
+
+  for (const match of segment.matchAll(NUMERIC_BIDI_PATTERN)) {
+    const raw = match[0]
+    let start = match.index ?? 0
+    const end = start + raw.length
+
+    if (/^[+-]/.test(raw) && start > 0 && /[\p{L}\p{N}_]/u.test(segment[start - 1])) {
+      if (!raw.includes('±')) {
+        continue
+      }
+      start += 1
+    }
+
+    if (start > lastIndex) {
+      nodes.push(segment.slice(lastIndex, start))
+    }
+    nodes.push(
+      <bdi key={`${keyPrefix}-bdi-${bidiIndex++}`} dir="ltr">
+        {segment.slice(start, end)}
+      </bdi>
+    )
+    lastIndex = end
+  }
+
+  if (lastIndex < segment.length) {
+    nodes.push(segment.slice(lastIndex))
+  }
+
+  return nodes.length > 0 ? nodes : [segment]
+}
+
 function renderInline(
   text: string,
   keyPrefix: string,
@@ -797,6 +839,7 @@ function renderInline(
     const nodes: ReactNode[] = []
     let lastIndex = 0
     let matchIndex = 0
+    let plainIndex = 0
 
     for (const match of value.matchAll(linkPattern)) {
       const raw = match[0]
@@ -813,7 +856,7 @@ function renderInline(
       }
 
       if (start > lastIndex) {
-        nodes.push(value.slice(lastIndex, start))
+        nodes.push(...renderBidiNumbers(value.slice(lastIndex, start), `${segmentKey}-p${plainIndex++}`))
       }
 
       const display = raw.replace(/[),.;!?،؛؟]+$/, '')
@@ -821,15 +864,21 @@ function renderInline(
       const rawHref = namedUrl ?? (isEmail ? `mailto:${display}` : /^https?:\/\//i.test(display) ? display : `https://${display}`)
       const link = resolveLinkProps(rawHref)
       if (!link) {
-        nodes.push((label ?? display) + trailing)
+        if (label) {
+          nodes.push(...renderBidiNumbers(label, `${segmentKey}-u${plainIndex++}`))
+          if (trailing) nodes.push(trailing)
+        } else {
+          nodes.push(display + trailing)
+        }
         lastIndex = end
         continue
       }
       const { href, external } = link
+      const currentLinkIndex = matchIndex++
 
       nodes.push(
         <a
-          key={`${segmentKey}-link-${matchIndex++}`}
+          key={`${segmentKey}-link-${currentLinkIndex}`}
           href={href}
           target={external ? '_blank' : undefined}
           rel={external ? 'noopener noreferrer' : undefined}
@@ -841,7 +890,7 @@ function renderInline(
             textDecorationColor: 'color-mix(in srgb, currentColor 55%, transparent)',
           }}
         >
-          {label ?? display}
+          {label ? renderBidiNumbers(label, `${segmentKey}-lbl-${currentLinkIndex}`) : display}
         </a>
       )
 
@@ -850,14 +899,31 @@ function renderInline(
     }
 
     if (lastIndex < value.length) {
-      nodes.push(value.slice(lastIndex))
+      nodes.push(...renderBidiNumbers(value.slice(lastIndex), `${segmentKey}-p${plainIndex++}`))
     }
 
-    return nodes.length > 0 ? nodes : [value]
+    return nodes.length > 0 ? nodes : renderBidiNumbers(value, segmentKey)
   }
 
-  const parts = text.split(/(\*\*[^*]+\*\*|\*[^*]+\*)/g)
+  const parts = text.split(/(`[^`\n]+`|\*\*[^*]+\*\*|\*[^*]+\*)/g)
   return parts.map((part, index) => {
+    if (part.startsWith('`') && part.endsWith('`') && part.length > 2) {
+      return (
+        <code
+          key={`${keyPrefix}-c${index}`}
+          dir="ltr"
+          style={{
+            fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
+            fontSize: '0.9em',
+            padding: '0.05em 0.3em',
+            borderRadius: '4px',
+            background: 'color-mix(in srgb, var(--cd-surf) 70%, transparent)',
+          }}
+        >
+          {part.slice(1, -1)}
+        </code>
+      )
+    }
     if (part.startsWith('**') && part.endsWith('**') && part.length > 4) {
       return (
         <strong key={`${keyPrefix}-b${index}`}>

@@ -2421,28 +2421,6 @@ body {
   border-color: var(--cd-accent);
 }
 
-.cd-nav-view-toggle--featured {
-  border-color: var(--cd-accent);
-  background: color-mix(in srgb, var(--cd-accent) 13%, var(--cd-surf));
-  color: var(--cd-accent);
-  box-shadow: 0 8px 20px -10px color-mix(in srgb, var(--cd-accent) 60%, transparent);
-}
-
-[data-theme="light"] .cd-nav-view-toggle--featured {
-  color: var(--cd-accent-h);
-}
-
-.cd-nav-view-toggle--featured:hover {
-  background: var(--cd-accent);
-  border-color: var(--cd-accent);
-  color: var(--cd-bg);
-  box-shadow: 0 6px 20px -6px color-mix(in srgb, var(--cd-accent) 70%, transparent);
-}
-
-[data-theme="light"] .cd-nav-view-toggle--featured:hover {
-  color: var(--cd-surf);
-}
-
 @media (max-width: 960px) {
   .cd-nav-actions .cd-nav-view-toggle {
     display: none;
