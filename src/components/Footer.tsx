@@ -42,7 +42,7 @@ export default function Footer() {
             <a href="https://www.linkedin.com/in/ahmed-3m/" target="_blank" rel="noopener noreferrer" className="cd-footer-link">LinkedIn</a>
             <a href="https://github.com/ahmed-3m" target="_blank" rel="noopener noreferrer" className="cd-footer-link">GitHub</a>
             <a href="https://huggingface.co/ahmed-3m" target="_blank" rel="noopener noreferrer" className="cd-footer-link">HuggingFace</a>
-            <a href="mailto:ahmed.mu.0905@gmail.com" className="cd-footer-link">{t(copy.email)}</a>
+            <a href="mailto:ahmed.mo.0595@gmail.com" className="cd-footer-link">{t(copy.email)}</a>
             <span className="cd-footer-sep" aria-hidden="true">·</span>
             <Link href="/impressum/" className="cd-footer-link">{t(copy.impressum)}</Link>
             <Link href="/privacy/" className="cd-footer-link">{t(copy.privacy)}</Link>
