@@ -1,9 +1,7 @@
 'use client'
 
+import { CALENDLY_URL } from '@/lib/booking'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
-
-const DEFAULT_CALENDLY_URL = 'https://calendly.com/ahmed-3m'
-const CALENDLY_URL = process.env.NEXT_PUBLIC_CALENDLY_URL || DEFAULT_CALENDLY_URL
 
 const copy = {
   label: {

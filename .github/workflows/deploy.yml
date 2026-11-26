@@ -82,7 +82,7 @@ jobs:
           NEXT_PUBLIC_GROQ_MODEL: ${{ vars.NEXT_PUBLIC_GROQ_MODEL }}
           NEXT_PUBLIC_BIGMODEL_MODEL: ${{ vars.NEXT_PUBLIC_BIGMODEL_MODEL }}
           NEXT_PUBLIC_ZAI_FAST_MODEL: ${{ vars.NEXT_PUBLIC_ZAI_FAST_MODEL }}
-          # Optional override. ScheduleMeetingButton supplies the default for empty values.
+          # Optional override. src/lib/booking.ts supplies the default for empty or invalid values.
           NEXT_PUBLIC_CALENDLY_URL: ${{ vars.NEXT_PUBLIC_CALENDLY_URL }}
           # Privacy-hardened GA4 beacon (src/components/Analytics.tsx) — renders
           # nothing until the variable holds a G-XXXXXXX measurement ID.

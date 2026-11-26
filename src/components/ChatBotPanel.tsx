@@ -6,6 +6,7 @@ import { ArrowUp, ChevronRight, X } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { useI18n } from '@/lib/i18n'
 import { languageName, translateValue, type Language, type TranslationMap } from '@/lib/i18n-config'
+import { CALENDLY_URL } from '@/lib/booking'
 import { buildChatMessages, createRequestTimers } from '@/lib/chat-request'
 import { BENCHMARK_DATASETS, CIFAR_LAMBDA_SWEEP, INKJET_OVERALL_SWEEP } from '@/lib/ood-explorer-data'
 import { diffusionExplorerHref } from '@/lib/portfolio-copy'
@@ -86,12 +87,28 @@ const MERGEPROOF_URL = `${GITHUB_URL}/mergeproof`
 const SIHEM_APP_URL = 'https://sihem-pwa.pages.dev/'
 const EMAIL_URL = 'mailto:ahmed.mu.0905@gmail.com'
 
-const publicLinks = new Set([
-  PORTFOLIO + '/', CV_URL, CONTACT_URL, BACKGROUND_URL, RESEARCH_URL, BLOG_URL,
-  GUARDRAILS_POST_URL, INDUSTRIAL_URL, DIFFUSION_URL, SIHEM_URL, THESIS_URL,
-  EXPLORER_URL, METHOD_URL, GITHUB_URL, LINKEDIN_URL, MERGEPROOF_URL,
-  SIHEM_APP_URL, EMAIL_URL,
-])
+/**
+ * Allowlist key that ignores a trailing slash on the path, so `/about` and
+ * `/about/`, or `calendly.com/x` and `calendly.com/x/`, resolve to the same link.
+ */
+function linkKey(url: URL): string {
+  if (url.protocol === 'mailto:') return url.href.toLowerCase()
+  const path = url.pathname.replace(/\/+$/, '')
+  return `${url.origin}${path}${url.search}${url.hash}`
+}
+
+/** Allowlist key → canonical URL that the rendered link points to. */
+const publicLinks = new Map(
+  [
+    PORTFOLIO + '/', CV_URL, CONTACT_URL, BACKGROUND_URL, RESEARCH_URL, BLOG_URL,
+    GUARDRAILS_POST_URL, INDUSTRIAL_URL, DIFFUSION_URL, SIHEM_URL, THESIS_URL,
+    EXPLORER_URL, METHOD_URL, GITHUB_URL, LINKEDIN_URL, MERGEPROOF_URL,
+    SIHEM_APP_URL, EMAIL_URL, CALENDLY_URL,
+  ].map((href) => {
+    const url = new URL(href)
+    return [linkKey(url), url] as const
+  }),
+)
 
 const inkjet = INKJET_OVERALL_SWEEP['0.0']
 const inkjetBaseline = `${inkjet.aurocMean.toFixed(4)} ± ${inkjet.aurocStd.toFixed(4)}`
@@ -110,13 +127,13 @@ Profile: AI/ML engineer in Linz, Austria, open to full-time AI/ML roles. Ahmed h
 Featured work:
 - Industrial inkjet inspection: a two-stage YOLO and conditional diffusion pipeline for locating print features and scoring anomalies. The diffusion baseline reached ${inkjetBaseline} AUROC under five-fold image-level cross-validation on the public FTI_Zer0P benchmark. Adding separation loss did not significantly improve the industrial result after Holm correction. Case study: ${INDUSTRIAL_URL}
 - Diffusion research: separation loss pushes the two class-conditioned noise predictions apart during training. At inference the difference in their reconstruction errors is compared with a calibrated threshold. On the within-CIFAR-10 binary airplane-vs-rest split, the three-seed mean AUROC was ${cifarSeparation} with separation loss and ${cifarBaseline} without it. The single seed-42 within-CIFAR AUROC was ${BENCHMARK_DATASETS.within_cifar.auroc.toFixed(2)}%. The seed-42 study also tested CIFAR-100, Places365, FashionMNIST, Textures and SVHN as external OOD sets. Method: ${METHOD_URL} Case study: ${DIFFUSION_URL} Thesis PDF: ${THESIS_URL}
-- Sihem: Ahmed leads and builds this personal planning and routines assistant. The Telegram bot and installable web app are in an invitation-only beta with scheduled check-ins, retrieval-based memory, and model routing. The native Android client uses Kotlin and Jetpack Compose and is in private testing. Case study: ${SIHEM_URL}
+- Sihem: Ahmed leads and builds this personal planning and routines assistant, accepted into the tech2b incubator in Linz. The Telegram bot and installable web app are in an invitation-only beta with scheduled check-ins, retrieval-based memory, and model routing. The native Android client uses Kotlin and Jetpack Compose and is in private testing. Case study: ${SIHEM_URL}
 - mergeproof checks AI-written pull requests against configured deterministic merge requirements without calling a language model. Passing its checks does not guarantee defect-free code. Repository: ${MERGEPROOF_URL}
 - Engineering blog (${BLOG_URL}): technical deep-dives on diffusion OOD detection, industrial vision, and deterministic AI guardrails—including a post on Sihem's arbiter loop and mergeproof (${GUARDRAILS_POST_URL}).
 
-Contact options: visitors can email ahmed.mu.0905@gmail.com, schedule a meeting via Calendly, or try the live AI front-desk voice/avatar call demo (up to 3 minutes) available in the Hero and Contact sections (${CONTACT_URL}).
+Contact options: visitors can email ahmed.mu.0905@gmail.com, schedule a meeting via Calendly (${CALENDLY_URL}), or try the live AI front-desk voice/avatar call demo (up to 3 minutes) available in the Hero and Contact sections (${CONTACT_URL}).
 
-Public links: CV ${CV_URL} · About ${BACKGROUND_URL} · Blog ${BLOG_URL} · Guardrails post ${GUARDRAILS_POST_URL} · Research reports and evidence ${RESEARCH_URL} · Explorer ${EXPLORER_URL} · Contact ${CONTACT_URL} · GitHub ${GITHUB_URL} · LinkedIn ${LINKEDIN_URL}
+Public links: CV ${CV_URL} · Calendly ${CALENDLY_URL} · About ${BACKGROUND_URL} · Blog ${BLOG_URL} · Guardrails post ${GUARDRAILS_POST_URL} · Research reports and evidence ${RESEARCH_URL} · Explorer ${EXPLORER_URL} · Contact ${CONTACT_URL} · GitHub ${GITHUB_URL} · LinkedIn ${LINKEDIN_URL}
 `
 }
 
@@ -322,6 +339,13 @@ export const LOCAL_REPLIES = {
     es: `Ahmed estudió si un modelo de difusión podía reconocer imágenes desconocidas. En tres ejecuciones de la prueba binaria CIFAR-10 aviones contra el resto, la pérdida de separación elevó la AUROC media de ${cifarBaseline} a ${cifarSeparation}. [Resultados y límites](${DIFFUSION_URL}).`,
     ar: `درس أحمد قدرة نموذج انتشار على التعرّف على الصور غير المألوفة. رفعت خسارة الفصل متوسط AUROC من ${cifarBaseline} إلى ${cifarSeparation} عبر ثلاث تجارب في اختبار CIFAR-10 الثنائي للطائرات مقابل بقية الفئات. [النتائج وحدودها](${DIFFUSION_URL}).`,
   },
+  thesis_results: {
+    en: `The headline thesis result is ${cifarSeparation} AUROC with separation loss, versus ${cifarBaseline} without it. Both are three-seed means on the binary CIFAR-10 airplane-vs-rest split. On the industrial FTI_Zer0P benchmark, the diffusion baseline reached ${inkjetBaseline} AUROC under five-fold cross-validation, and separation loss gave no significant gain after Holm correction. These are benchmark results, not production accuracy. [Compare the results in the explorer](${EXPLORER_URL}).`,
+    de: `Das zentrale Ergebnis der Masterarbeit ist ${cifarSeparation} AUROC mit Separation Loss gegenüber ${cifarBaseline} ohne. Beide Werte sind Mittel über drei Läufe im binären CIFAR-10-Vergleich Flugzeuge gegen alle anderen Klassen. Auf dem industriellen FTI_Zer0P-Benchmark erreichte die Diffusions-Baseline ${inkjetBaseline} AUROC bei fünffacher Kreuzvalidierung; nach Holm-Korrektur brachte die Separation Loss dort keine signifikante Verbesserung. Es sind Benchmark-Ergebnisse, keine Genauigkeit im Produktivbetrieb. [Ergebnisse im Explorer vergleichen](${EXPLORER_URL}).`,
+    fr: `Le résultat principal du mémoire est ${cifarSeparation} AUROC avec la perte de séparation, contre ${cifarBaseline} sans elle. Les deux valeurs sont des moyennes sur trois essais du test binaire CIFAR-10 avions contre toutes les autres classes. Sur le benchmark industriel FTI_Zer0P, la référence de diffusion a atteint ${inkjetBaseline} AUROC en validation croisée à cinq plis, et la perte de séparation n’a apporté aucun gain significatif après correction de Holm. Ce sont des résultats de benchmark, pas une précision en production. [Comparer les résultats dans l’explorateur](${EXPLORER_URL}).`,
+    es: `El resultado principal de la tesis es ${cifarSeparation} AUROC con pérdida de separación, frente a ${cifarBaseline} sin ella. Ambos valores son medias de tres ejecuciones en la prueba binaria CIFAR-10 aviones contra el resto. En el benchmark industrial FTI_Zer0P, la referencia de difusión alcanzó ${inkjetBaseline} AUROC con validación cruzada de cinco pliegues, y la pérdida de separación no aportó una mejora significativa tras la corrección de Holm. Son resultados de benchmark, no precisión en producción. [Comparar los resultados en el explorador](${EXPLORER_URL}).`,
+    ar: `النتيجة الرئيسية في رسالة الماجستير هي ${cifarSeparation} AUROC مع خسارة الفصل، مقابل ${cifarBaseline} بدونها. القيمتان متوسط ثلاث تجارب في اختبار CIFAR-10 الثنائي للطائرات مقابل بقية الفئات. وعلى معيار FTI_Zer0P الصناعي، سجّل نموذج الانتشار المرجعي ${inkjetBaseline} AUROC بالتحقق المتقاطع عبر خمسة أجزاء، ولم تحقق خسارة الفصل تحسنًا ذا دلالة إحصائية بعد تصحيح Holm. هذه نتائج اختبارات معيارية وليست دقة في بيئة الإنتاج. [قارن النتائج في المستكشف](${EXPLORER_URL}).`,
+  },
   thesis_method: {
     en: `During training, separation loss pushes apart the noise predictions for the normal and other conditions. At inference, the model subtracts the two reconstruction errors and flags the image as unfamiliar when the difference meets a calibrated threshold. [See the three-step explanation](${METHOD_URL}).`,
     de: `Beim Training trennt die Separation Loss die Rauschvorhersagen für die normale und die andere Bedingung. Bei der Auswertung zieht das Modell die beiden Rekonstruktionsfehler voneinander ab. Erreicht die Differenz den kalibrierten Schwellenwert, gilt das Bild als unbekannt. [Zur Erklärung in drei Schritten](${METHOD_URL}).`,
@@ -344,11 +368,11 @@ export const LOCAL_REPLIES = {
     ar: `يمكن لنموذج الانتشار الشرطي إزالة الضوضاء من الصورة نفسها وفق افتراضين مختلفين لفئتها. تعطي مقارنة الخطأين درجة تعبّر عن مدى توافق الصورة مع الفئة المألوفة، ويمكن معايرتها لكشف الصور غير المألوفة. [اقرأ دراسة الحالة](${DIFFUSION_URL}).`,
   },
   contact: {
-    en: `You can email Ahmed at ahmed.mu.0905@gmail.com, schedule a meeting via Calendly, try the live AI front-desk voice/avatar demo, or find his profiles in the [contact section](${CONTACT_URL}).`,
-    de: `Sie erreichen Ahmed per E-Mail unter ahmed.mu.0905@gmail.com und können im [Kontaktbereich](${CONTACT_URL}) ein Meeting über Calendly planen, die Live-Demo des KI-Empfangs (Stimme & Avatar) testen oder seine Profile abrufen.`,
-    fr: `Vous pouvez écrire à Ahmed à ahmed.mu.0905@gmail.com, planifier un rendez-vous via Calendly, essayer la démo vocale/avatar de son accueil IA ou consulter ses profils dans la [rubrique contact](${CONTACT_URL}).`,
-    es: `Puedes escribir a Ahmed a ahmed.mu.0905@gmail.com, programar una reunión por Calendly, probar la demo en vivo de voz y avatar de su recepción con IA o ver sus perfiles en la [sección de contacto](${CONTACT_URL}).`,
-    ar: `يمكنك مراسلة أحمد على ahmed.mu.0905@gmail.com، أو جدولة اجتماع عبر Calendly، أو تجربة العرض المباشر لموظف الاستقبال الذكي بالصوت والصورة المتحركة، أو الاطّلاع على ملفاته المهنية في [قسم التواصل](${CONTACT_URL}).`,
+    en: `You can email Ahmed at ahmed.mu.0905@gmail.com, schedule a meeting via [Calendly](${CALENDLY_URL}), try the live AI front-desk voice/avatar demo, or find his profiles in the [contact section](${CONTACT_URL}).`,
+    de: `Sie erreichen Ahmed per E-Mail unter ahmed.mu.0905@gmail.com und können im [Kontaktbereich](${CONTACT_URL}) ein Meeting über [Calendly](${CALENDLY_URL}) planen, die Live-Demo des KI-Empfangs (Stimme & Avatar) testen oder seine Profile abrufen.`,
+    fr: `Vous pouvez écrire à Ahmed à ahmed.mu.0905@gmail.com, planifier un rendez-vous via [Calendly](${CALENDLY_URL}), essayer la démo vocale/avatar de son accueil IA ou consulter ses profils dans la [rubrique contact](${CONTACT_URL}).`,
+    es: `Puedes escribir a Ahmed a ahmed.mu.0905@gmail.com, programar una reunión por [Calendly](${CALENDLY_URL}), probar la demo en vivo de voz y avatar de su recepción con IA o ver sus perfiles en la [sección de contacto](${CONTACT_URL}).`,
+    ar: `يمكنك مراسلة أحمد على ahmed.mu.0905@gmail.com، أو جدولة اجتماع عبر [Calendly](${CALENDLY_URL})، أو تجربة العرض المباشر لموظف الاستقبال الذكي بالصوت والصورة المتحركة، أو الاطّلاع على ملفاته المهنية في [قسم التواصل](${CONTACT_URL}).`,
   },
   open_to_work: {
     en: `Ahmed is based in Linz, Austria, and open to full-time AI/ML roles across computer vision, applied ML, and LLM/agent systems. He is eligible for Austria's Rot-Weiß-Rot Karte für Studienabsolventen (graduate work-permit track without a labour-market test); [contact Ahmed](${CONTACT_URL}) to discuss a role or confirm hiring details.`,
@@ -391,7 +415,7 @@ const REPLY_FOR_PROMPT = {
   thesis_summary: 'thesis',
   thesis_innovation: 'thesis_method',
   thesis_loss: 'thesis_method',
-  thesis_results: 'thesis',
+  thesis_results: 'thesis_results',
   thesis_datasets: 'thesis_datasets',
   thesis_diffusion: 'thesis_diffusion',
   sihem_overview: 'sihem_intro',
@@ -445,6 +469,7 @@ const FOLLOWUP_PROMPTS: Partial<Record<ReplyId, PromptId[]>> = {
   inspection: ['industrial_result', 'thesis_summary', 'projects_best'],
   industrial: ['industrial_pipeline', 'thesis_summary', 'projects_best'],
   thesis: ['thesis_loss', 'thesis_datasets', 'industrial_result'],
+  thesis_results: ['thesis_loss', 'thesis_datasets', 'industrial_pipeline'],
   thesis_method: ['thesis_results', 'thesis_datasets', 'industrial_result'],
   thesis_datasets: ['thesis_loss', 'thesis_results', 'industrial_result'],
   thesis_diffusion: ['thesis_loss', 'thesis_datasets', 'thesis_results'],
@@ -509,7 +534,7 @@ type ChatReply = { content: string; incomplete?: boolean }
 
 type ChatLane = 'fast' | 'deep'
 
-const DEEP_PATTERN = /(?:^|[^\p{L}])(?:explain|compare|why|how (?:does|do|did|would)|walk me|deep dive|detailed|difference between|evaluate|critique|warum|erkl[äa]r\p{L}*|vergleich\p{L}*|pourquoi|expliqu\p{L}*|compar\p{L}*|explic\p{L}*|por qu[ée]|c[oó]mo funciona|كيف|لماذا|اشرح|قارن)(?!\p{L})/iu
+const DEEP_PATTERN = /(?:^|[^\p{L}])(?:explain|compare|why|how (?:does|do|did|would)|walk me|deep dive|detailed|difference between|evaluate|critique|warum|wie funktionier\p{L}*|erkl[äa]r\p{L}*|vergleich\p{L}*|pourquoi|comment (?:\p{L}+ )?(?:fonctionn|march)\p{L}*|expliqu\p{L}*|compar\p{L}*|explic\p{L}*|por qu[ée]|c[oó]mo funciona|كيف|لماذا|اشرح|قارن)(?!\p{L})/iu
 
 function routeLocally(message: string): ChatLane {
   return DEEP_PATTERN.test(message) ? 'deep' : 'fast'
@@ -745,8 +770,8 @@ async function fetchGroq({
  */
 function resolveLinkProps(rawHref: string): { href: string; external: boolean } | null {
   try {
-    const parsed = new URL(rawHref, PORTFOLIO)
-    if (!publicLinks.has(parsed.href)) return null
+    const parsed = publicLinks.get(linkKey(new URL(rawHref, PORTFOLIO)))
+    if (!parsed) return null
     if (parsed.protocol === 'mailto:') return { href: parsed.href, external: false }
     if (parsed.origin === PORTFOLIO) {
       const isPdf = parsed.pathname.toLowerCase().endsWith('.pdf')
@@ -768,7 +793,7 @@ function renderInline(
 ): ReactNode[] {
   const renderLinkedText = (value: string, segmentKey: string): ReactNode[] => {
     const linkPattern =
-      /\[([^\]\n]+)\]\(((?:https?:\/\/|\/(?!\/))[^\s)]+)\)|((?:https?:\/\/|www\.)[^\s]+|(?:ahmed-3m\.github\.io|github\.com|linkedin\.com|huggingface\.co|sihem-pwa\.pages\.dev|t\.me)(?:\/[^\s]*)?|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/gi
+      /\[([^\]\n]+)\]\(((?:https?:\/\/|mailto:|\/(?!\/))[^\s)]+)\)|((?:https?:\/\/|www\.)[^\s]+|(?:ahmed-3m\.github\.io|github\.com|linkedin\.com|huggingface\.co|sihem-pwa\.pages\.dev|t\.me)(?:\/[^\s]*)?|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/gi
     const nodes: ReactNode[] = []
     let lastIndex = 0
     let matchIndex = 0
@@ -990,16 +1015,12 @@ export function getStarterPrompts(section: string): PromptId[] {
   return STARTER_PROMPT_IDS
 }
 
-export const DEFAULT_PROMPTS = STARTER_PROMPT_IDS
-
 export function pickFollowUpIds(reply: string, question: string, section: string): PromptId[] {
   const requested = findPromptId(question)
   const topic = requested ? REPLY_FOR_PROMPT[requested] : inferReplyId(question) ?? inferReplyId(reply)
   const followUps = (topic && FOLLOWUP_PROMPTS[topic]) || getStarterPrompts(section)
   return followUps.filter(id => id !== requested && REPLY_FOR_PROMPT[id] !== topic).slice(0, 3)
 }
-
-export const generateFollowUps = pickFollowUpIds
 
 const bubbleStyles = {
   assistant: {
@@ -1247,7 +1268,11 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
       }
       setMessages(prev => [...(streamStarted ? prev.slice(0, -1) : prev), finalMessage])
     } catch (caughtError) {
-      if (retry) setMessages(messages)
+      // Roll back to the pre-send transcript. On a fresh question, also put the
+      // text back in the box (unless the visitor already typed something new),
+      // so sending again does not mean retyping it.
+      setMessages(messages)
+      if (!retry) setInput(current => current || content)
       console.error('Chat failed across all configured providers:', caughtError)
       const status = (caughtError as ChatCompletionError | undefined)?.status
       setError(t(status === 429 ? CHAT_COPY.rateLimited : CHAT_COPY.genericError))
