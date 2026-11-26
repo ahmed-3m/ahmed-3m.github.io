@@ -1128,6 +1128,22 @@ body::before {
   .cd-footer-inner { flex-direction: column; gap: 10px; text-align: center; }
   .cd-footer-meta { white-space: normal; }
 }
+/* The concise homepage's content uses the wider .portfolio-page .portfolio-shell
+   (portfolio.css), so line the footer up with it instead of the inset .cd-container. */
+.portfolio-page ~ .cd-footer > .cd-container {
+  width: min(100% - 3rem, 68.75rem);
+  max-width: none;
+  padding-inline: 0;
+}
+@media (max-width: 720px) {
+  .portfolio-page ~ .cd-footer > .cd-container { width: calc(100% - 2rem); }
+}
+/* The 88px bottom padding keeps the footer clear of the fixed Genie launcher
+   (bottom-right, 24px + 57px). From 1300px the footer row ends left of it, so the
+   extra space is only empty band. */
+@media (min-width: 1300px) {
+  .cd-footer { padding-bottom: max(40px, calc(24px + env(safe-area-inset-bottom))); }
+}
 
 .wrap { max-width: 72rem; margin: 0 auto; padding: 0 1.5rem; }
 
