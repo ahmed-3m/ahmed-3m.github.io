@@ -36,7 +36,7 @@ export async function GET() {
     <description>Articles on computer vision, diffusion models, OOD detection, and production AI engineering.</description>
     <language>en-us</language>
     <atom:link href="${baseUrl}/feed.xml" rel="self" type="application/rss+xml"/>
-    <managingEditor>ahmed.mu.0905@gmail.com (Ahmed Mohammed)</managingEditor>
+    <managingEditor>ahmed.mo.0595@gmail.com (Ahmed Mohammed)</managingEditor>
     <lastBuildDate>${lastBuildDate}</lastBuildDate>
     ${items}
   </channel>

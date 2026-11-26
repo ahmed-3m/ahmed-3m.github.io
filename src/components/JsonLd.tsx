@@ -21,7 +21,7 @@ export function PersonSchema() {
     description: 'AI/ML Engineer building AI systems end to end: computer vision, industrial ML, anomaly detection, diffusion models, LLM products, and deterministic agent tooling. Builder of Sihem (LLM assistant in invitation-only beta) and mergeproof (checks AI-written pull requests against configured deterministic merge requirements without calling an LLM; passing those checks does not guarantee defect-free code). M.Sc. Artificial Intelligence (thesis submitted Jul 2026, degree completed 25 Sep 2026; thesis graded 1) from Johannes Kepler University Linz, supervised by Prof. Sepp Hochreiter. Achieved 99.03% ± 0.07% AUROC (3-seed mean) on a within-CIFAR airplane-vs-rest binary OOD split (single ID class; not comparable to multi-class CIFAR-10 OOD benchmarks) and 0.8673 ± 0.0230 AUROC (5-fold CV) on the public FTI_Zer0P industrial benchmark.',
     url: 'https://ahmed-3m.github.io',
     image: 'https://ahmed-3m.github.io/headshot.jpg',
-    email: 'ahmed.mu.0905@gmail.com',
+    email: 'ahmed.mo.0595@gmail.com',
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Linz',
@@ -119,7 +119,7 @@ export function PersonSchema() {
     },
     contactPoint: {
       '@type': 'ContactPoint',
-      email: 'ahmed.mu.0905@gmail.com',
+      email: 'ahmed.mo.0595@gmail.com',
       contactType: 'professional inquiry',
       availableLanguage: ['English', 'Arabic', 'German'],
     },
@@ -262,7 +262,7 @@ export function ResearchSchema() {
       '@type': 'Person',
       name: 'Ahmed Mohammed',
       url: 'https://ahmed-3m.github.io',
-      email: 'ahmed.mu.0905@gmail.com',
+      email: 'ahmed.mo.0595@gmail.com',
       affiliation: {
         '@type': 'CollegeOrUniversity',
         name: 'Johannes Kepler University Linz',

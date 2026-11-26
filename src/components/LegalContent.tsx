@@ -5,7 +5,7 @@ import { useI18n, type TranslationMap } from '@/lib/i18n'
 // Legal texts exist in all five site languages. German is the binding version; the other
 // languages carry a short note saying so.
 
-const EMAIL = 'ahmed.mu.0905@gmail.com'
+const EMAIL = 'ahmed.mo.0595@gmail.com'
 const UPDATED = '2026-11-25'
 
 type Section = { heading: TranslationMap; paragraphs: TranslationMap[] }

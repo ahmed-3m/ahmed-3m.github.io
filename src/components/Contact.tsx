@@ -67,8 +67,8 @@ export default function Contact({ full = false }: { full?: boolean }) {
             <RequestCvButton variant="link" />
           </div>
 
-          <a href="mailto:ahmed.mu.0905@gmail.com" className="cd-contact-email">
-            ahmed.mu.0905@gmail.com
+          <a href="mailto:ahmed.mo.0595@gmail.com" className="cd-contact-email">
+            ahmed.mo.0595@gmail.com
           </a>
         </div>
       </section>
@@ -83,9 +83,9 @@ export default function Contact({ full = false }: { full?: boolean }) {
           <p className="portfolio-contact-sub">{t(copy.sub)}</p>
           <p className="mt-1.5 max-w-[56ch] text-sm leading-snug text-[var(--cd-fg3)]">{t(copy.workPermit)}</p>
         </div>
-        <a href="mailto:ahmed.mu.0905@gmail.com" className="portfolio-contact-email">
+        <a href="mailto:ahmed.mo.0595@gmail.com" className="portfolio-contact-email">
           <Mail size={16} strokeWidth={2.1} aria-hidden="true" />
-          <bdi dir="ltr">ahmed.mu.0905@gmail.com</bdi>
+          <bdi dir="ltr">ahmed.mo.0595@gmail.com</bdi>
         </a>
       </div>
       <div className="portfolio-contact-links">
