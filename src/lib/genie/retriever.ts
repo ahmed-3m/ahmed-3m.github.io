@@ -56,7 +56,17 @@ export function normalizeForSearch(input: string): string {
 function tokenize(input: string): string[] {
   const normalized = normalizeForSearch(input)
   if (!normalized) return []
-  return Array.from(new Set(normalized.split(/\s+/).filter((token) => token.length >= 2)))
+  const tokens = new Set<string>()
+  for (const token of normalized.split(/\s+/)) {
+    if (token.length < 2) continue
+    tokens.add(token)
+    if (token.length > 5 && token.endsWith('ies')) {
+      tokens.add(`${token.slice(0, -3)}y`)
+    } else if (token.length > 4 && token.endsWith('s') && !token.endsWith('ss')) {
+      tokens.add(token.slice(0, -1))
+    }
+  }
+  return Array.from(tokens)
 }
 
 const HIGH_SIGNAL_TERMS = [
@@ -96,6 +106,7 @@ const CORE_FALLBACK_IDS = [
 
 export interface RetrieveOptions {
   query: string
+  history?: readonly { role: string; content: string }[]
   section?: string
   pathname?: string
   topK?: number
@@ -121,12 +132,21 @@ function matchesSectionAffinity(chunk: KnowledgeChunk, section: string, normPath
 
 export function retrieveKnowledgeChunks({
   query,
+  history = [],
   section = 'hero',
   pathname = '/',
   topK = 4,
 }: RetrieveOptions): KnowledgeChunk[] {
   const normQuery = normalizeForSearch(query)
   const queryTokens = tokenize(query)
+  // Recent conversation context preserves active topic on follow-ups (e.g. "How does it store memories?")
+  // while keeping the latest question dominant and strictly selecting static verified chunks.
+  const recentHistoryText = history
+    .slice(-4)
+    .map((entry) => entry.content)
+    .join(' ')
+  const normHistory = normalizeForSearch(recentHistoryText)
+  const historyTokens = tokenize(recentHistoryText)
   const normPath = normalizePathname(pathname)
 
   const scored = KNOWLEDGE_CHUNKS.map((chunk, index) => {
@@ -141,10 +161,13 @@ export function retrieveKnowledgeChunks({
       if (!normKw) continue
       if (normKw.includes(' ')) {
         if (normQuery.includes(normKw)) lexicalScore += 5
+        else if (normHistory.includes(normKw)) lexicalScore += 2
       } else if (queryTokens.includes(normKw)) {
         lexicalScore += HIGH_SIGNAL_TERMS.includes(normKw as (typeof HIGH_SIGNAL_TERMS)[number]) ? 6 : 4
       } else if (normKw.length >= 4 && normQuery.includes(normKw)) {
         lexicalScore += 3
+      } else if (historyTokens.includes(normKw)) {
+        lexicalScore += HIGH_SIGNAL_TERMS.includes(normKw as (typeof HIGH_SIGNAL_TERMS)[number]) ? 3 : 1.5
       }
     }
 
@@ -158,6 +181,14 @@ export function retrieveKnowledgeChunks({
         lexicalScore += 1.5
       } else if (normFacts.includes(token) && token.length >= 5) {
         lexicalScore += 0.75
+      }
+    }
+
+    for (const token of historyTokens) {
+      if (titleTokens.has(token)) {
+        lexicalScore += 1
+      } else if (factTokens.has(token) && HIGH_SIGNAL_TERMS.includes(token as (typeof HIGH_SIGNAL_TERMS)[number])) {
+        lexicalScore += 1
       }
     }
 
@@ -203,6 +234,7 @@ export function retrieveKnowledgeChunks({
 export interface BuildSystemPromptOptions {
   lang: Language
   query: string
+  history?: readonly { role: string; content: string }[]
   section?: string
   pathname?: string
 }
@@ -241,10 +273,11 @@ const COMPACT_PUBLIC_LINKS = [
 export function buildSystemPrompt({
   lang,
   query,
+  history = [],
   section = 'hero',
   pathname = '/',
 }: BuildSystemPromptOptions): string {
-  const chunks = retrieveKnowledgeChunks({ query, section, pathname, topK: 4 })
+  const chunks = retrieveKnowledgeChunks({ query, history, section, pathname, topK: 4 })
   const retrievedBlock = chunks
     .map((chunk) => `[${chunk.title}] ${chunk.facts} Links: ${chunk.links.join(', ')}`)
     .join('\n')

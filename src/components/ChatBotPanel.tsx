@@ -755,6 +755,7 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
     const systemPrompt = buildSystemPrompt({
       lang: lang as Language,
       query: content,
+      history: transcript.slice(0, -1),
       section: currentSection,
       pathname,
     })

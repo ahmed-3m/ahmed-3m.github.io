@@ -208,6 +208,19 @@ assert(
   )
 }
 {
+  const chunks = retrieverMod.retrieveKnowledgeChunks({
+    query: 'How does it store memories?',
+    history: [{ role: 'user', content: 'What is Sihem?' }],
+    section: 'hero',
+    pathname: '/',
+  })
+  assert(
+    'retrieve follow-up preserves prior Sihem topic for pgvector memory',
+    chunks.some((c) => c.id === 'sihem-architecture' && c.facts.includes('pgvector')),
+    `ids=${chunks.map((c) => c.id).join(',')}`,
+  )
+}
+{
   const chunks = retrieverMod.retrieveKnowledgeChunks({ query: 'mergeproof' })
   assert(
     'retrieve mergeproof returns mergeproof chunk',
