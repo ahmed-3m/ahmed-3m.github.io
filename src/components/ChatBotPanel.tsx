@@ -256,7 +256,10 @@ async function fetchBigModel({
   onDelta?: StreamDelta
 }): Promise<ChatReply> {
   const model = lane === 'fast' ? ZAI_FAST_MODEL : ZAI_MODEL
-  const maxTokens = lane === 'fast' ? 380 : 1200
+  // GLM-5 models allocate part of max_tokens to internal reasoning before
+  // emitting visible delta.content; keep fast headroom generous and cap
+  // reasoning_effort to 'low' on both lanes to avoid empty/truncated replies.
+  const maxTokens = lane === 'fast' ? 900 : 1200
   const payloadMessages = buildChatMessages(systemPrompt, messages)
 
   const controller = new AbortController()
@@ -281,7 +284,7 @@ async function fetchBigModel({
         max_tokens: maxTokens,
         temperature: 0.3,
         stream: streaming,
-        ...(lane === 'deep' ? { reasoning_effort: 'low' } : {}),
+        reasoning_effort: 'low',
       }),
       signal: controller.signal,
     })
@@ -318,7 +321,9 @@ async function fetchGroq({
   signal?: AbortSignal
   onDelta?: StreamDelta
 }): Promise<ChatReply> {
-  const maxTokens = lane === 'fast' ? 420 : 900
+  // gpt-oss-20b also consumes reasoning tokens out of max_tokens; give both
+  // lanes enough headroom (within worker MAX_TOKENS_CAP = 1200) to finish cleanly.
+  const maxTokens = lane === 'fast' ? 900 : 1200
   const payloadMessages = buildChatMessages(systemPrompt, messages)
 
   const controller = new AbortController()

@@ -767,6 +767,63 @@ async function runInteractiveSmokeChecks(browser, origin, failures) {
         recordCollectedErrors(errors, label, failures)
       }
     }
+
+    // 5) Keyboard Skip-to-Content link + #main landmark on `/`.
+    {
+      const label = '[interactive-skip-link] /'
+      executed += 1
+      errors.reset()
+
+      try {
+        const response = await page.goto(`${origin}/`, {
+          waitUntil: 'load',
+          timeout: 20_000,
+        })
+        if (!response || response.status() !== 200) {
+          failures.push(`${label}: expected HTTP 200, received ${response?.status() ?? 'no response'}`)
+        } else {
+          await waitForSettledLayout(page)
+          const skipLink = page.locator('a.cd-skip-link[href="#main"]').first()
+          const mainLandmark = page.locator('main#main').first()
+          if ((await skipLink.count()) === 0) {
+            failures.push(`${label}: missing a.cd-skip-link[href="#main"]`)
+          } else if ((await mainLandmark.count()) === 0) {
+            failures.push(`${label}: missing main#main landmark target`)
+          } else {
+            await page.keyboard.press('Tab')
+            const focusInfo = await skipLink.evaluate((el) => {
+              const style = getComputedStyle(el)
+              return {
+                isActive: document.activeElement === el,
+                outlineStyle: style.outlineStyle,
+                outlineWidth: parseFloat(style.outlineWidth) || 0,
+                clipPath: style.clipPath,
+              }
+            })
+            const box = await skipLink.boundingBox()
+            if (
+              !focusInfo.isActive ||
+              focusInfo.outlineStyle === 'none' ||
+              focusInfo.outlineWidth < 2 ||
+              focusInfo.clipPath !== 'none'
+            ) {
+              failures.push(
+                `${label}: skip link did not receive visible keyboard focus on Tab (${JSON.stringify(focusInfo)})`,
+              )
+            }
+            if (!box || box.width < 40 || box.height < 20) {
+              failures.push(
+                `${label}: skip link did not expand visibly on focus (box=${JSON.stringify(box)})`,
+              )
+            }
+          }
+        }
+        recordCollectedErrors(errors, label, failures)
+      } catch (err) {
+        failures.push(`${label}: ${err instanceof Error ? err.message : String(err)}`)
+        recordCollectedErrors(errors, label, failures)
+      }
+    }
   } finally {
     await context.close()
   }
@@ -916,7 +973,7 @@ if (failures.length > 0) {
 }
 
 console.log(
-  `playwright-smoke: OK (${checksRun} checks: ${PROFILES.length} profiles × ${ROUTES.length} routes + ${FOOTER_LOCALES.length} desktop footer locales + /research/ chart centering + 4 interactive flows` +
+  `playwright-smoke: OK (${checksRun} checks: ${PROFILES.length} profiles × ${ROUTES.length} routes + ${FOOTER_LOCALES.length} desktop footer locales + /research/ chart centering + 5 interactive flows` +
     (analyticsChecks ? ' + GoatCounter page-view counting' : '; analytics off, counting check skipped') +
     ')',
 )
