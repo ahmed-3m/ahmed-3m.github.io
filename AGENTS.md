@@ -60,6 +60,7 @@ Build notes:
 | `src/lib/ThemeContext.tsx` | Theme store (`localStorage['theme']` + `prefers-color-scheme`), sets `data-theme` on `<html>` |
 | `src/lib/ood-explorer-data.ts` | **Single source of truth for thesis numbers** (benchmarks, histograms, λ sweep, K ablation, inkjet CV) |
 | `src/lib/news-items.json` | News catalog (see the news protocol below) |
+| `src/lib/genie/` | Genie chatbot logic, kept free of React so `npm test` can import it: `prompts.ts` (suggested questions, prepared replies, follow-ups, lane routing), `reply.ts` (answer at once or ask the model; BigModel → Groq → prepared-reply fallback), `providers.ts` (proxy requests, SSE parsing, typed errors), `retriever.ts` + `knowledge.ts` (system prompt), `markdown.ts`, `links.ts`. `src/components/ChatBotPanel.tsx` keeps only the UI state |
 | `public/` | Static assets, CV, thesis PDF, research figures, `llms.txt` |
 | `worker/` | Cloudflare Worker chat proxy (`chat-proxy.js`, `wrangler.toml`) and self-test |
 | `tools/` | Build-time emitters (homepage news, sitemap alias), export verifier, Playwright smoke gate, and `test-hooks.mjs` (maps the `@/` alias for `npm test`) |
