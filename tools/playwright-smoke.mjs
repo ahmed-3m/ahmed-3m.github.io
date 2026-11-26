@@ -505,6 +505,21 @@ async function runAnalyticsCountingCheck(browser, origin, failures) {
       if (!/^https:\/\/[a-z0-9-]+\.goatcounter\.com\/count$/.test(endpoint ?? '')) {
         failures.push(`${label}: unexpected data-goatcounter endpoint ${JSON.stringify(endpoint)}`)
       }
+      // Without no_onload the real count.js would also count the first page itself,
+      // which the stub cannot see, so check the setting reaches the script tag.
+      const settings = await page
+        .locator('script[data-goatcounter]')
+        .first()
+        .getAttribute('data-goatcounter-settings')
+      let noOnload = false
+      try {
+        noOnload = JSON.parse(settings ?? '{}').no_onload === true
+      } catch {
+        // Reported below.
+      }
+      if (!noOnload) {
+        failures.push(`${label}: data-goatcounter-settings must set no_onload, got ${JSON.stringify(settings)}`)
+      }
       if (await expectCounts(['/'], 'first load')) {
         await waitForSettledLayout(page)
         await page.locator('.cd-footer a[href="/about/"]').first().click()
