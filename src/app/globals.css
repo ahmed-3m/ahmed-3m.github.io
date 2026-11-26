@@ -1185,27 +1185,6 @@ body::before {
   border-color: var(--glass-medium-border);
 }
 
-/* 3D cards (blog) */
-.card-3d {
-  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.4), 0 2px 4px -1px rgba(0,0,0,0.3),
-              0 0 0 1px rgba(255,255,255,0.05);
-  transition: all 0.2s ease;
-}
-.card-3d:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5), 0 10px 10px -5px rgba(0,0,0,0.3),
-              0 0 25px var(--cd-accent-dim), 0 0 0 1px rgba(255,255,255,0.1);
-}
-[data-theme="light"] .card-3d {
-  box-shadow: var(--glass-subtle-shadow), 0 0 0 1px var(--cd-b0);
-}
-[data-theme="light"] .card-3d:hover {
-  box-shadow:
-    var(--glass-medium-shadow),
-    0 0 22px var(--cd-accent-dim),
-    0 0 0 1px var(--cd-b-accent);
-}
-
 /* ── Reduced transparency ── */
 [data-reduce-transparency="true"] .cd-nav,
 [data-reduce-transparency="true"] .glass-surface,
@@ -1537,15 +1516,21 @@ body::before {
 
   /* Hero */
   .cd-hero { padding: 76px 0 32px; }
+  .cd-hero-grid { gap: 0; }
   .cd-hero-status, .cd-hero-name, .cd-hero-title, .cd-hero-body { margin-bottom: 16px; }
   .cd-hero-title span { white-space: normal; }
-  .cd-hero-work, .cd-hero-secondary, .cd-hero-visual, .cd-stat--wide, .cd-stat-label-wide, .cd-hero-legend { display: none; }
+  .cd-hero-work, .cd-stat--wide, .cd-stat-label-wide { display: none; }
+  .cd-hero-secondary { margin-bottom: 20px; gap: 8px 10px; line-height: 1.65; }
   .cd-hero-stats { width: 100%; }
   .cd-stat { padding: 12px 14px; border: 0; }
   .cd-stat-num { font-size: 20px; }
   .cd-stat-label-compact { display: inline; }
+  .cd-hero-legend { overflow-wrap: anywhere; }
   .cd-hero-jump { display: flex; flex-wrap: wrap; gap: 8px; margin-block-start: 16px; }
   .cd-hero-jump a { min-height: 44px; padding: 8px 12px; font-size: 13px; }
+  .cd-hero-visual { width: 100%; max-width: 100%; margin-top: 24px; }
+  .cd-signal { max-width: 100%; overflow: hidden; }
+  .cd-signal-head { flex-wrap: wrap; gap: 4px 8px; }
 
   /* Projects */
   .cd-projects-grid { grid-template-columns: minmax(0, 1fr); }
