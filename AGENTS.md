@@ -187,6 +187,7 @@ Required repository secrets:
 - The portfolio chatbot uses `NEXT_PUBLIC_CHAT_PROXY_URL` (a GitHub repository variable) for model requests. Store `ZAI_API_KEY` and `GROQ_API_KEY` as Cloudflare Worker secrets. Keep the news agent's key separate. Without the proxy URL, the widget uses curated answers.
 - Chatbot model overrides (optional GitHub repository variables): `NEXT_PUBLIC_BIGMODEL_MODEL` (deep lane, default `glm-5.3`), `NEXT_PUBLIC_ZAI_FAST_MODEL` (fast lane, default `glm-5-turbo`), and `NEXT_PUBLIC_GROQ_MODEL` (cross-provider fallback, default `openai/gpt-oss-20b`). Genie chooses the lane locally before sending a request.
 - `EXA_API_KEY` — Exa API key (https://exa.ai).
+- `NEXT_PUBLIC_GOATCOUNTER_CODE` (GitHub repository variable) — GoatCounter site code, e.g. `mysite` for `mysite.goatcounter.com`. Without a valid code the site loads no analytics script and `/privacy/` says so; with one, `src/components/Analytics.tsx` counts each route and the privacy notice describes GoatCounter. `verify:export` fails if the two disagree. PR builds always use the placeholder `ci-smoke` so the smoke check exercises the counting path; the placeholder is never deployed. Google Analytics was removed, and `verify:export` rejects its hosts in the export.
 
 `NEXT_PUBLIC_ZAI_TOKEN` is retired and unused. `ZAI_NEWS_TOKEN` survives only as the
 news workflow's fallback when `BIGMODEL_NEWS_TOKEN` is unset. All GLM endpoints live on

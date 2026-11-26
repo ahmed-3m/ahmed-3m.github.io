@@ -1,14 +1,60 @@
 'use client'
 
+import { ANALYTICS_ENABLED } from '@/lib/analytics'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 
 // Legal texts exist in all five site languages. German is the binding version; the other
 // languages carry a short note saying so.
 
 const EMAIL = 'ahmed.mo.0595@gmail.com'
-const UPDATED = '2026-11-25'
+const UPDATED = '2026-11-26'
 
 type Section = { heading: TranslationMap; paragraphs: TranslationMap[] }
+
+// Follows the build: the GoatCounter text appears only when a site code is configured
+// (src/lib/analytics.ts), so the notice never describes a script the page doesn't load.
+const visitStatistics: Section = {
+  heading: {
+    en: 'Visit statistics',
+    de: 'Besuchsstatistik',
+    fr: 'Statistiques de visite',
+    es: 'Estadísticas de visitas',
+    ar: 'إحصاءات الزيارات',
+  },
+  paragraphs: ANALYTICS_ENABLED
+    ? [
+        {
+          en: 'To see which pages are read, the site counts visits with GoatCounter, an open-source service for website statistics. When a page opens, your browser sends GoatCounter the page address (including any query string), the page title, the referring page, your screen width and, as with any request, your IP address and browser identifier (user agent).',
+          de: 'Um zu sehen, welche Seiten gelesen werden, zählt die Website Besuche mit GoatCounter, einem Open-Source-Dienst für Website-Statistiken. Beim Öffnen einer Seite sendet dein Browser an GoatCounter die Seitenadresse (einschließlich eines etwaigen Query-Strings), den Seitentitel, die verweisende Seite, deine Bildschirmbreite sowie, wie bei jeder Anfrage, deine IP-Adresse und Browserkennung (User-Agent).',
+          fr: 'Pour savoir quelles pages sont lues, le site compte les visites avec GoatCounter, un service open source de statistiques web. À l’ouverture d’une page, votre navigateur envoie à GoatCounter l’adresse de la page (y compris l’éventuelle chaîne de requête), son titre, la page de provenance, la largeur de votre écran et, comme pour toute requête, votre adresse IP et l’identifiant de votre navigateur (user agent).',
+          es: 'Para saber qué páginas se leen, el sitio cuenta las visitas con GoatCounter, un servicio de código abierto para estadísticas web. Al abrir una página, tu navegador envía a GoatCounter la dirección de la página (incluida la posible cadena de consulta), su título, la página de procedencia, el ancho de tu pantalla y, como en cualquier solicitud, tu dirección IP y el identificador de tu navegador (user agent).',
+          ar: 'لمعرفة الصفحات التي تُقرأ، يحصي الموقع الزيارات باستخدام GoatCounter، وهي خدمة مفتوحة المصدر لإحصاءات المواقع. عند فتح صفحة، يرسل متصفحك إلى GoatCounter رابط الصفحة (بما في ذلك أي سلسلة استعلام) وعنوانها والصفحة التي أحالتك إليها وعرض شاشتك، وكما في أي طلب، عنوان IP الخاص بك ومعرّف متصفحك (user agent).',
+        },
+        {
+          en: 'GoatCounter sets no cookies and does not store your IP address or user agent: they are kept only in memory, for at most 8 hours, so that a reload is not counted as a second visit. Only aggregate counts are stored (for example per page, referring site, browser, screen size and country), which do not identify you. The site uses no advertising tools.',
+          de: 'GoatCounter setzt keine Cookies und speichert weder deine IP-Adresse noch deinen User-Agent: Sie werden nur im Arbeitsspeicher gehalten, höchstens 8 Stunden lang, damit ein Neuladen nicht als zweiter Besuch zählt. Gespeichert werden nur zusammengefasste Zahlen (zum Beispiel pro Seite, verweisender Website, Browser, Bildschirmgröße und Land), die dich nicht identifizieren. Die Website nutzt keine Werbetools.',
+          fr: 'GoatCounter ne dépose aucun cookie et n’enregistre ni votre adresse IP ni votre user agent : ils restent uniquement en mémoire, 8 heures au maximum, afin qu’un rechargement ne compte pas comme une deuxième visite. Seuls des chiffres agrégés sont conservés (par exemple par page, site de provenance, navigateur, taille d’écran et pays), qui ne vous identifient pas. Le site n’utilise aucun outil de publicité.',
+          es: 'GoatCounter no crea cookies y no guarda tu dirección IP ni tu user agent: solo se mantienen en memoria, un máximo de 8 horas, para que una recarga no cuente como una segunda visita. Solo se guardan cifras agregadas (por ejemplo por página, sitio de procedencia, navegador, tamaño de pantalla y país), que no te identifican. El sitio no usa herramientas de publicidad.',
+          ar: 'لا يضع GoatCounter ملفات تعريف ارتباط، ولا يخزّن عنوان IP الخاص بك ولا معرّف متصفحك: يُحتفظ بهما في الذاكرة فقط، لمدة أقصاها 8 ساعات، حتى لا تُحتسب إعادة تحميل الصفحة زيارةً ثانية. ولا يُخزَّن سوى أرقام إجمالية (مثلاً حسب الصفحة والموقع المُحيل والمتصفح وحجم الشاشة والبلد) لا تكشف هويتك. ولا يستخدم الموقع أي أدوات إعلان.',
+        },
+        {
+          en: 'Legal basis: my legitimate interest in knowing which content is useful to visitors (Art. 6(1)(f) GDPR). Details: GoatCounter’s privacy policy at www.goatcounter.com/help/privacy.',
+          de: 'Rechtsgrundlage: mein berechtigtes Interesse zu erfahren, welche Inhalte für Besucher nützlich sind (Art. 6 Abs. 1 lit. f DSGVO). Details: Datenschutzerklärung von GoatCounter unter www.goatcounter.com/help/privacy.',
+          fr: 'Base juridique : mon intérêt légitime à savoir quels contenus sont utiles aux visiteurs (art. 6, par. 1, point f du RGPD). Détails : politique de confidentialité de GoatCounter sur www.goatcounter.com/help/privacy.',
+          es: 'Base jurídica: mi interés legítimo en saber qué contenidos son útiles para los visitantes (art. 6.1.f del RGPD). Detalles: política de privacidad de GoatCounter en www.goatcounter.com/help/privacy.',
+          ar: 'الأساس القانوني: مصلحتي المشروعة في معرفة المحتوى المفيد للزوار (المادة 6(1)(و) من اللائحة العامة لحماية البيانات). التفاصيل: سياسة الخصوصية لدى GoatCounter على www.goatcounter.com/help/privacy.',
+        },
+      ]
+    : [
+        {
+          en: 'The site uses no analytics or advertising tools.',
+          de: 'Die Website nutzt keine Analyse- oder Werbetools.',
+          fr: 'Le site n’utilise aucun outil d’analyse ou de publicité.',
+          es: 'El sitio no usa herramientas de analítica ni de publicidad.',
+          ar: 'لا يستخدم الموقع أي أدوات تحليل أو إعلان.',
+        },
+      ],
+}
 
 const titles = {
   impressum: {
@@ -141,22 +187,23 @@ const privacy: Section[] = [
   },
   {
     heading: {
-      en: 'One preference cookie, no tracking',
-      de: 'Ein Einstellungs-Cookie, kein Tracking',
-      fr: 'Un cookie de préférence, aucun suivi',
-      es: 'Una cookie de preferencia, sin seguimiento',
-      ar: 'ملف تعريف ارتباط واحد للتفضيلات، بلا تتبّع',
+      en: 'One preference cookie',
+      de: 'Ein Einstellungs-Cookie',
+      fr: 'Un cookie de préférence',
+      es: 'Una cookie de preferencia',
+      ar: 'ملف تعريف ارتباط واحد للتفضيلات',
     },
     paragraphs: [
       {
-        en: 'This site sets one cookie, called "language". It holds only the code of the language you use (for example "de") so that pages open in that language. It lasts one year and is not used for tracking. Your language, theme and display choices are also saved in your browser’s local storage. I do not read or store any of this; the site uses no analytics or advertising tools, and its fonts are served from the site itself.',
-        de: 'Diese Website setzt ein einziges Cookie namens „language“. Es enthält nur das Kürzel deiner Sprache (zum Beispiel „de“), damit Seiten in dieser Sprache öffnen. Es gilt ein Jahr und dient nicht dem Tracking. Deine Sprach-, Design- und Anzeige-Auswahl wird außerdem im Local Storage deines Browsers gespeichert. Ich lese und speichere davon nichts; die Website nutzt keine Analyse- oder Werbetools, und Schriften werden von der Website selbst geladen.',
-        fr: 'Ce site dépose un seul cookie, nommé « language ». Il contient uniquement le code de la langue que vous utilisez (par exemple « de ») afin que les pages s’ouvrent dans cette langue. Il dure un an et ne sert pas au suivi. Vos choix de langue, de thème et d’affichage sont aussi enregistrés dans le stockage local de votre navigateur. Je ne lis ni ne conserve rien de tout cela ; le site n’utilise aucun outil d’analyse ou de publicité, et ses polices sont servies par le site lui-même.',
-        es: 'Este sitio crea una única cookie, llamada «language». Solo guarda el código del idioma que usas (por ejemplo «de») para que las páginas se abran en ese idioma. Dura un año y no se usa para seguimiento. Tus preferencias de idioma, tema y visualización también se guardan en el almacenamiento local de tu navegador. Yo no leo ni guardo nada de esto; el sitio no usa herramientas de analítica ni de publicidad, y sus fuentes se sirven desde el propio sitio.',
-        ar: 'يضع هذا الموقع ملف تعريف ارتباط واحداً اسمه "language". يحتوي فقط على رمز اللغة التي تستخدمها (مثل "de") حتى تُفتح الصفحات بهذه اللغة. مدته سنة واحدة ولا يُستخدم للتتبّع. وتُحفظ اختياراتك للغة والمظهر والعرض أيضاً في التخزين المحلي لمتصفحك. لا أقرأ أياً من ذلك ولا أخزّنه؛ ولا يستخدم الموقع أي أدوات تحليل أو إعلان، وتُحمَّل خطوطه من الموقع نفسه.',
+        en: 'This site sets one cookie, called "language". It holds only the code of the language you use (for example "de") so that pages open in that language. It lasts one year and is not used for tracking. Your language, theme and display choices are also saved in your browser’s local storage. I do not read or store any of this. The site’s fonts are served from the site itself.',
+        de: 'Diese Website setzt ein einziges Cookie namens „language“. Es enthält nur das Kürzel deiner Sprache (zum Beispiel „de“), damit Seiten in dieser Sprache öffnen. Es gilt ein Jahr und dient nicht dem Tracking. Deine Sprach-, Design- und Anzeige-Auswahl wird außerdem im Local Storage deines Browsers gespeichert. Ich lese und speichere davon nichts. Schriften werden von der Website selbst geladen.',
+        fr: 'Ce site dépose un seul cookie, nommé « language ». Il contient uniquement le code de la langue que vous utilisez (par exemple « de ») afin que les pages s’ouvrent dans cette langue. Il dure un an et ne sert pas au suivi. Vos choix de langue, de thème et d’affichage sont aussi enregistrés dans le stockage local de votre navigateur. Je ne lis ni ne conserve rien de tout cela. Les polices du site sont servies par le site lui-même.',
+        es: 'Este sitio crea una única cookie, llamada «language». Solo guarda el código del idioma que usas (por ejemplo «de») para que las páginas se abran en ese idioma. Dura un año y no se usa para seguimiento. Tus preferencias de idioma, tema y visualización también se guardan en el almacenamiento local de tu navegador. Yo no leo ni guardo nada de esto. Las fuentes del sitio se sirven desde el propio sitio.',
+        ar: 'يضع هذا الموقع ملف تعريف ارتباط واحداً اسمه "language". يحتوي فقط على رمز اللغة التي تستخدمها (مثل "de") حتى تُفتح الصفحات بهذه اللغة. مدته سنة واحدة ولا يُستخدم للتتبّع. وتُحفظ اختياراتك للغة والمظهر والعرض أيضاً في التخزين المحلي لمتصفحك. لا أقرأ أياً من ذلك ولا أخزّنه. وتُحمَّل خطوط الموقع من الموقع نفسه.',
       },
     ],
   },
+  visitStatistics,
   {
     heading: {
       en: 'Chat assistant',

@@ -1,9 +1,10 @@
 // Hermetic headless-Chromium smoke gate for ./out.
 // Serves ./out on 127.0.0.1:<ephemeral-port>, intercepts external network calls,
 // and audits representative routes across desktop dark/light + 375px mobile EN/AR
-// for console/page errors, RTL attributes, and horizontal overflow.
+// for console/page errors, RTL attributes, and horizontal overflow. When the build
+// loads GoatCounter, it also checks that page views are counted once per route.
 
-import { createReadStream, existsSync, statSync } from 'node:fs'
+import { createReadStream, existsSync, readFileSync, statSync } from 'node:fs'
 import http from 'node:http'
 import { createRequire } from 'node:module'
 import path from 'node:path'
@@ -212,14 +213,29 @@ function closeServer(server) {
   })
 }
 
+const GOATCOUNTER_SCRIPT_URL = 'https://gc.zgo.at/count.js'
+const GOATCOUNTER_STUB = `window.__goatcounterCounts = window.__goatcounterCounts || [];
+window.goatcounter = Object.assign(window.goatcounter || {}, {
+  count: function (vars) { window.__goatcounterCounts.push(vars && vars.path); },
+});`
+
 async function attachHermeticRouting(page, origin) {
   // Keep the smoke gate 100% hermetic: intercept any external http(s) calls so
-  // optional third-party scripts (e.g. GA4 when NEXT_PUBLIC_GA_MEASUREMENT_ID is set)
-  // never touch the network or emit ERR_FAILED console noise.
+  // optional third-party scripts never touch the network or emit ERR_FAILED console
+  // noise. GoatCounter's count.js is replaced by a stub that records each counted
+  // path in window.__goatcounterCounts instead of sending it.
   await page.route(/^https?:\/\//i, async (route) => {
     const url = new URL(route.request().url())
     if (url.origin === origin) {
       await route.continue()
+      return
+    }
+    if (url.href === GOATCOUNTER_SCRIPT_URL) {
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/javascript; charset=utf-8',
+        body: GOATCOUNTER_STUB,
+      })
       return
     }
     if (route.request().resourceType() === 'script') {
@@ -445,6 +461,80 @@ async function createHermeticDesktopPage(browser, origin, { theme, language }) {
   await attachHermeticRouting(page, origin)
   const errors = attachErrorCollectors(page)
   return { context, page, errors }
+}
+
+// GoatCounter runs with no_onload, so src/components/Analytics.tsx counts the first page
+// itself and then every client-side route change. Skipped when the build has no site
+// code (no count.js in the export), which verify-export pairs with the privacy notice.
+async function runAnalyticsCountingCheck(browser, origin, failures) {
+  const indexHtml = readFileSync(path.join(outDir, 'index.html'), 'utf8')
+  if (!indexHtml.includes('gc.zgo.at/count.js')) return 0
+
+  const label = '[analytics-goatcounter] / -> /about/'
+  const { context, page, errors } = await createHermeticDesktopPage(browser, origin, {
+    theme: 'dark',
+    language: 'en',
+  })
+  const readCounts = () => page.evaluate(() => window.__goatcounterCounts ?? [])
+  const expectCounts = async (expected, step) => {
+    try {
+      await page.waitForFunction(
+        (want) => JSON.stringify(window.__goatcounterCounts ?? []) === JSON.stringify(want),
+        expected,
+        { timeout: 5_000 },
+      )
+    } catch {
+      failures.push(
+        `${label}: after ${step} expected counts ${JSON.stringify(expected)}, got ${JSON.stringify(await readCounts())}`,
+      )
+      return false
+    }
+    return true
+  }
+
+  try {
+    errors.reset()
+    const response = await page.goto(`${origin}/`, { waitUntil: 'load', timeout: 20_000 })
+    if (!response || response.status() !== 200) {
+      failures.push(`${label}: expected HTTP 200, received ${response?.status() ?? 'no response'}`)
+    } else {
+      const endpoint = await page
+        .locator('script[data-goatcounter]')
+        .first()
+        .getAttribute('data-goatcounter', { timeout: 10_000 })
+      if (!/^https:\/\/[a-z0-9-]+\.goatcounter\.com\/count$/.test(endpoint ?? '')) {
+        failures.push(`${label}: unexpected data-goatcounter endpoint ${JSON.stringify(endpoint)}`)
+      }
+      // Without no_onload the real count.js would also count the first page itself,
+      // which the stub cannot see, so check the setting reaches the script tag.
+      const settings = await page
+        .locator('script[data-goatcounter]')
+        .first()
+        .getAttribute('data-goatcounter-settings')
+      let noOnload = false
+      try {
+        noOnload = JSON.parse(settings ?? '{}').no_onload === true
+      } catch {
+        // Reported below.
+      }
+      if (!noOnload) {
+        failures.push(`${label}: data-goatcounter-settings must set no_onload, got ${JSON.stringify(settings)}`)
+      }
+      if (await expectCounts(['/'], 'first load')) {
+        await waitForSettledLayout(page)
+        await page.locator('.cd-footer a[href="/about/"]').first().click()
+        await page.waitForURL(`${origin}/about/`, { timeout: 10_000 })
+        await expectCounts(['/', '/about/'], 'client-side navigation to /about/')
+      }
+    }
+    recordCollectedErrors(errors, label, failures)
+  } catch (err) {
+    failures.push(`${label}: ${err instanceof Error ? err.message : String(err)}`)
+    recordCollectedErrors(errors, label, failures)
+  } finally {
+    await context.close()
+  }
+  return 1
 }
 
 async function runInteractiveSmokeChecks(browser, origin, failures) {
@@ -694,6 +784,7 @@ const { server, origin } = await startStaticServer()
 let browser = null
 const failures = []
 let checksRun = 0
+let analyticsChecks = 0
 
 try {
   browser = await chromium.launch({ headless: true, ...(process.env.PLAYWRIGHT_CHROMIUM_CHANNEL ? { channel: process.env.PLAYWRIGHT_CHROMIUM_CHANNEL } : {}) })
@@ -807,6 +898,8 @@ try {
 
   checksRun += await runDesktopFooterChecks(browser, origin, failures)
   checksRun += await runInteractiveSmokeChecks(browser, origin, failures)
+  analyticsChecks = await runAnalyticsCountingCheck(browser, origin, failures)
+  checksRun += analyticsChecks
 } finally {
   if (browser) {
     await browser.close()
@@ -823,5 +916,7 @@ if (failures.length > 0) {
 }
 
 console.log(
-  `playwright-smoke: OK (${checksRun} checks: ${PROFILES.length} profiles × ${ROUTES.length} routes + ${FOOTER_LOCALES.length} desktop footer locales + /research/ chart centering + 4 interactive flows)`,
+  `playwright-smoke: OK (${checksRun} checks: ${PROFILES.length} profiles × ${ROUTES.length} routes + ${FOOTER_LOCALES.length} desktop footer locales + /research/ chart centering + 4 interactive flows` +
+    (analyticsChecks ? ' + GoatCounter page-view counting' : '; analytics off, counting check skipped') +
+    ')',
 )
