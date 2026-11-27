@@ -36,8 +36,8 @@
   here. Platform specifics (rate-limit periods, the counter store, the telemetry store, fetch caching) are left
   to plan research.
 - The prompt-location decision in Clarifications was approved by the owner on 2026-11-28.
-- Planning proposed two amendments to FR-018 (v1 entry selection and over-cap history turns). They are listed in
-  Clarifications and in plan.md's open decisions, and need the owner's approval.
-- Budget cap values are settings. plan.md proposes starting values for the owner to confirm (see Assumptions).
+- Planning proposed two amendments to FR-018 (v1 entry selection and over-cap history turns). The owner approved
+  both on 2026-11-28, and FR-018 now says them. They are recorded in Clarifications and in plan.md's decisions.
+- Budget cap values are settings. The owner approved the starting values on 2026-11-28 (plan.md, decision 4).
 - The owner actions in Assumptions (separate keys, Z.ai terms, Groq billing) block deploying the Worker. They do
   not block planning.

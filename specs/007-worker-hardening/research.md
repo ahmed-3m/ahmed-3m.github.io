@@ -149,8 +149,8 @@ is the longest the binding supports, which keeps the privacy notice ("kept for a
 - **Interface.** The Worker calls the object through `stub.fetch()`, not RPC, so the class needs no
   `cloudflare:workers` import and loads in Node. The self-test passes a fake stub; a unit test runs `consume` on an
   in-memory store.
-- **Caps** are `[vars]` settings in `wrangler.toml`, reviewed like code. Proposed starting values, for the owner
-  to confirm or change:
+- **Caps** are `[vars]` settings in `wrangler.toml`, reviewed like code. Starting values, approved by the owner on
+  2026-11-28:
 
   | Provider | 5-hour cap | Daily cap |
   |---|---|---|
@@ -286,17 +286,15 @@ handles both.
 
   Each value is used only if it exactly matches a value the prompt file lists. Otherwise the section is `hero`, the
   path `/` and the language `en`.
-- **Knowledge entries:**
-  - *Proposed amendment to FR-018, for the owner to approve.* Read `[Title]` at the start of a line after
-    `Retrieved portfolio knowledge:`, up to 4. Map each title to an entry ID by exact match against the published
-    titles. If none match, use the section defaults.
-  - *As FR-018 is written today:* always use the section defaults.
+- **Knowledge entries** (FR-018, as amended with the owner's approval on 2026-11-28): read `[Title]` at the start
+  of a line after `Retrieved portfolio knowledge:`, up to 4. Map each title to an entry ID by exact match against
+  the published titles. If none match, use the section defaults.
 
   Only selection happens. No text from the client's system message reaches the composed prompt. A self-test plants
   instructions right after a real title and checks that they are not in the prompt.
 - **Turn caps:**
   - the last turn must be the visitor's question and is held to FR-008's caps;
-  - *also proposed:* earlier turns over a cap are cut to the cap in v1 only. Today's chat input has no length
+  - earlier turns over a cap are cut to the cap in v1 only (FR-018, as amended). Today's chat input has no length
     limit, so a long paste would otherwise stay in the history and make the next 15 requests fail. v2 rejects
     over-cap turns. PR 4 adds `maxLength={2000}` to the input.
 

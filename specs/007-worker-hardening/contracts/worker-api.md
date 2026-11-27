@@ -115,7 +115,7 @@ The same object, after `data: `, is the standard error event inside a stream.
 | `upstream_error` | 502 | `zai` or `groq` | Provider status ≥ 400, unreadable body, or an error event | `The model could not answer.` | — |
 | `upstream_timeout` | 504 | `zai` or `groq` | No first byte in 18 s, or the stream ran past 58 s | `The model took too long to answer.` | — |
 
-The status codes for the budget and the stop switch are open decision 3 in plan.md.
+The `503` status for the budget and the stop switch was approved by the owner on 2026-11-28 (plan.md, decision 3).
 
 **Never in a response:** a provider's error body, a secret or setting name, a model name the client did not ask
 for, or the composed prompt.

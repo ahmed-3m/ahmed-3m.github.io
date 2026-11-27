@@ -255,7 +255,12 @@ none. A mocked chat flow in the browser test sends a request in the new format a
   3. the site switches to the new format;
   4. the Worker stops accepting the old format, at least 7 days after step 3 is live.
 - **FR-018**: Until step 4, the Worker MUST accept today's request shape. It MUST replace that shape's system
-  message with its own prompt, using the default entries for the page section, and apply FR-008 to FR-016 to it.
+  message with its own prompt and apply FR-008 to FR-016 to it, with two differences:
+  - **Entries.** It uses the entries whose titles appear as `[Title]` lines in the replaced system message,
+    matched exactly against the published titles, up to 4. If none match, it uses the default entries for the page
+    section. No other text from the replaced message reaches the prompt.
+  - **Earlier turns over a cap** are cut to the cap instead of rejected. The visitor's question (the last turn) is
+    still held to FR-008.
 - **FR-019**: After the site switch, the site's JavaScript MUST NOT contain the prompt's rule sentences, and the
   export check MUST fail if it does.
 
@@ -318,8 +323,8 @@ site checks run on the built export.
   The keys are set by the owner. This work never handles them. If the Coding Plan terms do not allow this use,
   the lane settings move the affected lanes to another key or provider, and the request format does not change.
 - **Deploys stay manual.** The owner deploys the Worker, as today. Whether CI should deploy it is out of scope.
-- **Budget values.** The 5-hour and daily caps are settings. The owner sets the starting values during planning,
-  since there is no usage data yet. Telemetry (User Story 2) then gives the data to tune them.
+- **Budget values.** The 5-hour and daily caps are settings. The owner set the starting values during planning
+  (Clarifications), since there is no usage data yet. Telemetry (User Story 2) then gives the data to tune them.
 - **Retrieval stays in the site.** The site keeps choosing the knowledge entries for each question, as today, and
   sends their IDs. The Worker only puts together entries that are already published, so it needs no copy of the
   retrieval code. A client that sends chosen IDs can only pick among published facts.
@@ -356,13 +361,18 @@ site checks run on the built export.
 - Q: Does spec 007 cover the site switch (backlog item W3)? → A: yes, as User Story 3, in its own pull request
   after User Story 1 is deployed.
 
-### Proposed during planning (awaiting the owner's approval)
+### Decided during planning (approved by the owner, 2026-11-28)
 
-- Q: Which knowledge entries does the Worker use for a request in today's format? → A (proposed): the entries
-  whose titles appear as `[Title]` lines in the replaced system message, matched exactly against the published
-  titles, up to 4. If none match, the section defaults are used. Only selection happens; no client text reaches the
-  prompt. This would amend FR-018, which today says the section defaults are always used. See plan.md, open
-  decision 1, and research R11.
-- Q: What happens to an earlier turn over a cap in today's format? → A (proposed): it is cut to the cap, because
-  today's chat input has no length limit. The new format still rejects it (FR-008). This would amend FR-018. See
-  plan.md, open decision 2.
+- Q: Which knowledge entries does the Worker use for a request in today's format? → A: the entries whose titles
+  appear as `[Title]` lines in the replaced system message, matched exactly against the published titles, up to 4.
+  If none match, the section defaults are used. Only selection happens; no client text reaches the prompt. FR-018
+  is amended to say this. See plan.md, decision 1, and research R11.
+- Q: What happens to an earlier turn over a cap in today's format? → A: it is cut to the cap, because today's chat
+  input has no length limit. The new format still rejects it (FR-008). FR-018 is amended to say this. See plan.md,
+  decision 2.
+- Q: Which status do budget and stop-switch errors use? → A: `503`, so today's site tries the other provider and
+  then falls back to prepared answers. See plan.md, decision 3, and research R8.
+- Q: What are the starting caps? → A: Z.ai 100 per 5 hours and 300 a day; Groq 200 per 5 hours and 600 a day.
+  They are settings, tuned later from telemetry. See plan.md, decision 4, and research R6.
+- Q: What happens when the budget store fails? → A: the Worker fails closed and calls no provider. See plan.md,
+  decision 5, and research R6.

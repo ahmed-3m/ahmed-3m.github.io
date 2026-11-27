@@ -73,10 +73,10 @@ v2 request (research R11). It is recognized by having `messages` and no `version
 |---|---|
 | `provider` | `model`, through the allowlist. An unknown model is an invalid request. |
 | `lane` | `max_tokens` of 1,200 or more is `deep`, otherwise `fast`. |
-| `turns` | `messages` with every `system` message removed. Earlier turns over a cap are cut to the cap (proposed). The last turn must be `user` and within its cap. |
+| `turns` | `messages` with every `system` message removed. Earlier turns over a cap are cut to the cap (FR-018). The last turn must be `user` and within its cap. |
 | `section`, `pathname` | The `Active page context` line of the removed system message, if the values are listed. |
 | `lang` | The `(or <name> if unclear)` phrase, mapped back through `languages`. |
-| `entryIds` | Proposed: `[Title]` lines after `Retrieved portfolio knowledge:`, matched exactly against published titles, up to 4. As written today: none, so the section defaults are used. |
+| `entryIds` | `[Title]` lines after `Retrieved portfolio knowledge:`, matched exactly against published titles, up to 4 (FR-018). If none match: empty, so the section defaults are used. |
 | `stream` | `stream`. |
 
 ## Error response
@@ -133,8 +133,8 @@ No message text, IP address, user agent, request ID or country.
 | `FAST_MAX_TOKENS`, `DEEP_MAX_TOKENS` | var | `900`, `1600` | |
 | `TEMPERATURE` | var | `0.3` | |
 | `ZAI_REASONING_EFFORT` | var | `low` | Sent to Z.ai only. |
-| `ZAI_CAP_5H`, `ZAI_CAP_DAY` | var | 100, 300 (proposed) | R6 |
-| `GROQ_CAP_5H`, `GROQ_CAP_DAY` | var | 200, 600 (proposed) | R6 |
+| `ZAI_CAP_5H`, `ZAI_CAP_DAY` | var | 100, 300 | R6; approved 2026-11-28 |
+| `GROQ_CAP_5H`, `GROQ_CAP_DAY` | var | 200, 600 | R6; approved 2026-11-28 |
 | `FIRST_BYTE_MS`, `TOTAL_MS` | var | 18000, 58000 | R10 |
 | `CHAT_RATE_LIMITER` | binding | `{ limit = 8, period = 60 }` | R5 |
 | `GENIE_BUDGET` | binding | Durable Object `GenieBudget` | PR 3 |

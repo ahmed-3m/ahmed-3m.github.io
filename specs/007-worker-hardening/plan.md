@@ -119,7 +119,7 @@ specs/007-worker-hardening/
 │   ├── worker-api.md
 │   └── prompt-file.md
 ├── checklists/requirements.md
-└── tasks.md             # next step (/speckit-tasks), not written yet
+└── tasks.md             # /speckit-tasks output
 ```
 
 ### Source code
@@ -193,31 +193,25 @@ Five PRs, in the order FR-017 requires. Each one branches off `main` and is merg
   the owner deploys the Worker.
 - **After each Worker deploy,** the owner runs the site-health workflow by hand (SC-008).
 
-## Open decisions for the owner
+## Decisions (approved by the owner, 2026-11-28)
 
-These need an answer when the plan is approved. Each has a recommendation and a fallback.
+The owner approved the plan with the recommended choice for each open decision.
 
-1. **v1 entry selection.** This is a proposed amendment to FR-018 (research R11).
-   - *Recommended:* read the retrieved entry titles from today's system message and match them exactly against
-     the published titles. This keeps per-question focus for all traffic until the site switch.
-   - *As written today:* always use the section defaults.
-
-   If approved, FR-018 is updated in this PR.
-2. **v1 history turns over a cap.** Also an FR-018 amendment.
-   - *Recommended:* in v1 only, earlier turns over a cap are cut to the cap. Today's input has no length limit, so a
-     long paste would otherwise break the next 15 requests.
-   - *Alternative:* reject them, as FR-008 says for v2.
-3. **Status for budget and stop-switch errors.**
-   - *Recommended:* `503`. Today's site then tries the other provider and falls back to prepared answers.
-   - *Alternative:* `429`, which today's site would show as the rate-limit message when no prepared answer
-     matches.
-4. **Starting caps.**
-   - *Proposed:* Z.ai 100 per 5 hours and 300 a day; Groq 200 per 5 hours and 600 a day.
-   - These are guesses with no usage data. The owner may lower them, for example to fit the Z.ai Coding Plan's own
-     limits.
-5. **Budget store failure.**
-   - *Recommended:* fail closed. No model calls while the counter is down.
-   - *Alternative:* fail open with a telemetry outcome, which keeps answers but drops the ceiling.
+1. **v1 entry selection.** Read the retrieved entry titles from today's system message and match them exactly
+   against the published titles, up to 4. If none match, use the section defaults. This keeps per-question focus
+   for all traffic until the site switch. FR-018 is amended (research R11).
+   - *Not chosen:* always use the section defaults.
+2. **v1 history turns over a cap.** In v1 only, earlier turns over a cap are cut to the cap. Today's input has no
+   length limit, so a long paste would otherwise break the next 15 requests. FR-018 is amended.
+   - *Not chosen:* reject them, as FR-008 says for v2.
+3. **Status for budget and stop-switch errors.** `503`. Today's site then tries the other provider and falls back
+   to prepared answers.
+   - *Not chosen:* `429`, which today's site would show as the rate-limit message when no prepared answer matches.
+4. **Starting caps.** Z.ai 100 per 5 hours and 300 a day; Groq 200 per 5 hours and 600 a day. These are guesses
+   with no usage data. They are settings, so the owner can lower them at any time, for example to fit the Z.ai
+   Coding Plan's own limits.
+5. **Budget store failure.** Fail closed. No model calls while the counter is down.
+   - *Not chosen:* fail open with a telemetry outcome, which keeps answers but drops the ceiling.
 
 ## Complexity Tracking
 
