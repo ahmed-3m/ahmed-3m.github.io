@@ -61,7 +61,12 @@ Remove the plants: it passes on the current site.
 **Acceptance Scenarios**:
 
 1. **Given** the current site, **When** the check runs, **Then** it passes. Every figure
-   it finds is either a registered claim in an allowed form or a reviewed non-result.
+   it finds is one of:
+   - a registered claim in an allowed form;
+   - a reviewed non-result;
+   - a finding already on the site when the check lands. These are recorded in a reviewed
+     baseline that can only shrink, and the baseline is empty once User Story 3 is done
+     (see plan research R0 and R9).
 2. **Given** a German translation where "99,03 %" is changed to "99,30 %", **When** the
    check runs, **Then** it fails and names the file, the language (de), the figure and
    "not a registered value".
@@ -99,8 +104,9 @@ copy left elsewhere.
    computed from the optimal and baseline means in the data file, not typed in.
 2. **Given** the German or French site, **When** a registered figure is shown, **Then** it
    uses a decimal comma and the language's spacing ("99,03 % ± 0,07 %", "0,8673"). On the
-   English, Spanish and Arabic sites it uses a decimal point. This matches what the site
-   shows today.
+   English, Spanish and Arabic sites it uses a decimal point. Today's copy is mixed: German
+   pages show both `99.03%` and `99,03%`, and one Spanish line uses a comma. The migration
+   makes these uniform and lists each change (FR-011).
 3. **Given** a registered claim with a required qualifier, **When** the formatted form is
    requested, **Then** the qualifier is part of the output in that language. For example,
    "3-seed mean" becomes "Mittelwert über drei Läufe".
@@ -160,6 +166,9 @@ prompt file shows the new value without a hand edit.
   it has one. A rounded copy found on the site today is fixed during migration, and the
   fix is listed in the PR (FR-011). Spelled-out units are matched as the same claim as
   their short form.
+- **How a spread is written**: as "± 0.07%", as "+/- 0.07%" (blog posts), or stated
+  apart from its mean ("standard deviation from 11.07 to 0.07 percentage points"). All
+  three count as the spread being present, as long as it is in the same unit as the mean.
 - **Numbers that are not results**: years, dates, versions, λ values, p-values, sample
   counts (1,000 / 9,000), table and section numbers, durations, parameter counts.
   These come off a reviewed non-result list, each with a reason, as the Genie test's
@@ -299,7 +308,8 @@ prompt file shows the new value without a hand edit.
   each.
 - **SC-002**: On the current site after migration, the check passes. No result figure
   is excused other than through the reviewed non-result list, and that list is no
-  longer than 25 entries, each with a reason.
+  longer than 25 entries, each with a reason. The baseline of findings recorded when the
+  check landed is empty.
 - **SC-003**: Changing one registered value updates 100% of the headline surfaces in all
   five languages, with no other source edit.
 - **SC-004**: Typed-in copies of registered figures on the FR-010 surfaces fall from
