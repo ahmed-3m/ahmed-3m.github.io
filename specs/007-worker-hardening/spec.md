@@ -152,7 +152,7 @@ none. A mocked chat flow in the browser test sends a request in the new format a
 ### Edge Cases
 
 - **Old cached pages.** A visitor can keep a tab open with the old site for hours, so the old format is still
-  accepted for the compatibility window (FR-016).
+  accepted for the compatibility window (FR-017, FR-018).
 - **Knowledge entry IDs from an older site.** After a knowledge change, an older page can send IDs that no longer
   exist. They are dropped. If none remain, the Worker uses its default entries for the page section.
 - **Page context.** The section and path come from the client. Only values listed in the published file are used,
@@ -346,8 +346,8 @@ site checks run on the built export.
 
 ### Session 2026-11-28
 
-- Q: Where does the system prompt live, now that the site builds it for each question? → A (proposed, awaiting
-  the owner's approval): the site build publishes a prompt file. The client sends only selectors (knowledge entry
+- Q: Where does the system prompt live, now that the site builds it for each question? → A (approved by the
+  owner, 2026-11-28): the site build publishes a prompt file. The client sends only selectors (knowledge entry
   IDs, language, section and path), and the Worker composes the prompt from the published file.
 
   Considered and not chosen:
@@ -355,3 +355,14 @@ site checks run on the built export.
   - one compact prompt with all the facts, which loses the per-question focus the site has today.
 - Q: Does spec 007 cover the site switch (backlog item W3)? → A: yes, as User Story 3, in its own pull request
   after User Story 1 is deployed.
+
+### Proposed during planning (awaiting the owner's approval)
+
+- Q: Which knowledge entries does the Worker use for a request in today's format? → A (proposed): the entries
+  whose titles appear as `[Title]` lines in the replaced system message, matched exactly against the published
+  titles, up to 4. If none match, the section defaults are used. Only selection happens; no client text reaches the
+  prompt. This would amend FR-018, which today says the section defaults are always used. See plan.md, open
+  decision 1, and research R11.
+- Q: What happens to an earlier turn over a cap in today's format? → A (proposed): it is cut to the cap, because
+  today's chat input has no length limit. The new format still rejects it (FR-008). This would amend FR-018. See
+  plan.md, open decision 2.
