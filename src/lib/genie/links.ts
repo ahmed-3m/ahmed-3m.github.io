@@ -141,18 +141,11 @@ export function chatLinkAction(href: string, current: { pathname: string; search
   if (target.searchParams.toString() === currentParams.toString()) return { kind: 'scroll', hash }
 
   // The home page keeps its concise/full view in `?view=`, which the page only
-  // re-reads on a pathname change, so a view switch is applied directly.
+  // re-reads on a pathname change, so a view switch is applied directly. Other
+  // query parameters (e.g. `utm_source`) stay as they are.
   const view = target.searchParams.get('view') ?? 'concise'
-  const withoutView = (params: URLSearchParams) => {
-    const copy = new URLSearchParams(params)
-    copy.delete('view')
-    return copy.toString()
-  }
-  if (
-    isHomePathname(target.pathname) &&
-    (view === 'full' || view === 'concise') &&
-    withoutView(target.searchParams) === withoutView(currentParams)
-  ) {
+  if (isHomePathname(target.pathname) && (view === 'full' || view === 'concise')) {
+    if (view === (currentParams.get('view') ?? 'concise')) return { kind: 'scroll', hash }
     return { kind: 'view', view, hash }
   }
   return { kind: 'route', href }

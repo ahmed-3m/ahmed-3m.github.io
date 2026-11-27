@@ -127,6 +127,12 @@ describe('chatLinkAction', () => {
       kind: 'scroll',
       hash: 'contact',
     })
+    assert.deepEqual(chatLinkAction('/?view=full#mergeproof-playground', on('/', '?utm_source=linkedin')), {
+      kind: 'view',
+      view: 'full',
+      hash: 'mergeproof-playground',
+    })
+    assert.deepEqual(chatLinkAction('/#contact', on('/', '?utm_source=linkedin')), { kind: 'scroll', hash: 'contact' })
   })
 
   it('leaves mailto, absolute and protocol-relative links to the browser', () => {
