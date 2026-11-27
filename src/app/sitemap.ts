@@ -54,11 +54,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${baseUrl}/impressum/`,
+      lastModified: new Date(PAGE_LAST_MODIFIED.legal),
       changeFrequency: 'yearly',
       priority: 0.2,
     },
     {
       url: `${baseUrl}/privacy/`,
+      lastModified: new Date(PAGE_LAST_MODIFIED.legal),
       changeFrequency: 'yearly',
       priority: 0.2,
     },
