@@ -238,6 +238,12 @@ sanctioned exception to the "agents never merge their own PRs" rule.
   is the 3-seed mean** at λ = 0.02 (`CIFAR_LAMBDA_SWEEP`). The histogram in
   `HeroSignal` is the **single seed-42 run (98.98%)**. When both appear, label which
   is which.
+- Genie is held to the same rules by `tests/genie/claims.test.ts`, in all 5 languages.
+  It checks the prepared replies, typed questions answered without a model, and the
+  knowledge the model is given. Every decimal must come from (or be computed from)
+  `ood-explorer-data.ts`, means must keep their spread and qualifier, and links must be
+  on the allowlist. When a reply needs a new number, derive it from the data file
+  instead of typing it.
 
 ### Verifying UI changes
 
