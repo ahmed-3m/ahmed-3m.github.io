@@ -102,7 +102,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: 'inkjet-ood',
-    lastModified: '2026-11-26',
+    lastModified: '2026-11-27',
     stack: ['YOLOv8m', 'PyTorch', 'Roboflow', 'OpenCV', 'Hydra', 'FTI_Zer0P'],
     pipelineStages: [
       {
@@ -120,11 +120,11 @@ export const caseStudies: CaseStudy[] = [
     ],
     approach: [
       {
-        en: 'Run Stage-1 YOLOv8m detection (25.86M params in yolo_best.pt; thesis PDF erratum writes YOLOv8n) to localize 8 print feature types and extract 6,408 128×128 RGB crops across 573 source-image groups on FTI_Zer0P.',
-        de: 'Stufe-1-YOLOv8m-Detektor (25,86 Mio. Parameter in yolo_best.pt; Thesis-PDF-Erratum nennt YOLOv8n) zur Lokalisierung von 8 Druckmerkmalstypen und Extraktion von 6.408 128×128-RGB-Crops über 573 Quellbild-Gruppen auf FTI_Zer0P.',
-        fr: 'Exécuter la détection YOLOv8m de phase 1 (25,86 M paramètres dans yolo_best.pt ; erratum PDF : YOLOv8n) pour localiser 8 types de motifs et extraire 6 408 crops RGB 128×128 sur 573 groupes d’images FTI_Zer0P.',
-        es: 'Ejecutar detección YOLOv8m en etapa 1 (25,86 M parámetros en yolo_best.pt; errata del PDF: YOLOv8n) para localizar 8 tipos de rasgos y extraer 6.408 recortes RGB 128×128 en 573 grupos de FTI_Zer0P.',
-        ar: 'تشغيل كاشف YOLOv8m في المرحلة الأولى (25.86 مليون معامل في yolo_best.pt؛ ذُكر سهواً YOLOv8n في نص PDF الرسالة) لتحديد 8 أنواع من ميزات الطباعة واستخراج 6,408 قصاصة RGB بأبعاد 128×128 عبر 573 مجموعة صور في FTI_Zer0P.',
+        en: 'Run Stage-1 YOLOv8m detection to localize 8 print feature types and extract 6,408 128×128 RGB crops across 573 source-image groups on FTI_Zer0P.',
+        de: 'Stufe-1-YOLOv8m-Detektor zur Lokalisierung von 8 Druckmerkmalstypen und Extraktion von 6.408 128×128-RGB-Crops über 573 Quellbild-Gruppen auf FTI_Zer0P.',
+        fr: 'Exécuter la détection YOLOv8m de phase 1 pour localiser 8 types de motifs et extraire 6 408 crops RGB 128×128 sur 573 groupes d’images FTI_Zer0P.',
+        es: 'Ejecutar detección YOLOv8m en etapa 1 para localizar 8 tipos de rasgos y extraer 6.408 recortes RGB 128×128 en 573 grupos de FTI_Zer0P.',
+        ar: 'تشغيل كاشف YOLOv8m في المرحلة الأولى لتحديد 8 أنواع من ميزات الطباعة واستخراج 6,408 قصاصة RGB بأبعاد 128×128 عبر 573 مجموعة صور في FTI_Zer0P.',
       },
       {
         en: 'Train a multi-head conditional diffusion U-Net (AdaGN conditioning across the 8 feature types) on 128×128 crops to classify GOOD vs. BAD via differential reconstruction error.',
@@ -143,11 +143,11 @@ export const caseStudies: CaseStudy[] = [
     ],
     results: [
       {
-        en: 'Separation loss showed null effect on small industrial textures, confirming that natural-image gains do not automatically transfer to manufacturing surfaces.',
+        en: 'Separation loss showed no significant gain on small industrial textures — natural-image gains do not automatically transfer to manufacturing surfaces.',
         de: 'Separation Loss zeigte keinen signifikanten Gewinn bei feinen Industriestrukturen — Naturbild-Gewinne übertragen sich nicht automatisch auf Fertigungsoberflächen.',
-        fr: "La separation loss n'a pas montré d'effet significatif sur les micro-textures industrielles, prouvant que les gains d'images naturelles ne se transfèrent pas automatiquement aux surfaces de fabrication.",
-        es: 'La separation loss no mostró mejora significativa en microtexturas industriales, demostrando que las ganancias en imágenes naturales no se transfieren automáticamente.',
-        ar: 'أظهرت خسارة الفصل تأثيراً محايداً على الأنسجة الصناعية الدقيقة، مما يؤكد أن مكاسب الصور الطبيعية لا تنتقل تلقائياً إلى أسطح التصنيع.',
+        fr: "La separation loss n'a pas montré de gain significatif sur les micro-textures industrielles — les gains d'images naturelles ne se transfèrent pas automatiquement aux surfaces de fabrication.",
+        es: 'La separation loss no mostró mejora significativa en microtexturas industriales — las ganancias en imágenes naturales no se transfieren automáticamente a las superficies de fabricación.',
+        ar: 'لم تحقق خسارة الفصل مكسباً ذا دلالة إحصائية على الأنسجة الصناعية الدقيقة — مكاسب الصور الطبيعية لا تنتقل تلقائياً إلى أسطح التصنيع.',
       },
       {
         en: 'Clarified domain boundary conditions and documented negative results openly to save future engineering and research cycles.',
@@ -189,7 +189,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: 'sihem',
-    lastModified: '2026-11-26',
+    lastModified: '2026-11-27',
     stack: [
       'Deno / TypeScript',
       'Supabase Edge Functions',
@@ -226,11 +226,11 @@ export const caseStudies: CaseStudy[] = [
           ar: '2. المولدات ← المحكم ← المؤلف',
         },
         desc: {
-          en: 'Deterministic decision pipeline paired with pgvector long-term RAG memory to trigger adaptive, context-aware, non-spammy check-ins.',
-          de: 'Deterministische Entscheidungspipeline gekoppelt mit pgvector-Langzeit-RAG-Gedächtnis für adaptive, kontextsensitive und nicht störende Check-Ins.',
-          fr: 'Pipeline décisionnel déterministe couplé à la mémoire RAG pgvector long terme pour des check-ins adaptatifs, contextuels et non intrusifs.',
-          es: 'Pipeline de decisión determinista combinado con memoria RAG pgvector para activar check-ins adaptativos, contextuales y no intrusivos.',
-          ar: 'خط قرار حتمي مقترن بذاكرة RAG طويلة المدى بـ pgvector لإطلاق تنبيهات ذكية وتكيفية تراعي السياق دون إزعاج.',
+          en: 'Deterministic decision pipeline paired with pgvector long-term RAG memory to trigger adaptive, context-aware check-ins.',
+          de: 'Deterministische Entscheidungspipeline gekoppelt mit pgvector-Langzeit-RAG-Gedächtnis für adaptive, kontextsensitive Check-Ins.',
+          fr: 'Pipeline décisionnel déterministe couplé à la mémoire RAG pgvector long terme pour des check-ins adaptatifs et contextuels.',
+          es: 'Pipeline de decisión determinista combinado con memoria RAG pgvector para activar check-ins adaptativos y contextuales.',
+          ar: 'خط قرار حتمي مقترن بذاكرة RAG طويلة المدى بـ pgvector لإطلاق تنبيهات ذكية وتكيفية تراعي السياق.',
         },
       },
       {

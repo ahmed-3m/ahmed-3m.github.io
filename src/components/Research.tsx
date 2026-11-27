@@ -45,11 +45,11 @@ const copy = {
   },
   summaryImpactLabel: { en: 'Why it matters', de: 'Warum es zählt', fr: 'Pourquoi cela compte', es: 'Por qué importa', ar: 'لماذا يهم ذلك' },
   summaryImpactText: {
-    en: 'The score became not only higher, but dramatically more stable across seeds and easier to trust.',
+    en: 'The score became not only higher, but also much more stable across seeds.',
     de: 'Der Score wurde nicht nur höher, sondern auch deutlich stabiler über verschiedene Seeds hinweg.',
     fr: 'Le score est devenu non seulement plus élevé, mais aussi beaucoup plus stable entre les seeds.',
     es: 'La puntuación no solo subió, sino que también se volvió mucho más estable entre semillas.',
-    ar: 'لم ترتفع النتيجة فقط، بل أصبحت أكثر ثباتاً بكثير عبر البذور وأسهل في الثقة.',
+    ar: 'لم ترتفع النتيجة فقط، بل أصبحت أكثر ثباتاً بكثير عبر البذور.',
   },
   track1: { en: "Master's Thesis (Track 1) - JKU Linz - 2026", de: 'Masterarbeit (Track 1) - JKU Linz - 2026', fr: 'Mémoire de master (Track 1) - JKU Linz - 2026', es: 'Tesis de máster (Track 1) - JKU Linz - 2026', ar: 'رسالة ماجستير (المسار 1) - JKU لينتس - 2026' },
   thesisTitle: { en: 'Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control', de: 'Konditionale Diffusionsmodelle als generative Klassifikatoren für OOD-Erkennung in der Inkjet-Druckqualitätskontrolle', fr: 'Modèles de diffusion conditionnels comme classificateurs génératifs pour détection OOD dans le contrôle qualité impression inkjet', es: 'Modelos de difusión condicional como clasificadores generativos para detección OOD en control de calidad de impresión inkjet', ar: 'نماذج الانتشار الشرطية كمصنفات توليدية لكشف الخارج عن التوزيع في مراقبة جودة الطباعة النافثة' },
@@ -68,7 +68,7 @@ const copy = {
   thesisPdf: { en: 'View Full Thesis (PDF)', de: 'Vollständige Thesis ansehen (PDF)', fr: 'Voir le mémoire complet (PDF)', es: 'Ver tesis completa (PDF)', ar: 'عرض الرسالة كاملة (PDF)' },
   track2: { en: "Master's Thesis (Track 2) - JKU Linz - 2026", de: 'Masterarbeit (Track 2) - JKU Linz - 2026', fr: 'Mémoire de master (Track 2) - JKU Linz - 2026', es: 'Tesis de máster (Track 2) - JKU Linz - 2026', ar: 'رسالة ماجستير (المسار 2) - JKU لينتس - 2026' },
   track2Title: { en: 'Rigorous Cross-Domain Transfer & FTI_Zer0P Benchmark', de: 'Strenger Cross-Domain Transfer & FTI_Zer0P Benchmark', fr: 'Transfert cross-domain rigoureux & benchmark FTI_Zer0P', es: 'Transferencia cross-domain rigurosa y benchmark FTI_Zer0P', ar: 'انتقال صارم بين المجالات ومعيار FTI_Zer0P' },
-  track2Desc: { en: 'The public YOLO+CDM print-quality pipeline was evaluated on FTI_Zer0P with strict 5-fold cross-validation, showing where separation loss transfers and where small manufacturing textures behave differently.', de: 'Die öffentliche YOLO+CDM Pipeline wurde auf FTI_Zer0P mit strenger 5-facher Kreuzvalidierung evaluiert und zeigt die Grenzen der Übertragbarkeit.', fr: 'La pipeline publique YOLO+CDM a été évaluée sur FTI_Zer0P avec validation croisée stricte en 5 plis, montrant les limites du transfert.', es: 'La pipeline pública YOLO+CDM se evaluó en FTI_Zer0P con validación cruzada estricta de 5 folds, mostrando los límites de transferencia.', ar: 'تم تقييم خط YOLO+CDM العام على FTI_Zer0P بتحقق تقاطعي صارم من 5 طيات، مع توضيح حدود انتقال خسارة الفصل.' },
+  track2Desc: { en: 'The public YOLO+CDM print-quality pipeline was evaluated on FTI_Zer0P with strict 5-fold cross-validation, showing the limits of transfer.', de: 'Die öffentliche YOLO+CDM Pipeline wurde auf FTI_Zer0P mit strenger 5-facher Kreuzvalidierung evaluiert und zeigt die Grenzen der Übertragbarkeit.', fr: 'La pipeline publique YOLO+CDM a été évaluée sur FTI_Zer0P avec validation croisée stricte en 5 plis, montrant les limites du transfert.', es: 'La pipeline pública YOLO+CDM se evaluó en FTI_Zer0P con validación cruzada estricta de 5 folds, mostrando los límites de transferencia.', ar: 'تم تقييم خط YOLO+CDM العام على FTI_Zer0P بتحقق تقاطعي صارم من 5 طيات، مع توضيح حدود الانتقال.' },
   track2Meta: {
     en: 'Public Benchmark - InkjetOOD Codebase - FTI_Zer0P Public Dataset',
     de: 'Öffentlicher Benchmark - InkjetOOD Codebasis - Öffentlicher FTI_Zer0P Datensatz',
@@ -112,12 +112,12 @@ const copy = {
     es: 'Categorías de defectos',
     ar: 'فئات العيوب',
   },
-  thermographicFrames: {
-    en: 'Industrial thermographic frames',
-    de: 'Industrielle thermografische Einzelbilder',
-    fr: 'Images thermographiques industrielles',
-    es: 'Fotogramas termográficos industriales',
-    ar: 'إطارات تصوير حراري صناعي',
+  printImageCrops: {
+    en: 'Industrial print-image crops',
+    de: 'Ausschnitte industrieller Druckbilder',
+    fr: 'Recadrages d’images d’impressions industrielles',
+    es: 'Recortes de imágenes de impresiones industriales',
+    ar: 'قصاصات من صور المطبوعات الصناعية',
   },
   industrialReport: { en: 'View Early Technical Report (2024)', de: 'Frühzeitigen Technikbericht ansehen (2024)', fr: 'Voir le rapport technique précoce (2024)', es: 'Ver informe técnico temprano (2024)', ar: 'عرض التقرير التقني المبكر (2024)' },
   diffusionCaseStudy: {
@@ -353,7 +353,7 @@ export default function Research() {
 
           <div className="px-4 min-[481px]:px-6 min-[769px]:px-8">
             <div className="cd-band-eyebrow" style={{ marginTop: 20, marginBottom: 10 }}>
-              {t(copy.datasetOverview)}: {t(copy.thermographicFrames)} · {t(copy.zeroDefectSamples)} · {t(copy.defectCategories)} · {t(copy.fiveFoldCv)}
+              {t(copy.datasetOverview)}: {t(copy.printImageCrops)} · {t(copy.zeroDefectSamples)} · {t(copy.defectCategories)} · {t(copy.fiveFoldCv)}
             </div>
 
             <ResearchCharts track="industrial" />

@@ -193,7 +193,7 @@ export const KNOWLEDGE_CHUNKS: readonly KnowledgeChunk[] = [
     ],
     title: 'Austrian Work Authorization & Role Fit',
     facts:
-      'Ahmed is based in Linz, Austria, available for full-time AI/ML engineering roles across computer vision, industrial ML, and LLM/agentic systems. As a JKU Linz Master’s graduate, he is eligible for Austria’s Rot-Weiß-Rot Karte für Studienabsolventen (Red-White-Red Card graduate work-permit track, with no labour-market test and no quota); public pages state eligibility for this track rather than an already-issued card. Specific hiring terms and timelines can be confirmed directly via Contact or Calendly.',
+      'Ahmed is based in Linz, Austria, available for full-time AI/ML engineering roles across computer vision, industrial ML, and LLM/agentic systems. As a JKU Linz Master’s graduate, he is eligible for Austria’s Rot-Weiß-Rot Karte für Studienabsolventen (Red-White-Red Card graduate work-permit track, with no labour-market test); public pages state eligibility for this track rather than an already-issued card. Specific hiring terms and timelines can be confirmed directly via Contact or Calendly.',
     links: [BACKGROUND_URL, CONTACT_URL, CALENDLY_URL],
   },
   {
