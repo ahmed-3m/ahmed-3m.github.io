@@ -1,19 +1,31 @@
 import { translateValue, type Language, type TranslationMap } from '@/lib/i18n-config'
-import { BENCHMARK_DATASETS, CIFAR_LAMBDA_SWEEP, INKJET_OVERALL_SWEEP } from '@/lib/ood-explorer-data'
+import { BENCHMARK_DATASETS, CIFAR_LAMBDA_SWEEP, INKJET_OVERALL_SWEEP, K_ABLATION_TABLE } from '@/lib/ood-explorer-data'
 import {
   BACKGROUND_URL,
+  BLOG_URL,
   CALENDLY_URL,
   CONTACT_URL,
   CV_URL,
   DIFFUSION_URL,
   EXPLORER_URL,
+  GITHUB_URL,
   GUARDRAILS_POST_URL,
+  HF_URL,
+  INDUSTRIAL_POST_URL,
   INDUSTRIAL_URL,
+  JKU_THESIS_RECORD_URL,
+  LINKEDIN_URL,
   MERGEPROOF_PLAYGROUND_URL,
   MERGEPROOF_URL,
   METHOD_URL,
+  NEWS_URL,
+  ORCID_URL,
   SIHEM_APP_URL,
   SIHEM_URL,
+  THESIS_POST_URL,
+  THESIS_URL,
+  WANDB_URL,
+  YOLO_POST_URL,
   formatLocaleNumber,
 } from './links'
 
@@ -36,6 +48,14 @@ export type PromptId =
   | 'sihem_tech'
   | 'mergeproof_overview'
   | 'guardrails_post'
+  | 'thesis_why_diffusion'
+  | 'thesis_speed'
+  | 'thesis_limits'
+  | 'thesis_read'
+  | 'experience'
+  | 'profiles'
+  | 'frontdesk_demo'
+  | 'writing'
 
 export const PROMPT_LIBRARY: Record<PromptId, TranslationMap> = {
   sihem_overview: {
@@ -164,6 +184,62 @@ export const PROMPT_LIBRARY: Record<PromptId, TranslationMap> = {
     es: '¿Cómo se evaluó el sistema de inspección de impresión?',
     ar: 'كيف جرى تقييم نظام فحص جودة الطباعة؟',
   },
+  thesis_why_diffusion: {
+    en: 'Why use diffusion models for OOD detection?',
+    de: 'Warum Diffusionsmodelle für die OOD-Erkennung?',
+    fr: 'Pourquoi des modèles de diffusion pour la détection OOD ?',
+    es: '¿Por qué usar modelos de difusión para detectar OOD?',
+    ar: 'لماذا تُستخدم نماذج الانتشار لكشف OOD؟',
+  },
+  thesis_speed: {
+    en: 'How fast is the OOD detector?',
+    de: 'Wie schnell ist der OOD-Detektor?',
+    fr: 'Quelle est la vitesse du détecteur OOD ?',
+    es: '¿Qué tan rápido es el detector OOD?',
+    ar: 'ما سرعة كاشف OOD؟',
+  },
+  thesis_limits: {
+    en: 'What are the limits of the thesis results?',
+    de: 'Wo liegen die Grenzen der Ergebnisse?',
+    fr: 'Quelles sont les limites des résultats ?',
+    es: '¿Cuáles son los límites de los resultados?',
+    ar: 'ما حدود نتائج الرسالة؟',
+  },
+  thesis_read: {
+    en: 'Where can I read the full thesis?',
+    de: 'Wo kann ich die ganze Masterarbeit lesen?',
+    fr: 'Où lire le mémoire complet ?',
+    es: '¿Dónde puedo leer la tesis completa?',
+    ar: 'أين يمكنني قراءة الرسالة كاملة؟',
+  },
+  experience: {
+    en: 'Where has Ahmed worked?',
+    de: 'Wo hat Ahmed bisher gearbeitet?',
+    fr: 'Où Ahmed a-t-il travaillé ?',
+    es: '¿Dónde ha trabajado Ahmed?',
+    ar: 'أين عمل أحمد سابقًا؟',
+  },
+  profiles: {
+    en: 'Where can I find his GitHub and LinkedIn?',
+    de: 'Wo finde ich sein GitHub und LinkedIn?',
+    fr: 'Où trouver son GitHub et son LinkedIn ?',
+    es: '¿Dónde encuentro su GitHub y LinkedIn?',
+    ar: 'أين أجد حساباته على GitHub وLinkedIn؟',
+  },
+  frontdesk_demo: {
+    en: 'What is the AI front-desk call?',
+    de: 'Was ist der KI-Empfang per Anruf?',
+    fr: 'Qu’est-ce que l’accueil IA par appel ?',
+    es: '¿Qué es la recepción con IA por llamada?',
+    ar: 'ما هي مكالمة موظف الاستقبال الذكي؟',
+  },
+  writing: {
+    en: 'What has Ahmed written?',
+    de: 'Was hat Ahmed geschrieben?',
+    fr: 'Qu’a écrit Ahmed ?',
+    es: '¿Qué ha escrito Ahmed?',
+    ar: 'ماذا كتب أحمد؟',
+  },
 }
 
 export const PROMPTS = PROMPT_LIBRARY
@@ -220,6 +296,25 @@ const seed42WithinDe = formatLocaleNumber(seed42Within, 'de')
 const seed42WithinFr = formatLocaleNumber(seed42Within, 'fr')
 const cifarGainDe = formatLocaleNumber(cifarGain, 'de')
 const cifarGainFr = formatLocaleNumber(cifarGain, 'fr')
+
+// Monte Carlo trials (K) ablation, seed 42: the recommended K against the default K=50.
+const kFast = K_ABLATION_TABLE.find((row) => row.recommended)
+const kDefault = K_ABLATION_TABLE.find((row) => row.k === 50)
+const kFastAuroc = kFast ? `${kFast.auroc.toFixed(2)}%` : ''
+const kFastMs = kFast ? kFast.msPerSample.toFixed(1) : ''
+const kDefaultAuroc = kDefault ? `${kDefault.auroc.toFixed(2)}%` : ''
+const kDefaultMs = kDefault ? kDefault.msPerSample.toFixed(1) : ''
+const kSpeedup = kFast && kDefault ? Math.round(kDefault.msPerSample / kFast.msPerSample) : ''
+const kFastK = kFast?.k ?? ''
+const kDefaultK = kDefault?.k ?? ''
+const kLocal = (lang: 'de' | 'fr') => ({
+  fastAuroc: formatLocaleNumber(kFastAuroc, lang),
+  fastMs: formatLocaleNumber(kFastMs, lang),
+  defaultAuroc: formatLocaleNumber(kDefaultAuroc, lang),
+  defaultMs: formatLocaleNumber(kDefaultMs, lang),
+})
+const kDe = kLocal('de')
+const kFr = kLocal('fr')
 
 export const LOCAL_REPLIES = {
   projects: {
@@ -355,6 +450,55 @@ export const LOCAL_REPLIES = {
     es: `Logros destacados:\n- [DiffusionOOD](${DIFFUSION_URL}): ${cifarSeparation} AUROC (media de 3 seeds) en el split binario within-CIFAR aviones contra el resto con separation loss condicional (+${cifarGain} puntos porcentuales frente al ${cifarBaseline} de referencia; tesis con Prof. Sepp Hochreiter, nota 1)\n- [InkjetOOD](${INDUSTRIAL_URL}): referencia de ${inkjetBaseline} AUROC en el dataset público FTI_Zer0P con validación cruzada 5-fold en PROFACTOR GmbH\n- [Sihem](${SIHEM_URL}): Desarrollador en solitario y líder de proyecto (incubadora tech2b Linz, asistente mentor IA en beta por invitación)\n- [mergeproof](${MERGEPROOF_URL}): verifica PRs generadas por IA según requisitos deterministas configurados con 0 llamadas a un LLM (superar las comprobaciones no garantiza que el código esté libre de errores)`,
     ar: `أبرز الإنجازات:\n- [DiffusionOOD](${DIFFUSION_URL}): ${cifarSeparation} AUROC (متوسط 3 بذور) على تقسيم within-CIFAR الثنائي للطائرات مقابل البقية مع separation loss الشرطية (+${cifarGain} نقطة مئوية مقارنةً بالأساس ${cifarBaseline}؛ رسالة الماجستير بإشراف Prof. Sepp Hochreiter، تقدير 1)\n- [InkjetOOD](${INDUSTRIAL_URL}): خط أساس ${inkjetBaseline} AUROC على مجموعة FTI_Zer0P العامة بتحقق تقاطعي 5-fold لدى PROFACTOR GmbH\n- [Sihem](${SIHEM_URL}): مطور منفرد وقائد مشروع (حاضنة tech2b لينتس، مساعد موجه بالذكاء الاصطناعي في نسخة تجريبية بدعوة)\n- [mergeproof](${MERGEPROOF_URL}): يتحقق من طلبات الدمج المكتوبة بالذكاء الاصطناعي وفق متطلبات حتمية محددة بـ 0 استدعاءات LLM (اجتياز الفحوص لا يضمن خلو الشيفرة من الأخطاء)`,
   },
+  thesis_speed: {
+    en: `Speed depends on K, the number of denoising trials used to score each image. In the seed-42 ablation, K=${kFastK} reached ${kFastAuroc} AUROC at ${kFastMs} ms per image, about ${kSpeedup}x faster than the default K=${kDefaultK} (${kDefaultAuroc} AUROC, ${kDefaultMs} ms per image), so K=${kFastK} is the recommended setting. [Explore the trade-off](${EXPLORER_URL}).`,
+    de: `Die Geschwindigkeit hängt von K ab, der Zahl der Entrauschungsversuche pro Bild. In der Ablation mit Seed 42 erreichte K=${kFastK} ${kDe.fastAuroc} AUROC bei ${kDe.fastMs} ms pro Bild und war damit etwa ${kSpeedup}-mal schneller als der Standardwert K=${kDefaultK} (${kDe.defaultAuroc} AUROC, ${kDe.defaultMs} ms pro Bild). K=${kFastK} ist daher die empfohlene Einstellung. [Den Kompromiss im Explorer ansehen](${EXPLORER_URL}).`,
+    fr: `La vitesse dépend de K, le nombre d’essais de débruitage par image. Dans l’ablation avec la seed 42, K=${kFastK} a atteint ${kFr.fastAuroc} AUROC en ${kFr.fastMs} ms par image, soit environ ${kSpeedup} fois plus vite que la valeur par défaut K=${kDefaultK} (${kFr.defaultAuroc} AUROC, ${kFr.defaultMs} ms par image) : K=${kFastK} est donc le réglage recommandé. [Explorer le compromis](${EXPLORER_URL}).`,
+    es: `La velocidad depende de K, el número de pruebas de eliminación de ruido por imagen. En la ablación con seed 42, K=${kFastK} alcanzó ${kFastAuroc} AUROC con ${kFastMs} ms por imagen, unas ${kSpeedup} veces más rápido que el valor por defecto K=${kDefaultK} (${kDefaultAuroc} AUROC, ${kDefaultMs} ms por imagen), por lo que K=${kFastK} es el ajuste recomendado. [Explorar el equilibrio](${EXPLORER_URL}).`,
+    ar: `تعتمد السرعة على K، أي عدد محاولات إزالة الضوضاء لتقييم كل صورة. في تجربة البذرة 42، حقق K=${kFastK} نسبة ${kFastAuroc} AUROC في ${kFastMs} ms لكل صورة، أي أسرع بنحو ${kSpeedup} مرات من القيمة الافتراضية K=${kDefaultK} (${kDefaultAuroc} AUROC و${kDefaultMs} ms لكل صورة)، لذا فإن K=${kFastK} هو الإعداد الموصى به. [استكشف المفاضلة](${EXPLORER_URL}).`,
+  },
+  thesis_limits: {
+    en: `The thesis results come with four limits:\n- The headline result is from a binary test with one familiar class (CIFAR-10 airplanes against the other nine classes), so it is not comparable to multi-class OOD leaderboards or to accuracy in production.\n- On the industrial FTI_Zer0P data, separation loss gave no significant gain after Holm correction.\n- Without separation loss, results varied much more between seeds.\n- Scoring needs several denoising trials per image, so it is much slower than a standard ResNet-18 classifier.\n[Read the findings and limits](${DIFFUSION_URL})`,
+    de: `Die Ergebnisse der Masterarbeit haben vier Grenzen:\n- Das zentrale Ergebnis stammt aus einem binären Test mit einer bekannten Klasse (CIFAR-10-Flugzeuge gegen die anderen neun Klassen). Es ist daher nicht mit Mehrklassen-OOD-Ranglisten oder mit der Genauigkeit im Produktivbetrieb vergleichbar.\n- Auf den industriellen FTI_Zer0P-Daten brachte die Separation Loss nach Holm-Korrektur keinen signifikanten Gewinn.\n- Ohne Separation Loss schwankten die Ergebnisse zwischen den Seeds deutlich stärker.\n- Die Bewertung braucht mehrere Entrauschungsversuche pro Bild und ist daher viel langsamer als ein üblicher ResNet-18-Klassifikator.\n[Ergebnisse und Grenzen](${DIFFUSION_URL})`,
+    fr: `Les résultats du mémoire ont quatre limites :\n- Le résultat principal vient d’un test binaire avec une seule classe connue (les avions de CIFAR-10 contre les neuf autres classes) : il n’est donc comparable ni aux classements OOD multiclasses ni à une précision en production.\n- Sur les données industrielles FTI_Zer0P, la perte de séparation n’a apporté aucun gain significatif après correction de Holm.\n- Sans perte de séparation, les résultats variaient beaucoup plus d’une seed à l’autre.\n- Le score demande plusieurs essais de débruitage par image, ce qui le rend bien plus lent qu’un classifieur ResNet-18 standard.\n[Résultats et limites](${DIFFUSION_URL})`,
+    es: `Los resultados de la tesis tienen cuatro límites:\n- El resultado principal procede de una prueba binaria con una sola clase conocida (los aviones de CIFAR-10 contra las otras nueve clases), por lo que no es comparable con clasificaciones OOD multiclase ni con la precisión en producción.\n- En los datos industriales FTI_Zer0P, la pérdida de separación no aportó una mejora significativa tras la corrección de Holm.\n- Sin pérdida de separación, los resultados variaban mucho más entre semillas.\n- La puntuación necesita varias pruebas de eliminación de ruido por imagen, así que es mucho más lenta que un clasificador ResNet-18 estándar.\n[Resultados y límites](${DIFFUSION_URL})`,
+    ar: `لنتائج الرسالة أربعة حدود:\n- النتيجة الرئيسية مأخوذة من اختبار ثنائي بفئة مألوفة واحدة (طائرات CIFAR-10 مقابل الفئات التسع الأخرى)، لذا لا تُقارن بلوائح ترتيب OOD متعددة الفئات ولا بالدقة في بيئة الإنتاج.\n- على بيانات FTI_Zer0P الصناعية، لم تحقق خسارة الفصل تحسنًا ذا دلالة إحصائية بعد تصحيح Holm.\n- من دون خسارة الفصل، تفاوتت النتائج بين البذور أكثر بكثير.\n- يحتاج التقييم إلى عدة محاولات لإزالة الضوضاء لكل صورة، لذا فهو أبطأ بكثير من مصنِّف ResNet-18 المعتاد.\n[النتائج وحدودها](${DIFFUSION_URL})`,
+  },
+  thesis_read: {
+    en: `The thesis was supervised by Prof. Sepp Hochreiter at JKU Linz and graded 1. You can read the [full thesis (PDF)](${THESIS_URL}) or its [JKU library record](${JKU_THESIS_RECORD_URL}). For a shorter read, see the [case study](${DIFFUSION_URL}) or the [blog post about the thesis](${THESIS_POST_URL}).`,
+    de: `Die Masterarbeit wurde an der JKU Linz von Prof. Sepp Hochreiter betreut und mit 1 benotet. Sie können die [vollständige Arbeit (PDF)](${THESIS_URL}) oder den [Eintrag in der JKU-Bibliothek](${JKU_THESIS_RECORD_URL}) lesen. Kürzer geht es mit der [Fallstudie](${DIFFUSION_URL}) oder dem [Blogartikel zur Masterarbeit](${THESIS_POST_URL}).`,
+    fr: `Le mémoire a été dirigé par Prof. Sepp Hochreiter à la JKU Linz et noté 1. Vous pouvez lire le [mémoire complet (PDF)](${THESIS_URL}) ou sa [fiche à la bibliothèque de la JKU](${JKU_THESIS_RECORD_URL}). Pour une lecture plus courte, voyez l’[étude de cas](${DIFFUSION_URL}) ou l’[article de blog sur le mémoire](${THESIS_POST_URL}).`,
+    es: `La tesis fue dirigida por el Prof. Sepp Hochreiter en la JKU Linz y calificada con 1. Puedes leer la [tesis completa (PDF)](${THESIS_URL}) o su [registro en la biblioteca de la JKU](${JKU_THESIS_RECORD_URL}). Para una lectura más breve, consulta el [caso de estudio](${DIFFUSION_URL}) o el [artículo del blog sobre la tesis](${THESIS_POST_URL}).`,
+    ar: `أُنجزت الرسالة في JKU Linz بإشراف Prof. Sepp Hochreiter ونالت تقدير 1. يمكنك قراءة [الرسالة كاملة (PDF)](${THESIS_URL}) أو [سجلها في مكتبة JKU](${JKU_THESIS_RECORD_URL}). وللاطلاع السريع، راجع [دراسة الحالة](${DIFFUSION_URL}) أو [مقال المدونة عن الرسالة](${THESIS_POST_URL}).`,
+  },
+  experience: {
+    en: `Ahmed’s work, newest first:\n- Since May 2026: Solo Developer & Project Lead for [Sihem](${SIHEM_URL}), a side project in the tech2b incubator, Linz, alongside freelance AI consulting (LLMs, integrations, workflow automation)\n- Apr–Nov 2024: Master’s thesis researcher at PROFACTOR GmbH on [industrial print inspection](${INDUSTRIAL_URL}), continued at JKU Linz\n- Aug–Oct 2023: AI research intern at Karunya Institute (EEG motor-imagery models)\n- Sep 2018–Oct 2020: Electronics technician at Ledzone, Istanbul\n[Full background](${BACKGROUND_URL})`,
+    de: `Ahmeds Stationen, die neueste zuerst:\n- Seit Mai 2026: Solo-Entwickler & Projektleiter von [Sihem](${SIHEM_URL}), einem Nebenprojekt im tech2b-Inkubator in Linz, dazu freiberufliche KI-Beratung (LLMs, Integrationen, Workflow-Automatisierung)\n- Apr.–Nov. 2024: Masterarbeits-Forscher bei der PROFACTOR GmbH zur [industriellen Druckprüfung](${INDUSTRIAL_URL}), fortgesetzt an der JKU Linz\n- Aug.–Okt. 2023: KI-Forschungspraktikant am Karunya Institute (EEG-Motor-Imagery-Modelle)\n- Sep. 2018–Okt. 2020: Elektroniktechniker bei Ledzone in Istanbul\n[Gesamter Hintergrund](${BACKGROUND_URL})`,
+    fr: `Le parcours d’Ahmed, du plus récent au plus ancien :\n- Depuis mai 2026 : développeur solo et chef de projet de [Sihem](${SIHEM_URL}), un projet personnel dans l’incubateur tech2b à Linz, en parallèle de missions de conseil IA en freelance (LLM, intégrations, automatisation de workflows)\n- Avr.–nov. 2024 : chercheur en mémoire de master chez PROFACTOR GmbH sur l’[inspection industrielle des impressions](${INDUSTRIAL_URL}), poursuivi à la JKU Linz\n- Août–oct. 2023 : stagiaire de recherche en IA au Karunya Institute (modèles EEG d’imagerie motrice)\n- Sept. 2018–oct. 2020 : technicien en électronique chez Ledzone à Istanbul\n[Parcours complet](${BACKGROUND_URL})`,
+    es: `La experiencia de Ahmed, de la más reciente a la más antigua:\n- Desde mayo de 2026: desarrollador en solitario y líder de proyecto de [Sihem](${SIHEM_URL}), un proyecto propio en la incubadora tech2b de Linz, junto con consultoría de IA freelance (LLM, integraciones, automatización de flujos de trabajo)\n- Abr.–nov. 2024: investigador de tesis de máster en PROFACTOR GmbH sobre [inspección industrial de impresión](${INDUSTRIAL_URL}), continuada en la JKU Linz\n- Ago.–oct. 2023: becario de investigación en IA en el Karunya Institute (modelos EEG de imaginería motora)\n- Sep. 2018–oct. 2020: técnico de electrónica en Ledzone, Estambul\n[Trayectoria completa](${BACKGROUND_URL})`,
+    ar: `خبرات أحمد من الأحدث إلى الأقدم:\n- منذ مايو 2026: مطوّر منفرد وقائد مشروع [Sihem](${SIHEM_URL})، وهو مشروع جانبي في حاضنة tech2b في لينتس، إلى جانب استشارات حرة في الذكاء الاصطناعي (LLM والتكاملات وأتمتة سير العمل)\n- أبريل–نوفمبر 2024: باحث رسالة ماجستير في PROFACTOR GmbH حول [فحص جودة الطباعة الصناعي](${INDUSTRIAL_URL})، واستُكمل العمل في JKU Linz\n- أغسطس–أكتوبر 2023: متدرب بحثي في الذكاء الاصطناعي في Karunya Institute (نماذج EEG للتخيل الحركي)\n- سبتمبر 2018–أكتوبر 2020: فني إلكترونيات في Ledzone بإسطنبول\n[الخلفية الكاملة](${BACKGROUND_URL})`,
+  },
+  profiles: {
+    en: `Ahmed’s public profiles: [GitHub](${GITHUB_URL}), [LinkedIn](${LINKEDIN_URL}), [Hugging Face](${HF_URL}), [Weights & Biases](${WANDB_URL}) and [ORCID](${ORCID_URL}). His thesis is also listed in the [JKU library](${JKU_THESIS_RECORD_URL}).`,
+    de: `Ahmeds öffentliche Profile: [GitHub](${GITHUB_URL}), [LinkedIn](${LINKEDIN_URL}), [Hugging Face](${HF_URL}), [Weights & Biases](${WANDB_URL}) und [ORCID](${ORCID_URL}). Seine Masterarbeit ist außerdem in der [JKU-Bibliothek](${JKU_THESIS_RECORD_URL}) verzeichnet.`,
+    fr: `Les profils publics d’Ahmed : [GitHub](${GITHUB_URL}), [LinkedIn](${LINKEDIN_URL}), [Hugging Face](${HF_URL}), [Weights & Biases](${WANDB_URL}) et [ORCID](${ORCID_URL}). Son mémoire figure aussi dans la [bibliothèque de la JKU](${JKU_THESIS_RECORD_URL}).`,
+    es: `Los perfiles públicos de Ahmed: [GitHub](${GITHUB_URL}), [LinkedIn](${LINKEDIN_URL}), [Hugging Face](${HF_URL}), [Weights & Biases](${WANDB_URL}) y [ORCID](${ORCID_URL}). Su tesis también aparece en la [biblioteca de la JKU](${JKU_THESIS_RECORD_URL}).`,
+    ar: `حسابات أحمد العامة: [GitHub](${GITHUB_URL}) و[LinkedIn](${LINKEDIN_URL}) و[Hugging Face](${HF_URL}) و[Weights & Biases](${WANDB_URL}) و[ORCID](${ORCID_URL}). ورسالته مُدرجة أيضًا في [مكتبة JKU](${JKU_THESIS_RECORD_URL}).`,
+  },
+  frontdesk: {
+    en: `It is a live demo call with an AI version of Ahmed that speaks in his cloned voice with an animated face. It can tell you about his work and help you book a meeting. Calls last up to 3 minutes, and it can make mistakes or be busy. Start it from the top of the home page or the [contact section](${CONTACT_URL}); your browser will ask for the microphone. The call uses Google Gemini, ElevenLabs and Anam, and Ahmed does not record or store it.`,
+    de: `Es ist ein Live-Demo-Anruf mit einer KI-Version von Ahmed, die mit seiner geklonten Stimme und einem animierten Gesicht spricht. Sie erzählt von seiner Arbeit und hilft, einen Termin zu buchen. Anrufe dauern bis zu 3 Minuten; die KI kann Fehler machen oder besetzt sein. Starten Sie ihn oben auf der Startseite oder im [Kontaktbereich](${CONTACT_URL}); Ihr Browser fragt nach dem Mikrofon. Der Anruf nutzt Google Gemini, ElevenLabs und Anam, und Ahmed zeichnet ihn weder auf noch speichert er ihn.`,
+    fr: `C’est un appel de démonstration en direct avec une version IA d’Ahmed, qui parle avec sa voix clonée et un visage animé. Elle peut présenter son travail et vous aider à réserver un rendez-vous. Les appels durent jusqu’à 3 minutes, et l’IA peut se tromper ou être occupée. Lancez-le en haut de la page d’accueil ou dans la [rubrique contact](${CONTACT_URL}) ; votre navigateur demandera l’accès au micro. L’appel utilise Google Gemini, ElevenLabs et Anam, et Ahmed ne l’enregistre ni ne le conserve.`,
+    es: `Es una llamada de demostración en vivo con una versión de IA de Ahmed que habla con su voz clonada y una cara animada. Puede contarte sobre su trabajo y ayudarte a reservar una reunión. Las llamadas duran hasta 3 minutos, y la IA puede equivocarse o estar ocupada. Iníciala desde la parte superior de la página de inicio o en la [sección de contacto](${CONTACT_URL}); tu navegador pedirá el micrófono. La llamada usa Google Gemini, ElevenLabs y Anam, y Ahmed no la graba ni la guarda.`,
+    ar: `هي مكالمة تجريبية مباشرة مع نسخة ذكاء اصطناعي من أحمد تتحدث بصوته المستنسخ وبوجه متحرك. يمكنها أن تحدثك عن عمله وتساعدك على حجز اجتماع. تستمر المكالمة حتى 3 دقائق، وقد تخطئ أو تكون مشغولة. ابدأها من أعلى الصفحة الرئيسية أو من [قسم التواصل](${CONTACT_URL})؛ وسيطلب متصفحك إذن الميكروفون. تستخدم المكالمة Google Gemini وElevenLabs وAnam، ولا يسجّلها أحمد ولا يحتفظ بها.`,
+  },
+  writing: {
+    en: `Ahmed’s [blog](${BLOG_URL}) has four posts:\n- [Deterministic guardrails for LLM and agent systems](${GUARDRAILS_POST_URL})\n- [The diffusion OOD thesis](${THESIS_POST_URL})\n- [Diffusion models for industrial defect detection](${INDUSTRIAL_POST_URL})\n- [YOLOv8m for industrial quality control](${YOLO_POST_URL})\nThe [News page](${NEWS_URL}) adds AI and agentic-engineering news, updated daily by an automated pipeline.`,
+    de: `Ahmeds [Blog](${BLOG_URL}) hat vier Artikel:\n- [Deterministische Guardrails für LLM- und Agentensysteme](${GUARDRAILS_POST_URL})\n- [Die Masterarbeit zur Diffusions-OOD-Erkennung](${THESIS_POST_URL})\n- [Diffusionsmodelle zur industriellen Fehlererkennung](${INDUSTRIAL_POST_URL})\n- [YOLOv8m für die industrielle Qualitätskontrolle](${YOLO_POST_URL})\nDie [News-Seite](${NEWS_URL}) bietet zusätzlich KI- und Agentic-Engineering-News, täglich von einer automatisierten Pipeline aktualisiert.`,
+    fr: `Le [blog](${BLOG_URL}) d’Ahmed compte quatre articles :\n- [Garde-fous déterministes pour systèmes LLM et agents](${GUARDRAILS_POST_URL})\n- [Le mémoire sur la détection OOD par diffusion](${THESIS_POST_URL})\n- [Modèles de diffusion pour la détection de défauts industriels](${INDUSTRIAL_POST_URL})\n- [YOLOv8m pour le contrôle qualité industriel](${YOLO_POST_URL})\nLa [page Actualités](${NEWS_URL}) propose aussi des nouvelles sur l’IA et l’ingénierie agentique, mises à jour chaque jour par un pipeline automatisé.`,
+    es: `El [blog](${BLOG_URL}) de Ahmed tiene cuatro artículos:\n- [Controles deterministas para sistemas LLM y agentes](${GUARDRAILS_POST_URL})\n- [La tesis sobre detección OOD con difusión](${THESIS_POST_URL})\n- [Modelos de difusión para detectar defectos industriales](${INDUSTRIAL_POST_URL})\n- [YOLOv8m para el control de calidad industrial](${YOLO_POST_URL})\nLa [página de Noticias](${NEWS_URL}) añade noticias de IA e ingeniería agéntica, actualizadas a diario por un pipeline automatizado.`,
+    ar: `تضم [مدونة](${BLOG_URL}) أحمد أربعة مقالات:\n- [الضوابط الحتمية لأنظمة LLM والوكلاء](${GUARDRAILS_POST_URL})\n- [رسالة الماجستير عن كشف OOD بنماذج الانتشار](${THESIS_POST_URL})\n- [نماذج الانتشار لكشف العيوب الصناعية](${INDUSTRIAL_POST_URL})\n- [YOLOv8m لضبط الجودة الصناعي](${YOLO_POST_URL})\nوتضيف [صفحة الأخبار](${NEWS_URL}) أخبار الذكاء الاصطناعي وهندسة الوكلاء، وتُحدَّث يوميًا عبر مسار آلي.`,
+  },
 } satisfies Record<string, TranslationMap>
 
 export type ReplyId = keyof typeof LOCAL_REPLIES
@@ -378,6 +522,14 @@ export const REPLY_FOR_PROMPT = {
   achievements: 'achievements',
   mergeproof_overview: 'mergeproof',
   guardrails_post: 'guardrails_post',
+  thesis_why_diffusion: 'thesis_diffusion',
+  thesis_speed: 'thesis_speed',
+  thesis_limits: 'thesis_limits',
+  thesis_read: 'thesis_read',
+  experience: 'experience',
+  profiles: 'profiles',
+  frontdesk_demo: 'frontdesk',
+  writing: 'writing',
 } satisfies Record<PromptId, ReplyId>
 
 export function findPromptId(question: string): PromptId | undefined {
@@ -416,6 +568,11 @@ export function inferReplyId(text: string): ReplyId | undefined {
   if (/(?:why use|warum|pourquoi|por qu[ée]|لماذا).{0,24}(?:diffusion|diffusions|انتشار).{0,16}ood/i.test(text)) {
     return 'thesis_diffusion'
   }
+  if (/\bk[- ]?ablation\b|monte carlo trials|inference (?:time|speed)|latency|ms per (?:image|sample)/i.test(text)) {
+    return 'thesis_speed'
+  }
+  if (/\blimitations?\b|\bcaveats?\b|\bweakness(?:es)?\b/i.test(text)) return 'thesis_limits'
+  if (/\bfull thesis\b|\bthesis (?:pdf|record)\b|\bread (?:the|his) thesis\b/i.test(text)) return 'thesis_read'
   if (/(?:innovation|separation loss|خسارة الفصل)/i.test(text)) return 'thesis_method'
   if (/\b(thesis|ood|out.?of.?distribution|cifar|auroc)\b|masterarbeit|mémoire|tesis|رسالة/i.test(text)) return 'thesis'
   if (
@@ -425,7 +582,12 @@ export function inferReplyId(text: string): ReplyId | undefined {
   ) {
     return 'cv'
   }
+  if (/front[- ]?desk|\bavatar\b|voice (?:call|demo)/i.test(text)) return 'frontdesk'
   if (/(contact|email|linkedin|reach|talk to|connect|تواصل)/i.test(text)) return 'contact'
+  if (/work experience|where (?:has|did) (?:he|ahmed) work|worked at|berufserfahrung|exp[ée]riences? professionnelles?|experiencia laboral|الخبرة المهنية/i.test(text)) {
+    return 'experience'
+  }
+  if (/\bblog\b|\barticles?\b|has (?:he|ahmed) written|did (?:he|ahmed) write|artikel|art[ií]culos|مقالات/i.test(text)) return 'writing'
   if (/(what roles|roles fit|welche rollen|quels r[oô]les|qu[eé] puestos|الأدوار الأنسب)/i.test(text)) return 'role_fit'
   if (/(open to work|available|hire|job|role|opportunit|وظائف)/i.test(text)) return 'open_to_work'
   if (/(tech stack|stack|tools|technolog)/i.test(text)) return 'tech_stack'
@@ -444,22 +606,29 @@ export const FOLLOWUP_PROMPTS: Partial<Record<ReplyId, PromptId[]>> = {
   projects: ['industrial_result', 'thesis_results', 'mergeproof_overview'],
   inspection: ['industrial_result', 'thesis_summary', 'projects_best'],
   industrial: ['industrial_pipeline', 'thesis_results', 'projects_best'],
-  thesis: ['thesis_loss', 'thesis_datasets', 'industrial_result'],
-  thesis_results: ['thesis_loss', 'thesis_datasets', 'industrial_pipeline'],
-  thesis_method: ['thesis_results', 'thesis_datasets', 'industrial_result'],
-  thesis_datasets: ['thesis_loss', 'thesis_results', 'industrial_result'],
-  thesis_diffusion: ['thesis_loss', 'thesis_datasets', 'thesis_results'],
+  thesis: ['thesis_loss', 'thesis_why_diffusion', 'thesis_limits'],
+  thesis_results: ['thesis_limits', 'thesis_loss', 'thesis_speed'],
+  thesis_method: ['thesis_why_diffusion', 'thesis_results', 'thesis_speed'],
+  thesis_datasets: ['thesis_results', 'thesis_limits', 'industrial_result'],
+  thesis_diffusion: ['thesis_loss', 'thesis_speed', 'thesis_datasets'],
+  thesis_speed: ['thesis_limits', 'thesis_results', 'thesis_read'],
+  thesis_limits: ['thesis_read', 'industrial_result', 'thesis_speed'],
+  thesis_read: ['thesis_results', 'writing', 'contact'],
   sihem_intro: ['sihem_tech', 'guardrails_post', 'contact'],
   sihem: ['sihem_overview', 'guardrails_post', 'contact'],
   mergeproof: ['guardrails_post', 'projects_best', 'tech_stack'],
-  guardrails_post: ['mergeproof_overview', 'sihem_tech', 'projects_best'],
-  cv: ['background', 'open_to_work', 'contact'],
-  background: ['projects_best', 'cv', 'hire_fit'],
+  guardrails_post: ['mergeproof_overview', 'sihem_tech', 'writing'],
+  writing: ['guardrails_post', 'thesis_read', 'profiles'],
+  cv: ['experience', 'open_to_work', 'contact'],
+  background: ['experience', 'projects_best', 'cv'],
+  experience: ['background', 'hire_fit', 'cv'],
   open_to_work: ['hire_fit', 'cv', 'contact'],
-  role_fit: ['open_to_work', 'background', 'contact'],
-  contact: ['cv', 'projects_best', 'open_to_work'],
-  tech_stack: ['projects_best', 'sihem_tech', 'mergeproof_overview'],
-  achievements: ['thesis_results', 'industrial_result', 'sihem_overview'],
+  role_fit: ['experience', 'open_to_work', 'contact'],
+  contact: ['frontdesk_demo', 'profiles', 'cv'],
+  profiles: ['writing', 'cv', 'contact'],
+  frontdesk: ['contact', 'profiles', 'projects_best'],
+  tech_stack: ['projects_best', 'sihem_tech', 'profiles'],
+  achievements: ['thesis_results', 'industrial_result', 'experience'],
 }
 
 export function getStarterPrompts(sectionOrPath: string): PromptId[] {

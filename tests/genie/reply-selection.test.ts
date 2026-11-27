@@ -51,6 +51,12 @@ describe('getLocalReply (offline and fallback answers)', () => {
     ['what roles fit him', 'role_fit'],
     ['His background?', 'background'],
     ['industrial inkjet results', 'industrial'],
+    ['What is the inference latency?', 'thesis_speed'],
+    ['Any limitations of the thesis?', 'thesis_limits'],
+    ['Is the full thesis online?', 'thesis_read'],
+    ['Tell me about the AI front desk', 'frontdesk'],
+    ['What is his work experience?', 'experience'],
+    ['Does he have a blog?', 'writing'],
     // Known quirk: keyword matching answers a scheduling question with the
     // open-to-work reply. PR 6 labels such fallback answers.
     ['Is he available Tuesday?', 'open_to_work'],
@@ -72,10 +78,10 @@ describe('getLocalReply (offline and fallback answers)', () => {
 
 describe('pickFollowUpIds', () => {
   const cases: [string, PromptId[]][] = [
-    ['Download his CV', ['background', 'open_to_work', 'contact']],
-    ['How can I contact Ahmed?', ['cv', 'projects_best', 'open_to_work']],
+    ['Download his CV', ['experience', 'open_to_work', 'contact']],
+    ['How can I contact Ahmed?', ['frontdesk_demo', 'profiles', 'cv']],
     ['Tell me about mergeproof', ['guardrails_post', 'projects_best', 'tech_stack']],
-    ['What is the separation loss innovation?', ['thesis_results', 'thesis_datasets', 'industrial_result']],
+    ['What is the separation loss innovation?', ['thesis_why_diffusion', 'thesis_results', 'thesis_speed']],
     ['Is he available Tuesday?', ['hire_fit', 'cv', 'contact']],
     // No topic in the question or reply: fall back to the section's starter prompts.
     ['Tell me a joke', ['projects_best', 'thesis_results', 'sihem_overview']],
