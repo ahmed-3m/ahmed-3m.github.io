@@ -116,8 +116,6 @@ remain typed in pass the check. After
 this story, the site says the same thing everywhere, and the check passes with no
 exceptions beyond the reviewed non-result list.
 
-(The decision this story depends on is Q1, in FR-010.)
-
 **Why this priority**: it delivers the "same story everywhere" outcome to visitors. It
 depends on User Stories 1 and 2.
 
@@ -157,9 +155,10 @@ prompt file shows the new value without a hand edit.
 ### Edge Cases
 
 - **Rounded or alternative forms.** "99%", "0.87", "6.5 percentage points", "6,5
-  Prozentpunkte", Arabic-Indic digits. Whether rounded forms are allowed is
-  [NEEDS CLARIFICATION: Q3. Is a rounded form such as "99%" or "~0.87" allowed in short
-  copy, or must every result be stated at full precision with its spread?]. Spelled-out units are matched as the same claim as
+  Prozentpunkte", Arabic-Indic digits. Rounded forms are not allowed (decided
+  2026-11-27). Every result is stated at its registered precision, with its spread where
+  it has one. A rounded copy found on the site today is fixed during migration, and the
+  fix is listed in the PR (FR-011). Spelled-out units are matched as the same claim as
   their short form.
 - **Numbers that are not results**: years, dates, versions, λ values, p-values, sample
   counts (1,000 / 9,000), table and section numbers, durations, parameter counts.
@@ -209,9 +208,8 @@ prompt file shows the new value without a hand edit.
   - the inkjet baseline.
 
   It MUST also cover the figures already retired: 80.25%, +18.8 pp and "18.8 percentage".
-  The status of the production 98.4% figure is [NEEDS CLARIFICATION: Q2. It is absent
-  from the site today, and the constitution allows it only with a threshold and
-  production-context qualifier. Is it retired, or current with that qualifier?].
+  The production 98.4% figure is also retired: it has no public artifact, and it is
+  absent from the site today (decided 2026-11-27).
 - **FR-004**: The registry MUST provide each claim's display form in each of the five
   languages. The form uses that language's decimal mark and spacing and includes the
   required qualifier text. Today's on-site wording is the reference.
@@ -260,9 +258,9 @@ prompt file shows the new value without a hand edit.
   - the OG image generator;
   - Genie's prepared replies and knowledge.
 
-  Long-form prose, meaning blog posts and their metadata (about 100 occurrences), is
-  handled per [NEEDS CLARIFICATION: Q1. Do blog posts stay as typed text that the check
-  verifies, or do they also move to registry output?].
+  Long-form prose, meaning blog posts and their metadata (about 100 occurrences), stays
+  as typed text. The check (FR-006/FR-007) verifies it, and it does not move to registry
+  output (decided 2026-11-27).
 - **FR-011**: The migration MUST NOT change any visible wording, figure, qualifier or
   layout. A before/after text comparison of the five-language pages shows no difference
   except deliberate fixes, and each such fix is listed in the PR.
@@ -335,3 +333,17 @@ prompt file shows the new value without a hand edit.
   does not regenerate them.
 - Work is delivered as separate PRs into `main`: User Story 1 first, then Stories 2–3.
   User Story 4 waits for spec 007.
+- Retiring 98.4% makes the constitution's Claim Integrity Standards line about it
+  out of date. The User Story 1 PR amends that line to "retired", following the
+  constitution's amendment rule.
+
+## Clarifications
+
+### Session 2026-11-27
+
+- Q: Do blog posts stay as typed text that the check verifies, or also move to registry
+  output? → A: Check only. Blog text stays as written and the check verifies it.
+- Q: What is the status of the production 98.4% figure? → A: Retired. The check fails if
+  it reappears.
+- Q: May short copy use a rounded form of a result? → A: No. Full precision as
+  registered, with spread where one exists.

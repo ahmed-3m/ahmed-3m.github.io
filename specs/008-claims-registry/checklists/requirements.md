@@ -13,7 +13,7 @@
 
 ## Requirement Completeness
 
-- [ ] No [NEEDS CLARIFICATION] markers remain (3 open: Q1 blog prose, Q2 98.4% status, Q3 rounded forms)
+- [x] No [NEEDS CLARIFICATION] markers remain (Q1–Q3 answered 2026-11-27; see spec "Clarifications")
 - [x] Requirements are testable and unambiguous
 - [x] Success criteria are measurable
 - [x] Success criteria are technology-agnostic (no implementation details)
