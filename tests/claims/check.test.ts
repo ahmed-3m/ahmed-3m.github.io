@@ -3,6 +3,7 @@
 // scanners, and a listed non-result does not.
 
 import assert from 'node:assert/strict'
+import { createHash } from 'node:crypto'
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
@@ -22,6 +23,7 @@ import {
 } from '@/lib/claims/check'
 import { isBackedValue, QUALIFIERS } from '@/lib/claims'
 import type { Language } from '@/lib/i18n-config'
+import { cardHash, lockOf, staleOgImages } from '../../tools/claims/og-lock.mjs'
 import { renderedFromSource, thirdPartyRetired } from '../../tools/claims/run-check.mjs'
 import { scanExport } from '../../tools/claims/scan-export.mjs'
 import { scanOgCards, scanSvgFile, scanTextFile, scanTsFile } from '../../tools/claims/scan-sources.mjs'
@@ -86,11 +88,9 @@ const SURFACES: Record<string, { langs: readonly Language[]; units: (text: strin
   },
   'og card': {
     langs: ['en'],
-    units: (text) => {
-      const rel = `tools/og-${++n}.mjs`
-      const src = `const CARDS = {\n  'og-x.png': { eyebrow: 'Thesis', title: ${js(text)}, sub: ${js(CLEAN)} },\n}\n`
-      return scanOgCards(write(rel, src), rel)
-    },
+    // The scanner takes the evaluated cards, as the generator exports them.
+    units: (text) =>
+      scanOgCards({ 'og-x.png': { eyebrow: 'Thesis', title: text, sub: CLEAN, stat: '' } }, `tools/og-${++n}.mjs`) as TextUnit[],
   },
   'html block': {
     langs: ['en'],
@@ -258,6 +258,59 @@ describe('figure check: baseline', () => {
     assert.deepEqual(
       r.staleEntries.map((e) => e.figure),
       ['1,5%'],
+    )
+  })
+})
+
+describe('figure check: OG image lock', () => {
+  const card = { eyebrow: 'e', title: 'Diffusion OOD', sub: 's', stat: '99.03% ± 0.07% AUROC · 3-seed mean' }
+  const rendered = new Uint8Array([137, 80, 78, 71, 1])
+  const pngs = { 'og-x.png': rendered }
+  const where = { file: 'tools/generate-og-images.mjs', lineOf: () => 7, pngOf: (png: string) => pngs[png as 'og-x.png'] }
+
+  it('hashes the JSON-encoded eyebrow, title, sub and stat', () => {
+    const expected = createHash('sha256').update(JSON.stringify(['e', 'Diffusion OOD', 's', '99.03% ± 0.07% AUROC · 3-seed mean'])).digest('hex')
+    assert.equal(cardHash(card), expected)
+  })
+
+  it('keeps text from running across fields', () => {
+    assert.notEqual(cardHash({ ...card, title: 'A | B', sub: 'C' }), cardHash({ ...card, title: 'A ', sub: ' B | C' }))
+  })
+
+  it('passes when every card and PNG matches the lock', () => {
+    assert.deepEqual(staleOgImages({ 'og-x.png': card }, lockOf({ 'og-x.png': card }, pngs), where), [])
+  })
+
+  it('fails on a committed PNG that differs from the lock or is missing', () => {
+    const lock = lockOf({ 'og-x.png': card }, pngs)
+    for (const pngOf of [() => new Uint8Array([137, 80, 78, 71, 2]), () => undefined]) {
+      const findings: Finding[] = staleOgImages({ 'og-x.png': card }, lock, { ...where, pngOf }) as Finding[]
+      assert.equal(findings.length, 1, formatFindings(findings))
+      assert.equal(findings[0].rule, 'stale-og-image')
+      assert.equal(findings[0].file, 'public/og-x.png')
+      assert.equal(findings[0].detail, 'OG image og-x.png does not match tools/claims/og-cards.lock.json — regenerate it')
+    }
+  })
+
+  it('fails on a changed card with an old hash, with the contract message', () => {
+    const old = lockOf({ 'og-x.png': card }, pngs)
+    const findings: Finding[] = staleOgImages({ 'og-x.png': { ...card, stat: '99.10% ± 0.07% AUROC · 3-seed mean' } }, old, where) as Finding[]
+    assert.equal(findings.length, 1, formatFindings(findings))
+    assert.equal(findings[0].rule, 'stale-og-image')
+    assert.equal(findings[0].scope, 'source')
+    assert.equal(findings[0].detail, 'OG image og-x.png is stale — regenerate it')
+    assert.equal(findings[0].file, 'tools/generate-og-images.mjs')
+    assert.equal(findings[0].line, 7)
+  })
+
+  it('fails on a card missing from the lock and on a lock entry with no card', () => {
+    const findings = staleOgImages({ 'og-new.png': card }, { 'og-gone.png': { text: cardHash(card) } }, where)
+    assert.deepEqual(
+      findings.map((f) => [f.figure, f.file]),
+      [
+        ['og-new.png', 'tools/generate-og-images.mjs'],
+        ['og-gone.png', 'tools/claims/og-cards.lock.json'],
+      ],
     )
   })
 })

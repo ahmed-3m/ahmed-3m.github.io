@@ -27,7 +27,7 @@ export function compareWithBaseline(findings: Finding[], baseline: BaselineEntry
 | `retired` | A figure matches a retired value in any form | `retired figure (<reason>)` |
 | `mean-without-spread` | A named claim's mean appears and its spread value is absent from the unit | `mean without its spread (<expected spread form>)` |
 | `missing-qualifier` | A named claim appears and a required qualifier's accepted phrasing is absent from the unit. PR A enforces only today's three rules (research R7). | `missing qualifier: <qualifier text in that language>` |
-| `stale-og-image` | An OG card's text hash differs from `og-cards.lock.json` | `OG image <file> is stale — regenerate it` |
+| `stale-og-image` | An OG card's text hash differs from `og-cards.lock.json`, or a committed `public/<png>` is missing or differs from the PNG hash there | `OG image <file> is stale — regenerate it`, or `OG image <file> does not match tools/claims/og-cards.lock.json — regenerate it` |
 | `stale-baseline` | A baseline entry no longer occurs | `remove this entry from tools/claims/baseline.json` |
 
 ## Command-line behaviour
@@ -63,12 +63,13 @@ public/llms.txt:41 (en) "0.8673 ± 0.0230" — missing-qualifier: 5-fold CV
 | `src/**/*.ts`, `src/**/*.tsx`, except `ood-explorer-data.ts` | Card or JSX block | From the nearest language key, else `en` |
 | `public/llms.txt`, `public/llms-full.txt`, `README.md` | Paragraph, list item or table row | `en` |
 | `.github/readme/hero-*.svg` | The whole file | `en` |
-| `tools/generate-og-images.mjs` card definitions | One card | `en` |
+| `tools/generate-og-images.mjs` card definitions (its evaluated `CARDS` export, so `formatClaim` stat lines are scanned as rendered) | One card | `en` |
 | `out/**/*.html` (export only) | Block element, `meta` content or `title` | `en` |
 | `out/_next/static/**/*.js` (export only) | The whole file | Retired rule only |
 
-**Not scanned**: `specs/`, `tests/`, `docs/`, manuscripts, PDFs, and
-`ood-explorer-data.ts` itself.
+**Not scanned**: `specs/`, `tests/`, `docs/`, manuscripts, PDFs,
+`ood-explorer-data.ts` itself, and `src/lib/claims/` (the registry and its qualifier
+texts).
 
 ## Fixtures (SC-001)
 

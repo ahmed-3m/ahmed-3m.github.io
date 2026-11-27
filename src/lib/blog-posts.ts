@@ -481,9 +481,9 @@ Signals (calendar, routines, activity logs)
     },
     translations: {
       en: {
-        title: 'How I Reached 99.03% AUROC on OOD Detection with Conditional Diffusion Models',
+        title: 'How I Reached 99.03% ± 0.07% AUROC (3-seed mean) on OOD Detection with Conditional Diffusion Models',
         excerpt:
-          "My master's thesis at JKU Linz introduced class-conditional separation loss into conditional diffusion models used as generative classifiers, reaching 99.03% +/- 0.07% AUROC on CIFAR-10 and adding a stable +6.5pp over the non-separated baseline.",
+          "My master's thesis at JKU Linz introduced class-conditional separation loss into conditional diffusion models used as generative classifiers, reaching 99.03% ± 0.07% AUROC (3-seed mean) on CIFAR-10 and adding a stable +6.5pp over the non-separated baseline.",
         tags: ['Diffusion Models', 'OOD Detection', 'Deep Learning', 'PyTorch', 'CIFAR-10', 'Generative Models'],
         readingTime: '14 min read',
         faq: [
@@ -530,18 +530,18 @@ The point is simple: if the two explanations become more distinct, the reconstru
 
 The best setting was **λ = 0.02**. Averaged across three independent seeds, it reached:
 
-- **99.03% +/- 0.07% AUROC** on CIFAR-10
+- **99.03% +/- 0.07% AUROC** (3-seed mean) on CIFAR-10
 - **+6.5 percentage points** over the non-separated baseline
 - much lower cross-seed standard deviation than the baseline
 
 For a concrete reproducible run, seed-42 achieved:
 
-- **98.98% AUROC** on the within-CIFAR split
+- **98.98% AUROC** (seed 42) on the within-CIFAR split
 - **90.50%-96.97%** zero-shot generalization across CIFAR-100, Places365, FashionMNIST, Textures, and SVHN
 
 ## Why I Care About This Result
 
-The important part is not only that the score went up. The important part is that the cross-seed standard deviation collapsed. Moving from a fragile 92.52% +/- 11.07% to a stable 99.03% +/- 0.07% is the difference between "interesting research result" and "plausible building block for a real safety system."
+The important part is not only that the score went up. The important part is that the cross-seed standard deviation collapsed. Moving from a fragile 92.52% +/- 11.07% to a stable 99.03% +/- 0.07% (both 3-seed means) is the difference between "interesting research result" and "plausible building block for a real safety system."
 
 ## Cross-Domain Reality Check
 
@@ -564,9 +564,9 @@ Public artifacts:
         `,
       },
       de: {
-        title: 'Wie ich mit konditionalen Diffusionsmodellen 99.03% AUROC für OOD-Erkennung erreicht habe',
+        title: 'Wie ich mit konditionalen Diffusionsmodellen 99,03 % ± 0,07 % AUROC (3-Seed-Mittel) für OOD-Erkennung erreicht habe',
         excerpt:
-          'Meine Masterarbeit an der JKU Linz führte eine class-conditional separation loss in konditionale Diffusionsmodelle als generative Klassifikatoren ein und erreichte 99.03% +/- 0.07% AUROC auf CIFAR-10 sowie einen stabilen Gewinn von +6.5 Prozentpunkten gegenüber der Basis ohne Separation.',
+          'Meine Masterarbeit an der JKU Linz führte eine class-conditional separation loss in konditionale Diffusionsmodelle als generative Klassifikatoren ein und erreichte 99,03 % ± 0,07 % AUROC (3-Seed-Mittel) auf CIFAR-10 sowie einen stabilen Gewinn von +6.5 Prozentpunkten gegenüber der Basis ohne Separation.',
         tags: ['Diffusionsmodelle', 'OOD-Erkennung', 'Deep Learning', 'PyTorch', 'CIFAR-10', 'Generative Modelle'],
         readingTime: '14 Min. Lesezeit',
         faq: [
@@ -613,18 +613,18 @@ Wenn die beiden Erklärungen klarer getrennt sind, wird auch die Rekonstruktions
 
 Die beste Einstellung war **λ = 0.02**. Über drei unabhängige Seeds ergab sich:
 
-- **99.03% +/- 0.07% AUROC** auf CIFAR-10
+- **99.03% +/- 0.07% AUROC** (3-Seed-Mittel) auf CIFAR-10
 - **+6.5 Prozentpunkte** gegenüber der Basis ohne Separation
 - deutlich geringere Standardabweichung über Seeds
 
 Ein reproduzierbarer Seed-42 Lauf erreichte:
 
-- **98.98% AUROC** im within-CIFAR Setting
+- **98.98% AUROC** (Seed 42) im within-CIFAR Setting
 - **90.50%-96.97%** zero-shot Generalisierung auf CIFAR-100, Places365, FashionMNIST, Textures und SVHN
 
 ## Warum dieses Ergebnis wichtig ist
 
-Entscheidend ist nicht nur der höhere Score. Entscheidend ist der starke Rückgang der Standardabweichung. Der Schritt von 92.52% +/- 11.07% zu 99.03% +/- 0.07% trennt eine interessante Idee von einer deutlich glaubwürdigeren Sicherheitskomponente.
+Entscheidend ist nicht nur der höhere Score. Entscheidend ist der starke Rückgang der Standardabweichung. Der Schritt von 92.52% +/- 11.07% zu 99.03% +/- 0.07% (jeweils 3-Seed-Mittel) trennt eine interessante Idee von einer deutlich glaubwürdigeren Sicherheitskomponente.
 
 ## Transfer in die Industrie
 
@@ -647,16 +647,16 @@ Auch das war ein wichtiges Ergebnis. Es zeigt, dass der Mechanismus in semantisc
         `,
       },
       fr: {
-        title: "Comment j'ai atteint 99.03% AUROC pour la détection OOD avec des modèles de diffusion conditionnels",
+        title: "Comment j'ai atteint 99,03 % ± 0,07 % AUROC (moyenne 3 seeds) pour la détection OOD avec des modèles de diffusion conditionnels",
         excerpt:
-          "Mon mémoire de master à JKU Linz a introduit une class-conditional separation loss dans des modèles de diffusion conditionnels utilisés comme classificateurs génératifs, atteignant 99.03% +/- 0.07% AUROC sur CIFAR-10 avec un gain stable de +6.5 points face à la baseline sans séparation.",
+          "Mon mémoire de master à JKU Linz a introduit une class-conditional separation loss dans des modèles de diffusion conditionnels utilisés comme classificateurs génératifs, atteignant 99,03 % ± 0,07 % AUROC (moyenne 3 seeds) sur CIFAR-10 avec un gain stable de +6.5 points face à la baseline sans séparation.",
         tags: ['Modèles de diffusion', 'Détection OOD', 'Deep Learning', 'PyTorch', 'CIFAR-10', 'Modèles génératifs'],
         readingTime: '14 min de lecture',
         faq: [
           {
             question: 'Quel résultat a été obtenu sur CIFAR-10 ?',
             answer:
-              'Le meilleur résultat moyen sur trois seeds est de 99.03% +/- 0.07% AUROC. Le seed-42 a atteint 98.98% dans le split CIFAR et a généralisé zero-shot à cinq benchmarks externes.',
+              'Le meilleur résultat moyen est de 99.03% +/- 0.07% AUROC (moyenne 3 seeds). Le seed-42 a atteint 98.98% dans le split CIFAR et a généralisé zero-shot à cinq benchmarks externes.',
           },
           {
             question: "Qu'est-ce que la separation loss ?",
@@ -696,18 +696,18 @@ Le principe est simple : des explications mieux séparées produisent un écart 
 
 Le meilleur réglage était **λ = 0.02**. Sur trois seeds indépendants :
 
-- **99.03% +/- 0.07% AUROC** sur CIFAR-10
+- **99.03% +/- 0.07% AUROC** (moyenne 3 seeds) sur CIFAR-10
 - **+6.5 points** face à la baseline sans séparation
 - un écart-type très fortement réduit entre seeds
 
 Le seed-42 a atteint :
 
-- **98.98% AUROC** dans le cadre within-CIFAR
+- **98.98% AUROC** (seed 42) dans le cadre within-CIFAR
 - **90.50%-96.97%** de généralisation zero-shot sur CIFAR-100, Places365, FashionMNIST, Textures et SVHN
 
 ## Pourquoi ce résultat est fort
 
-Le point clé n'est pas seulement l'augmentation du score. C'est surtout l'effondrement de l'écart-type. Passer de 92.52% +/- 11.07% à 99.03% +/- 0.07% signifie passer d'une méthode fragile à une approche bien plus crédible pour une utilisation réelle.
+Le point clé n'est pas seulement l'augmentation du score. C'est surtout l'effondrement de l'écart-type. Passer de 92.52% +/- 11.07% à 99.03% +/- 0.07% (moyennes 3 seeds) signifie passer d'une méthode fragile à une approche bien plus crédible pour une utilisation réelle.
 
 ## Transfert vers l'industrie
 
@@ -730,9 +730,9 @@ Artefacts publics :
         `,
       },
       es: {
-        title: 'Cómo alcancé 99.03% AUROC en detección OOD con modelos de difusión condicional',
+        title: 'Cómo alcancé 99.03% ± 0.07% AUROC (media de 3 seeds) en detección OOD con modelos de difusión condicional',
         excerpt:
-          'Mi tesis de máster en JKU Linz introdujo una class-conditional separation loss en modelos de difusión condicional usados como clasificadores generativos, alcanzando 99.03% +/- 0.07% AUROC en CIFAR-10 y una mejora estable de +6.5 puntos sobre la base sin separación.',
+          'Mi tesis de máster en JKU Linz introdujo una class-conditional separation loss en modelos de difusión condicional usados como clasificadores generativos, alcanzando 99.03% ± 0.07% AUROC (media de 3 seeds) en CIFAR-10 y una mejora estable de +6.5 puntos sobre la base sin separación.',
         tags: ['Modelos de difusión', 'Detección OOD', 'Deep Learning', 'PyTorch', 'CIFAR-10', 'Modelos generativos'],
         readingTime: '14 min de lectura',
         faq: [
@@ -779,18 +779,18 @@ Si las dos explicaciones son más distintas, la diferencia de error de reconstru
 
 La mejor configuración fue **λ = 0.02**. En tres semillas independientes:
 
-- **99.03% +/- 0.07% AUROC** en CIFAR-10
+- **99.03% +/- 0.07% AUROC** (media de 3 seeds) en CIFAR-10
 - **+6.5 puntos porcentuales** sobre la base sin separación
 - una desviación estándar mucho menor entre semillas
 
 La seed-42 logró:
 
-- **98.98% AUROC** en el escenario within-CIFAR
+- **98.98% AUROC** (semilla 42) en el escenario within-CIFAR
 - **90.50%-96.97%** de generalización zero-shot en CIFAR-100, Places365, FashionMNIST, Textures y SVHN
 
 ## Por qué este resultado es importante
 
-Lo importante no es solo subir el puntaje. Lo importante es reducir drásticamente la desviación estándar. Pasar de 92.52% +/- 11.07% a 99.03% +/- 0.07% significa pasar de una heurística frágil a un componente de seguridad mucho más creíble.
+Lo importante no es solo subir el puntaje. Lo importante es reducir drásticamente la desviación estándar. Pasar de 92.52% +/- 11.07% a 99.03% +/- 0.07% (medias de 3 seeds) significa pasar de una heurística frágil a un componente de seguridad mucho más creíble.
 
 ## Transferencia industrial
 
@@ -813,9 +813,9 @@ Artefactos públicos:
         `,
       },
       ar: {
-        title: 'كيف وصلت إلى 99.03% AUROC في كشف OOD باستخدام نماذج الانتشار الشرطية',
+        title: 'كيف وصلت إلى \u206699.03%\u00a0±\u00a00.07% AUROC\u2069 (متوسط 3 بذور) في كشف OOD باستخدام نماذج الانتشار الشرطية',
         excerpt:
-          'قدمت رسالتي في JKU Linz خسارة فصل شرطية داخل نماذج الانتشار الشرطية المستخدمة كمصنفات توليدية، وحققت 99.03% +/- 0.07% AUROC على CIFAR-10 مع تحسن ثابت قدره +6.5 نقطة مقارنة بالخط الأساسي من دون الفصل.',
+          'قدمت رسالتي في JKU Linz خسارة فصل شرطية داخل نماذج الانتشار الشرطية المستخدمة كمصنفات توليدية، وحققت \u206699.03%\u00a0±\u00a00.07% AUROC\u2069 (متوسط 3 بذور) على CIFAR-10 مع تحسن ثابت قدره +6.5 نقطة مقارنة بالخط الأساسي من دون الفصل.',
         tags: ['نماذج الانتشار', 'كشف OOD', 'التعلم العميق', 'PyTorch', 'CIFAR-10', 'نماذج توليدية'],
         readingTime: '14 دقيقة قراءة',
         faq: [
@@ -862,18 +862,18 @@ loss = L_diffusion + lambda * L_separation
 
 أفضل إعداد كان **λ = 0.02**. عبر ثلاث بذور مستقلة وصلنا إلى:
 
-- **99.03% +/- 0.07% AUROC** على CIFAR-10
+- **99.03% +/- 0.07% AUROC** (متوسط 3 بذور) على CIFAR-10
 - **+6.5 نقطة مئوية** فوق الخط الأساسي بدون فصل
 - انخفاض كبير جداً في الانحراف المعياري بين البذور
 
 أما seed-42 فحقق:
 
-- **98.98% AUROC** في within-CIFAR
+- **98.98% AUROC** (البذرة 42) في within-CIFAR
 - **90.50%-96.97%** تعميماً zero-shot على CIFAR-100 وPlaces365 وFashionMNIST وTextures وSVHN
 
 ## لماذا هذه النتيجة مهمة
 
-الأهم ليس فقط ارتفاع الدرجة، بل انهيار الانحراف المعياري. الانتقال من 92.52% +/- 11.07% إلى 99.03% +/- 0.07% يعني الانتقال من فكرة بحثية هشة إلى مكون أكثر مصداقية كنظام أمان.
+الأهم ليس فقط ارتفاع الدرجة، بل انهيار الانحراف المعياري. الانتقال من 92.52% +/- 11.07% إلى 99.03% +/- 0.07% (متوسط 3 بذور) يعني الانتقال من فكرة بحثية هشة إلى مكون أكثر مصداقية كنظام أمان.
 
 ## الاختبار عبر المجال الصناعي
 
@@ -949,7 +949,7 @@ The public **InkjetOOD** evaluation uses a **Stage-1 YOLOv8m detector + Stage-2 
 
 Evaluated under strict **5-fold stratified image-level cross-validation** at \`λ = 0.0\` (\`K = 100\`):
 
-- **0.8673 ± 0.0230 AUROC** overall baseline
+- **0.8673 ± 0.0230 AUROC** overall baseline (5-fold CV)
 - **0.8094 ± 0.0151 accuracy** and **0.5631 ± 0.1697 FPR@95%TPR**
 - Strongest per-feature AUROC on **Dots (0.9557 ± 0.0353)** and **Distance 6 (0.9362 ± 0.0666)**, with higher spread on sparse features such as **Angle (0.8166 ± 0.1381)** and **Edge 3 (0.7441 ± 0.0757)**
 
@@ -965,7 +965,7 @@ The most honest finding was where separation loss stopped helping. On CIFAR-10 a
 
 Artifacts:
 
-- M.Sc. Thesis PDF (0.8673 baseline source): https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf
+- M.Sc. Thesis PDF (source of the 0.8673 ± 0.0230 AUROC 5-fold CV baseline): https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf
 - Early Technical Report PDF (2024, negative result): https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf
 - Code: https://github.com/ahmed-3m/InkjetOOD
 - Weights: https://huggingface.co/ahmed-3m/InkjetOOD
@@ -1017,7 +1017,7 @@ Die öffentliche **InkjetOOD**-Evaluation kombiniert einen **Stufe-1-YOLOv8m-Det
 
 Unter strenger **5-facher stratifizierter bildbasierter Kreuzvalidierung** bei \`λ = 0.0\` (\`K = 100\`):
 
-- **0.8673 ± 0.0230 AUROC** Gesamt-Baseline
+- **0.8673 ± 0.0230 AUROC** Gesamt-Baseline (5-fach-CV)
 - **0.8094 ± 0.0151 Genauigkeit** und **0.5631 ± 0.1697 FPR@95%TPR**
 - Stärkste Einzelwerte bei **Dots (0.9557 ± 0.0353)** und **Distance 6 (0.9362 ± 0.0666)**; größere Streuung bei dünn besetzten Merkmalen wie **Angle (0.8166 ± 0.1381)** und **Edge 3 (0.7441 ± 0.0757)**
 
@@ -1033,7 +1033,7 @@ Eine zentrale Erkenntnis war, wo die Separation Loss aufhört zu helfen. Auf CIF
 
 Artefakte:
 
-- Masterarbeit PDF (Quelle für 0.8673): https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf
+- Masterarbeit PDF (Quelle der Baseline 0.8673 ± 0.0230 AUROC, 5-fach-CV): https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf
 - Frühzeitiger Technikbericht PDF (2024, Negativergebnis): https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf
 - Code: https://github.com/ahmed-3m/InkjetOOD
 - Weights: https://huggingface.co/ahmed-3m/InkjetOOD
@@ -1085,7 +1085,7 @@ L'évaluation publique **InkjetOOD** combine un **détecteur YOLOv8m (phase 1)**
 
 En **validation croisée stratifiée par image à 5 plis** avec \`λ = 0.0\` (\`K = 100\`) :
 
-- **0.8673 ± 0.0230 AUROC** (baseline globale)
+- **0.8673 ± 0.0230 AUROC** (baseline globale, VC 5 plis)
 - **0.8094 ± 0.0151 d'exactitude** et **0.5631 ± 0.1697 FPR@95%TPR**
 - Meilleures performances sur **Dots (0.9557 ± 0.0353)** et **Distance 6 (0.9362 ± 0.0666)**, et plus forte variance sur **Angle (0.8166 ± 0.1381)** ou **Edge 3 (0.7441 ± 0.0757)**
 
@@ -1101,7 +1101,7 @@ Le constat le plus honnête concerne les limites de la separation loss. Sur CIFA
 
 Artefacts :
 
-- PDF du mémoire (source du 0.8673) : https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf
+- PDF du mémoire (source de la baseline 0.8673 ± 0.0230 AUROC, VC 5 plis) : https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf
 - Rapport technique précoce PDF (2024, résultat négatif) : https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf
 - Code : https://github.com/ahmed-3m/InkjetOOD
 - Weights : https://huggingface.co/ahmed-3m/InkjetOOD
@@ -1153,7 +1153,7 @@ La evaluación pública **InkjetOOD** combina un **detector YOLOv8m en etapa 1**
 
 Con **validación cruzada estratificada de 5 folds a nivel de imagen** (\`λ = 0.0\`, \`K = 100\`):
 
-- **0.8673 ± 0.0230 AUROC** de línea base global
+- **0.8673 ± 0.0230 AUROC** de línea base global (CV de 5 pliegues)
 - **0.8094 ± 0.0151 de exactitud** y **0.5631 ± 0.1697 FPR@95%TPR**
 - Mayor separación en **Dots (0.9557 ± 0.0353)** y **Distance 6 (0.9362 ± 0.0666)**, y mayor dispersión en rasgos escasos como **Angle (0.8166 ± 0.1381)** y **Edge 3 (0.7441 ± 0.0757)**
 
@@ -1169,7 +1169,7 @@ La conclusión más honesta fue observar dónde dejaba de ayudar la separation l
 
 Artefactos:
 
-- PDF de la tesis (fuente de 0.8673): https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf
+- PDF de la tesis (fuente de la línea base 0.8673 ± 0.0230 AUROC, CV de 5 pliegues): https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf
 - PDF del informe técnico temprano (2024, resultado negativo): https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf
 - Código: https://github.com/ahmed-3m/InkjetOOD
 - Weights: https://huggingface.co/ahmed-3m/InkjetOOD
@@ -1221,7 +1221,7 @@ Artefactos:
 
 بتحقق تقاطعي طبقي صارم من **5 طيات على مستوى الصورة** عند \`λ = 0.0\` (\`K = 100\`):
 
-- **0.8673 ± 0.0230 AUROC** كخط أساس عام
+- **0.8673 ± 0.0230 AUROC** كخط أساس عام (تحقق متقاطع خماسي)
 - **0.8094 ± 0.0151 دقة** و**0.5631 ± 0.1697 FPR@95%TPR**
 - أقوى فصل في **Dots (0.9557 ± 0.0353)** و**Distance 6 (0.9362 ± 0.0666)**، مقابل تباين أعلى في الفئات الأقل وفرة مثل **Angle (0.8166 ± 0.1381)** و**Edge 3 (0.7441 ± 0.0757)**
 
@@ -1237,7 +1237,7 @@ Artefactos:
 
 الروابط:
 
-- PDF الرسالة (مصدر 0.8673): https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf
+- PDF الرسالة (مصدر خط الأساس 0.8673 ± 0.0230 AUROC، تحقق متقاطع خماسي): https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf
 - PDF التقرير التقني المبكر (2024، نتيجة سلبية): https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf
 - الكود: https://github.com/ahmed-3m/InkjetOOD
 - الأوزان: https://huggingface.co/ahmed-3m/InkjetOOD

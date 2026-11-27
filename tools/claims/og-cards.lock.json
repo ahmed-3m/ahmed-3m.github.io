@@ -1,0 +1,38 @@
+{
+  "og-image.png": {
+    "text": "a4768cb7d9ab3b325cc007ee51e00e536392bd14574aa71ab7beb7f74fa80775",
+    "png": "51453fb74f0eab29f8a3b3ecace9e203700c2951517a9cc85b082783ae35f2ce"
+  },
+  "og-news.png": {
+    "text": "35d28fe3de17154172113f1102736746b859a5bf73c4de97bb262620cf999e2a",
+    "png": "c1b6f356fe73c9c9ae6c26c2795b117106d233a4f7ee868df5fdfae6592eee8d"
+  },
+  "og-diffusion-ood.png": {
+    "text": "3b3e2560267c4bea6c482b0f36914e1d70377b74bacf1b8d6f996aebafe0a3bc",
+    "png": "0184c215ef304c5b5a3d23ca5d6db996bc6fa43dc63b8817cdf8816a90941d9e"
+  },
+  "og-inkjet-ood.png": {
+    "text": "b81d22d6d2862498996046751ef1f0ce0b444abe94e482e7d703de2b43d23360",
+    "png": "7d18e021cba0158cfc189850ba09c3d6c5250505bb27e71f56503d6c49b80c05"
+  },
+  "og-sihem.png": {
+    "text": "8cf0159f666e6085542fcc07fa0d0c7c709ad3084425dde59715709bff8bfd4a",
+    "png": "124a8f5f74a5fa1a8e310529f279951d364137c1eddd50d02028a9858af244c9"
+  },
+  "og-ood-diffusion-thesis.png": {
+    "text": "8ca965f6526fe90ba8d48a4508bd2e19a1173e0ea99c7b7b4d3edbe010986ef6",
+    "png": "24e824cf5d1b7c748de5f4d95e345cacf5c6602a0ce39fe170afa9147d7756d8"
+  },
+  "og-deterministic-guardrails.png": {
+    "text": "48ab9247e728cf1574189587a9e314afd447207e6d34fee492ffac45d43ea19a",
+    "png": "6fb40d38b91b1aff9c6d5a8b601d1c4f4660fd1fb95341a84d269e377d68fc74"
+  },
+  "og-diffusion-models-anomaly-detection.png": {
+    "text": "c935932100451f2adc268ca14ddffcfcc1ba85ffc33b9f65843186b831347d3b",
+    "png": "f9857c66c29aab080d12f4101a211118914384a30c7bdb94d2438c1284d45a35"
+  },
+  "og-computer-vision-yolo-mastery.png": {
+    "text": "a8dfb8c43f0b0c8e15c103d55d08a9374a4ff624b51a44c1fdf700b3da5fff7a",
+    "png": "cbc88acb7cf408d18994116242863097b006a16b8df9ff5858010b9ee7d3f728"
+  }
+}

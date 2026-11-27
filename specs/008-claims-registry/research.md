@@ -349,11 +349,12 @@ Principle III. Titles grow by about 25 characters. Blog slugs and URLs do not ch
 
 **Decision**: the OG generator exports its card definitions and builds the stat lines
 from `formatClaim` (PR B). Run by hand, it also writes `tools/claims/og-cards.lock.json`,
-which maps each PNG to a SHA-256 of that card's text. The check recomputes the hashes
-from the exported definitions without rendering. When a hash differs, the check fails:
-"OG image `og-diffusion-ood.png` is stale: run `node --import ./tools/test-hooks.mjs
-tools/generate-og-images.mjs`". The generator's main block runs only when the file is
-executed directly.
+which maps each PNG to a SHA-256 of that card's text and a SHA-256 of the PNG it wrote.
+The check recomputes the text hashes from the exported definitions without rendering,
+and hashes the committed PNGs, so a lock committed without its PNGs fails too. When a
+hash differs, the check fails: "OG image `og-diffusion-ood.png` is stale: run
+`node --import ./tools/test-hooks.mjs tools/generate-og-images.mjs`". The generator's
+main block runs only when the file is executed directly (`import.meta.main`).
 
 **Rationale**:
 - Files checked out in CI all carry the same modification time, so dates cannot show

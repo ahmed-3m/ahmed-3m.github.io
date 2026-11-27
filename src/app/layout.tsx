@@ -12,6 +12,7 @@ import SkipLink from "@/components/SkipLink";
 import ChatBot from "@/components/ChatBot";
 import { ThemeProvider } from "@/lib/ThemeContext";
 import { ogImage } from "@/lib/seo";
+import { formatClaim } from "@/lib/claims";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-display",
@@ -57,7 +58,7 @@ export const metadata: Metadata = {
     default: 'Ahmed Mohammed | AI/ML Engineer',
     template: '%s | Ahmed Mohammed'
   },
-  description: "AI/ML Engineer in Linz, Austria (M.Sc. AI, JKU Linz, thesis graded 1). Specializing in computer vision, industrial ML, and diffusion-based OOD detection: 99.03% +/- 0.07% AUROC (within-CIFAR airplane-vs-rest binary split, 3-seed mean) and 0.8673 +/- 0.0230 AUROC on FTI_Zer0P (5-fold CV), plus Sihem and mergeproof.",
+  description: `AI/ML Engineer in Linz, Austria (M.Sc. AI, JKU Linz, thesis graded 1). Specializing in computer vision, industrial ML, and diffusion-based OOD detection: ${formatClaim('thesis.mean', 'en', 'metric')} (within-CIFAR airplane-vs-rest binary split, 3-seed mean) and ${formatClaim('inkjet.baseline', 'en', 'metric')} on FTI_Zer0P (5-fold CV), plus Sihem and mergeproof.`,
   keywords: ["AI Engineer", "Machine Learning Engineer", "Computer Vision", "Deep Learning", "PyTorch", "YOLO", "Diffusion Models", "Anomaly Detection", "Ahmed Mohammed", "Sihem", "LLM applications", "mergeproof", "AI Agent Tooling", "Linz Austria", "JKU", "OOD Detection", "Industrial Quality Control", "DiffusionOOD", "InkjetOOD", "Case Study", "Research Portfolio"],
   authors: [{ name: "Ahmed Mohammed", url: 'https://ahmed-3m.github.io' }],
   creator: 'Ahmed Mohammed',

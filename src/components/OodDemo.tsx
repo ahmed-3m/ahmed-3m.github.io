@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useMemo, useId, useRef, type KeyboardEvent } from 'react'
-import { claimParts, formatClaim, formatLocaleNumber, type ClaimId } from '@/lib/claims'
+import { QUALIFIERS, claimParts, formatClaim, formatLocaleNumber, type ClaimId } from '@/lib/claims'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { languageLocale, type Language } from '@/lib/i18n-config'
 import {
@@ -738,6 +738,8 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
   const sliderId = useId()
   const timestepSliderId = useId()
   const numberLocale = languageLocale[lang]
+  /** Decimal comma and percent spacing for de/fr, as the registered figures use. */
+  const num = (raw: string) => formatLocaleNumber(raw, lang)
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([])
 
   const [activeTab, setActiveTab] = useState<LabTab>('calibration')
@@ -1071,7 +1073,10 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
                       {t(DATASET_LABELS[key]).split(' (')[0]}
                     </span>
                     <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--cd-accent)' }}>
-                      <bdi dir="ltr">{meta.auroc.toFixed(2)}%</bdi>
+                      <bdi dir="ltr">{num(`${meta.auroc.toFixed(2)}%`)}</bdi>
+                      {key === 'within_cifar' && (
+                        <span style={{ fontWeight: 500, color: 'var(--cd-fg3)' }}> ({t(QUALIFIERS.seed42.text)})</span>
+                      )}
                     </span>
                   </button>
                 )
@@ -1096,7 +1101,7 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
             >
               {t(copy.thresholdHeading)}:{' '}
               <span style={{ color: 'var(--cd-warn)', fontWeight: 700 }}>
-                <bdi dir="ltr">τ = {threshold >= 0 ? `+${threshold.toFixed(5)}` : threshold.toFixed(5)}</bdi>
+                <bdi dir="ltr">τ = {num(threshold >= 0 ? `+${threshold.toFixed(5)}` : threshold.toFixed(5))}</bdi>
               </span>
             </label>
 
@@ -1179,7 +1184,7 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
                 {t(copy.kpiAurocLabel)}
               </div>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: 18, fontWeight: 700, color: 'var(--cd-accent)' }}>
-                <bdi dir="ltr">{`${(regime === 'base' ? LAMBDA0_SEED42_META.auroc : activeMeta.auroc).toFixed(2)}%`}</bdi>
+                <bdi dir="ltr">{num(`${(regime === 'base' ? LAMBDA0_SEED42_META.auroc : activeMeta.auroc).toFixed(2)}%`)}</bdi>
               </div>
               <div style={{ fontSize: 11, color: 'var(--cd-fg3)' }}>
                 {regime === 'base' ? (
@@ -1191,7 +1196,7 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
                     {t(copy.kpiThreeSeed)}: <bdi dir="ltr">{bareClaim('thesis.mean', lang)}</bdi>
                   </>
                 ) : (
-                  <bdi dir="ltr">AUPRC: {activeMeta.auprc.toFixed(2)}%</bdi>
+                  <bdi dir="ltr">AUPRC: {num(`${activeMeta.auprc.toFixed(2)}%`)}</bdi>
                 )}
               </div>
             </div>
@@ -1201,7 +1206,7 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
                 {t(copy.kpiTprLabel)}
               </div>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: 18, fontWeight: 700, color: 'var(--cd-success)' }}>
-                <bdi dir="ltr">{liveDiagnostics.tpr.toFixed(1)}%</bdi>
+                <bdi dir="ltr">{num(`${liveDiagnostics.tpr.toFixed(1)}%`)}</bdi>
               </div>
               <div style={{ fontSize: 11, color: 'var(--cd-fg3)' }}>
                 <bdi dir="ltr">
@@ -1215,7 +1220,7 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
                 {t(copy.kpiFprLabel)}
               </div>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: 18, fontWeight: 700, color: liveDiagnostics.fpr <= 15 ? 'var(--cd-accent)' : 'var(--cd-danger)' }}>
-                <bdi dir="ltr">{liveDiagnostics.fpr.toFixed(1)}%</bdi>
+                <bdi dir="ltr">{num(`${liveDiagnostics.fpr.toFixed(1)}%`)}</bdi>
               </div>
               <div style={{ fontSize: 11, color: 'var(--cd-fg3)' }}>
                 <bdi dir="ltr">
@@ -1230,10 +1235,10 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
                 {t(copy.kpiYoudenLabel)}
               </div>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: 18, fontWeight: 700, color: 'var(--cd-fg)' }}>
-                <bdi dir="ltr">{liveDiagnostics.youdenJ.toFixed(1)}%</bdi>
+                <bdi dir="ltr">{num(`${liveDiagnostics.youdenJ.toFixed(1)}%`)}</bdi>
               </div>
               <div style={{ fontSize: 11, color: 'var(--cd-fg3)' }}>
-                {t(copy.kpiBalAcc)}: <bdi dir="ltr">{liveDiagnostics.balAcc.toFixed(1)}%</bdi>
+                {t(copy.kpiBalAcc)}: <bdi dir="ltr">{num(`${liveDiagnostics.balAcc.toFixed(1)}%`)}</bdi>
               </div>
             </div>
           </div>
@@ -1292,7 +1297,7 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
                       <line x1={tx} y1="16" x2={tx} y2="195" stroke="var(--cd-warn)" strokeWidth="2.5" strokeDasharray="5 4" />
                       <rect x={Math.min(415, Math.max(42, tx - 44))} y="12" width="88" height="18" rx="4" fill="var(--cd-warn)" />
                       <text x={Math.min(459, Math.max(86, tx))} y="24" textAnchor="middle" fill="var(--cd-bg)" fontSize="9.5" fontWeight="700" fontFamily="monospace">
-                        τ = {threshold.toFixed(4)}
+                        τ = {num(threshold.toFixed(4))}
                       </text>
                     </g>
                   )
@@ -1300,13 +1305,13 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
 
                 {/* X-axis labels */}
                 <text x="40" y="212" fill="var(--cd-fg3)" fontSize="10" fontFamily="monospace">
-                  {activeHist.lo.toFixed(4)}
+                  {num(activeHist.lo.toFixed(4))}
                 </text>
                 <text x="270" y="212" textAnchor="middle" fill="var(--cd-fg2)" fontSize="10" fontFamily="monospace">
                   s_OOD(x) = ê₀(x) − ê₁(x)
                 </text>
                 <text x="500" y="212" textAnchor="end" fill="var(--cd-fg3)" fontSize="10" fontFamily="monospace">
-                  +{activeHist.hi.toFixed(4)}
+                  +{num(activeHist.hi.toFixed(4))}
                 </text>
               </svg>
             </div>
@@ -1379,7 +1384,7 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
             <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--cd-fg2)' }}>
               {t(copy.operatingPointLabel)}:{' '}
               <bdi dir="ltr">
-                <strong>FPR = {liveDiagnostics.fpr.toFixed(1)}%</strong>, <strong>TPR = {liveDiagnostics.tpr.toFixed(1)}%</strong>
+                <strong>FPR = {num(`${liveDiagnostics.fpr.toFixed(1)}%`)}</strong>, <strong>TPR = {num(`${liveDiagnostics.tpr.toFixed(1)}%`)}</strong>
               </bdi>{' '}
               ({t(copy.benchmarkFprLabel)} ={' '}
               <bdi dir="ltr">{`${regime === 'base' ? LAMBDA0_SEED42_META.fpr95 : activeMeta.fpr95}%`}</bdi>)
@@ -1405,7 +1410,7 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
               {t(copy.timestepHeading)}:{' '}
               <span style={{ color: 'var(--cd-accent)' }}>
                 <bdi dir="ltr">t = {activeTimestep.t} / 1000</bdi> ({t(copy.timestepSignalLabel)}{' '}
-                <bdi dir="ltr">ᾱ_t = {activeTimestep.alphaBar.toFixed(4)}</bdi>)
+                <bdi dir="ltr">ᾱ_t = {num(activeTimestep.alphaBar.toFixed(4))}</bdi>)
               </span>
             </label>
             <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-fg3)' }}>
@@ -1498,12 +1503,12 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
                 {t(copy.idMseLabel)} <bdi dir="ltr">@ t={activeTimestep.t}</bdi>
               </div>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--cd-fg)', marginTop: 4 }}>
-                <bdi dir="ltr">c=0: <strong>{activeTimestep.idC0Mean.toFixed(4)}</strong> · c=1: <strong>{activeTimestep.idC1Mean.toFixed(4)}</strong></bdi>
+                <bdi dir="ltr">c=0: <strong>{num(activeTimestep.idC0Mean.toFixed(4))}</strong> · c=1: <strong>{num(activeTimestep.idC1Mean.toFixed(4))}</strong></bdi>
               </div>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-success)', marginTop: 2 }}>
                 {t(copy.meanErrorDifference)}: <bdi dir="ltr">ê₀ − ê₁ = {(() => {
                   const diff = activeTimestep.idC0Mean - activeTimestep.idC1Mean
-                  return `${diff >= 0 ? '+' : ''}${diff.toFixed(5)}`
+                  return num(`${diff >= 0 ? '+' : ''}${diff.toFixed(5)}`)
                 })()}</bdi>
               </div>
             </div>
@@ -1513,12 +1518,12 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
                 {t(copy.oodMseLabel)} <bdi dir="ltr">@ t={activeTimestep.t}</bdi>
               </div>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--cd-fg)', marginTop: 4 }}>
-                <bdi dir="ltr">c=0: <strong>{activeTimestep.oodC0Mean.toFixed(4)}</strong> · c=1: <strong>{activeTimestep.oodC1Mean.toFixed(4)}</strong></bdi>
+                <bdi dir="ltr">c=0: <strong>{num(activeTimestep.oodC0Mean.toFixed(4))}</strong> · c=1: <strong>{num(activeTimestep.oodC1Mean.toFixed(4))}</strong></bdi>
               </div>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-warn)', marginTop: 2 }}>
                 {t(copy.meanErrorDifference)}: <bdi dir="ltr">ê₀ − ê₁ = {(() => {
                   const diff = activeTimestep.oodC0Mean - activeTimestep.oodC1Mean
-                  return `${diff >= 0 ? '+' : ''}${diff.toFixed(5)}`
+                  return num(`${diff >= 0 ? '+' : ''}${diff.toFixed(5)}`)
                 })()}</bdi>
               </div>
             </div>
@@ -1528,7 +1533,7 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
                 {t(copy.manifoldMismatchLabel)}
               </div>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: 16, fontWeight: 700, color: 'var(--cd-accent)', marginTop: 4 }}>
-                <bdi dir="ltr">+{(activeTimestep.oodC0Mean - activeTimestep.idC0Mean).toFixed(4)} MSE</bdi>
+                <bdi dir="ltr">+{num((activeTimestep.oodC0Mean - activeTimestep.idC0Mean).toFixed(4))} MSE</bdi>
               </div>
               <div style={{ fontSize: 11, color: 'var(--cd-fg3)' }}>
                 {t(copy.uniformSummaryNote)}
@@ -1577,10 +1582,10 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
                   {t(copy.withinCifarAurocLabel)}
                 </div>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: 20, fontWeight: 700, color: activeScoring.cifarAuroc > 90 ? 'var(--cd-success)' : 'var(--cd-warn)' }}>
-                  <bdi dir="ltr">{activeScoring.cifarAuroc.toFixed(2)}%</bdi>
+                  <bdi dir="ltr">{num(`${activeScoring.cifarAuroc.toFixed(2)}%`)}</bdi>
                 </div>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-fg3)' }}>
-                  <bdi dir="ltr">FPR95: {activeScoring.cifarFpr95.toFixed(1)}%</bdi>
+                  <bdi dir="ltr">FPR95: {num(`${activeScoring.cifarFpr95.toFixed(1)}%`)}</bdi>
                 </div>
               </div>
               <div style={{ padding: 12, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)', minWidth: 0 }}>
@@ -1588,10 +1593,10 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
                   {t(copy.externalSvhnAurocLabel)}
                 </div>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: 20, fontWeight: 700, color: activeScoring.svhnAuroc > 90 ? 'var(--cd-success)' : 'var(--cd-danger)' }}>
-                  <bdi dir="ltr">{activeScoring.svhnAuroc.toFixed(2)}%</bdi>
+                  <bdi dir="ltr">{num(`${activeScoring.svhnAuroc.toFixed(2)}%`)}</bdi>
                 </div>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--cd-fg3)' }}>
-                  <bdi dir="ltr">FPR95: {activeScoring.svhnFpr95.toFixed(1)}%</bdi>
+                  <bdi dir="ltr">FPR95: {num(`${activeScoring.svhnFpr95.toFixed(1)}%`)}</bdi>
                 </div>
               </div>
             </div>
@@ -1687,15 +1692,15 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
                 <span>{t(copy.withinCifarAurocLabel)}:</span>
                 <strong style={{ color: 'var(--cd-success)' }}>
                   <bdi dir="ltr">
-                    {activeLambda.withinCifarMean.toFixed(2)}%
-                    {activeLambda.withinCifarStd !== null ? ` ± ${activeLambda.withinCifarStd.toFixed(2)}%` : ''}
+                    {num(`${activeLambda.withinCifarMean.toFixed(2)}%`)}
+                    {activeLambda.withinCifarStd !== null ? num(` ± ${activeLambda.withinCifarStd.toFixed(2)}%`) : ''}
                   </bdi>
-                  {activeLambda.withinCifarStd === null ? ` ${t(copy.seed42Paren)}` : ''}
+                  {activeLambda.withinCifarStd === null ? ` ${t(copy.seed42Paren)}` : ` (${t(QUALIFIERS.threeSeeds.text)})`}
                 </strong>
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
                 <span>{t(copy.seedRunsLabel)}</span>
-                <span><bdi dir="ltr">{activeLambda.seeds.map((s) => `${s.toFixed(2)}%`).join(' · ')}</bdi></span>
+                <span><bdi dir="ltr">{num(activeLambda.seeds.map((s) => `${s.toFixed(2)}%`).join(' · '))}</bdi></span>
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
                 <span>{t(copy.bestEpochLabel)}</span>
@@ -1704,7 +1709,7 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
                 <span>{t(copy.svhnExternalLabel)}</span>
                 <span>
-                  <bdi dir="ltr">{activeLambda.svhnAuroc.toFixed(1)}%</bdi>
+                  <bdi dir="ltr">{num(`${activeLambda.svhnAuroc.toFixed(1)}%`)}</bdi>
                   {activeLambda.svhnArtefact ? ` ${t(copy.artefactNote)}` : ''}
                 </span>
               </div>
@@ -1742,16 +1747,16 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
             <div style={{ padding: 12, borderRadius: 8, border: '1px solid var(--cd-border)', background: 'var(--cd-surface)' }}>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 12 }}>
                 <span>{t(copy.kWithinCifarLabel)}</span>
-                <strong style={{ color: 'var(--cd-accent)' }}><bdi dir="ltr">{activeK.auroc.toFixed(2)}%</bdi></strong>
+                <strong style={{ color: 'var(--cd-accent)' }}><bdi dir="ltr">{num(`${activeK.auroc.toFixed(2)}%`)}</bdi></strong>
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
                 <span><bdi dir="ltr">FPR@95%TPR:</bdi></span>
-                <span><bdi dir="ltr">{activeK.fpr95.toFixed(1)}%</bdi></span>
+                <span><bdi dir="ltr">{num(`${activeK.fpr95.toFixed(1)}%`)}</bdi></span>
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
                 <span>{t(copy.rtxTimeLabel)}</span>
                 <span>
-                  <bdi dir="ltr">{activeK.timeSeconds10k.toFixed(1)} s ({activeK.msPerSample.toFixed(1)}</bdi> {t(copy.msPerImg)})
+                  <bdi dir="ltr">{num(activeK.timeSeconds10k.toFixed(1))} s ({num(activeK.msPerSample.toFixed(1))}</bdi> {t(copy.msPerImg)})
                 </span>
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>
@@ -1801,13 +1806,13 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
             <span>
               {t(copy.inkjetCvMeanLabel)}{' '}
               <strong style={{ color: 'var(--cd-accent)' }}>
-                <bdi dir="ltr">{activeInkjetOverall.aurocMean.toFixed(4)} ± {activeInkjetOverall.aurocStd.toFixed(4)}</bdi>
+                <bdi dir="ltr">{num(`${activeInkjetOverall.aurocMean.toFixed(4)} ± ${activeInkjetOverall.aurocStd.toFixed(4)}`)}</bdi>
               </strong>
             </span>
             <span>
               {t(copy.inkjetAccuracyLabel)}{' '}
               <strong>
-                <bdi dir="ltr">{(activeInkjetOverall.accMean * 100).toFixed(2)}% ± {(activeInkjetOverall.accStd * 100).toFixed(2)}%</bdi>
+                <bdi dir="ltr">{num(`${(activeInkjetOverall.accMean * 100).toFixed(2)}% ± ${(activeInkjetOverall.accStd * 100).toFixed(2)}%`)}</bdi>
               </strong>
             </span>
             <span>
@@ -1817,7 +1822,7 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
                   t(copy.inkjetBaseline)
                 ) : (
                   <>
-                    <bdi dir="ltr">p = {activeInkjetOverall.holmPValue.toFixed(3)}</bdi> {t(copy.inkjetNotSig)}
+                    <bdi dir="ltr">p = {num(activeInkjetOverall.holmPValue.toFixed(3))}</bdi> {t(copy.inkjetNotSig)}
                   </>
                 )}
               </strong>
@@ -1845,7 +1850,7 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5 }}>
                     <strong style={{ color: 'var(--cd-fg)' }}>{featureLabel}</strong>
                     <span style={{ color: pct >= 90 ? 'var(--cd-success)' : pct >= 80 ? 'var(--cd-accent)' : 'var(--cd-warn)', fontWeight: 700 }}>
-                      <bdi dir="ltr">{stats.mean.toFixed(4)} ± {stats.std.toFixed(4)}</bdi>
+                      <bdi dir="ltr">{num(`${stats.mean.toFixed(4)} ± ${stats.std.toFixed(4)}`)}</bdi>
                     </span>
                   </div>
                   <div style={{ height: 5, borderRadius: 3, background: 'var(--cd-bg)', marginTop: 6, overflow: 'hidden' }}>

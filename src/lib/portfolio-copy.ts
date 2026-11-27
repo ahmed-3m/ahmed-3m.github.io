@@ -1,4 +1,4 @@
-import { claimParts, formatClaim, type ClaimId } from '@/lib/claims'
+import { claimParts, formatClaim, type ClaimId, type QualifierId } from '@/lib/claims'
 import type { Language, TranslationMap } from '@/lib/i18n-config'
 
 /** A registered figure without Arabic isolates, for text that already isolates it. */
@@ -326,6 +326,8 @@ export interface FocusPillar {
   tabLabel: TranslationMap
   title: TranslationMap
   metricValue: TranslationMap | string
+  /** Shown under the metric in the home tab rail, which has no room for metricSub. */
+  metricQualifier?: QualifierId
   metricSub: TranslationMap
   ctaLabel: TranslationMap
   href: string
@@ -343,6 +345,7 @@ export const focusPillars: readonly FocusPillar[] = [
       ar: 'كشف OOD بنماذج الانتشار الشرطية',
     },
     metricValue: bareMap('thesis.mean'),
+    metricQualifier: 'threeSeeds',
     metricSub: {
       en: `AUROC · CIFAR-10 airplane-vs-rest · 3-seed mean (${formatClaim('thesis.gainPp', 'en')} vs ${formatClaim('thesis.baseline', 'en')}) · plot: seed 42 (${formatClaim('thesis.seed42', 'en', 'value')}, FPR@95 ${formatClaim('thesis.seed42Fpr95', 'en', 'value')})`,
       de: `AUROC · CIFAR-10 Flugzeug-vs-Rest · 3-Seed-Mittel (${formatClaim('thesis.gainPp', 'de')} vs. ${formatClaim('thesis.baseline', 'de')}) · Plot: Seed 42 (${formatClaim('thesis.seed42', 'de', 'value')}, FPR@95 ${formatClaim('thesis.seed42Fpr95', 'de', 'value')})`,
@@ -370,6 +373,7 @@ export const focusPillars: readonly FocusPillar[] = [
       ar: 'فحص صناعي للعيوب على مرحلتين',
     },
     metricValue: bareMap('inkjet.baseline'),
+    metricQualifier: 'fiveFoldCv',
     metricSub: {
       en: 'AUROC · FTI_Zer0P 5-fold CV baseline (separation loss non-significant after Holm correction)',
       de: 'AUROC · FTI_Zer0P 5-fach-CV-Baseline (Separation Loss nach Holm-Korrektur nicht signifikant)',

@@ -5,13 +5,24 @@
 // Next (node_modules/sharp); guarded so a missing sharp is a clear message,
 // not a stack trace. Run from the repo root:
 //
-//   node tools/generate-og-images.mjs
+//   node --import ./tools/test-hooks.mjs tools/generate-og-images.mjs
+//
+// The stat lines with a result come from the claims registry (spec 008). Each run
+// also writes tools/claims/og-cards.lock.json, a hash of every card's text and of
+// the PNG rendered from it; the figure check fails when a card or a committed PNG
+// no longer matches it, so commit the PNGs and the lock together.
 //
 // Palette mirrors the site's --cd-* tokens (globals.css, dark theme):
 // bg #08090d · accent #00d4ff · fg #e8eaf0 · dim fg #8b93a7.
 
 import { mkdir, writeFile } from 'node:fs/promises'
 import path from 'node:path'
+
+import { QUALIFIERS, formatClaim } from '@/lib/claims'
+import { OG_DIR, OG_LOCK, lockOf } from './claims/og-lock.mjs'
+
+const thesisStat = `${formatClaim('thesis.mean', 'en', 'metric')} · ${QUALIFIERS.threeSeeds.text.en}`
+const inkjetStat = `${formatClaim('inkjet.baseline', 'en', 'metric')} · ${QUALIFIERS.fiveFoldCv.text.en}`
 
 const BG = '#08090d'
 const ACCENT = '#00d4ff'
@@ -74,7 +85,8 @@ function card({ eyebrow, title, sub, stat }) {
 </svg>`
 }
 
-const CARDS = {
+/** Card definitions by PNG name. The figure check scans these and hashes them. */
+export const CARDS = {
   'og-image.png': {
     eyebrow: 'ahmed-3m.github.io',
     title: 'Ahmed Mohammed',
@@ -91,13 +103,13 @@ const CARDS = {
     eyebrow: 'ahmed-3m.github.io/case-studies/diffusion-ood',
     title: 'Diffusion OOD Detection',
     sub: 'Within-CIFAR airplane-vs-rest · binary, single ID class',
-    stat: '99.03% ± 0.07% AUROC · 3-seed mean',
+    stat: thesisStat,
   },
   'og-inkjet-ood.png': {
     eyebrow: 'ahmed-3m.github.io/case-studies/inkjet-ood',
     title: 'InkjetOOD — Case Study',
     sub: 'YOLOv8 + conditional diffusion on FTI_Zer0P',
-    stat: '0.8673 ± 0.0230 AUROC · 5-fold CV',
+    stat: inkjetStat,
   },
   'og-sihem.png': {
     eyebrow: 'ahmed-3m.github.io/case-studies/sihem',
@@ -109,7 +121,7 @@ const CARDS = {
     eyebrow: 'ahmed-3m.github.io/blog/ood-diffusion-thesis',
     title: 'Conditional Diffusion for OOD',
     sub: 'Class-conditional separation loss · binary airplane-vs-rest',
-    stat: '99.03% ± 0.07% AUROC · 3-seed mean (+6.5pp)',
+    stat: `${thesisStat} (${formatClaim('thesis.gainPp', 'en', 'value')})`,
   },
   'og-deterministic-guardrails.png': {
     eyebrow: 'ahmed-3m.github.io/blog/deterministic-guardrails-for-llm-and-agent-systems',
@@ -121,7 +133,7 @@ const CARDS = {
     eyebrow: 'ahmed-3m.github.io/blog/diffusion-models-anomaly-detection',
     title: 'Diffusion Anomaly Detection',
     sub: 'From CIFAR-10 separation loss to FTI_Zer0P QC',
-    stat: '0.8673 ± 0.0230 AUROC · 5-fold CV',
+    stat: inkjetStat,
   },
   'og-computer-vision-yolo-mastery.png': {
     eyebrow: 'ahmed-3m.github.io/blog/computer-vision-yolo-mastery',
@@ -139,17 +151,26 @@ async function main() {
     console.error('sharp not found in node_modules — install deps first (npm ci). CI never runs this tool; committed PNGs are canonical.')
     process.exit(1)
   }
-  const outDir = path.resolve('public')
+  const outDir = path.resolve(OG_DIR)
   await mkdir(outDir, { recursive: true })
+  const pngs = {}
   for (const [file, spec] of Object.entries(CARDS)) {
     const png = await sharp(Buffer.from(card(spec))).png({ compressionLevel: 9 }).toBuffer()
     await writeFile(path.join(outDir, file), png)
+    pngs[file] = png
     const meta = await sharp(png).metadata()
     console.log(`${file}: ${meta.width}x${meta.height}, ${(png.length / 1024).toFixed(1)} KB`)
   }
+  await writeFile(path.resolve(OG_LOCK), `${JSON.stringify(lockOf(CARDS, pngs), null, 2)}\n`)
+  console.log(`${OG_LOCK}: ${Object.keys(CARDS).length} cards`)
 }
 
-main().catch((err) => {
-  console.error(err)
-  process.exit(1)
-})
+// Render only when run directly: the figure check imports CARDS without rendering.
+// import.meta.main (Node 24.2+) holds through junctions and symlinks, where argv[1]
+// and the module's real path differ.
+if (import.meta.main) {
+  main().catch((err) => {
+    console.error(err)
+    process.exit(1)
+  })
+}

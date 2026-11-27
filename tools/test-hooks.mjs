@@ -21,7 +21,10 @@ registerHooks({
       const target = !existsSync(fileURLToPath(file)) && existsSync(fileURLToPath(index)) ? index : file
       return nextResolve(target.href, context)
     }
-    if ((specifier.startsWith('./') || specifier.startsWith('../')) && !HAS_EXTENSION.test(specifier)) {
+    // Only the repository's own files: packages (sharp's detect-libc) resolve their own
+    // extensionless requires to `.js`.
+    const inPackage = context.parentURL?.includes('/node_modules/')
+    if ((specifier.startsWith('./') || specifier.startsWith('../')) && !HAS_EXTENSION.test(specifier) && !inPackage) {
       return nextResolve(`${specifier}.ts`, context)
     }
     return nextResolve(specifier, context)
