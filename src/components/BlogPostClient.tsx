@@ -5,6 +5,7 @@ import { ArrowLeft, Calendar, Clock, Tag } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
 import { languageLocale } from '@/lib/i18n-config'
 import { getBlogPost } from '@/lib/blog-posts'
+import { useHomeHref } from '@/lib/portfolio-view'
 import type { RelatedLink } from '@/lib/related-content'
 import { serializeJsonLd } from '@/lib/serialize-json-ld'
 
@@ -172,6 +173,7 @@ export default function BlogPostClient({
   relatedCaseStudies?: RelatedLink[]
 }) {
   const { lang, t } = useI18n()
+  const homeHref = useHomeHref()
   const locale = languageLocale[lang]
   const post = getBlogPost(slug, lang)
 
@@ -272,7 +274,7 @@ export default function BlogPostClient({
         <nav aria-label={t(copy.breadcrumb)} className="mb-6">
           <ol className="flex flex-wrap items-center gap-2 text-sm text-[var(--cd-fg3)]">
             <li>
-              <Link href="/" className="text-[var(--cd-accent)]">
+              <Link href={homeHref} className="text-[var(--cd-accent)]">
                 {t(copy.home)}
               </Link>
             </li>

@@ -2,7 +2,7 @@
 
 > AI/ML Engineer based in Linz, Austria. M.Sc. in Artificial Intelligence from Johannes Kepler University Linz (Oct 2020 - Sep 2026; Defensio 25 Sep 2026, thesis graded 1, supervised by Prof. Sepp Hochreiter). Specializing in computer vision, industrial ML, diffusion models, out-of-distribution detection, LLM products (Sihem), and deterministic agent tooling (mergeproof).
 
-Last updated: 2026-11-26
+Last updated: 2026-11-27
 
 ## Identity
 
@@ -25,7 +25,7 @@ Last updated: 2026-11-26
 - [OOD Detection Framework](https://github.com/ahmed-3m/DiffusionOOD): Novel use of conditional diffusion models as generative classifiers for out-of-distribution detection. 99.03% ± 0.07% average AUROC on CIFAR-10 airplane-vs-rest (binary, single ID class, 3-seed mean). Introduced class-conditional separation loss. Applied to industrial quality control via a Stage-1 YOLOv8m detector (6,408 128×128 YOLO crops across 573 source-image groups) plus multi-head conditional diffusion on the public FTI_Zer0P benchmark (0.8673 ± 0.0230 AUROC; thesis-documented).
 - Thesis PDF erratum: the thesis text identifies the detector as YOLOv8n; the trained artifact yolo_best.pt is YOLOv8m (25.86M params, verified from train_args).
 - [Industrial Anomaly Detection](https://ahmed-3m.github.io/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf): Early 2024 YOLO + diffusion model pipeline for industrial defect detection — a negative-result technical report that motivated the later thesis approach. (The FTI_Zer0P 0.8673 ± 0.0230 AUROC baseline is reported in the [Master's thesis](https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf), not this report.)
-- [Sihem](https://sihem-pwa.pages.dev/): Independent personal-mentor project with an invitation-only beta on Telegram and the installable web app. The native Android client uses Kotlin and Jetpack Compose and is in private testing. Built on Supabase edge functions (Deno/TS) with pgvector RAG long-term memory, multi-provider LLM routing (GLM/Gemini/Groq) with failover, and a deterministic generators-arbiter-composer decision engine (@sihem_ai_bot). Includes an interactive 3-scenario illustrative walkthrough of the invitation-only beta at https://ahmed-3m.github.io/case-studies/sihem/.
+- [Sihem](https://sihem-pwa.pages.dev/): Independent personal-mentor project with an invitation-only beta on Telegram and the installable web app. The native Android client uses Kotlin and Jetpack Compose and is in private testing. Built on Supabase edge functions (Deno/TS) with pgvector RAG long-term memory, multi-provider LLM routing (GLM/Gemini/Groq) with failover, a deterministic generators-arbiter-composer decision engine, multimodal meal-photo vision, TTS voice reminders, and Google Calendar sync (@sihem_ai_bot). Includes an interactive 3-scenario illustrative walkthrough of the invitation-only beta at https://ahmed-3m.github.io/case-studies/sihem/.
 - [mergeproof](https://github.com/ahmed-3m/mergeproof): Checks AI-written pull requests against configured deterministic merge requirements without calling an LLM. Passing those checks does not guarantee defect-free code. Zero dependencies, MIT, npm package @ahmed-3m/mergeproof. Also available as a live client-side interactive PR gate playground (0 LLM calls) in the portfolio Projects section (`https://ahmed-3m.github.io/?view=full#mergeproof-playground`) and concise work rail.
 - [EEG Signal Classification](https://github.com/ahmed-3m/Motor-Imagery-classification): LSTM, Bi-LSTM, GRU architectures for EEG motor imagery classification in brain-computer interface applications. Hyperparameter optimization across architectures (Karunya Institute of Technology and Sciences, 2023).
 - [Elbostan Pazar bot](https://github.com/ahmed-3m/Elbostan-Pazar-bot): Messenger bot that answers a real shop's customers about prices, hours and delivery.
@@ -81,7 +81,7 @@ Deep-dives on research decisions, production lessons, and the gap between papers
 
 ## News
 
-[AI & Agentic AI News](https://ahmed-3m.github.io/news/): curated AI news, each item with a short personal take — updated daily by an automated agent pipeline, with a bias toward agentic AI.
+[AI & Agentic AI News](https://ahmed-3m.github.io/news/): rolling 200-item catalog of curated AI news, each with a localized editorial take and canonical topic tags (`mcp`, `coding-agents`, `multi-agent`, `evaluation`, `guardrails`, `agent-security`, `open-weights`, etc.) — updated daily by an automated agent pipeline, with shareable URL filters (`?category=agentic|ai`, `?tag=...`, `?source=...`, `?q=...`).
 
 ## Selected Evidence
 

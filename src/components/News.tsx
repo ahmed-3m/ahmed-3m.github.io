@@ -61,6 +61,8 @@ export default function News() {
   const [perPage, setPerPage] = useState(3)
   const [startIndex, setStartIndex] = useState(0)
   const touchStartRef = useRef<{ x: number; y: number } | null>(null)
+  const gridRef = useRef<HTMLDivElement | null>(null)
+  const pendingCardFocusRef = useRef(false)
 
   useEffect(() => {
     if (typeof window === 'undefined' || !window.matchMedia) return
@@ -86,10 +88,19 @@ export default function News() {
   const hasPrev = currentPage > 0
   const hasNext = currentPage < pageCount - 1
 
-  const goToPage = (pageIndex: number) => {
+  const goToPage = (pageIndex: number, restoreCardFocus = false) => {
     const clamped = Math.max(0, Math.min(pageCount - 1, pageIndex))
+    if (clamped !== currentPage && restoreCardFocus) {
+      pendingCardFocusRef.current = true
+    }
     setStartIndex(clamped * perPage)
   }
+
+  useEffect(() => {
+    if (!pendingCardFocusRef.current) return
+    pendingCardFocusRef.current = false
+    gridRef.current?.querySelector<HTMLElement>('a.cd-writing-card')?.focus()
+  }, [currentPage, perPage])
 
   const goPrev = () => {
     if (hasPrev) goToPage(currentPage - 1)
@@ -101,21 +112,29 @@ export default function News() {
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (pageCount <= 1) return
+    const focusInsideGrid =
+      typeof document !== 'undefined' && Boolean(gridRef.current?.contains(document.activeElement))
     const isRtl = typeof document !== 'undefined' && document.documentElement.dir === 'rtl'
     if (event.key === 'ArrowRight') {
       event.preventDefault()
-      if (isRtl) goPrev()
-      else goNext()
+      if (isRtl) {
+        if (hasPrev) goToPage(currentPage - 1, focusInsideGrid)
+      } else if (hasNext) {
+        goToPage(currentPage + 1, focusInsideGrid)
+      }
     } else if (event.key === 'ArrowLeft') {
       event.preventDefault()
-      if (isRtl) goNext()
-      else goPrev()
+      if (isRtl) {
+        if (hasNext) goToPage(currentPage + 1, focusInsideGrid)
+      } else if (hasPrev) {
+        goToPage(currentPage - 1, focusInsideGrid)
+      }
     } else if (event.key === 'Home') {
       event.preventDefault()
-      goToPage(0)
+      goToPage(0, focusInsideGrid)
     } else if (event.key === 'End') {
       event.preventDefault()
-      goToPage(pageCount - 1)
+      goToPage(pageCount - 1, focusInsideGrid)
     }
   }
 
@@ -175,6 +194,7 @@ export default function News() {
           )}
 
           <div
+            ref={gridRef}
             key={`page-${currentPage}-${perPage}`}
             className="cd-writing-grid cd-news-grid-page"
           >
