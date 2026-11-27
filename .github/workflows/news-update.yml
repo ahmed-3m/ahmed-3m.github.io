@@ -73,6 +73,12 @@ jobs:
       - name: Self-test agent-stdout extractor
         run: node .github/news/parse-agent-stdout.mjs --self-test
 
+      - name: Self-test research context builder
+        run: node .github/news/prepare-research-context.mjs --self-test
+
+      - name: Prepare compact dedup index
+        run: node .github/news/prepare-research-context.mjs "$RUNNER_TEMP/news-dedup-index.json"
+
       - name: Collect news delta on stdout
         env:
           # Z.ai (international) Anthropic Messages endpoint. Claude Code
@@ -110,6 +116,8 @@ jobs:
             echo "::error::Secret EXA_API_KEY is unset or empty, so the Exa research MCP cannot authenticate. Set it with: gh secret set EXA_API_KEY"
             exit 1
           fi
+          today_utc="$(date -u +%F)"
+          prompt="$(printf '%s\n\n## Run context\n- todayUtc: %s\n- Dedup index path (read this compact file instead of src/lib/news-items.json): %s/news-dedup-index.json\n' "$(cat .github/news/task.md)" "$today_utc" "$RUNNER_TEMP")"
           # Fall back through GLM tiers on transient overload (529): the flagship
           # model is the most capacity-constrained, so the lighter flash tier
           # often succeeds. Short backoff (15s) because the run is daily —
@@ -131,7 +139,9 @@ jobs:
             err="$RUNNER_TEMP/agent-attempt-$attempt.err"
             set +e
             ANTHROPIC_DEFAULT_SONNET_MODEL="$m" ANTHROPIC_DEFAULT_OPUS_MODEL="$m" \
-              claude -p "$(cat .github/news/task.md)" \
+              claude -p "$prompt" \
+              --tools "Read" \
+              --strict-mcp-config \
               --mcp-config .github/news/exa-mcp.json \
               --allowedTools "Read,mcp__exa" \
               --permission-mode bypassPermissions \
@@ -159,7 +169,8 @@ jobs:
                 echo "::endgroup::"
                 exit 1
               fi
-              echo "Succeeded with $m."
+              candidate_count="$(node -e "const d = JSON.parse(require('fs').readFileSync(process.argv[1],'utf8')); console.log(Array.isArray(d?.items) ? d.items.length : 'invalid')" "$RUNNER_TEMP/news-delta.json")"
+              echo "Succeeded with $m (candidates: $candidate_count)."
               exit 0
             fi
             combined="$RUNNER_TEMP/agent-attempt-$attempt.combined.log"
@@ -189,6 +200,9 @@ jobs:
   validate:
     needs: research
     runs-on: ubuntu-latest
+    outputs:
+      items_count: ${{ steps.sanitize.outputs.items_count }}
+      has_items: ${{ steps.sanitize.outputs.has_items }}
     permissions:
       contents: read
     env:
@@ -206,35 +220,48 @@ jobs:
           node-version: "24"
           cache: "npm"
 
-      - run: npm ci
-
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: news-delta
           path: ${{ runner.temp }}
 
-      - name: Sanitize delta against current main
+      - name: Sanitize delta & probe incoming links
+        id: sanitize
         run: |
+          set -euo pipefail
           node --input-type=module <<'EOF'
           import { readFile, writeFile, lstat } from 'node:fs/promises'
-          import { applyNewsDelta, parseNewsItems } from './src/lib/news.ts'
-          const path = process.env.RUNNER_TEMP + '/news-delta.json'
-          const st = await lstat(path)
+          import { parseNewsItems, sanitizeIncomingDelta } from './src/lib/news.ts'
+          const deltaPath = process.env.RUNNER_TEMP + '/news-delta.json'
+          const st = await lstat(deltaPath)
           if (!st.isFile() || st.isSymbolicLink() || st.size > 64_000) {
             throw new Error('delta must be a regular file ≤ 64KB')
           }
-          const delta = JSON.parse(await readFile(path, 'utf8'))
+          const delta = JSON.parse(await readFile(deltaPath, 'utf8'))
           const existing = parseNewsItems(JSON.parse(await readFile('src/lib/news-items.json', 'utf8')))
-          const next = applyNewsDelta(existing, delta)
-          // Write sanitized delta (parsed items only), NOT the full catalog.
-          // Filter by id rather than slicing: once the catalog is full, eviction
-          // keeps next.length === existing.length and a slice would come back empty.
-          const existingIds = new Set(existing.map((item) => item.id))
-          const sanitized = { items: next.filter((item) => !existingIds.has(item.id)) }
-          await writeFile(path, JSON.stringify(sanitized) + '\n')
+          const { accepted, dropped } = sanitizeIncomingDelta(existing, delta)
+          for (const d of dropped) {
+            console.log(`::warning::Dropped candidate item (${d.kind}) ${d.id || d.url || 'unknown'}: ${d.reason}`)
+          }
+          await writeFile(deltaPath, JSON.stringify({ items: accepted }) + '\n')
           EOF
+          node .github/news/news-selftest.mjs
+          node .github/news/check-news-links.mjs --self-test
+          node .github/news/check-news-links.mjs --delta "$RUNNER_TEMP/news-delta.json" --drop-failed
+          items_count="$(node -e "const d = JSON.parse(require('fs').readFileSync(process.env.RUNNER_TEMP + '/news-delta.json','utf8')); console.log(d.items.length)")"
+          echo "items_count=$items_count" >> "$GITHUB_OUTPUT"
+          if [ "$items_count" -gt 0 ]; then
+            echo "has_items=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_items=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install dependencies (publishing delta only)
+        if: steps.sanitize.outputs.has_items == 'true'
+        run: npm ci
 
       - name: Build with delta applied (local copy only)
+        if: steps.sanitize.outputs.has_items == 'true'
         run: |
           node --input-type=module <<'EOF'
           import { readFile, writeFile } from 'node:fs/promises'
@@ -245,9 +272,7 @@ jobs:
           await writeFile('src/lib/news-items.json', JSON.stringify(next, null, 2) + '\n')
           EOF
           npm run build
-          node .github/news/news-selftest.mjs
-          node .github/news/check-news-links.mjs --self-test
-          node .github/news/check-news-links.mjs
+          npm run verify:export
 
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
@@ -257,7 +282,7 @@ jobs:
 
   publish:
     needs: validate
-    if: github.event_name == 'schedule' || github.event.inputs.dry_run == 'false'
+    if: (github.event_name == 'schedule' || github.event.inputs.dry_run == 'false') && needs.validate.outputs.has_items == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -272,9 +297,6 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: "24"
-          cache: "npm"
-
-      - run: npm ci
 
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
@@ -283,16 +305,23 @@ jobs:
 
       - name: Apply sanitized delta to current main
         run: |
+          node .github/news/news-selftest.mjs
+          node .github/news/check-news-links.mjs --delta "$RUNNER_TEMP/news-delta.json" --drop-failed
           node --input-type=module <<'EOF'
           import { readFile, writeFile } from 'node:fs/promises'
-          import { applyNewsDelta, parseNewsItems } from './src/lib/news.ts'
-          const delta = JSON.parse(await readFile(process.env.RUNNER_TEMP + '/news-delta.json', 'utf8'))
+          import { parseNewsItems, sanitizeIncomingDelta } from './src/lib/news.ts'
+          const deltaPath = process.env.RUNNER_TEMP + '/news-delta.json'
+          const delta = JSON.parse(await readFile(deltaPath, 'utf8'))
           const existing = parseNewsItems(JSON.parse(await readFile('src/lib/news-items.json', 'utf8')))
-          const next = applyNewsDelta(existing, delta)
-          await writeFile('src/lib/news-items.json', JSON.stringify(next, null, 2) + '\n')
+          const { accepted, dropped, nextCatalog } = sanitizeIncomingDelta(existing, delta)
+          for (const d of dropped) {
+            console.log(`::warning::Skipped item at publish boundary (${d.kind}) ${d.id || d.url || ''}: ${d.reason}`)
+          }
+          if (accepted.length > 0) {
+            await writeFile('src/lib/news-items.json', JSON.stringify(nextCatalog, null, 2) + '\n')
+          }
+          await writeFile(deltaPath, JSON.stringify({ items: accepted }) + '\n')
           EOF
-          npm run build
-          node .github/news/check-news-links.mjs
 
       - name: Publish JSON-only delta via PR merge
         id: publish
@@ -552,7 +581,7 @@ jobs:
             git push origin --delete "refs/heads/${{ steps.publish.outputs.branch }}" || true
           fi
 
-  # publish is skipped on dry-run; needs.*.result for a skipped job is
+  # publish is skipped on dry-run or quiet days; needs.*.result for a skipped job is
   # skipped, which is not failure. A dry-run research/validate failure still
   # alerts. First-failure (open or comment), not a two-run counter.
   alert:

@@ -21,7 +21,7 @@
  * Self-test: `node check-news-links.mjs --self-test` pins HARD_FAIL classification
  * and SSRF predicates (no network for the predicate cases).
  */
-import { readFile } from 'node:fs/promises'
+import { readFile, writeFile } from 'node:fs/promises'
 import dns from 'node:dns'
 import { isIP, BlockList } from 'node:net'
 import { fileURLToPath } from 'node:url'
@@ -119,6 +119,7 @@ async function probe(url, hops = 0) {
       signal: ctrl.signal,
       headers: { 'user-agent': UA },
     })
+    await res.body?.cancel().catch(() => {})
     if (res.status >= 300 && res.status < 400) {
       if (hops >= MAX_REDIRECTS) {
         return { url, status: 0, error: 'TOO_MANY_REDIRECTS', blocked: true }
@@ -137,10 +138,29 @@ async function probe(url, hops = 0) {
 
 const HARD_FAIL_STATUSES = new Set([404, 410])
 
-const isHardFail = (r) =>
+export const isHardFail = (r) =>
   r.blocked === true ||
   HARD_FAIL_STATUSES.has(r.status) ||
   (r.status === 0 && typeof r.error === 'string' && /ENOTFOUND|EAI_AGAIN|ENODATA/.test(r.error))
+
+/**
+ * Filter a delta's items against probe results. Drops any item whose URL is a
+ * hard failure so a single bad link never forfeits valid siblings, while failing
+ * when a non-empty delta ends up with zero reachable items.
+ */
+export function filterDeltaByProbeResults(items, resultsByUrl) {
+  const kept = []
+  const dropped = []
+  for (const item of items) {
+    const res = resultsByUrl.get(item.url)
+    if (res && isHardFail(res)) {
+      dropped.push({ item, result: res })
+    } else {
+      kept.push(item)
+    }
+  }
+  return { kept, dropped }
+}
 
 async function selfTest() {
   let failed = false
@@ -188,6 +208,42 @@ async function selfTest() {
   expectBlocked('https://[::1]/', 'https://[::1]/', true)
   expectBlocked('https://example.com/', 'https://example.com/', false)
 
+  {
+    const deltaItems = [
+      { id: 'ok', url: 'https://example.com/ok' },
+      { id: 'bad', url: 'https://example.com/missing' },
+      { id: 'warn', url: 'https://example.com/ratelimit' },
+    ]
+    const resultsMap = new Map([
+      ['https://example.com/ok', { url: 'https://example.com/ok', status: 200 }],
+      ['https://example.com/missing', { url: 'https://example.com/missing', status: 404 }],
+      ['https://example.com/ratelimit', { url: 'https://example.com/ratelimit', status: 429 }],
+    ])
+    const { kept, dropped } = filterDeltaByProbeResults(deltaItems, resultsMap)
+    const ok = kept.length === 2 && dropped.length === 1 && dropped[0].item.id === 'bad'
+    console.log(`self-test: delta per-item filter (keeps 200/429, drops 404) ${ok ? '✓' : '✗'}`)
+    if (!ok) failed = true
+
+    // Simulated redirect where probeFn returns the final destination URL rather than input URL:
+    const redirectRes = await probeDeltaItems(
+      [
+        { id: 'redir-404', url: 'https://example.com/start' },
+        { id: 'redir-ok', url: 'https://example.com/short' },
+      ],
+      async (u) =>
+        u === 'https://example.com/start'
+          ? { url: 'https://example.com/missing', status: 404 }
+          : { url: 'https://example.com/dest', status: 200 },
+    )
+    const redirOk =
+      redirectRes.kept.length === 1 &&
+      redirectRes.kept[0].id === 'redir-ok' &&
+      redirectRes.dropped.length === 1 &&
+      redirectRes.dropped[0].item.id === 'redir-404'
+    console.log(`self-test: delta probe keys redirected results by original URL ${redirOk ? '✓' : '✗'}`)
+    if (!redirOk) failed = true
+  }
+
   if (failed) {
     console.error('self-test FAILED: link classification drifted from the documented policy.')
     process.exit(1)
@@ -213,7 +269,7 @@ async function mapWithConcurrency(items, limit, worker) {
   return results
 }
 
-async function checkCatalog() {
+async function checkCatalog({ warnOnly = false } = {}) {
   const src = await readFile(FILE, 'utf8')
   let catalog
   try {
@@ -249,12 +305,79 @@ async function checkCatalog() {
 
   for (const w of warnings)
     console.warn(`⚠️  ${w.status || w.error} (allowed) ${w.url}`)
-  for (const f of failures) console.error(`❌  ${f.status || f.error} ${f.url}`)
+  for (const f of failures) {
+    if (warnOnly) {
+      console.warn(`::warning::Catalog link rot detected (${f.status || f.error}): ${f.url}`)
+    } else {
+      console.error(`❌  ${f.status || f.error} ${f.url}`)
+    }
+  }
 
   console.log(
     `\nChecked ${results.length} unique links — ${failures.length} hard failures, ${warnings.length} warnings.`,
   )
-  process.exit(failures.length > 0 ? 1 : 0)
+  process.exit(!warnOnly && failures.length > 0 ? 1 : 0)
+}
+
+export async function probeDeltaItems(items, probeFn = probe) {
+  const urls = items.map((item) => item?.url).filter((u) => typeof u === 'string' && u.trim())
+  const uniqueUrls = [...new Set(urls)]
+  const entries = await mapWithConcurrency(uniqueUrls, PROBE_CONCURRENCY, async (u) => [
+    u,
+    await probeFn(u),
+  ])
+  const byUrl = new Map(entries)
+  const { kept, dropped } = filterDeltaByProbeResults(items, byUrl)
+  return { uniqueUrls, results: entries.map(([, r]) => r), kept, dropped }
+}
+
+async function checkDelta(deltaPath, { dropFailed = false } = {}) {
+  const raw = JSON.parse(await readFile(deltaPath, 'utf8'))
+  if (!raw || typeof raw !== 'object' || !Array.isArray(raw.items)) {
+    console.error(`Invalid delta JSON at ${deltaPath} — expected { items: [...] }.`)
+    process.exit(1)
+  }
+  if (raw.items.length === 0) {
+    console.log('Delta contains 0 items — skipping link probe.')
+    process.exit(0)
+  }
+
+  const { uniqueUrls, results, kept, dropped } = await probeDeltaItems(raw.items)
+
+  for (const r of results) {
+    if (!isHardFail(r) && (r.status === 0 || r.status >= 400)) {
+      console.warn(`⚠️  ${r.status || r.error} (allowed) ${r.url}`)
+    } else if (!isHardFail(r)) {
+      console.log(`✓  ${r.status} ${r.url}`)
+    }
+  }
+
+  for (const { item, result } of dropped) {
+    const code = result.status || result.error
+    if (dropFailed) {
+      console.warn(`::warning::Dropped delta item "${item.id}" due to dead URL (${code}): ${item.url}`)
+    } else {
+      console.error(`❌  ${code} ${item.url}`)
+    }
+  }
+
+  if (dropFailed && dropped.length > 0) {
+    await writeFile(deltaPath, `${JSON.stringify({ items: kept })}\n`, 'utf8')
+  }
+
+  console.log(
+    `Checked ${uniqueUrls.length} delta link(s) — ${kept.length} kept, ${dropped.length} dropped.`,
+  )
+
+  if (dropFailed) {
+    if (kept.length === 0) {
+      console.error('All non-empty delta items failed link reachability checks.')
+      process.exit(1)
+    }
+    process.exit(0)
+  }
+
+  process.exit(dropped.length > 0 ? 1 : 0)
 }
 
 function isDirectRun() {
@@ -268,9 +391,18 @@ function isDirectRun() {
 }
 
 if (isDirectRun()) {
-  if (process.argv.includes('--self-test')) {
+  const args = process.argv.slice(2)
+  const deltaIdx = args.indexOf('--delta')
+  if (args.includes('--self-test')) {
     await selfTest()
+  } else if (deltaIdx !== -1) {
+    const deltaPath = args[deltaIdx + 1]
+    if (!deltaPath) {
+      console.error('usage: check-news-links.mjs --delta <path> [--drop-failed]')
+      process.exit(2)
+    }
+    await checkDelta(deltaPath, { dropFailed: args.includes('--drop-failed') })
   } else {
-    await checkCatalog()
+    await checkCatalog({ warnOnly: args.includes('--warn-only') })
   }
 }

@@ -9,7 +9,15 @@ import { register } from 'node:module'
 import { dirname, join } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { fileURLToPath } from 'node:url'
-import { parseNewsItems, canonicalNewsUrl, applyNewsDelta, NEWS_LIMITS } from '../../src/lib/news.ts'
+import {
+  parseNewsItems,
+  canonicalNewsUrl,
+  applyNewsDelta,
+  sanitizeIncomingDelta,
+  stripTrackingParams,
+  normalizeIncomingTags,
+  NEWS_LIMITS,
+} from '../../src/lib/news.ts'
 import { serializeJsonLd } from '../../src/lib/serialize-json-ld.ts'
 import { isBlockedHostname, isBlockedIp } from './check-news-links.mjs'
 
@@ -174,6 +182,62 @@ assert(
   applyNewsDelta([valid], { items: [{ ...valid, id: 'other', url: 'https://example.com/b' }] })
     .length === 2,
 )
+
+{
+  const cleaned = stripTrackingParams('https://example.com/story?utm_source=exa&id=42&fbclid=abc')
+  assert(
+    'tracking params stripped, significant params kept',
+    cleaned === 'https://example.com/story?id=42' &&
+      canonicalNewsUrl('https://Example.COM/story/?id=42&utm_medium=social') ===
+        canonicalNewsUrl('https://example.com/story?id=42'),
+    cleaned,
+  )
+}
+
+assert(
+  'normalizeIncomingTags maps synonyms and dedupes',
+  JSON.stringify(normalizeIncomingTags(['agent-governance', 'governance', 'agentic-coding'])) ===
+    JSON.stringify(['governance', 'coding-agents']),
+)
+
+{
+  const full5 = (n, extra = {}) => ({
+    id: `item-${n}`,
+    date: '2026-01-15',
+    category: 'agentic',
+    headline: { en: `H${n}`, de: `D${n}`, fr: `F${n}`, es: `E${n}`, ar: `A${n}` },
+    source: 'Anthropic',
+    url: `https://example.com/post-${n}?utm_source=test`,
+    take: { en: `T${n}`, de: `TD${n}`, fr: `TF${n}`, es: `TE${n}`, ar: `TA${n}` },
+    tags: ['agent-governance', 'governance'],
+    ...extra,
+  })
+  const res = sanitizeIncomingDelta([valid], {
+    items: [
+      full5(1),
+      full5(2, { take: { en: 'Only EN' } }), // missing 4 locales -> dropped invalid
+      full5(3, { url: 'https://example.com/a/?utm_campaign=dupe' }), // duplicate URL -> dropped dupe
+    ],
+  })
+  assert(
+    'sanitizeIncomingDelta keeps valid subset and drops bad/dupe siblings',
+    res.accepted.length === 1 &&
+      res.accepted[0].id === 'item-1' &&
+      res.accepted[0].url === 'https://example.com/post-1' &&
+      JSON.stringify(res.accepted[0].tags) === JSON.stringify(['governance']) &&
+      res.dropped.length === 2,
+    JSON.stringify(res),
+  )
+
+  const allDupes = sanitizeIncomingDelta([valid], {
+    items: [full5(4, { url: 'https://example.com/a' })],
+  })
+  assert('sanitizeIncomingDelta treats all-duplicate delta as quiet no-op', allDupes.accepted.length === 0)
+
+  assertThrows('sanitizeIncomingDelta fails when non-empty delta has only invalid items', () => {
+    sanitizeIncomingDelta([valid], { items: [full5(5, { url: 'http://example.com/insecure' })] })
+  })
+}
 
 function ssrfUrlBlocked(url) {
   const parsed = new URL(url)
