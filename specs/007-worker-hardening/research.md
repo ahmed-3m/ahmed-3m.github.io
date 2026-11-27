@@ -17,6 +17,7 @@ only open number. It is measured during implementation (R6).
 | Variables changed in the dashboard are overwritten by the next `wrangler deploy` unless `keep_vars = true`. Secrets are never deleted by a deploy. | Wrangler → Configuration → Source of truth | The stop switch is a secret-type setting (R7). |
 | Wrangler bundles the entry module with esbuild. `[build] command` runs a custom step before `wrangler dev` and `wrangler deploy`, in `sh` on Linux and macOS and in `cmd` on Windows. | Wrangler → Bundling; Wrangler → Custom builds | The bundled prompt copy is a committed `.js` module, so no custom build step is needed (R2). |
 | Not found in the docs: the added latency of a Durable Object call from a Worker. | — | Measured with `wrangler dev` and once after the owner's first deploy (R6). |
+| Not checked: whether `compatibility_date = "2024-01-01"` in `wrangler.toml` works with the Durable Object and Analytics Engine bindings. | — | PR 3 checks it with `wrangler dev` and `wrangler deploy --dry-run`. It moves the date forward only if a binding needs it, and then reads the compatibility flags between the two dates. |
 
 ## R1. How the site publishes the prompt file
 
@@ -73,21 +74,29 @@ The Worker is split so the self-test never needs the generated file:
 ## R3. Fetching and caching the prompt file
 
 **Decision.**
-- The Worker keeps the parsed file in module scope with the time it was loaded.
-- A request never waits for the fetch. It uses the cached copy, or the bundled copy if there is none yet.
-- When the cached copy is older than 10 minutes (or missing), the request schedules a refresh with
-  `ctx.waitUntil()`. The refresh calls `fetch(PROMPT_URL, { cf: { cacheTtl: 600, cacheEverything: true } })` with a
-  3-second `AbortSignal.timeout`.
-- The refresh validates the shape (R4, data model). A failed fetch, a non-200, a body over 256 KB, an unknown
-  `version` or a failed shape check keeps the current copy and records `prompt_source: bundled` or `cached` in
-  telemetry.
+- The Worker keeps the parsed file in module scope with the time it was loaded. Module scope is lost when an
+  isolate is recycled, which at this traffic happens often.
+- **Isolate with no fetched copy yet:** the request waits for the fetch, up to 2 seconds. If the fetch fails or
+  times out, the request uses the bundled copy, and the isolate does not try again for 60 seconds. So while GitHub
+  Pages is down, a request waits at most once a minute per isolate.
+- **Isolate with a fetched copy:** the request uses it at once. When it is older than 10 minutes, the request
+  schedules a refresh with `ctx.waitUntil()`.
+- Every fetch is `fetch(PROMPT_URL, { cf: { cacheTtl: 600, cacheEverything: true } })`. A cold isolate usually gets
+  a Cloudflare cache hit at its location, not a GitHub Pages round trip.
+- Each fetched copy is validated (R4, data model). A failed fetch, a non-200, a body over 256 KB, an unknown
+  `version` or a failed shape check keeps the current copy.
+- Telemetry records `promptSource` as `fetched`, `cached` or `bundled`.
 - `PROMPT_URL` is a `[vars]` setting, defaulting to `https://ahmed-3m.github.io/genie/prompt.json`.
 
-**Why.** A visitor never pays for a slow GitHub Pages fetch, and the Cloudflare cache keeps the fetch rate down
-across isolates.
+**Why.** If the fetch ran only in the background, a cold isolate would always answer from the bundled copy. Since
+isolates are often cold here, a knowledge change would then hardly reach visitors before the next manual deploy,
+and new entry IDs from the site would be dropped. Waiting once per isolate, usually for a cache hit, keeps the
+Worker on the site's current file.
 
-**Alternatives.** Fetching on the request path with a timeout. It adds latency to the first request in each isolate
-and fails every request while GitHub Pages is slow.
+**Alternatives.**
+- Background refresh only: no added wait, but often stale, for the reason above.
+- Fetching on every request: the Cloudflare cache makes this cheap, but there is no reason to repeat it within
+  10 minutes.
 
 ## R4. Sections, paths and default entries
 
@@ -134,8 +143,9 @@ is the longest the binding supports, which keeps the privacy notice ("kept for a
   end of the window that is full.
 - **Order of checks:** origin, client limit, body and format, stop switch, budget, upstream. A rejected request
   spends no budget. A request is counted when it starts, and a stream that has started is never cut off.
-- **Fail closed.** If the Durable Object call throws or times out (1 s), the Worker answers `unavailable` with
-  `scope: 'worker'` and calls no provider. A hard ceiling that disappears when the counter is down is not a ceiling.
+- **Fail closed.** If the Durable Object call throws or times out, the Worker answers `unavailable` with
+  `scope: 'worker'` and calls no provider. The timeout is set after the latency is measured (below), well above
+  the measured value. A hard ceiling that disappears when the counter is down is not a ceiling.
 - **Interface.** The Worker calls the object through `stub.fetch()`, not RPC, so the class needs no
   `cloudflare:workers` import and loads in Node. The self-test passes a fake stub; a unit test runs `consume` on an
   in-memory store.
@@ -213,8 +223,21 @@ the owner can match a visitor's report to a data point. It is not linked to an I
 
 ## R9. Telemetry
 
-**Decision.** An Analytics Engine dataset binding, `GENIE_EVENTS` (dataset `genie_events`). One `writeDataPoint`
-per model request, in `ctx.waitUntil()` after the response finishes:
+**Decision.** An Analytics Engine dataset binding, `GENIE_EVENTS` (dataset `genie_events`).
+
+**Which requests get a point.** One point for each request that passes validation, that is, each request that
+reaches the stop switch, the budget or a provider. This includes stop-switch and budget refusals, which US2
+scenario 5 counts. Requests refused earlier get no point: wrong origin, rate-limited, invalid. A flood of those
+could otherwise use up the 100,000 daily points. The rate limiter already bounds them.
+
+**When it is written.** `writeDataPoint` does not return a promise, so it needs no `waitUntil()`. It is called when
+the response is complete:
+- for a stream, in the stream transform's end or cancel handler;
+- otherwise, just before returning.
+
+This avoids keeping a `waitUntil()` open through a stream of up to 58 seconds, past the 30-second limit (R0).
+
+The point:
 
 - `indexes: [provider]`
 - `blobs: [lane, provider, model, outcome, format, promptSource]`
@@ -254,7 +277,8 @@ always give up first and never see the Worker's timeout error.
 handles both.
 
 - **Provider:** from `model` (in the Z.ai or Groq allowlist). An unknown model is an invalid request.
-- **Lane:** from `max_tokens`. 1,200 or more is `deep`, anything else `fast`. Today's site sends 900 or 1,600.
+- **Lane:** from `max_tokens`. 1,200 or more is `deep`, anything else `fast`. Today's site sends 900 for fast and
+  1,600 for deep, to both providers (`providers.ts`).
 - **System messages:** every message with role `system` is removed, wherever it sits.
 - **Section, path and language:** read from the removed system message:
   - section and path from the `Active page context: section="…", pathname="…"` line;
@@ -303,7 +327,9 @@ and pull plain JS into the type-checked client bundle.
 
   A wrong or unqualified figure there fails `verify:export` in the same run as the rest of 008's check (SC-005). This
   completes 008 task T047.
-- `worker/prompt-bundle.js` is covered through the up-to-date test (R2), since it must equal `buildPromptFile()`.
+- `worker/prompt-bundle.js` is not scanned directly. `tools/claims/scan-sources.mjs` reads only `src/` and its
+  listed text and SVG files, so 008's empty baseline is unaffected. The bundle is covered through the up-to-date
+  test (R2): it must equal `buildPromptFile()`, whose output is scanned as `out/genie/prompt.json`.
 - **PR 4.** `tools/verify-export.mjs` reads the rule sentences from `out/genie/prompt.json` (every sentence of 40
   characters or more) and fails when any of them is in `out/_next/static/**/*.js` (FR-019, SC-006).
 

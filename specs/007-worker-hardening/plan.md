@@ -68,7 +68,9 @@ running TypeScript modules in Node.
 **Project Type**: static website plus one edge Worker.
 
 **Performance Goals**:
-- No added wait for the prompt file on any request: it refreshes in the background.
+- The prompt file adds a wait only to the first request in a fresh isolate. That wait is usually a Cloudflare
+  cache hit and is capped at 2 seconds. Later requests in the isolate use the cached copy and refresh it in the
+  background (R3).
 - The budget call adds one Durable Object round trip. Its latency is not in the docs and is measured during PR 3
   (R6).
 
@@ -186,7 +188,7 @@ Five PRs, in the order FR-017 requires. Each one branches off `main` and is merg
 | 5 | Worker drops v1. The self-test expects v1 to be rejected. | US3 scenario 4; FR-017 step 4 | The owner deploys, at least 7 days after PR 4 is live. |
 
 **Notes.**
-- **PR 2 and PR 3 can swap order.** The spec lets US1 ship alone. PR 3 depends on PR 2's handler.
+- **PR 3 builds on PR 2's handler,** so it comes second. PR 2 can be deployed and run on its own (US1 ships alone).
 - **The privacy notice must be live before telemetry is deployed.** PR 3's site change goes live on merge, before
   the owner deploys the Worker.
 - **After each Worker deploy,** the owner runs the site-health workflow by hand (SC-008).

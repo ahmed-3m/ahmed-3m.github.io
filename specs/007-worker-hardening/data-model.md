@@ -109,7 +109,8 @@ The counter holds nothing about visitors.
 
 ## Telemetry point
 
-One Analytics Engine data point per model request (R9).
+One Analytics Engine data point for each request that passes validation, written when the response is complete
+(R9). Requests refused for origin, rate limit or validity get no point.
 
 | Slot | Value |
 |---|---|
