@@ -49,6 +49,9 @@ export interface KnowledgeChunk {
 
 const cifarBase = CIFAR_LAMBDA_SWEEP.find((entry) => entry.lambda === '0.0')!
 const cifarOptimal = CIFAR_LAMBDA_SWEEP.find((entry) => entry.isOptimal)!
+const cifarGainPp = (cifarOptimal.withinCifarMean - cifarBase.withinCifarMean).toFixed(1)
+const cifarHeadline = `${cifarOptimal.withinCifarMean.toFixed(2)}% ± ${cifarOptimal.withinCifarStd?.toFixed(2)}%`
+const seedList = (seeds: readonly number[]) => seeds.map((seed) => seed.toFixed(2)).join(', ')
 const withinCifar = BENCHMARK_DATASETS.within_cifar
 const inkjetBase = INKJET_OVERALL_SWEEP['0.0']
 
@@ -215,7 +218,7 @@ export const KNOWLEDGE_CHUNKS: readonly KnowledgeChunk[] = [
       'خسارة الفصل',
     ],
     title: 'DiffusionOOD 3-Seed Headline & Seed-42 Reconciliation',
-    facts: `M.Sc. thesis (JKU Linz, supervised by Prof. Sepp Hochreiter, grade 1): conditional diffusion models used as generative classifiers for OOD detection. Class-conditional separation loss pushes the two class-conditioned noise predictions apart during training; at inference, the difference in reconstruction errors is compared with a calibrated threshold. On within-CIFAR-10 binary airplane-vs-rest (1,000 ID vs 9,000 OOD): 3-seed mean AUROC is ${cifarOptimal.withinCifarMean.toFixed(2)}% ± ${cifarOptimal.withinCifarStd?.toFixed(2)}% at optimal lambda=${cifarOptimal.lambda} vs ${cifarBase.withinCifarMean.toFixed(2)}% ± ${cifarBase.withinCifarStd?.toFixed(2)}% at lambda=${cifarBase.lambda} (+6.5pp mean gain with far lower cross-seed variance). Single seed-42 within-CIFAR at lambda=${cifarOptimal.lambda}, K=100 reached ${withinCifar.auroc.toFixed(2)}% AUROC (${withinCifar.fpr95.toFixed(1)}% FPR95, ${withinCifar.auprc.toFixed(2)}% AUPRC) vs seed-42 lambda=0.0 baseline ${LAMBDA0_SEED42_META.auroc.toFixed(2)}% AUROC (${LAMBDA0_SEED42_META.fpr95.toFixed(1)}% FPR95). Qualifiers: binary single-ID-class benchmark, not comparable to multi-class CIFAR-10 OOD leaderboards or production accuracy.`,
+    facts: `M.Sc. thesis (JKU Linz, supervised by Prof. Sepp Hochreiter, grade 1): conditional diffusion models used as generative classifiers for OOD detection. Class-conditional separation loss pushes the two class-conditioned noise predictions apart during training; at inference, the difference in reconstruction errors is compared with a calibrated threshold. On within-CIFAR-10 binary airplane-vs-rest (1,000 ID vs 9,000 OOD): 3-seed mean AUROC is ${cifarOptimal.withinCifarMean.toFixed(2)}% ± ${cifarOptimal.withinCifarStd?.toFixed(2)}% at optimal lambda=${cifarOptimal.lambda} vs ${cifarBase.withinCifarMean.toFixed(2)}% ± ${cifarBase.withinCifarStd?.toFixed(2)}% at lambda=${cifarBase.lambda} (+${cifarGainPp}pp mean gain with far lower cross-seed variance). Single seed-42 within-CIFAR at lambda=${cifarOptimal.lambda}, K=100 reached ${withinCifar.auroc.toFixed(2)}% AUROC (${withinCifar.fpr95.toFixed(1)}% FPR95, ${withinCifar.auprc.toFixed(2)}% AUPRC) vs seed-42 lambda=0.0 baseline ${LAMBDA0_SEED42_META.auroc.toFixed(2)}% AUROC (${LAMBDA0_SEED42_META.fpr95.toFixed(1)}% FPR95). Qualifiers: binary single-ID-class benchmark, not comparable to multi-class CIFAR-10 OOD leaderboards or production accuracy.`,
     links: [DIFFUSION_URL, METHOD_URL, EXPLORER_URL, THESIS_URL],
   },
   {
@@ -272,7 +275,7 @@ export const KNOWLEDGE_CHUNKS: readonly KnowledgeChunk[] = [
       'epoch',
     ],
     title: 'DiffusionOOD Separation-Loss Lambda Sweep',
-    facts: `Within-CIFAR & SVHN lambda sweep (CIFAR_LAMBDA_SWEEP, Table 6.6 & D.1): ${lambdaSweepLines}. Optimal lambda=${cifarOptimal.lambda} (best epoch 29 on seed 42, 3 seeds [99.11, 98.95, 99.04], SVHN ${cifarOptimal.svhnAuroc.toFixed(2)}%). Baseline lambda=0.0 has high seed variance [79.73, 98.81, 99.01] and an SVHN collapse artefact at 100.00%.`,
+    facts: `Within-CIFAR & SVHN lambda sweep (CIFAR_LAMBDA_SWEEP, Table 6.6 & D.1): ${lambdaSweepLines}. Optimal lambda=${cifarOptimal.lambda} (best epoch 29 on seed 42, 3 seeds [${seedList(cifarOptimal.seeds)}], SVHN ${cifarOptimal.svhnAuroc.toFixed(2)}%). Baseline lambda=0.0 has high seed variance [${seedList(cifarBase.seeds)}] and an SVHN collapse artefact at 100.00%.`,
     links: [EXPLORER_URL, METHOD_URL, DIFFUSION_URL],
   },
   {
@@ -491,7 +494,7 @@ export const KNOWLEDGE_CHUNKS: readonly KnowledgeChunk[] = [
       'مقال',
     ],
     title: 'Blog: How I Reached 99.03% AUROC on OOD Detection',
-    facts: blogFact('ood-diffusion-thesis'),
+    facts: `${blogFact('ood-diffusion-thesis')} Qualifier: the headline ${cifarHeadline} AUROC is the 3-seed mean at lambda=${cifarOptimal.lambda} on the binary CIFAR-10 airplane-vs-rest split.`,
     links: [THESIS_POST_URL, BLOG_URL],
   },
   {
