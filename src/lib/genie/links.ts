@@ -15,6 +15,7 @@ export const THESIS_POST_URL = `${PORTFOLIO}/blog/ood-diffusion-thesis/`
 export const INDUSTRIAL_POST_URL = `${PORTFOLIO}/blog/diffusion-models-anomaly-detection/`
 export const YOLO_POST_URL = `${PORTFOLIO}/blog/computer-vision-yolo-mastery/`
 export const NEWS_URL = `${PORTFOLIO}/news/`
+export const NEWS_FEED_URL = `${PORTFOLIO}/news/feed.xml`
 export const INDUSTRIAL_URL = `${PORTFOLIO}/case-studies/inkjet-ood/`
 export const DIFFUSION_URL = `${PORTFOLIO}/case-studies/diffusion-ood/`
 export const SIHEM_URL = `${PORTFOLIO}/case-studies/sihem/`
@@ -58,6 +59,7 @@ export const publicLinks = new Map<string, URL>(
     INDUSTRIAL_POST_URL,
     YOLO_POST_URL,
     NEWS_URL,
+    NEWS_FEED_URL,
     INDUSTRIAL_URL,
     DIFFUSION_URL,
     SIHEM_URL,
@@ -91,10 +93,11 @@ export function resolveLinkProps(rawHref: string): { href: string; external: boo
     if (!parsed) return null
     if (parsed.protocol === 'mailto:') return { href: parsed.href, external: false }
     if (parsed.origin === PORTFOLIO) {
-      const isPdf = parsed.pathname.toLowerCase().endsWith('.pdf')
+      const lowerPath = parsed.pathname.toLowerCase()
+      const isStaticAsset = lowerPath.endsWith('.pdf') || lowerPath.endsWith('.xml')
       return {
         href: `${parsed.pathname}${parsed.search}${parsed.hash}`,
-        external: isPdf,
+        external: isStaticAsset,
       }
     }
     return { href: parsed.href, external: true }

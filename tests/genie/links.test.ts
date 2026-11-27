@@ -44,8 +44,9 @@ describe('resolveLinkProps', () => {
     })
   })
 
-  it('opens PDFs and external sites in a new tab', () => {
+  it('opens PDFs, XML feeds, and external sites in a new tab', () => {
     assert.deepEqual(resolveLinkProps('/cv.pdf'), { href: '/cv.pdf', external: true })
+    assert.deepEqual(resolveLinkProps('/news/feed.xml'), { href: '/news/feed.xml', external: true })
     assert.deepEqual(resolveLinkProps('https://github.com/ahmed-3m/mergeproof'), {
       href: 'https://github.com/ahmed-3m/mergeproof',
       external: true,

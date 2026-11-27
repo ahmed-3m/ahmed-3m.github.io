@@ -26,6 +26,7 @@ import {
   MERGEPROOF_PLAYGROUND_URL,
   MERGEPROOF_URL,
   METHOD_URL,
+  NEWS_FEED_URL,
   NEWS_URL,
   ORCID_URL,
   RESEARCH_URL,
@@ -551,7 +552,7 @@ export const KNOWLEDGE_CHUNKS: readonly KnowledgeChunk[] = [
     title: 'Automated Daily AI & Agentic Engineering News Feed',
     facts:
       'The portfolio News page (/news/, with RSS at /news/feed.xml) publishes curated AI and agentic engineering news updated daily by an automated research-agent pipeline (rolling window, deduplicated across 5 locales, filterable by category, topic tag, source, or keyword, with each item paired with a short editorial take in Ahmed’s voice and primary source links).',
-    links: [NEWS_URL],
+    links: [NEWS_URL, NEWS_FEED_URL],
   },
   {
     id: 'tech-stack-tools',
