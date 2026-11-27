@@ -1,6 +1,6 @@
 export type Language = 'en' | 'de' | 'fr' | 'es' | 'ar'
 
-export type TranslationMap = Partial<Record<Language, string>> & { en: string }
+export type TranslationMap = Record<Language, string>
 
 export const LANGUAGE_STORAGE_KEY = 'language'
 export const LANGUAGE_COOKIE = 'language'

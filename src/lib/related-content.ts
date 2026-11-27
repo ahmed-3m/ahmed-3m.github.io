@@ -23,11 +23,8 @@ const postsByCaseStudy: Record<CaseStudySlug, readonly string[]> = {
 function postTitle(slug: string): TranslationMap {
   const post = blogPostsMeta.find((p) => p.slug === slug)
   if (!post) throw new Error(`related-content: unknown blog post "${slug}"`)
-  const title: TranslationMap = { en: post.translations.en.title }
-  for (const [lang, translation] of Object.entries(post.translations)) {
-    if (translation) title[lang as keyof TranslationMap] = translation.title
-  }
-  return title
+  const { en, de, fr, es, ar } = post.translations
+  return { en: en.title, de: de.title, fr: fr.title, es: es.title, ar: ar.title }
 }
 
 /** Blog posts related to a case study, in the order listed above. */

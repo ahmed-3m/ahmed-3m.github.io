@@ -18,7 +18,7 @@ export interface BlogPost {
   ogImage?: string
   lastModified?: string
   citation?: BlogCitation
-  translations: Partial<Record<Language, BlogPostTranslation>> & { en: BlogPostTranslation }
+  translations: Record<Language, BlogPostTranslation>
 }
 
 export interface LocalizedBlogPost extends BlogPostTranslation {

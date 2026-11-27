@@ -1,6 +1,6 @@
 // Hermetic headless-Chromium smoke gate for ./out.
 // Serves ./out on 127.0.0.1:<ephemeral-port>, intercepts external network calls,
-// and audits representative routes across desktop dark/light + 375px mobile EN/AR
+// and audits representative routes across desktop dark/light EN/DE + 375px mobile EN/DE/AR
 // for console/page errors, RTL attributes, and horizontal overflow. When the build
 // loads GoatCounter, it also checks that page views are counted once per route.
 
@@ -40,10 +40,22 @@ const PROFILES = [
     language: 'en',
   },
   {
+    name: 'desktop-light-de',
+    viewport: { width: 1280, height: 800 },
+    theme: 'light',
+    language: 'de',
+  },
+  {
     name: 'mobile-en-ltr',
     viewport: { width: 375, height: 812 },
     theme: 'dark',
     language: 'en',
+  },
+  {
+    name: 'mobile-de-ltr',
+    viewport: { width: 375, height: 812 },
+    theme: 'dark',
+    language: 'de',
   },
   {
     name: 'mobile-light-en',
