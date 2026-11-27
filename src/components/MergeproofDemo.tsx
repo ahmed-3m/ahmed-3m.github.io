@@ -86,7 +86,7 @@ const EXIT_CODES: Record<VerdictCode, 0 | 3 | 4> = {
 
 const MAX_NOTES = 3
 const AGENT_ID = 'claude-code'
-const MODEL_ID = 'glm-5.2'
+const MODEL_ID = 'glm-5.3'
 
 function renderNewTestPassesOnBase(path: string): string {
   return `new test ${path} passes on base, so it proves nothing`
@@ -407,6 +407,13 @@ const uiCopy = {
     fr: '0 appel LLM · table de décision pure',
     es: '0 llamadas LLM · tabla de decisión pura',
     ar: '\u20660\u2069 استدعاءات \u2066LLM\u2069 · جدول قرار حتمي',
+  },
+  demoNote: {
+    en: 'Illustrative demo with preset scenarios. It does not run the mergeproof package.',
+    de: 'Beispielhafte Demo mit vorgegebenen Szenarien. Sie führt das mergeproof-Paket nicht aus.',
+    fr: 'Démo illustrative avec des scénarios prédéfinis. Elle n’exécute pas le paquet mergeproof.',
+    es: 'Demostración ilustrativa con escenarios predefinidos. No ejecuta el paquete mergeproof.',
+    ar: 'عرض توضيحي بسيناريوهات جاهزة. لا يشغّل حزمة \u2066mergeproof\u2069.',
   },
   modeGroupLabel: {
     en: 'Config mode (.mergeproof.json)',
@@ -870,6 +877,8 @@ export default function MergeproofDemo() {
           <span className="mp-eyebrow">{renderBdi(t(uiCopy.eyebrow))}</span>
           <span className="mp-zero-pill">{renderBdi(t(uiCopy.zeroLlm))}</span>
         </div>
+
+        <p className="mp-summary">{renderBdi(t(uiCopy.demoNote))}</p>
 
         <div className="mp-controls">
           <div className="mp-control-block">

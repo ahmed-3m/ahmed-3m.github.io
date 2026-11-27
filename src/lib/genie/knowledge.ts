@@ -469,7 +469,7 @@ export const KNOWLEDGE_CHUNKS: readonly KnowledgeChunk[] = [
     ],
     title: 'mergeproof Deterministic PR Gate & Playground',
     facts:
-      'mergeproof (@ahmed-3m/mergeproof, zero dependencies, MIT) checks AI-written pull requests against configured deterministic merge requirements with 0 LLM calls, returning deterministic decisions (MERGE, RETRY, or HUMAN—for example flagging modified existing tests for human review). A live client-side interactive PR gate playground (0 LLM calls) is available in the portfolio Projects section. Caveat: passing deterministic checks does not guarantee defect-free code.',
+      'mergeproof (@ahmed-3m/mergeproof, zero dependencies, MIT) checks AI-written pull requests against configured deterministic merge requirements with 0 LLM calls, returning deterministic decisions (MERGE, RETRY, or HUMAN—for example flagging modified existing tests for human review). An illustrative client-side playground with preset scenarios (0 LLM calls) is in the portfolio Projects section; it does not run the mergeproof package. Caveat: passing deterministic checks does not guarantee defect-free code.',
     links: [MERGEPROOF_PLAYGROUND_URL, MERGEPROOF_URL, GUARDRAILS_POST_URL],
   },
   {
