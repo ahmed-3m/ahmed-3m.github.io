@@ -3,12 +3,20 @@
 //   1. Missing required routes, feeds, sitemaps, LLM manifests, or CV PDF
 //   2. Missing <link rel="canonical"> tags or malformed application/ld+json blocks
 //   3. Broken internal href/src paths (including %20-encoded PDFs) and #fragment anchors
-//   4. Regressions of retired unsourced metrics, leaked public API token identifiers, or
-//      Google Analytics tags
+//   4. Leaked public API token identifiers or Google Analytics tags
 //   5. A privacy notice that disagrees with the build about the GoatCounter script
+//   6. The figure check (spec 008): unregistered, retired, spread-less or unqualified
+//      figures in the source copy and the built pages, against tools/claims/baseline.json
+// Runs with plain `node tools/verify-export.mjs`: it registers the TS hooks the figure
+// check needs before loading it.
 
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
 import path from 'node:path'
+
+import './test-hooks.mjs'
+
+// Loaded after the hooks are registered: a static import would resolve `@/` first.
+const { report, runClaimsCheck } = await import('./claims/run-check.mjs')
 
 const outDir = path.resolve(import.meta.dirname, '..', 'out')
 
@@ -57,10 +65,9 @@ const NON_ROUTE_HTML = new Set([
 ])
 
 // Joined from segments so repo-wide literal greps for retired strings never trip on this file.
+// Retired metrics moved to src/lib/claims/retired.ts; the figure check (6.) scans for them
+// in every decimal form.
 const FORBIDDEN_SUBSTRINGS = [
-  { label: 'unsourced baseline metric', value: ['80', '.25%'].join('') },
-  { label: 'unsourced pp delta', value: ['+18', '.8pp'].join('') },
-  { label: 'unsourced percentage phrase', value: ['18', '.8 percentage'].join('') },
   { label: 'retired NEXT_PUBLIC_BIGMODEL_TOKEN', value: ['NEXT_PUBLIC_BIGMODEL', '_TOKEN'].join('') },
   { label: 'retired NEXT_PUBLIC_GROQ_TOKEN', value: ['NEXT_PUBLIC_GROQ', '_TOKEN'].join('') },
   { label: 'retired NEXT_PUBLIC_ZAI_TOKEN', value: ['NEXT_PUBLIC_ZAI', '_TOKEN'].join('') },
@@ -312,7 +319,7 @@ for (const relHtml of htmlFiles) {
   }
 }
 
-// 4. Scan HTML and _next/static/**/*.js bundles for forbidden metrics & leaked token identifiers.
+// 4. Scan HTML and _next/static/**/*.js bundles for leaked token identifiers and GA tags.
 const scanTargets = [...htmlFiles, ...jsBundleFiles]
 for (const rel of scanTargets) {
   const content =
@@ -336,6 +343,12 @@ if (analyticsLoaded !== privacyMentionsGoatCounter) {
   )
 }
 
+// 6. The figure check, over the source copy and the built pages.
+const claims = runClaimsCheck({ scopes: ['source', 'export'], outDir })
+if (!claims.ok) {
+  errors.push(`figure check (spec 008) failed:\n${report(claims)}`)
+}
+
 if (errors.length > 0) {
   console.error(`verify-export: FAILED with ${errors.length} error(s):`)
   for (const err of errors) {
@@ -349,5 +362,7 @@ console.log(
     `${canonicalCount} canonical tags, ${jsonLdCount} JSON-LD blocks, ` +
     `${internalRefCount} internal refs, ${anchorCheckCount} anchors, ` +
     `${scanTargets.length} HTML/JS bundles scanned, ` +
-    `analytics ${analyticsLoaded ? 'on' : 'off'} and privacy notice consistent)`,
+    `analytics ${analyticsLoaded ? 'on' : 'off'} and privacy notice consistent, ` +
+    `figure check ${claims.units.source} source and ${claims.units.export} export units ` +
+    `in ${claims.timings.totalMs} ms, ${claims.findings.length} known in baseline)`,
 )

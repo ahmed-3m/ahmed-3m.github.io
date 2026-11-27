@@ -1,7 +1,9 @@
 <!--
 Sync Impact Report
-- Version change: template → 1.0.0 → 1.0.1
+- Version change: template → 1.0.0 → 1.0.1 → 1.0.2
 - Modified principles: update branch discipline to single-branch main model
+- 1.0.2 (2026-11-27, spec 008): the 98.4% production-accuracy line now says the figure
+  is retired and must not appear on any surface (clarification; PATCH)
 - Added sections: none
 - Removed sections: none
 - Templates requiring updates: none
@@ -83,8 +85,8 @@ Rules:
   (single ID class) unless multi-class is explicitly claimed.
 - Industrial public baseline: **0.8673 ± 0.0230 AUROC** (5-fold CV on FTI_Zer0P)
   documented in the **thesis**, not the 2024 negative-result industrial report.
-- **98.4%** production accuracy MUST always be qualified as threshold-dependent /
-  operational unless removed from headline surfaces.
+- **98.4%** production accuracy is **retired** (spec 008): it has no public artifact
+  and MUST NOT appear on any surface. The figure check fails the build on it.
 - Degree language MUST reflect true status (submitted / expected / awarded) on
   every surface that mentions it.
 - Contact email on CV and site MUST match the preferred public contact.
@@ -110,4 +112,4 @@ repository. When principles conflict with convenience, principles win.
 - Runtime agent guidance lives in `AGENTS.md` / `GEMINI.md` and MUST remain
   consistent with the Branch Discipline section above.
 
-**Version**: 1.0.1 | **Ratified**: 2026-07-12 | **Last Amended**: 2026-11-07
+**Version**: 1.0.2 | **Ratified**: 2026-07-12 | **Last Amended**: 2026-11-27
