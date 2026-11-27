@@ -10,8 +10,12 @@ interface Figure { raw: string; value: number; resultLooking: boolean; index: nu
 /** Findings for one text unit. Applies the non-result patterns; does not apply the baseline. */
 export function checkUnit(unit: TextUnit, nonResults: NonResultEntry[]): Finding[]
 
-/** Splits findings against the baseline. Either list being non-empty is a failure. */
-export function compareWithBaseline(findings: Finding[], baseline: BaselineEntry[]):
+/** Retired figures, joined from segments (from retired.ts; not importable by components). */
+export function retiredFigures(): readonly { id: string; text: string; reason: string }[]
+
+/** Splits findings against the baseline, for the scopes this runner scanned.
+ *  Either list being non-empty is a failure. */
+export function compareWithBaseline(findings: Finding[], baseline: BaselineEntry[], scopes: Array<'source' | 'export'>):
   { newFindings: Finding[]; staleEntries: BaselineEntry[] }
 ```
 
@@ -22,7 +26,7 @@ export function compareWithBaseline(findings: Finding[], baseline: BaselineEntry
 | `unregistered` | A result-looking figure is not `isBackedValue` and matches no non-result pattern | `not a registered value — register it in src/lib/claims/registry.ts, or add a non-result pattern with a reason` |
 | `retired` | A figure matches a retired value in any form | `retired figure (<reason>)` |
 | `mean-without-spread` | A named claim's mean appears and its spread value is absent from the unit | `mean without its spread (<expected spread form>)` |
-| `missing-qualifier` | A named claim appears and a required qualifier's accepted phrasing is absent from the unit | `missing qualifier: <qualifier text in that language>` |
+| `missing-qualifier` | A named claim appears and a required qualifier's accepted phrasing is absent from the unit. PR A enforces only today's three rules (research R7). | `missing qualifier: <qualifier text in that language>` |
 | `stale-og-image` | An OG card's text hash differs from `og-cards.lock.json` | `OG image <file> is stale — regenerate it` |
 | `stale-baseline` | A baseline entry no longer occurs | `remove this entry from tools/claims/baseline.json` |
 

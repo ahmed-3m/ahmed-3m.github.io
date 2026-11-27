@@ -37,21 +37,28 @@ interface Claim {
 
 **Starting claims** (from FR-003). Final ids are set in tasks.
 
+PR A enforces only today's three rules: `threeSeeds` on `thesis.mean`, `seed42` on
+`thesis.seed42`, and `fiveFoldCv` on `inkjet.baseline`. "Candidate" rules are measured
+but not enforced until a spec amendment (research R7).
+
 | id | value | spread | qualifiers |
 |---|---|---|---|
-| `thesis.mean` | 99.03 % | 0.07 | `threeSeeds`, `airplaneVsRest` |
-| `thesis.baseline` | 92.52 % | 11.07 | `threeSeeds`, `airplaneVsRest` |
-| `thesis.gainPp` | computed: mean − baseline = 6.5 pp | n/a | `threeSeeds` |
+| `thesis.mean` | 99.03 % | 0.07 | `threeSeeds` (+ candidate `airplaneVsRest`) |
+| `thesis.baseline` | 92.52 % | 11.07 | none enforced (candidates `threeSeeds`, `airplaneVsRest`) |
+| `thesis.gainPp` | computed: mean − baseline = 6.5 pp | n/a | none enforced (candidate `threeSeeds`) |
 | `thesis.seed42` | 98.98 % (`BENCHMARK_DATASETS.within_cifar`) | n/a | `seed42` |
-| `thesis.seed42Fpr95` | 4.7 % | n/a | `seed42` |
-| `benchmark.externalRange` | min–max of the non-within datasets | n/a | `seed42` |
-| `benchmark.externalMean` | computed mean of the non-within datasets | n/a | `seed42` |
-| `thesis.kAblation.*` | the K-ablation values pages quote | n/a | per table |
-| `thesis.lambdaSweep.*` | the λ-sweep values pages quote | per row | `threeSeeds` |
+| `thesis.seed42Fpr95` | 4.7 % | n/a | none enforced (candidate `seed42`) |
+| `benchmark.externalRange` | min–max of the non-within datasets | n/a | none enforced (candidate `seed42`) |
+| `benchmark.externalMean` | computed mean of the non-within datasets | n/a | none enforced (candidate `seed42`) |
+| `thesis.kAblation.*` | the K-ablation values pages quote | n/a | none enforced |
+| `thesis.lambdaSweep.*` | the λ-sweep values pages quote | per row | none enforced (candidate `threeSeeds`) |
 | `inkjet.baseline` | 0.8673 | 0.0230 | `fiveFoldCv` |
-| `inkjet.yoloMetric`? | 95.04 % | n/a | depends on evidence; triage in PR A (research R0) |
+| `inkjet.yoloMetric`? | 95.04 % | n/a | only if the owner names a public artifact; else removed in PR B (plan, open decision 2) |
 
 ## RetiredClaim
+
+This lives in `src/lib/claims/retired.ts`. Only `check.ts` imports it; components never
+do (research R1).
 
 ```ts
 interface RetiredClaim {
@@ -65,8 +72,9 @@ interface RetiredClaim {
 
 The starting entries are `80.25%`, `+18.8pp`, "18.8 percentage" and `98.4%`.
 
-**Transition**: a claim moves from `CLAIMS` to `RETIRED`, never back without a spec
-change. `formatClaim` throws for any retired id (FR-005).
+**Transition**: a claim moves from `CLAIMS` to `retired.ts`, never back without a spec
+change. `formatClaim` then throws "unknown claim" for its id, and the type rejects it
+(FR-005).
 
 ## Qualifier
 
@@ -153,10 +161,18 @@ interface Finding {
 This lives in `tools/claims/baseline.json`.
 
 ```ts
-interface BaselineEntry { file: string; lang: Language; figure: string; rule: Rule; note?: string }
+interface BaselineEntry {
+  scope: 'source' | 'export'   // export = built HTML, seen only by verify:export
+  file: string                 // repository-relative, forward slashes
+  lang: Language
+  figure: string
+  rule: Rule
+  note?: string
+}
 ```
 
-The key is `(file, lang, figure, rule)`. When the same key occurs several times, it
+The key is `(scope, file, lang, figure, rule)`. Each runner checks staleness only for the
+scopes it scans. When the same key occurs several times, it
 needs a matching count, stored as repeated entries.
 
 **Lifecycle**:

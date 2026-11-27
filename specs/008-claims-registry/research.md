@@ -23,14 +23,14 @@ real baseline file replaces them.
 | Registered values with three decimals and a non-zero integer part (they would clash with the thousands rule) | none |
 | Unregistered decimals in result context | 26 hits, 5 distinct (table below) |
 | Mean without its spread anywhere in the same unit | about 30 |
-| Registered claim without its qualifier in the same unit | about 70: blog titles 26, `llms*.txt` 11, diffusion case-study metadata 6, Evidence, HeroSignal, Projects and Research tiles 15, other 12 |
+| Registered claim without its qualifier in the same unit (today's three rules only) | about 70; the largest group is blog titles at 26. The others:  `llms*.txt` 11, diffusion case-study metadata 6, Evidence, HeroSignal, Projects and Research tiles 15, other 12 |
 
 The 5 distinct unregistered decimals:
 
 | Figure | Where | Verdict |
 |---|---|---|
 | `98.9%`, `95.4%` (`98,9%`, `95,4%` in de and fr) | `OodDemo.tsx`, timestep-strategy note, 5 languages | **Rounded** copies of `98.87` and `95.44` in `TIMESTEP_STRATEGIES`. A real finding: the clarification says full precision only. |
-| `95.04%` | `blog-posts.ts`, InkjetOOD YOLOv8m paragraph, 5 languages | **Not in the data file.** A YOLO detection metric. Needs a registered claim with an evidence reference, or removal. Triage in PR A. |
+| `95.04%` | `blog-posts.ts`, InkjetOOD YOLOv8m paragraph, 5 languages | **Not in the data file.** A YOLO detection metric. Baselined in PR A. The owner decides before PR B: register it with a public artifact, or remove it. |
 | `6.8`, `6.1` | "Fig. 6.8", "Table 6.1", "art. 6.1.f" | Not results. Non-result patterns. |
 | `1,1000` | `U[1,1000]` interval | Not a result. Non-result pattern for bracketed intervals. |
 
@@ -38,8 +38,8 @@ The 5 distinct unregistered decimals:
 
 - **German and French decimal marks are mixed today.** `Hero.tsx` and `OodDemo.tsx` use
   `99,03%`; `Evidence.tsx`, `Research.tsx` and `portfolio-copy.ts` use `99.03%` and `+6.5pp`
-  in the de and fr entries. Nothing uses the spaced form `99,03 %` that Genie's
-  `formatLocaleNumber` produces. The Spanish Hero line uses `99,03%`, while all other
+  in the de and fr entries. No page copy uses the spaced form `99,03 %`. Only Genie's German and French
+  replies do, through `formatLocaleNumber`, and the Genie test asserts it. The Spanish Hero line uses `99,03%`, while all other
   Spanish copy uses a point.
 - **Blog posts write the spread as `+/-`**, not `±`.
 - **Some text states a spread apart from its mean.** `Experience.tsx` says "from 92.52% to
@@ -51,9 +51,14 @@ The 5 distinct unregistered decimals:
 ## R1. Registry location and shape
 
 **Decision**: the registry lives in `src/lib/claims/registry.ts`. It is a typed `const`
-object of named claims built from `ood-explorer-data.ts`. Retired claims live in a
-separate list, with their values joined from segments. The module imports only the data
+object of named claims built from `ood-explorer-data.ts`. The module imports only the data
 file, never `node:` modules.
+
+Retired claims live in `src/lib/claims/retired.ts`, with their values joined from
+segments. Only `check.ts` imports that file. An ESLint `no-restricted-imports` rule keeps
+it, and `check.ts`, out of `src/components` and `src/app`. Otherwise the retired values
+would reach the client bundle, where the minifier can fold the segments back into a
+literal and the bundle scan would fail on the registry itself.
 
 **Rationale**:
 - Components, the OG generator, Genie and the tests all need it.
@@ -222,6 +227,24 @@ additions:
 
 New phrasings go into the registry, never into the check (spec assumption).
 
+**Scope in PR A**: only today's three rules are enforced, the ones the Genie test
+already applies:
+
+- `threeSeeds` on the thesis mean (99.03%);
+- `seed42` on the seed-42 run (98.98%);
+- `fiveFoldCv` on the inkjet baseline (0.8673).
+
+These candidate rules are measured in PR A, and the counts go into the PR A
+description:
+
+- `airplaneVsRest` on the thesis claims;
+- `threeSeeds` on the baseline and the gain;
+- `seed42` on FPR@95 and the external benchmark figures.
+
+Each candidate is enforced only after a spec amendment in PR B, because the spec
+assumption names today's phrasings and FR-009/SC-007 require the same Genie cases to
+pass. The Genie test keeps applying exactly the three.
+
 **Rationale**: the registry is the single place where the wording lives. The Genie
 test's current patterns carry over unchanged, so its coverage holds (FR-009, SC-007).
 
@@ -251,8 +274,21 @@ classes are:
 ## R9. Baseline of existing findings
 
 **Decision**: `tools/claims/baseline.json` lists the findings present when the check
-lands. Each finding is keyed by file, language, figure and rule, with no line numbers,
-so ordinary edits do not churn it. The check:
+lands. Each finding is keyed by scope, file, language, figure and rule, with no line
+numbers, so ordinary edits do not churn it.
+
+- **Paths**: repository-relative with forward slashes, so a baseline written on Windows
+  matches on the Linux CI runner.
+- **Scope**: each entry is `source` (the source, manifest, README, SVG and OG scan,
+  which both runners perform) or `export` (built HTML, which only `verify:export` sees).
+  Each runner reports stale entries only for the scopes it scans, so `npm test` never
+  sees the `export` partition as stale.
+- **Duplicates in the export**: an export finding is dropped when its figure and rule
+  already have a `source` finding. A blog title rendered on every page that links to
+  it is then reported once, at its source. The export partition was not measured in R0.
+  PR A's first task measures it.
+
+The check:
 
 - fails on any finding **not** in the baseline;
 - fails on any baseline entry that **no longer occurs**, which forces the file to
@@ -331,11 +367,13 @@ executed directly.
 
 ## R13. Retired claims
 
-**Decision**: the retired list holds `80.25%`, `+18.8 pp`, "18.8 percentage" and `98.4%`
+**Decision**: `src/lib/claims/retired.ts` (see R1) holds `80.25%`, `+18.8 pp`, "18.8 percentage" and `98.4%`
 (production accuracy), each with a reason and the date it was retired. Values are stored
 as joined segments. A retired value matches in any language, with either decimal mark,
-with or without a space before the unit. `formatClaim` throws on a retired id, and the
-`ClaimId` type excludes retired ids, so the build fails twice over (FR-005). R0 found no
+with or without a space before the unit. Retired ids are not in `CLAIMS`, so
+`formatClaim` throws "unknown claim" at prerender time, and the `ClaimId` type rejects
+them at compile time. The build fails twice over (FR-005). Components cannot import
+`retired.ts`, so retired values never reach the client bundle. R0 found no
 current occurrence of `98.4`.
 
 ## R14. Constitution amendment

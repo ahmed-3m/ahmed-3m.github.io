@@ -27,8 +27,8 @@ export function formatLocaleNumber(raw: string, lang: Language): string
 /** True when the number equals a named claim, a data-file value or a derived value. */
 export function isBackedValue(n: number): boolean
 
-/** Retired figures, joined from segments at call time. */
-export function retiredFigures(): readonly { id: string; text: string; reason: string }[]
+// Not exported here: retired figures. They live in src/lib/claims/retired.ts, which only
+// check.ts imports, so they never reach the client bundle (research R1).
 ```
 
 ## Behaviour
@@ -36,8 +36,8 @@ export function retiredFigures(): readonly { id: string; text: string; reason: s
 - **Precision**: `formatClaim` never rounds. Values print with `claim.decimals` digits.
 - **Gains**: `formatClaim('thesis.gainPp', lang)` computes the gain from the two means at
   call time. A changed data value moves every surface (SC-003).
-- **Retired ids**: an id that is not a current claim throws
-  `Error('claim <id> is retired: <reason>')` or `Error('unknown claim <id>')`. Static
+- **Retired ids**: an id that is not a current claim, retired ones included, throws
+  `Error('unknown claim <id>')`. Static
   export prerendering runs this, so the build fails (FR-005). TypeScript also rejects
   such ids at compile time.
 - **Arabic**: output is wrapped in U+2066…U+2069, so callers must not add their own

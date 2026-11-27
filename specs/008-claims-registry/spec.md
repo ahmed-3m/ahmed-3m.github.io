@@ -187,8 +187,8 @@ prompt file shows the new value without a hand edit.
   claim was retired" note. Spec, test and documentation folders are not published and
   are not scanned (FR-006).
 - **OG images are committed pictures.** Their generator is run by hand, and pixels cannot
-  be scanned. The check scans the generator's text and flags an image that is older
-  than the last change to its generator's figures.
+  be scanned. The check scans the generator's text and flags an image whose card text changed
+  since the image was generated.
 
 ## Requirements *(mandatory)*
 
@@ -274,7 +274,7 @@ prompt file shows the new value without a hand edit.
   layout. A before/after text comparison of the five-language pages shows no difference
   except deliberate fixes, and each such fix is listed in the PR.
 - **FR-012**: OG images whose generator text changes MUST be regenerated in the same
-  change, and the check MUST flag an image older than its generator's figures.
+  change, and the check MUST flag an image whose card text changed since it was generated.
 
 **Later (blocked)**
 

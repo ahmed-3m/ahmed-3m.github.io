@@ -58,8 +58,8 @@ table reference, say), add a pattern with a reason to `tools/claims/non-results.
      ```
 
   3. Commit the PNGs and `tools/claims/og-cards.lock.json` together.
-- **Retired result**: move the claim from `CLAIMS` to the retired list in
-  `src/lib/claims/registry.ts`, with a reason and date, and store the value as joined
+- **Retired result**: move the claim from `CLAIMS` in `src/lib/claims/registry.ts` to
+  `src/lib/claims/retired.ts`, with a reason and date, and store the value as joined
   segments. Every surface that still uses it now fails the build.
 
 ## The baseline
