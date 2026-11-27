@@ -1281,7 +1281,7 @@ Most YOLO posts stop at "train on a large dataset and report mAP." Industrial qu
 
 ## Stage-1 Detection & Cropping with YOLOv8m
 
-In the **InkjetOOD** two-stage pipeline, **YOLOv8m** acts explicitly as a **Stage-1 feature detector and cropper** (` + '`640×640`' + ` YOLO input over ` + '`1920×1080`' + ` print frames, ` + '`95.04%`' + ` mAP@0.5 reported in the thesis). *(Erratum note: the thesis text identifies the detector as YOLOv8n, whereas the released trained checkpoint ` + '`yolo_best.pt`' + ` is ` + '`YOLOv8m`' + ` with 25.86M parameters verified from ` + '`train_args`' + `.)*
+In the **InkjetOOD** two-stage pipeline, **YOLOv8m** acts explicitly as a **Stage-1 feature detector and cropper** (` + '`640×640`' + ` YOLO input over ` + '`1920×1080`' + ` print frames). *(Erratum note: the thesis text identifies the detector as YOLOv8n, whereas the released trained checkpoint ` + '`yolo_best.pt`' + ` is ` + '`YOLOv8m`' + ` with 25.86M parameters verified from ` + '`train_args`' + `.)*
 
 Each detected print region (8 feature classes: ` + '`angle`' + `, ` + '`dist1`' + `, ` + '`dist6`' + `, ` + '`dots`' + `, and ` + '`edge1–4`' + `) is cropped and resized via bilinear interpolation to **128×128 RGB**. Across the 573 processed source-image groups on **FTI_Zer0P**, that yields **6,408 retained feature crops** for Stage-2 generative classification.
 
@@ -1342,7 +1342,7 @@ Die meisten YOLO-Beiträge enden bei "auf großem Datensatz trainieren und mAP b
 
 ## Stufe-1-Detektion und Zuschneiden mit YOLOv8m
 
-In der zweistufigen **InkjetOOD**-Pipeline arbeitet **YOLOv8m** gezielt als **Stufe-1-Merkmalsdetektor und Cropper** (` + '`640×640`' + `-Eingang auf ` + '`1920×1080`' + `-Druckbildern, ` + '`95.04%`' + ` mAP@0.5 laut Masterarbeit). *(Erratum-Hinweis: der Text der Arbeit bezeichnet den Detektor als YOLOv8n, das trainierte Gewicht ` + '`yolo_best.pt`' + ` ist jedoch laut ` + '`train_args`' + ` YOLOv8m mit 25,86 Mio. Parametern.)*
+In der zweistufigen **InkjetOOD**-Pipeline arbeitet **YOLOv8m** gezielt als **Stufe-1-Merkmalsdetektor und Cropper** (` + '`640×640`' + `-Eingang auf ` + '`1920×1080`' + `-Druckbildern). *(Erratum-Hinweis: der Text der Arbeit bezeichnet den Detektor als YOLOv8n, das trainierte Gewicht ` + '`yolo_best.pt`' + ` ist jedoch laut ` + '`train_args`' + ` YOLOv8m mit 25,86 Mio. Parametern.)*
 
 Jede erkannte Druckregion (8 Klassen: ` + '`angle`' + `, ` + '`dist1`' + `, ` + '`dist6`' + `, ` + '`dots`' + `, ` + '`edge1–4`' + `) wird ausgeschnitten und bilinear auf **128×128 RGB** skaliert. Über die 573 verarbeiteten Quellbild-Gruppen von **FTI_Zer0P** entstehen so **6.408 Merkmals-Crops** für die zweite Stufe.
 
@@ -1403,7 +1403,7 @@ La plupart des articles YOLO s'arrêtent à « entraîner sur un grand dataset e
 
 ## Détection et recadrage en phase 1 avec YOLOv8m
 
-Dans la pipeline en deux étapes **InkjetOOD**, **YOLOv8m** sert explicitement de **détecteur et recadreur de phase 1** (entrée ` + '`640×640`' + ` sur images ` + '`1920×1080`' + `, ` + '`95.04%`' + ` mAP@0.5 rapportés dans le mémoire). *(Erratum : le mémoire désigne le détecteur comme YOLOv8n, alors que le checkpoint publié ` + '`yolo_best.pt`' + ` est ` + '`YOLOv8m`' + ` à 25,86 M paramètres selon ` + '`train_args`' + `.)*
+Dans la pipeline en deux étapes **InkjetOOD**, **YOLOv8m** sert explicitement de **détecteur et recadreur de phase 1** (entrée ` + '`640×640`' + ` sur images ` + '`1920×1080`' + `). *(Erratum : le mémoire désigne le détecteur comme YOLOv8n, alors que le checkpoint publié ` + '`yolo_best.pt`' + ` est ` + '`YOLOv8m`' + ` à 25,86 M paramètres selon ` + '`train_args`' + `.)*
 
 Chaque motif détecté (8 catégories : ` + '`angle`' + `, ` + '`dist1`' + `, ` + '`dist6`' + `, ` + '`dots`' + `, ` + '`edge1–4`' + `) est recadré et redimensionné par interpolation bilinéaire en **128×128 RGB**. Sur les 573 groupes d'images de **FTI_Zer0P**, cela produit **6 408 crops de motifs** pour le classificateur génératif de phase 2.
 
@@ -1464,7 +1464,7 @@ La mayoría de los posts sobre YOLO terminan en «entrenar en un gran dataset y 
 
 ## Detección y recorte en etapa 1 con YOLOv8m
 
-En la pipeline de dos etapas **InkjetOOD**, **YOLOv8m** funciona explícitamente como **detector y recortador de etapa 1** (entrada ` + '`640×640`' + ` sobre capturas ` + '`1920×1080`' + `, ` + '`95.04%`' + ` mAP@0.5 según la tesis). *(Nota de errata: la tesis identifica el detector como YOLOv8n, pero el checkpoint publicado ` + '`yolo_best.pt`' + ` es ` + '`YOLOv8m`' + ` con 25,86 M parámetros verificados en ` + '`train_args`' + `.)*
+En la pipeline de dos etapas **InkjetOOD**, **YOLOv8m** funciona explícitamente como **detector y recortador de etapa 1** (entrada ` + '`640×640`' + ` sobre capturas ` + '`1920×1080`' + `). *(Nota de errata: la tesis identifica el detector como YOLOv8n, pero el checkpoint publicado ` + '`yolo_best.pt`' + ` es ` + '`YOLOv8m`' + ` con 25,86 M parámetros verificados en ` + '`train_args`' + `.)*
 
 Cada región detectada (8 tipos: ` + '`angle`' + `, ` + '`dist1`' + `, ` + '`dist6`' + `, ` + '`dots`' + `, ` + '`edge1–4`' + `) se recorta y redimensiona por interpolación bilineal a **128×128 RGB**. En los 573 grupos de imágenes fuente de **FTI_Zer0P**, eso produce **6.408 recortes** para el clasificador generativo de etapa 2.
 
@@ -1525,7 +1525,7 @@ Evaluado en **FTI_Zer0P** con 5-fold CV a nivel de imagen (` + '`λ = 0.0`' + `)
 
 ## الكشف والاقتصاص في المرحلة الأولى باستخدام YOLOv8m
 
-في خط **InkjetOOD** ذي المرحلتين، يعمل **YOLOv8m** صراحةً كـ **كاشف ومقتطع للمرحلة الأولى** (مدخل ` + '`640×640`' + ` على إطارات ` + '`1920×1080`' + `، بمقياس ` + '`95.04%`' + ` mAP@0.5 في الرسالة). *(ملاحظة تصويب: يصف نص الرسالة الكاشف بأنه YOLOv8n، بينما نقطة التحقق المنشورة ` + '`yolo_best.pt`' + ` هي ` + '`YOLOv8m`' + ` بـ 25.86 مليون معامل وفق ` + '`train_args`' + `.)*
+في خط **InkjetOOD** ذي المرحلتين، يعمل **YOLOv8m** صراحةً كـ **كاشف ومقتطع للمرحلة الأولى** (مدخل ` + '`640×640`' + ` على إطارات ` + '`1920×1080`' + `). *(ملاحظة تصويب: يصف نص الرسالة الكاشف بأنه YOLOv8n، بينما نقطة التحقق المنشورة ` + '`yolo_best.pt`' + ` هي ` + '`YOLOv8m`' + ` بـ 25.86 مليون معامل وفق ` + '`train_args`' + `.)*
 
 تُقتطع كل منطقة ميزة مكتشفة (8 فئات: ` + '`angle`' + `، ` + '`dist1`' + `، ` + '`dist6`' + `، ` + '`dots`' + `، ` + '`edge1–4`' + `) ويُعاد تحجيمها ثنائياً إلى **128×128 RGB**. وعبر 573 مجموعة صور أصلية في **FTI_Zer0P** ينتج عن ذلك **6,408 قصاصات** لمصنف المرحلة الثانية التوليدي.
 

@@ -4,6 +4,7 @@ import RequestCvButton from '@/components/RequestCvButton'
 import ScheduleMeetingButton from '@/components/ScheduleMeetingButton'
 import FrontDeskButton from '@/components/FrontDeskButton'
 import HeroSignal from '@/components/HeroSignal'
+import { claimParts, formatClaim } from '@/lib/claims'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { portfolioCopy } from '@/lib/portfolio-copy'
 import { usePortfolioView } from '@/lib/portfolio-view'
@@ -68,17 +69,21 @@ const copy = {
   },
   gain: { en: 'Gain over baseline (stable)', de: 'Gewinn gegenüber Baseline (stabil)', fr: 'Gain face au baseline (stable)', es: 'Mejora sobre la base (estable)', ar: 'تحسن على خط الأساس (مستقر)' },
   legend: {
-    en: '99.03% ± 0.07% AUROC = CIFAR-10 thesis (binary, single-class airplane-vs-rest, 3-seed mean) · 0.8673 ± 0.0230 AUROC = industrial FTI_Zer0P 5-fold baseline · +6.5pp = mean gain over 92.52% ± 11.07% baseline',
-    de: '99,03% ± 0,07% AUROC = CIFAR-10 Thesis (binär, Einzelklasse Flugzeug-vs-Rest, 3-Seed-Mittel) · 0,8673 ± 0,0230 AUROC = industrielle FTI_Zer0P 5-fach Baseline · +6,5pp = Gewinn über 92,52% ± 11,07% Baseline',
-    fr: '99,03% ± 0,07% AUROC = thèse CIFAR-10 (binaire, classe unique avion-vs-reste, moyenne 3 seeds) · 0,8673 ± 0,0230 AUROC = baseline industrielle FTI_Zer0P 5-fold · +6,5pp = gain sur baseline 92,52% ± 11,07%',
-    es: '99,03% ± 0,07% AUROC = tesis CIFAR-10 (binaria, clase única avión-vs-resto, media de 3 seeds) · 0,8673 ± 0,0230 AUROC = baseline industrial FTI_Zer0P 5-fold · +6,5pp = ganancia sobre base 92,52% ± 11,07%',
-    ar: '\u206699.03%\u00A0±\u00A00.07% AUROC\u2069 = رسالة CIFAR-10 (ثنائي، فئة واحدة طائرة مقابل الباقي، متوسط 3 تجارب) · \u20660.8673\u00A0±\u00A00.0230 AUROC\u2069 = خط أساس صناعي FTI_Zer0P 5-fold · \u2066+6.5pp\u2069 = تحسن على الأساس \u206692.52%\u00A0±\u00A011.07%\u2069',
+    en: `${formatClaim('thesis.mean', 'en', 'metric')} = CIFAR-10 thesis (binary, single-class airplane-vs-rest, 3-seed mean) · ${formatClaim('inkjet.baseline', 'en', 'metric')} = industrial FTI_Zer0P 5-fold baseline · ${formatClaim('thesis.gainPp', 'en')} = mean gain over ${formatClaim('thesis.baseline', 'en')} baseline`,
+    de: `${formatClaim('thesis.mean', 'de', 'metric')} = CIFAR-10 Thesis (binär, Einzelklasse Flugzeug-vs-Rest, 3-Seed-Mittel) · ${formatClaim('inkjet.baseline', 'de', 'metric')} = industrielle FTI_Zer0P 5-fach Baseline · ${formatClaim('thesis.gainPp', 'de')} = Gewinn über ${formatClaim('thesis.baseline', 'de')} Baseline`,
+    fr: `${formatClaim('thesis.mean', 'fr', 'metric')} = thèse CIFAR-10 (binaire, classe unique avion-vs-reste, moyenne 3 seeds) · ${formatClaim('inkjet.baseline', 'fr', 'metric')} = baseline industrielle FTI_Zer0P 5-fold · ${formatClaim('thesis.gainPp', 'fr')} = gain sur baseline ${formatClaim('thesis.baseline', 'fr')}`,
+    es: `${formatClaim('thesis.mean', 'es', 'metric')} = tesis CIFAR-10 (binaria, clase única avión-vs-resto, media de 3 seeds) · ${formatClaim('inkjet.baseline', 'es', 'metric')} = baseline industrial FTI_Zer0P 5-fold · ${formatClaim('thesis.gainPp', 'es')} = ganancia sobre base ${formatClaim('thesis.baseline', 'es')}`,
+    ar: `${formatClaim('thesis.mean', 'ar', 'metric')} = رسالة CIFAR-10 (ثنائي، فئة واحدة طائرة مقابل الباقي، متوسط 3 بذور) · ${formatClaim('inkjet.baseline', 'ar', 'metric')} = خط أساس صناعي FTI_Zer0P 5-fold · ${formatClaim('thesis.gainPp', 'ar')} = تحسن على الأساس ${formatClaim('thesis.baseline', 'ar')}`,
   },
 } satisfies Record<string, TranslationMap>
 
 export default function Hero() {
-  const { t } = useI18n()
+  const { t, lang } = useI18n()
   const { setView } = usePortfolioView()
+  const mean = claimParts('thesis.mean', lang)
+  const gain = claimParts('thesis.gainPp', lang)
+  // Split "99.03" / "99,03" so the decimal separator keeps its accent styling.
+  const [, meanInt, meanSep, meanFrac] = /^(.*)([.,])(\d+)$/.exec(mean.number) ?? ['', mean.number, '', '']
 
   return (
     <section id="hero" className="cd-hero" style={{ borderTop: 'none' }}>
@@ -133,14 +138,14 @@ export default function Hero() {
                 <div className="cd-stat-label">{t(copy.degree)}</div>
               </div>
               <div className="cd-stat">
-                <div className="cd-stat-num" dir="ltr">99<span className="a">.</span>03<span className="u">% ± 0.07%</span></div>
+                <div className="cd-stat-num" dir="ltr">{meanInt}<span className="a">{meanSep}</span>{meanFrac}<span className="u">{mean.unit} ± {mean.spread}{mean.unit}</span></div>
                 <div className="cd-stat-label">
                   <span className="cd-stat-label-wide">{t(copy.auroc)}</span>
                   <span className="cd-stat-label-compact">{t(copy.benchmark)}</span>
                 </div>
               </div>
               <div className="cd-stat cd-stat--wide">
-                <div className="cd-stat-num" dir="ltr">+6.5<span className="g u">pp</span></div>
+                <div className="cd-stat-num" dir="ltr">{gain.number}<span className="g u">{gain.unit.trim()}</span></div>
                 <div className="cd-stat-label">{t(copy.gain)}</div>
               </div>
             </div>

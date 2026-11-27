@@ -4,7 +4,8 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 
-import { CLAIMS, DERIVED, isBackedValue, QUALIFIERS, type Claim } from '@/lib/claims'
+import { claimParts, CLAIMS, DERIVED, formatClaim, isBackedValue, QUALIFIERS, type Claim, type ClaimId } from '@/lib/claims'
+import { checkUnit, compileNonResults, formatFindings } from '@/lib/claims/check'
 import { retiredFigures } from '@/lib/claims/retired'
 import * as DATA from '@/lib/ood-explorer-data'
 
@@ -66,6 +67,71 @@ describe('claims registry', () => {
     for (const r of retiredFigures()) {
       const value = Number(r.text.replace(/^\+/, '').match(/\d+(?:\.\d+)?/)![0])
       assert.ok(!isBackedValue(value), r.id)
+    }
+  })
+})
+
+describe('formatClaim (contracts/claims-api.md)', () => {
+  const variants = ['value', 'spread', 'metric', 'full', 'qualifier'] as const
+
+  it('renders the contract examples', () => {
+    assert.equal(formatClaim('thesis.mean', 'en'), '99.03% ± 0.07%')
+    assert.equal(formatClaim('thesis.mean', 'de'), '99,03 % ± 0,07 %')
+    assert.equal(formatClaim('thesis.mean', 'fr'), '99,03 % ± 0,07 %')
+    assert.equal(formatClaim('thesis.mean', 'es'), '99.03% ± 0.07%')
+    assert.equal(formatClaim('thesis.mean', 'en', 'full'), '99.03% ± 0.07% AUROC (3-seed mean)')
+    assert.equal(formatClaim('thesis.mean', 'en', 'metric'), '99.03% ± 0.07% AUROC')
+    assert.equal(formatClaim('thesis.mean', 'en', 'value'), '99.03%')
+    assert.equal(formatClaim('thesis.mean', 'en', 'qualifier'), '3-seed mean')
+    assert.equal(formatClaim('thesis.gainPp', 'fr', 'value'), '+6,5 pp')
+    assert.equal(formatClaim('thesis.gainPp', 'en'), '+6.5 pp')
+    assert.equal(formatClaim('inkjet.baseline', 'ar', 'spread'), '\u20660.8673\u00A0±\u00A00.0230\u2069')
+    assert.equal(formatClaim('inkjet.baseline', 'en', 'full'), '0.8673 ± 0.0230 AUROC (5-fold CV)')
+    assert.equal(formatClaim('thesis.seed42', 'de', 'full'), '98,98 % AUROC (Seed 42)')
+  })
+
+  it('wraps every Arabic number form in one isolate and leaves the qualifier outside it', () => {
+    assert.equal(formatClaim('thesis.mean', 'ar', 'full'), '\u206699.03%\u00A0±\u00A00.07% AUROC\u2069 (متوسط 3 بذور)')
+    for (const c of claims) {
+      for (const v of variants.filter((x) => x !== 'qualifier')) {
+        const text = formatClaim(c.id, 'ar', v)
+        assert.ok(text.startsWith('\u2066'), `${c.id} ${v}`)
+        assert.equal(text.match(/\u2066/g)!.length, 1, `${c.id} ${v}`)
+      }
+    }
+  })
+
+  it('never rounds: prints exactly the registered decimals', () => {
+    for (const c of claims) {
+      assert.ok(formatClaim(c.id, 'en', 'value').includes(Math.abs(c.value).toFixed(c.decimals)), c.id)
+    }
+  })
+
+  it('computes the gain from the two means', () => {
+    const gain = (CLAIMS['thesis.mean'].value - CLAIMS['thesis.baseline'].value).toFixed(1)
+    assert.equal(formatClaim('thesis.gainPp', 'en', 'value'), `+${gain} pp`)
+  })
+
+  it('throws for an unknown or retired id', () => {
+    assert.throws(() => formatClaim('thesis.nope' as ClaimId, 'en'), /unknown claim thesis\.nope/)
+    // @ts-expect-error a retired id is not a ClaimId
+    assert.throws(() => formatClaim('thesis.production', 'en'), /unknown claim/)
+  })
+
+  it('gives the number and unit parts for split layouts', () => {
+    assert.deepEqual(claimParts('thesis.mean', 'en'), { number: '99.03', unit: '%', spread: '0.07' })
+    assert.deepEqual(claimParts('thesis.mean', 'fr'), { number: '99,03', unit: ' %', spread: '0,07' })
+    assert.deepEqual(claimParts('inkjet.baseline', 'de'), { number: '0,8673', unit: '', spread: '0,0230' })
+  })
+
+  it('passes the figure check in its full form, for every claim and language', () => {
+    const none = compileNonResults([])
+    for (const c of claims) {
+      for (const lang of LOCALES) {
+        const text = formatClaim(c.id, lang, 'full')
+        const findings = checkUnit({ file: 'x.ts', lang, scope: 'source', text }, none)
+        assert.deepEqual(findings, [], `${c.id} ${lang}: ${text}\n${formatFindings(findings)}`)
+      }
     }
   })
 })

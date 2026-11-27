@@ -303,7 +303,7 @@ export default function PortfolioAbstract() {
                   <span className="stage-rail-dot" aria-hidden="true" />
                   <span className="stage-rail-title">{t(pillar.tabLabel)}</span>
                   <span className="stage-rail-metric">
-                    <bdi dir="ltr">{pillar.metricValue}</bdi>
+                    <bdi dir="ltr">{t(pillar.metricValue)}</bdi>
                   </span>
                 </button>
               )
@@ -583,7 +583,7 @@ export default function PortfolioAbstract() {
 
                   <div className="stage-dossier-kpi">
                     <strong className="stage-dossier-num">
-                      <bdi dir="ltr">{pillar.metricValue}</bdi>
+                      <bdi dir="ltr">{t(pillar.metricValue)}</bdi>
                     </strong>
                     <p className="stage-dossier-qual">{t(pillar.metricSub)}</p>
                   </div>

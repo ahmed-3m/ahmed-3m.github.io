@@ -4,3 +4,4 @@
 export { CLAIMS, DERIVED, isBackedValue, type Claim, type ClaimId, type ClaimUnit } from './registry'
 export { QUALIFIERS, type Qualifier, type QualifierId } from './qualifiers'
 export { formatLocaleNumber } from './format'
+export { claimParts, formatClaim, type Variant } from './format-claim'

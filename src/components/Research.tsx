@@ -2,11 +2,19 @@
 import { useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
+import { claimParts, formatClaim } from '@/lib/claims'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
+import type { Language } from '@/lib/i18n-config'
 import ResearchCharts from '@/components/ResearchCharts'
 import SeparationLoss from '@/components/SeparationLoss'
 
 const OodDemo = dynamic(() => import('@/components/OodDemo'))
+
+/** `± 0.07%` in one language: the 3-seed spread of the thesis mean. */
+const meanSpread = (lang: Language) => {
+  const p = claimParts('thesis.mean', lang)
+  return `± ${p.spread}${p.unit}`
+}
 
 const copy = {
   eyebrow: { en: '// Research', de: '// Forschung', fr: '// Recherche', es: '// Investigación', ar: '// الأبحاث' },
@@ -29,11 +37,11 @@ const copy = {
   },
   summaryResultLabel: { en: 'Result', de: 'Ergebnis', fr: 'Résultat', es: 'Resultado', ar: 'النتيجة' },
   summaryResultText: {
-    en: '99.03% ± 0.07% AUROC on CIFAR-10 airplane-vs-rest (binary, single ID class, 3-seed mean), with a +6.5pp gain over the non-separated baseline.',
-    de: '99.03% ± 0.07% AUROC auf CIFAR-10 airplane-vs-rest (binär, Einzelklasse, 3-Seed-Mittel) mit +6.5 Prozentpunkten gegenüber der Basis ohne Separation.',
-    fr: '99.03% ± 0.07% AUROC sur CIFAR-10 airplane-vs-rest (binaire, classe unique, moyenne 3 seeds) avec un gain de +6.5 points face à la baseline sans séparation.',
-    es: '99.03% ± 0.07% AUROC en CIFAR-10 airplane-vs-rest (binaria, clase única, media 3 seeds) con una mejora de +6.5 puntos sobre la base sin separación.',
-    ar: '99.03% ± 0.07% AUROC على CIFAR-10 airplane-vs-rest (ثنائي، فئة واحدة، متوسط 3 بذور) مع تحسن قدره +6.5 نقطة على الخط الأساسي بدون فصل.',
+    en: `${formatClaim('thesis.mean', 'en', 'metric')} on CIFAR-10 airplane-vs-rest (binary, single ID class, 3-seed mean), with a ${formatClaim('thesis.gainPp', 'en')} gain over the non-separated baseline.`,
+    de: `${formatClaim('thesis.mean', 'de', 'metric')} auf CIFAR-10 airplane-vs-rest (binär, Einzelklasse, 3-Seed-Mittel) mit ${claimParts('thesis.gainPp', 'de').number} Prozentpunkten gegenüber der Basis ohne Separation.`,
+    fr: `${formatClaim('thesis.mean', 'fr', 'metric')} sur CIFAR-10 airplane-vs-rest (binaire, classe unique, moyenne 3 seeds) avec un gain de ${claimParts('thesis.gainPp', 'fr').number} points face à la baseline sans séparation.`,
+    es: `${formatClaim('thesis.mean', 'es', 'metric')} en CIFAR-10 airplane-vs-rest (binaria, clase única, media 3 seeds) con una mejora de ${claimParts('thesis.gainPp', 'es').number} puntos sobre la base sin separación.`,
+    ar: `${formatClaim('thesis.mean', 'ar', 'metric')} على CIFAR-10 airplane-vs-rest (ثنائي، فئة واحدة، متوسط 3 بذور) مع تحسن قدره \u2066${claimParts('thesis.gainPp', 'ar').number}\u2069 نقطة على الخط الأساسي بدون فصل.`,
   },
   summaryImpactLabel: { en: 'Why it matters', de: 'Warum es zählt', fr: 'Pourquoi cela compte', es: 'Por qué importa', ar: 'لماذا يهم ذلك' },
   summaryImpactText: {
@@ -49,7 +57,7 @@ const copy = {
   supervisor: { en: 'Supervisor', de: 'Betreuer', fr: 'Superviseur', es: 'Supervisor', ar: 'المشرف' },
   assistant: { en: 'Assistant', de: 'Assistent', fr: 'Assistant', es: 'Asistente', ar: 'المساعد' },
   metricLabel: { en: 'Mean AUROC · CIFAR-10 airplanes vs. other classes', de: 'Mittlere AUROC · CIFAR-10: Flugzeuge gegen andere Klassen', fr: 'AUROC moyenne · CIFAR-10 : avions contre les autres classes', es: 'AUROC media · CIFAR-10: aviones frente a otras clases', ar: 'متوسط AUROC · CIFAR-10: الطائرات مقابل الفئات الأخرى' },
-  variance: { en: '± 0.07% std dev (3 seeds)', de: '± 0.07% Std.-Abw. (3 Seeds)', fr: '± 0.07% écart-type (3 seeds)', es: '± 0.07% desv. est. (3 semillas)', ar: '± 0.07% انحراف معياري (3 بذور)' },
+  variance: { en: `${meanSpread('en')} std dev (3 seeds)`, de: `${meanSpread('de')} Std.-Abw. (3 Seeds)`, fr: `${meanSpread('fr')} écart-type (3 seeds)`, es: `${meanSpread('es')} desv. est. (3 semillas)`, ar: `${meanSpread('ar')} انحراف معياري (3 بذور)` },
   chartHeading: {
     en: 'Separation-weight sweep · Threshold calibration · Reconstruction error',
     de: 'Variation des Separationsgewichts · Schwellenwertkalibrierung · Rekonstruktionsfehler',
@@ -198,7 +206,9 @@ function RtlArrow() {
  * interactive thesis explorer.
  */
 export default function Research() {
-  const { t } = useI18n()
+  const { t, lang } = useI18n()
+  const thesisParts = claimParts('thesis.mean', lang)
+  const inkjetParts = claimParts('inkjet.baseline', lang)
   const [shouldRenderLab, setShouldRenderLab] = useState(false)
   const labContainerRef = useRef<HTMLDivElement>(null)
 
@@ -265,7 +275,7 @@ export default function Research() {
               </div>
             </div>
             <div className="cd-rf-metric">
-              <div className="cd-rf-metric-num" dir="ltr">99.03<span className="cd-rf-metric-unit">%</span></div>
+              <div className="cd-rf-metric-num" dir="ltr">{thesisParts.number}<span className="cd-rf-metric-unit">{thesisParts.unit}</span></div>
               <div className="cd-rf-metric-label">{t(copy.metricLabel)}</div>
               <div className="cd-rf-metric-delta">{t(copy.variance)}</div>
             </div>
@@ -331,11 +341,11 @@ export default function Research() {
             <div className="cd-rf-left">
               <div className="cd-rf-label">{t(copy.track2)}</div>
               <h3 className="cd-rf-title">{t(copy.track2Title)}</h3>
-              <div className="cd-rf-desc">{t(copy.track2Desc)} <strong>0.8673 ± 0.0230 AUROC</strong>.</div>
+              <div className="cd-rf-desc">{t(copy.track2Desc)} <strong>{formatClaim('inkjet.baseline', lang, 'full')}</strong>.</div>
               <div className="cd-rf-meta">{t(copy.track2Meta)}</div>
             </div>
             <div className="cd-rf-metric">
-              <div className="cd-rf-metric-num">0.8673</div>
+              <div className="cd-rf-metric-num" dir="ltr">{inkjetParts.number}<span className="cd-rf-metric-unit"> ± {inkjetParts.spread}</span></div>
               <div className="cd-rf-metric-label">{t(copy.auroc5FoldCv)}</div>
               <div className="cd-rf-metric-delta">{t(copy.publicEval)}</div>
             </div>

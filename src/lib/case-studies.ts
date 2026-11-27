@@ -1,3 +1,4 @@
+import { formatClaim } from '@/lib/claims'
 import { type TranslationMap } from '@/lib/i18n-config'
 
 export type CaseStudy = {
@@ -114,7 +115,7 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         title: { en: '3. 5-Fold Cross-Validation', de: '3. 5-fache Kreuzvalidierung', fr: '3. Validation croisée en 5 plis', es: '3. Validación cruzada de 5 folds', ar: '3. تحقق تقاطعي خماسي صارم' },
-        desc: { en: 'Image-level 5-fold stratified CV across the 573 source-image groups establishing an auditable 0.8673 ± 0.0230 AUROC baseline.', de: 'Bildbasierte 5-fache stratifizierte Kreuzvalidierung über 573 Quellbild-Gruppen ergibt eine prüfbare Baseline von 0.8673 ± 0.0230 AUROC.', fr: 'Validation croisée stratifiée par image source (573 groupes, 5 plis) établissant une référence vérifiable de 0.8673 ± 0.0230 AUROC.', es: 'Validación cruzada estratificada a nivel de imagen (573 grupos, 5 folds) estableciendo una referencia auditable de 0.8673 ± 0.0230 AUROC.', ar: 'تحقق تقاطعي طبقي على مستوى الصورة الأصلية عبر 573 مجموعة يثبت خط أساس موثوقاً عند 0.8673 ± 0.0230 AUROC.' },
+        desc: { en: `Image-level 5-fold stratified CV across the 573 source-image groups establishing an auditable ${formatClaim('inkjet.baseline', 'en', 'metric')} baseline.`, de: `Bildbasierte 5-fache stratifizierte Kreuzvalidierung über 573 Quellbild-Gruppen ergibt eine prüfbare Baseline von ${formatClaim('inkjet.baseline', 'de', 'metric')}.`, fr: `Validation croisée stratifiée par image source (573 groupes, 5 plis) établissant une référence vérifiable de ${formatClaim('inkjet.baseline', 'fr', 'metric')}.`, es: `Validación cruzada estratificada a nivel de imagen (573 grupos, 5 folds) estableciendo una referencia auditable de ${formatClaim('inkjet.baseline', 'es', 'metric')}.`, ar: `تحقق تقاطعي خماسي طبقي على مستوى الصورة الأصلية عبر 573 مجموعة يثبت خط أساس موثوقاً عند ${formatClaim('inkjet.baseline', 'ar', 'metric')}.` },
       },
     ],
     approach: [
@@ -180,7 +181,7 @@ export const caseStudies: CaseStudy[] = [
       },
     ],
     artifacts: [
-      { label: { en: 'Thesis PDF (0.8673 source)', de: 'Thesis PDF (0.8673 Quelle)', fr: 'PDF du mémoire (source 0.8673)', es: 'PDF de la tesis (fuente 0.8673)', ar: 'PDF الرسالة (مصدر 0.8673)' }, href: '/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf' },
+      { label: { en: 'Thesis PDF (source of the inkjet baseline)', de: 'Thesis PDF (Quelle der Inkjet-Baseline)', fr: 'PDF du mémoire (source de la référence inkjet)', es: 'PDF de la tesis (fuente de la referencia inkjet)', ar: 'PDF الرسالة (مصدر خط أساس الطباعة النافثة)' }, href: '/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf' },
       { label: { en: 'Early technical report (2024)', de: 'Frühzeitiger Technischer Bericht (2024)', fr: 'Rapport technique précoce (2024)', es: 'Informe técnico temprano (2024)', ar: 'تقرير تقني مبكر (2024)' }, href: '/Diffusion-Based%20Multi-class%20Defect%20Detection.pdf' },
       { label: { en: 'InkjetOOD repository', de: 'InkjetOOD Repository', fr: 'Dépôt InkjetOOD', es: 'Repositorio InkjetOOD', ar: 'مستودع InkjetOOD' }, href: 'https://github.com/ahmed-3m/InkjetOOD', external: true },
       { label: { en: 'Model weights', de: 'Modellgewichte', fr: 'Poids du modèle', es: 'Pesos del modelo', ar: 'أوزان النموذج' }, href: 'https://huggingface.co/ahmed-3m/InkjetOOD', external: true },

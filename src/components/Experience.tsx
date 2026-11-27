@@ -1,5 +1,15 @@
 'use client'
+import { claimParts, formatClaim } from '@/lib/claims'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
+
+/** The thesis's baseline and separated means, and their 3-seed spreads, in one language. */
+const thesisFigures = (lang: 'en' | 'de' | 'fr' | 'es' | 'ar') => ({
+  from: formatClaim('thesis.baseline', lang, 'value'),
+  to: formatClaim('thesis.mean', lang, 'value'),
+  sdFrom: claimParts('thesis.baseline', lang).spread,
+  sdTo: claimParts('thesis.mean', lang).spread,
+})
+const [EN, DE, FR, ES, AR] = (['en', 'de', 'fr', 'es', 'ar'] as const).map(thesisFigures)
 
 const copy = {
   eyebrow: { en: '// Experience', de: '// Erfahrung', fr: '// Expérience', es: '// Experiencia', ar: '// الخبرة' },
@@ -60,11 +70,11 @@ const experiences: Array<{
       ar: 'جامعة يوهانس كيبلر لينتس',
     },
     desc: {
-      en: 'Continued the PROFACTOR research at JKU under Prof. Sepp Hochreiter and submitted the thesis in July 2026. On CIFAR-10 airplane-vs-rest, a class-conditional separation loss raised mean AUROC from 92.52% to 99.03% across three runs and reduced the standard deviation from 11.07 to 0.07 percentage points.',
-      de: 'Führte die bei PROFACTOR begonnene Forschung an der JKU unter Prof. Sepp Hochreiter fort und reichte die Masterarbeit im Juli 2026 ein. Bei CIFAR-10 (Flugzeuge gegen alle übrigen Klassen) erhöhte ein klassenkonditionaler Separation Loss die mittlere AUROC über drei Läufe von 92,52 % auf 99,03 % und senkte die Standardabweichung von 11,07 auf 0,07 Prozentpunkte.',
-      fr: 'J’ai poursuivi à la JKU les recherches commencées chez PROFACTOR, sous la direction du professeur Sepp Hochreiter, et remis mon mémoire en juillet 2026. Sur CIFAR-10 (avions contre toutes les autres classes), une perte de séparation conditionnée par la classe a fait passer l’AUROC moyenne de 92,52 % à 99,03 % sur trois essais et réduit l’écart-type de 11,07 à 0,07 point de pourcentage.',
-      es: 'Continué en la JKU la investigación iniciada en PROFACTOR, bajo la supervisión del profesor Sepp Hochreiter, y entregué la tesis en julio de 2026. En CIFAR-10 (aviones frente al resto), una pérdida de separación condicionada por clase elevó el AUROC medio de 92,52 % a 99,03 % en tres ejecuciones y redujo la desviación estándar de 11,07 a 0,07 puntos porcentuales.',
-      ar: 'واصلت في جامعة يوهانس كيبلر البحث الذي بدأته في PROFACTOR بإشراف البروفيسور سيب هوخرايتر، وقدّمت الرسالة في يوليو 2026. وفي اختبار CIFAR-10 للطائرات مقابل بقية الفئات، رفعت خسارة الفصل المشروطة بالفئة متوسط AUROC عبر ثلاث تجارب من 92.52% إلى 99.03% وخفّضت الانحراف المعياري من 11.07 إلى 0.07 نقطة مئوية.',
+      en: `Continued the PROFACTOR research at JKU under Prof. Sepp Hochreiter and submitted the thesis in July 2026. On CIFAR-10 airplane-vs-rest, a class-conditional separation loss raised mean AUROC from ${EN.from} to ${EN.to} across three seeds and reduced the standard deviation from ${EN.sdFrom} to ${EN.sdTo} percentage points.`,
+      de: `Führte die bei PROFACTOR begonnene Forschung an der JKU unter Prof. Sepp Hochreiter fort und reichte die Masterarbeit im Juli 2026 ein. Bei CIFAR-10 (Flugzeuge gegen alle übrigen Klassen) erhöhte ein klassenkonditionaler Separation Loss die mittlere AUROC über drei Läufe von ${DE.from} auf ${DE.to} und senkte die Standardabweichung von ${DE.sdFrom} auf ${DE.sdTo} Prozentpunkte.`,
+      fr: `J’ai poursuivi à la JKU les recherches commencées chez PROFACTOR, sous la direction du professeur Sepp Hochreiter, et remis mon mémoire en juillet 2026. Sur CIFAR-10 (avions contre toutes les autres classes), une perte de séparation conditionnée par la classe a fait passer l’AUROC moyenne de ${FR.from} à ${FR.to} sur trois essais et réduit l’écart-type de ${FR.sdFrom} à ${FR.sdTo} point de pourcentage.`,
+      es: `Continué en la JKU la investigación iniciada en PROFACTOR, bajo la supervisión del profesor Sepp Hochreiter, y entregué la tesis en julio de 2026. En CIFAR-10 (aviones frente al resto), una pérdida de separación condicionada por clase elevó el AUROC medio de ${ES.from} a ${ES.to} en tres ejecuciones y redujo la desviación estándar de ${ES.sdFrom} a ${ES.sdTo} puntos porcentuales.`,
+      ar: `واصلت في جامعة يوهانس كيبلر البحث الذي بدأته في PROFACTOR بإشراف البروفيسور سيب هوخرايتر، وقدّمت الرسالة في يوليو 2026. وفي اختبار CIFAR-10 للطائرات مقابل بقية الفئات، رفعت خسارة الفصل المشروطة بالفئة متوسط AUROC عبر ثلاث تجارب من ${AR.from} إلى ${AR.to} وخفّضت الانحراف المعياري من ${AR.sdFrom} إلى ${AR.sdTo} نقطة مئوية.`,
     },
     badge: { en: 'Thesis graded 1 (top mark)', de: 'Masterarbeit mit 1 (Sehr gut) bewertet', fr: 'Mémoire noté 1 (meilleure note)', es: 'Tesis calificada con 1 (nota máxima)', ar: 'الرسالة بتقدير 1 (أعلى درجة)' },
     active: false,
