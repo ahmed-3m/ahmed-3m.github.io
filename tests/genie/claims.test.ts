@@ -62,7 +62,6 @@ function decimals(text: string, lang: Language): { raw: string; value: number }[
     .map((m) => m[0])
     .filter((raw) => decimalComma || !/^\d{1,3}(?:,\d{3})+$/.test(raw)) // 9,000 is a count
     .map((raw) => ({ raw, value: Number(decimalComma ? raw.replace(',', '.') : raw.replace(/,/g, '')) }))
-    .filter(({ value }) => !Number.isInteger(value))
 }
 
 // ---------------------------------------------------------------------------------
@@ -77,7 +76,7 @@ const MEANS = [
 ]
 
 const THREE_SEEDS: Record<Language, RegExp> = {
-  en: /three seeds|3-seed/i,
+  en: /three seeds|3[- ]seeds?/i,
   de: /drei Läufe|3-Seed/i,
   fr: /trois essais|3 seeds/i,
   es: /tres ejecuciones|3 semillas|3 seeds/i,
@@ -98,10 +97,11 @@ const FIVE_FOLD: Record<Language, RegExp> = {
   ar: /خمسة أجزاء|5-fold/,
 }
 
-/** Problems with the numbers, spreads and qualifiers in one reply. */
-function claimProblems(text: string, lang: Language): string[] {
+/** Problems with the numbers, spreads and qualifiers in one text. `notResults` lists
+ *  numbers that are not results (a table reference, say) and need no backing. */
+function claimProblems(text: string, lang: Language, notResults: ReadonlySet<string> = new Set()): string[] {
   const problems: string[] = []
-  for (const { raw } of decimals(text, lang).filter(({ value }) => !isBacked(value))) {
+  for (const { raw } of decimals(text, lang).filter(({ raw, value }) => !isBacked(value) && !notResults.has(raw))) {
     problems.push(`${raw} is not in ood-explorer-data.ts`)
   }
   for (const { mean, spread } of MEANS) {
@@ -164,6 +164,7 @@ describe('prepared replies', () => {
       '99,03 % without its spread (99,03 % ± 0,07 %)',
     ])
     assert.deepEqual(claimProblems('The baseline reached 0.8673 ± 0.0230 AUROC.', 'en'), ['inkjet AUROC without 5-fold CV'])
+    assert.deepEqual(claimProblems('AUROC reached 12345.00% across three seeds.', 'en'), ['12345.00 is not in ood-explorer-data.ts'])
     assert.deepEqual(unlisted('[CV](https://ahmed-3m.github.io/cv.pdf) or https://example.com/x.'), ['https://example.com/x'])
   })
 })
@@ -236,11 +237,8 @@ describe('what the model is given', () => {
   ])
 
   for (const chunk of KNOWLEDGE_CHUNKS) {
-    it(`knowledge "${chunk.id}" uses backed numbers and allowlisted links`, () => {
-      const extra = decimals(chunk.facts, 'en')
-        .filter(({ raw, value }) => !isBacked(value) && !NOT_RESULTS.has(raw))
-        .map(({ raw }) => raw)
-      assert.deepEqual(extra, [])
+    it(`knowledge "${chunk.id}" uses backed numbers with spreads and qualifiers, and allowlisted links`, () => {
+      assert.deepEqual(claimProblems(chunk.facts, 'en', NOT_RESULTS), [])
       assert.deepEqual(chunk.links.filter((href) => resolveLinkProps(href) === null), [])
       assert.deepEqual(unlisted(chunk.facts), [])
     })
