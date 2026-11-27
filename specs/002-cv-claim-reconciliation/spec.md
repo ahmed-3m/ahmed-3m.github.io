@@ -1,6 +1,7 @@
 # Spec 002 — CV ↔ Site ↔ Thesis Claim Reconciliation
 
-**Status:** Ready for next session
+**Status:** Checked 2026-11-27 — the claims matrix and ground truth in this folder are current reference material; the open tasks wait for the owner's answers (the thesis submission date and the remaining blocking decisions). Superseded: references to `public/cv.tex` — the CV is generated in the external CV workspace and copied in (see `AGENTS.md`).
+**Note (2026-11-27):** the "Contact email" row in the table below and decision 3 below it are superseded: the canonical contact address was settled by PR #281, merged 2026-11-26 (see section 9 of `ground-truth.md`).
 **Priority:** P0 (credibility risk — highest leverage)
 **Origin:** Follow-up to `001-claim-integrity-alignment`. A candidate CV
 (`~/Downloads/cv_ref/Ahmed_Mohammed_CV/Ahmed_Mohammed_CV.pdf`, reviewed 2026-07-18)
@@ -48,7 +49,7 @@ the chatbot — every number traceable to the thesis PDF.
       `public/` (thesis PDF page, report, repo). No orphan metrics.
 - [ ] The "within-CIFAR binary / not multi-class CIFAR-10" caveat is preserved wherever
       99.03% appears — including any regenerated CV.
-- [ ] `public/cv.pdf` is regenerated from the corrected `public/cv.tex` and matches the site.
+- [ ] `public/cv.pdf` matches the site. Superseded (2026-11-27): the owner regenerates `public/cv.pdf` in the external CV workspace and copies it in; an agent must not rebuild it here (`tasks.md` T2.4, `AGENTS.md`).
 - [ ] Thesis submission date is identical in CV, `About.tsx`, `JsonLd.tsx`, `Experience.tsx`.
 
 ## Out of scope

@@ -3,8 +3,8 @@
 **Delegation legend:** `[P]` = parallelizable (no dependency on another in-flight task) ·
 `→Tnnn` = depends on · **Agent** = suggested subagent type.
 
-> ⚠️ **Gate:** T2.3+ are blocked until Ahmed answers the 4 decisions in `spec.md`
-> (headline improvement figure, submission date, canonical email, external-benchmark range).
+> ⚠️ **Gate:** T2.3+ are blocked until Ahmed answers the decisions in `spec.md`
+> (headline improvement figure, submission date, external-benchmark range; the canonical contact address was already settled by PR #281, see section 9 of `ground-truth.md`).
 > T2.1 and T2.2 can start immediately and *inform* those decisions.
 
 ### T2.1 [P] — Extract thesis ground truth
@@ -28,9 +28,10 @@ Edit all site surfaces to the single agreed set of numbers/dates/email. Preserve
 all 5 i18n languages in each `copy` block.
 
 ### T2.4 — Regenerate the CV  →T2.3
-**Agent:** general-purpose (edit)
-Update `public/cv.tex` to match the reconciled claims, rebuild `public/cv.pdf`. Do **not**
-adopt the Downloads CV verbatim — it overclaims (see `candidate_cv_rejected` memory).
+**Agent:** none — owner action
+The owner regenerates `public/cv.pdf` in the external CV workspace and copies the finished
+PDF into this repository (see `AGENTS.md`). The CV is not built here: an agent must never
+rebuild or edit the PDF in this repository.
 
 ### T2.5 — Verify  →T2.3 →T2.4
 **Agent:** general-purpose + `verify` skill

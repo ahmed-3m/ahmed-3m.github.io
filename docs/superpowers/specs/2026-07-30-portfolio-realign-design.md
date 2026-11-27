@@ -1,9 +1,9 @@
 # Portfolio Re-align — Sihem-forward + Rigor Positioning
 
-**Status:** Revised draft (v2) — incorporates the deep source audit in
-`specs/005-portfolio-modernization/analysis.md`
+**Status:** Implemented in commit `8a98c5d` (2026-07-30, "feat(portfolio): re-align to AI/ML Engineer + Sihem flagship", whose message cites this document as its plan) — retained as design history. The v2 draft incorporated the deep source audit in
+`specs/005-portfolio-modernization/analysis.md` (not in this repository)
 **Date:** 2026-07-30
-**Branch:** to be created off `origin/main` (e.g. `feat/portfolio-rigor-realign`)
+**Branch:** (as planned in this draft) to be created off `origin/main` (e.g. `feat/portfolio-rigor-realign`)
 **Approach:** A′ — editorial re-rank, content-only, **plus two deletions** (see §3)
 
 > **v2 changelog.** Corrected scope counts (§4); added the complete
@@ -41,7 +41,7 @@ across both, and untouched by this work.
 `ahmed.mo.0595@gmail.com` to **17 locations**, including JSON-LD `email`, the
 RSS `managingEditor`, the `<noscript>` block, Contact, and Footer.
 
-That address matches `GITHUB_PROFILE_README.md:45`. But the value on file for
+That address matches `GITHUB_PROFILE_README.md:45` (not in this repository). But the value on file for
 this account is `ahmed.mu.0905@gmail.com` — differing in two places
 (`mo`/`mu`, `0595`/`0905`), which is a classic transposition pattern. One of
 these is wrong.

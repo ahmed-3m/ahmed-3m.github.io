@@ -1,6 +1,6 @@
 # RFC 005 — Portfolio credibility, recruiter clarity, and mobile usability
 
-**Status:** Proposed; implementation has not started.  
+**Status:** Implemented in PR #205 (merged 2026-11-13; see `IMPLEMENTATION-REPORT.md` and `CODEX-REVIEW.md`).  
 **Date:** 2026-11-12  
 **Owner:** Ahmed Mohammed  
 **Implementation handoff:** Antigravity app; the owner selects the model. No external model session is running on behalf of this RFC.  
@@ -41,7 +41,7 @@ The supplied 16-second responsiveness claim, 92/97 Lighthouse scores, 5.4 MB pag
 - Search case-insensitively for the project name and domain. Historical specs, this RFC, and Git history are allowed to retain them. Do not purge history or delete useful agent documentation.
 - Remove the retired project routes from generated navigation/feed/sitemap discovery. Default to a deliberate 404 for removed routes on GitHub Pages; verify no stale exported HTML remains after a clean build. Do not require a server-side redirect.
 - Change the PROFACTOR location display to explicitly include remote/home office. Do not infer employment duration or rewrite the role title from location alone.
-- Reconcile 98.4% using `specs/002-cv-claim-reconciliation/` and the constitution. It is not verified in the thesis, but existing policy permits an explicitly labeled internal, threshold-dependent operational metric. Retain only with a clear separate evaluation scope and appropriate support; otherwise omit it from active claims. Do not invent a source or silently replace it with an unrelated metric.
+- Reconcile 98.4% using the claim rules in `specs/001-claim-integrity-alignment/` and the claims matrix and ground truth in `specs/002-cv-claim-reconciliation/` (current reference material, not an active task list), plus the constitution. It is not verified in the thesis, but existing policy permits an explicitly labeled internal, threshold-dependent operational metric. Retain only with a clear separate evaluation scope and appropriate support; otherwise omit it from active claims. Do not invent a source or silently replace it with an unrelated metric.
 - Correct “variance” to standard deviation where that is what the data reports.
 
 ### 2. Mobile layout, contact, and accessibility

@@ -4,7 +4,8 @@
 **Spec directory**: `specs/001-claim-integrity-alignment`  
 **Created**: 2026-07-12  
 **Updated**: 2026-07-12 (merged second-audit findings; rejected its false thesis-metric “corrections”)  
-**Status**: Draft  
+**Status**: Implemented in PR #29 (merged 2026-07-12; see `IMPLEMENTATION-REPORT.md`) — the adjudicated claim rules below remain the governing reference for portfolio numbers (see `AGENTS.md`). Superseded: the lane branches named below (`claude-work`/`agents-work`) — changes now go through short-lived branches merged into `main` via pull requests (see `AGENTS.md`). Superseded: the CV build from `public/cv.tex` described in the implementation report — the CV is now generated outside this repository and copied in (see `AGENTS.md`).  
+**Note (2026-11-27):** the contact-address rows below (acceptance criterion 5 of User Story 1, and the "Preferred public email" assumption) are superseded by PR #281, merged 2026-11-26; see section 9 of `specs/002-cv-claim-reconciliation/ground-truth.md`.  
 **Input**: User description: "Create a Speckit-driven plan for the verified portfolio integrity issues: CV contradicts site/thesis numbers and dates; industrial proof card points 0.8673 AUROC at a negative-result PDF with no metrics; bare 98.4% in high-visibility surfaces; 99.03% missing airplane-vs-rest scope; degree status claimed inconsistently; future-dated blog post; stale news after link-check failures; i18n orthography gaps; truncated thesis title on Research." Plus: "Add any missing verified verdict from the second audit without adopting its incorrect thesis extraction."
 
 ## Source-of-truth metrics (adjudicated)
@@ -201,7 +202,7 @@ A German- or Spanish-speaking recruiter switches language and reads hero/about/e
 - True thesis metrics are those in `Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf` as listed in **Source-of-truth metrics (adjudicated)**.
 - Preferred public email remains `ahmed@faultrix.com` unless the owner decides otherwise when regenerating the CV.
 - Degree is not assumed “awarded” without owner confirmation; default safe wording is thesis-submitted / degree-expected if still pending.
-- Regenerating the CV may use existing local CV source materials (`cv_ref` or similar) if present; if only the PDF exists, a new PDF generation step is required.
+- Regenerating the CV may use existing local CV source materials (`cv_ref` or similar) if present; if only the PDF exists, a new PDF generation step is required. Superseded: the CV is generated outside this repository and copied in (see `AGENTS.md`).
 - News: `ZAI_NEWS_TOKEN` / Exa secrets may already exist; do not treat “create secret” as the default fix without checking the Actions failing step (link check observed on recent failures).
 - News automation fix may be a separate commit if link-check failures need more than copy changes.
 - Work proceeds on an existing lane branch (`claude-work` or `agents-work`), not a new Speckit feature git branch, per repository branch model.
