@@ -29,8 +29,10 @@ export type ChatCompletionError = Error & {
 }
 
 const GROQ_MODEL = process.env.NEXT_PUBLIC_GROQ_MODEL || 'openai/gpt-oss-20b'
-const ZAI_MODEL = process.env.NEXT_PUBLIC_BIGMODEL_MODEL || 'glm-5.3'
-const ZAI_FAST_MODEL = process.env.NEXT_PUBLIC_ZAI_FAST_MODEL || 'glm-5-turbo'
+// Both are GLM Coding Plan models, which is what the chat proxy's Z.ai key is for.
+// If glm-5.4 is refused, Genie falls back to Groq and then to prepared answers.
+const ZAI_MODEL = process.env.NEXT_PUBLIC_BIGMODEL_MODEL || 'glm-5.4'
+const ZAI_FAST_MODEL = process.env.NEXT_PUBLIC_ZAI_FAST_MODEL || 'glm-5.3-flash'
 export const CHAT_PROXY_URL = process.env.NEXT_PUBLIC_CHAT_PROXY_URL?.trim()
 export const MAX_REPLY_CHARS = 1600
 export const TTFB_TIMEOUT_MS = 20000

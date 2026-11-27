@@ -30,7 +30,7 @@ export function isAllowedOrigin(origin, env) {
 export const ALLOWED_ROLES = new Set(['system', 'user', 'assistant'])
 
 export const ALLOWED_MODELS = {
-  zai: new Set(['glm-5.3', 'glm-5-turbo', 'glm-5.3-flash']),
+  zai: new Set(['glm-5.4', 'glm-5.3', 'glm-5-turbo', 'glm-5.3-flash']),
   groq: new Set(['openai/gpt-oss-20b']),
 }
 

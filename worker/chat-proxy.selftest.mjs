@@ -284,6 +284,23 @@ await test("Forwarding reasoning_effort: 'low' to Z.ai upstream", async () => {
   assert(targetUrl.includes('api.z.ai'), `targetUrl should be Z.ai, got ${targetUrl}`)
 })
 
+// 9b. Genie's default lanes (glm-5.4 deep, glm-5.3-flash fast) are allowlisted Z.ai models
+for (const model of ['glm-5.4', 'glm-5.3-flash']) {
+  await test(`Allowed Z.ai model (${model}) routes to Z.ai upstream`, async () => {
+    let payload
+    let targetUrl
+    const upstream = async (url, init) => {
+      targetUrl = url
+      payload = JSON.parse(init.body)
+      return new Response('{}', { status: 200 })
+    }
+    const res = await call({ ...validBody, model, reasoning_effort: 'low' }, { origin: SITE, upstream })
+    assert(res.status === 200, `status ${res.status}`)
+    assert(targetUrl.includes('api.z.ai'), `targetUrl should be Z.ai, got ${targetUrl}`)
+    assert(payload?.model === model, `expected model ${model}, got ${payload?.model}`)
+  })
+}
+
 // 10. Forwarding Groq model to Groq upstream
 await test('Allowed Groq model (openai/gpt-oss-20b) routes to Groq upstream without reasoning_effort', async () => {
   let payload

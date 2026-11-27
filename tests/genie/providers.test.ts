@@ -1,10 +1,8 @@
 import assert from 'node:assert/strict'
-import { afterEach, describe, it } from 'node:test'
+import { afterEach, before, describe, it } from 'node:test'
 
 import {
   MAX_REPLY_CHARS,
-  fetchBigModel,
-  fetchGroq,
   isProxyRateLimitPayload,
   readChatResponse,
   shortenReply,
@@ -176,6 +174,26 @@ describe('shortenReply', () => {
 
 describe('provider requests', () => {
   const realFetch = globalThis.fetch
+  const MODEL_ENV = ['NEXT_PUBLIC_BIGMODEL_MODEL', 'NEXT_PUBLIC_ZAI_FAST_MODEL', 'NEXT_PUBLIC_GROQ_MODEL']
+  let fetchBigModel: typeof import('@/lib/genie/providers').fetchBigModel
+  let fetchGroq: typeof import('@/lib/genie/providers').fetchGroq
+
+  // The models are read from the environment when the module loads. Load a fresh copy
+  // with the overrides cleared, so these tests check the built-in defaults whatever
+  // the shell running them has set.
+  before(async () => {
+    const saved = MODEL_ENV.map((name) => [name, process.env[name]] as const)
+    for (const name of MODEL_ENV) delete process.env[name]
+    try {
+      const fresh: typeof import('@/lib/genie/providers') = await import(
+        new URL('../../src/lib/genie/providers.ts?defaults', import.meta.url).href
+      )
+      ;({ fetchBigModel, fetchGroq } = fresh)
+    } finally {
+      for (const [name, value] of saved) if (value !== undefined) process.env[name] = value
+    }
+  })
+
   afterEach(() => {
     globalThis.fetch = realFetch
   })
@@ -199,8 +217,8 @@ describe('provider requests', () => {
     assert.deepEqual(
       bodies.map((b) => [b.model, b.max_tokens, b.reasoning_effort, b.stream]),
       [
-        ['glm-5-turbo', 900, 'low', false],
-        ['glm-5.3', 1200, 'low', false],
+        ['glm-5.3-flash', 900, 'low', false],
+        ['glm-5.4', 1200, 'low', false],
       ]
     )
     assert.deepEqual(bodies[0].messages, [
@@ -213,6 +231,7 @@ describe('provider requests', () => {
     const bodies = captureFetch(() => sseResponse([delta('ok'), 'data: [DONE]\n\n']))
     assert.deepEqual(await fetchGroq({ ...base, lane: 'deep', onDelta() {} }), { content: 'ok', incomplete: false })
     assert.equal(bodies[0].stream, true)
+    assert.equal(bodies[0].model, 'openai/gpt-oss-20b')
     assert.equal(bodies[0].max_tokens, 1200)
   })
 

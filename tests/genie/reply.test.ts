@@ -129,12 +129,12 @@ describe('requestModelReply', () => {
 
   it('throws the last provider error when there is no prepared reply either', async () => {
     const groqError = upstream500('Groq')
-    await assert.rejects(request('Tell me a joke', providers(upstream500('BigModel'), groqError)), groqError)
+    await assert.rejects(request('Tell me a joke', providers(upstream500('BigModel'), groqError)), (e) => e === groqError)
   })
 
   it('skips Groq on a proxy rate limit and keeps the 429 for the error message', async () => {
     const limit = proxy429()
-    await assert.rejects(request('Tell me a joke', providers(limit, { content: 'from Groq' })), limit)
+    await assert.rejects(request('Tell me a joke', providers(limit, { content: 'from Groq' })), (e) => e === limit)
     assert.deepEqual(log, ['bigModel'])
     assert.equal(chatErrorKind(limit), 'rate-limited')
   })
@@ -149,7 +149,7 @@ describe('requestModelReply', () => {
     let stopped = false
     const abort = new Error('aborted')
     const fakes = providers(abort, { content: 'from Groq' }, () => (stopped = true))
-    await assert.rejects(request('Tell me about mergeproof', fakes, () => stopped), abort)
+    await assert.rejects(request('Tell me about mergeproof', fakes, () => stopped), (e) => e === abort)
     assert.deepEqual(log, ['bigModel'])
     assert.equal(consoleError.mock.callCount(), 0)
   })
@@ -160,7 +160,7 @@ describe('requestModelReply', () => {
     const fakes = providers(upstream500('BigModel'), abort, (name) => {
       if (name === 'groq') stopped = true
     })
-    await assert.rejects(request('Tell me about mergeproof', fakes, () => stopped), abort)
+    await assert.rejects(request('Tell me about mergeproof', fakes, () => stopped), (e) => e === abort)
     assert.equal(consoleError.mock.callCount(), 1)
   })
 
