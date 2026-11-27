@@ -9,6 +9,7 @@ import {
   findCuratedTopic,
   getLocalReply,
   pickFollowUpIds,
+  questionLanguage,
   type ChatLane,
   type PromptId,
 } from './prompts'
@@ -66,10 +67,12 @@ export function decideImmediateReply({
   earlierQuestions?: readonly string[]
 }): ImmediateReply {
   const curatedTopic = promptId ? REPLY_FOR_PROMPT[promptId] : findCuratedTopic(content)
-  const curatedReply = curatedTopic ? translateValue(lang, LOCAL_REPLIES[curatedTopic]) : null
+  // A prepared answer follows the question's language (a suggested question is in the site language).
+  const replyLang = promptId ? lang : questionLanguage(content, lang)
+  const curatedReply = curatedTopic ? translateValue(replyLang, LOCAL_REPLIES[curatedTopic]) : null
   if (!curatedReply && proxyConfigured) return { kind: 'ask-model' }
 
-  const local = curatedReply ?? getLocalReply(content, lang)
+  const local = curatedReply ?? getLocalReply(content, replyLang)
   if (!local) return { kind: 'unavailable' }
   return {
     kind: 'answer',
@@ -176,7 +179,7 @@ export async function requestModelReply({
   }
 
   if (rawReply === null && !isStopped()) {
-    const local = getLocalReply(content, lang)
+    const local = getLocalReply(content, questionLanguage(content, lang))
     if (local) {
       rawReply = { content: local, fallback: true }
     } else {

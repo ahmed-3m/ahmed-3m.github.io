@@ -149,6 +149,21 @@ export const CHAT_COPY = {
     es: 'Correo',
     ar: 'البريد الإلكتروني',
   },
+  // Under the input, followed by a link to the chat section of the privacy page.
+  aiNotice: {
+    en: 'Genie is an AI assistant and can make mistakes.',
+    de: 'Genie ist ein KI-Assistent und kann Fehler machen.',
+    fr: 'Genie est un assistant IA et peut se tromper.',
+    es: 'Genie es un asistente de IA y puede equivocarse.',
+    ar: 'جيني مساعد ذكاء اصطناعي وقد يخطئ.',
+  },
+  privacyLink: {
+    en: 'Privacy',
+    de: 'Datenschutz',
+    fr: 'Confidentialité',
+    es: 'Privacidad',
+    ar: 'الخصوصية',
+  },
   retryReply: {
     en: 'Try again',
     de: 'Erneut versuchen',

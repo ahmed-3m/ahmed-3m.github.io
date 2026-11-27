@@ -9,7 +9,7 @@ import { useI18n, type TranslationMap } from '@/lib/i18n'
 const EMAIL = 'ahmed.mo.0595@gmail.com'
 const UPDATED = '2026-11-27'
 
-type Section = { heading: TranslationMap; paragraphs: TranslationMap[] }
+type Section = { id?: string; heading: TranslationMap; paragraphs: TranslationMap[] }
 
 // Follows the build: the GoatCounter text appears only when a site code is configured
 // (src/lib/analytics.ts), so the notice never describes a script the page doesn't load.
@@ -212,6 +212,8 @@ const privacy: Section[] = [
   },
   visitStatistics,
   {
+    // Linked from the chat panel's AI notice.
+    id: 'chat-assistant',
     heading: {
       en: 'Chat assistant',
       de: 'Chat-Assistent',
@@ -302,7 +304,7 @@ export default function LegalContent({ kind }: { kind: 'impressum' | 'privacy' }
       <h1>{t(titles[kind])}</h1>
       {lang !== 'de' && <p className="legal-note">{t(bindingNote)}</p>}
       {sections.map((section) => (
-        <section key={section.heading.en}>
+        <section key={section.heading.en} id={section.id}>
           <h2>{t(section.heading)}</h2>
           {section.paragraphs.map((paragraph) => (
             <p key={paragraph.en}>{t(paragraph)}</p>
