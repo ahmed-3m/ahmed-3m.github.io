@@ -2,6 +2,7 @@
 
 import ResearchFigure from '@/components/ResearchFigure'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
+import { QUALIFIERS } from '@/lib/claims'
 import { CIFAR_LAMBDA_SWEEP } from '@/lib/ood-explorer-data'
 import { separationNoiseTraining } from '@/lib/research-figures'
 import { useTheme } from '@/lib/ThemeContext'
@@ -93,7 +94,7 @@ export default function SeparationLoss() {
               { label: copy.separation, entry: withSeparation },
             ].map(({ label, entry }) => (
               <div key={entry.lambda}>
-                <dt>{t(label)} <bdi>λ = {Number(entry.lambda)}</bdi></dt>
+                <dt>{t(label)} <bdi>λ = {Number(entry.lambda)}</bdi> · {t(QUALIFIERS.threeSeeds.text)}</dt>
                 <dd><bdi dir="ltr">{entry.withinCifarMean.toFixed(2)}% ± {entry.withinCifarStd?.toFixed(2)}%</bdi></dd>
               </div>
             ))}

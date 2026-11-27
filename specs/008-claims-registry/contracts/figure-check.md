@@ -63,12 +63,13 @@ public/llms.txt:41 (en) "0.8673 ± 0.0230" — missing-qualifier: 5-fold CV
 | `src/**/*.ts`, `src/**/*.tsx`, except `ood-explorer-data.ts` | Card or JSX block | From the nearest language key, else `en` |
 | `public/llms.txt`, `public/llms-full.txt`, `README.md` | Paragraph, list item or table row | `en` |
 | `.github/readme/hero-*.svg` | The whole file | `en` |
-| `tools/generate-og-images.mjs` card definitions | One card | `en` |
+| `tools/generate-og-images.mjs` card definitions (its evaluated `CARDS` export, so `formatClaim` stat lines are scanned as rendered) | One card | `en` |
 | `out/**/*.html` (export only) | Block element, `meta` content or `title` | `en` |
 | `out/_next/static/**/*.js` (export only) | The whole file | Retired rule only |
 
-**Not scanned**: `specs/`, `tests/`, `docs/`, manuscripts, PDFs, and
-`ood-explorer-data.ts` itself.
+**Not scanned**: `specs/`, `tests/`, `docs/`, manuscripts, PDFs,
+`ood-explorer-data.ts` itself, and `src/lib/claims/` (the registry and its qualifier
+texts).
 
 ## Fixtures (SC-001)
 

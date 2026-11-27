@@ -192,8 +192,8 @@ export const blogPostsMeta: BlogPostMeta[] = [
     },
     "translations": {
       "en": {
-        "title": "How I Reached 99.03% AUROC on OOD Detection with Conditional Diffusion Models",
-        "excerpt": "My master's thesis at JKU Linz introduced class-conditional separation loss into conditional diffusion models used as generative classifiers, reaching 99.03% +/- 0.07% AUROC on CIFAR-10 and adding a stable +6.5pp over the non-separated baseline.",
+        "title": "How I Reached 99.03% ± 0.07% AUROC (3-seed mean) on OOD Detection with Conditional Diffusion Models",
+        "excerpt": "My master's thesis at JKU Linz introduced class-conditional separation loss into conditional diffusion models used as generative classifiers, reaching 99.03% ± 0.07% AUROC (3-seed mean) on CIFAR-10 and adding a stable +6.5pp over the non-separated baseline.",
         "tags": [
           "Diffusion Models",
           "OOD Detection",
@@ -219,8 +219,8 @@ export const blogPostsMeta: BlogPostMeta[] = [
         ]
       },
       "de": {
-        "title": "Wie ich mit konditionalen Diffusionsmodellen 99.03% AUROC für OOD-Erkennung erreicht habe",
-        "excerpt": "Meine Masterarbeit an der JKU Linz führte eine class-conditional separation loss in konditionale Diffusionsmodelle als generative Klassifikatoren ein und erreichte 99.03% +/- 0.07% AUROC auf CIFAR-10 sowie einen stabilen Gewinn von +6.5 Prozentpunkten gegenüber der Basis ohne Separation.",
+        "title": "Wie ich mit konditionalen Diffusionsmodellen 99,03 % ± 0,07 % AUROC (3-Seed-Mittel) für OOD-Erkennung erreicht habe",
+        "excerpt": "Meine Masterarbeit an der JKU Linz führte eine class-conditional separation loss in konditionale Diffusionsmodelle als generative Klassifikatoren ein und erreichte 99,03 % ± 0,07 % AUROC (3-Seed-Mittel) auf CIFAR-10 sowie einen stabilen Gewinn von +6.5 Prozentpunkten gegenüber der Basis ohne Separation.",
         "tags": [
           "Diffusionsmodelle",
           "OOD-Erkennung",
@@ -246,8 +246,8 @@ export const blogPostsMeta: BlogPostMeta[] = [
         ]
       },
       "fr": {
-        "title": "Comment j'ai atteint 99.03% AUROC pour la détection OOD avec des modèles de diffusion conditionnels",
-        "excerpt": "Mon mémoire de master à JKU Linz a introduit une class-conditional separation loss dans des modèles de diffusion conditionnels utilisés comme classificateurs génératifs, atteignant 99.03% +/- 0.07% AUROC sur CIFAR-10 avec un gain stable de +6.5 points face à la baseline sans séparation.",
+        "title": "Comment j'ai atteint 99,03 % ± 0,07 % AUROC (moyenne 3 seeds) pour la détection OOD avec des modèles de diffusion conditionnels",
+        "excerpt": "Mon mémoire de master à JKU Linz a introduit une class-conditional separation loss dans des modèles de diffusion conditionnels utilisés comme classificateurs génératifs, atteignant 99,03 % ± 0,07 % AUROC (moyenne 3 seeds) sur CIFAR-10 avec un gain stable de +6.5 points face à la baseline sans séparation.",
         "tags": [
           "Modèles de diffusion",
           "Détection OOD",
@@ -260,7 +260,7 @@ export const blogPostsMeta: BlogPostMeta[] = [
         "faq": [
           {
             "question": "Quel résultat a été obtenu sur CIFAR-10 ?",
-            "answer": "Le meilleur résultat moyen sur trois seeds est de 99.03% +/- 0.07% AUROC. Le seed-42 a atteint 98.98% dans le split CIFAR et a généralisé zero-shot à cinq benchmarks externes."
+            "answer": "Le meilleur résultat moyen est de 99.03% +/- 0.07% AUROC (moyenne 3 seeds). Le seed-42 a atteint 98.98% dans le split CIFAR et a généralisé zero-shot à cinq benchmarks externes."
           },
           {
             "question": "Qu'est-ce que la separation loss ?",
@@ -273,8 +273,8 @@ export const blogPostsMeta: BlogPostMeta[] = [
         ]
       },
       "es": {
-        "title": "Cómo alcancé 99.03% AUROC en detección OOD con modelos de difusión condicional",
-        "excerpt": "Mi tesis de máster en JKU Linz introdujo una class-conditional separation loss en modelos de difusión condicional usados como clasificadores generativos, alcanzando 99.03% +/- 0.07% AUROC en CIFAR-10 y una mejora estable de +6.5 puntos sobre la base sin separación.",
+        "title": "Cómo alcancé 99.03% ± 0.07% AUROC (media de 3 seeds) en detección OOD con modelos de difusión condicional",
+        "excerpt": "Mi tesis de máster en JKU Linz introdujo una class-conditional separation loss en modelos de difusión condicional usados como clasificadores generativos, alcanzando 99.03% ± 0.07% AUROC (media de 3 seeds) en CIFAR-10 y una mejora estable de +6.5 puntos sobre la base sin separación.",
         "tags": [
           "Modelos de difusión",
           "Detección OOD",
@@ -300,8 +300,8 @@ export const blogPostsMeta: BlogPostMeta[] = [
         ]
       },
       "ar": {
-        "title": "كيف وصلت إلى 99.03% AUROC في كشف OOD باستخدام نماذج الانتشار الشرطية",
-        "excerpt": "قدمت رسالتي في JKU Linz خسارة فصل شرطية داخل نماذج الانتشار الشرطية المستخدمة كمصنفات توليدية، وحققت 99.03% +/- 0.07% AUROC على CIFAR-10 مع تحسن ثابت قدره +6.5 نقطة مقارنة بالخط الأساسي من دون الفصل.",
+        "title": "كيف وصلت إلى \u206699.03%\u00a0±\u00a00.07% AUROC\u2069 (متوسط 3 بذور) في كشف OOD باستخدام نماذج الانتشار الشرطية",
+        "excerpt": "قدمت رسالتي في JKU Linz خسارة فصل شرطية داخل نماذج الانتشار الشرطية المستخدمة كمصنفات توليدية، وحققت \u206699.03%\u00a0±\u00a00.07% AUROC\u2069 (متوسط 3 بذور) على CIFAR-10 مع تحسن ثابت قدره +6.5 نقطة مقارنة بالخط الأساسي من دون الفصل.",
         "tags": [
           "نماذج الانتشار",
           "كشف OOD",

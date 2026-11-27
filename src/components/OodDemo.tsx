@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useMemo, useId, useRef, type KeyboardEvent } from 'react'
-import { claimParts, formatClaim, formatLocaleNumber, type ClaimId } from '@/lib/claims'
+import { QUALIFIERS, claimParts, formatClaim, formatLocaleNumber, type ClaimId } from '@/lib/claims'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { languageLocale, type Language } from '@/lib/i18n-config'
 import {
@@ -1072,6 +1072,9 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
                     </span>
                     <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--cd-accent)' }}>
                       <bdi dir="ltr">{meta.auroc.toFixed(2)}%</bdi>
+                      {key === 'within_cifar' && (
+                        <span style={{ fontWeight: 500, color: 'var(--cd-fg3)' }}> ({t(QUALIFIERS.seed42.text)})</span>
+                      )}
                     </span>
                   </button>
                 )
@@ -1690,7 +1693,7 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
                     {activeLambda.withinCifarMean.toFixed(2)}%
                     {activeLambda.withinCifarStd !== null ? ` ± ${activeLambda.withinCifarStd.toFixed(2)}%` : ''}
                   </bdi>
-                  {activeLambda.withinCifarStd === null ? ` ${t(copy.seed42Paren)}` : ''}
+                  {activeLambda.withinCifarStd === null ? ` ${t(copy.seed42Paren)}` : ` (${t(QUALIFIERS.threeSeeds.text)})`}
                 </strong>
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, marginTop: 6, color: 'var(--cd-fg2)' }}>

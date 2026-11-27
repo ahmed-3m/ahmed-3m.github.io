@@ -1,10 +1,13 @@
 // Source scanner for the figure check (spec 008, research R5). Turns the site's copy
 // into text units: TS/TSX cards and JSX blocks (per language), manifest and README
-// paragraphs, the README hero SVGs, and the OG card definitions. No build needed.
+// paragraphs, the README hero SVGs, and the OG card definitions. No build needed, but
+// the OG cards come from the generator's module, so run it with the test hooks.
 
 import { readdirSync, readFileSync } from 'node:fs'
 import { createRequire } from 'node:module'
 import path from 'node:path'
+
+import { CARDS } from '../generate-og-images.mjs'
 
 // Loaded from this repository's node_modules (a dev dependency already).
 const ts = createRequire(import.meta.url)('typescript')
@@ -192,27 +195,26 @@ export function scanTextFile(abs, rel) {
 }
 
 // ---------------------------------------------------------------------------------
-// OG generator: one unit per card definition in its CARDS object.
+// OG generator: one unit per card, from the evaluated CARDS it exports. Its stat lines
+// come from formatClaim, so the string literals alone would hide the figures.
 
-export function scanOgCards(abs, rel) {
-  const src = readText(abs)
-  const sf = ts.createSourceFile(abs, src, ts.ScriptTarget.Latest, true, ts.ScriptKind.JS)
-  const units = []
-  const visit = (node) => {
-    if (ts.isVariableDeclaration(node) && node.name.getText(sf) === 'CARDS' && node.initializer && ts.isObjectLiteralExpression(node.initializer)) {
-      for (const prop of node.initializer.properties) {
-        if (!ts.isPropertyAssignment(prop) || !ts.isObjectLiteralExpression(prop.initializer)) continue
-        const text = prop.initializer.properties
-          .filter((p) => ts.isPropertyAssignment(p) && (ts.isStringLiteral(p.initializer) || ts.isNoSubstitutionTemplateLiteral(p.initializer)))
-          .map((p) => p.initializer.text)
-          .join('\n')
-        units.push({ file: rel, lang: 'en', scope: 'source', text, line: sf.getLineAndCharacterOfPosition(prop.getStart(sf)).line + 1 })
-      }
-    }
-    ts.forEachChild(node, visit)
-  }
-  visit(sf)
-  return units
+/** The line of a card's `'<png>':` key in the generator source, if found. */
+export function ogCardLine(source, png) {
+  const index = source.split('\n').findIndex((line) => line.includes(`'${png}':`))
+  return index === -1 ? undefined : index + 1
+}
+
+/**
+ * @param {Record<string, Record<string, string>>} cards card definitions by PNG name
+ * @param {string} rel the generator, repository-relative
+ * @param {string} [source] the generator source, for line numbers
+ */
+export function scanOgCards(cards, rel, source = '') {
+  return Object.entries(cards).map(([png, card]) => {
+    const line = ogCardLine(source, png)
+    const text = ['eyebrow', 'title', 'sub', 'stat'].map((k) => card[k]).filter(Boolean).join('\n')
+    return { file: rel, lang: 'en', scope: 'source', text, ...(line ? { line } : {}) }
+  })
 }
 
 // ---------------------------------------------------------------------------------
@@ -244,6 +246,6 @@ export function scanSources(root) {
   for (const rel of sourceFiles(root)) units.push(...scanTsFile(path.join(root, rel), rel))
   for (const rel of TEXT_FILES) units.push(...scanTextFile(path.join(root, rel), rel))
   for (const rel of SVG_FILES) units.push(...scanSvgFile(path.join(root, rel), rel))
-  units.push(...scanOgCards(path.join(root, OG_GENERATOR), OG_GENERATOR))
+  units.push(...scanOgCards(CARDS, OG_GENERATOR, readText(path.join(root, OG_GENERATOR))))
   return units
 }

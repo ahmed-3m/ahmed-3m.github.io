@@ -54,11 +54,11 @@ const labels = {
     ar: 'المتوسط ± الانحراف المعياري عبر ثلاث بذور على CIFAR-10 (الطائرات مقابل الفئات التسع الأخرى)، عند λ = 0.02 وK = 50 عينة لحساب درجة كل صورة.',
   },
   inkjetSetup: {
-    en: 'Mean ± standard deviation for the FTI_Zer0P print dataset across five stratified folds split by source image, with λ = 0 (baseline) and K = 100 scoring samples per crop.',
-    de: 'Mittelwert ± Standardabweichung für die FTI_Zer0P-Druckdaten über fünf stratifizierte Folds, getrennt nach Quellbild, mit λ = 0 (Baseline) und K = 100 Stichproben pro Ausschnitt.',
-    fr: 'Moyenne ± écart type pour FTI_Zer0P sur cinq partitions stratifiées par image source, avec λ = 0 (référence) et K = 100 échantillons par zone.',
-    es: 'Media ± desviación estándar para FTI_Zer0P en cinco particiones estratificadas por imagen de origen, con λ = 0 (referencia) y K = 100 muestras por recorte.',
-    ar: 'المتوسط ± الانحراف المعياري لمجموعة طباعة FTI_Zer0P عبر خمس طيات طبقية مقسّمة حسب الصورة الأصلية، عند λ = 0 (خط الأساس) وK = 100 عينة لكل جزء مقتطع.',
+    en: 'Mean ± standard deviation over 5-fold CV on the FTI_Zer0P print dataset (stratified folds split by source image), with λ = 0 (baseline) and K = 100 scoring samples per crop.',
+    de: 'Mittelwert ± Standardabweichung aus 5-fach-CV auf den FTI_Zer0P-Druckdaten (stratifizierte Folds, getrennt nach Quellbild), mit λ = 0 (Baseline) und K = 100 Stichproben pro Ausschnitt.',
+    fr: 'Moyenne ± écart type en VC 5 plis sur FTI_Zer0P (partitions stratifiées par image source), avec λ = 0 (référence) et K = 100 échantillons par zone.',
+    es: 'Media ± desviación estándar en CV de 5 pliegues sobre FTI_Zer0P (particiones estratificadas por imagen de origen), con λ = 0 (referencia) y K = 100 muestras por recorte.',
+    ar: 'المتوسط ± الانحراف المعياري في تحقق متقاطع خماسي على مجموعة طباعة FTI_Zer0P (طيات طبقية مقسّمة حسب الصورة الأصلية)، عند λ = 0 (خط الأساس) وK = 100 عينة لكل جزء مقتطع.',
   },
   auroc: {
     en: 'AUROC measures how well the scores rank unfamiliar examples above familiar ones across decision thresholds.',

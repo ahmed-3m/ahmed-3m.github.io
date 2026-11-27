@@ -2,12 +2,14 @@
 // export, and compares the result with tools/claims/baseline.json.
 // Needs the test hooks (`node --import ./tools/test-hooks.mjs`) to load the TS modules.
 
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import path from 'node:path'
 
 import { candidateGaps, checkUnit, compareWithBaseline, compileNonResults, formatFindings, lettersOf } from '@/lib/claims/check'
+import { CARDS } from '../generate-og-images.mjs'
+import { OG_LOCK, staleOgImages } from './og-lock.mjs'
 import { scanExport } from './scan-export.mjs'
-import { scanSources } from './scan-sources.mjs'
+import { OG_GENERATOR, ogCardLine, scanSources } from './scan-sources.mjs'
 
 export const ROOT = path.resolve(import.meta.dirname, '..', '..')
 const MAX_NON_RESULTS = 25
@@ -68,6 +70,11 @@ export function runClaimsCheck({ scopes, outDir = path.join(ROOT, 'out'), baseli
       sourceTexts.set(key, [...(sourceTexts.get(key) ?? []), words])
     }
   }
+  // An OG card whose text changed since the PNGs were rendered (research R12). No lock
+  // file means every card is stale.
+  const lock = existsSync(path.join(ROOT, OG_LOCK)) ? readJson(OG_LOCK) : {}
+  const generatorSource = readFileSync(path.join(ROOT, OG_GENERATOR), 'utf8')
+  findings.push(...staleOgImages(CARDS, lock, { file: OG_GENERATOR, lineOf: (png) => ogCardLine(generatorSource, png) }))
   const timings = { sourceMs: Math.round(performance.now() - started) }
 
   let exportUnits = []

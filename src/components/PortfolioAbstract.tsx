@@ -4,6 +4,7 @@ import { useRef, useState, type KeyboardEvent, type ReactNode } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, ArrowUpRight, Layers, Terminal, X } from 'lucide-react'
+import { QUALIFIERS } from '@/lib/claims'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { getAllBlogPostsMeta } from '@/lib/blog-posts-meta'
 import { BENCHMARK_DATASETS, INKJET_OVERALL_SWEEP } from '@/lib/ood-explorer-data'
@@ -304,6 +305,9 @@ export default function PortfolioAbstract() {
                   <span className="stage-rail-title">{t(pillar.tabLabel)}</span>
                   <span className="stage-rail-metric">
                     <bdi dir="ltr">{t(pillar.metricValue)}</bdi>
+                    {pillar.metricQualifier && (
+                      <span className="stage-rail-qual">{t(QUALIFIERS[pillar.metricQualifier].text)}</span>
+                    )}
                   </span>
                 </button>
               )

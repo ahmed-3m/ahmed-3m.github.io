@@ -115,7 +115,7 @@ The model scores an image by how well a class-conditional diffusion model recons
 ## Selected writing.
 
 - **[Deterministic Guardrails for LLM and Agent Systems: Sihem's Arbiter and mergeproof](https://ahmed-3m.github.io/blog/deterministic-guardrails-for-llm-and-agent-systems/)** *(Nov 2026)* — Separating deterministic scheduling, state, and diff verification from probabilistic LLM synthesis.
-- **[How I Reached 99.03% AUROC on OOD Detection with Conditional Diffusion Models](https://ahmed-3m.github.io/blog/ood-diffusion-thesis/)** *(Jul 2026)* — Class-conditional separation loss, seed stability, and cross-domain boundary conditions.
+- **[How I Reached 99.03% ± 0.07% AUROC (3-seed mean) on OOD Detection with Conditional Diffusion Models](https://ahmed-3m.github.io/blog/ood-diffusion-thesis/)** *(Jul 2026)* — Class-conditional separation loss, seed stability, and cross-domain boundary conditions.
 - **[Diffusion Models for Industrial Defect Detection at PROFACTOR GmbH](https://ahmed-3m.github.io/blog/diffusion-models-anomaly-detection/)** *(Nov 2024)* — Evaluating a two-stage YOLOv8m + conditional diffusion pipeline on `FTI_Zer0P` under 5-fold CV.
 - **[YOLOv8 for Industrial Quality Control: Decisions That Actually Moved the Needle](https://ahmed-3m.github.io/blog/computer-vision-yolo-mastery/)** *(Oct 2024)* — Feature extraction, stratified fold design, and edge-deployment trade-offs.
 

@@ -57,11 +57,11 @@ export const caseStudies: CaseStudy[] = [
     ],
     results: [
       {
-        en: '+6.5 percentage points gain over the non-separated baseline (which achieved 92.52% ± 11.07% AUROC at lambda=0).',
-        de: '+6.5 Prozentpunkte Gewinn gegenüber der Basis ohne Separation (die bei lambda=0 92.52% ± 11.07% AUROC erreichte).',
-        fr: '+6.5 points de pourcentage de gain face à la baseline sans séparation (qui atteignait 92.52% ± 11.07% AUROC à lambda=0).',
-        es: '+6.5 puntos porcentuales de mejora sobre la base sin separación (que alcanzó 92.52% ± 11.07% AUROC con lambda=0).',
-        ar: '+6.5 نقطة مئوية تحسن على خط الأساس بدون فصل (الذي حقق 92.52% ± 11.07% AUROC عند lambda=0).',
+        en: `${formatClaim('thesis.gainPp', 'en', 'value')} gain over the non-separated baseline (which achieved ${formatClaim('thesis.baseline', 'en', 'metric')} at lambda=0).`,
+        de: `${formatClaim('thesis.gainPp', 'de', 'value')} Gewinn gegenüber der Basis ohne Separation (die bei lambda=0 ${formatClaim('thesis.baseline', 'de', 'metric')} erreichte).`,
+        fr: `${formatClaim('thesis.gainPp', 'fr', 'value')} de gain face à la baseline sans séparation (qui atteignait ${formatClaim('thesis.baseline', 'fr', 'metric')} à lambda=0).`,
+        es: `${formatClaim('thesis.gainPp', 'es', 'value')} de mejora sobre la base sin separación (que alcanzó ${formatClaim('thesis.baseline', 'es', 'metric')} con lambda=0).`,
+        ar: `${formatClaim('thesis.gainPp', 'ar', 'value')} تحسن على خط الأساس بدون فصل (الذي حقق ${formatClaim('thesis.baseline', 'ar', 'metric')} عند lambda=0).`,
       },
       {
         en: 'Seed-42 generalized zero-shot to CIFAR-100 (96.97%), Places365 (96.50%), FashionMNIST (94.03%), Textures (92.84%), and SVHN (90.50%).',
