@@ -8,3 +8,8 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    ignore:
+      # eslint-config-next / typescript-eslint rejects TypeScript 7.0 (PR #295);
+      # revisit once typescript-eslint ships TS >= 7 support.
+      - dependency-name: "typescript"
+        versions: [">= 7.0.0"]

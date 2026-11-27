@@ -221,10 +221,11 @@ export async function fetchBigModel({
   onDelta?: StreamDelta
 }): Promise<ChatReply> {
   const model = lane === 'fast' ? ZAI_FAST_MODEL : ZAI_MODEL
-  // GLM-5 models allocate part of max_tokens to internal reasoning before
-  // emitting visible delta.content; keep fast headroom generous and cap
-  // reasoning_effort to 'low' on both lanes to avoid empty/truncated replies.
-  const maxTokens = lane === 'fast' ? 900 : 1200
+  // Live benchmark on api.z.ai Coding Plan: reasoning_effort: 'low' keeps first
+  // visible token ~1.3s on glm-5.4 (vs ~19s / 1200-token starvation at 'high') and
+  // halves visible TTFB on glm-5.3-flash (~2.4s vs ~4.8s when omitted). 1600 deep
+  // tokens prevent mid-sentence clipping on detailed or multilingual explanations.
+  const maxTokens = lane === 'fast' ? 900 : 1600
   const payloadMessages = buildChatMessages(systemPrompt, messages)
 
   const controller = new AbortController()
@@ -287,8 +288,8 @@ export async function fetchGroq({
   onDelta?: StreamDelta
 }): Promise<ChatReply> {
   // gpt-oss-20b also consumes reasoning tokens out of max_tokens; give both
-  // lanes enough headroom (within worker MAX_TOKENS_CAP = 1200) to finish cleanly.
-  const maxTokens = lane === 'fast' ? 900 : 1200
+  // lanes enough headroom (within worker MAX_TOKENS_CAP = 2000) to finish cleanly.
+  const maxTokens = lane === 'fast' ? 900 : 1600
   const payloadMessages = buildChatMessages(systemPrompt, messages)
 
   const controller = new AbortController()

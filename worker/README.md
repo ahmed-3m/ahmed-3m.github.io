@@ -91,7 +91,7 @@ revoke the former browser keys at their providers and remove the unused
 ## How it works
 
 - When `NEXT_PUBLIC_CHAT_PROXY_URL` is set, the Z.ai and Groq callers in
-  `src/components/ChatBotPanel.tsx` POST `{ messages, model, max_tokens, temperature, ... }`
+  `src/lib/genie/providers.ts` POST `{ messages, model, max_tokens, temperature, ... }`
   to the proxy URL **without** an `Authorization` header. The proxy routes
   allowlisted Z.ai models (`glm-5.4`, `glm-5.3`, `glm-5-turbo`, `glm-5.3-flash`) to
   `api.z.ai` with `env.ZAI_API_KEY` and allowlisted Groq models
@@ -99,7 +99,7 @@ revoke the former browser keys at their providers and remove the unused
 - Without `NEXT_PUBLIC_CHAT_PROXY_URL`, Genie uses its curated answers. It also
   uses them when the configured providers fail.
 - The proxy requires an allowlisted `Origin` on `POST` and `OPTIONS` (missing or
-  disallowed origins receive `403`), enforces `MAX_TOKENS_CAP = 1_200`, caps
+  disallowed origins receive `403`), enforces `MAX_TOKENS_CAP = 2_000`, caps
   body size (`64_000` UTF-8 bytes), allows at most one `system` message (only at
   `messages[0]`), rejects malformed payloads with `400`, rejects non-`POST`
   methods with `405`, and passes SSE streaming responses through unbuffered.

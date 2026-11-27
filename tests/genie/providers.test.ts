@@ -218,7 +218,7 @@ describe('provider requests', () => {
       bodies.map((b) => [b.model, b.max_tokens, b.reasoning_effort, b.stream]),
       [
         ['glm-5.3-flash', 900, 'low', false],
-        ['glm-5.4', 1200, 'low', false],
+        ['glm-5.4', 1600, 'low', false],
       ]
     )
     assert.deepEqual(bodies[0].messages, [
@@ -232,7 +232,7 @@ describe('provider requests', () => {
     assert.deepEqual(await fetchGroq({ ...base, lane: 'deep', onDelta() {} }), { content: 'ok', incomplete: false })
     assert.equal(bodies[0].stream, true)
     assert.equal(bodies[0].model, 'openai/gpt-oss-20b')
-    assert.equal(bodies[0].max_tokens, 1200)
+    assert.equal(bodies[0].max_tokens, 1600)
   })
 
   it('reports a Groq 503 as warming up', async () => {

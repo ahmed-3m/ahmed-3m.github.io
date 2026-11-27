@@ -92,10 +92,16 @@ describe('starter and follow-up prompts', () => {
 describe('routeLocally', () => {
   const cases: [string, 'fast' | 'deep'][] = [
     ['Explain how separation loss works', 'deep'],
+    ['What are the trade-offs of the MergeProof architecture?', 'deep'],
+    ['Summarize his thesis design decisions under the hood', 'deep'],
     ['Warum funktioniert Separation Loss?', 'deep'],
+    ['Was sind die Vor- und Nachteile der Architektur?', 'deep'],
     ['Comment fonctionne Sihem ?', 'deep'],
+    ['Quels sont les avantages et inconvénients de son architecture ?', 'deep'],
     ['¿Por qué usar difusión?', 'deep'],
+    ['Resume la arquitectura y las ventajas y desventajas del pipeline', 'deep'],
     ['كيف يعمل محرك Sihem؟', 'deep'],
+    ['ما هي مقايضات ومعمارية المشروع؟', 'deep'],
     ['Where is his CV?', 'fast'],
     ['Wo ist sein Lebenslauf?', 'fast'],
     ['Où est son CV ?', 'fast'],
