@@ -162,27 +162,40 @@ export const CLAIMS: Readonly<Record<ClaimId, Claim>> = Object.fromEntries(
 
 const PLOT_KEYS = new Set(['histogram', 'roc', 'id_pct', 'ood_pct'])
 
-function collectDataNumbers(): number[] {
+/** Data fields that hold a 0-1 metric the copy may show as a percentage (accMean 0.8094 as
+ *  80.94%). Other fractions (λ, thresholds, p-values, noise schedules, scores) are not. */
+const FRACTION_KEY = /^(?:auroc|acc|fpr95|auprc|f1)(?:Mean|Std)$|^(?:mean|std)$/
+
+function collectDataNumbers(): { values: number[]; fractions: number[] } {
   const values: number[] = []
+  const fractions: number[] = []
   const walk = (value: unknown, key = ''): void => {
     if (PLOT_KEYS.has(key)) return
-    if (typeof value === 'number') values.push(value)
-    else if (typeof value === 'string') for (const m of value.matchAll(/\d+(?:\.\d+)?/g)) values.push(Number(m[0]))
-    else if (Array.isArray(value)) value.forEach((item) => walk(item))
+    if (typeof value === 'number') {
+      values.push(value)
+      if (value > 0 && value < 1 && FRACTION_KEY.test(key)) fractions.push(value)
+    } else if (typeof value === 'string') for (const m of value.matchAll(/\d+(?:\.\d+)?/g)) values.push(Number(m[0]))
+    else if (Array.isArray(value)) value.forEach((item) => walk(item, key))
     else if (value && typeof value === 'object') for (const [k, v] of Object.entries(value)) walk(v, k)
   }
   for (const [name, value] of Object.entries(DATA)) walk(value, name)
-  return values
+  return { values, fractions }
 }
 
+const DATA_NUMBERS = collectDataNumbers()
+
 const BACKED_VALUES: readonly number[] = [
-  ...collectDataNumbers(),
+  ...DATA_NUMBERS.values,
   ...Object.values(DERIVED),
   ...CLAIM_LIST.flatMap((c) => ('spread' in c ? [c.value, c.spread] : [c.value])),
 ]
 
+/** A 0-1 metric field written as a percentage. */
+const BACKED_PERCENTAGES: readonly number[] = DATA_NUMBERS.fractions.map((v) => v * 100)
+
 /** True when the number equals a named claim, a data-file value or a computed value, or
- *  is a 0-1 data fraction written as a percentage (accMean 0.8094 shown as 80.94%). */
+ *  is a 0-1 metric field of the data file written as a percentage (FRACTION_KEY). */
 export function isBackedValue(n: number): boolean {
-  return BACKED_VALUES.some((v) => Math.abs(v - n) < 1e-9 || (v > 0 && v < 1 && Math.abs(v * 100 - n) < 1e-9))
+  const near = (v: number) => Math.abs(v - n) < 1e-9
+  return BACKED_VALUES.some(near) || BACKED_PERCENTAGES.some(near)
 }

@@ -45,7 +45,16 @@ export interface Finding {
   detail: string
   fix: string
   line?: number
+  /** Letters just before and after the figure (lowercase, letters only), so an export
+   *  finding can be matched to the source unit it was rendered from. Not part of the key. */
+  context?: { before: string; after: string }
 }
+
+/** Lowercase letters only: the words of a text, without markup, digits or spacing. */
+export const lettersOf = (text: string) => text.toLowerCase().replace(/[^\p{L}]/gu, '')
+
+const CONTEXT_WINDOW = 60
+const CONTEXT_LETTERS = 16
 
 export interface NonResultEntry {
   id: string
@@ -135,8 +144,22 @@ export function checkUnit(unit: TextUnit, nonResults: NonResults): Finding[] {
     const k = clean.slice(0, index).split('\n').length - 1
     return unit.lineMap[Math.min(k, unit.lineMap.length - 1)] ?? unit.line
   }
+  const contextAt = (index: number, length: number) => ({
+    before: lettersOf(clean.slice(Math.max(0, index - CONTEXT_WINDOW), index)).slice(-CONTEXT_LETTERS),
+    after: lettersOf(clean.slice(index + length, index + length + CONTEXT_WINDOW)).slice(0, CONTEXT_LETTERS),
+  })
   const add = (figure: string, rule: Rule, detail: string, fix: string, index: number) =>
-    findings.push({ scope: unit.scope, file: unit.file, lang: unit.lang, figure, rule, detail, fix, line: lineAt(index) })
+    findings.push({
+      scope: unit.scope,
+      file: unit.file,
+      lang: unit.lang,
+      figure,
+      rule,
+      detail,
+      fix,
+      line: lineAt(index),
+      context: retiredOnly ? undefined : contextAt(index, figure.length),
+    })
 
   // Retired figures, in any form.
   const retiredSpans: [number, number][] = []

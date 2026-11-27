@@ -21,7 +21,7 @@ export const JS_BUNDLE_LABEL = 'out/_next/static/**/*.js'
 const EXCLUDED_HTML = [/^news\//]
 /** The same news on other pages: the home page's daily-updated news section (News.tsx).
  *  Retired figures are still caught there by the raw-file unit. */
-const EXCLUDED_SECTION_ID = /\bid\s*=\s*"news"/
+const EXCLUDED_SECTION_ID = /(?:^|\s)id\s*=\s*"news"/
 
 function listFiles(dir) {
   return readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
@@ -113,23 +113,48 @@ function pageUnits(html, file) {
   return units
 }
 
-/** Every export-scope text unit. Fails like verify-export does when out/ is missing. */
-export function scanExport(outDir) {
+const HTML_ESCAPES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#x27;' }
+const jsonBody = (s) => JSON.stringify(s).slice(1, -1)
+const asciiEscaped = (s) => s.replace(/[^\x00-\x7f]/g, (c) => `\\u${c.charCodeAt(0).toString(16).padStart(4, '0')}`)
+
+/** The ways a string can be written in built HTML and JS: as is, HTML-escaped, as a JSON
+ *  string body (also with \u escapes), and JSON inside JSON (the RSC payload in a page). */
+export function encodedForms(s) {
+  const forms = [s, s.replace(/[&<>"']/g, (c) => HTML_ESCAPES[c]), jsonBody(s), asciiEscaped(jsonBody(s)), jsonBody(jsonBody(s))]
+  return [...new Set(forms)].filter(Boolean)
+}
+
+/** Removes every encoded form of the given strings from a text. */
+export function blankStrings(text, strings) {
+  let out = text
+  for (const s of strings) for (const form of encodedForms(s)) if (out.includes(form)) out = out.split(form).join(' ')
+  return out
+}
+
+/**
+ * Every export-scope text unit. Fails like verify-export does when out/ is missing.
+ * `thirdParty` strings (news headlines that hold a retired figure) are blanked from the
+ * raw HTML and JS units, so third-party text cannot fail the build but owner copy can.
+ * @param {string} outDir
+ * @param {{ thirdParty?: string[] }} [options]
+ */
+export function scanExport(outDir, { thirdParty = [] } = {}) {
   if (!existsSync(outDir)) throw new Error(`scan-export: ${outDir} does not exist; run npm run build first`)
   const units = []
   const rel = (abs) => path.relative(outDir, abs).split(path.sep).join('/')
+  const raw = (text) => (thirdParty.length ? blankStrings(text, thirdParty) : text)
   const files = listFiles(outDir)
   for (const abs of files.filter((f) => f.endsWith('.html')).sort()) {
     const relHtml = rel(abs)
     const html = readFileSync(abs, 'utf8').replace(/\r\n?/g, '\n')
     const file = `out/${relHtml}`
-    units.push({ file, lang: 'en', scope: 'export', rules: 'retired-only', text: html })
+    units.push({ file, lang: 'en', scope: 'export', rules: 'retired-only', text: raw(html) })
     if (EXCLUDED_HTML.some((re) => re.test(relHtml))) continue
     units.push(...pageUnits(html, file))
   }
   const bundles = files.filter((f) => f.endsWith('.js') && rel(f).startsWith('_next/static/'))
   for (const abs of bundles) {
-    units.push({ file: JS_BUNDLE_LABEL, lang: 'en', scope: 'export', rules: 'retired-only', text: readFileSync(abs, 'utf8') })
+    units.push({ file: JS_BUNDLE_LABEL, lang: 'en', scope: 'export', rules: 'retired-only', text: raw(readFileSync(abs, 'utf8')) })
   }
   return units
 }

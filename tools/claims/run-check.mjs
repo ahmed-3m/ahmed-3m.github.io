@@ -5,17 +5,45 @@
 import { readFileSync } from 'node:fs'
 import path from 'node:path'
 
-import { candidateGaps, checkUnit, compareWithBaseline, compileNonResults, formatFindings } from '@/lib/claims/check'
+import { candidateGaps, checkUnit, compareWithBaseline, compileNonResults, formatFindings, lettersOf } from '@/lib/claims/check'
 import { scanExport } from './scan-export.mjs'
 import { scanSources } from './scan-sources.mjs'
 
 export const ROOT = path.resolve(import.meta.dirname, '..', '..')
 const MAX_NON_RESULTS = 25
+/** Third-party news (headlines and takes) bundled into the site; see thirdPartyRetired. */
+const NEWS_DATA = 'src/lib/news-items.json'
 
 const readJson = (rel) => JSON.parse(readFileSync(path.join(ROOT, rel), 'utf8'))
 
 /** `99,03 %` and `99.03%` are the same figure for export-versus-source deduplication. */
 const normalisedFigure = (figure) => figure.replace(/,/g, '.').replace(/\s+/g, '')
+
+const stringsOf = (value) =>
+  typeof value === 'string' ? [value] : value && typeof value === 'object' ? Object.values(value).flatMap(stringsOf) : []
+
+/** News strings that hold a retired figure. They are third-party text, so the export scan
+ *  blanks them from the raw HTML and JS units instead of failing the build on them. */
+export function thirdPartyRetired(newsItems) {
+  const none = compileNonResults([])
+  return [...new Set(stringsOf(newsItems))].filter(
+    (text) => checkUnit({ file: NEWS_DATA, lang: 'en', scope: 'export', rules: 'retired-only', text }, none).length > 0,
+  )
+}
+
+const SNIPPET_MIN = 8
+
+/**
+ * Whether an export finding is the rendering of a source finding: the same figure and
+ * rule, in a source unit that also holds the words just before or just after it. A finding
+ * with no such source unit is reported in the export scope.
+ */
+export function renderedFromSource(finding, sourceTexts) {
+  const texts = sourceTexts.get(`${normalisedFigure(finding.figure)}|${finding.rule}`)
+  if (!texts || !finding.context) return false
+  const snippets = [finding.context.before, finding.context.after].filter((s) => s.length >= SNIPPET_MIN)
+  return snippets.length > 0 && texts.some((text) => snippets.some((s) => text.includes(s)))
+}
 
 /**
  * @param {{ scopes: Array<'source'|'export'>, outDir?: string, baseline?: object[] }} options
@@ -27,15 +55,25 @@ export function runClaimsCheck({ scopes, outDir = path.join(ROOT, 'out'), baseli
   const baselineEntries = baseline ?? readJson('tools/claims/baseline.json')
 
   const sourceUnits = scanSources(ROOT)
-  const sourceFindings = sourceUnits.flatMap((u) => checkUnit(u, nonResults))
-  const findings = [...sourceFindings]
+  const findings = []
+  /** figure|rule -> the words of each source unit with that finding */
+  const sourceTexts = new Map()
+  for (const unit of sourceUnits) {
+    const unitFindings = checkUnit(unit, nonResults)
+    if (!unitFindings.length) continue
+    findings.push(...unitFindings)
+    const words = lettersOf(unit.text.replace(/<[^>]*>/g, ' '))
+    for (const f of unitFindings) {
+      const key = `${normalisedFigure(f.figure)}|${f.rule}`
+      sourceTexts.set(key, [...(sourceTexts.get(key) ?? []), words])
+    }
+  }
   const timings = { sourceMs: Math.round(performance.now() - started) }
 
   let exportUnits = []
   if (scopes.includes('export')) {
     const exportStarted = performance.now()
-    exportUnits = scanExport(outDir)
-    const inSource = new Set(sourceFindings.map((f) => `${normalisedFigure(f.figure)}|${f.rule}`))
+    exportUnits = scanExport(outDir, { thirdParty: thirdPartyRetired(readJson(NEWS_DATA)) })
     const blockFindings = []
     const rawFindings = []
     for (const unit of exportUnits) {
@@ -47,8 +85,8 @@ export function runClaimsCheck({ scopes, outDir = path.join(ROOT, 'out'), baseli
       ...blockFindings,
       ...rawFindings.filter((f) => !inBlocks.has(`${f.file}|${normalisedFigure(f.figure)}|${f.rule}`)),
     ]
-    // Reported once, at its source: the same figure and rule already found in source.
-    findings.push(...exportFindings.filter((f) => !inSource.has(`${normalisedFigure(f.figure)}|${f.rule}`)))
+    // Reported once, at its source, when the source unit it was rendered from has it too.
+    findings.push(...exportFindings.filter((f) => !renderedFromSource(f, sourceTexts)))
     timings.exportMs = Math.round(performance.now() - exportStarted)
   }
 

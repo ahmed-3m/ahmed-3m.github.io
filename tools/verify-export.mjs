@@ -7,12 +7,16 @@
 //   5. A privacy notice that disagrees with the build about the GoatCounter script
 //   6. The figure check (spec 008): unregistered, retired, spread-less or unqualified
 //      figures in the source copy and the built pages, against tools/claims/baseline.json
-// Run it through `npm run verify:export`, which loads the TS test hooks the check needs.
+// Runs with plain `node tools/verify-export.mjs`: it registers the TS hooks the figure
+// check needs before loading it.
 
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
 import path from 'node:path'
 
-import { report, runClaimsCheck } from './claims/run-check.mjs'
+import './test-hooks.mjs'
+
+// Loaded after the hooks are registered: a static import would resolve `@/` first.
+const { report, runClaimsCheck } = await import('./claims/run-check.mjs')
 
 const outDir = path.resolve(import.meta.dirname, '..', 'out')
 

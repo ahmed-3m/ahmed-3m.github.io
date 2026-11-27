@@ -31,17 +31,21 @@ const INLINE_TAG = /<\/?(?:span|tspan|bdi|b|strong|em|i|sup|sub|small|code|a|abb
 const BIDI_MARKS = /[⁦-⁩‎‏]/g
 const WIDE_SPACES = /[   ]/g
 
+/** The line breaks inside a removed tag or comment, so line numbers stay right. */
+const keepBreaks = (removed: string, filler = '') => removed.replace(/[^\n]/g, '') || filler
+
 /**
  * Normalises text before reading figures: line endings, HTML comments, inline tags (so
  * that `99.03<span>%</span>` reads as one figure; other tags become a space), entities,
- * bidi marks, no-break and thin spaces, and `+/-` as `±`.
+ * bidi marks, no-break and thin spaces, and `+/-` as `±`. A tag or comment that spans
+ * lines leaves its line breaks behind.
  */
 export function cleanText(text: string): string {
   return text
     .replace(/\r\n?/g, '\n')
-    .replace(/<!--[\s\S]*?-->/g, '')
-    .replace(INLINE_TAG, '')
-    .replace(/<[a-z/!][^>]*>/gi, ' ')
+    .replace(/<!--[\s\S]*?-->/g, (m) => keepBreaks(m))
+    .replace(INLINE_TAG, (m) => keepBreaks(m))
+    .replace(/<[a-z/!][^>]*>/gi, (m) => keepBreaks(m, ' '))
     .replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (m, name: string) => {
       if (name[0] === '#') {
         const hex = name[1] === 'x' || name[1] === 'X'

@@ -131,11 +131,28 @@ export function scanTsFile(abs, rel) {
   }
   visit(sf)
 
+  // Copy that sits under no language key takes its language from a `lang`, `language` or
+  // `locale` property of its object (or an enclosing one), then from a file name such as
+  // `about.de.ts`, and only then defaults to English.
+  const fileLang = rel.match(/\.(en|de|fr|es|ar)\.[jt]sx?$/)?.[1] ?? null
+  const declaredLang = (container) => {
+    for (let a = container; a; a = a.parent) {
+      if (!ts.isObjectLiteralExpression(a)) continue
+      for (const p of a.properties) {
+        if (!ts.isPropertyAssignment(p) || !/^(?:lang|language|locale)$/.test(propertyName(p) ?? '')) continue
+        const init = p.initializer
+        if ((ts.isStringLiteral(init) || ts.isNoSubstitutionTemplateLiteral(init)) && LANGS.has(init.text)) return init.text
+      }
+    }
+    return null
+  }
+
   const units = []
-  for (const group of groups.values()) {
+  for (const [container, group] of groups) {
     const neutral = group.get('neutral') ?? []
     const langs = [...group.keys()].filter((k) => k !== 'neutral')
-    for (const lang of langs.length ? langs : ['en']) {
+    const fallback = declaredLang(container) ?? fileLang ?? 'en'
+    for (const lang of langs.length ? langs : [fallback]) {
       const pieces = [...(group.get(lang) ?? []), ...neutral].sort((a, b) => a.line - b.line)
       const withFigure = pieces.find((p) => /\d[.,]\d/.test(p.text)) ?? pieces[0]
       const lineMap = pieces.flatMap((p) => p.text.split('\n').map((_, i) => p.line + i))

@@ -22,6 +22,7 @@ import {
 } from '@/lib/claims/check'
 import { isBackedValue, QUALIFIERS } from '@/lib/claims'
 import type { Language } from '@/lib/i18n-config'
+import { renderedFromSource, thirdPartyRetired } from '../../tools/claims/run-check.mjs'
 import { scanExport } from '../../tools/claims/scan-export.mjs'
 import { scanOgCards, scanSvgFile, scanTextFile, scanTsFile } from '../../tools/claims/scan-sources.mjs'
 
@@ -153,6 +154,78 @@ describe('figure check: planted figures', () => {
     const text = 'TPR = 93.1%'
     assert.equal(checkUnit({ file: 'a.ts', lang: 'en', scope: 'source', text }, nonResults).length, 1)
     assert.equal(checkUnit({ file: 'out/a.html', lang: 'en', scope: 'export', text }, nonResults).length, 0)
+  })
+})
+
+describe('figure check: scanners', () => {
+  const exportDir = (html: string) => {
+    const out = path.join(tmp, `out-${++n}`)
+    write(path.relative(tmp, path.join(out, 'index.html')), html)
+    return out
+  }
+
+  it('lets third-party news hold a retired figure, but not owner copy', () => {
+    const headline = `Lab model reaches ${retired} on a new benchmark`
+    const news = [{ headline: { en: headline, de: 'Ohne Zahl' }, take: { en: 'No figure here.' } }]
+    const thirdParty = thirdPartyRetired(news)
+    assert.deepEqual(thirdParty, [headline])
+    const page = `<html><body><section id="news"><h3>${headline.replace("'", '&#x27;')}</h3></section>` +
+      `<script>self.__next_f.push([1,${JSON.stringify(JSON.stringify({ t: headline }))}])</script></body></html>`
+    const raw = (html: string, opts = { thirdParty }) =>
+      scanExport(exportDir(html), opts).filter((u: TextUnit) => u.rules === 'retired-only')
+    assert.deepEqual(check(raw(page)), [])
+    // Without the news list, the same page fails (the encoded forms were really there).
+    assert.equal(check(raw(page, { thirdParty: [] })).length, 2)
+    const owned = page.replace('</body>', `<p>${retired} accuracy</p></body>`)
+    assert.deepEqual(
+      check(raw(owned)).map((f) => f.rule),
+      ['retired'],
+    )
+  })
+
+  it('skips only the element whose own id is "news"', () => {
+    const html = `<html><body><div data-id="news"><p>AUROC reached 99.30%</p></div></body></html>`
+    const units = scanExport(exportDir(html)).filter((u: TextUnit) => u.rules !== 'retired-only')
+    assert.deepEqual(
+      check(units).map((f) => f.figure),
+      ['99.30%'],
+    )
+  })
+
+  it('matches an export finding to its source unit by the words around it', () => {
+    const exported = check([{ file: 'out/x.html', lang: 'en', scope: 'export', text: 'Headline result: AUROC 99.03% on CIFAR-10 airplane classes' }])
+    const spread = exported.find((f) => f.rule === 'mean-without-spread')!
+    const source = (words: string) => new Map([['99.03%|mean-without-spread', [words]]])
+    assert.ok(renderedFromSource(spread, source('headlineresultaurocairplaneclasses')))
+    assert.ok(!renderedFromSource(spread, source('anunrelatedcardaboutsomethingelse')))
+    assert.ok(!renderedFromSource(spread, new Map()))
+  })
+
+  it('names the right line after a tag that spans lines', () => {
+    const rel = `public/llms-${++n}.txt`
+    const text = `<p align="center"\n   class="x">intro\n<img\n src="a.png">\nAUROC reached 99.30%</p>\n`
+    const findings = check(scanTextFile(write(rel, text), rel) as TextUnit[])
+    assert.deepEqual(
+      findings.map((f) => f.line),
+      [5],
+    )
+  })
+
+  it('reads copy under no language key in the language its object declares', () => {
+    const rel = `src/fixture-${++n}.ts`
+    const src = `export const posts = [{ lang: 'de', body: 'Die Kurve erreicht 99,03 % ± 0,07 % AUROC (drei Seeds).' }]\n`
+    const units = scanTsFile(write(rel, src), rel) as TextUnit[]
+    assert.deepEqual(
+      units.map((u) => u.lang),
+      ['de'],
+    )
+    assert.deepEqual(check(units), [])
+  })
+
+  it('backs a percentage only for 0-1 metric fields, not for other fractions', () => {
+    assert.ok(isBackedValue(80.94)) // accMean 0.8094
+    assert.ok(!isBackedValue(96.98)) // alphaBar 0.9698, a noise schedule
+    assert.ok(!isBackedValue(37.1)) // rawPValue 0.371
   })
 })
 

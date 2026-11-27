@@ -1,6 +1,30 @@
 [
   {
     "scope": "export",
+    "file": "out/blog/diffusion-models-anomaly-detection/index.html",
+    "lang": "en",
+    "figure": "0.8673",
+    "rule": "mean-without-spread",
+    "note": "built block shows the mean without its spread; not matched to a source unit by its words, PR B"
+  },
+  {
+    "scope": "export",
+    "file": "out/blog/diffusion-models-anomaly-detection/index.html",
+    "lang": "en",
+    "figure": "0.8673",
+    "rule": "missing-qualifier",
+    "note": "built block lacks the qualifier its source card has nearby; not matched to a source unit by its words, PR B"
+  },
+  {
+    "scope": "export",
+    "file": "out/blog/diffusion-models-anomaly-detection/index.html",
+    "lang": "en",
+    "figure": "0.8673",
+    "rule": "missing-qualifier",
+    "note": "built block lacks the qualifier its source card has nearby; not matched to a source unit by its words, PR B"
+  },
+  {
+    "scope": "export",
     "file": "out/blog/ood-diffusion-thesis/index.html",
     "lang": "en",
     "figure": "98.98%",
@@ -11,6 +35,30 @@
     "scope": "export",
     "file": "out/case-studies/diffusion-ood/index.html",
     "lang": "en",
+    "figure": "99.03%",
+    "rule": "mean-without-spread",
+    "note": "built block shows the mean without its spread; not matched to a source unit by its words, PR B"
+  },
+  {
+    "scope": "export",
+    "file": "out/case-studies/diffusion-ood/index.html",
+    "lang": "en",
+    "figure": "99.03%",
+    "rule": "mean-without-spread",
+    "note": "built block shows the mean without its spread; not matched to a source unit by its words, PR B"
+  },
+  {
+    "scope": "export",
+    "file": "out/case-studies/diffusion-ood/index.html",
+    "lang": "en",
+    "figure": "99.03%",
+    "rule": "mean-without-spread",
+    "note": "built block shows the mean without its spread; not matched to a source unit by its words, PR B"
+  },
+  {
+    "scope": "export",
+    "file": "out/case-studies/diffusion-ood/index.html",
+    "lang": "en",
     "figure": "98.98%",
     "rule": "missing-qualifier",
     "note": "seed-42 figure without its seed in the built block, T038"
@@ -19,9 +67,33 @@
     "scope": "export",
     "file": "out/case-studies/diffusion-ood/index.html",
     "lang": "en",
+    "figure": "99.03%",
+    "rule": "missing-qualifier",
+    "note": "built block lacks the qualifier its source card has nearby; not matched to a source unit by its words, PR B"
+  },
+  {
+    "scope": "export",
+    "file": "out/case-studies/diffusion-ood/index.html",
+    "lang": "en",
+    "figure": "99.03%",
+    "rule": "missing-qualifier",
+    "note": "built block lacks the qualifier its source card has nearby; not matched to a source unit by its words, PR B"
+  },
+  {
+    "scope": "export",
+    "file": "out/case-studies/diffusion-ood/index.html",
+    "lang": "en",
     "figure": "95.0%",
     "rule": "unregistered",
     "note": "timestep schedule card rounds data to 1 decimal, T038"
+  },
+  {
+    "scope": "export",
+    "file": "out/case-studies/diffusion-ood/index.html",
+    "lang": "en",
+    "figure": "95.4%",
+    "rule": "unregistered",
+    "note": "rounded value rendered by the component (OodDemo), not matched to a source unit by its words, T038"
   },
   {
     "scope": "export",
@@ -38,6 +110,62 @@
     "figure": "98.8%",
     "rule": "unregistered",
     "note": "timestep schedule card rounds data to 1 decimal, T038"
+  },
+  {
+    "scope": "export",
+    "file": "out/case-studies/diffusion-ood/index.html",
+    "lang": "en",
+    "figure": "98.9%",
+    "rule": "unregistered",
+    "note": "rounded value rendered by the component (OodDemo), not matched to a source unit by its words, T038"
+  },
+  {
+    "scope": "export",
+    "file": "out/case-studies/inkjet-ood/index.html",
+    "lang": "en",
+    "figure": "0.8673",
+    "rule": "missing-qualifier",
+    "note": "built block lacks the qualifier its source card has nearby; not matched to a source unit by its words, PR B"
+  },
+  {
+    "scope": "export",
+    "file": "out/index.html",
+    "lang": "en",
+    "figure": "0.8673",
+    "rule": "missing-qualifier",
+    "note": "built block lacks the qualifier its source card has nearby; not matched to a source unit by its words, PR B"
+  },
+  {
+    "scope": "export",
+    "file": "out/research/index.html",
+    "lang": "en",
+    "figure": "0.8673",
+    "rule": "mean-without-spread",
+    "note": "built block shows the mean without its spread; not matched to a source unit by its words, PR B"
+  },
+  {
+    "scope": "export",
+    "file": "out/research/index.html",
+    "lang": "en",
+    "figure": "0.8673",
+    "rule": "missing-qualifier",
+    "note": "built block lacks the qualifier its source card has nearby; not matched to a source unit by its words, PR B"
+  },
+  {
+    "scope": "export",
+    "file": "out/research/index.html",
+    "lang": "en",
+    "figure": "99.03%",
+    "rule": "missing-qualifier",
+    "note": "built block lacks the qualifier its source card has nearby; not matched to a source unit by its words, PR B"
+  },
+  {
+    "scope": "export",
+    "file": "out/research/index.html",
+    "lang": "en",
+    "figure": "99.03%",
+    "rule": "missing-qualifier",
+    "note": "built block lacks the qualifier its source card has nearby; not matched to a source unit by its words, PR B"
   },
   {
     "scope": "source",
