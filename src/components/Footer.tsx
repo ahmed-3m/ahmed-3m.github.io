@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
+import { useHomeHref } from '@/lib/portfolio-view'
 
 const copy = {
   meta: {
@@ -25,7 +26,8 @@ const copy = {
 
 export default function Footer() {
   const { t } = useI18n()
-  const projectsHref = usePathname() === '/' ? '#projects' : '/#projects'
+  const homeProjectsHref = useHomeHref('#projects')
+  const projectsHref = usePathname() === '/' ? '#projects' : homeProjectsHref
 
   return (
     <footer className="cd-footer">

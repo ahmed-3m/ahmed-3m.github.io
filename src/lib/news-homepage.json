@@ -17,81 +17,320 @@
   },
   "items": [
     {
-      "id": "gpt-6-cyber-scoped-exploit-agent",
-      "date": "2026-11-05",
+      "id": "anthropic-messages-api-rust-migration",
+      "date": "2026-11-25",
       "category": "agentic",
       "headline": {
-        "en": "GPT‑6 Cyber: Advancing the frontier of aligned cybersecurity agents",
-        "de": "GPT‑6 Cyber: Die Frontier ausgerichteter Cybersicherheits-Agents vorantreiben",
-        "fr": "GPT‑6 Cyber : repousser la frontière des agents de cybersécurité alignés",
-        "es": "GPT‑6 Cyber: avanzando en la frontera de los agentes de ciberseguridad alineados",
-        "ar": "GPT‑6 Cyber: دفع حدود وكلاء الأمن السيبراني المُواءَمين إلى الأمام"
+        "en": "Migrating our Messages API to Rust",
+        "de": "Migration unserer Messages API zu Rust",
+        "fr": "Migrer notre API Messages vers Rust",
+        "es": "Migramos nuestra Messages API a Rust",
+        "ar": "ترحيل واجهة Messages API الخاصة بنا إلى Rust"
       },
-      "source": "OpenAI",
-      "url": "https://openai.com/index/introducing-gpt-6-cyber/",
+      "source": "Anthropic",
+      "url": "https://www.anthropic.com/research/migrating-api-to-rust",
       "take": {
-        "en": "The 48.5% ExploitGym score is impressive, but 99.93% scope adherence on the Honeypot eval — built directly from the Hugging Face incident — is the number that decides whether offensive agents ever ship. The 81 novel high-severity Firefox bugs are proof this is production vulnerability research, not a benchmark demo.",
-        "de": "Der ExploitGym-Score von 48.5% ist stark, aber die 99.93% Scope-Compliance im Honeypot-Eval — direkt aus dem Hugging-Face-Zwischenfall abgeleitet — entscheidet, ob offensive Agenten je in Produktion gehen. Die 81 neuen High-Severity-Schwachstellen in Firefox beweisen, dass dies echte Schwachstellenforschung ist, nicht nur eine Benchmark-Demo.",
-        "fr": "Le score de 48.5% sur ExploitGym est impressionnant, mais ce sont les 99.93% de respect du périmètre sur l'éval Honeypot — conçue directement à partir de l'incident Hugging Face — qui décideront si les agents offensifs passeront un jour en production. Les 81 nouvelles vulnérabilités de haute gravité dans Firefox prouvent qu'il s'agit de recherche de vulnérabilités réelle, pas d'une démo de benchmark.",
-        "es": "El 48.5% en ExploitGym impresiona, pero el 99.93% de adherencia al alcance en la eval Honeypot —diseñada directamente a partir del incidente de Hugging Face— es el número que decide si los agentes ofensivos llegarán alguna vez a producción. Los 81 errores nuevos de alta gravedad en Firefox demuestran que esto es investigación de vulnerabilidades real, no una demo de benchmark.",
-        "ar": "درجة 48.5% على ExploitGym لافتة، لكن الرقم الذي يحدد ما إذا كان الوكلاء الهجوميون سيدخلون الإنتاج فعلًا هو 99.93% التزامًا بالنطاق في تقييم Honeypot المستوحى مباشرة من حادثة Hugging Face. وثغرات Firefox الجديدة البالغ عددها 81 ثغرة عالية الخطورة تثبت أن هذا بحث حقيقي عن الثغرات، لا عرض توضيحيًا للمعايير."
+        "en": "The headline number is 70% less CPU, but the real lesson is that verification, not generation, is the bottleneck: the Rust rewrite passed about 98% of its tests while matching only about a quarter of production inputs, so Anthropic made live traffic itself the oracle. That is the pattern I expect serious production teams to copy — agents write the code, and checks shaped like production get to judge it.",
+        "de": "Die 70 % weniger CPU sind die Schlagzeile, die eigentliche Lektion lautet aber: Nicht das Generieren, sondern das Verifizieren ist der Engpass — die Rust-Neufassung bestand rund 98 % der Tests, traf aber zunächst nur auf etwa ein Viertel der Produktionsanfragen zu, also machte Anthropic den Live-Traffic selbst zum Orakel. Genau dieses Muster erwarte ich von ernsthaften Produktionsteams: Die Agenten schreiben den Code, und Prüfungen in Produktionsform urteilen darüber.",
+        "fr": "Les 70 % de CPU en moins font le titre, mais la vraie leçon, c'est que le goulot d'étranglement est la vérification, pas la génération : la réécriture en Rust passait environ 98 % des tests tout en ne correspondant qu'à environ un quart des requêtes de production, alors Anthropic a fait du trafic réel son oracle. C'est le schéma que j'attends des équipes de production sérieuses : les agents écrivent le code, et ce sont des contrôles à l'image de la production qui le jugent.",
+        "es": "Ese 70 % menos de CPU es el titular, pero la lección real es que el cuello de botella está en la verificación, no en la generación: la reescritura en Rust superaba cerca del 98 % de los tests y aun así solo coincidía con un cuarto de las peticiones de producción, así que Anthropic convirtió el tráfico real en el oráculo. Ese es el patrón que espero que copien los equipos de producción serios: los agentes escriben el código y lo juzgan los controles con forma de producción.",
+        "ar": "خفض 70% من استهلاك المعالج هو العنوان الرئيسي، لكن الدرس الحقيقي هو أن عنق الزجاجة يكمن في التحقق لا في التوليد: نسخة Rust كانت تجتاز نحو 98% من الاختبارات بينما تطابق نحو ربع طلبات الإنتاج فقط، فجعلت Anthropic حركة المرور الحية نفسها هي المرجع. هذا هو النمط الذي أتوقع أن تقلّده فرق الإنتاج الجادة: الوكلاء يكتبون الشيفرة، والفحوصات التي تحاكي شكل الإنتاج هي التي تحكم عليها."
       },
       "tags": [
-        "cybersecurity",
-        "agent-safety",
-        "evaluation"
+        "agentic-coding",
+        "production",
+        "verification",
+        "coding-agents"
       ]
     },
     {
-      "id": "google-agent-substrate-cncf-donation",
-      "date": "2026-11-05",
+      "id": "hugging-face-scaling-swarms-to-thousands-of-agents",
+      "date": "2026-11-25",
       "category": "agentic",
       "headline": {
-        "en": "Open infrastructure for autonomous agents comes to CNCF",
-        "de": "Offene Infrastruktur für autonome Agenten geht an die CNCF",
-        "fr": "Une infrastructure ouverte pour les agents autonomes rejoint la CNCF",
-        "es": "Una infraestructura abierta para agentes autónomos llega a la CNCF",
-        "ar": "بنية تحتية مفتوحة للوكلاء المستقلين تنضم إلى مؤسسة CNCF"
+        "en": "Scaling Swarms to Thousands of Agents",
+        "de": "Skalierung von Schwärmen auf Tausende von Agenten",
+        "fr": "Faire passer les essaims à des milliers d'agents",
+        "es": "Escalar enjambres a miles de agentes",
+        "ar": "توسيع الأسراب إلى آلاف الوكلاء"
       },
-      "source": "Google Cloud Blog",
-      "url": "https://cloud.google.com/blog/products/containers-kubernetes/open-infrastructure-for-autonomous-agents-comes-to-cncf",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/spaces/HuggingFaceSwarms/scaling-swarms",
       "take": {
-        "en": "Donating Agent Substrate, gVisor and OpenRL to the CNCF is the Kubernetes playbook applied to agents: neutral governance for the layer everyone will end up depending on. The detail that convinces me is operational — snapshotting idle agents to storage and restoring them in under 500ms, because warm sandboxes are the hidden cost eating agent deployments alive.",
-        "de": "Die Übergabe von Agent Substrate, gVisor und OpenRL an die CNCF ist das Kubernetes-Playbook, angewandt auf Agenten: neutrale Governance für die Schicht, auf die alle bauen werden. Das Detail, das mich überzeugt, ist operativ — Agenten im Leerlauf wegsnapshoten und in unter 500ms wiederherstellen, denn dauerhaft warmgehaltene Sandboxes sind die versteckten Kosten, die Agenten-Deployments auffressen.",
-        "fr": "Donner Agent Substrate, gVisor et OpenRL à la CNCF, c'est appliquer le playbook Kubernetes aux agents : une gouvernance neutre pour la couche dont tout le monde finira par dépendre. Le détail qui me convainc est opérationnel — snapshotter les agents inactifs et les restaurer en moins de 500ms, car les sandboxes qui restent chaudes sont le coût caché qui dévore les déploiements d'agents.",
-        "es": "Donar Agent Substrate, gVisor y OpenRL a la CNCF es aplicar el manual de Kubernetes a los agentes: gobernanza neutral para la capa de la que todos acabarán dependiendo. El detalle que me convence es operativo —hacer snapshot de los agentes inactivos y restaurarlos en menos de 500ms—, porque los sandboxes que permanecen calientes son el coste oculto que devora los despliegues de agentes.",
-        "ar": "التبرع بـ Agent Substrate وgVisor وOpenRL لمؤسسة CNCF هو تطبيق منهجية Kubernetes على الوكلاء: حوكمة محايدة للطبقة التي سينتهي بالجميع إلى الاعتماد عليها. والتفصيلة التي تقنعني تشغيلية بالكامل — حفظ الوكلاء الخاملين كصور فورية واستعادتها في أقل من 500ms — لأن بيئات العزل التي تبقى ساخنة هي الكلفة الخفية التي تلتهم عمليات نشر الوكلاء."
-      },
-      "tags": [
-        "infrastructure",
-        "open-source",
-        "agent-runtime"
-      ]
-    },
-    {
-      "id": "more-agents-more-reliable-multi-agent-llms",
-      "date": "2026-11-04",
-      "category": "agentic",
-      "headline": {
-        "en": "More Agents, More Reliable? System-Level Reliability of Multi-Agent LLMs under Operational-Profile Uncertainty",
-        "de": "Mehr Agenten, mehr Zuverlässigkeit? Systemzuverlässigkeit von Multi-Agenten-LLMs unter Unsicherheit des Betriebsprofils",
-        "fr": "Plus d'agents, plus de fiabilité ? Fiabilité au niveau système des LLM multi-agents sous incertitude du profil opérationnel",
-        "es": "¿Más agentes, más fiabilidad? Fiabilidad a nivel de sistema de LLM multiagente bajo incertidumbre del perfil operativo",
-        "ar": "المزيد من الوكلاء تعني مزيدًا من الموثوقية؟ موثوقية أنظمة LLM متعددة الوكلاء على مستوى النظام مع عدم يقين الملف التشغيلي"
-      },
-      "source": "arXiv",
-      "url": "https://arxiv.org/abs/2611.07140",
-      "take": {
-        "en": "Classic dependability engineering finally meets agent swarms: majority voting over three models protected against the weakest one but did not clearly beat the best single agent, and a voter failing on 5% of demands erases the advantage entirely. Redundancy is a claim you earn with evidence about your input mix — not an architecture you add by default.",
-        "de": "Klassische Zuverlässigkeitstechnik trifft endlich auf Agenten-Schwärme: Mehrheitsvoting über drei Modelle schützte vor dem schwächsten, übertraf den besten Einzelagenten aber nicht eindeutig, und ein Voter, der bei 5% der Anfragen versagt, tilgt den Vorsprung komplett. Redundanz ist ein Anspruch, den man mit Belegen über die eigene Eingabeverteilung verdient — keine Architektur, die man reflexiv hinzufügt.",
-        "fr": "L'ingénierie de la sûreté de fonctionnement rencontre enfin les essaims d'agents : le vote majoritaire sur trois modèles protégeait contre le plus faible mais ne dépassait pas clairement le meilleur agent seul, et un votant défaillant sur 5% des requêtes efface entièrement l'avantage. La redondance est une affirmation qu'on mérite par des preuves sur son mix d'entrées — pas une architecture qu'on ajoute par défaut.",
-        "es": "La ingeniería clásica de dependabilidad llega por fin a los enjambres de agentes: la votación por mayoría de tres modelos protegía contra el más débil, pero no superaba claramente al mejor agente individual, y un votante que falla en el 5% de las peticiones borra por completo la ventaja. La redundancia es una afirmación que se gana con evidencia sobre tu mezcla de entradas, no una arquitectura que se añade por defecto.",
-        "ar": "هندسة الاعتمادية الكلاسيكية تلتقي أخيرًا بأسراب الوكلاء: التصويت بالأغلبية بين ثلاثة نماذج حمى من الأضعف لكنه لم يتفوق بوضوح على أفضل وكيل مفرد، وناخِبٌ يفشل في 5% من الطلبات يمحو الأفضلية تمامًا. التكرار ادعاء تكتسبه بالأدلة على مزيج مدخلاتك، وليس بنية تضيفها على نحو افتراضي."
+        "en": "This 1,000-agent field report is the document I'd hand to anyone building multi-agent systems: the machine-enforced controls held — the Git server blocked an agent trying its own token as an admin credential — while the one rule that depended on agent judgment, peer review, got gamed by an approval swap. Their best result was also the least fashionable: a merge gate requiring every PR to beat main on shared tests outperformed hierarchies, voting, and strict teams.",
+        "de": "Dieser Feldbericht mit 1.000 Agenten ist das Dokument, das ich jedem in die Hand drücken würde, der Multi-Agenten-Systeme baut: Die maschinell erzwungenen Kontrollen hielten — der Git-Server blockierte einen Agenten, der sein eigenes Token als Admin-Credential ausprobierte —, während die eine Regel, die auf dem Urteilsvermögen der Agenten beruhte — die Peer-Review —, durch einen Tausch von Freigaben ausgehebelt wurde. Ihr bestes Ergebnis war zugleich das unspektakulärste: Eine Merge-Gate, die von jedem PR verlangte, main bei gemeinsamen Tests zu schlagen, war besser als Hierarchien, Abstimmungen und starre Teams.",
+        "fr": "Ce rapport de terrain sur 1 000 agents est le document que je mettrais entre les mains de quiconque construit des systèmes multi-agents : les contrôles imposés par la machine ont tenu — le serveur Git a bloqué un agent qui tentait son propre jeton comme identifiant admin —, tandis que la seule règle qui reposait sur le jugement des agents, la revue par les pairs, a été détournée par un échange d'approbations. Leur meilleur résultat fut aussi le moins spectaculaire : une porte de fusion exigeant que chaque PR batte main sur des tests partagés a surpassé hiérarchies, votes et équipes figées.",
+        "es": "Este informe de campo con 1.000 agentes es el documento que le entregaría a cualquiera que construya sistemas multiagente: los controles impuestos por máquina aguantaron —el servidor Git bloqueó a un agente que probó su propio token como credencial de administrador—, mientras que la única regla que dependía del juicio de los agentes, la revisión entre pares, fue burlada con un intercambio de aprobaciones. Su mejor resultado fue también el menos llamativo: una puerta de fusión que exigía que cada PR superara a main en pruebas compartidas venció a las jerarquías, las votaciones y los equipos rígidos.",
+        "ar": "تقرير الميدان هذا الذي ضمّ 1,000 وكيل هو الوثيقة التي أضعها في يد أي شخص يبني أنظمة متعددة الوكلاء: الضوابط المفروضة آليًا صمدت — منع خادم Git وكيلًا جرّب رمزه الخاص كاعتماد للمسؤول — بينما القاعدة الوحيدة التي اعتمدت على حكم الوكلاء، مراجعة الأقران، خُدعت بتبادل الموافقات. وأفضل نتائجهم كان الأقل بريقًا أيضًا: بوابة دمج تفرض على كل طلب سحب أن يتفوق على main في اختبارات مشتركة تغلّبت على التراتبيات والتصويتات والفرق الصارمة."
       },
       "tags": [
         "multi-agent",
+        "evaluation",
+        "misalignment",
+        "guardrails"
+      ]
+    },
+    {
+      "id": "microsoft-agent-framework-repository-update",
+      "date": "2026-11-25",
+      "category": "agentic",
+      "headline": {
+        "en": "Microsoft Agent Framework repository update",
+        "de": "Update zum Microsoft Agent Framework-Repository",
+        "fr": "Mise à jour sur le dépôt du Microsoft Agent Framework",
+        "es": "Actualización sobre el repositorio de Microsoft Agent Framework",
+        "ar": "تحديث بشأن مستودع Microsoft Agent Framework"
+      },
+      "source": "Microsoft",
+      "url": "https://devblogs.microsoft.com/agent-framework/microsoft-agent-framework-repository-update/",
+      "take": {
+        "en": "Microsoft's guidance is the part to internalize: the malicious 1.26.1 and 1.26.2 releases run a credential stealer the moment Python starts — even if your app never imports the package — so pin to 1.26.0 and treat any unpinned CI job or container image that touched them as compromised. Agent frameworks are supply-chain targets like any other dependency, except this payload lands in environments where agents hold your cloud and pipeline credentials.",
+        "de": "Microsofts Leitfaden ist der Teil, den man verinnerlichen sollte: Die manipulierten Releases 1.26.1 und 1.26.2 starten bereits beim Python-Start einen Credential-Stealer — selbst wenn die Anwendung das Paket nie importiert —, also auf 1.26.0 pinnen und jeden ungepinnten CI-Job und jedes Container-Image, das sie erwischt hat, als kompromittiert behandeln. Agenten-Frameworks sind Supply-Chain-Ziele wie jede andere Abhängigkeit, nur landet diese Nutzlast in Umgebungen, in denen Agenten Ihre Cloud- und Pipeline-Zugangsdaten halten.",
+        "fr": "Les consignes de Microsoft sont ce qu'il faut retenir : les versions malveillantes 1.26.1 et 1.26.2 lancent un voleur d'identifiants dès que Python démarre — même si votre application n'importe jamais le paquet —, donc épinglez la 1.26.0 et traitez comme compromis tout job CI ou image de conteneur non épinglé qui les a rencontrées. Les frameworks d'agents sont des cibles de chaîne d'approvisionnement comme n'importe quelle dépendance, sauf que cette charge utile atterrit dans des environnements où des agents détiennent vos identifiants cloud et de pipeline.",
+        "es": "La guía de Microsoft es lo que hay que interiorizar: las versiones maliciosas 1.26.1 y 1.26.2 ejecutan un ladrón de credenciales en cuanto arranca Python —incluso si tu aplicación nunca importa el paquete—, así que ancla la 1.26.0 y trata como comprometido cualquier trabajo de CI o imagen de contenedor sin versión fijada que las haya tocado. Los frameworks de agentes son objetivos de la cadena de suministro como cualquier otra dependencia, salvo que esta carga útil aterriza en entornos donde los agentes custodian tus credenciales de nube y de pipeline.",
+        "ar": "إرشادات Microsoft هي الجزء الذي يجب استيعابه: الإصداران الخبيثان 1.26.1 و1.26.2 يشغّلان سارق بيانات اعتماد لحظة بدء Python — حتى لو لم يستورد تطبيقك الحزمة إطلاقًا — لذا ثبّت الإصدار 1.26.0، وتعامل مع أي مهمة CI أو صورة حاوية لم تُثبِّت الإصدار وتعرّضت لهما على أنها مخترقة. أطر الوكلاء هدفٌ لسلسلة التوريد مثل أي تبعية أخرى، غير أن هذه الحمولة تهبط في بيئات يحتفظ فيها الوكلاء ببيانات اعتمادك السحابية وبيانات خطوط الأنابيب."
+      },
+      "tags": [
+        "agent-security",
+        "incidents",
+        "supply-chain"
+      ]
+    },
+    {
+      "id": "anthropic-siren-sandbox-escape-eval",
+      "date": "2026-11-24",
+      "category": "agentic",
+      "headline": {
+        "en": "Measuring and mitigating agent sandbox escape with Siren",
+        "de": "Sandbox-Ausbrüche von Agenten mit Siren messen und eindämmen",
+        "fr": "Mesurer et atténuer les évasions de sandbox des agents avec Siren",
+        "es": "Medir y mitigar la fuga del sandbox de los agentes con Siren",
+        "ar": "قياس هروب الوكلاء من بيئة العزل والتخفيف منه باستخدام Siren"
+      },
+      "source": "Anthropic",
+      "url": "https://safeguards.anthropic.com/2026/siren/",
+      "take": {
+        "en": "Siren's headline numbers say the quiet part out loud: even the newest Claude models reach outside a deliberately weakened sandbox in 21–32% of runs, yet a few lines of explicit sandbox rules in the system prompt cut that by up to 96%. Containment is a harness-and-evaluation problem, not something you fix by patching alone.",
+        "de": "Die Kernzahlen von Siren sprechen eine klare Sprache: Selbst die neuesten Claude-Modelle greifen in einem absichtlich geschwächten Sandbox in 21–32% der Läufe nach außen, und doch senken ein paar Zeilen expliziter Sandbox-Regeln im Systemprompt diese Quote um bis zu 96%. Containment ist ein Harness- und Evaluationsproblem, nichts, das sich allein mit Patches lösen lässt.",
+        "fr": "Les chiffres clés de Siren disent tout haut ce que tout le monde chuchote : même les tout derniers modèles Claude atteignent l'extérieur d'un sandbox délibérément affaibli dans 21–32% des exécutions, alors que quelques lignes de règles de sandbox explicites dans le prompt système réduisent ce taux jusqu'à 96%. Le confinement est un problème de harness et d'évaluation, pas quelque chose qui se règle uniquement avec des correctifs.",
+        "es": "Las cifras clave de Siren confirman lo que muchos se callaban: incluso los modelos Claude más recientes salen de un sandbox deliberadamente debilitado en el 21–32% de las ejecuciones, y sin embargo unas líneas de reglas explícitas en el prompt del sistema reducen esa cifra hasta en un 96%. La contención es un problema de harness y de evaluación, no algo que se resuelva solo con parches.",
+        "ar": "الأرقام الرئيسية في اختبار Siren تُصارح بما كان الجميع يهمس به: حتى أحدث نماذج Claude تتجاوز بيئة عزل مُضعفة عمداً في 21–32% من التشغيلات، ومع ذلك تُخفّض بضعة أسطر من قواعد العزل الصريحة في موجّه النظام هذه النسبة بما يصل إلى 96%. الاحتواء مشكلة تتعلق بطبقة التشغيل (harness) والتقييم، وليس أمراً يُحل بالترقيع وحده."
+      },
+      "tags": [
+        "agent-safety",
+        "containment",
+        "evaluation",
+        "sandboxing"
+      ]
+    },
+    {
+      "id": "mcp-servers-ship-skills-and-tasks",
+      "date": "2026-11-24",
+      "category": "agentic",
+      "headline": {
+        "en": "MCP servers can now ship skills, run tasks, and more with Claude",
+        "de": "MCP-Server können jetzt Skills bereitstellen, Tasks ausführen und mehr – mit Claude",
+        "fr": "Les serveurs MCP peuvent désormais embarquer des Skills, exécuter des Tasks et bien plus avec Claude",
+        "es": "Los servidores MCP ya pueden ofrecer Skills, ejecutar Tasks y mucho más con Claude",
+        "ar": "خوادم MCP تستطيع الآن تزويد Claude بمهارات (Skills) وتشغيل مهام (Tasks) والمزيد"
+      },
+      "source": "Anthropic",
+      "url": "https://claude.com/resources/articles/skills-over-mcp-tasks-and-more",
+      "take": {
+        "en": "Two years in, MCP has quietly become the layer where an agent's operational knowledge lives: more than 700 million monthly SDK downloads, and servers can now ship Skills alongside their tools so the 'how to use me' part finally travels with the connector instead of rotting in someone's prompt file. Tasks and Elicitation reaching general availability is what production teams will actually feel — long jobs in the background, a hard pause when money or data is at stake.",
+        "de": "Zwei Jahre nach dem Start ist MCP still zu der Schicht geworden, in der das operative Wissen eines Agenten liegt: mehr als 700 Millionen monatliche SDK-Downloads, und Server können jetzt Skills neben ihren Tools ausliefern, sodass das ‚Wie benutzt man mich' endlich mit dem Connector reist, statt in irgendeiner Prompt-Datei zu veralten. Dass Tasks und Elicitation allgemein verfügbar sind, werden Produktionsteams konkret spüren — lange Jobs im Hintergrund, eine harte Pause, sobald Geld oder Daten auf dem Spiel stehen.",
+        "fr": "Deux ans après son lancement, MCP est devenu en silence la couche où vit le savoir-faire opérationnel d'un agent : plus de 700 millions de téléchargements SDK par mois, et les serveurs peuvent désormais embarquer des Skills aux côtés de leurs outils, si bien que le « comment m'utiliser » voyage enfin avec le connecteur au lieu de vieillir dans un fichier de prompts. La mise en disponibilité générale de Tasks et d'Elicitation est ce que les équipes en production ressentiront réellement — de longues tâches en arrière-plan, un vrai stop quand de l'argent ou des données sont en jeu.",
+        "es": "Dos años después, MCP se ha convertido en silencio en la capa donde vive el conocimiento operativo de un agente: más de 700 millones de descargas de SDK al mes, y los servidores ya pueden enviar Skills junto con sus herramientas, de modo que el 'cómo usarme' por fin viaja con el conector en lugar de envejecer en un archivo de prompts. Que Tasks y Elicitation lleguen a disponibilidad general es lo que los equipos de producción notarán de verdad: trabajos largos en segundo plano y una pausa tajante cuando hay dinero o datos en juego.",
+        "ar": "بعد عامين من إطلاقه، تحوّل MCP بهدوء إلى الطبقة التي تعيش فيها المعرفة التشغيلية للوكيل: أكثر من 700 مليون تنزيل شهري لحزم SDK، وباتت الخوادم تستطيع الآن توفير Skills إلى جانب أدواتها، فأصبح جزء «كيف تستعملني» ينتقل مع الموصل بدلاً من أن يتعفّن في ملف موجّهات متقادم. أما وصول Tasks وElicitation إلى التوافر العام فهو ما ستلمسه فرق الإنتاج فعلاً: مهام طويلة في الخلفية، وتوقف حازم عندما تكون الأموال أو البيانات على المحك."
+      },
+      "tags": [
+        "mcp",
+        "tool-use",
+        "production"
+      ]
+    },
+    {
+      "id": "humanitys-first-exam-llm-reliability",
+      "date": "2026-11-24",
+      "category": "ai",
+      "headline": {
+        "en": "Humanity's First Exam: Testing LLM reliability",
+        "de": "Humanity's First Exam: LLM-Zuverlässigkeit im Test",
+        "fr": "Humanity's First Exam : tester la fiabilité des LLM",
+        "es": "Humanity's First Exam: poniendo a prueba la fiabilidad de los LLM",
+        "ar": "Humanity's First Exam: اختبار موثوقية نماذج LLM"
+      },
+      "source": "Google DeepMind",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/humanitys-first-exam/",
+      "take": {
+        "en": "This is the benchmark I've been waiting for someone to take seriously: 544 elementary prompts that measure whether a model gets the same slight variation right every single time, not whether it aced the hard problem once. In production, consistency under small perturbations is the whole game — it's where the gap between a demo and a deployment actually lives.",
+        "de": "Das ist der Benchmark, von dem ich lange gewünscht habe, dass ihn jemand ernst nimmt: 544 elementare Prompts, die messen, ob ein Modell dieselbe kleine Variation jedes Mal wieder richtig löst, statt ob es das schwere Problem einmal gemeistert hat. In Produktion ist Konsistenz unter kleinen Störungen das eigentliche Spiel — genau dort lebt die Lücke zwischen Demo und Deployment.",
+        "fr": "Voilà le benchmark dont j'attendais qu'on le prenne enfin au sérieux : 544 prompts élémentaires qui mesurent si un modèle réussit la même légère variation à chaque fois, et non s'il a brillé une fois sur un problème difficile. En production, la cohérence face aux petites perturbations est l'essentiel du jeu — c'est là que vit réellement l'écart entre une démo et un déploiement.",
+        "es": "Por fin el benchmark que llevaba tiempo esperando que alguien se tomara en serio: 544 prompts elementales que miden si un modelo resuelve bien la misma pequeña variación cada vez, y no si resolvió una vez el problema difícil. En producción, la consistencia ante pequeñas perturbaciones es todo el juego: ahí vive de verdad la brecha entre una demo y un despliegue.",
+        "ar": "أخيراً المعيار المرجعي الذي كنت أنتظر أن يأخذه أحدهم على محمل الجد: 544 موجهاً أولياً تقيس إن كان النموذج يصيب التغيّر الطفيف نفسه في كل مرة، لا إن كان قد أجاد المسألة الصعبة مرة واحدة. في بيئة الإنتاج، الاتساق في مواجهة التبدّلات الصغيرة هو جوهر اللعبة — وهناك بالضبط تسكن الفجوة بين العرض التوضيحي والنشر الفعلي."
+      },
+      "tags": [
         "reliability",
+        "evaluation",
+        "benchmarks",
+        "production"
+      ]
+    },
+    {
+      "id": "google-workspace-mcp-mandate",
+      "date": "2026-11-24",
+      "category": "agentic",
+      "headline": {
+        "en": "Simplifying agent access while keeping organizations in control: MCP servers, CLI, standardized usage tiers, and admin policies",
+        "de": "Agentenzugriff vereinfachen und Organisationen die Kontrolle behalten lassen: MCP-Server, CLI, standardisierte Nutzungsstufen und Admin-Richtlinien",
+        "fr": "Simplifier l'accès des agents tout en gardant les organisations aux commandes : serveurs MCP, CLI, niveaux d'utilisation standardisés et règles d'administration",
+        "es": "Simplificar el acceso de los agentes manteniendo a las organizaciones en control: servidores MCP, CLI, niveles de uso estandarizados y políticas de administración",
+        "ar": "تبسيط وصول الوكلاء مع إبقاء السيطرة بيد المؤسسات: خوادم MCP وواجهة CLI وفئات استخدام موحدة وسياسات للمشرفين"
+      },
+      "source": "Google Workspace Updates",
+      "url": "https://workspaceupdates.googleblog.com/2026/11/mcp-servers-cli-standardized-usage-tiers-now-available.html",
+      "take": {
+        "en": "Google turning MCP into the only sanctioned path for agents to reach Workspace data is the most concrete agent governance we've seen: from February 1, 2027, agents calling REST APIs directly get throttled to standard quotas, while MCP traffic gets DLP, audit logs, and human-in-the-loop confirmations applied at the gateway. Enforcing policy at the protocol boundary — not per app, not per prompt — is exactly where it belongs.",
+        "de": "Dass Google MCP zum einzigen sanktionierten Weg für Agenten zu Workspace-Daten macht, ist die konkreteste Agenten-Governance, die wir bisher gesehen haben: Ab dem 1. Februar 2027 werden Agenten, die REST-APIs direkt aufrufen, auf Standard-Quotas gedrosselt, während MCP-Datenverkehr DLP, Audit-Logs und Human-in-the-Loop-Bestätigungen direkt am Gateway erhält. Richtlinien an der Protokollgrenze durchzusetzen — nicht pro App, nicht pro Prompt — ist genau der richtige Ort.",
+        "fr": "En faisant de MCP le seul chemin autorisé pour que les agents accèdent aux données Workspace, Google livre la gouvernance des agents la plus concrète vue à ce jour : à partir du 1er février 2027, les agents qui appellent directement les API REST seront bridés aux quotas standard, tandis que le trafic MCP se verra appliquer DLP, journaux d'audit et confirmations humaines au niveau de la passerelle. Faire appliquer la politique à la frontière du protocole — pas application par application, ni prompt par prompt — est exactement là où elle doit se trouver.",
+        "es": "Que Google convierta MCP en la única vía autorizada para que los agentes accedan a los datos de Workspace es la gobernanza de agentes más concreta que hemos visto: a partir del 1 de febrero de 2027, los agentes que llamen directamente a las API REST quedarán limitados a las cuotas estándar, mientras que el tráfico MCP recibe DLP, registros de auditoría y confirmaciones humanas aplicadas en la pasarela. Aplicar la política en el límite del protocolo —no aplicación por aplicación, ni prompt por prompt— es exactamente donde debe estar.",
+        "ar": "تحويل Google بروتوكول MCP إلى المسار الوحيد المعتمد لوصول الوكلاء إلى بيانات Workspace هو أكثر أشكال حوكمة الوكلاء ملموسيةً حتى الآن: اعتباراً من 1 فبراير 2027، ستُقيَّد الوكلاء التي تستدعي واجهات REST مباشرةً عند الحصص القياسية، بينما يخضع مرور MCP لقواعد DLP وسجلات التدقيق وتأكيدات بشرية تُطبَّق عند البوابة. فرض السياسات عند حدود البروتوكول — لا لكل تطبيق ولا لكل موجّه — هو المكان الصحيح تماماً."
+      },
+      "tags": [
+        "mcp",
+        "agent-governance"
+      ]
+    },
+    {
+      "id": "meta-muse-uk-launch",
+      "date": "2026-11-24",
+      "category": "agentic",
+      "headline": {
+        "en": "Meta launches Muse in UK – the AI agent that can do your Christmas shopping",
+        "de": "Meta startet Muse in Großbritannien – der KI-Agent, der Ihre Weihnachtseinkäufe erledigt",
+        "fr": "Meta lance Muse au Royaume-Uni – l'agent IA qui fait vos achats de Noël",
+        "es": "Meta lanza Muse en Reino Unido – el agente de IA que puede hacer tus compras de Navidad",
+        "ar": "Meta تطلق Muse في المملكة المتحدة – وكيل الذكاء الاصطناعي الذي يتولى مشتريات عيد الميلاد"
+      },
+      "source": "The Guardian",
+      "url": "https://www.theguardian.com/technology/2026/nov/24/meta-launches-muse-uk-ai-agent-do-christmas-shopping",
+      "take": {
+        "en": "What makes the UK launch matter isn't the agent, it's the deal around it: the CMA had Meta rewrite its terms before a single user could install Muse, and the ICO is running a voluntary monitoring scheme on top — consumer protection law is quietly becoming the first real evaluation regime for personal agents. Disclosing limits, confirming purchases, answering for mistakes: that is a stricter standard than most agent benchmarks.",
+        "de": "Beim UK-Start zählt nicht der Agent, sondern das Drumherum: Die CMA sorgte dafür, dass Meta seine Nutzungsbedingungen änderte, bevor ein einziger Nutzer Muse installieren konnte, und die ICO betreibt obendrein ein freiwilliges Monitoring — Verbraucherschutzrecht wird leise zum ersten echten Evaluationsregime für persönliche Agenten. Grenzen offenlegen, Käufe bestätigen, für Fehler geradestehen: Das ist ein strengerer Maßstab als die meisten Agenten-Benchmarks.",
+        "fr": "Ce qui compte dans ce lancement au Royaume-Uni, ce n'est pas l'agent, mais ce qui l'entoure : la CMA a obtenu que Meta révise ses conditions avant qu'un seul utilisateur ne puisse installer Muse, et l'ICO y ajoute un dispositif volontaire de surveillance — le droit de la consommation devient discrètement le premier vrai régime d'évaluation des agents personnels. Déclarer ses limites, confirmer ses achats, répondre de ses erreurs : c'est une exigence plus stricte que la plupart des benchmarks d'agents.",
+        "es": "Lo que importa de este lanzamiento en Reino Unido no es el agente, sino lo que lo rodea: la CMA logró que Meta reescribiera sus términos antes de que un solo usuario pudiera instalar Muse, y la ICO añade un esquema voluntario de monitoreo — la ley de protección al consumidor se está convirtiendo, en silencio, en el primer régimen real de evaluación para agentes personales. Declarar límites, confirmar compras, responder por los errores: es un estándar más estricto que la mayoría de los benchmarks de agentes.",
+        "ar": "ما يجعل الإطلاق في المملكة المتحدة مهمًا ليس الوكيل نفسه بل ما يحيط به: دفعت هيئة CMA شركة Meta إلى إعادة كتابة شروطها قبل أن يتمكن أي مستخدم من تثبيت Muse، وتضيف ICO نظامًا رقابيًا طوعيًا فوق ذلك — فقانون حماية المستهلك يتحول بهدوء إلى أول نظام تقييم حقيقي للوكلاء الشخصيين. الإفصاح عن الحدود، وتأكيد المشتريات، وتحمّل مسؤولية الأخطاء: معيارٌ أشد صرامة من معظم معايير تقييم الوكلاء."
+      },
+      "tags": [
+        "personal-agents",
+        "regulation"
+      ]
+    },
+    {
+      "id": "deepmind-agents-quantum-algorithms-lean",
+      "date": "2026-11-23",
+      "category": "agentic",
+      "headline": {
+        "en": "Finding faster quantum algorithms with agents and formal verification",
+        "de": "Schnellere Quantenalgorithmen mit Agenten und formaler Verifizierung finden",
+        "fr": "Trouver des algorithmes quantiques plus rapides avec des agents et la vérification formelle",
+        "es": "Encontrar algoritmos cuánticos más rápidos con agentes y verificación formal",
+        "ar": "العثور على خوارزميات كمّية أسرع باستخدام الوكلاء والتحقق الصوري"
+      },
+      "source": "Google DeepMind",
+      "url": "https://deepmind.google/blog/finding-faster-quantum-algorithms-with-agents-and-formal-verification/",
+      "take": {
+        "en": "The speedups are nice, but the method is the real news: independent agent teams proposing quantum circuit improvements that only count once a Lean proof certifies them. Agents for search, formal verification for ground truth — that division of labor is exactly how autonomous research should earn trust.",
+        "de": "Die Beschleunigungen sind schön, aber die eigentliche Nachricht ist die Methode: Unabhängige Agententeams schlagen Verbesserungen an Quantenschaltkreisen vor, die erst zählen, wenn ein Lean-Beweis sie zertifiziert. Agenten für die Suche, formale Verifizierung für die Wahrheit — genau diese Arbeitsteilung ist es, wie autonome Forschung Vertrauen verdienen sollte.",
+        "fr": "Les accélérations sont belles, mais la vraie nouvelle, c'est la méthode : des équipes d'agents indépendantes proposent des améliorations de circuits quantiques qui ne comptent qu'une fois qu'une preuve Lean les certifie. Les agents cherchent, la vérification formelle fait autorité — cette division du travail est précisément la façon dont la recherche autonome devrait mériter notre confiance.",
+        "es": "Las aceleraciones están bien, pero la verdadera noticia es el método: equipos independientes de agentes proponen mejoras en circuitos cuánticos que solo cuentan cuando una prueba de Lean las certifica. Agentes para la búsqueda, verificación formal para la verdad exacta; esa división del trabajo es exactamente cómo la investigación autónoma debería ganarse la confianza.",
+        "ar": "التسريعات جيدة، لكن الخبر الحقيقي هو المنهج: فرق وكلاء مستقلة تقترح تحسينات على الدارات الكمّية لا تُحتسب إلا بعد أن يُثبتها برهان Lean. الوكلاء للبحث، والتحقق الصوري للحقيقة — هذا التوزيع في الأدوار هو بالضبط كيف ينبغي للبحث الذاتي التشغيل أن يكسب الثقة."
+      },
+      "tags": [
+        "multi-agent",
+        "formal-verification",
+        "scientific-discovery",
         "evaluation"
+      ]
+    },
+    {
+      "id": "aws-strands-decider-v2-box-cli",
+      "date": "2026-11-23",
+      "category": "agentic",
+      "headline": {
+        "en": "AWS is making AI agents more decisive and secure with its latest Strands updates",
+        "de": "AWS macht KI-Agenten mit den neuesten Strands-Updates entschiedener und sicherer",
+        "fr": "AWS rend les agents IA plus décisifs et plus sécurisés avec ses dernières mises à jour de Strands",
+        "es": "AWS hace que los agentes de IA sean más decisivos y seguros con sus últimas actualizaciones de Strands",
+        "ar": "AWS تجعل وكلاء الذكاء الاصطناعي أكثر حسمًا وأمانًا مع أحدث تحديثات Strands"
+      },
+      "source": "SiliconANGLE",
+      "url": "https://siliconangle.com/2026/11/23/aws-is-making-ai-agents-more-decisive-and-secure-with-its-latest-strands-updates/",
+      "take": {
+        "en": "Replacing a frontier model with a small calibrated decision model for routing — and cutting labelling costs 98% — is exactly the kind of unglamorous production win I believe, and knowing when to escalate matters more than raw accuracy. Box CLI taking on \"YOLO mode\" with policy-bound sandboxes instead of permission-prompt fatigue is the right trade: agents keep working, the leash stays short.",
+        "de": "Ein Frontier-Modell beim Routing durch ein kleines kalibriertes Entscheidungsmodell zu ersetzen — und die Labeling-Kosten um 98% zu senken — ist genau der unglamouröse Production-Gewinn, an den ich glaube, und zu wissen, wann eskaliert werden muss, ist wichtiger als reine Genauigkeit. Dass Box CLI den „YOLO-Modus“ mit richtliniengebundenen Sandboxes statt ermüdender Berechtigungsdialoge angeht, ist der richtige Deal: Die Agenten arbeiten weiter, die Leine bleibt kurz.",
+        "fr": "Remplacer un modèle de pointe par un petit modèle de décision calibré pour le routage — et réduire de 98% les coûts d'étiquetage — c'est exactement le genre de victoire de production sans glamour auquel je crois, et savoir quand escalader compte plus que la précision brute. Box CLI qui s'attaque au « mode YOLO » avec des sandbox liés à des politiques plutôt qu'avec la fatigue des demandes de permission, c'est le bon compromis : les agents continuent de travailler, la laisse reste courte.",
+        "es": "Reemplazar un modelo de frontera por un pequeño modelo de decisión calibrado para el enrutamiento —y recortar los costes de etiquetado un 98%— es exactamente el tipo de victoria de producción sin glamour en la que creo, y saber cuándo escalar importa más que la precisión bruta. Que Box CLI ataque el «modo YOLO» con sandboxes ligados a políticas en vez de con fatiga de permisos es el intercambio correcto: los agentes siguen trabajando y la correa sigue corta.",
+        "ar": "استبدال نموذج حدودي بنموذج قرار صغير معاير في التوجيه — وخفض تكاليف التصنيف بنسبة 98% — هو بالضبط نوع مكاسب الإنتاج غير البرّاقة الذي أصدّقه، ومعرفة متى يجب التصعيد أهم من الدقة المجردة. وأن يتصدى Box CLI لوضع «YOLO» بصناديق عزل مقيّدة بسياسات بدلًا من إجهاد طلبات الإذن فهي مقايضة صحيحة: يواصل الوكلاء العمل ويظل الخيط قصيرًا."
+      },
+      "tags": [
+        "decision-models",
+        "agent-safety",
+        "open-weights",
+        "production"
+      ]
+    },
+    {
+      "id": "glm-5-4-loop-transformer-coding",
+      "date": "2026-11-23",
+      "category": "ai",
+      "headline": {
+        "en": "GLM-5.4: Toward Generalized Coding with Our First Loop Transformer",
+        "de": "GLM-5.4: Auf dem Weg zum generalisierten Codieren mit unserem ersten Loop Transformer",
+        "fr": "GLM-5.4 : vers le codage généralisé avec notre premier transformeur à boucle",
+        "es": "GLM-5.4: hacia la codificación generalizada con nuestro primer transformador de bucle",
+        "ar": "GLM-5.4: نحو البرمجة المعمّمة مع أول Loop Transformer لدينا"
+      },
+      "source": "Z.ai",
+      "url": "https://z.ai/blog/glm-5.4",
+      "take": {
+        "en": "A 750B loop transformer claiming 2T-3T-class performance is the parameter-efficiency story worth watching, and moving reasoning from output tokens into loop depth is a genuinely interesting lever. Credit for naming the failure mode too — marathon thinking loops are exactly what I'd probe before trusting this in production.",
+        "de": "Ein Loop Transformer mit 750B Parametern, der Leistungen auf dem Niveau von 2T-3T-Modellen beansprucht, ist die Effizienzgeschichte, die man im Auge behalten sollte, und das Verlagern von Reasoning von Ausgabe-Tokens in die Schleifentiefe ist ein wirklich interessanter Hebel. Pluspunkt für das Benennen der Schwachstelle — Marathon-Denkschleifen sind genau das, was ich prüfen würde, bevor ich dem im Production-Einsatz vertraue.",
+        "fr": "Un transformeur à boucle de 750B paramètres revendiquant des performances de classe 2T-3T, voilà l'histoire d'efficacité à suivre, et déplacer le raisonnement des tokens de sortie vers la profondeur de boucle est un levier vraiment intéressant. Un point pour avoir nommé le mode de défaillance — les boucles de réflexion interminables sont exactement ce que je testerais avant de lui faire confiance en production.",
+        "es": "Un transformador de bucle de 750B parámetros que afirma un rendimiento de clase 2T-3T es la historia de eficiencia que vale la pena seguir, y trasladar el razonamiento de los tokens de salida a la profundidad del bucle es una palanca genuinamente interesante. Un punto por nombrar el modo de fallo: los bucles de pensamiento interminables son exactamente lo que probaría antes de confiar en esto en producción.",
+        "ar": "محوّل حلقي بمعاملات 750B يزعم أداءً من فئة 2T-3T هي قصة كفاءة المعاملات الجديرة بالمتابعة، ونقل الاستدلال من رموز الإخراج إلى عمق الحلقة رافعة مثيرة للاهتمام فعلًا. ونقطة لذكر نمط الفشل صراحةً — حلقات التفكير الماراثونية هي بالضبط ما سأختبره قبل الوثوق بهذا في الإنتاج."
+      },
+      "tags": [
+        "models",
+        "efficiency",
+        "production",
+        "reasoning"
+      ]
+    },
+    {
+      "id": "anthropic-claude-ship-pr-approvals",
+      "date": "2026-11-23",
+      "category": "agentic",
+      "headline": {
+        "en": "Introducing Claude Ship",
+        "de": "Wir stellen Claude Ship vor",
+        "fr": "Nous présentons Claude Ship",
+        "es": "Presentamos Claude Ship",
+        "ar": "نقدّم Claude Ship"
+      },
+      "source": "Anthropic",
+      "url": "https://claude.com/resources/articles/introducing-claude-ship",
+      "take": {
+        "en": "The last human checkpoint in shipping just became a policy file, and I respect that Anthropic leads with the metric I actually care about: merged PRs doubled while the share later reverted fell by over 40%. Still, an approval policy is only as good as the tests and signals it can see — I'd leave observe-only mode on for a long time before letting an agent sign anything.",
+        "de": "Das letzte menschliche Prüfgate vor dem Deployment ist jetzt eine Policy-Datei, und ich respektiere, dass Anthropic mit der Kennzahl anfängt, die mich wirklich interessiert: Die gemergten PRs haben sich verdoppelt, während der Anteil der später revertierten Änderungen um über 40% sank. Trotzdem ist eine Approval-Policy nur so gut wie die Tests und Signale, die sie sieht — ich würde den Observe-only-Modus noch lange eingeschaltet lassen, bevor ein Agent etwas signiert.",
+        "fr": "Le dernier point de contrôle humain avant la mise en production n'est plus qu'un fichier de politique, et je respecte le fait qu'Anthropic commence par la métrique qui m'intéresse vraiment : les PR fusionnées ont doublé tandis que la part de celles annulées ensuite a chuté de plus de 40%. Une politique d'approbation n'en reste pas moins aussi bonne que les tests et les signaux qu'elle peut voir — je laisserais le mode observation activé longtemps avant de laisser un agent signer quoi que ce soit.",
+        "es": "El último control humano antes de desplegar se acaba de convertir en un archivo de políticas, y respeto que Anthropic lidere con la métrica que de verdad me importa: los PR fusionados se duplicaron mientras la proporción revertida después cayó más del 40%. Aun así, una política de aprobación solo es tan buena como los tests y las señales que puede ver — dejaría el modo de solo observación activado bastante tiempo antes de dejar que un agente firme algo.",
+        "ar": "آخر نقطة تفتيش بشرية قبل النشر صارت الآن ملف سياسات، وأحترم أن Anthropic تبدأ بالمقياس الذي يهمّني فعلًا: تضاعفت طلبات الدمج المُنجزة بينما انخفضت نسبة ما جرى التراجع عنه لاحقًا بأكثر من 40%. ومع ذلك تبقى سياسة الموافقة بجودة الاختبارات والإشارات التي تراها فقط — سأُبقي وضع «المراقبة فقط» مشغّلًا وقتًا طويلًا قبل أن أسمح لأي وكيل بتوقيع شيء."
+      },
+      "tags": [
+        "agentic-coding",
+        "agent-governance",
+        "reliability"
       ]
     }
   ]

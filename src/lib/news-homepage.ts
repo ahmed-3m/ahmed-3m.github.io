@@ -6,10 +6,10 @@ import raw from './news-homepage.json' with { type: 'json' }
  * Homepage news accessors.
  *
  * `news-homepage.json` is generated at build time by `tools/emit-homepage-news.mjs`
- * (the npm `prebuild` step) and holds only the newest 3 items, so the homepage does
- * not bundle the full catalog in `@/lib/news-items`. Do not edit the JSON by hand —
- * run `node tools/emit-homepage-news.mjs`. The /news page keeps using the full
- * catalog via `@/lib/news-items`.
+ * (the npm `prebuild` step) and holds only the newest 12 items for the homepage
+ * carousel, so the homepage does not bundle the full catalog in `@/lib/news-items`.
+ * Do not edit the JSON by hand — run `node tools/emit-homepage-news.mjs`. The /news
+ * page keeps using the full catalog via `@/lib/news-items`.
  */
 
 /** Shape shared by the localized headline/take fields (same as `LocalizedText`). */
@@ -56,7 +56,7 @@ function localizeHomepageNewsItem(item: HomepageNewsItem, lang: Language): Local
   return { ...rest, take: take[lang] ?? take.en, headline: headline[lang] ?? headline.en }
 }
 
-/** Homepage items, newest first (already capped at 3 at build time). */
+/** Homepage items, newest first (already capped at 12 at build time). */
 export function getHomepageNews(lang: Language = 'en'): LocalizedHomepageNewsItem[] {
   return homepageNews.map((item) => localizeHomepageNewsItem(item, lang))
 }

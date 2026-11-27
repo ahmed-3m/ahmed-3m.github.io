@@ -5,6 +5,7 @@ import { ArrowLeft } from 'lucide-react'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
+import { useHomeHref } from '@/lib/portfolio-view'
 
 const copy = {
   eyebrow: {
@@ -46,6 +47,7 @@ const copy = {
 
 export default function NotFoundContent() {
   const { t } = useI18n()
+  const homeHref = useHomeHref()
 
   return (
     <div
@@ -97,7 +99,7 @@ export default function NotFoundContent() {
 
           <div className="flex flex-col justify-center gap-3 sm:flex-row">
             <Link
-              href="/"
+              href={homeHref}
               className="cd-btn-primary min-h-11 justify-center motion-reduce:transition-none"
             >
               <ArrowLeft size={16} className="rtl:rotate-180" aria-hidden="true" />

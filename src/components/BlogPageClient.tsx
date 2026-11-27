@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight, Calendar, Clock } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
 import { languageLocale } from '@/lib/i18n-config'
 import { getAllBlogPostsMeta } from '@/lib/blog-posts-meta'
+import { useHomeHref } from '@/lib/portfolio-view'
 import { serializeJsonLd } from '@/lib/serialize-json-ld'
 
 const copy = {
@@ -34,6 +35,7 @@ const copy = {
 
 export default function BlogPageClient() {
   const { lang, t } = useI18n()
+  const homeHref = useHomeHref()
   const posts = getAllBlogPostsMeta(lang)
   const locale = languageLocale[lang]
 
@@ -66,7 +68,7 @@ export default function BlogPageClient() {
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
       />
       <div className="mx-auto max-w-4xl px-5">
-        <Link href="/" className="mb-8 inline-flex items-center gap-2 text-[var(--cd-accent)]">
+        <Link href={homeHref} className="mb-8 inline-flex items-center gap-2 text-[var(--cd-accent)]">
           <ArrowLeft size={18} className="rtl:rotate-180" />
           {t(copy.backHome)}
         </Link>
