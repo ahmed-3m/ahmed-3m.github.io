@@ -109,6 +109,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="alternate" type="application/rss+xml" title="Ahmed Mohammed Blog" href="/feed.xml" />
+        <link rel="alternate" type="application/rss+xml" title="Ahmed Mohammed — AI & Agentic AI News" href="/news/feed.xml" />
         <PersonSchema />
         <WebsiteSchema />
       </head>

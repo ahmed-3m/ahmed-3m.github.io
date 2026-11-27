@@ -35,6 +35,7 @@ const REQUIRED_FILES = [
   'sitemap.xml',
   'sitemap-pages.xml',
   'feed.xml',
+  'news/feed.xml',
   'robots.txt',
   'llms.txt',
   'llms-full.txt',

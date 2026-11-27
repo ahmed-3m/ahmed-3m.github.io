@@ -1,16 +1,8 @@
 import { getAllBlogPostsMeta } from '@/lib/blog-posts-meta';
 import { getLatestBlogDate } from '@/lib/content-dates';
+import { escapeXml, wrapCdata } from '@/lib/rss';
 
 export const dynamic = 'force-static';
-
-function escapeXml(value: string): string {
-  return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;');
-}
 
 export async function GET() {
   const posts = getAllBlogPostsMeta();
@@ -19,10 +11,10 @@ export async function GET() {
 
   const items = posts.map((post) => `
     <item>
-      <title><![CDATA[${post.title}]]></title>
+      <title>${wrapCdata(post.title)}</title>
       <link>${baseUrl}/blog/${post.slug}/</link>
       <guid isPermaLink="true">${baseUrl}/blog/${post.slug}/</guid>
-      <description><![CDATA[${post.excerpt}]]></description>
+      <description>${wrapCdata(post.excerpt)}</description>
       <pubDate>${new Date(post.date).toUTCString()}</pubDate>
       ${post.tags.map(t => `<category>${escapeXml(t)}</category>`).join('\n      ')}
     </item>
