@@ -7,7 +7,7 @@ import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import { describe, it } from 'node:test'
 
-import { formatClaim } from '@/lib/claims'
+import { formatClaim, QUALIFIERS } from '@/lib/claims'
 import type { NonResultEntry } from '@/lib/claims/check'
 import { CARDS } from '../../tools/generate-og-images.mjs'
 import { report, runClaimsCheck } from '../../tools/claims/run-check.mjs'
@@ -27,7 +27,8 @@ describe('figure check: site copy', () => {
     const og = scanSources('.').filter((u: { file: string }) => u.file === OG_GENERATOR)
     assert.equal(og.length, Object.keys(CARDS).length)
     const thesis = og.find((u: { text: string }) => u.text.includes('Conditional Diffusion for OOD'))
-    assert.ok(thesis?.text.includes(`${formatClaim('thesis.mean', 'en', 'metric')} · 3-seed mean (+6.5 pp)`), thesis?.text)
+    const stat = `${formatClaim('thesis.mean', 'en', 'metric')} · ${QUALIFIERS.threeSeeds.text.en} (${formatClaim('thesis.gainPp', 'en', 'value')})`
+    assert.ok(thesis?.text.includes(stat), thesis?.text)
   })
 
   it('keeps the non-result list short, with a reason and an example for each entry', () => {

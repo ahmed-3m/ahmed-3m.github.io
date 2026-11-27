@@ -1,4 +1,4 @@
-import { formatClaim } from '@/lib/claims'
+import { claimParts, formatClaim } from '@/lib/claims'
 import { type TranslationMap } from '@/lib/i18n-config'
 
 export type CaseStudy = {
@@ -57,11 +57,11 @@ export const caseStudies: CaseStudy[] = [
     ],
     results: [
       {
-        en: `${formatClaim('thesis.gainPp', 'en', 'value')} gain over the non-separated baseline (which achieved ${formatClaim('thesis.baseline', 'en', 'metric')} at lambda=0).`,
-        de: `${formatClaim('thesis.gainPp', 'de', 'value')} Gewinn gegenüber der Basis ohne Separation (die bei lambda=0 ${formatClaim('thesis.baseline', 'de', 'metric')} erreichte).`,
-        fr: `${formatClaim('thesis.gainPp', 'fr', 'value')} de gain face à la baseline sans séparation (qui atteignait ${formatClaim('thesis.baseline', 'fr', 'metric')} à lambda=0).`,
-        es: `${formatClaim('thesis.gainPp', 'es', 'value')} de mejora sobre la base sin separación (que alcanzó ${formatClaim('thesis.baseline', 'es', 'metric')} con lambda=0).`,
-        ar: `${formatClaim('thesis.gainPp', 'ar', 'value')} تحسن على خط الأساس بدون فصل (الذي حقق ${formatClaim('thesis.baseline', 'ar', 'metric')} عند lambda=0).`,
+        en: `${claimParts('thesis.gainPp', 'en').number} percentage points gain over the non-separated baseline (which achieved ${formatClaim('thesis.baseline', 'en', 'metric')} at lambda=0).`,
+        de: `${claimParts('thesis.gainPp', 'de').number} Prozentpunkte Gewinn gegenüber der Basis ohne Separation (die bei lambda=0 ${formatClaim('thesis.baseline', 'de', 'metric')} erreichte).`,
+        fr: `${claimParts('thesis.gainPp', 'fr').number} points de pourcentage de gain face à la baseline sans séparation (qui atteignait ${formatClaim('thesis.baseline', 'fr', 'metric')} à lambda=0).`,
+        es: `${claimParts('thesis.gainPp', 'es').number} puntos porcentuales de mejora sobre la base sin separación (que alcanzó ${formatClaim('thesis.baseline', 'es', 'metric')} con lambda=0).`,
+        ar: `\u2066${claimParts('thesis.gainPp', 'ar').number}\u2069 نقطة مئوية تحسن على خط الأساس بدون فصل (الذي حقق ${formatClaim('thesis.baseline', 'ar', 'metric')} عند lambda=0).`,
       },
       {
         en: 'Seed-42 generalized zero-shot to CIFAR-100 (96.97%), Places365 (96.50%), FashionMNIST (94.03%), Textures (92.84%), and SVHN (90.50%).',
