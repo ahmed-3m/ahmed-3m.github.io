@@ -201,11 +201,12 @@ export default function NewsPageClient() {
     const currentHref = `${window.location.pathname}${window.location.search}${window.location.hash}`
     if (nextHref !== currentHref) {
       lastWrittenSearchRef.current = nextSearch
-      // Pass `null` rather than `window.history.state` (which carries Next.js's
-      // internal `__NA: true` marker): Next.js's `replaceState` wrapper copies its
-      // internal tree automatically and updates `useSearchParams()` only when
-      // `__NA` is absent on the caller's state argument.
-      window.history.replaceState(null, '', nextHref)
+      // When Next.js's `replaceState` wrapper is active, pass `null` rather than
+      // `window.history.state` (which carries `__NA: true`) so the wrapper copies
+      // its internal tree automatically AND updates `useSearchParams()`.
+      const isPatchedByNext =
+        typeof History !== 'undefined' && window.history.replaceState !== History.prototype.replaceState
+      window.history.replaceState(isPatchedByNext ? null : window.history.state, '', nextHref)
     }
   }, [hydratedUrl, filter, selectedTags, selectedSource, searchQuery])
 

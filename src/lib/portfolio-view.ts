@@ -31,13 +31,24 @@ function buildCustomHistoryState(
   source: Record<string, unknown> | null | undefined,
   portfolioView: PortfolioView,
 ): Record<string, unknown> {
-  // Omit Next.js's internal `__NA` / `_N` markers so Next.js's patched
-  // `pushState`/`replaceState` wrapper copies its latest internal tree AND
-  // updates the App Router's `canonicalUrl`.
+  const isPatchedByNext =
+    typeof window !== 'undefined' &&
+    typeof History !== 'undefined' &&
+    window.history.replaceState !== History.prototype.replaceState
+
+  // During initial `useLayoutEffect` (before Next.js `AppRouter`'s `useEffect`
+  // patches `history.replaceState`), preserve `__NA` and `__PRIVATE_NEXTJS_INTERNALS_TREE`
+  // verbatim so client-side Back navigation never falls back to a full reload.
+  if (!isPatchedByNext) {
+    return { ...(source ?? {}), portfolioView }
+  }
+
+  // Once Next.js's `pushState`/`replaceState` wrapper is active, omit `__NA` / `_N`
+  // so the wrapper copies its latest internal tree AND updates `canonicalUrl`.
   const next: Record<string, unknown> = {}
   if (source) {
     for (const [key, value] of Object.entries(source)) {
-      if (key === '__NA' || key === '_N' || key === '__PRIVATE_NEXTJS_INTERNALS_TREE') continue
+      if (key === '__NA' || key === '_N' || key === '__N' || key === '__PRIVATE_NEXTJS_INTERNALS_TREE') continue
       next[key] = value
     }
   }
