@@ -58,7 +58,7 @@ describe('getLocalReply (offline and fallback answers)', () => {
     ['What is his work experience?', 'experience'],
     ['Does he have a blog?', 'writing'],
     // Known quirk: keyword matching answers a scheduling question with the
-    // open-to-work reply. PR 6 labels such fallback answers.
+    // open-to-work reply. The panel labels such answers as fallbacks (reply.ts).
     ['Is he available Tuesday?', 'open_to_work'],
     ['Tell me a joke', null],
   ]

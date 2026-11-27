@@ -4,6 +4,7 @@ import type { CSSProperties } from 'react'
 import dynamic from 'next/dynamic'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { X } from 'lucide-react'
+import { trackEvent } from '@/lib/analytics'
 import { useI18n } from '@/lib/i18n'
 import { CHAT_COPY } from './chatbot-dictionaries'
 
@@ -217,6 +218,7 @@ export default function ChatBot() {
         onFocus={requestPanel}
         onClick={() => {
           requestPanel()
+          if (!isOpen) trackEvent('genie-open')
           setIsOpen((value) => !value)
         }}
         className={`group fixed bottom-[max(1rem,env(safe-area-inset-bottom))] end-4 z-[9999] inline-flex h-14 items-center overflow-hidden rounded-full border transition-all duration-300 ease-out sm:bottom-6 sm:end-6 ${

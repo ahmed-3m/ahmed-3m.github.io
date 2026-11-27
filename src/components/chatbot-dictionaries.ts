@@ -103,6 +103,15 @@ export const CHAT_COPY = {
     es: 'La respuesta se interrumpió.',
     ar: 'انقطع الرد قبل اكتماله.',
   },
+  // Shown under a prepared answer picked by keyword because no model answered
+  // (the model failed, or none is configured).
+  fallbackNotice: {
+    en: 'Live answers are unavailable right now, so this is the closest prepared answer. It may not match your question exactly.',
+    de: 'Live-Antworten sind gerade nicht verfügbar. Das ist die passendste vorbereitete Antwort, sie trifft Ihre Frage vielleicht nicht genau.',
+    fr: 'Les réponses en direct sont indisponibles pour le moment : voici la réponse préparée la plus proche, qui peut ne pas correspondre exactement à votre question.',
+    es: 'Las respuestas en directo no están disponibles ahora, así que esta es la respuesta preparada más cercana. Puede que no se ajuste exactamente a tu pregunta.',
+    ar: 'الإجابات المباشرة غير متاحة الآن، لذا هذه أقرب إجابة جاهزة، وقد لا تطابق سؤالك تمامًا.',
+  },
   retryReply: {
     en: 'Try again',
     de: 'Erneut versuchen',

@@ -29,7 +29,15 @@ export type ChatMessage = {
   content: string
   followUps?: PromptId[]
   incomplete?: boolean
+  /**
+   * The answer is a prepared reply picked by keyword because no model answered.
+   * It may not fit the question, so the panel says so under it.
+   */
+  fallback?: boolean
 }
+
+/** A model reply, or a prepared reply standing in for one (`fallback`). */
+export type ModelReply = ChatReply & { fallback?: true }
 
 export type ImmediateReply =
   | { kind: 'answer'; message: ChatMessage }
@@ -39,7 +47,7 @@ export type ImmediateReply =
 /**
  * Suggested questions, and questions that match a prepared topic, are answered at
  * once from public facts. Without a chat proxy every question is answered that way,
- * or not at all ('unavailable').
+ * or not at all ('unavailable'); an answer guessed from keywords is marked `fallback`.
  */
 export function decideImmediateReply({
   content,
@@ -65,7 +73,12 @@ export function decideImmediateReply({
   if (!local) return { kind: 'unavailable' }
   return {
     kind: 'answer',
-    message: { role: 'assistant', content: local, followUps: pickFollowUpIds(local, content, section, earlierQuestions) },
+    message: {
+      role: 'assistant',
+      content: local,
+      followUps: pickFollowUpIds(local, content, section, earlierQuestions),
+      ...(!curatedReply && { fallback: true }),
+    },
   }
 }
 
@@ -83,7 +96,7 @@ export type ModelProviders = { bigModel: ProviderCall; groq: ProviderCall }
 const DEFAULT_PROVIDERS: ModelProviders = { bigModel: fetchBigModel, groq: fetchGroq }
 
 /**
- * Asks BigModel, then Groq, then falls back to a prepared reply.
+ * Asks BigModel, then Groq, then falls back to a prepared reply (marked `fallback`).
  *
  * - `isStopped` is read live: after the visitor presses stop, a provider error is
  *   rethrown and no further lane or fallback is tried (the result is then null).
@@ -117,8 +130,8 @@ export async function requestModelReply({
   isStopped: () => boolean
   onBeforeGroq?: () => void
   providers?: ModelProviders
-}): Promise<ChatReply | null> {
-  let rawReply: ChatReply | null = null
+}): Promise<ModelReply | null> {
+  let rawReply: ModelReply | null = null
   let lastProviderError: unknown = null
 
   try {
@@ -165,7 +178,7 @@ export async function requestModelReply({
   if (rawReply === null && !isStopped()) {
     const local = getLocalReply(content, lang)
     if (local) {
-      rawReply = { content: local }
+      rawReply = { content: local, fallback: true }
     } else {
       throw lastProviderError ?? new Error('No chat provider succeeded.')
     }
@@ -177,7 +190,7 @@ export async function requestModelReply({
 /**
  * The assistant message shown once a model reply is complete. A streamed reply is
  * kept as shown; any other reply is shortened. A stopped or cut-off reply is marked
- * incomplete and gets no follow-up suggestions.
+ * incomplete and gets no follow-up suggestions. A prepared fallback reply keeps its mark.
  */
 export function buildFinalMessage({
   reply,
@@ -187,7 +200,7 @@ export function buildFinalMessage({
   section,
   earlierQuestions = [],
 }: {
-  reply: ChatReply
+  reply: ModelReply
   streamed: boolean
   stopped: boolean
   question: string
@@ -202,6 +215,7 @@ export function buildFinalMessage({
     content,
     incomplete,
     followUps: incomplete ? undefined : pickFollowUpIds(content, question, section, earlierQuestions),
+    ...(reply.fallback && { fallback: true }),
   }
 }
 

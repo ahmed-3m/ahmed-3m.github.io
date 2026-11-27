@@ -4,6 +4,7 @@ import type { CSSProperties, FormEvent, MouseEvent, ReactNode } from 'react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { ArrowUp, ChevronRight, RotateCcw, Square, X } from 'lucide-react'
 import { usePathname } from 'next/navigation'
+import { trackEvent } from '@/lib/analytics'
 import { useI18n } from '@/lib/i18n'
 import { translateValue, type Language } from '@/lib/i18n-config'
 import { CHAT_PROXY_URL } from '@/lib/genie/providers'
@@ -388,6 +389,8 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
     setMessages(nextMessages)
     setInput('')
     setError(null)
+    // Fixed event names only: the text a visitor types never goes to analytics.
+    if (!retry) trackEvent(promptId ? `genie-suggested-${promptId}` : 'genie-typed-question')
 
     // Questions asked before this one, so suggestions do not offer them again.
     const earlierQuestions = nextMessages
@@ -406,10 +409,12 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
       earlierQuestions,
     })
     if (immediate.kind === 'answer') {
+      if (immediate.message.fallback) trackEvent('genie-fallback')
       setMessages((prev) => [...prev, immediate.message])
       return
     }
     if (immediate.kind === 'unavailable' || !proxyUrl) {
+      trackEvent('genie-unavailable')
       setError(t(CHAT_COPY.limitedAnswers))
       return
     }
@@ -473,6 +478,7 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
           section: currentSection,
           earlierQuestions,
         })
+        if (finalMessage.fallback) trackEvent('genie-fallback')
         setMessages((prev) => [...(streamStarted ? prev.slice(0, -1) : prev), finalMessage])
       }
     } catch (caughtError) {
@@ -497,7 +503,9 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
       setMessages(messages)
       if (!retry) setInput((current) => current || content)
       console.error('Chat failed across all configured providers:', caughtError)
-      setError(t(chatErrorKind(caughtError) === 'rate-limited' ? CHAT_COPY.rateLimited : CHAT_COPY.genericError))
+      const errorKind = chatErrorKind(caughtError)
+      trackEvent(`genie-error-${errorKind}`)
+      setError(t(errorKind === 'rate-limited' ? CHAT_COPY.rateLimited : CHAT_COPY.genericError))
     } finally {
       if (activeAbortRef.current === requestAbort) {
         activeAbortRef.current = null
@@ -624,6 +632,12 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
                       : message.content}
                   </div>
                 </div>
+
+                {message.fallback && (
+                  <p className="max-w-[88%] text-xs leading-5" style={{ color: 'var(--cd-fg3)' }}>
+                    {t(CHAT_COPY.fallbackNotice)}
+                  </p>
+                )}
 
                 {message.incomplete && (
                   <div className="flex flex-wrap items-center gap-2 text-xs" style={{ color: 'var(--cd-warn)' }}>

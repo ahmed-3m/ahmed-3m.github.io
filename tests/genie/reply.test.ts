@@ -53,6 +53,20 @@ describe('decideImmediateReply', () => {
     assert.equal(result.kind === 'answer' && result.message.content, LOCAL_REPLIES.mergeproof.en)
     assert.deepEqual(decideImmediateReply({ ...offline, content: 'Tell me a joke' }), { kind: 'unavailable' })
   })
+
+  it('marks a keyword guess as a fallback, but not a suggested or exactly matched question', () => {
+    const offline = { ...base, proxyConfigured: false }
+    const guess = decideImmediateReply({ ...offline, content: 'Tell me about mergeproof' })
+    assert.equal(guess.kind === 'answer' && guess.message.fallback, true)
+    for (const result of [
+      decideImmediateReply({ ...offline, content: 'x', promptId: 'cv' }),
+      decideImmediateReply({ ...offline, content: 'Lebenslauf', lang: 'de' }),
+      decideImmediateReply({ ...base, content: 'Download his CV', proxyConfigured: true }),
+    ]) {
+      assert.equal(result.kind, 'answer')
+      assert.ok(result.kind === 'answer' && !('fallback' in result.message))
+    }
+  })
 })
 
 describe('requestModelReply', () => {
@@ -128,7 +142,7 @@ describe('requestModelReply', () => {
 
   it('falls back to a prepared reply when both lanes fail', async () => {
     const fakes = providers(upstream500('BigModel'), upstream500('Groq'))
-    assert.deepEqual(await request('Tell me about mergeproof', fakes), { content: LOCAL_REPLIES.mergeproof.en })
+    assert.deepEqual(await request('Tell me about mergeproof', fakes), { content: LOCAL_REPLIES.mergeproof.en, fallback: true })
     assert.deepEqual(
       consoleError.mock.calls.map((c) => c.arguments[0]),
       ['Chat provider BigModel failed:', 'Chat provider Groq failed:']
@@ -149,7 +163,7 @@ describe('requestModelReply', () => {
 
   it('still offers a prepared reply on a proxy rate limit', async () => {
     const fakes = providers(proxy429(), { content: 'from Groq' })
-    assert.deepEqual(await request('Tell me about mergeproof', fakes), { content: LOCAL_REPLIES.mergeproof.en })
+    assert.deepEqual(await request('Tell me about mergeproof', fakes), { content: LOCAL_REPLIES.mergeproof.en, fallback: true })
     assert.deepEqual(log, ['bigModel'])
   })
 
@@ -205,6 +219,13 @@ describe('buildFinalMessage', () => {
       incomplete: undefined,
       followUps: pickFollowUpIds('Done.', base.question, 'hero'),
     })
+  })
+
+  it('keeps the fallback mark of a prepared reply, and adds none to a model reply', () => {
+    const fallback = buildFinalMessage({ ...base, reply: { content: 'Done.', fallback: true }, streamed: false })
+    assert.equal(fallback.fallback, true)
+    assert.ok(fallback.followUps)
+    assert.ok(!('fallback' in buildFinalMessage({ ...base, reply: { content: 'Done.' }, streamed: true })))
   })
 
   it('marks a stopped or cut-off reply incomplete, without follow-ups', () => {
