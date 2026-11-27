@@ -244,6 +244,15 @@ sanctioned exception to the "agents never merge their own PRs" rule.
   `ood-explorer-data.ts`, means must keep their spread and qualifier, and links must be
   on the allowlist. When a reply needs a new number, derive it from the data file
   instead of typing it.
+- Figures come from `@/lib/claims` (the registry built on `ood-explorer-data.ts`, spec
+  008). Components never import `@/lib/claims/check`, `/retired` or `/read-figures`;
+  ESLint blocks it.
+- The figure check runs in `npm test` (source copy, llms*.txt, README, hero SVGs, OG
+  cards) and `npm run verify:export` (also the built pages and JS bundles). It fails on
+  unregistered, retired, spread-less or unqualified figures, in all 5 languages.
+- Today's findings sit in `tools/claims/baseline.json`, which only shrinks: never add an
+  entry; fix the copy and delete its entry. See
+  [specs/008-claims-registry/quickstart.md](specs/008-claims-registry/quickstart.md).
 
 ### Verifying UI changes
 

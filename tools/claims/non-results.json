@@ -1,0 +1,15 @@
+[
+  {
+    "id": "thesis-figure-ref",
+    "pattern": "(?:Fig\\.|Abb\\.|شكل)\\s*\\d+[.,]\\d+",
+    "reason": "A thesis figure number (Fig. 6.8), not a result; it sits next to a metric name in the explorer's calibration preset.",
+    "example": "Calibrate @ TPR = 95% (Fig. 6.8)"
+  },
+  {
+    "id": "explorer-live-readout",
+    "scope": "export",
+    "pattern": "(?:Sensitivity|Balanced Acc:|TPR\\s*[−-]\\s*FPR|TPR\\s*=)\\s*\\d+[.,]\\d+\\s?%",
+    "reason": "The explorer's threshold readouts are computed in the page from the seed-42 ROC arrays at the default threshold; they change with the slider and are not stated results.",
+    "example": "Youden's J(τ) = TPR − FPR 90.1% Balanced Acc: 95.0%"
+  }
+]

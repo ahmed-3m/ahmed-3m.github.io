@@ -17,6 +17,21 @@ const eslintConfig = defineConfig([
     ".claude/**",
     "node_modules/**",
   ]),
+  // Spec 008: the figure check and the retired figures stay out of the client bundle.
+  {
+    files: ["src/components/**", "src/app/**"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          paths: ["@/lib/claims/check", "@/lib/claims/retired", "@/lib/claims/read-figures"].map((name) => ({
+            name,
+            message: "Components import figures from @/lib/claims; the check and the retired figures are build-time only.",
+          })),
+        },
+      ],
+    },
+  },
 ]);
 
 export default eslintConfig;

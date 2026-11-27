@@ -8,7 +8,7 @@
     "prebuild": "node tools/emit-homepage-news.mjs",
     "build": "next build",
     "postbuild": "node tools/emit-sitemap-alias.mjs",
-    "verify:export": "node tools/verify-export.mjs",
+    "verify:export": "node --import ./tools/test-hooks.mjs tools/verify-export.mjs",
     "start": "next start",
     "lint": "eslint src tests",
     "typecheck": "tsc --noEmit",

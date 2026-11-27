@@ -10,6 +10,7 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 
+import { DERIVED, isBackedValue, QUALIFIERS } from '@/lib/claims'
 import * as DATA from '@/lib/ood-explorer-data'
 import { KNOWLEDGE_CHUNKS } from '@/lib/genie/knowledge'
 import { formatLocaleNumber, resolveLinkProps } from '@/lib/genie/links'
@@ -22,38 +23,14 @@ import type { Language } from '@/lib/i18n-config'
 const LOCALES = ['en', 'de', 'fr', 'es', 'ar'] as const satisfies readonly Language[]
 
 // ---------------------------------------------------------------------------------
-// Numbers the data file backs
-
-/** Every number in the data file, including decimals written inside its strings. */
-function collectDataNumbers(): number[] {
-  const values: number[] = []
-  const skip = new Set(['histogram', 'roc', 'id_pct', 'ood_pct']) // plot points, not claims
-  const walk = (value: unknown, key = ''): void => {
-    if (skip.has(key)) return
-    if (typeof value === 'number') values.push(value)
-    else if (typeof value === 'string') for (const m of value.matchAll(/\d+(?:\.\d+)?/g)) values.push(Number(m[0]))
-    else if (Array.isArray(value)) value.forEach((item) => walk(item))
-    else if (value && typeof value === 'object') for (const [k, v] of Object.entries(value)) walk(v, k)
-  }
-  for (const [name, value] of Object.entries(DATA)) walk(value, name)
-  return values
-}
+// Numbers the data file backs: the claims registry (spec 008, FR-009) holds them, with
+// the computed values (DERIVED) and the qualifier phrasings the site-wide check uses.
 
 const cifarBaseline = DATA.CIFAR_LAMBDA_SWEEP.find((r) => r.lambda === '0.0')!
 const cifarOptimal = DATA.CIFAR_LAMBDA_SWEEP.find((r) => r.isOptimal)!
 const inkjetBaseline = DATA.INKJET_OVERALL_SWEEP['0.0']
-const externalAurocs = Object.values(DATA.BENCHMARK_DATASETS)
-  .filter((d) => d.category !== 'within')
-  .map((d) => d.auroc)
 
-/** Values computed from the data file rather than stored in it. */
-const DERIVED = {
-  separationGainPp: Number((cifarOptimal.withinCifarMean - cifarBaseline.withinCifarMean).toFixed(1)),
-  externalAurocMean: Number((externalAurocs.reduce((a, b) => a + b, 0) / externalAurocs.length).toFixed(2)),
-}
-
-const DATA_NUMBERS = [...collectDataNumbers(), ...Object.values(DERIVED)]
-const isBacked = (n: number) => DATA_NUMBERS.some((v) => Math.abs(v - n) < 1e-9)
+const isBacked = isBackedValue
 
 /** Decimal numbers in a text, read with the language's decimal mark. */
 function decimals(text: string, lang: Language): { raw: string; value: number }[] {
@@ -75,27 +52,9 @@ const MEANS = [
   { mean: inkjetBaseline.aurocMean.toFixed(4), spread: inkjetBaseline.aurocStd.toFixed(4) },
 ]
 
-const THREE_SEEDS: Record<Language, RegExp> = {
-  en: /three seeds|3[- ]seeds?/i,
-  de: /drei Läufe|3-Seed/i,
-  fr: /trois essais|3 seeds/i,
-  es: /tres ejecuciones|3 semillas|3 seeds/i,
-  ar: /ثلاث تجارب|3 بذور/,
-}
-const SEED_42: Record<Language, RegExp> = {
-  en: /seed[- ]42/i,
-  de: /Seed 42/i,
-  fr: /seed 42/i,
-  es: /seed 42|semilla 42/i,
-  ar: /البذرة 42/,
-}
-const FIVE_FOLD: Record<Language, RegExp> = {
-  en: /five-fold|5-fold/i,
-  de: /fünffach|5-fach/i,
-  fr: /cinq plis|5 plis/i,
-  es: /cinco pliegues|5-fold/i,
-  ar: /خمسة أجزاء|5-fold/,
-}
+const THREE_SEEDS = QUALIFIERS.threeSeeds.accepts
+const SEED_42 = QUALIFIERS.seed42.accepts
+const FIVE_FOLD = QUALIFIERS.fiveFoldCv.accepts
 
 /** Problems with the numbers, spreads and qualifiers in one text. `notResults` lists
  *  numbers that are not results (a table reference, say) and need no backing. */

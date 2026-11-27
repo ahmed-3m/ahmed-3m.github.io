@@ -1,4 +1,3 @@
-import type { Language } from '@/lib/i18n-config'
 import { CALENDLY_URL } from '@/lib/booking'
 import { diffusionExplorerHref } from '@/lib/portfolio-copy'
 import { isHomePathname, type PortfolioView } from '@/lib/portfolio-view-logic'
@@ -151,11 +150,4 @@ export function chatLinkAction(href: string, current: { pathname: string; search
   return { kind: 'route', href }
 }
 
-/**
- * Formats numeric strings for German and French decimal comma and percentage spacing
- * (`99.03% ± 0.07%` -> `99,03 % ± 0,07 %`) while preserving other locales.
- */
-export function formatLocaleNumber(raw: string, lang: Language): string {
-  if (lang !== 'de' && lang !== 'fr') return raw
-  return raw.replace(/(\d)\.(\d)/g, '$1,$2').replace(/[ \u00A0]*%/g, ' %')
-}
+export { formatLocaleNumber } from '@/lib/claims/format'
