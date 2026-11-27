@@ -491,11 +491,35 @@ export function getStarterPrompts(sectionOrPath: string): PromptId[] {
   return STARTER_PROMPT_IDS
 }
 
-export function pickFollowUpIds(reply: string, question: string, section: string): PromptId[] {
+/** The prepared reply a question maps to, if any. */
+function topicOfQuestion(question: string): ReplyId | undefined {
+  const prompt = findPromptId(question)
+  return prompt ? REPLY_FOR_PROMPT[prompt] : findCuratedTopic(question) ?? inferReplyId(question)
+}
+
+/**
+ * Up to three suggested questions to show after a reply. Never suggests a question
+ * the visitor already asked in this conversation (`earlierQuestions`), or one whose
+ * prepared reply they have already been given. Topic follow-ups come first, then the
+ * page's starter questions fill any gaps.
+ */
+export function pickFollowUpIds(
+  reply: string,
+  question: string,
+  section: string,
+  earlierQuestions: readonly string[] = []
+): PromptId[] {
   const requested = findPromptId(question)
   const topic = requested ? REPLY_FOR_PROMPT[requested] : inferReplyId(question) ?? inferReplyId(reply)
-  const followUps = (topic && FOLLOWUP_PROMPTS[topic]) || getStarterPrompts(section)
-  return followUps.filter((id) => id !== requested && REPLY_FOR_PROMPT[id] !== topic).slice(0, 3)
+
+  const asked = new Set<PromptId | undefined>([requested, ...earlierQuestions.map(findPromptId)])
+  const answered = new Set<ReplyId | undefined>([topic, ...earlierQuestions.map(topicOfQuestion)])
+  const candidates = new Set<PromptId>([
+    ...((topic && FOLLOWUP_PROMPTS[topic]) || []),
+    ...getStarterPrompts(section),
+    ...STARTER_PROMPT_IDS,
+  ])
+  return [...candidates].filter((id) => !asked.has(id) && !answered.has(REPLY_FOR_PROMPT[id])).slice(0, 3)
 }
 
 export type ChatLane = 'fast' | 'deep'
