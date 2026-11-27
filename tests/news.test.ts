@@ -70,10 +70,10 @@ describe('news intake hardening', () => {
     )
   })
 
-  it('normalizes overlapping tag synonyms onto canonical tags without duplicates', () => {
+  it('normalizes overlapping tag synonyms onto canonical tags without duplicates or prototype leaks', () => {
     assert.deepEqual(
-      normalizeIncomingTags(['agent-governance', 'governance', 'safeguards', 'guardrails']),
-      ['governance', 'guardrails'],
+      normalizeIncomingTags(['agent-governance', 'governance', 'constructor', 'safeguards', 'guardrails']),
+      ['governance', 'constructor', 'guardrails'],
     )
   })
 

@@ -195,9 +195,9 @@ assert(
 }
 
 assert(
-  'normalizeIncomingTags maps synonyms and dedupes',
-  JSON.stringify(normalizeIncomingTags(['agent-governance', 'governance', 'agentic-coding'])) ===
-    JSON.stringify(['governance', 'coding-agents']),
+  'normalizeIncomingTags maps synonyms, ignores prototype keys, and dedupes',
+  JSON.stringify(normalizeIncomingTags(['agent-governance', 'constructor', 'governance', 'agentic-coding'])) ===
+    JSON.stringify(['governance', 'constructor', 'coding-agents']),
 )
 
 {

@@ -92,7 +92,7 @@ export function normalizeIncomingTags(tags: readonly string[]): readonly string[
   const normalized: string[] = []
   const seen = new Set<string>()
   for (const raw of tags) {
-    const mapped = TAG_SYNONYMS[raw] ?? raw
+    const mapped = Object.hasOwn(TAG_SYNONYMS, raw) ? TAG_SYNONYMS[raw] : raw
     if (seen.has(mapped)) continue
     seen.add(mapped)
     normalized.push(mapped)
