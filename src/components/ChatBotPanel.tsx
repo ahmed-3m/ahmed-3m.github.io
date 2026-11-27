@@ -446,18 +446,24 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
           .filter(Boolean)
           .join(' ')
       : ''
-  const announcedIndex = replyAnnouncement ? messages.length - 1 : -1
+  // A failed request rolls back to the earlier transcript (the same message
+  // objects), so remembering the announced message keeps an old reply silent.
   const announcerRef = useRef<HTMLDivElement>(null)
+  const announcedMessageRef = useRef<ChatMessage | null>(null)
   useEffect(() => {
     const node = announcerRef.current
     if (!node) return
+    if (!replyAnnouncement || !lastMessage || announcedMessageRef.current === lastMessage) {
+      node.textContent = ''
+      return
+    }
     node.textContent = ''
-    if (!replyAnnouncement) return
     const timer = window.setTimeout(() => {
+      announcedMessageRef.current = lastMessage
       node.textContent = replyAnnouncement
     }, 100)
     return () => window.clearTimeout(timer)
-  }, [announcedIndex, replyAnnouncement])
+  }, [lastMessage, replyAnnouncement])
 
   useEffect(() => {
     return () => {
