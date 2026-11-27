@@ -544,25 +544,9 @@
   {
     "scope": "source",
     "file": "src/lib/blog-posts.ts",
-    "lang": "ar",
-    "figure": "95.04%",
-    "rule": "unregistered",
-    "note": "YOLO mAP figure: owner decision 2 (register with a public artifact or remove), T041"
-  },
-  {
-    "scope": "source",
-    "file": "src/lib/blog-posts.ts",
     "lang": "de",
     "figure": "99.03%",
     "rule": "missing-qualifier"
-  },
-  {
-    "scope": "source",
-    "file": "src/lib/blog-posts.ts",
-    "lang": "de",
-    "figure": "95.04%",
-    "rule": "unregistered",
-    "note": "YOLO mAP figure: owner decision 2 (register with a public artifact or remove), T041"
   },
   {
     "scope": "source",
@@ -574,22 +558,6 @@
   {
     "scope": "source",
     "file": "src/lib/blog-posts.ts",
-    "lang": "en",
-    "figure": "95.04%",
-    "rule": "unregistered",
-    "note": "YOLO mAP figure: owner decision 2 (register with a public artifact or remove), T041"
-  },
-  {
-    "scope": "source",
-    "file": "src/lib/blog-posts.ts",
-    "lang": "es",
-    "figure": "95.04%",
-    "rule": "unregistered",
-    "note": "YOLO mAP figure: owner decision 2 (register with a public artifact or remove), T041"
-  },
-  {
-    "scope": "source",
-    "file": "src/lib/blog-posts.ts",
     "lang": "fr",
     "figure": "99.03%",
     "rule": "missing-qualifier"
@@ -600,14 +568,6 @@
     "lang": "fr",
     "figure": "99.03%",
     "rule": "missing-qualifier"
-  },
-  {
-    "scope": "source",
-    "file": "src/lib/blog-posts.ts",
-    "lang": "fr",
-    "figure": "95.04%",
-    "rule": "unregistered",
-    "note": "YOLO mAP figure: owner decision 2 (register with a public artifact or remove), T041"
   },
   {
     "scope": "source",

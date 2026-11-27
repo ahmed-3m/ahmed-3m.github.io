@@ -363,3 +363,5 @@ prompt file shows the new value without a hand edit.
   post title and description, the diffusion case-study `title`, description, OpenGraph
   and Twitter fields, and the titles quoted in `llms*.txt`, the README and Genie
   knowledge (T040).
+- Q: The `95.04%` YOLO mAP@0.5 in the InkjetOOD blog post, which no public artifact
+  backs? → A: Remove it from all five languages; it is not registered (T041).
