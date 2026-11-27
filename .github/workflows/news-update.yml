@@ -160,6 +160,10 @@ jobs:
                 exit 1
               fi
               echo "Succeeded with $m."
+              {
+                echo "### News research"
+                echo "- **Model tier**: \`$m\` (attempt $attempt)"
+              } >> "$GITHUB_STEP_SUMMARY"
               exit 0
             fi
             combined="$RUNNER_TEMP/agent-attempt-$attempt.combined.log"
@@ -233,6 +237,11 @@ jobs:
           const sanitized = { items: next.filter((item) => !existingIds.has(item.id)) }
           await writeFile(path, JSON.stringify(sanitized) + '\n')
           EOF
+          items_count="$(node -e "const d = JSON.parse(require('fs').readFileSync(process.env.RUNNER_TEMP + '/news-delta.json','utf8')); console.log(d.items.length)")"
+          {
+            echo "### Delta validation"
+            echo "- **Accepted items**: $items_count"
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Build with delta applied (local copy only)
         run: |
@@ -529,6 +538,13 @@ jobs:
           done
           if [ "$conclusion" = "success" ]; then
             echo "Deploy $run_id succeeded: $url"
+            {
+              echo "### Publish & deploy"
+              echo "- **PR**: #${{ steps.publish.outputs.pr }}"
+              echo "- **Deploy**: $url"
+            } >> "$GITHUB_STEP_SUMMARY"
+            git checkout origin/main -- src/lib/news-items.json
+            node .github/news/check-news-health.mjs live --expected-delta "$RUNNER_TEMP/news-delta.json" --wait-seconds 180
           else
             echo "Deploy $run_id concluded $conclusion"
             echo "::error::Deploy $run_id failed: $url"
@@ -552,6 +568,34 @@ jobs:
             git push origin --delete "refs/heads/${{ steps.publish.outputs.branch }}" || true
           fi
 
+  recover:
+    needs: [research, validate, publish]
+    if: >-
+      always() &&
+      github.event_name == 'schedule' &&
+      needs.research.result == 'success' &&
+      needs.validate.result == 'success' &&
+      (needs.publish.result == 'success' || needs.publish.result == 'skipped')
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Close open failure issue on scheduled recovery
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          title="[ops] news-update failed"
+          existing=$(gh issue list --state open --search "$title in:title" --json number --jq '.[0].number // empty')
+          if [ -z "$existing" ]; then
+            echo "No open failure issue to close."
+            exit 0
+          fi
+          gh issue comment "$existing" --body "Recovered cleanly in scheduled \`news-update\` run: $RUN_URL — closing."
+          gh issue close "$existing" --reason completed
+
   # publish is skipped on dry-run; needs.*.result for a skipped job is
   # skipped, which is not failure. A dry-run research/validate failure still
   # alerts. First-failure (open or comment), not a two-run counter.
@@ -573,9 +617,8 @@ jobs:
           body="Workflow \`news-update\` failed: $RUN_URL"
           existing=$(gh issue list --state open --search "$title in:title" --json number --jq '.[0].number // empty')
           if [ -n "$existing" ]; then
-            # one failure = one comment; a new run URL always comments
-            last=$(gh issue view "$existing" --json comments --jq '.comments[-1].body // empty')
-            if printf '%s' "$last" | grep -qF "$RUN_URL"; then
+            # Dedupe against all comments so an intervening human comment cannot re-notify for the same run.
+            if gh issue view "$existing" --json comments --jq '[.comments[].body] | any(contains(env.RUN_URL))' | grep -q '^true$'; then
               echo "Issue #$existing already reports $RUN_URL — skipping duplicate comment."
               exit 0
             fi
