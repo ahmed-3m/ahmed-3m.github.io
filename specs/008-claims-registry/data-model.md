@@ -188,7 +188,11 @@ needs a matching count, stored as repeated entries.
 This lives in `tools/claims/og-cards.lock.json`.
 
 ```ts
-type OgCardLock = Record<string /* png file name */, string /* sha256 of eyebrow|title|sub|stat */>
+type OgCardLock = Record<string /* png file name */, {
+  text: string /* sha256 of JSON.stringify([eyebrow, title, sub, stat]) */
+  png: string  /* sha256 of the PNG the generator wrote to public/ */
+}>
 ```
 
-The generator writes it, and the check compares against it.
+The generator writes it, and the check compares against it: the text hash against the
+exported cards, and the PNG hash against the committed `public/<png>`.

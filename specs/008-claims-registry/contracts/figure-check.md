@@ -27,7 +27,7 @@ export function compareWithBaseline(findings: Finding[], baseline: BaselineEntry
 | `retired` | A figure matches a retired value in any form | `retired figure (<reason>)` |
 | `mean-without-spread` | A named claim's mean appears and its spread value is absent from the unit | `mean without its spread (<expected spread form>)` |
 | `missing-qualifier` | A named claim appears and a required qualifier's accepted phrasing is absent from the unit. PR A enforces only today's three rules (research R7). | `missing qualifier: <qualifier text in that language>` |
-| `stale-og-image` | An OG card's text hash differs from `og-cards.lock.json` | `OG image <file> is stale — regenerate it` |
+| `stale-og-image` | An OG card's text hash differs from `og-cards.lock.json`, or a committed `public/<png>` is missing or differs from the PNG hash there | `OG image <file> is stale — regenerate it`, or `OG image <file> does not match tools/claims/og-cards.lock.json — regenerate it` |
 | `stale-baseline` | A baseline entry no longer occurs | `remove this entry from tools/claims/baseline.json` |
 
 ## Command-line behaviour

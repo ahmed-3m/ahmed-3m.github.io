@@ -8,19 +8,18 @@
 //   node --import ./tools/test-hooks.mjs tools/generate-og-images.mjs
 //
 // The stat lines with a result come from the claims registry (spec 008). Each run
-// also writes tools/claims/og-cards.lock.json, a hash of every card's text; the
-// figure check fails when a card no longer matches it, so commit the PNGs and the
-// lock together.
+// also writes tools/claims/og-cards.lock.json, a hash of every card's text and of
+// the PNG rendered from it; the figure check fails when a card or a committed PNG
+// no longer matches it, so commit the PNGs and the lock together.
 //
 // Palette mirrors the site's --cd-* tokens (globals.css, dark theme):
 // bg #08090d · accent #00d4ff · fg #e8eaf0 · dim fg #8b93a7.
 
 import { mkdir, writeFile } from 'node:fs/promises'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
 
 import { QUALIFIERS, formatClaim } from '@/lib/claims'
-import { OG_LOCK, lockOf } from './claims/og-lock.mjs'
+import { OG_DIR, OG_LOCK, lockOf } from './claims/og-lock.mjs'
 
 const thesisStat = `${formatClaim('thesis.mean', 'en', 'metric')} · ${QUALIFIERS.threeSeeds.text.en}`
 const inkjetStat = `${formatClaim('inkjet.baseline', 'en', 'metric')} · ${QUALIFIERS.fiveFoldCv.text.en}`
@@ -152,20 +151,24 @@ async function main() {
     console.error('sharp not found in node_modules — install deps first (npm ci). CI never runs this tool; committed PNGs are canonical.')
     process.exit(1)
   }
-  const outDir = path.resolve('public')
+  const outDir = path.resolve(OG_DIR)
   await mkdir(outDir, { recursive: true })
+  const pngs = {}
   for (const [file, spec] of Object.entries(CARDS)) {
     const png = await sharp(Buffer.from(card(spec))).png({ compressionLevel: 9 }).toBuffer()
     await writeFile(path.join(outDir, file), png)
+    pngs[file] = png
     const meta = await sharp(png).metadata()
     console.log(`${file}: ${meta.width}x${meta.height}, ${(png.length / 1024).toFixed(1)} KB`)
   }
-  await writeFile(path.resolve(OG_LOCK), `${JSON.stringify(lockOf(CARDS), null, 2)}\n`)
+  await writeFile(path.resolve(OG_LOCK), `${JSON.stringify(lockOf(CARDS, pngs), null, 2)}\n`)
   console.log(`${OG_LOCK}: ${Object.keys(CARDS).length} cards`)
 }
 
 // Render only when run directly: the figure check imports CARDS without rendering.
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+// import.meta.main (Node 24.2+) holds through junctions and symlinks, where argv[1]
+// and the module's real path differ.
+if (import.meta.main) {
   main().catch((err) => {
     console.error(err)
     process.exit(1)

@@ -2,7 +2,7 @@
 
 import ResearchFigure from '@/components/ResearchFigure'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
-import { QUALIFIERS } from '@/lib/claims'
+import { QUALIFIERS, formatLocaleNumber } from '@/lib/claims'
 import { CIFAR_LAMBDA_SWEEP } from '@/lib/ood-explorer-data'
 import { separationNoiseTraining } from '@/lib/research-figures'
 import { useTheme } from '@/lib/ThemeContext'
@@ -74,7 +74,7 @@ const copy = {
 } satisfies Record<string, TranslationMap>
 
 export default function SeparationLoss() {
-  const { t } = useI18n()
+  const { t, lang } = useI18n()
   const { theme } = useTheme()
   const trainingFigure = {
     ...separationNoiseTraining,
@@ -95,7 +95,7 @@ export default function SeparationLoss() {
             ].map(({ label, entry }) => (
               <div key={entry.lambda}>
                 <dt>{t(label)} <bdi>λ = {Number(entry.lambda)}</bdi> · {t(QUALIFIERS.threeSeeds.text)}</dt>
-                <dd><bdi dir="ltr">{entry.withinCifarMean.toFixed(2)}% ± {entry.withinCifarStd?.toFixed(2)}%</bdi></dd>
+                <dd><bdi dir="ltr">{formatLocaleNumber(`${entry.withinCifarMean.toFixed(2)}% ± ${entry.withinCifarStd?.toFixed(2)}%`, lang)}</bdi></dd>
               </div>
             ))}
           </dl>

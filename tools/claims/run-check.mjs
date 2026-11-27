@@ -7,7 +7,7 @@ import path from 'node:path'
 
 import { candidateGaps, checkUnit, compareWithBaseline, compileNonResults, formatFindings, lettersOf } from '@/lib/claims/check'
 import { CARDS } from '../generate-og-images.mjs'
-import { OG_LOCK, staleOgImages } from './og-lock.mjs'
+import { OG_DIR, OG_LOCK, staleOgImages } from './og-lock.mjs'
 import { scanExport } from './scan-export.mjs'
 import { OG_GENERATOR, ogCardLine, scanSources } from './scan-sources.mjs'
 
@@ -70,11 +70,15 @@ export function runClaimsCheck({ scopes, outDir = path.join(ROOT, 'out'), baseli
       sourceTexts.set(key, [...(sourceTexts.get(key) ?? []), words])
     }
   }
-  // An OG card whose text changed since the PNGs were rendered (research R12). No lock
-  // file means every card is stale.
+  // An OG card whose text changed since the PNGs were rendered, or a committed PNG that
+  // is not the one rendered (research R12). No lock file means every card is stale.
   const lock = existsSync(path.join(ROOT, OG_LOCK)) ? readJson(OG_LOCK) : {}
   const generatorSource = readFileSync(path.join(ROOT, OG_GENERATOR), 'utf8')
-  findings.push(...staleOgImages(CARDS, lock, { file: OG_GENERATOR, lineOf: (png) => ogCardLine(generatorSource, png) }))
+  const pngOf = (png) => {
+    const abs = path.join(ROOT, OG_DIR, png)
+    return existsSync(abs) ? readFileSync(abs) : undefined
+  }
+  findings.push(...staleOgImages(CARDS, lock, { file: OG_GENERATOR, lineOf: (png) => ogCardLine(generatorSource, png), pngOf }))
   const timings = { sourceMs: Math.round(performance.now() - started) }
 
   let exportUnits = []

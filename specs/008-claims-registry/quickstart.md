@@ -66,8 +66,9 @@ table reference, say), add a pattern with a reason to `tools/claims/non-results.
      ```
 
   3. Commit the PNGs and `tools/claims/og-cards.lock.json` together. The generator
-     writes the lock: one SHA-256 per card over its eyebrow, title, sub and stat
-     (`tools/claims/og-lock.mjs`).
+     writes the lock: per card, a SHA-256 of its eyebrow, title, sub and stat, and a
+     SHA-256 of the PNG (`tools/claims/og-lock.mjs`). A lock committed without its
+     PNGs fails the check.
 - **Retired result**: move the claim from `CLAIMS` in `src/lib/claims/registry.ts` to
   `src/lib/claims/retired.ts`, with a reason and date, and store the value as joined
   segments. Every surface that still uses it now fails the build.

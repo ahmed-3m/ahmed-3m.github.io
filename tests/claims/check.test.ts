@@ -264,19 +264,36 @@ describe('figure check: baseline', () => {
 
 describe('figure check: OG image lock', () => {
   const card = { eyebrow: 'e', title: 'Diffusion OOD', sub: 's', stat: '99.03% ± 0.07% AUROC · 3-seed mean' }
-  const where = { file: 'tools/generate-og-images.mjs', lineOf: () => 7 }
+  const rendered = new Uint8Array([137, 80, 78, 71, 1])
+  const pngs = { 'og-x.png': rendered }
+  const where = { file: 'tools/generate-og-images.mjs', lineOf: () => 7, pngOf: (png: string) => pngs[png as 'og-x.png'] }
 
-  it('hashes eyebrow|title|sub|stat', () => {
-    const expected = createHash('sha256').update('e|Diffusion OOD|s|99.03% ± 0.07% AUROC · 3-seed mean').digest('hex')
+  it('hashes the JSON-encoded eyebrow, title, sub and stat', () => {
+    const expected = createHash('sha256').update(JSON.stringify(['e', 'Diffusion OOD', 's', '99.03% ± 0.07% AUROC · 3-seed mean'])).digest('hex')
     assert.equal(cardHash(card), expected)
   })
 
-  it('passes when every card matches the lock', () => {
-    assert.deepEqual(staleOgImages({ 'og-x.png': card }, lockOf({ 'og-x.png': card }), where), [])
+  it('keeps text from running across fields', () => {
+    assert.notEqual(cardHash({ ...card, title: 'A | B', sub: 'C' }), cardHash({ ...card, title: 'A ', sub: ' B | C' }))
+  })
+
+  it('passes when every card and PNG matches the lock', () => {
+    assert.deepEqual(staleOgImages({ 'og-x.png': card }, lockOf({ 'og-x.png': card }, pngs), where), [])
+  })
+
+  it('fails on a committed PNG that differs from the lock or is missing', () => {
+    const lock = lockOf({ 'og-x.png': card }, pngs)
+    for (const pngOf of [() => new Uint8Array([137, 80, 78, 71, 2]), () => undefined]) {
+      const findings: Finding[] = staleOgImages({ 'og-x.png': card }, lock, { ...where, pngOf }) as Finding[]
+      assert.equal(findings.length, 1, formatFindings(findings))
+      assert.equal(findings[0].rule, 'stale-og-image')
+      assert.equal(findings[0].file, 'public/og-x.png')
+      assert.equal(findings[0].detail, 'OG image og-x.png does not match tools/claims/og-cards.lock.json — regenerate it')
+    }
   })
 
   it('fails on a changed card with an old hash, with the contract message', () => {
-    const old = lockOf({ 'og-x.png': card })
+    const old = lockOf({ 'og-x.png': card }, pngs)
     const findings: Finding[] = staleOgImages({ 'og-x.png': { ...card, stat: '99.10% ± 0.07% AUROC · 3-seed mean' } }, old, where) as Finding[]
     assert.equal(findings.length, 1, formatFindings(findings))
     assert.equal(findings[0].rule, 'stale-og-image')
@@ -287,7 +304,7 @@ describe('figure check: OG image lock', () => {
   })
 
   it('fails on a card missing from the lock and on a lock entry with no card', () => {
-    const findings = staleOgImages({ 'og-new.png': card }, { 'og-gone.png': cardHash(card) }, where)
+    const findings = staleOgImages({ 'og-new.png': card }, { 'og-gone.png': { text: cardHash(card) } }, where)
     assert.deepEqual(
       findings.map((f) => [f.figure, f.file]),
       [
