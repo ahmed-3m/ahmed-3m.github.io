@@ -861,6 +861,15 @@ async function runInteractiveSmokeChecks(browser, origin, failures) {
           await page.locator('button.cd-nav-view-toggle').first().click()
           await page.locator('main.cd-full-portfolio #news').waitFor({ state: 'visible', timeout: 5_000 })
 
+          // Browser Back right after switching to Full must restore the initial Concise homepage.
+          await page.goBack({ waitUntil: 'load', timeout: 10_000 })
+          await waitForSettledLayout(page)
+          if ((await page.locator('main.cd-full-portfolio').count()) !== 0) {
+            failures.push(`${label}: browser goBack() after switching to Full did not restore concise homepage`)
+          }
+          await page.goForward({ waitUntil: 'load', timeout: 10_000 })
+          await page.locator('main.cd-full-portfolio #news').waitFor({ state: 'visible', timeout: 5_000 })
+
           const newsSection = page.locator('main.cd-full-portfolio #news')
           await newsSection.scrollIntoViewIfNeeded()
 
@@ -907,10 +916,22 @@ async function runInteractiveSmokeChecks(browser, origin, failures) {
             failures.push(`${label}: browser goBack() from /news/ reset homepage to concise view instead of keeping full view`)
           }
 
-          // In-page "Back to home" link on /news/ must also return to Full portfolio.
+          // In-page "Back to home" link on /news/ must also return to Full portfolio,
+          // and clicking a same-page /news/ link while filtered must reset active filters.
           await page.locator('main.cd-full-portfolio #news a[href="/news/"]').click()
           await page.waitForURL(`${origin}/news/`, { timeout: 10_000 })
           await waitForSettledLayout(page)
+          await firstTagChip.click()
+          await page.locator('.news-reset-btn').first().waitFor({ state: 'visible', timeout: 5_000 })
+          await page.locator('footer .cd-footer-link[href="/news/"]').click()
+          await page.waitForURL(`${origin}/news/`, { timeout: 10_000 })
+          await waitForSettledLayout(page)
+          if ((await firstTagChip.getAttribute('aria-pressed')) !== 'false') {
+            failures.push(`${label}: clicking /news/ footer link did not reset active tag filter`)
+          }
+          if ((await page.locator('.news-reset-btn').count()) !== 0) {
+            failures.push(`${label}: clicking /news/ footer link left .news-reset-btn visible`)
+          }
           await page.locator('main#main a[href^="/"]').first().click()
           await waitForSettledLayout(page)
           if ((await page.locator('main.cd-full-portfolio').count()) === 0) {

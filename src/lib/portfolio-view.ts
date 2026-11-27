@@ -27,6 +27,24 @@ function emit() {
   for (const listener of listeners) listener()
 }
 
+function buildCustomHistoryState(
+  source: Record<string, unknown> | null | undefined,
+  portfolioView: PortfolioView,
+): Record<string, unknown> {
+  // Omit Next.js's internal `__NA` / `_N` markers so Next.js's patched
+  // `pushState`/`replaceState` wrapper copies its latest internal tree AND
+  // updates the App Router's `canonicalUrl`.
+  const next: Record<string, unknown> = {}
+  if (source) {
+    for (const [key, value] of Object.entries(source)) {
+      if (key === '__NA' || key === '_N' || key === '__PRIVATE_NEXTJS_INTERNALS_TREE') continue
+      next[key] = value
+    }
+  }
+  next.portfolioView = portfolioView
+  return next
+}
+
 function readStoredView(storage?: Pick<Storage, 'getItem'> | null): PortfolioView | null {
   try {
     const target = storage ?? (typeof window !== 'undefined' ? window.sessionStorage : null)
@@ -71,20 +89,24 @@ function syncFromLocation() {
     fallbackView: currentView,
   })
 
-  if (explicit === 'full' || explicit === 'concise') {
+  const onHome = isHomePathname(pathname)
+  if (onHome || explicit === 'full' || explicit === 'concise') {
     writeStoredView(next)
   }
 
-  if (isHomePathname(pathname) && explicit === null && next === 'full') {
+  if (onHome) {
     const url = new URL(window.location.href)
-    url.searchParams.set('view', 'full')
-    const nextState = { ...(historyState ?? {}), portfolioView: 'full' }
-    window.history.replaceState(nextState, '', `${url.pathname}${url.search}${url.hash}`)
-  } else if (isHomePathname(pathname) && explicit === 'concise') {
-    const url = new URL(window.location.href)
-    url.searchParams.delete('view')
-    const nextState = { ...(historyState ?? {}), portfolioView: 'concise' }
-    window.history.replaceState(nextState, '', `${url.pathname}${url.search}${url.hash}`)
+    if (explicit === null && next === 'full') {
+      url.searchParams.set('view', 'full')
+    } else if (explicit === 'concise') {
+      url.searchParams.delete('view')
+    }
+    const nextHref = `${url.pathname}${url.search}${url.hash}`
+    const currentHref = `${window.location.pathname}${window.location.search}${window.location.hash}`
+    if (nextHref !== currentHref || historyState?.portfolioView !== next) {
+      const nextState = buildCustomHistoryState(historyState, next)
+      window.history.replaceState(nextState, '', nextHref)
+    }
   }
 
   if (currentView !== next) {
@@ -95,6 +117,7 @@ function syncFromLocation() {
 
 /** `hash` (without `#`), when given, replaces the URL fragment in the same history step. */
 export function setPortfolioView(next: PortfolioView, updateUrl = true, hash?: string) {
+  const previousView = currentView
   writeStoredView(next)
   if (currentView !== next) {
     currentView = next
@@ -103,6 +126,7 @@ export function setPortfolioView(next: PortfolioView, updateUrl = true, hash?: s
   if (updateUrl && typeof window !== 'undefined') {
     const url = new URL(window.location.href)
     const prevSearch = url.search
+    const prevHash = url.hash
     if (hash !== undefined) url.hash = hash
     if (next === 'full') {
       url.searchParams.set('view', 'full')
@@ -112,9 +136,16 @@ export function setPortfolioView(next: PortfolioView, updateUrl = true, hash?: s
     const baseState =
       window.history.state && typeof window.history.state === 'object'
         ? (window.history.state as Record<string, unknown>)
-        : {}
-    const nextState = { ...baseState, portfolioView: next }
+        : null
+    const nextState = buildCustomHistoryState(baseState, next)
     if (url.search !== prevSearch) {
+      if (isHomePathname(url.pathname) && baseState?.portfolioView !== previousView) {
+        window.history.replaceState(
+          buildCustomHistoryState(baseState, previousView),
+          '',
+          `${url.pathname}${prevSearch}${prevHash}`,
+        )
+      }
       window.history.pushState(nextState, '', `${url.pathname}${url.search}${url.hash}`)
     } else {
       window.history.replaceState(nextState, '', `${url.pathname}${url.search}${url.hash}`)

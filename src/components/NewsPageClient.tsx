@@ -1,15 +1,22 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import { ArrowLeft, ArrowUpRight, Calendar, Search, X } from 'lucide-react'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { languageLocale } from '@/lib/i18n-config'
-import { getAllNews, newsCategoryLabels, type NewsCategory } from '@/lib/news-items'
+import {
+  canonicalizeNewsFilterSearch,
+  parseNewsFilterSearch,
+  serializeNewsFilterSearch,
+  type NewsFilterCategory,
+} from '@/lib/news-filter-url'
+import { getAllNews, newsCategoryLabels } from '@/lib/news-items'
 import { useHomeHref } from '@/lib/portfolio-view'
 import { serializeJsonLd } from '@/lib/serialize-json-ld'
 
-type Filter = 'all' | NewsCategory
+type Filter = NewsFilterCategory
 
 const PAGE_SIZE = 24
 const COLLAPSED_TAG_COUNT = 14
@@ -126,6 +133,18 @@ const copy = {
   },
 } satisfies Record<string, TranslationMap>
 
+function NewsSearchParamsObserver({ onSearchChange }: { onSearchChange: (search: string) => void }) {
+  const searchParams = useSearchParams()
+  const serialized = searchParams.toString()
+
+  useEffect(() => {
+    const nextSearch = serialized ? `?${serialized}` : ''
+    queueMicrotask(() => onSearchChange(nextSearch))
+  }, [serialized, onSearchChange])
+
+  return null
+}
+
 export default function NewsPageClient() {
   const { lang, t } = useI18n()
   const homeHref = useHomeHref()
@@ -136,63 +155,57 @@ export default function NewsPageClient() {
   const [showAllTags, setShowAllTags] = useState(false)
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
   const [hydratedUrl, setHydratedUrl] = useState(false)
+  const hydratedRef = useRef(false)
+  const lastWrittenSearchRef = useRef<string | null>(null)
   const locale = languageLocale[lang]
 
   const all = useMemo(() => getAllNews(lang), [lang])
 
-  // Hydrate initial filter state from URL query params without adding history entries.
+  const syncFiltersFromSearch = useCallback((rawSearch: string) => {
+    const incomingCanonical = canonicalizeNewsFilterSearch(rawSearch)
+    if (hydratedRef.current && lastWrittenSearchRef.current === incomingCanonical) {
+      lastWrittenSearchRef.current = null
+      return
+    }
+    lastWrittenSearchRef.current = null
+    const parsed = parseNewsFilterSearch(rawSearch)
+    setFilter(parsed.filter)
+    setSelectedTags(parsed.selectedTags)
+    setSelectedSource(parsed.selectedSource)
+    setSearchQuery(parsed.searchQuery)
+    setVisibleCount(PAGE_SIZE)
+    hydratedRef.current = true
+    setHydratedUrl(true)
+  }, [])
+
+  // Sync filter state on browser Back/Forward in addition to client-side Link query navigations.
   useEffect(() => {
     if (typeof window === 'undefined') return
-    const applyFromSearch = () => {
-      const params = new URLSearchParams(window.location.search)
-      const cat = params.get('category')
-      if (cat === 'ai' || cat === 'agentic') {
-        setFilter(cat)
-      }
-      const tagsParam = params.get('tag')
-      if (tagsParam) {
-        const parsed = tagsParam
-          .split(',')
-          .map((s) => s.trim().toLowerCase())
-          .filter((s) => /^[a-z0-9-]+$/.test(s))
-        if (parsed.length > 0) setSelectedTags(Array.from(new Set(parsed)))
-      }
-      const src = params.get('source')
-      if (src && src.trim()) {
-        setSelectedSource(src.trim())
-      }
-      const q = params.get('q')
-      if (q && q.trim()) {
-        setSearchQuery(q.trim())
-      }
-      setHydratedUrl(true)
+    const handlePopState = () => {
+      syncFiltersFromSearch(window.location.search)
     }
-    queueMicrotask(applyFromSearch)
-    window.addEventListener('popstate', applyFromSearch)
-    return () => window.removeEventListener('popstate', applyFromSearch)
-  }, [])
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [syncFiltersFromSearch])
 
   // Keep URL query params in sync via replaceState so Back always returns home in one click.
   useEffect(() => {
     if (!hydratedUrl || typeof window === 'undefined') return
-    const url = new URL(window.location.href)
-    if (filter !== 'all') url.searchParams.set('category', filter)
-    else url.searchParams.delete('category')
-
-    if (selectedTags.length > 0) url.searchParams.set('tag', selectedTags.join(','))
-    else url.searchParams.delete('tag')
-
-    if (selectedSource !== 'all') url.searchParams.set('source', selectedSource)
-    else url.searchParams.delete('source')
-
-    const trimmedQuery = searchQuery.trim()
-    if (trimmedQuery) url.searchParams.set('q', trimmedQuery)
-    else url.searchParams.delete('q')
-
-    const nextHref = `${url.pathname}${url.search}${url.hash}`
+    const nextSearch = serializeNewsFilterSearch({
+      filter,
+      selectedTags,
+      selectedSource,
+      searchQuery,
+    })
+    const nextHref = `${window.location.pathname}${nextSearch}${window.location.hash}`
     const currentHref = `${window.location.pathname}${window.location.search}${window.location.hash}`
     if (nextHref !== currentHref) {
-      window.history.replaceState(window.history.state, '', nextHref)
+      lastWrittenSearchRef.current = nextSearch
+      // Pass `null` rather than `window.history.state` (which carries Next.js's
+      // internal `__NA: true` marker): Next.js's `replaceState` wrapper copies its
+      // internal tree automatically and updates `useSearchParams()` only when
+      // `__NA` is absent on the caller's state argument.
+      window.history.replaceState(null, '', nextHref)
     }
   }, [hydratedUrl, filter, selectedTags, selectedSource, searchQuery])
 
@@ -326,6 +339,9 @@ export default function NewsPageClient() {
 
   return (
     <main id="main" tabIndex={-1} className="min-h-screen pb-20 pt-24">
+      <Suspense fallback={null}>
+        <NewsSearchParamsObserver onSearchChange={syncFiltersFromSearch} />
+      </Suspense>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}

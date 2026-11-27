@@ -75,4 +75,29 @@ describe('portfolio-view navigation persistence', () => {
     assert.equal(buildHomeHref('full', '#projects'), '/?view=full#projects')
     assert.equal(buildHomeHref('full', 'news'), '/?view=full#news')
   })
+
+  it('restores concise on browser Back from /?view=full when initial / entry recorded concise', () => {
+    // 1. Fresh visit on `/` resolves concise and stamps historyView: 'concise'
+    const initial = resolvePortfolioView({ pathname: '/', search: '', storedView: null })
+    assert.equal(initial, 'concise')
+
+    // 2. Switching to Full pushes `/?view=full` and stores `'full'` in sessionStorage
+    const full = resolvePortfolioView({
+      pathname: '/',
+      search: '?view=full',
+      historyView: 'full',
+      storedView: 'full',
+    })
+    assert.equal(full, 'full')
+
+    // 3. Browser Back pops to `/` with stamped historyView: 'concise' while sessionStorage still had `'full'`
+    const afterBack = resolvePortfolioView({
+      pathname: '/',
+      search: '',
+      historyView: initial,
+      storedView: 'full',
+      fallbackView: full,
+    })
+    assert.equal(afterBack, 'concise')
+  })
 })
