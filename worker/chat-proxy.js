@@ -14,7 +14,7 @@ export const DEFAULT_MODEL = 'glm-5.3'
 export const MAX_BODY_BYTES = 64_000
 export const MAX_MESSAGES = 24
 export const MAX_CONTENT_CHARS = 16_000
-export const MAX_TOKENS_CAP = 1_200
+export const MAX_TOKENS_CAP = 2_000
 
 export const PROD_ORIGIN = 'https://ahmed-3m.github.io'
 export const LOCALHOST_ORIGIN = 'http://localhost:3000'

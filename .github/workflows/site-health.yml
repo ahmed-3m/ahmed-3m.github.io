@@ -167,3 +167,30 @@ jobs:
             echo "::error::Chat widget mount missing from homepage HTML (neither 'ahmed-chatbot-panel' nor 'Ask Genie' found). The ChatBot component may have stopped rendering, or the deployed bundle is stale."
             exit 1
           fi
+
+      - name: Chat proxy Worker CORS preflight returns 204
+        env:
+          CHAT_PROXY_URL: ${{ vars.NEXT_PUBLIC_CHAT_PROXY_URL }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "$CHAT_PROXY_URL" ]; then
+            echo "NEXT_PUBLIC_CHAT_PROXY_URL is unset — Genie runs in curated-only mode; skipping proxy canary."
+            exit 0
+          fi
+          headers_file="$RUNNER_TEMP/proxy-cors.headers"
+          code=$(curl -s -D "$headers_file" -o /dev/null -w '%{http_code}' -X OPTIONS \
+            -H 'Origin: https://ahmed-3m.github.io' \
+            -H 'Access-Control-Request-Method: POST' \
+            -H 'Access-Control-Request-Headers: Content-Type' \
+            --max-time 20 "$CHAT_PROXY_URL") || code="000"
+          if [ "$code" != "204" ]; then
+            echo "::error::Chat proxy OPTIONS preflight to $CHAT_PROXY_URL returned HTTP $code (expected 204)"
+            exit 1
+          fi
+          if ! tr -d '\r' < "$headers_file" | grep -qi '^access-control-allow-origin: *https://ahmed-3m\.github\.io$'; then
+            echo "::error::Chat proxy OPTIONS response missing Access-Control-Allow-Origin: https://ahmed-3m.github.io"
+            cat "$headers_file"
+            exit 1
+          fi
+          echo "OK   $CHAT_PROXY_URL OPTIONS preflight -> 204 (ACAO verified)"

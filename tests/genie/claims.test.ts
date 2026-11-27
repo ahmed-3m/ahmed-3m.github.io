@@ -251,4 +251,42 @@ describe('what the model is given', () => {
       assert.deepEqual(unlisted(prompt), [])
     })
   }
+
+  const word = (pattern: string) => new RegExp(`(?:^|[^\\p{L}])(?:${pattern})(?!\\p{L})`, 'iu')
+  const RWR_ELIGIBLE: Record<Language, RegExp> = {
+    en: word('eligible'),
+    de: word('berechtigt'),
+    fr: word('éligible'),
+    es: word('elegible'),
+    ar: /مؤهل/,
+  }
+  const RWR_POSSESSION_OVERCLAIM: Record<Language, RegExp> = {
+    en: word('already (?:holds|has)|holder of'),
+    de: word('besitzt|hat bereits|bereits im Besitz|Inhaber'),
+    fr: word('détient|possède déjà|titulaire'),
+    es: word('ya tiene|posee|titular'),
+    ar: /(?:يحمل بالفعل|يمتلك بالفعل|حاصل على بطاقة)/,
+  }
+  const RWR_QUESTIONS: Record<Language, string> = {
+    en: 'Does Ahmed have a work permit in Austria?',
+    de: 'Darf Ahmed in Österreich arbeiten? Hat er die Rot-Weiß-Rot-Karte?',
+    fr: 'Ahmed a-t-il un permis de travail en Autriche ?',
+    es: '¿Tiene Ahmed permiso de trabajo en Austria?',
+    ar: 'هل لدى أحمد تصريح عمل في النمسا؟',
+  }
+
+  for (const lang of LOCALES) {
+    it(`frames RWR strictly as eligibility, never possession, in prepared replies and system prompt (${lang})`, () => {
+      for (const id of ['open_to_work', 'role_fit'] as const) {
+        const text = LOCAL_REPLIES[id][lang]
+        assert.match(text, RWR_ELIGIBLE[lang])
+        assert.doesNotMatch(text, RWR_POSSESSION_OVERCLAIM[lang])
+      }
+      const prompt = buildSystemPrompt({ lang, query: RWR_QUESTIONS[lang] })
+      assert.ok(prompt.includes('[Austrian Work Authorization & Role Fit]'))
+      assert.ok(prompt.includes('never claim he already holds or has been issued the card'))
+      assert.ok(prompt.includes('rather than an already-issued card'))
+      assert.deepEqual(unlisted(prompt), [])
+    })
+  }
 })
