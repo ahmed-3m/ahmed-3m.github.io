@@ -694,7 +694,7 @@ export function pickFollowUpIds(
 export type ChatLane = 'fast' | 'deep'
 
 const DEEP_PATTERN =
-  /(?:^|[^\p{L}])(?:explain|compare|why|how (?:does|do|did|would)|walk me|deep dive|detailed|difference between|evaluate|critique|warum|wie funktionier\p{L}*|erkl[äa]r\p{L}*|vergleich\p{L}*|pourquoi|comment (?:\p{L}+ )?(?:fonctionn|march)\p{L}*|expliqu\p{L}*|compar\p{L}*|explic\p{L}*|por qu[ée]|c[oó]mo funciona|كيف|لماذا|اشرح|قارن)(?!\p{L})/iu
+  /(?:^|[^\p{L}])(?:explain|compare|why|how (?:does|do|did|would)|walk me|deep dive|detailed|difference between|evaluate|critique|trade-?offs?|architecture|design decisions?|pros and cons|under the hood|summariz\p{L}*|break down|warum|wie funktionier\p{L}*|erkl[äa]r\p{L}*|vergleich\p{L}*|architektur|kompromiss\p{L}*|vor- und nachteile|zusammenfass\p{L}*|pourquoi|comment (?:\p{L}+ )?(?:fonctionn|march)\p{L}*|expliqu\p{L}*|compar\p{L}*|compromis|avantages et inconv[ée]nients|r[ée]sum\p{L}*|explic\p{L}*|por qu[ée]|c[oó]mo funciona|arquitectura|ventajas y desventajas|resum\p{L}*|كيف|لماذا|اشرح|قارن|معمارية|مقايضات|مزايا وعيوب|لخّ?ص|ملخص)(?!\p{L})/iu
 
 export function routeLocally(message: string): ChatLane {
   return DEEP_PATTERN.test(message) ? 'deep' : 'fast'

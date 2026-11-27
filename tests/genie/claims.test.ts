@@ -289,4 +289,10 @@ describe('what the model is given', () => {
       assert.deepEqual(unlisted(prompt), [])
     })
   }
+
+  it('normalizes uppercase German ẞ (ROT-WEIẞ-ROT KARTE) when retrieving RWR guidance', () => {
+    const prompt = buildSystemPrompt({ lang: 'de', query: 'Hat Ahmed die ROT-WEIẞ-ROT KARTE?' })
+    assert.ok(prompt.includes('[Austrian Work Authorization & Role Fit]'))
+    assert.ok(prompt.includes('never claim he already holds or has been issued the card'))
+  })
 })

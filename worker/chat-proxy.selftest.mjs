@@ -2,7 +2,7 @@
  * Fetch-level self-test for the chat proxy Worker.
  * Calls `export default.fetch`.
  */
-import handler, { MAX_BODY_BYTES, MAX_TOKENS_CAP } from './chat-proxy.js'
+import handler, { DEFAULT_MODEL, MAX_BODY_BYTES, MAX_TOKENS_CAP } from './chat-proxy.js'
 
 const SITE = 'https://ahmed-3m.github.io'
 const LOCALHOST = 'http://localhost:3000'
@@ -301,7 +301,23 @@ for (const model of ['glm-5.4', 'glm-5.3-flash']) {
   })
 }
 
-// 9c. Clamps max_tokens to MAX_TOKENS_CAP (2,000)
+// 9c. Omitting model defaults to DEFAULT_MODEL (glm-5.3-flash) on Z.ai upstream
+await test(`Omitting model defaults to DEFAULT_MODEL (${DEFAULT_MODEL}) on Z.ai upstream`, async () => {
+  let payload
+  let targetUrl
+  const upstream = async (url, init) => {
+    targetUrl = url
+    payload = JSON.parse(init.body)
+    return new Response('{}', { status: 200 })
+  }
+  const res = await call(validBody, { origin: SITE, upstream })
+  assert(res.status === 200, `status ${res.status}`)
+  assert(targetUrl.includes('api.z.ai'), `targetUrl should be Z.ai, got ${targetUrl}`)
+  assert(DEFAULT_MODEL === 'glm-5.3-flash', `expected DEFAULT_MODEL glm-5.3-flash, got ${DEFAULT_MODEL}`)
+  assert(payload?.model === DEFAULT_MODEL, `expected model ${DEFAULT_MODEL}, got ${payload?.model}`)
+})
+
+// 9d. Clamps max_tokens to MAX_TOKENS_CAP (2,000)
 await test(`Clamps requested max_tokens above MAX_TOKENS_CAP (${MAX_TOKENS_CAP})`, async () => {
   let payload
   const upstream = async (_url, init) => {

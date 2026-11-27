@@ -10,7 +10,7 @@ const ZAI_CHAT_URL = 'https://api.z.ai/api/coding/paas/v4/chat/completions'
 const GROQ_CHAT_URL = 'https://api.groq.com/openai/v1/chat/completions'
 const RATE_LIMIT_PER_HOUR = 60
 
-export const DEFAULT_MODEL = 'glm-5.3'
+export const DEFAULT_MODEL = 'glm-5.3-flash'
 export const MAX_BODY_BYTES = 64_000
 export const MAX_MESSAGES = 24
 export const MAX_CONTENT_CHARS = 16_000

@@ -45,7 +45,7 @@ export function normalizeForSearch(input: string): string {
     .normalize('NFKD')
     .replace(COMBINING_MARKS_RE, '')
     .replace(ARABIC_DIACRITICS_RE, '')
-    .replace(/ß/gu, 'ss')
+    .replace(/[ßẞ]/gu, 'ss')
     .replace(/[أإآ]/gu, 'ا')
     .replace(/ى/gu, 'ي')
     .replace(/ة/gu, 'ه')
