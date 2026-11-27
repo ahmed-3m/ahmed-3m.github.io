@@ -112,6 +112,43 @@ export const CHAT_COPY = {
     es: 'Las respuestas en directo no están disponibles ahora, así que esta es la respuesta preparada más cercana. Puede que no se ajuste exactamente a tu pregunta.',
     ar: 'الإجابات المباشرة غير متاحة الآن، لذا هذه أقرب إجابة جاهزة، وقد لا تطابق سؤالك تمامًا.',
   },
+  // Hand-off row under contact, CV and hiring answers. Nouns only, so German needs
+  // neither Sie nor du.
+  handoff: {
+    en: 'Get in touch',
+    de: 'Kontakt',
+    fr: 'Prendre contact',
+    es: 'Contacto',
+    ar: 'تواصل',
+  },
+  handoffCv: {
+    en: 'CV',
+    de: 'Lebenslauf',
+    fr: 'CV',
+    es: 'CV',
+    ar: 'السيرة الذاتية',
+  },
+  handoffCall: {
+    en: 'Book a call',
+    de: 'Termin buchen',
+    fr: 'Réserver un appel',
+    es: 'Reservar una llamada',
+    ar: 'احجز مكالمة',
+  },
+  handoffVoice: {
+    en: 'Voice demo',
+    de: 'Sprach-Demo',
+    fr: 'Démo vocale',
+    es: 'Demo de voz',
+    ar: 'العرض الصوتي',
+  },
+  handoffEmail: {
+    en: 'Email',
+    de: 'E-Mail',
+    fr: 'E-mail',
+    es: 'Correo',
+    ar: 'البريد الإلكتروني',
+  },
   retryReply: {
     en: 'Try again',
     de: 'Erneut versuchen',

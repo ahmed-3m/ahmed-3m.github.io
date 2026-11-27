@@ -78,10 +78,13 @@ export default function FrontDeskButton({
   className,
   variant = 'ghost',
   compact = false,
+  label,
 }: {
   className?: string
   variant?: 'ghost' | 'link'
   compact?: boolean
+  /** Button text instead of the default "Talk to my AI front desk". */
+  label?: TranslationMap
 }) {
   const { t } = useI18n()
   const { theme } = useTheme()
@@ -102,7 +105,7 @@ export default function FrontDeskButton({
         aria-haspopup="dialog"
         onClick={() => dialog.current?.showModal()}
       >
-        {t(copy.label)}
+        {t(label ?? copy.label)}
         {variant === 'link' && !compact && (
           <>
             {' '}

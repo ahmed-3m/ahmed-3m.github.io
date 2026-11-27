@@ -93,7 +93,8 @@ function syncFromLocation() {
   }
 }
 
-export function setPortfolioView(next: PortfolioView, updateUrl = true) {
+/** `hash` (without `#`), when given, replaces the URL fragment in the same history step. */
+export function setPortfolioView(next: PortfolioView, updateUrl = true, hash?: string) {
   writeStoredView(next)
   if (currentView !== next) {
     currentView = next
@@ -102,6 +103,7 @@ export function setPortfolioView(next: PortfolioView, updateUrl = true) {
   if (updateUrl && typeof window !== 'undefined') {
     const url = new URL(window.location.href)
     const prevSearch = url.search
+    if (hash !== undefined) url.hash = hash
     if (next === 'full') {
       url.searchParams.set('view', 'full')
     } else {

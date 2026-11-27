@@ -602,6 +602,15 @@ export function getLocalReply(question: string, lang: Language): string | null {
   return topic ? translateValue(lang, LOCAL_REPLIES[topic]) : null
 }
 
+/** Answers after which the chat offers direct ways to reach Ahmed (CV, call, voice demo, email). */
+const HANDOFF_TOPICS: ReadonlySet<ReplyId> = new Set<ReplyId>(['contact', 'cv', 'open_to_work', 'role_fit', 'frontdesk'])
+
+/** Whether the answer to `question` gets the hand-off row under it. */
+export function showsHandoff(question: string): boolean {
+  const topic = findCuratedTopic(question) ?? inferReplyId(question)
+  return topic !== undefined && HANDOFF_TOPICS.has(topic)
+}
+
 export const FOLLOWUP_PROMPTS: Partial<Record<ReplyId, PromptId[]>> = {
   projects: ['industrial_result', 'thesis_results', 'mergeproof_overview'],
   inspection: ['industrial_result', 'thesis_summary', 'projects_best'],

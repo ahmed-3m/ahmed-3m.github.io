@@ -10,6 +10,7 @@ import {
   STARTER_PROMPT_IDS,
   getStarterPrompts,
   routeLocally,
+  showsHandoff,
 } from '@/lib/genie/prompts'
 import { languageOptions } from '@/lib/i18n-config'
 
@@ -107,4 +108,26 @@ describe('routeLocally', () => {
       assert.equal(routeLocally(query), lane)
     })
   }
+})
+
+describe('showsHandoff', () => {
+  it('offers the hand-off row after contact, CV and hiring questions', () => {
+    for (const question of [
+      String(PROMPT_LIBRARY.contact.en),
+      String(PROMPT_LIBRARY.cv.de),
+      String(PROMPT_LIBRARY.open_to_work.fr),
+      String(PROMPT_LIBRARY.hire_fit.ar),
+      String(PROMPT_LIBRARY.frontdesk_demo.es),
+      'How can I reach him?',
+      'Where can I download his resume?',
+    ]) {
+      assert.equal(showsHandoff(question), true, question)
+    }
+  })
+
+  it('does not offer it after research or project questions', () => {
+    for (const question of [String(PROMPT_LIBRARY.thesis_summary.en), String(PROMPT_LIBRARY.projects_best.en), 'What is CIFAR-10?', '']) {
+      assert.equal(showsHandoff(question), false, question)
+    }
+  })
 })
