@@ -28,6 +28,9 @@ const bareClaim = (id: ClaimId, lang: Language) => {
   return p.spread ? `${p.number}${p.unit} ± ${p.spread}${p.unit}` : `${p.number}${p.unit}`
 }
 
+/** The lambda = 0 seed-42 run's AUROC, from the data file (not a registered claim). */
+const baselineSeed42 = (lang: Language) => formatLocaleNumber(`${LAMBDA0_SEED42_META.auroc.toFixed(2)}%`, lang)
+
 /** Uniform timestep sampling's AUROC (thesis timestep-strategy table), as the table gives it. */
 const uniformAuroc = (key: 'cifarAuroc' | 'svhnAuroc', lang: Language) =>
   formatLocaleNumber(`${(TIMESTEP_STRATEGIES.find((s) => s.key === 'uniform')?.[key] ?? NaN).toFixed(2)}%`, lang)
@@ -248,11 +251,11 @@ const copy = {
     ar: `λ = 0.02 · مع خسارة الفصل (${formatClaim('thesis.mean', 'ar')} لـ 3 بذور · ${formatClaim('thesis.seed42', 'ar', 'value')} لبذرة 42)`,
   },
   regimeBase: {
-    en: 'λ = 0.00 · Baseline No Sep. Loss (92.52% ± 11.07% 3-seed · 79.73% seed-42)',
-    de: 'λ = 0.00 · Baseline ohne Sep. Loss (92,52% ± 11,07% 3-Seeds · 79,73% Seed-42)',
-    fr: 'λ = 0.00 · Baseline sans Sep. Loss (92,52% ± 11,07% 3 graines · 79,73% seed-42)',
-    es: 'λ = 0.00 · Baseline sin Sep. Loss (92.52% ± 11.07% 3 semillas · 79.73% seed-42)',
-    ar: 'λ = 0.00 · خط الأساس بدون فصل (92.52% ± 11.07% لـ 3 بذور · 79.73% لبذرة 42)',
+    en: `λ = 0.00 · Baseline No Sep. Loss (${formatClaim('thesis.baseline', 'en')} 3-seed · ${baselineSeed42('en')} seed-42)`,
+    de: `λ = 0.00 · Baseline ohne Sep. Loss (${formatClaim('thesis.baseline', 'de')} 3-Seeds · ${baselineSeed42('de')} Seed-42)`,
+    fr: `λ = 0.00 · Baseline sans Sep. Loss (${formatClaim('thesis.baseline', 'fr')} 3 graines · ${baselineSeed42('fr')} seed-42)`,
+    es: `λ = 0.00 · Baseline sin Sep. Loss (${formatClaim('thesis.baseline', 'es')} 3 semillas · ${baselineSeed42('es')} seed-42)`,
+    ar: `λ = 0.00 · خط الأساس بدون فصل (${formatClaim('thesis.baseline', 'ar')} لـ 3 بذور · \u2066${baselineSeed42('ar')}\u2069 لبذرة 42)`,
   },
   datasetHeading: {
     en: 'Evaluation Benchmark (Table 6.1 · Seed 42 Raw Score Tensors, K = 100)',

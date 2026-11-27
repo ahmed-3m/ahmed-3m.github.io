@@ -7,6 +7,15 @@ const bare = (id: ClaimId, lang: Language) => {
   return p.spread ? `${p.number}${p.unit} ± ${p.spread}${p.unit}` : `${p.number}${p.unit}`
 }
 
+/** A registered figure in every language, without isolates: it renders inside a `<bdi>`. */
+const bareMap = (id: ClaimId): TranslationMap => ({
+  en: bare(id, 'en'),
+  de: bare(id, 'de'),
+  fr: bare(id, 'fr'),
+  es: bare(id, 'es'),
+  ar: bare(id, 'ar'),
+})
+
 export const diffusionExplorerHref = '/case-studies/diffusion-ood/#ood-explorer'
 
 export const portfolioCopy = {
@@ -69,11 +78,11 @@ export const portfolioCopy = {
     ar: 'مخطط يوضح كيف تدفع خسارة الفصل الشرطية تفسيرات الضوضاء للفئتين «طبيعي» و«أخرى» إلى الابتعاد عن بعضهما',
   },
   histogramChartLabel: {
-    en: 'Histogram of CIFAR-10 seed-42 diffusion anomaly scores: in-distribution airplane images cluster at low scores and out-of-distribution images at higher scores, with AUROC 98.98% and FPR at 95% TPR of 4.7%.',
-    de: 'Histogramm der Diffusions-Anomaliescores auf CIFAR-10 (Seed 42): In-Distribution-Flugzeugbilder liegen bei niedrigen Scores und Out-of-Distribution-Bilder bei höheren Scores, mit einer AUROC von 98.98% und einer FPR bei 95% TPR von 4.7%.',
-    fr: 'Histogramme des scores d’anomalie par diffusion sur CIFAR-10 (seed 42) : les images d’avions in-distribution se regroupent aux scores bas et les images hors distribution aux scores plus élevés, avec une AUROC de 98.98% et un FPR à 95% de TPR de 4.7%.',
-    es: 'Histograma de puntuaciones de anomalía por difusión en CIFAR-10 (seed 42): las imágenes de aviones en distribución se agrupan en puntuaciones bajas y las fuera de distribución en puntuaciones más altas, con AUROC de 98.98% y FPR al 95% de TPR de 4.7%.',
-    ar: 'مدرج تكراري لدرجات الشذوذ بالانتشار على \u2066CIFAR-10 (seed 42)\u2069: تتجمع صور الطائرات داخل التوزيع عند الدرجات المنخفضة والصور خارج التوزيع عند الدرجات الأعلى، مع \u2066AUROC\u2069 يبلغ \u206698.98%\u2069 ومعدل \u2066FPR\u2069 عند \u206695% TPR\u2069 يبلغ \u20664.7%\u2069.',
+    en: `Histogram of CIFAR-10 seed-42 diffusion anomaly scores: in-distribution airplane images cluster at low scores and out-of-distribution images at higher scores, with AUROC ${formatClaim('thesis.seed42', 'en', 'value')} and FPR at 95% TPR of ${formatClaim('thesis.seed42Fpr95', 'en', 'value')}.`,
+    de: `Histogramm der Diffusions-Anomaliescores auf CIFAR-10 (Seed 42): In-Distribution-Flugzeugbilder liegen bei niedrigen Scores und Out-of-Distribution-Bilder bei höheren Scores, mit einer AUROC von ${formatClaim('thesis.seed42', 'de', 'value')} und einer FPR bei 95 % TPR von ${formatClaim('thesis.seed42Fpr95', 'de', 'value')}.`,
+    fr: `Histogramme des scores d’anomalie par diffusion sur CIFAR-10 (seed 42) : les images d’avions in-distribution se regroupent aux scores bas et les images hors distribution aux scores plus élevés, avec une AUROC de ${formatClaim('thesis.seed42', 'fr', 'value')} et un FPR à 95 % de TPR de ${formatClaim('thesis.seed42Fpr95', 'fr', 'value')}.`,
+    es: `Histograma de puntuaciones de anomalía por difusión en CIFAR-10 (seed 42): las imágenes de aviones en distribución se agrupan en puntuaciones bajas y las fuera de distribución en puntuaciones más altas, con AUROC de ${formatClaim('thesis.seed42', 'es', 'value')} y FPR al 95% de TPR de ${formatClaim('thesis.seed42Fpr95', 'es', 'value')}.`,
+    ar: `مدرج تكراري لدرجات الشذوذ بالانتشار على \u2066CIFAR-10 (seed 42)\u2069: تتجمع صور الطائرات داخل التوزيع عند الدرجات المنخفضة والصور خارج التوزيع عند الدرجات الأعلى، مع \u2066AUROC\u2069 يبلغ ${formatClaim('thesis.seed42', 'ar', 'value')} ومعدل \u2066FPR\u2069 عند \u206695% TPR\u2069 يبلغ ${formatClaim('thesis.seed42Fpr95', 'ar', 'value')}.`,
   },
   histogramId: { en: 'ID · airplane', de: 'ID · Flugzeug', fr: 'ID · avion', es: 'ID · avión', ar: 'ID · طائرة' },
   histogramOod: { en: 'OOD · 9 other classes', de: 'OOD · 9 andere Klassen', fr: 'OOD · 9 autres classes', es: 'OOD · otras 9 clases', ar: 'OOD · 9 فئات أخرى' },
@@ -243,7 +252,7 @@ export const selectedWork = [
       ar: 'خلال عقد بحثي مع PROFACTOR عام 2024، طوّرت نظام رؤية يحدّد مواقع العناصر المطبوعة ويشير إلى الأنماط غير المألوفة. واصلت هذا العمل في رسالة الماجستير بجامعة يوهانس كيبلر في لينتس.',
     },
     link: { en: 'See the industrial evaluation', de: 'Industrielle Evaluation ansehen', fr: 'Voir l’évaluation industrielle', es: 'Ver la evaluación industrial', ar: 'اطّلع على التقييم الصناعي' },
-    metricValue: formatClaim('inkjet.baseline', 'en'),
+    metricValue: bareMap('inkjet.baseline'),
     metricLabel: {
       en: 'AUROC · FTI_Zer0P 5-fold CV baseline',
       de: 'AUROC · FTI_Zer0P 5-fach-CV-Baseline',
@@ -266,7 +275,7 @@ export const selectedWork = [
       ar: 'قد يجيب النموذج بثقة حتى عندما يرى نوعًا جديدًا من الصور. في جامعة يوهانس كيبلر في لينتس اختبرت ما إذا كانت طريقة إعادة بناء الصورة تكشف أنها خارج نطاق ما يعرفه النموذج.',
     },
     link: { en: 'Read the thesis case study', de: 'Fallstudie zur Masterarbeit lesen', fr: 'Lire l’étude de cas du mémoire', es: 'Leer el estudio de caso de la tesis', ar: 'اقرأ دراسة حالة الرسالة' },
-    metricValue: formatClaim('thesis.mean', 'en'),
+    metricValue: bareMap('thesis.mean'),
     metricLabel: {
       en: `AUROC · CIFAR-10 airplane-vs-rest (3 seeds, ${formatClaim('thesis.gainPp', 'en')})`,
       de: `AUROC · CIFAR-10 Flugzeug-vs-Rest (3-Seed-Mittel, ${formatClaim('thesis.gainPp', 'de')})`,
@@ -307,7 +316,7 @@ export const selectedWork = [
   title: TranslationMap
   summary: TranslationMap
   link: TranslationMap
-  metricValue: string
+  metricValue: TranslationMap | string
   metricLabel: TranslationMap
   tags: ReadonlyArray<string | TranslationMap>
 }>
@@ -316,7 +325,7 @@ export interface FocusPillar {
   id: 'diffusion-ood' | 'inkjet-ood' | 'sihem'
   tabLabel: TranslationMap
   title: TranslationMap
-  metricValue: string
+  metricValue: TranslationMap | string
   metricSub: TranslationMap
   ctaLabel: TranslationMap
   href: string
@@ -333,7 +342,7 @@ export const focusPillars: readonly FocusPillar[] = [
       es: 'Detección OOD por difusión condicional',
       ar: 'كشف OOD بنماذج الانتشار الشرطية',
     },
-    metricValue: formatClaim('thesis.mean', 'en'),
+    metricValue: bareMap('thesis.mean'),
     metricSub: {
       en: `AUROC · CIFAR-10 airplane-vs-rest · 3-seed mean (${formatClaim('thesis.gainPp', 'en')} vs ${formatClaim('thesis.baseline', 'en')}) · plot: seed 42 (${formatClaim('thesis.seed42', 'en', 'value')}, FPR@95 ${formatClaim('thesis.seed42Fpr95', 'en', 'value')})`,
       de: `AUROC · CIFAR-10 Flugzeug-vs-Rest · 3-Seed-Mittel (${formatClaim('thesis.gainPp', 'de')} vs. ${formatClaim('thesis.baseline', 'de')}) · Plot: Seed 42 (${formatClaim('thesis.seed42', 'de', 'value')}, FPR@95 ${formatClaim('thesis.seed42Fpr95', 'de', 'value')})`,
@@ -360,7 +369,7 @@ export const focusPillars: readonly FocusPillar[] = [
       es: 'Inspección industrial de defectos en dos etapas',
       ar: 'فحص صناعي للعيوب على مرحلتين',
     },
-    metricValue: formatClaim('inkjet.baseline', 'en'),
+    metricValue: bareMap('inkjet.baseline'),
     metricSub: {
       en: 'AUROC · FTI_Zer0P 5-fold CV baseline (separation loss non-significant after Holm correction)',
       de: 'AUROC · FTI_Zer0P 5-fach-CV-Baseline (Separation Loss nach Holm-Korrektur nicht signifikant)',

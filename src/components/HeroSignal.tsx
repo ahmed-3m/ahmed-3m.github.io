@@ -1,6 +1,6 @@
 'use client'
 
-import { claimParts, formatLocaleNumber } from '@/lib/claims'
+import { claimParts, formatClaim, formatLocaleNumber } from '@/lib/claims'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { BENCHMARK_DATASETS, CIFAR_LAMBDA_SWEEP } from '@/lib/ood-explorer-data'
 
@@ -81,11 +81,11 @@ const copy = {
     ar: 'استكشف المختبر التفاعلي',
   },
   chartLabel: {
-    en: 'Histogram of diffusion anomaly scores: in-distribution airplane images cluster at low scores, out-of-distribution images at higher scores, with the TPR 95 threshold between them. Seed-42 run: AUROC 98.98%, FPR at 95% TPR 4.7%.',
-    de: 'Histogramm der Diffusions-Anomaliescores: In-Distribution-Flugzeugbilder liegen bei niedrigen Scores, Out-of-Distribution-Bilder bei höheren, dazwischen die TPR-95-Schwelle. Lauf mit Seed 42: AUROC 98,98 %, FPR bei 95 % TPR 4,7 %.',
-    fr: "Histogramme des scores d'anomalie par diffusion : les images d'avions in-distribution se regroupent aux scores bas, les images hors distribution aux scores plus élevés, avec le seuil TPR 95 entre les deux. Run seed 42 : AUROC 98,98 %, FPR à 95 % de TPR 4,7 %.",
-    es: 'Histograma de puntuaciones de anomalía por difusión: las imágenes de aviones en distribución se agrupan en puntuaciones bajas y las fuera de distribución en puntuaciones más altas, con el umbral TPR 95 entre ambas. Ejecución con seed 42: AUROC 98,98 %, FPR al 95 % de TPR 4,7 %.',
-    ar: 'مدرج تكراري لدرجات الشذوذ: صور الطائرات داخل التوزيع تتجمع عند درجات منخفضة، والصور خارج التوزيع عند درجات أعلى، مع عتبة TPR 95 بينهما. تشغيل البذرة 42: AUROC 98.98%، وFPR عند 95% TPR يساوي 4.7%.',
+    en: `Histogram of diffusion anomaly scores: in-distribution airplane images cluster at low scores, out-of-distribution images at higher scores, with the TPR 95 threshold between them. Seed-42 run: AUROC ${formatClaim('thesis.seed42', 'en', 'value')}, FPR at 95% TPR ${formatClaim('thesis.seed42Fpr95', 'en', 'value')}.`,
+    de: `Histogramm der Diffusions-Anomaliescores: In-Distribution-Flugzeugbilder liegen bei niedrigen Scores, Out-of-Distribution-Bilder bei höheren, dazwischen die TPR-95-Schwelle. Lauf mit Seed 42: AUROC ${formatClaim('thesis.seed42', 'de', 'value')}, FPR bei 95 % TPR ${formatClaim('thesis.seed42Fpr95', 'de', 'value')}.`,
+    fr: `Histogramme des scores d'anomalie par diffusion : les images d'avions in-distribution se regroupent aux scores bas, les images hors distribution aux scores plus élevés, avec le seuil TPR 95 entre les deux. Run seed 42 : AUROC ${formatClaim('thesis.seed42', 'fr', 'value')}, FPR à 95 % de TPR ${formatClaim('thesis.seed42Fpr95', 'fr', 'value')}.`,
+    es: `Histograma de puntuaciones de anomalía por difusión: las imágenes de aviones en distribución se agrupan en puntuaciones bajas y las fuera de distribución en puntuaciones más altas, con el umbral TPR 95 entre ambas. Ejecución con seed 42: AUROC ${formatClaim('thesis.seed42', 'es', 'value')}, FPR al 95 % de TPR ${formatClaim('thesis.seed42Fpr95', 'es', 'value')}.`,
+    ar: `مدرج تكراري لدرجات الشذوذ: صور الطائرات داخل التوزيع تتجمع عند درجات منخفضة، والصور خارج التوزيع عند درجات أعلى، مع عتبة TPR 95 بينهما. تشغيل البذرة 42: AUROC ${formatClaim('thesis.seed42', 'ar', 'value')}، وFPR عند 95% TPR يساوي ${formatClaim('thesis.seed42Fpr95', 'ar', 'value')}.`,
   },
 } satisfies Record<string, TranslationMap>
 
@@ -110,7 +110,11 @@ function stepArea(pct: readonly number[], yMax: number): string {
 export default function HeroSignal() {
   const { lang, t } = useI18n()
   const mean = claimParts('thesis.mean', lang)
+  const auroc = claimParts('thesis.seed42', lang)
+  const fpr95 = claimParts('thesis.seed42Fpr95', lang)
   const ds = BENCHMARK_DATASETS.within_cifar
+  // AUPRC is not a registered claim: format the data value, then split off its unit.
+  const [, auprcNumber, auprcUnit] = /^(.*?)( ?%)$/.exec(formatLocaleNumber(`${ds.auprc.toFixed(2)}%`, lang)) ?? ['', ds.auprc.toFixed(2), '%']
   const h = ds.histogram
   const yMax = Math.max(...h.id_pct, ...h.ood_pct)
   const tauX = PAD_X + ((ds.tauTpr95 - h.lo) / (h.hi - h.lo)) * (W - PAD_X * 2)
@@ -158,9 +162,9 @@ export default function HeroSignal() {
 
       <p className="cd-signal-run-label">{t(copy.runLabel)}</p>
       <dl className="cd-signal-metrics">
-        <div><dt>AUROC</dt><dd>{formatLocaleNumber(ds.auroc.toFixed(2), lang)}<span>{mean.unit}</span></dd></div>
-        <div><dt>FPR@95</dt><dd>{formatLocaleNumber(ds.fpr95.toFixed(1), lang)}<span>{mean.unit}</span></dd></div>
-        <div><dt>AUPRC</dt><dd>{formatLocaleNumber(ds.auprc.toFixed(2), lang)}<span>{mean.unit}</span></dd></div>
+        <div><dt>AUROC</dt><dd>{auroc.number}<span>{auroc.unit}</span></dd></div>
+        <div><dt>FPR@95</dt><dd>{fpr95.number}<span>{fpr95.unit}</span></dd></div>
+        <div><dt>AUPRC</dt><dd>{auprcNumber}<span>{auprcUnit}</span></dd></div>
       </dl>
 
       <figcaption className="cd-signal-caption">{t(copy.caption)}</figcaption>

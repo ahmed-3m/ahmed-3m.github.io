@@ -52,8 +52,8 @@ export interface KnowledgeChunk {
 const THESIS_MEAN_KEYWORD = claimParts('thesis.mean', 'en').number
 const cifarBase = CIFAR_LAMBDA_SWEEP.find((entry) => entry.lambda === '0.0')!
 const cifarOptimal = CIFAR_LAMBDA_SWEEP.find((entry) => entry.isOptimal)!
-const cifarGainPp = (cifarOptimal.withinCifarMean - cifarBase.withinCifarMean).toFixed(1)
-const cifarHeadline = `${cifarOptimal.withinCifarMean.toFixed(2)}% ± ${cifarOptimal.withinCifarStd?.toFixed(2)}%`
+const cifarGain = formatClaim('thesis.gainPp', 'en', 'value')
+const cifarHeadline = formatClaim('thesis.mean', 'en')
 const seedList = (seeds: readonly number[]) => seeds.map((seed) => seed.toFixed(2)).join(', ')
 const withinCifar = BENCHMARK_DATASETS.within_cifar
 const inkjetBase = INKJET_OVERALL_SWEEP['0.0']
@@ -230,7 +230,7 @@ export const KNOWLEDGE_CHUNKS: readonly KnowledgeChunk[] = [
       'خسارة الفصل',
     ],
     title: 'DiffusionOOD 3-Seed Headline & Seed-42 Reconciliation',
-    facts: `M.Sc. thesis (JKU Linz, supervised by Prof. Sepp Hochreiter, grade 1): conditional diffusion models used as generative classifiers for OOD detection. Class-conditional separation loss pushes the two class-conditioned noise predictions apart during training; at inference, the difference in reconstruction errors is compared with a calibrated threshold. On within-CIFAR-10 binary airplane-vs-rest (1,000 ID vs 9,000 OOD): 3-seed mean AUROC is ${cifarOptimal.withinCifarMean.toFixed(2)}% ± ${cifarOptimal.withinCifarStd?.toFixed(2)}% at optimal lambda=${cifarOptimal.lambda} vs ${cifarBase.withinCifarMean.toFixed(2)}% ± ${cifarBase.withinCifarStd?.toFixed(2)}% at lambda=${cifarBase.lambda} (+${cifarGainPp}pp mean gain with far lower cross-seed variance). Single seed-42 within-CIFAR at lambda=${cifarOptimal.lambda}, K=100 reached ${withinCifar.auroc.toFixed(2)}% AUROC (${withinCifar.fpr95.toFixed(1)}% FPR95, ${withinCifar.auprc.toFixed(2)}% AUPRC) vs seed-42 lambda=0.0 baseline ${LAMBDA0_SEED42_META.auroc.toFixed(2)}% AUROC (${LAMBDA0_SEED42_META.fpr95.toFixed(1)}% FPR95). Qualifiers: binary single-ID-class benchmark, not comparable to multi-class CIFAR-10 OOD leaderboards or production accuracy.`,
+    facts: `M.Sc. thesis (JKU Linz, supervised by Prof. Sepp Hochreiter, grade 1): conditional diffusion models used as generative classifiers for OOD detection. Class-conditional separation loss pushes the two class-conditioned noise predictions apart during training; at inference, the difference in reconstruction errors is compared with a calibrated threshold. On within-CIFAR-10 binary airplane-vs-rest (1,000 ID vs 9,000 OOD): 3-seed mean AUROC is ${cifarOptimal.withinCifarMean.toFixed(2)}% ± ${cifarOptimal.withinCifarStd?.toFixed(2)}% at optimal lambda=${cifarOptimal.lambda} vs ${cifarBase.withinCifarMean.toFixed(2)}% ± ${cifarBase.withinCifarStd?.toFixed(2)}% at lambda=${cifarBase.lambda} (${cifarGain} mean gain with far lower cross-seed variance). Single seed-42 within-CIFAR at lambda=${cifarOptimal.lambda}, K=100 reached ${withinCifar.auroc.toFixed(2)}% AUROC (${withinCifar.fpr95.toFixed(1)}% FPR95, ${withinCifar.auprc.toFixed(2)}% AUPRC) vs seed-42 lambda=0.0 baseline ${LAMBDA0_SEED42_META.auroc.toFixed(2)}% AUROC (${LAMBDA0_SEED42_META.fpr95.toFixed(1)}% FPR95). Qualifiers: binary single-ID-class benchmark, not comparable to multi-class CIFAR-10 OOD leaderboards or production accuracy.`,
     links: [DIFFUSION_URL, METHOD_URL, EXPLORER_URL, THESIS_URL],
   },
   {
@@ -505,7 +505,8 @@ export const KNOWLEDGE_CHUNKS: readonly KnowledgeChunk[] = [
       'artikel',
       'مقال',
     ],
-    title: `Blog: How I Reached ${formatClaim('thesis.mean', 'en', 'full')} on OOD Detection`,
+    // The post's own title, so the chunk follows it when the title changes (T040).
+    title: `Blog: ${blogPostsMeta.find((entry) => entry.slug === 'ood-diffusion-thesis')?.translations.en.title ?? 'OOD detection thesis'}`,
     facts: `${blogFact('ood-diffusion-thesis')} Qualifier: the headline ${cifarHeadline} AUROC is the 3-seed mean at lambda=${cifarOptimal.lambda} on the binary CIFAR-10 airplane-vs-rest split.`,
     links: [THESIS_POST_URL, BLOG_URL],
   },
