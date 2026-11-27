@@ -1,59 +1,5 @@
 [
   {
-    "id": "gpt-6-astra-frontier-launch",
-    "date": "2026-09-10",
-    "category": "ai",
-    "headline": {
-      "en": "GPT-6 Astra: A new generation of intelligence",
-      "de": "GPT-6 Astra: Eine neue Generation von Intelligenz",
-      "fr": "GPT-6 Astra : une nouvelle génération d'intelligence",
-      "es": "GPT-6 Astra: una nueva generación de inteligencia",
-      "ar": "GPT-6 Astra: جيل جديد من الذكاء"
-    },
-    "source": "OpenAI",
-    "url": "https://openai.com/index/gpt-6-astra/",
-    "take": {
-      "en": "A launch whose headline numbers are saturation — 98% on FrontierMath Tier 4, 99.9% on ARC-AGI-3, 100% on ExploitBench — says as much about the benchmarks as about GPT-6 Astra: when frontier models max out the chart, capability stops discriminating, and cost, latency, and your own evals become the only selection signal left. The claim I find more credible than any score: mid-evaluation Astra found two previously unknown zero-day vulnerabilities and disclosed them to their maintainers — a checkable capability fact, not a leaderboard number.",
-      "de": "Ein Launch, dessen Schlagzeilen-Zahlen Sättigung sind — 98 % auf FrontierMath Tier 4, 99.9 % auf ARC-AGI-3, 100 % auf ExploitBench —, sagt genauso viel über die Benchmarks aus wie über GPT-6 Astra: Wenn Frontier-Modelle die Tabelle ausreizen, hört Fähigkeit auf zu diskriminieren, und Kosten, Latenz und die eigenen Evals bleiben als einziges Auswahlkriterium. Die Behauptung, der ich mehr traue als jedem Score: Astra hat mitten in der Evaluation zwei bisher unbekannte Zero-Day-Schwachstellen gefunden und ihren Maintainern gemeldet — ein überprüfbarer Fähigkeits-Fakt statt einer Leaderboard-Zahl.",
-      "fr": "Un lancement dont les chiffres-vedettes sont des saturations — 98 % sur FrontierMath Tier 4, 99.9 % sur ARC-AGI-3, 100 % sur ExploitBench — en dit autant sur les benchmarks que sur GPT-6 Astra : quand les modèles de pointe saturent le tableau, la capacité ne discrimine plus, et le coût, la latence et vos propres évals deviennent le seul signal de sélection restant. L'affirmation à laquelle je crois plus qu'à n'importe quel score : en pleine évaluation, Astra a trouvé deux vulnérabilités zero-day jusque-là inconnues et les a signalées à leurs mainteneurs — un fait de capacité vérifiable, pas un chiffre de classement.",
-      "es": "Un lanzamiento cuyas cifras estelares son saturación — 98 % en FrontierMath Tier 4, 99.9 % en ARC-AGI-3, 100 % en ExploitBench — dice tanto de los benchmarks como de GPT-6 Astra: cuando los modelos frontier saturan la tabla, la capacidad deja de discriminar y el coste, la latencia y tus propias evals se convierten en la única señal de selección que queda. La afirmación que me resulta más creíble que cualquier puntuación: en plena evaluación Astra encontró dos vulnerabilidades zero-day desconocidas hasta entonces y las reveló a sus mantenedores — un hecho de capacidad verificable, no un número de clasificación.",
-      "ar": "إطلاق تكون أرقامه الرئيسية اشباعًا — 98% في FrontierMath Tier 4 و99.9% في ARC-AGI-3 و100% في ExploitBench — يخبرنا عن المعايير بقدر ما يخبرنا عن GPT-6 Astra: فحين تُشبع النماذج الحدودية الجدول تتوقف القدرة عن التمييز، ولا يبقى من إشارات الاختيار سوى التكلفة وزمن الاستجابة وتقييماتك أنت. والادعاء الذي أراه أكثر مصداقية من أي درجة: أن Astra وجدت أثناء التقييم ثغرتين يوم-صفر مجهولتين وأفصحت عنهما لمطوّريهما — واقعة قدرة قابلة للتحقق، لا رقمًا في لوحة تصنيفات."
-    },
-    "tags": [
-      "models",
-      "benchmarks",
-      "computer-use",
-      "evaluation"
-    ]
-  },
-  {
-    "id": "gpt-live-1-voice-agents-api",
-    "date": "2026-09-10",
-    "category": "agentic",
-    "headline": {
-      "en": "Build more natural voice experiences with GPT‑Live‑1 in the API",
-      "de": "Natürlichere Spracherlebnisse mit GPT-Live-1 in der API entwickeln",
-      "fr": "Créer des expériences vocales plus naturelles avec GPT-Live-1 dans l'API",
-      "es": "Crea experiencias de voz más naturales con GPT-Live-1 en la API",
-      "ar": "ابنِ تجارب صوتية أكثر طبيعية مع GPT-Live-1 في واجهة API"
-    },
-    "source": "OpenAI",
-    "url": "https://openai.com/index/introducing-gpt-live-1-in-the-api/",
-    "take": {
-      "en": "The architecture is the story: a full-duplex speech front-end that listens while it talks and delegates reasoning, tool calls, and actions to whichever backend model and harness you pair it with — the same conversation-layer/worker split that won in coding agents, pointed at phone lines. The production detail to design for on day one: interrupting speech does not cancel backend work, so a voice agent can keep spending and acting on a conversation the user believes they aborted — barge-in handling is a UX feature, not a safety boundary.",
-      "de": "Die Architektur ist die Story: ein Full-Duplex-Sprach-Frontend, das zuhört, während es spricht, und Reasoning, Tool-Calls und Aktionen an das jeweilige Backend-Modell und Harness delegiert, das man ihm zur Seite stellt — dieselbe Trennung von Konversationsschicht und Worker, die bei Coding-Agenten gewonnen hat, jetzt auf Telefonleitungen. Das Produktions-Detail für Tag eins: Unterbrochene Sprache bricht Backend-Arbeit nicht ab, ein Voice-Agent kann also weiter ausgeben und handeln in einer Konversation, die der Nutzer für abgebrochen hält — Barge-in-Handling ist ein UX-Feature, keine Safety-Grenze.",
-      "fr": "L'architecture est l'histoire : un front-end vocal full-duplex qui écoute pendant qu'il parle et délègue raisonnement, appels d'outils et actions au modèle et à l'harnais backend de votre choix — la même séparation couche-de-conversation/exécutant qui a gagné chez les agents de code, pointée sur les lignes téléphoniques. Le détail à concevoir dès le premier jour : interrompre la parole n'annule pas le travail backend, donc un agent vocal peut continuer à dépenser et à agir dans une conversation que l'utilisateur croit avoir interrompue — la gestion du barge-in est une fonction d'UX, pas une frontière de sécurité.",
-      "es": "La arquitectura es la historia: un front-end de voz full-duplex que escucha mientras habla y delega razonamiento, llamadas a herramientas y acciones en el modelo y harness backend que elijas — la misma separación capa-de-conversación/trabajador que ganó en los agentes de código, ahora apuntada a las líneas telefónicas. El detalle a diseñar desde el día uno: interrumpir el habla no cancela el trabajo del backend, así que un agente de voz puede seguir gastando y actuando en una conversación que el usuario cree haber abortado — el manejo del barge-in es una función de UX, no una frontera de seguridad.",
-      "ar": "المعمارية هي القصة: واجهة صوتية أمامية مزدوجة الاتجاه تستمع أثناء الكلام وتفوّض الاستدلال واستدعاءات الأدوات والأفعال إلى أي نموذج خلفي وحزمة تختارها — الفصل نفسه بين طبقة المحادثة والعامل الذي فاز في وكلاء البرمجة، موجّهًا الآن إلى خطوط الهاتف. والتفصيل الذي يجب التصميم له منذ اليوم الأول: مقاطعة الكلام لا تلغي عمل الواجهة الخلفية، فقد يواصل وكيل صوتي الإنفاق والتصرف في محادثة يعتقد المستخدم أنه أجهضها — ومعالجة المقاطعة ميزة تجربة استخدام لا حدّ أمان."
-    },
-    "tags": [
-      "voice-agents",
-      "tool-use",
-      "production",
-      "reasoning"
-    ]
-  },
-  {
     "id": "openai-misalignment-reporting-framework",
     "date": "2026-09-16",
     "category": "agentic",
@@ -213,33 +159,6 @@
     ]
   },
   {
-    "id": "atria-dawn-agentic-superintelligence",
-    "date": "2026-09-14",
-    "category": "agentic",
-    "headline": {
-      "en": "Atria Dawn: The Dawn of Agentic Superintelligence",
-      "de": "Atria Dawn: Die Dämmerung der agentischen Superintelligenz",
-      "fr": "Atria Dawn : L'aube de la superintelligence agentique",
-      "es": "Atria Dawn: el amanecer de la superinteligencia agéntica",
-      "ar": "Atria Dawn: فجر الذكاء الفائق الوكيلي"
-    },
-    "source": "arXiv",
-    "url": "https://arxiv.org/abs/2609.15818",
-    "take": {
-      "en": "The interesting part isn't the 744B parameters, it's the Verifiable Experience Pipeline — training tool use against externally checked outcomes instead of self-graded reasoning is exactly the verifiability most agentic training still lacks. Every benchmark on the card is vendor-reported, though, so until someone independent reproduces the BrowseComp and CyberGym numbers, read this as a well-licensed hypothesis, not a leaderboard result.",
-      "de": "Der spannende Teil sind nicht die 744B Parameter, sondern die Verifiable Experience Pipeline – Tool-Nutzung gegen extern überprüfte Ergebnisse zu trainieren statt gegen selbstbewertetes Reasoning ist genau die Verifizierbarkeit, die dem meisten Agenten-Training noch fehlt. Allerdings ist jeder Benchmark auf der Modellkarte herstellerseitig berichtet; bis jemand die BrowseComp- und CyberGym-Zahlen unabhängig reproduziert, sollte man das als gut lizenzierte Hypothese lesen, nicht als Leaderboard-Ergebnis.",
-      "fr": "Ce qui est intéressant, ce n'est pas les 744B de paramètres, c'est la Verifiable Experience Pipeline — entraîner l'usage d'outils sur des résultats vérifiés externalement plutôt que sur du raisonnement auto-évalué, c'est exactement la vérifiabilité qui manque encore à la plupart des entraînements d'agents. Mais chaque benchmark de la fiche est rapporté par le fournisseur : tant que personne ne reproduit indépendamment les scores BrowseComp et CyberGym, lisez cela comme une hypothèse bien licenciée, pas comme un résultat de classement.",
-      "es": "Lo interesante no son los 744B de parámetros, sino la Verifiable Experience Pipeline: entrenar el uso de herramientas contra resultados verificados externamente en lugar de razonamiento autoevaluado es precisamente la verificabilidad que aún le falta a la mayoría del entrenamiento de agentes. Eso sí, cada benchmark de la ficha lo reporta el propio proveedor; hasta que alguien reproduzca de forma independiente las cifras de BrowseComp y CyberGym, hay que leerlo como una hipótesis con buena licencia, no como un resultado de clasificación.",
-      "ar": "الجزء المثير ليس حجم 744B من المعاملات، بل Verifiable Experience Pipeline — فتدريب استخدام الأدوات على نتائج مدققة خارجيًا بدلًا من استدلال يقيّم نفسه هو بالضبط قابلية التحقق التي تفتقدها معظم تدريبات الوكلاء حتى الآن. لكن كل معيار على بطاقة النموذج مُبلَّغ من مقدم النموذج نفسه، وحتى يعيد طرف مستقل إنتاج أرقام BrowseComp وCyberGym، اقرأ هذا كفرضية جيدة الترخيص لا كنتيجة على لوحة تصنيف."
-    },
-    "tags": [
-      "open-weights",
-      "agents",
-      "benchmarks",
-      "evaluation"
-    ]
-  },
-  {
     "id": "anthropic-openai-embedded-safety-evaluators",
     "date": "2026-09-16",
     "category": "ai",
@@ -289,31 +208,6 @@
     "tags": [
       "agents",
       "automation"
-    ]
-  },
-  {
-    "id": "google-dream-rsi-self-improvement",
-    "date": "2026-09-14",
-    "category": "agentic",
-    "headline": {
-      "en": "Dream-RSI: Recursive Self-Improvement through Evolving Worlds",
-      "de": "Dream-RSI: Rekursives Selbstverbessern durch sich entwickelnde Welten",
-      "fr": "Dream-RSI : auto-amélioration récursive à travers des mondes en évolution",
-      "es": "Dream-RSI: mejora propia recursiva a través de mundos en evolución",
-      "ar": "Dream-RSI: تحسين ذاتي تكراري عبر عوالم متطورة"
-    },
-    "source": "arXiv",
-    "url": "https://arxiv.org/abs/2609.14858",
-    "take": {
-      "en": "Dream-RSI improves the exploration policy, not the model — candidate strategies get replayed against the agent's own recorded discovery trees, cutting discovery-agent calls 1.7× versus fixed exploration and up to 162× versus SimpleTES. Self-improvement you can read as a diff is self-improvement you can audit, which is exactly the property I want in any loop that rewrites itself.",
-      "de": "Dream-RSI verbessert die Explorationspolitik, nicht das Modell — Kandidatenstrategien werden gegen die aufgezeichneten Discovery-Bäume des Agenten gerepielt, was die Zahl der Discovery-Agent-Aufrufe gegenüber fester Exploration um 1.7× und gegenüber SimpleTES um bis zu 162× senkt. Selbstverbesserung, die man als Diff lesen kann, ist Selbstverbesserung, die man auditieren kann — genau diese Eigenschaft will ich in jeder Schleife sehen, die sich selbst umschreibt.",
-      "fr": "Dream-RSI améliore la politique d'exploration, pas le modèle : les stratégies candidates sont rejouées contre les arbres de découverte enregistrés de l'agent, réduisant les appels d'agents de découverte de 1.7× face à l'exploration fixe et jusqu'à 162× face à SimpleTES. Une auto-amélioration qu'on peut lire comme un diff est une auto-amélioration qu'on peut auditer — c'est exactement la propriété que je veux dans toute boucle qui se réécrit elle-même.",
-      "es": "Dream-RSI mejora la política de exploración, no el modelo: las estrategias candidatas se reproducen contra los árboles de descubrimiento grabados del propio agente, reduciendo las llamadas del agente de descubrimiento 1.7× frente a la exploración fija y hasta 162× frente a SimpleTES. La mejora propia que se puede leer como un diff es la que se puede auditar, y esa es exactamente la propiedad que quiero en cualquier bucle que se reescribe a sí mismo.",
-      "ar": "يحسّن Dream-RSI سياسة الاستكشاف لا النموذج — إذ يُعاد تشغيل استراتيجيات مرشحة ضد أشجار الاكتشاف المسجّلة للوكيل نفسه، ما يقلّص نداءات وكيل الاكتشاف بمقدار 1.7× مقارنة بالاستكشاف الثابت وحتى 162× مقارنةً بـ SimpleTES. التحسين الذاتي الذي يمكن قراءته كـ diff هو تحسين يمكن تدقيقه، وهذا بالضبط ما أريده في أي حلقة تعيد كتابة نفسها."
-    },
-    "tags": [
-      "self-improvement",
-      "agents"
     ]
   },
   {
@@ -5223,6 +5117,113 @@
     "tags": [
       "personal-agents",
       "regulation"
+    ]
+  },
+  {
+    "id": "nvidia-steering-multimodal-models-into-acting",
+    "date": "2026-11-25",
+    "category": "agentic",
+    "headline": {
+      "en": "Steering Multimodal Models into Acting",
+      "de": "Multimodale Modelle zum Handeln steuern",
+      "fr": "Orienter les modèles multimodaux vers l'action",
+      "es": "Orientar a los modelos multimodales hacia la acción",
+      "ar": "دفع النماذج متعددة الوسائط إلى اتخاذ إجراءات"
+    },
+    "source": "NVIDIA Research",
+    "url": "https://research.nvidia.com/ai-security/steering-multimodal-models-acting",
+    "take": {
+      "en": "A white-box nudge to a single image (no pixel value moved more than 16 steps out of 255) was enough to make Gemma 4 skip the summary and emit an exact native run_shell_command call, 21 runs out of 21, which the app's auto-approval then executed. It is one model on one local setup with a visible perturbation, but the lesson generalises: instructions in the prompt are not an authorization boundary, so the check that decides whether untrusted pixels may trigger a shell tool belongs in application code, not in the system prompt.",
+      "de": "Ein White-Box-Nudge an einem einzigen Bild (kein Pixelwert bewegte sich um mehr als 16 von 255 Stufen) reichte aus, damit Gemma 4 die Zusammenfassung überspringt und exakt einen nativen run_shell_command-Aufruf ausgibt, in 21 von 21 Läufen, den die Auto-Freigabe der App dann ausführte. Es ist ein Modell auf einem lokalen Setup mit sichtbarer Störung, aber die Lektion verallgemeinert sich: Anweisungen im Prompt sind keine Autorisierungsgrenze, also gehört die Prüfung, ob nicht vertrauenswürdige Pixel ein Shell-Tool auslösen dürfen, in den Anwendungscode, nicht in den Systemprompt.",
+      "fr": "Une légère perturbation white-box d'une seule image (aucune valeur de pixel déplacée de plus de 16 niveaux sur 255) a suffi pour que Gemma 4 saute le résumé et émette un appel natif run_shell_command exact, 21 fois sur 21, que l'approbation automatique de l'application a ensuite exécuté. C'est un modèle sur une seule configuration locale avec une perturbation visible, mais la leçon se généralise : les instructions dans le prompt ne sont pas une frontière d'autorisation, donc la vérification qui décide si des pixels non fiables peuvent déclencher un outil shell appartient au code de l'application, pas au prompt système.",
+      "es": "Un ajuste white-box en una sola imagen (ningún valor de píxel se movió más de 16 pasos de 255) bastó para que Gemma 4 se saltara el resumen y emitiera una llamada nativa run_shell_command exacta, 21 veces de 21, que la aprobación automática de la app ejecutó a continuación. Es un modelo en un único entorno local y con una perturbación visible, pero la lección se generaliza: las instrucciones del prompt no son una frontera de autorización, así que la comprobación que decide si unos píxeles no fiables pueden disparar una herramienta de shell pertenece al código de la aplicación, no al prompt del sistema.",
+      "ar": "تعديل white-box طفيف على صورة واحدة (لم تتحرك أي قيمة بكسل أكثر من 16 درجة من 255) كان كافيًا ليجعل Gemma 4 تتخطى التلخيص وتصدر استدعاءً أصليًا مطابقًا لـ run_shell_command، في 21 محاولة من 21، ثم نفّذته الموافقة التلقائية في التطبيق. إنه نموذج واحد على إعداد محلي واحد وباضطراب مرئي، لكن الدرس يعمّم: التعليمات في الموجّه ليست حدًّا للتفويض، لذا فإن الفحص الذي يقرر ما إذا كانت بكسلات غير موثوقة قد تُطلق أداة shell يجب أن يقوم في كود التطبيق لا في موجّه النظام."
+    },
+    "tags": [
+      "agent-security",
+      "vision",
+      "tool-use",
+      "guardrails"
+    ]
+  },
+  {
+    "id": "microsoft-artex-agentic-ai-framework-threat-actors",
+    "date": "2026-11-25",
+    "category": "agentic",
+    "headline": {
+      "en": "What defenders need to know about ARTEX, the agentic AI framework threat actors abuse",
+      "de": "Was Verteidiger über ARTEX wissen müssen, das Framework für agentische KI, das Angreifer missbrauchen",
+      "fr": "Ce que les défenseurs doivent savoir sur ARTEX, le framework d'IA agentique dont abusent les acteurs malveillants",
+      "es": "Lo que los defensores deben saber sobre ARTEX, el framework de IA agéntica que explotan los actores de amenazas",
+      "ar": "ما يحتاج المدافعون إلى معرفته عن ARTEX، إطار الذكاء الاصطناعي الوكيلي الذي يسيء استخدامه ممثلو التهديدات"
+    },
+    "source": "Microsoft Security Blog",
+    "url": "https://www.microsoft.com/en-us/security/blog/2026/11/25/what-defenders-need-to-know-artex-agentic-ai-framework-threat-actors-abuse/",
+    "take": {
+      "en": "Strip the branding and ARTEX's architecture is unremarkable, a planner agent over a knowledge graph dispatching worker agents, the same shape a lot of enterprise agent stacks use; what's new is that Microsoft now counts six state-sponsored and criminal groups running it, with recon-to-privileged-access measured in minutes. The durable detection signal is behavioral, machine-speed bursts rather than IPs or user agents, and since operators can point it at abliterated open-weight models, no single provider's safety controls or telemetry can be your control plane.",
+      "de": "Lässt man das Branding beiseite, ist ARTEX' Architektur unspektakulär: ein Planner-Agent über einem Knowledge Graph, der Worker-Agenten losschickt, dieselbe Form, die viele unternehmensinterne Agenten-Stacks nutzen; neu ist, dass Microsoft inzwischen sechs staatlich gesponserte und kriminelle Gruppen zählt, die es einsetzen, mit Aufklärung bis privilegiertem Zugriff in Minuten. Das belastbare Detektionssignal ist verhaltensbasiert, Maschinengeschwindigkeits-Bursts statt IPs oder User-Agents, und weil Betreiber es auf abliterierte Open-Weight-Modelle richten können, kann die Sicherheitskontrolle oder Telemetrie eines einzelnen Anbieters nicht Ihre Control Plane sein.",
+      "fr": "Une fois la marque mise de côté, l'architecture d'ARTEX n'a rien de remarquable : un agent planificateur au-dessus d'un graphe de connaissances qui dispatche des agents workers, la même forme que beaucoup de stacks d'agents d'entreprise ; ce qui est nouveau, c'est que Microsoft recense désormais six groupes étatiques et criminels qui l'utilisent, avec un chemin de la reconnaissance à l'accès privilégié mesuré en minutes. Le signal de détection durable est comportemental, des rafales à vitesse machine plutôt que des IP ou des user agents, et comme les opérateurs peuvent le brancher sur des modèles à poids ouverts « ablitérés », les contrôles de sécurité ou la télémétrie d'un seul fournisseur ne peuvent pas servir de plan de contrôle.",
+      "es": "Quitando la marca, la arquitectura de ARTEX no tiene nada de extraordinario: un agente planificador sobre un grafo de conocimiento que envía agentes trabajadores, la misma forma que usan muchas stacks de agentes empresariales; lo nuevo es que Microsoft ya contabiliza seis grupos estatales y criminales usándolo, con un camino de reconocimiento a acceso privilegiado medido en minutos. La señal de detección duradera es comportamental, ráfagas a velocidad de máquina en lugar de IP o user agents, y como los operadores pueden apuntarlo a modelos abiertos «abliterados», ni los controles de seguridad ni la telemetría de un único proveedor pueden actuar como plano de control único.",
+      "ar": "إذا تجاهلنا اسم العلامة، فبنية ARTEX ليست استثنائية: وكيل مخطِّط فوق رسم معرفي يوزّع المهام على وكلاء عاملين، وهي الصورة نفسها التي تستخدمها كثير من حزم الوكلاء المؤسسية؛ الجديد أن Microsoft تحصي الآن ست مجموعات مدعومة من دول أو إجرامية تستخدمه، مع مسار من الاستطلاع إلى الوصول المميَّز يُقاس بالدقائق. إشارة الكشف الدائمة هي سلوكية، دفعات بسرعة الآلة بدلاً من عناوين IP أو user agents، ولأن المشغّلين يمكنهم توجيهه إلى نماذج مفتوحة الأوزان المزالة ضماناتها (abliterated)، فلا يمكن أن تكون ضوابط السلامة أو بيانات القياس لدى مزوّد واحد هي مستوى التحكم لديك."
+    },
+    "tags": [
+      "agent-security",
+      "cybersecurity",
+      "incidents",
+      "monitoring"
+    ]
+  },
+  {
+    "id": "ai-shopping-agents-retailer-blocks-stunt-growth",
+    "date": "2026-11-27",
+    "category": "agentic",
+    "headline": {
+      "en": "AI shopping agents are having a moment, but Amazon and a growing number of sites threaten to stunt their growth",
+      "de": "KI-Shopping-Agenten boomen, doch Amazon und eine wachsende Zahl von Websites gefährden ihr Wachstum",
+      "fr": "Les agents shopping par IA vivent leur moment, mais Amazon et un nombre croissant de sites menacent de freiner leur croissance",
+      "es": "Los agentes de compra con IA están en su momento, pero Amazon y un número creciente de sitios amenazan con frenar su crecimiento",
+      "ar": "وكلاء التسوق بالذكاء الاصطناعي يشهدون لحظتهم، لكن Amazon وعددًا متزايدًا من المواقع يهددان بعرقلة نموهم"
+    },
+    "source": "CNBC",
+    "url": "https://www.cnbc.com/2026/11/27/ai-shopping-agents-retailer-blocks.html",
+    "take": {
+      "en": "The Visa study is the number I'd pin to the wall: across 22 models from 12 labs, shopping agents failed about 43% of runs, and in more than half of those failures they bought something that didn't meet the stated requirements, which is worse than failing loudly because money actually moved. Until agents show up with a verifiable identity and proof that a human consented, every retailer is guessing, and 'blocked by accident' is exactly what bot defence looks like when it can't tell a customer's agent from a scraper.",
+      "de": "Die Visa-Studie ist die Zahl, die ich mir an die Wand hängen würde: über 22 Modelle von 12 Laboren schlugen Shopping-Agenten bei etwa 43% der Läufe fehl, und in mehr als der Hälfte dieser Fehlschläge kauften sie etwas, das den genannten Anforderungen nicht entsprach, was schlimmer ist als ein lauter Fehlschlag, weil tatsächlich Geld geflossen ist. Solange Agenten nicht mit einer überprüfbaren Identität und dem Nachweis erscheinen, dass ein Mensch zugestimmt hat, rät jeder Einzelhändler, und „versehentlich blockiert“ ist genau das, was Bot-Abwehr aussehen lässt, wenn sie den Agenten eines Kunden nicht von einem Scraper unterscheiden kann.",
+      "fr": "L'étude de Visa, c'est le chiffre que j'afficherais au mur : sur 22 modèles de 12 laboratoires, les agents shopping ont échoué sur environ 43% des runs, et dans plus de la moitié de ces échecs ils ont acheté un produit qui ne répondait pas aux exigences énoncées, ce qui est pire qu'un échec bruyant parce que de l'argent a réellement bougé. Tant que les agents ne se présentent pas avec une identité vérifiable et la preuve qu'un humain a consenti, chaque détaillant fait au jugé, et « bloqué par accident », c'est exactement ce à quoi ressemble la défense anti-bot quand elle ne peut pas distinguer l'agent d'un client d'un scraper.",
+      "es": "El estudio de Visa es la cifra que yo clavaría en la pared: con 22 modelos de 12 laboratorios, los agentes de compra fallaron en cerca del 43% de las ejecuciones, y en más de la mitad de esos fallos compraron algo que no cumplía los requisitos indicados, lo cual es peor que fallar de forma evidente porque el dinero sí se movió. Mientras los agentes no lleguen con una identidad verificable y la prueba de que un humano dio su consentimiento, cada minorista está adivinando, y «bloqueado por accidente» es exactamente el aspecto que tiene la defensa anti-bot cuando no puede distinguir al agente de un cliente de un scraper.",
+      "ar": "دراسة Visa هي الرقم الذي سأعلّقه على الجدار: عبر 22 نموذجًا من 12 مختبرًا، فشل وكلاء التسوق في نحو 43% من المحاولات، وفي أكثر من نصف هذه الإخفاقات اشتروا شيئًا لا يطابق المتطلبات المذكورة، وهذا أسوأ من فشل صريح لأن المال تحرك فعلًا. ما لم يصل الوكلاء بهوية قابلة للتحقق وإثبات موافقة إنسان، فكل متجر يجزف بالتخمين، و«محظور عن طريق الخطأ» هو بالضبط ما تبدو عليه الدفاعات ضد البوتات حين لا تستطيع التمييز بين وكيل العميل وزاحف (scraper)."
+    },
+    "tags": [
+      "web-agents",
+      "personal-agents",
+      "reliability",
+      "production"
+    ]
+  },
+  {
+    "id": "accountable-agents-framework-agent-ids",
+    "date": "2026-11-24",
+    "category": "agentic",
+    "headline": {
+      "en": "The Accountable Agents Framework (AAF): A Blueprint for AI Agent IDs",
+      "de": "The Accountable Agents Framework (AAF): ein Bauplan für KI-Agenten-IDs",
+      "fr": "The Accountable Agents Framework (AAF) : une feuille de route pour les identifiants d'agents IA",
+      "es": "The Accountable Agents Framework (AAF): una hoja de ruta para los identificadores de agentes de IA",
+      "ar": "The Accountable Agents Framework (AAF): خارطة طريق لمعرّفات وكلاء الذكاء الاصطناعي"
+    },
+    "source": "Center for AI Safety",
+    "url": "https://www.accountableagents.ai/",
+    "take": {
+      "en": "A 51-author paper led by the Center for AI Safety proposes directories that verify a principal and issue pseudonymous IDs, basically certificate authorities for agents, and it is honest about the failure mode that comes with the analogy: directories become a chokepoint for outages, coerced revocations and forum-shopping, and no operator is named yet. The part I respect most is the least convenient one, that an ID on its own says nothing about an agent's conduct, because a prompt-injected agent authenticates with perfectly valid credentials, so identity only pays off when it ships with authorization claims and tamper-evident activity logs.",
+      "de": "Ein Paper von 51 Autoren unter Führung des Center for AI Safety schlägt Verzeichnisse vor, die einen Prinzipal verifizieren und pseudonyme IDs ausstellen, im Grunde Zertifizierungsstellen für Agenten, und es ist ehrlich bei dem Versagensmodus, den die Analogie mitbringt: Verzeichnisse werden zum Nadelöhr für Ausfälle, erzwungene Widerrufe und Forum-Shopping, und ein Betreiber wird noch nicht genannt. Den Teil, den ich am meisten respektiere, ist der unbequemste: Eine ID allein sagt nichts über das Verhalten eines Agenten aus, weil ein per Prompt-Injection gekaperter Agent sich mit völlig gültigen Zugangsdaten authentifiziert, sodass Identität nur dann etwas bringt, wenn sie zusammen mit Autorisierungsansprüchen und manipulationsgeschützten Aktivitätsprotokollen ausgeliefert wird.",
+      "fr": "Un article de 51 auteurs piloté par le Center for AI Safety propose des annuaires qui vérifient un principal et délivrent des identifiants pseudonymes, en somme des autorités de certification pour les agents, et il est honnête sur le mode de défaillance qu'implique l'analogie : les annuaires deviennent un point de passage obligé pour les pannes, les révocations forcées et le forum-shopping, et aucun opérateur n'est encore nommé. Ce que je respecte le plus, c'est le point le plus dérangeant : un identifiant seul ne dit rien de la conduite d'un agent, car un agent détourné par injection de prompt s'authentifie avec des identifiants parfaitement valides, donc l'identité ne paie que si elle arrive avec des claims d'autorisation et des journaux d'activité infalsifiables.",
+      "es": "Un artículo de 51 autores liderado por el Center for AI Safety propone directorios que verifican a un principal y emiten identificadores seudónimos, en el fondo autoridades de certificación para agentes, y es honesto sobre el modo de fallo que conlleva la analogía: los directorios se convierten en un cuello de botella para caídas, revocaciones forzadas y forum-shopping, y aún no se nombra a ningún operador. Lo que más respeto es la parte más incómoda: un identificador por sí solo no dice nada sobre la conducta de un agente, porque un agente secuestrado por inyección de prompt se autentica con credenciales perfectamente válidas, así que la identidad solo rinde cuando se entrega con claims de autorización y registros de actividad a prueba de manipulación.",
+      "ar": "ورقة من 51 باحثًا بقيادة Center for AI Safety تقترح أدلة (directories) تتحقق من هوية الطرف المسؤول وتصدر معرّفات مستعارة، وهي في الجوهر جهات إصدار شهادات للوكلاء، وهي صريحة بشأن نمط الفشل الذي تجرّه هذه المقارنة: الأدلة تصبح نقطة اختناق للانقطاعات والإلغاءات القسرية والتهرب إلى الأدلة الأكثر تساهلًا، ولم يُذكر أي مشغّل بعد. الجزء الذي أحترمه أكثر هو الأقل راحة: المعرّف وحده لا يقول شيئًا عن سلوك الوكيل، لأن وكيلًا مخترقًا بحقن الموجّه يصادق نفسه ببيانات اعتماد صحيحة تمامًا، لذا لا تفيد الهوية إلا حين تُسلَّم مع claims التفويض وسجلات نشاط محصنة من التلاعب."
+    },
+    "tags": [
+      "agent-governance",
+      "governance",
+      "agent-security"
     ]
   }
 ]
