@@ -324,6 +324,8 @@ jobs:
 
       - name: Apply sanitized delta to current main
         run: |
+          node .github/news/news-selftest.mjs
+          node .github/news/check-news-links.mjs --delta "$RUNNER_TEMP/news-delta.json" --drop-failed
           node --input-type=module <<'EOF'
           import { readFile, writeFile } from 'node:fs/promises'
           import { parseNewsItems, sanitizeIncomingDelta } from './src/lib/news.ts'
@@ -339,8 +341,6 @@ jobs:
           }
           await writeFile(deltaPath, JSON.stringify({ items: accepted }) + '\n')
           EOF
-          node .github/news/news-selftest.mjs
-          node .github/news/check-news-links.mjs --delta "$RUNNER_TEMP/news-delta.json" --drop-failed
 
       - name: Publish JSON-only delta via PR merge
         id: publish

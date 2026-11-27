@@ -223,6 +223,25 @@ async function selfTest() {
     const ok = kept.length === 2 && dropped.length === 1 && dropped[0].item.id === 'bad'
     console.log(`self-test: delta per-item filter (keeps 200/429, drops 404) ${ok ? '✓' : '✗'}`)
     if (!ok) failed = true
+
+    // Simulated redirect where probeFn returns the final destination URL rather than input URL:
+    const redirectRes = await probeDeltaItems(
+      [
+        { id: 'redir-404', url: 'https://example.com/start' },
+        { id: 'redir-ok', url: 'https://example.com/short' },
+      ],
+      async (u) =>
+        u === 'https://example.com/start'
+          ? { url: 'https://example.com/missing', status: 404 }
+          : { url: 'https://example.com/dest', status: 200 },
+    )
+    const redirOk =
+      redirectRes.kept.length === 1 &&
+      redirectRes.kept[0].id === 'redir-ok' &&
+      redirectRes.dropped.length === 1 &&
+      redirectRes.dropped[0].item.id === 'redir-404'
+    console.log(`self-test: delta probe keys redirected results by original URL ${redirOk ? '✓' : '✗'}`)
+    if (!redirOk) failed = true
   }
 
   if (failed) {
@@ -300,6 +319,18 @@ async function checkCatalog({ warnOnly = false } = {}) {
   process.exit(!warnOnly && failures.length > 0 ? 1 : 0)
 }
 
+export async function probeDeltaItems(items, probeFn = probe) {
+  const urls = items.map((item) => item?.url).filter((u) => typeof u === 'string' && u.trim())
+  const uniqueUrls = [...new Set(urls)]
+  const entries = await mapWithConcurrency(uniqueUrls, PROBE_CONCURRENCY, async (u) => [
+    u,
+    await probeFn(u),
+  ])
+  const byUrl = new Map(entries)
+  const { kept, dropped } = filterDeltaByProbeResults(items, byUrl)
+  return { uniqueUrls, results: entries.map(([, r]) => r), kept, dropped }
+}
+
 async function checkDelta(deltaPath, { dropFailed = false } = {}) {
   const raw = JSON.parse(await readFile(deltaPath, 'utf8'))
   if (!raw || typeof raw !== 'object' || !Array.isArray(raw.items)) {
@@ -311,10 +342,7 @@ async function checkDelta(deltaPath, { dropFailed = false } = {}) {
     process.exit(0)
   }
 
-  const urls = raw.items.map((item) => item?.url).filter((u) => typeof u === 'string' && u.trim())
-  const uniqueUrls = [...new Set(urls)]
-  const results = await mapWithConcurrency(uniqueUrls, PROBE_CONCURRENCY, (u) => probe(u))
-  const byUrl = new Map(results.map((r) => [r.url, r]))
+  const { uniqueUrls, results, kept, dropped } = await probeDeltaItems(raw.items)
 
   for (const r of results) {
     if (!isHardFail(r) && (r.status === 0 || r.status >= 400)) {
@@ -324,7 +352,6 @@ async function checkDelta(deltaPath, { dropFailed = false } = {}) {
     }
   }
 
-  const { kept, dropped } = filterDeltaByProbeResults(raw.items, byUrl)
   for (const { item, result } of dropped) {
     const code = result.status || result.error
     if (dropFailed) {
