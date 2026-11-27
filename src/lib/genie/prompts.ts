@@ -539,6 +539,31 @@ export function findPromptId(question: string): PromptId | undefined {
   )
 }
 
+/**
+ * The language to answer `question` in when the answer is prepared rather than
+ * written by the model: the language of a suggested question it matches, Arabic
+ * for Arabic script, English for Latin script while the site is in Arabic, and
+ * otherwise the site language.
+ */
+export function questionLanguage(question: string, siteLang: Language): Language {
+  const text = question.trim().toLowerCase()
+  for (const id of Object.keys(PROMPT_LIBRARY) as PromptId[]) {
+    const labels = PROMPT_LIBRARY[id]
+    if (labels[siteLang]?.toLowerCase() === text) return siteLang
+    for (const lang of Object.keys(labels) as Language[]) {
+      if (labels[lang]?.toLowerCase() === text) return lang
+    }
+  }
+  // Count words, not letters, so a Latin product name in an Arabic question
+  // ("ما هو mergeproof؟") does not outweigh the Arabic around it.
+  const words = text.split(/\s+/)
+  const arabic = words.filter((word) => /\p{Script=Arabic}/u.test(word)).length
+  const latin = words.filter((word) => /\p{Script=Latin}/u.test(word)).length
+  if (arabic > latin) return 'ar'
+  if (siteLang === 'ar' && latin > 0 && arabic === 0) return 'en'
+  return siteLang
+}
+
 export function findCuratedTopic(question: string): ReplyId | undefined {
   const prompt = findPromptId(question)
   if (prompt) return REPLY_FOR_PROMPT[prompt]

@@ -139,3 +139,34 @@ export function parseInlineTokens(text: string): InlineToken[] {
 
   return tokens
 }
+
+function tokensToPlainText(tokens: InlineToken[]): string {
+  return tokens
+    .map((token) => {
+      switch (token.type) {
+        case 'text':
+          return token.segments.map((segment) => segment.text).join('')
+        case 'code':
+          return token.text
+        case 'bold':
+        case 'italic':
+          return tokensToPlainText(token.children)
+        case 'link':
+          return token.labelText
+      }
+    })
+    .join('')
+}
+
+/**
+ * The text a screen reader announces for an answer: Markdown markers and link
+ * targets dropped, lines joined with spaces.
+ */
+export function markdownToPlainText(markdown: string): string {
+  return markdown
+    .split('\n')
+    .map((line) => line.replace(/^#{1,3}\s+/, '').replace(/^[-*]\s+/, '').trim())
+    .filter(Boolean)
+    .map((line) => tokensToPlainText(parseInlineTokens(line)))
+    .join(' ')
+}

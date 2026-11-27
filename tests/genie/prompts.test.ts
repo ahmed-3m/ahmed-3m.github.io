@@ -9,6 +9,7 @@ import {
   ROUTE_SECTIONS,
   STARTER_PROMPT_IDS,
   getStarterPrompts,
+  questionLanguage,
   routeLocally,
   showsHandoff,
 } from '@/lib/genie/prompts'
@@ -135,5 +136,23 @@ describe('showsHandoff', () => {
     for (const question of [String(PROMPT_LIBRARY.thesis_summary.en), String(PROMPT_LIBRARY.projects_best.en), 'What is CIFAR-10?', '']) {
       assert.equal(showsHandoff(question), false, question)
     }
+  })
+})
+
+describe('questionLanguage', () => {
+  it('uses the language of a matching suggested question', () => {
+    assert.equal(questionLanguage(String(PROMPT_LIBRARY.cv.de), 'en'), 'de')
+    assert.equal(questionLanguage(String(PROMPT_LIBRARY.contact.fr), 'ar'), 'fr')
+  })
+
+  it('detects Arabic by words, so Latin product names do not outweigh it', () => {
+    assert.equal(questionLanguage('ما هو mergeproof؟', 'en'), 'ar')
+    assert.equal(questionLanguage('What is mergeproof?', 'ar'), 'en')
+  })
+
+  it('otherwise keeps the site language', () => {
+    assert.equal(questionLanguage('Was ist mergeproof?', 'de'), 'de')
+    assert.equal(questionLanguage('Qué es mergeproof', 'es'), 'es')
+    assert.equal(questionLanguage('', 'fr'), 'fr')
   })
 })

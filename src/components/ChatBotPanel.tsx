@@ -18,7 +18,7 @@ import {
   type ChatMessage,
   type ChatRole,
 } from '@/lib/genie/reply'
-import { parseInlineTokens, type BidiSegment, type InlineToken } from '@/lib/genie/markdown'
+import { markdownToPlainText, parseInlineTokens, type BidiSegment, type InlineToken } from '@/lib/genie/markdown'
 import {
   PROMPTS,
   PROMPT_LIBRARY,
@@ -317,6 +317,9 @@ function goToSection(id: string) {
   scrollWhenReady(id)
 }
 
+/** The privacy section about the chat, linked from the AI notice under the input. */
+const PRIVACY_CHAT_HREF = '/privacy/#chat-assistant'
+
 function LoadingDots({ label }: { label: string }) {
   return (
     <div
@@ -406,14 +409,42 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
     }
   }, [isOpen])
 
+  // A new reply scrolls to its start, not its end, so it is read from the top;
+  // anything else (the visitor's message, the typing dots) scrolls to the bottom.
+  const scrolledForRef = useRef('')
   useEffect(() => {
     const container = messagesRef.current
     if (!container) return
-    container.scrollTo({
-      top: container.scrollHeight,
-      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
-    })
+    const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+    const lastIndex = messages.length - 1
+    const bottom = container.scrollHeight - container.clientHeight
+    if (messages[lastIndex]?.role !== 'assistant') {
+      scrolledForRef.current = ''
+      container.scrollTo({ top: bottom, behavior })
+      return
+    }
+    // Once when the reply appears and once when it is complete (follow-ups appear).
+    const key = `${lastIndex}-${isLoading}`
+    if (scrolledForRef.current === key) return
+    scrolledForRef.current = key
+    const reply = container.querySelector<HTMLElement>(`[data-message-index="${lastIndex}"]`)
+    if (!reply) return
+    container.scrollTo({ top: Math.min(reply.offsetTop - 12, bottom), behavior })
   }, [messages, isLoading])
+
+  // Read out once per finished reply. Empty while a reply is arriving, so the next
+  // reply is announced even when its text repeats the previous one.
+  const lastMessage = messages[messages.length - 1]
+  const replyAnnouncement =
+    !isLoading && lastMessage?.role === 'assistant'
+      ? [
+          markdownToPlainText(lastMessage.content),
+          lastMessage.fallback ? t(CHAT_COPY.fallbackNotice) : '',
+          lastMessage.incomplete ? t(CHAT_COPY.incompleteReply) : '',
+        ]
+          .filter(Boolean)
+          .join(' ')
+      : ''
 
   useEffect(() => {
     return () => {
@@ -659,9 +690,10 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
       <div
         ref={messagesRef}
         role="log"
-        aria-live="polite"
-        aria-relevant="additions text"
-        className="flex-1 space-y-3 overflow-y-auto px-4 py-4"
+        // Streaming text is not read out piece by piece; the status region below
+        // announces each finished reply once.
+        aria-live="off"
+        className="relative flex-1 space-y-3 overflow-y-auto px-4 py-4"
       >
         {messages.length === 0 ? (
           <div className="space-y-4">
@@ -685,13 +717,16 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
               !messages.slice(index + 1).some((item) => item.role === 'assistant')
 
             return (
-              <div key={`${message.role}-${index}`} className="space-y-2">
+              <div key={`${message.role}-${index}`} data-message-index={index} className="space-y-2">
                 <div className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div
                     className={`max-w-[88%] min-w-0 break-words rounded-2xl border px-3 py-2.5 text-sm leading-6${
                       message.role === 'user' ? ' whitespace-pre-wrap' : ''
                     }`}
                     style={bubbleStyles[message.role]}
+                    // Each bubble takes its direction from its own text, so an Arabic
+                    // answer reads right to left on an English page and vice versa.
+                    dir="auto"
                   >
                     {message.role === 'assistant'
                       ? renderMarkdown(message.content, handleInternalLinkClick)
@@ -797,6 +832,19 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
             </button>
           )}
         </form>
+        <p className="mt-2 text-xs leading-5" style={{ color: 'var(--cd-fg2)' }}>
+          {t(CHAT_COPY.aiNotice)}{' '}
+          <a
+            href={PRIVACY_CHAT_HREF}
+            onClick={(event) => handleInternalLinkClick(PRIVACY_CHAT_HREF, event)}
+            className="underline underline-offset-2"
+          >
+            {t(CHAT_COPY.privacyLink)}
+          </a>
+        </p>
+      </div>
+      <div role="status" className="sr-only">
+        {replyAnnouncement}
       </div>
     </div>
   )

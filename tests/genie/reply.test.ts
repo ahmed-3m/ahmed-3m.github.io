@@ -33,6 +33,18 @@ describe('decideImmediateReply', () => {
     assert.equal(result.kind === 'answer' && result.message.content, LOCAL_REPLIES.cv.de)
   })
 
+  it('answers a typed question in its own language', () => {
+    const arabic = decideImmediateReply({ ...base, content: 'تواصل مع أحمد', proxyConfigured: true })
+    assert.equal(arabic.kind === 'answer' && arabic.message.content, LOCAL_REPLIES.contact.ar)
+    const english = decideImmediateReply({ ...base, lang: 'ar', content: 'How can I contact Ahmed?', proxyConfigured: true })
+    assert.equal(english.kind === 'answer' && english.message.content, LOCAL_REPLIES.contact.en)
+  })
+
+  it('answers a suggested question in the site language', () => {
+    const result = decideImmediateReply({ ...base, lang: 'ar', content: 'anything', promptId: 'contact', proxyConfigured: true })
+    assert.equal(result.kind === 'answer' && result.message.content, LOCAL_REPLIES.contact.ar)
+  })
+
   it('leaves an open question to the model when one is configured', () => {
     assert.deepEqual(decideImmediateReply({ ...base, content: 'Tell me about mergeproof', proxyConfigured: true }), {
       kind: 'ask-model',

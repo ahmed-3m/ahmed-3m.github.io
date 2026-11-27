@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 
-import { parseInlineTokens, tokenizeBidiNumbers, type InlineToken } from '@/lib/genie/markdown'
+import { markdownToPlainText, parseInlineTokens, tokenizeBidiNumbers, type InlineToken } from '@/lib/genie/markdown'
 
 function linksIn(tokens: InlineToken[]): { href: string; external: boolean; label: string }[] {
   return tokens.flatMap((token) => {
@@ -86,5 +86,18 @@ describe('parseInlineTokens links', () => {
   it('rejects script and protocol-relative links written as Markdown', () => {
     const tokens = parseInlineTokens('[x](javascript:alert(1)) [y](//evil.example/)')
     assert.deepEqual(linksIn(tokens), [])
+  })
+})
+
+describe('markdownToPlainText', () => {
+  it('keeps link labels and drops targets and markers', () => {
+    assert.equal(
+      markdownToPlainText('Read the **thesis** in the [case study](https://ahmed-3m.github.io/case-studies/diffusion-ood/).'),
+      'Read the thesis in the case study.'
+    )
+  })
+
+  it('joins headings and list items into one line', () => {
+    assert.equal(markdownToPlainText('## Posts\n- *First* post\n- `code` post\n\nEnd.'), 'Posts First post code post End.')
   })
 })
