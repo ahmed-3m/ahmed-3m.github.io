@@ -57,6 +57,15 @@ jobs:
       - name: Chat proxy self-test
         run: node worker/chat-proxy.selftest.mjs
 
+      - name: News pipeline self-tests
+        run: |
+          node .github/news/news-selftest.mjs
+          node .github/news/check-news-links.mjs --self-test
+          node .github/news/parse-agent-stdout.mjs --self-test
+          node .github/news/classify-agent-failure.mjs --self-test
+          node .github/news/prepare-research-context.mjs --self-test
+          node .github/news/check-news-health.mjs --self-test
+
       - name: Unit tests
         run: npm test
 

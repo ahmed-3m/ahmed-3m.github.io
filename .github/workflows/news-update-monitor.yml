@@ -23,17 +23,15 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.event.workflow_run.html_url }}
         run: |
           set -euo pipefail
           title="[ops] news-update failed"
-          url="${{ github.event.workflow_run.html_url }}"
-          body="Workflow \`news-update\` failed: $url"
+          body="Workflow \`news-update\` failed: $RUN_URL"
           existing=$(gh issue list --state open --search "$title in:title" --json number --jq '.[0].number // empty')
           if [ -n "$existing" ]; then
-            # one failure = one comment; a new run URL always comments
-            last=$(gh issue view "$existing" --json comments --jq '.comments[-1].body // empty')
-            if printf '%s' "$last" | grep -qF "$url"; then
-              echo "Issue #$existing already reports $url — skipping duplicate comment."
+            if gh issue view "$existing" --json comments --jq '[.comments[].body] | any(contains(env.RUN_URL))' | grep -q '^true$'; then
+              echo "Issue #$existing already reports $RUN_URL — skipping duplicate comment."
               exit 0
             fi
             gh issue comment "$existing" --body "$body"
