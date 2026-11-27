@@ -6,28 +6,32 @@ import { ArrowUp, ChevronRight, RotateCcw, Square, X } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { useI18n } from '@/lib/i18n'
 import { translateValue, type Language } from '@/lib/i18n-config'
-import { buildChatMessages, createRequestTimers } from '@/lib/chat-request'
+import { CHAT_PROXY_URL } from '@/lib/genie/providers'
+import {
+  buildFinalMessage,
+  chatErrorKind,
+  decideImmediateReply,
+  requestModelReply,
+  type ChatMessage,
+  type ChatRole,
+} from '@/lib/genie/reply'
 import { parseInlineTokens, type BidiSegment, type InlineToken } from '@/lib/genie/markdown'
 import {
   PROMPTS,
   PROMPT_LIBRARY,
   STARTER_PROMPT_IDS,
   LOCAL_REPLIES,
-  REPLY_FOR_PROMPT,
-  findCuratedTopic,
   getLocalReply,
   getStarterPrompts,
   pickFollowUpIds,
   resolveSectionForPathname,
   routeLocally,
-  type ChatLane,
   type PromptId,
 } from '@/lib/genie/prompts'
 import { buildSystemPrompt } from '@/lib/genie/retriever'
 import { CHAT_COPY } from './chatbot-dictionaries'
 
-export type ChatRole = 'user' | 'assistant'
-export type { PromptId }
+export type { ChatMessage, ChatRole, PromptId }
 export {
   PROMPT_LIBRARY,
   PROMPTS,
@@ -36,341 +40,6 @@ export {
   getLocalReply,
   getStarterPrompts,
   pickFollowUpIds,
-}
-
-export type ChatMessage = {
-  role: ChatRole
-  content: string
-  followUps?: PromptId[]
-  incomplete?: boolean
-}
-
-type ApiErrorDetail = { message?: string; type?: string; code?: string }
-
-type ChatCompletionResponse = {
-  choices?: Array<{
-    finish_reason?: string | null
-    message?: {
-      content?: string
-    }
-  }>
-  error?: string | ApiErrorDetail
-  scope?: 'proxy' | 'upstream'
-}
-
-type ChatCompletionError = Error & {
-  status?: number
-  code?: string
-  provider?: 'Groq' | 'BigModel'
-  isProxyRateLimit?: boolean
-}
-
-const GROQ_MODEL = process.env.NEXT_PUBLIC_GROQ_MODEL || 'openai/gpt-oss-20b'
-const ZAI_MODEL = process.env.NEXT_PUBLIC_BIGMODEL_MODEL || 'glm-5.3'
-const ZAI_FAST_MODEL = process.env.NEXT_PUBLIC_ZAI_FAST_MODEL || 'glm-5-turbo'
-const CHAT_PROXY_URL = process.env.NEXT_PUBLIC_CHAT_PROXY_URL?.trim()
-const MAX_REPLY_CHARS = 1600
-const TTFB_TIMEOUT_MS = 20000
-
-function shortenReply(reply: string): string {
-  if (reply.length <= MAX_REPLY_CHARS) return reply
-
-  const compact = reply.replace(/\n{3,}/g, '\n\n').trim()
-  const boundary = Math.max(
-    compact.lastIndexOf('\n', MAX_REPLY_CHARS),
-    compact.lastIndexOf('.', MAX_REPLY_CHARS),
-    compact.lastIndexOf('!', MAX_REPLY_CHARS),
-    compact.lastIndexOf('?', MAX_REPLY_CHARS)
-  )
-  const end = boundary > 900 ? boundary + 1 : MAX_REPLY_CHARS
-  return `${compact.slice(0, end).trim()}...`
-}
-
-function createChatError(
-  message: string,
-  provider: 'Groq' | 'BigModel',
-  status?: number,
-  code?: string,
-  isProxyRateLimit = false
-): ChatCompletionError {
-  const error = new Error(message) as ChatCompletionError
-  error.provider = provider
-  error.status = status
-  error.code = code
-  error.isProxyRateLimit = isProxyRateLimit
-  return error
-}
-
-function isProxyRateLimitPayload(
-  data: ChatCompletionResponse | null,
-  status: number
-): boolean {
-  if (status !== 429 || !data) return false
-  if (data.scope !== undefined) return data.scope === 'proxy'
-  return data.error === 'Rate limit exceeded. Please try again later.'
-}
-
-type StreamDelta = (fullContent: string) => void
-
-type StreamChunk = ChatCompletionResponse & {
-  choices?: Array<{
-    finish_reason?: string | null
-    delta?: { content?: string }
-    message?: { content?: string }
-  }>
-}
-
-type ChatReply = { content: string; incomplete?: boolean }
-type ChatProvider = 'Groq' | 'BigModel'
-
-async function throwProviderError(
-  response: Response,
-  provider: ChatProvider,
-  status503Message?: string
-): Promise<never> {
-  const data = (await response.json().catch(() => null)) as ChatCompletionResponse | null
-  const detail = data?.error
-  const errorDetail = typeof detail === 'string' ? undefined : detail
-  const message =
-    typeof detail === 'string'
-      ? detail
-      : errorDetail?.message ?? `${provider} could not respond right now.`
-  const isProxyRateLimit = isProxyRateLimitPayload(data, response.status)
-  if (status503Message && response.status === 503) {
-    throw createChatError(status503Message, provider, response.status, errorDetail?.code, isProxyRateLimit)
-  }
-  throw createChatError(message, provider, response.status, errorDetail?.code, isProxyRateLimit)
-}
-
-async function readChatResponse({
-  response,
-  provider,
-  streaming,
-  timers,
-  onDelta,
-}: {
-  response: Response
-  provider: ChatProvider
-  streaming: boolean
-  timers: ReturnType<typeof createRequestTimers>
-  onDelta?: StreamDelta
-}): Promise<ChatReply> {
-  if (!streaming || !response.body || response.headers.get('Content-Type')?.includes('application/json')) {
-    timers.onFirstByte()
-    const data = (await response.json()) as ChatCompletionResponse
-    const reply = data.choices?.[0]?.message?.content?.trim()
-    if (!reply) throw createChatError(`${provider} returned an empty response.`, provider)
-    const finishReason = data.choices?.[0]?.finish_reason
-    return { content: reply, incomplete: Boolean(finishReason && finishReason !== 'stop') }
-  }
-
-  timers.onFirstByte()
-
-  const reader = response.body.getReader()
-  const decoder = new TextDecoder()
-  let buffer = ''
-  let content = ''
-  let doneEvent = false
-  let finishReason: string | undefined
-
-  const consumeLine = (line: string) => {
-    const trimmed = line.trim()
-    if (!trimmed.startsWith('data:')) return
-    const payload = trimmed.slice(5).trim()
-    if (payload === '[DONE]') {
-      doneEvent = true
-      return
-    }
-    if (!payload) return
-    let chunk: StreamChunk
-    try {
-      chunk = JSON.parse(payload) as StreamChunk
-    } catch {
-      return
-    }
-    if (chunk.error) {
-      const message =
-        typeof chunk.error === 'string'
-          ? chunk.error
-          : chunk.error.message ?? `${provider} stream failed.`
-      throw createChatError(message, provider)
-    }
-    const choice = chunk.choices?.[0]
-    if (choice?.finish_reason) finishReason = choice.finish_reason
-    const delta = choice?.delta?.content
-    if (delta) {
-      content += delta
-      onDelta?.(content)
-    }
-  }
-
-  try {
-    while (!doneEvent) {
-      const { done, value } = await reader.read()
-      if (done) break
-      timers.onChunk()
-      buffer += decoder.decode(value, { stream: true })
-      const lines = buffer.split('\n')
-      buffer = lines.pop() ?? ''
-      for (const line of lines) consumeLine(line)
-    }
-    if (!doneEvent) consumeLine(buffer + decoder.decode())
-  } catch (streamError) {
-    if (!content.trim()) throw streamError
-    return { content: content.trim(), incomplete: true }
-  } finally {
-    void reader.cancel().catch(() => {})
-    reader.releaseLock()
-  }
-
-  if (!content.trim()) {
-    throw createChatError(`${provider} returned an empty response.`, provider)
-  }
-  return { content: content.trim(), incomplete: finishReason ? finishReason !== 'stop' : !doneEvent }
-}
-
-function linkAbortSignals(externalSignal: AbortSignal | undefined, controller: AbortController): () => void {
-  if (!externalSignal) return () => {}
-  if (externalSignal.aborted) {
-    controller.abort(externalSignal.reason)
-    return () => {}
-  }
-  const onAbort = () => controller.abort(externalSignal.reason)
-  externalSignal.addEventListener('abort', onAbort, { once: true })
-  return () => externalSignal.removeEventListener('abort', onAbort)
-}
-
-async function fetchBigModel({
-  messages,
-  systemPrompt,
-  proxyUrl,
-  lane,
-  signal,
-  onDelta,
-}: {
-  messages: readonly ChatMessage[]
-  systemPrompt: string
-  proxyUrl: string
-  lane: ChatLane
-  signal?: AbortSignal
-  onDelta?: StreamDelta
-}): Promise<ChatReply> {
-  const model = lane === 'fast' ? ZAI_FAST_MODEL : ZAI_MODEL
-  // GLM-5 models allocate part of max_tokens to internal reasoning before
-  // emitting visible delta.content; keep fast headroom generous and cap
-  // reasoning_effort to 'low' on both lanes to avoid empty/truncated replies.
-  const maxTokens = lane === 'fast' ? 900 : 1200
-  const payloadMessages = buildChatMessages(systemPrompt, messages)
-
-  const controller = new AbortController()
-  const unlinkSignal = linkAbortSignals(signal, controller)
-  const timers = createRequestTimers({
-    firstByteMs: TTFB_TIMEOUT_MS,
-    idleMs: 15_000,
-    totalMs: 60_000,
-    onTimeout: (reason) => {
-      controller.abort(createChatError(`BigModel timed out (${reason})`, 'BigModel'))
-    },
-  })
-
-  try {
-    const streaming = Boolean(onDelta)
-    const response = await fetch(proxyUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model,
-        messages: payloadMessages,
-        max_tokens: maxTokens,
-        temperature: 0.3,
-        stream: streaming,
-        reasoning_effort: 'low',
-      }),
-      signal: controller.signal,
-    })
-
-    if (!response.ok) {
-      await throwProviderError(response, 'BigModel')
-    }
-
-    return await readChatResponse({
-      response,
-      provider: 'BigModel',
-      streaming,
-      timers,
-      onDelta,
-    })
-  } finally {
-    unlinkSignal()
-    timers.clear()
-  }
-}
-
-async function fetchGroq({
-  messages,
-  systemPrompt,
-  proxyUrl,
-  lane,
-  signal,
-  onDelta,
-}: {
-  messages: readonly ChatMessage[]
-  systemPrompt: string
-  proxyUrl: string
-  lane: ChatLane
-  signal?: AbortSignal
-  onDelta?: StreamDelta
-}): Promise<ChatReply> {
-  // gpt-oss-20b also consumes reasoning tokens out of max_tokens; give both
-  // lanes enough headroom (within worker MAX_TOKENS_CAP = 1200) to finish cleanly.
-  const maxTokens = lane === 'fast' ? 900 : 1200
-  const payloadMessages = buildChatMessages(systemPrompt, messages)
-
-  const controller = new AbortController()
-  const unlinkSignal = linkAbortSignals(signal, controller)
-  const timers = createRequestTimers({
-    firstByteMs: TTFB_TIMEOUT_MS,
-    idleMs: 15_000,
-    totalMs: 60_000,
-    onTimeout: (reason) => {
-      controller.abort(createChatError(`Groq timed out (${reason})`, 'Groq'))
-    },
-  })
-
-  try {
-    const streaming = Boolean(onDelta)
-    const response = await fetch(proxyUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: GROQ_MODEL,
-        messages: payloadMessages,
-        max_tokens: maxTokens,
-        temperature: 0.3,
-        stream: streaming,
-      }),
-      signal: controller.signal,
-    })
-
-    if (!response.ok) {
-      await throwProviderError(
-        response,
-        'Groq',
-        'Model is warming up, try again in a moment.'
-      )
-    }
-
-    return await readChatResponse({
-      response,
-      provider: 'Groq',
-      streaming,
-      timers,
-      onDelta,
-    })
-  } finally {
-    unlinkSignal()
-    timers.clear()
-  }
 }
 
 function renderBidiSegments(segments: BidiSegment[], keyPrefix: string): ReactNode[] {
@@ -721,21 +390,19 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
     setError(null)
 
     // Suggested questions point to public facts and can answer immediately.
-    const curatedTopic = promptId ? REPLY_FOR_PROMPT[promptId] : findCuratedTopic(content)
-    const curatedReply = curatedTopic ? translateValue(lang, LOCAL_REPLIES[curatedTopic]) : null
-    if (curatedReply || !CHAT_PROXY_URL) {
-      const local = curatedReply ?? getLocalReply(content, lang)
-      if (local) {
-        setMessages((prev) => [
-          ...prev,
-          {
-            role: 'assistant',
-            content: local,
-            followUps: pickFollowUpIds(local, content, currentSection),
-          },
-        ])
-        return
-      }
+    const proxyUrl = CHAT_PROXY_URL
+    const immediate = decideImmediateReply({
+      content,
+      promptId,
+      lang,
+      proxyConfigured: Boolean(proxyUrl),
+      section: currentSection,
+    })
+    if (immediate.kind === 'answer') {
+      setMessages((prev) => [...prev, immediate.message])
+      return
+    }
+    if (immediate.kind === 'unavailable' || !proxyUrl) {
       setError(t(CHAT_COPY.limitedAnswers))
       return
     }
@@ -775,70 +442,29 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
         )
       }
 
-      let rawReply: ChatReply | null = null
-      let lastProviderError: unknown = null
-
-      try {
-        rawReply = await fetchBigModel({
-          messages: transcript,
-          systemPrompt,
-          proxyUrl: CHAT_PROXY_URL,
-          lane,
-          signal: requestAbort.signal,
-          onDelta: emitDelta,
-        })
-      } catch (providerError) {
-        if (stopRequestedRef.current) {
-          throw providerError
-        }
-        lastProviderError = providerError
-        console.error('Chat provider BigModel failed:', providerError)
-      }
-
-      const proxyRateLimited = Boolean(
-        (lastProviderError as ChatCompletionError | undefined)?.isProxyRateLimit
-      )
-
-      if (rawReply === null && !proxyRateLimited && !stopRequestedRef.current) {
-        try {
+      const rawReply = await requestModelReply({
+        content,
+        lang,
+        transcript,
+        systemPrompt,
+        proxyUrl,
+        lane,
+        signal: requestAbort.signal,
+        onDelta: emitDelta,
+        isStopped: () => stopRequestedRef.current,
+        onBeforeGroq: () => {
           streamStarted = false
-          rawReply = await fetchGroq({
-            messages: transcript,
-            systemPrompt,
-            proxyUrl: CHAT_PROXY_URL,
-            lane,
-            signal: requestAbort.signal,
-            onDelta: emitDelta,
-          })
-        } catch (providerError) {
-          if (stopRequestedRef.current) {
-            throw providerError
-          }
-          lastProviderError = providerError
-          console.error('Chat provider Groq failed:', providerError)
-        }
-      }
-
-      if (rawReply === null && !stopRequestedRef.current) {
-        const local = getLocalReply(content, lang)
-        if (local) {
-          rawReply = { content: local }
-        } else {
-          throw lastProviderError ?? new Error('No chat provider succeeded.')
-        }
-      }
+        },
+      })
 
       if (rawReply) {
-        const reply = streamStarted ? rawReply.content : shortenReply(rawReply.content)
-        const finalMessage: ChatMessage = {
-          role: 'assistant',
-          content: reply,
-          incomplete: stopRequestedRef.current || rawReply.incomplete,
-          followUps:
-            stopRequestedRef.current || rawReply.incomplete
-              ? undefined
-              : pickFollowUpIds(reply, content, currentSection),
-        }
+        const finalMessage = buildFinalMessage({
+          reply: rawReply,
+          streamed: streamStarted,
+          stopped: stopRequestedRef.current,
+          question: content,
+          section: currentSection,
+        })
         setMessages((prev) => [...(streamStarted ? prev.slice(0, -1) : prev), finalMessage])
       }
     } catch (caughtError) {
@@ -863,8 +489,7 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
       setMessages(messages)
       if (!retry) setInput((current) => current || content)
       console.error('Chat failed across all configured providers:', caughtError)
-      const status = (caughtError as ChatCompletionError | undefined)?.status
-      setError(t(status === 429 ? CHAT_COPY.rateLimited : CHAT_COPY.genericError))
+      setError(t(chatErrorKind(caughtError) === 'rate-limited' ? CHAT_COPY.rateLimited : CHAT_COPY.genericError))
     } finally {
       if (activeAbortRef.current === requestAbort) {
         activeAbortRef.current = null
