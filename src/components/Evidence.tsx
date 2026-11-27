@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { formatClaim } from '@/lib/claims'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 
 const copy = {
@@ -27,7 +28,7 @@ const evidenceItems = [
   {
     id: 'thesis-pdf',
     title: { en: 'Master thesis PDF', de: 'Masterarbeit PDF', fr: 'PDF du mémoire', es: 'PDF de la tesis', ar: 'PDF الرسالة' },
-    meta: { en: '99.03% ± 0.07% AUROC', de: '99.03% ± 0.07% AUROC', fr: '99.03% ± 0.07% AUROC', es: '99.03% ± 0.07% AUROC', ar: '\u206699.03%\u00A0±\u00A00.07% AUROC\u2069' },
+    meta: { en: formatClaim('thesis.mean', 'en', 'full'), de: formatClaim('thesis.mean', 'de', 'full'), fr: formatClaim('thesis.mean', 'fr', 'full'), es: formatClaim('thesis.mean', 'es', 'full'), ar: formatClaim('thesis.mean', 'ar', 'full') },
     href: '/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf',
     label: 'Proof',
   },
@@ -39,7 +40,7 @@ const evidenceItems = [
     // all, which is why spec 001 repointed this card here. Keep the two cards keyed by
     // `id`, not `href`.
     title: { en: 'Industrial OOD baseline (thesis)', de: 'Industrielle OOD-Baseline (Thesis)', fr: 'Baseline OOD industrielle (mémoire)', es: 'Baseline OOD industrial (tesis)', ar: 'خط الأساس OOD الصناعي (الرسالة)' },
-    meta: { en: '0.8673 ± 0.0230 AUROC · FTI_Zer0P 5-fold', de: '0.8673 ± 0.0230 AUROC · FTI_Zer0P 5-fach', fr: '0.8673 ± 0.0230 AUROC · FTI_Zer0P 5-plis', es: '0.8673 ± 0.0230 AUROC · FTI_Zer0P 5-folds', ar: '\u20660.8673\u00A0±\u00A00.0230 AUROC\u2069 · FTI_Zer0P 5 طيات' },
+    meta: { en: `${formatClaim('inkjet.baseline', 'en', 'metric')} · FTI_Zer0P 5-fold`, de: `${formatClaim('inkjet.baseline', 'de', 'metric')} · FTI_Zer0P 5-fach`, fr: `${formatClaim('inkjet.baseline', 'fr', 'metric')} · FTI_Zer0P 5-plis`, es: `${formatClaim('inkjet.baseline', 'es', 'metric')} · FTI_Zer0P 5-folds`, ar: `${formatClaim('inkjet.baseline', 'ar', 'metric')} · FTI_Zer0P 5 طيات` },
     href: '/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf',
     label: 'Proof',
   },

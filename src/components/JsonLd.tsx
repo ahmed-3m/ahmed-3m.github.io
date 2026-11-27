@@ -1,5 +1,6 @@
 'use client'
 
+import { DERIVED, formatClaim } from '@/lib/claims'
 import { serializeJsonLd } from '@/lib/serialize-json-ld'
 
 // Server-rendered <script> elements are serialized twice into the delivered
@@ -148,7 +149,7 @@ export function WebsiteSchema() {
     '@type': 'WebSite',
     name: 'Ahmed Mohammed — AI/ML Engineer',
     url: 'https://ahmed-3m.github.io',
-    description: 'Portfolio of Ahmed Mohammed — AI/ML Engineer building AI systems end to end: computer vision, industrial ML, diffusion models, OOD detection, LLM products, and agent tooling. Builder of Sihem and mergeproof. 99.03% ± 0.07% AUROC on a within-CIFAR airplane-vs-rest binary OOD split (single ID class, 3-seed mean); 0.8673 ± 0.0230 AUROC on public FTI_Zer0P (5-fold CV). M.Sc. AI (thesis submitted Jul 2026, degree completed 25 Sep 2026, graded 1) from JKU Linz.',
+    description: `Portfolio of Ahmed Mohammed — AI/ML Engineer building AI systems end to end: computer vision, industrial ML, diffusion models, OOD detection, LLM products, and agent tooling. Builder of Sihem and mergeproof. ${formatClaim('thesis.mean', 'en', 'metric')} on a within-CIFAR airplane-vs-rest binary OOD split (single ID class, 3-seed mean); ${formatClaim('inkjet.baseline', 'en', 'metric')} on public FTI_Zer0P (5-fold CV). M.Sc. AI (thesis submitted Jul 2026, degree completed 25 Sep 2026, graded 1) from JKU Linz.`,
     author: {
       '@type': 'Person',
       name: 'Ahmed Mohammed',
@@ -179,7 +180,7 @@ export function ProjectsSchema() {
         item: {
           '@type': 'SoftwareApplication',
           name: 'OOD Detection Framework',
-          description: 'Novel use of conditional diffusion models as generative classifiers for out-of-distribution detection. Achieved 99.03% ± 0.07% average AUROC on a within-CIFAR airplane-vs-rest binary split (single ID class; not comparable to multi-class CIFAR-10 OOD benchmarks), improving over non-separated baseline (92.52% ± 11.07%) by 6.5 percentage points via class-conditional separation loss with low seed standard deviation. Master\'s Thesis at JKU Linz (graded 1), 2026.',
+          description: `Novel use of conditional diffusion models as generative classifiers for out-of-distribution detection. Achieved ${formatClaim('thesis.mean', 'en', 'full')} on a within-CIFAR airplane-vs-rest binary split (single ID class; not comparable to multi-class CIFAR-10 OOD benchmarks), improving over non-separated baseline (${formatClaim('thesis.baseline', 'en')}) by ${DERIVED.separationGainPp} percentage points via class-conditional separation loss with low seed standard deviation. Master's Thesis at JKU Linz (graded 1), 2026.`,
           applicationCategory: 'DeveloperApplication',
           url: 'https://github.com/ahmed-3m/DiffusionOOD',
           author: { '@type': 'Person', name: 'Ahmed Mohammed' },
@@ -191,7 +192,7 @@ export function ProjectsSchema() {
         item: {
           '@type': 'SoftwareApplication',
           name: 'InkjetOOD — Industrial Defect Detection (FTI_Zer0P)',
-          description: 'YOLO + conditional diffusion pipeline for industrial defect detection on inkjet-printed building components, evaluated on the public FTI_Zer0P dataset under strict 5-fold cross-validation (0.8673 ± 0.0230 AUROC baseline; separation loss showed no statistically significant gain after Holm correction). Part of the Zer0P project with PROFACTOR GmbH.',
+          description: `YOLO + conditional diffusion pipeline for industrial defect detection on inkjet-printed building components, evaluated on the public FTI_Zer0P dataset under strict 5-fold cross-validation (${formatClaim('inkjet.baseline', 'en', 'metric')} baseline; separation loss showed no statistically significant gain after Holm correction). Part of the Zer0P project with PROFACTOR GmbH.`,
           applicationCategory: 'BusinessApplication',
           url: 'https://github.com/ahmed-3m/InkjetOOD',
           author: { '@type': 'Person', name: 'Ahmed Mohammed' },
@@ -252,7 +253,7 @@ export function ResearchSchema() {
     '@type': ['Thesis', 'ScholarlyArticle'],
     headline: 'Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control',
     name: 'Conditional Diffusion Models as Generative Classifiers for Out-of-Distribution Detection in Inkjet Print Quality Control',
-    abstract: 'This thesis treats conditional diffusion models as generative classifiers where class-conditional reconstruction error serves as the OOD signal. We develop a binary conditional diffusion model for CIFAR-10 OOD detection (within-CIFAR airplane-vs-rest split, single ID class; not comparable to multi-class CIFAR-10 OOD benchmarks) and introduce a class-conditional separation loss that improves both performance and stability. The separation loss achieves a 99.03% ± 0.07% average AUROC (3-seed mean), showing a +6.5pp gain and dramatically lower seed standard deviation over the baseline (92.52% ± 11.07%). We further evaluate the public InkjetOOD pipeline on the public FTI_Zer0P dataset under strict 5-fold cross-validation, reaching 0.8673 ± 0.0230 AUROC and characterizing its boundary conditions.',
+    abstract: `This thesis treats conditional diffusion models as generative classifiers where class-conditional reconstruction error serves as the OOD signal. We develop a binary conditional diffusion model for CIFAR-10 OOD detection (within-CIFAR airplane-vs-rest split, single ID class; not comparable to multi-class CIFAR-10 OOD benchmarks) and introduce a class-conditional separation loss that improves both performance and stability. The separation loss achieves a ${formatClaim('thesis.mean', 'en', 'full')}, showing a ${formatClaim('thesis.gainPp', 'en')} gain and dramatically lower seed standard deviation over the baseline (${formatClaim('thesis.baseline', 'en')}). We further evaluate the public InkjetOOD pipeline on the public FTI_Zer0P dataset under strict 5-fold cross-validation, reaching ${formatClaim('inkjet.baseline', 'en', 'metric')} and characterizing its boundary conditions.`,
     url: 'https://ahmed-3m.github.io/Mohammed_Ahmed_Thesis_Diffusion_OOD_Detection.pdf',
     // The JKU university library record is the authoritative bibliographic entry.
     sameAs: ['https://epub.jku.at/obvulihs/content/titleinfo/14374221'],

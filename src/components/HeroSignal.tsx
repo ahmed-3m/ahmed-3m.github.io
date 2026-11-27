@@ -1,5 +1,6 @@
 'use client'
 
+import { claimParts } from '@/lib/claims'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { BENCHMARK_DATASETS, CIFAR_LAMBDA_SWEEP } from '@/lib/ood-explorer-data'
 
@@ -70,7 +71,7 @@ const copy = {
     de: 'Hauptwert · Mittel aus 3 Seeds',
     fr: 'Chiffre clé · moyenne sur 3 seeds',
     es: 'Cifra principal · media de 3 seeds',
-    ar: 'الرقم الرئيسي · متوسط 3 تشغيلات',
+    ar: 'الرقم الرئيسي · متوسط 3 بذور',
   },
   explore: {
     en: 'Explore the interactive lab',
@@ -80,11 +81,11 @@ const copy = {
     ar: 'استكشف المختبر التفاعلي',
   },
   chartLabel: {
-    en: 'Histogram of diffusion anomaly scores: in-distribution airplane images cluster at low scores, out-of-distribution images at higher scores, with the TPR 95 threshold between them. AUROC 98.98%, FPR at 95% TPR 4.7%.',
-    de: 'Histogramm der Diffusions-Anomaliescores: In-Distribution-Flugzeugbilder liegen bei niedrigen Scores, Out-of-Distribution-Bilder bei höheren, dazwischen die TPR-95-Schwelle. AUROC 98,98 %, FPR bei 95 % TPR 4,7 %.',
-    fr: "Histogramme des scores d'anomalie par diffusion : les images d'avions in-distribution se regroupent aux scores bas, les images hors distribution aux scores plus élevés, avec le seuil TPR 95 entre les deux. AUROC 98,98 %, FPR à 95 % de TPR 4,7 %.",
-    es: 'Histograma de puntuaciones de anomalía por difusión: las imágenes de aviones en distribución se agrupan en puntuaciones bajas y las fuera de distribución en puntuaciones más altas, con el umbral TPR 95 entre ambas. AUROC 98,98 %, FPR al 95 % de TPR 4,7 %.',
-    ar: 'مدرج تكراري لدرجات الشذوذ: صور الطائرات داخل التوزيع تتجمع عند درجات منخفضة، والصور خارج التوزيع عند درجات أعلى، مع عتبة TPR 95 بينهما. AUROC 98.98%، وFPR عند 95% TPR يساوي 4.7%.',
+    en: 'Histogram of diffusion anomaly scores: in-distribution airplane images cluster at low scores, out-of-distribution images at higher scores, with the TPR 95 threshold between them. Seed-42 run: AUROC 98.98%, FPR at 95% TPR 4.7%.',
+    de: 'Histogramm der Diffusions-Anomaliescores: In-Distribution-Flugzeugbilder liegen bei niedrigen Scores, Out-of-Distribution-Bilder bei höheren, dazwischen die TPR-95-Schwelle. Lauf mit Seed 42: AUROC 98,98 %, FPR bei 95 % TPR 4,7 %.',
+    fr: "Histogramme des scores d'anomalie par diffusion : les images d'avions in-distribution se regroupent aux scores bas, les images hors distribution aux scores plus élevés, avec le seuil TPR 95 entre les deux. Run seed 42 : AUROC 98,98 %, FPR à 95 % de TPR 4,7 %.",
+    es: 'Histograma de puntuaciones de anomalía por difusión: las imágenes de aviones en distribución se agrupan en puntuaciones bajas y las fuera de distribución en puntuaciones más altas, con el umbral TPR 95 entre ambas. Ejecución con seed 42: AUROC 98,98 %, FPR al 95 % de TPR 4,7 %.',
+    ar: 'مدرج تكراري لدرجات الشذوذ: صور الطائرات داخل التوزيع تتجمع عند درجات منخفضة، والصور خارج التوزيع عند درجات أعلى، مع عتبة TPR 95 بينهما. تشغيل البذرة 42: AUROC 98.98%، وFPR عند 95% TPR يساوي 4.7%.',
   },
 } satisfies Record<string, TranslationMap>
 
@@ -108,6 +109,7 @@ function stepArea(pct: readonly number[], yMax: number): string {
 
 export default function HeroSignal() {
   const { lang, t } = useI18n()
+  const mean = claimParts('thesis.mean', lang)
   const ds = BENCHMARK_DATASETS.within_cifar
   const h = ds.histogram
   const yMax = Math.max(...h.id_pct, ...h.ood_pct)
@@ -148,8 +150,8 @@ export default function HeroSignal() {
         <div className="cd-signal-mean">
           <span className="cd-signal-mean-label">{t(copy.meanLabel)}</span>
           <span className="cd-signal-mean-value">
-            AUROC {SWEEP_002.withinCifarMean.toFixed(2)}%
-            {SWEEP_002.withinCifarStd != null && <span> ± {SWEEP_002.withinCifarStd.toFixed(2)}</span>}
+            AUROC {mean.number}{mean.unit}
+            <span> ± {mean.spread}{mean.unit}</span>
           </span>
         </div>
       )}

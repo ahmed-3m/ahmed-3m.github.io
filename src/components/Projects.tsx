@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useRef } from 'react'
 import Link from 'next/link'
+import { claimParts } from '@/lib/claims'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { portfolioCopy } from '@/lib/portfolio-copy'
 import MergeproofDemo from '@/components/MergeproofDemo'
@@ -21,11 +22,11 @@ const copy = {
     ar: 'جرّب بوابة طلبات الدمج التفاعلية',
   },
   oodMetric: {
-    en: 'AUROC · CIFAR-10 airplanes vs. other classes · 3-run mean ± SD',
-    de: 'AUROC · CIFAR-10: Flugzeuge gegen andere Klassen · Mittelwert ± Standardabweichung (3 Läufe)',
-    fr: 'AUROC · CIFAR-10 : avions contre les autres classes · moyenne ± écart-type (3 essais)',
-    es: 'AUROC · CIFAR-10: aviones frente a otras clases · media ± desviación estándar (3 pruebas)',
-    ar: 'AUROC · CIFAR-10: الطائرات مقابل الفئات الأخرى · المتوسط ± الانحراف المعياري (3 تجارب)',
+    en: 'AUROC · CIFAR-10 airplanes vs. other classes · 3-seed mean ± SD',
+    de: 'AUROC · CIFAR-10: Flugzeuge gegen andere Klassen · Mittelwert ± Standardabweichung über drei Läufe',
+    fr: 'AUROC · CIFAR-10 : avions contre les autres classes · moyenne ± écart-type sur trois essais',
+    es: 'AUROC · CIFAR-10: aviones frente a otras clases · media ± desviación estándar en tres ejecuciones',
+    ar: 'AUROC · CIFAR-10: الطائرات مقابل الفئات الأخرى · المتوسط ± الانحراف المعياري عبر ثلاث تجارب',
   },
   inkjetMetric: {
     en: 'Baseline AUROC · FTI_Zer0P · 5-fold cross-validation',
@@ -211,7 +212,9 @@ function AdditionalProjectCards() {
 }
 
 export function FullProjects() {
-  const { t } = useI18n()
+  const { t, lang } = useI18n()
+  const ood = claimParts('thesis.mean', lang)
+  const inkjet = claimParts('inkjet.baseline', lang)
 
   return (
     <section id="projects" className="cd-section">
@@ -231,7 +234,7 @@ export function FullProjects() {
               </div>
             </div>
             <div className="cd-proj-metric-big">
-              <div className="cd-pc-metric" style={{ marginTop: 0 }}><bdi dir="ltr">99.03% <span>± 0.07%</span></bdi><br /><span>{t(copy.oodMetric)}</span></div>
+              <div className="cd-pc-metric" style={{ marginTop: 0 }}><bdi dir="ltr">{ood.number}{ood.unit} <span>± {ood.spread}{ood.unit}</span></bdi><br /><span>{t(copy.oodMetric)}</span></div>
               <div className="cd-proj-actions" style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
                 <Link href="/case-studies/diffusion-ood/" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.caseStudyLink)} <RtlArrow /></Link>
                 <a href="https://github.com/ahmed-3m/DiffusionOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.code)} <RtlArrow /></a>
@@ -244,7 +247,7 @@ export function FullProjects() {
             <div className="cd-pc-eyebrow">{t(copy.track2Eyebrow)}</div>
             <div className="cd-pc-title">{t(copy.inkjetTitle)}</div>
             <div className="cd-pc-desc">{t(copy.inkjetDesc)}</div>
-            <div className="cd-pc-metric"><bdi dir="ltr">0.8673 <span>± 0.0230</span></bdi><br /><span>{t(copy.inkjetMetric)}</span></div>
+            <div className="cd-pc-metric"><bdi dir="ltr">{inkjet.number} <span>± {inkjet.spread}</span></bdi><br /><span>{t(copy.inkjetMetric)}</span></div>
             <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
               <a href="https://github.com/ahmed-3m/InkjetOOD" target="_blank" rel="noopener noreferrer" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.code)} <RtlArrow /></a>
               <Link href="/case-studies/inkjet-ood/" className="cd-proj-link" style={{ fontSize: 12 }}>{t(copy.caseStudy)} <RtlArrow /></Link>

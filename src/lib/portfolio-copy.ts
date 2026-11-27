@@ -1,4 +1,11 @@
-import type { TranslationMap } from '@/lib/i18n-config'
+import { claimParts, formatClaim, type ClaimId } from '@/lib/claims'
+import type { Language, TranslationMap } from '@/lib/i18n-config'
+
+/** A registered figure without Arabic isolates, for text that already isolates it. */
+const bare = (id: ClaimId, lang: Language) => {
+  const p = claimParts(id, lang)
+  return p.spread ? `${p.number}${p.unit} ± ${p.spread}${p.unit}` : `${p.number}${p.unit}`
+}
 
 export const diffusionExplorerHref = '/case-studies/diffusion-ood/#ood-explorer'
 
@@ -236,7 +243,7 @@ export const selectedWork = [
       ar: 'خلال عقد بحثي مع PROFACTOR عام 2024، طوّرت نظام رؤية يحدّد مواقع العناصر المطبوعة ويشير إلى الأنماط غير المألوفة. واصلت هذا العمل في رسالة الماجستير بجامعة يوهانس كيبلر في لينتس.',
     },
     link: { en: 'See the industrial evaluation', de: 'Industrielle Evaluation ansehen', fr: 'Voir l’évaluation industrielle', es: 'Ver la evaluación industrial', ar: 'اطّلع على التقييم الصناعي' },
-    metricValue: '0.8673 ± 0.0230',
+    metricValue: formatClaim('inkjet.baseline', 'en'),
     metricLabel: {
       en: 'AUROC · FTI_Zer0P 5-fold CV baseline',
       de: 'AUROC · FTI_Zer0P 5-fach-CV-Baseline',
@@ -259,13 +266,13 @@ export const selectedWork = [
       ar: 'قد يجيب النموذج بثقة حتى عندما يرى نوعًا جديدًا من الصور. في جامعة يوهانس كيبلر في لينتس اختبرت ما إذا كانت طريقة إعادة بناء الصورة تكشف أنها خارج نطاق ما يعرفه النموذج.',
     },
     link: { en: 'Read the thesis case study', de: 'Fallstudie zur Masterarbeit lesen', fr: 'Lire l’étude de cas du mémoire', es: 'Leer el estudio de caso de la tesis', ar: 'اقرأ دراسة حالة الرسالة' },
-    metricValue: '99.03% ± 0.07%',
+    metricValue: formatClaim('thesis.mean', 'en'),
     metricLabel: {
-      en: 'AUROC · CIFAR-10 airplane-vs-rest (3 seeds, +6.5pp)',
-      de: 'AUROC · CIFAR-10 Flugzeug-vs-Rest (3 Seeds, +6.5pp)',
-      fr: 'AUROC · CIFAR-10 avion-vs-reste (3 seeds, +6.5pp)',
-      es: 'AUROC · CIFAR-10 avión-vs-resto (3 seeds, +6.5pp)',
-      ar: '\u2066AUROC · CIFAR-10\u2069 طائرة مقابل الباقي (\u20663\u2069 بذور، \u2066+6.5pp\u2069)',
+      en: `AUROC · CIFAR-10 airplane-vs-rest (3 seeds, ${formatClaim('thesis.gainPp', 'en')})`,
+      de: `AUROC · CIFAR-10 Flugzeug-vs-Rest (3-Seed-Mittel, ${formatClaim('thesis.gainPp', 'de')})`,
+      fr: `AUROC · CIFAR-10 avion-vs-reste (3 seeds, ${formatClaim('thesis.gainPp', 'fr')})`,
+      es: `AUROC · CIFAR-10 avión-vs-resto (3 seeds, ${formatClaim('thesis.gainPp', 'es')})`,
+      ar: `\u2066AUROC · CIFAR-10\u2069 طائرة مقابل الباقي (\u20663\u2069 بذور، ${formatClaim('thesis.gainPp', 'ar')})`,
     },
     tags: ['PyTorch', { en: 'Separation loss', de: 'Separation Loss', fr: 'Separation loss', es: 'Separation loss', ar: 'خسارة الفصل' }, 'CIFAR-10'],
   },
@@ -326,13 +333,13 @@ export const focusPillars: readonly FocusPillar[] = [
       es: 'Detección OOD por difusión condicional',
       ar: 'كشف OOD بنماذج الانتشار الشرطية',
     },
-    metricValue: '99.03% ± 0.07%',
+    metricValue: formatClaim('thesis.mean', 'en'),
     metricSub: {
-      en: 'AUROC · CIFAR-10 airplane-vs-rest · 3-seed mean (+6.5pp vs 92.52% ± 11.07%) · plot: seed 42 (98.98%, FPR@95 4.7%)',
-      de: 'AUROC · CIFAR-10 Flugzeug-vs-Rest · 3-Seed-Mittel (+6.5pp vs. 92.52% ± 11.07%) · Plot: Seed 42 (98.98%, FPR@95 4.7%)',
-      fr: 'AUROC · CIFAR-10 avion-vs-reste · moyenne 3 seeds (+6.5pp vs 92.52% ± 11.07%) · graphe : seed 42 (98.98%, FPR@95 4.7%)',
-      es: 'AUROC · CIFAR-10 avión-vs-resto · media 3 seeds (+6.5pp vs 92.52% ± 11.07%) · gráfico: seed 42 (98.98%, FPR@95 4.7%)',
-      ar: '\u2066AUROC · CIFAR-10\u2069 طائرة مقابل الباقي · متوسط \u20663\u2069 بذور (\u2066+6.5pp\u2069 مقابل \u206692.52% ± 11.07%\u2069) · الرسم: \u2066seed 42 (98.98%, FPR@95 4.7%)\u2069',
+      en: `AUROC · CIFAR-10 airplane-vs-rest · 3-seed mean (${formatClaim('thesis.gainPp', 'en')} vs ${formatClaim('thesis.baseline', 'en')}) · plot: seed 42 (${formatClaim('thesis.seed42', 'en', 'value')}, FPR@95 ${formatClaim('thesis.seed42Fpr95', 'en', 'value')})`,
+      de: `AUROC · CIFAR-10 Flugzeug-vs-Rest · 3-Seed-Mittel (${formatClaim('thesis.gainPp', 'de')} vs. ${formatClaim('thesis.baseline', 'de')}) · Plot: Seed 42 (${formatClaim('thesis.seed42', 'de', 'value')}, FPR@95 ${formatClaim('thesis.seed42Fpr95', 'de', 'value')})`,
+      fr: `AUROC · CIFAR-10 avion-vs-reste · moyenne 3 seeds (${formatClaim('thesis.gainPp', 'fr')} vs ${formatClaim('thesis.baseline', 'fr')}) · graphe : seed 42 (${formatClaim('thesis.seed42', 'fr', 'value')}, FPR@95 ${formatClaim('thesis.seed42Fpr95', 'fr', 'value')})`,
+      es: `AUROC · CIFAR-10 avión-vs-resto · media 3 seeds (${formatClaim('thesis.gainPp', 'es')} vs ${formatClaim('thesis.baseline', 'es')}) · gráfico: seed 42 (${formatClaim('thesis.seed42', 'es', 'value')}, FPR@95 ${formatClaim('thesis.seed42Fpr95', 'es', 'value')})`,
+      ar: `\u2066AUROC · CIFAR-10\u2069 طائرة مقابل الباقي · متوسط \u20663\u2069 بذور (\u2066${bare('thesis.gainPp', 'ar')}\u2069 مقابل \u2066${bare('thesis.baseline', 'ar')}\u2069) · الرسم: \u2066seed 42 (${bare('thesis.seed42', 'ar')}, FPR@95 ${bare('thesis.seed42Fpr95', 'ar')})\u2069`,
     },
     ctaLabel: {
       en: 'Open interactive OOD explorer',
@@ -353,7 +360,7 @@ export const focusPillars: readonly FocusPillar[] = [
       es: 'Inspección industrial de defectos en dos etapas',
       ar: 'فحص صناعي للعيوب على مرحلتين',
     },
-    metricValue: '0.8673 ± 0.0230',
+    metricValue: formatClaim('inkjet.baseline', 'en'),
     metricSub: {
       en: 'AUROC · FTI_Zer0P 5-fold CV baseline (separation loss non-significant after Holm correction)',
       de: 'AUROC · FTI_Zer0P 5-fach-CV-Baseline (Separation Loss nach Holm-Korrektur nicht signifikant)',

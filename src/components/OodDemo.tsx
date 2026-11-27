@@ -1,8 +1,9 @@
 'use client'
 
 import React, { useState, useMemo, useId, useRef, type KeyboardEvent } from 'react'
+import { claimParts, formatClaim, formatLocaleNumber, type ClaimId } from '@/lib/claims'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
-import { languageLocale } from '@/lib/i18n-config'
+import { languageLocale, type Language } from '@/lib/i18n-config'
 import {
   BENCHMARK_DATASETS,
   LAMBDA0_SEED42_HISTOGRAM,
@@ -20,6 +21,16 @@ import {
   type KAblationEntry,
   type TimestepStrategyEntry,
 } from '@/lib/ood-explorer-data'
+
+/** A registered figure with its spread and no Arabic isolates, for a `<bdi>` that isolates it. */
+const bareClaim = (id: ClaimId, lang: Language) => {
+  const p = claimParts(id, lang)
+  return p.spread ? `${p.number}${p.unit} ± ${p.spread}${p.unit}` : `${p.number}${p.unit}`
+}
+
+/** Uniform timestep sampling's AUROC (thesis timestep-strategy table), as the table gives it. */
+const uniformAuroc = (key: 'cifarAuroc' | 'svhnAuroc', lang: Language) =>
+  formatLocaleNumber(`${(TIMESTEP_STRATEGIES.find((s) => s.key === 'uniform')?.[key] ?? NaN).toFixed(2)}%`, lang)
 
 type LabTab = 'calibration' | 'timesteps' | 'ablations'
 
@@ -230,11 +241,11 @@ const copy = {
     ar: 'نظام هدف التدريب (معادلة 3.24: L = L_diffusion + λ · L_sep)',
   },
   regimeSep: {
-    en: 'λ = 0.02 · With Separation Loss (99.03% ± 0.07% 3-seed · 98.98% seed-42)',
-    de: 'λ = 0.02 · Mit Separation Loss (99,03% ± 0,07% 3-Seeds · 98,98% Seed-42)',
-    fr: 'λ = 0.02 · Avec Separation Loss (99,03% ± 0,07% 3 graines · 98,98% seed-42)',
-    es: 'λ = 0.02 · Con Separation Loss (99.03% ± 0.07% 3 semillas · 98.98% seed-42)',
-    ar: 'λ = 0.02 · مع خسارة الفصل (99.03% ± 0.07% لـ 3 بذور · 98.98% لبذرة 42)',
+    en: `λ = 0.02 · With Separation Loss (${formatClaim('thesis.mean', 'en')} 3-seed · ${formatClaim('thesis.seed42', 'en', 'value')} seed-42)`,
+    de: `λ = 0.02 · Mit Separation Loss (${formatClaim('thesis.mean', 'de')} 3-Seeds · ${formatClaim('thesis.seed42', 'de', 'value')} Seed-42)`,
+    fr: `λ = 0.02 · Avec Separation Loss (${formatClaim('thesis.mean', 'fr')} 3 graines · ${formatClaim('thesis.seed42', 'fr', 'value')} seed-42)`,
+    es: `λ = 0.02 · Con Separation Loss (${formatClaim('thesis.mean', 'es')} 3 semillas · ${formatClaim('thesis.seed42', 'es', 'value')} seed-42)`,
+    ar: `λ = 0.02 · مع خسارة الفصل (${formatClaim('thesis.mean', 'ar')} لـ 3 بذور · ${formatClaim('thesis.seed42', 'ar', 'value')} لبذرة 42)`,
   },
   regimeBase: {
     en: 'λ = 0.00 · Baseline No Sep. Loss (92.52% ± 11.07% 3-seed · 79.73% seed-42)',
@@ -475,11 +486,11 @@ const copy = {
     ar: 'تباين المتشعب Δ_OOD(t) (معادلة 3.15)',
   },
   uniformSummaryNote: {
-    en: 'Uniform t ~ U[1,1000] achieves 98.9% CIFAR / 95.4% SVHN',
-    de: 'Gleichverteilt t ~ U[1,1000] erreicht 98,9% CIFAR / 95,4% SVHN',
-    fr: 'Uniforme t ~ U[1,1000] atteint 98,9% CIFAR / 95,4% SVHN',
-    es: 'Uniforme t ~ U[1,1000] alcanza 98.9% CIFAR / 95.4% SVHN',
-    ar: 'التوزيع المنتظم t ~ U[1,1000] يحقق 98.9% على CIFAR و95.4% على SVHN',
+    en: `Uniform t ~ U[1,1000] achieves ${uniformAuroc('cifarAuroc', 'en')} CIFAR / ${uniformAuroc('svhnAuroc', 'en')} SVHN`,
+    de: `Gleichverteilt t ~ U[1,1000] erreicht ${uniformAuroc('cifarAuroc', 'de')} CIFAR / ${uniformAuroc('svhnAuroc', 'de')} SVHN`,
+    fr: `Uniforme t ~ U[1,1000] atteint ${uniformAuroc('cifarAuroc', 'fr')} CIFAR / ${uniformAuroc('svhnAuroc', 'fr')} SVHN`,
+    es: `Uniforme t ~ U[1,1000] alcanza ${uniformAuroc('cifarAuroc', 'es')} CIFAR / ${uniformAuroc('svhnAuroc', 'es')} SVHN`,
+    ar: `التوزيع المنتظم t ~ U[1,1000] يحقق ${uniformAuroc('cifarAuroc', 'ar')} على CIFAR و${uniformAuroc('svhnAuroc', 'ar')} على SVHN`,
   },
   scoringHeading: {
     en: 'Why Contrastive Scoring Is Essential (Table 6.5 & D.3 · Seed 42, λ = 0.01, K = 50)',
@@ -1170,11 +1181,11 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
               <div style={{ fontSize: 11, color: 'var(--cd-fg3)' }}>
                 {regime === 'base' ? (
                   <>
-                    {t(copy.kpiThreeSeed)}: <bdi dir="ltr">92.52% ± 11.07%</bdi>
+                    {t(copy.kpiThreeSeed)}: <bdi dir="ltr">{bareClaim('thesis.baseline', lang)}</bdi>
                   </>
                 ) : datasetKey === 'within_cifar' ? (
                   <>
-                    {t(copy.kpiThreeSeed)}: <bdi dir="ltr">99.03% ± 0.07%</bdi>
+                    {t(copy.kpiThreeSeed)}: <bdi dir="ltr">{bareClaim('thesis.mean', lang)}</bdi>
                   </>
                 ) : (
                   <bdi dir="ltr">AUPRC: {activeMeta.auprc.toFixed(2)}%</bdi>
@@ -1615,10 +1626,10 @@ export default function OodDemo({ id, heading: Heading = 'h3' }: { id?: string; 
                   </div>
                   <div style={{ textAlign: 'end' }}>
                     <div style={{ color: 'var(--cd-accent)', fontWeight: 700 }}>
-                      <bdi dir="ltr">CIFAR: {strat.cifarAuroc.toFixed(1)}%</bdi>
+                      <bdi dir="ltr">CIFAR: {formatLocaleNumber(`${strat.cifarAuroc.toFixed(2)}%`, lang)}</bdi>
                     </div>
                     <div style={{ color: 'var(--cd-fg2)', fontSize: 11 }}>
-                      <bdi dir="ltr">SVHN: {strat.svhnAuroc.toFixed(1)}%</bdi>
+                      <bdi dir="ltr">SVHN: {formatLocaleNumber(`${strat.svhnAuroc.toFixed(2)}%`, lang)}</bdi>
                     </div>
                   </div>
                 </div>

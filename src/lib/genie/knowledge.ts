@@ -1,4 +1,5 @@
 import { blogPostsMeta } from '@/lib/blog-posts-meta'
+import { claimParts, formatClaim } from '@/lib/claims'
 import {
   BENCHMARK_DATASETS,
   CIFAR_LAMBDA_SWEEP,
@@ -47,6 +48,8 @@ export interface KnowledgeChunk {
   links: string[]
 }
 
+/** The headline mean as a retrieval keyword (`99.03`), from the claims registry. */
+const THESIS_MEAN_KEYWORD = claimParts('thesis.mean', 'en').number
 const cifarBase = CIFAR_LAMBDA_SWEEP.find((entry) => entry.lambda === '0.0')!
 const cifarOptimal = CIFAR_LAMBDA_SWEEP.find((entry) => entry.isOptimal)!
 const cifarGainPp = (cifarOptimal.withinCifarMean - cifarBase.withinCifarMean).toFixed(1)
@@ -206,9 +209,9 @@ export const KNOWLEDGE_CHUNKS: readonly KnowledgeChunk[] = [
       'cifar',
       'cifar-10',
       'airplane',
-      '99.03',
+      THESIS_MEAN_KEYWORD,
       '98.98',
-      '92.52',
+      claimParts('thesis.baseline', 'en').number,
       '79.73',
       'seed-42',
       'seed 42',
@@ -326,7 +329,7 @@ export const KNOWLEDGE_CHUNKS: readonly KnowledgeChunk[] = [
       'yolov8n',
       '5-fold',
       'cross-validation',
-      '0.8673',
+      claimParts('inkjet.baseline', 'en').number,
       'holm',
       'negative result',
       'adagn',
@@ -496,13 +499,13 @@ export const KNOWLEDGE_CHUNKS: readonly KnowledgeChunk[] = [
       'article',
       'post',
       'ood-diffusion-thesis',
-      '99.03',
+      THESIS_MEAN_KEYWORD,
       'separation loss',
       'diffusion thesis',
       'artikel',
       'مقال',
     ],
-    title: 'Blog: How I Reached 99.03% AUROC on OOD Detection',
+    title: `Blog: How I Reached ${formatClaim('thesis.mean', 'en', 'full')} on OOD Detection`,
     facts: `${blogFact('ood-diffusion-thesis')} Qualifier: the headline ${cifarHeadline} AUROC is the 3-seed mean at lambda=${cifarOptimal.lambda} on the binary CIFAR-10 airplane-vs-rest split.`,
     links: [THESIS_POST_URL, BLOG_URL],
   },
