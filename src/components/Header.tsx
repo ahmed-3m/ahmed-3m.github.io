@@ -6,7 +6,7 @@ import { ArrowRight, Check, ChevronDown, Globe2, Layers, Moon, Sun } from 'lucid
 import { useTheme } from '@/lib/ThemeContext'
 import { languageOptions, useI18n, type TranslationMap, isLanguage } from '@/lib/i18n'
 import { portfolioCopy } from '@/lib/portfolio-copy'
-import { setPortfolioView, usePortfolioView } from '@/lib/portfolio-view'
+import { buildHomeHref, setPortfolioView, usePortfolioView } from '@/lib/portfolio-view'
 
 const links = [
   { href: '#projects', label: { en: 'Projects', de: 'Projekte', fr: 'Projets', es: 'Proyectos', ar: 'المشاريع' } },
@@ -112,11 +112,11 @@ function NavLink({ href, label, onClick }: { href: string; label: TranslationMap
   )
 }
 
-function NavCta({ isHome, onClick }: { isHome: boolean; onClick?: () => void }) {
+function NavCta({ isHome, homeContactHref, onClick }: { isHome: boolean; homeContactHref: string; onClick?: () => void }) {
   const { t } = useI18n()
 
   return (
-    <Link href={isHome ? '#contact' : '/#contact'} className="cd-nav-cta" onClick={onClick}>
+    <Link href={isHome ? '#contact' : homeContactHref} className="cd-nav-cta" onClick={onClick}>
       {t(ctaLabel)}
     </Link>
   )
@@ -177,12 +177,15 @@ export default function Header() {
   const menuToggleRef = useRef<HTMLButtonElement>(null)
   const { theme, toggleTheme } = useTheme()
   const { t } = useI18n()
+  const { view } = usePortfolioView()
   const isDark = theme === 'dark'
   // On the homepage the logo scrolls to the hero; everywhere else it returns home.
   const isHome = usePathname() === '/'
+  const homeHref = buildHomeHref(view)
+  const homeContactHref = buildHomeHref(view, '#contact')
   const navLinks = links.map(link => ({
     ...link,
-    href: !isHome && link.href.startsWith('#') ? `/${link.href}` : link.href,
+    href: !isHome && link.href.startsWith('#') ? buildHomeHref(view, link.href) : link.href,
   }))
 
   useEffect(() => {
@@ -207,7 +210,11 @@ export default function Header() {
   return (
     <nav className={isHome ? 'cd-nav' : 'cd-nav portfolio-nav'} ref={navRef}>
       <div className="cd-nav-inner">
-        <a href={isHome ? '#hero' : '/'} className="cd-nav-logo" aria-label={t(logoLabels)}>Ahmed<span>.</span></a>
+        {isHome ? (
+          <a href="#hero" className="cd-nav-logo" aria-label={t(logoLabels)}>Ahmed<span>.</span></a>
+        ) : (
+          <Link href={homeHref} className="cd-nav-logo" aria-label={t(logoLabels)}>Ahmed<span>.</span></Link>
+        )}
 
         <ul className="cd-nav-links">
           {navLinks.map(l => (
@@ -229,7 +236,7 @@ export default function Header() {
           >
             {isDark ? <Sun size={16} strokeWidth={2.1} /> : <Moon size={16} strokeWidth={2.1} />}
           </button>
-          <NavCta isHome={isHome} />
+          <NavCta isHome={isHome} homeContactHref={homeContactHref} />
         </div>
 
         <button
@@ -258,7 +265,7 @@ export default function Header() {
           <NavLink key={l.href} href={l.href} label={l.label} onClick={() => setOpen(false)} />
         ))}
         <ViewModeToggle isHome={isHome} onAfterClick={() => setOpen(false)} />
-        <NavCta isHome={isHome} onClick={() => setOpen(false)} />
+        <NavCta isHome={isHome} homeContactHref={homeContactHref} onClick={() => setOpen(false)} />
       </div>
     </nav>
   )

@@ -6,6 +6,7 @@ import { useI18n } from '@/lib/i18n'
 import { getCaseStudy } from '@/lib/case-studies'
 import { caseStudyOverview } from '@/lib/case-study-overview'
 import { portfolioCopy, selectedWork } from '@/lib/portfolio-copy'
+import { useHomeHref } from '@/lib/portfolio-view'
 import { CIFAR_LAMBDA_SWEEP, INKJET_OVERALL_SWEEP } from '@/lib/ood-explorer-data'
 import type { RelatedLink } from '@/lib/related-content'
 import ResearchCharts from '@/components/ResearchCharts'
@@ -80,6 +81,7 @@ export default function CaseStudyPage({
   relatedPosts?: RelatedLink[]
 }) {
   const { t } = useI18n()
+  const backHref = useHomeHref('#projects')
   const study = getCaseStudy(slug)
   const project = selectedWork.find((work) => work.slug === slug)
 
@@ -93,7 +95,7 @@ export default function CaseStudyPage({
   return (
     <main id="main" tabIndex={-1} className="portfolio-case">
       <article className="portfolio-shell">
-        <Link href="/#projects" className="portfolio-text-link">{t(labels.back)}</Link>
+        <Link href={backHref} className="portfolio-text-link">{t(labels.back)}</Link>
         <header>
           <p className="portfolio-project-context">{t(project.context)}</p>
           <h1>{t(project.title)}</h1>

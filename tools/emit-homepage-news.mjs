@@ -1,10 +1,11 @@
-// Emits src/lib/news-homepage.json — the three newest news items for the homepage
-// card grid, in exactly the shape `getAllNews(lang)` returns per item (full localized
+// Emits src/lib/news-homepage.json — the newest news items for the homepage
+// carousel, in exactly the shape `getAllNews(lang)` returns per item (full localized
 // headline/take objects; the reader resolves the locale with the same en fallback).
 //
-// Why: the homepage only renders 3 cards, but importing `@/lib/news-items` bundled the
-// whole ~611 KB catalog (src/lib/news-items.json) into the homepage bundle. The full
-// catalog stays where it belongs: the /news page and server-side SEO date helpers.
+// Why: the homepage carousel renders pages of 3 cards (12 items total), and importing
+// `@/lib/news-items` bundled the whole ~611 KB catalog (`src/lib/news-items.json`)
+// into the homepage bundle. The full catalog stays where it belongs: the /news page
+// and server-side SEO date helpers.
 //
 // Runs as `prebuild` (npm runs it automatically before `npm run build`), so CI builds
 // always bundle the current top-3. Plain node, no dependencies — same style as
@@ -18,7 +19,7 @@ const root = path.resolve(import.meta.dirname, '..')
 const source = path.join(root, 'src', 'lib', 'news-items.json')
 const target = path.join(root, 'src', 'lib', 'news-homepage.json')
 
-const HOMEPAGE_ITEM_COUNT = 3
+const HOMEPAGE_ITEM_COUNT = 12
 
 // Mirrors `newsCategoryLabels` in src/lib/news-items.ts — copied verbatim, never
 // edit these here first (news-items.ts is the source of truth).

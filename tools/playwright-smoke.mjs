@@ -842,6 +842,87 @@ async function runInteractiveSmokeChecks(browser, origin, failures) {
         recordCollectedErrors(errors, label, failures)
       }
     }
+
+    // 6) Full-portfolio view persistence across /news/ + homepage smart news arrows + /news/ tag filters.
+    {
+      const label = '[interactive-news-and-back-view] / -> /?view=full -> /news/ -> back'
+      executed += 1
+      errors.reset()
+
+      try {
+        const response = await page.goto(`${origin}/`, {
+          waitUntil: 'load',
+          timeout: 20_000,
+        })
+        if (!response || response.status() !== 200) {
+          failures.push(`${label}: expected HTTP 200, received ${response?.status() ?? 'no response'}`)
+        } else {
+          await waitForSettledLayout(page)
+          await page.locator('button.cd-nav-view-toggle').first().click()
+          await page.locator('main.cd-full-portfolio #news').waitFor({ state: 'visible', timeout: 5_000 })
+
+          const newsSection = page.locator('main.cd-full-portfolio #news')
+          await newsSection.scrollIntoViewIfNeeded()
+
+          const prevArrow = newsSection.locator('.cd-news-arrow--prev')
+          const nextArrow = newsSection.locator('.cd-news-arrow--next')
+          const firstTitleBefore = await newsSection.locator('.cd-wc-title').first().innerText()
+
+          if (!(await prevArrow.isDisabled())) {
+            failures.push(`${label}: expected prev news arrow to start disabled on page 1`)
+          }
+          if (await nextArrow.isDisabled()) {
+            failures.push(`${label}: expected next news arrow to start enabled on page 1`)
+          } else {
+            await nextArrow.click()
+            await page.waitForFunction(
+              (prevTitle) => {
+                const first = document.querySelector('#news .cd-wc-title')
+                return Boolean(first && first.textContent && first.textContent.trim() !== prevTitle.trim())
+              },
+              firstTitleBefore,
+              { timeout: 5_000 },
+            )
+            if (await prevArrow.isDisabled()) {
+              failures.push(`${label}: expected prev news arrow to become enabled on page 2`)
+            }
+          }
+
+          await newsSection.locator('a[href="/news/"]').click()
+          await page.waitForURL(`${origin}/news/`, { timeout: 10_000 })
+          await waitForSettledLayout(page)
+
+          const firstTagChip = page.locator('.news-tags-cloud .news-tag-chip').first()
+          await firstTagChip.waitFor({ state: 'visible', timeout: 5_000 })
+          await firstTagChip.click()
+          if ((await firstTagChip.getAttribute('aria-pressed')) !== 'true') {
+            failures.push(`${label}: expected clicked /news/ tag chip to set aria-pressed="true"`)
+          }
+          await page.locator('.news-reset-btn').first().waitFor({ state: 'visible', timeout: 5_000 })
+
+          // Browser Back must return to Full portfolio (not concise).
+          await page.goBack({ waitUntil: 'load', timeout: 10_000 })
+          await waitForSettledLayout(page)
+          if ((await page.locator('main.cd-full-portfolio').count()) === 0) {
+            failures.push(`${label}: browser goBack() from /news/ reset homepage to concise view instead of keeping full view`)
+          }
+
+          // In-page "Back to home" link on /news/ must also return to Full portfolio.
+          await page.locator('main.cd-full-portfolio #news a[href="/news/"]').click()
+          await page.waitForURL(`${origin}/news/`, { timeout: 10_000 })
+          await waitForSettledLayout(page)
+          await page.locator('main#main a[href^="/"]').first().click()
+          await waitForSettledLayout(page)
+          if ((await page.locator('main.cd-full-portfolio').count()) === 0) {
+            failures.push(`${label}: clicking Back to home on /news/ reset homepage to concise view instead of keeping full view`)
+          }
+        }
+        recordCollectedErrors(errors, label, failures)
+      } catch (err) {
+        failures.push(`${label}: ${err instanceof Error ? err.message : String(err)}`)
+        recordCollectedErrors(errors, label, failures)
+      }
+    }
   } finally {
     await context.close()
   }
@@ -991,7 +1072,7 @@ if (failures.length > 0) {
 }
 
 console.log(
-  `playwright-smoke: OK (${checksRun} checks: ${PROFILES.length} profiles × ${ROUTES.length} routes + ${FOOTER_LOCALES.length} desktop footer locales + /research/ chart centering + 5 interactive flows` +
+  `playwright-smoke: OK (${checksRun} checks: ${PROFILES.length} profiles × ${ROUTES.length} routes + ${FOOTER_LOCALES.length} desktop footer locales + /research/ chart centering + 6 interactive flows` +
     (analyticsChecks ? ' + GoatCounter page-view counting' : '; analytics off, counting check skipped') +
     ')',
 )
