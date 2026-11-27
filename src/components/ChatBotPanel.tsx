@@ -432,8 +432,9 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
     container.scrollTo({ top: Math.min(reply.offsetTop - 12, bottom), behavior })
   }, [messages, isLoading])
 
-  // Read out once per finished reply. Empty while a reply is arriving, so the next
-  // reply is announced even when its text repeats the previous one.
+  // Read out once per finished reply. The region is emptied first and filled a
+  // moment later, so a reply is announced even when its text repeats the last one
+  // (a prepared answer arrives in the same render as the question).
   const lastMessage = messages[messages.length - 1]
   const replyAnnouncement =
     !isLoading && lastMessage?.role === 'assistant'
@@ -445,6 +446,18 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
           .filter(Boolean)
           .join(' ')
       : ''
+  const announcedIndex = replyAnnouncement ? messages.length - 1 : -1
+  const announcerRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const node = announcerRef.current
+    if (!node) return
+    node.textContent = ''
+    if (!replyAnnouncement) return
+    const timer = window.setTimeout(() => {
+      node.textContent = replyAnnouncement
+    }, 100)
+    return () => window.clearTimeout(timer)
+  }, [announcedIndex, replyAnnouncement])
 
   useEffect(() => {
     return () => {
@@ -843,9 +856,7 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
           </a>
         </p>
       </div>
-      <div role="status" className="sr-only">
-        {replyAnnouncement}
-      </div>
+      <div ref={announcerRef} role="status" className="sr-only" />
     </div>
   )
 }
