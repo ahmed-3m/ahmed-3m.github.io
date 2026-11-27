@@ -218,8 +218,8 @@ with one standard error event (`data: {"error":{"code":"upstream_error",…},"sc
 ends. Today's site already reads `chunk.error.message` there. Other events pass through unchanged. The transform
 works on whole lines and does not parse events that cannot contain an error, to keep CPU time low (R0: 10 ms).
 
-**Request ID.** `crypto.randomUUID()`, returned in the body and in `X-Request-Id`. It is in the telemetry point, so
-the owner can match a visitor's report to a data point. It is not linked to an IP address.
+**Request ID.** `crypto.randomUUID()`, returned in the body and in `X-Request-Id`. It is returned to the client only.
+It is not recorded in telemetry (R9) and not linked to an IP address.
 
 ## R9. Telemetry
 

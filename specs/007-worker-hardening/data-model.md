@@ -136,6 +136,7 @@ No message text, IP address, user agent, request ID or country.
 | `ZAI_CAP_5H`, `ZAI_CAP_DAY` | var | 100, 300 | R6; approved 2026-11-28 |
 | `GROQ_CAP_5H`, `GROQ_CAP_DAY` | var | 200, 600 | R6; approved 2026-11-28 |
 | `FIRST_BYTE_MS`, `TOTAL_MS` | var | 18000, 58000 | R10 |
+| `BUDGET_TIMEOUT_MS` | var | 2000 | R6. Conservative start; set from the measured latency. |
 | `CHAT_RATE_LIMITER` | binding | `{ limit = 8, period = 60 }` | R5 |
 | `GENIE_BUDGET` | binding | Durable Object `GenieBudget` | PR 3 |
 | `GENIE_EVENTS` | binding | Analytics Engine `genie_events` | PR 3, optional |

@@ -72,7 +72,8 @@ site needs no change, because the Worker accepts the current request shape.
 **Acceptance Scenarios**:
 
 1. **Given** a request in today's format with a system message, **When** the Worker forwards it, **Then** the
-   provider receives the Worker's prompt in place of the client's, and the rest of the turns are unchanged.
+   provider receives the Worker's prompt in place of the client's, and the rest of the turns are unchanged apart
+   from the cut in FR-018.
 2. **Given** a request in the new format that contains a system turn, **When** the Worker checks it, **Then** it
    is rejected as an invalid request, and nothing is sent to a provider.
 3. **Given** a request in the new format naming published knowledge entries, a language and a page section,
