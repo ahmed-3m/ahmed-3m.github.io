@@ -73,7 +73,7 @@ const copy = {
     de: `${formatClaim('thesis.mean', 'de', 'metric')} = CIFAR-10 Thesis (binär, Einzelklasse Flugzeug-vs-Rest, 3-Seed-Mittel) · ${formatClaim('inkjet.baseline', 'de', 'metric')} = industrielle FTI_Zer0P 5-fach Baseline · ${formatClaim('thesis.gainPp', 'de')} = Gewinn über ${formatClaim('thesis.baseline', 'de')} Baseline`,
     fr: `${formatClaim('thesis.mean', 'fr', 'metric')} = thèse CIFAR-10 (binaire, classe unique avion-vs-reste, moyenne 3 seeds) · ${formatClaim('inkjet.baseline', 'fr', 'metric')} = baseline industrielle FTI_Zer0P 5-fold · ${formatClaim('thesis.gainPp', 'fr')} = gain sur baseline ${formatClaim('thesis.baseline', 'fr')}`,
     es: `${formatClaim('thesis.mean', 'es', 'metric')} = tesis CIFAR-10 (binaria, clase única avión-vs-resto, media de 3 seeds) · ${formatClaim('inkjet.baseline', 'es', 'metric')} = baseline industrial FTI_Zer0P 5-fold · ${formatClaim('thesis.gainPp', 'es')} = ganancia sobre base ${formatClaim('thesis.baseline', 'es')}`,
-    ar: `${formatClaim('thesis.mean', 'ar', 'metric')} = رسالة CIFAR-10 (ثنائي، فئة واحدة طائرة مقابل الباقي، متوسط 3 تجارب) · ${formatClaim('inkjet.baseline', 'ar', 'metric')} = خط أساس صناعي FTI_Zer0P 5-fold · ${formatClaim('thesis.gainPp', 'ar')} = تحسن على الأساس ${formatClaim('thesis.baseline', 'ar')}`,
+    ar: `${formatClaim('thesis.mean', 'ar', 'metric')} = رسالة CIFAR-10 (ثنائي، فئة واحدة طائرة مقابل الباقي، متوسط 3 بذور) · ${formatClaim('inkjet.baseline', 'ar', 'metric')} = خط أساس صناعي FTI_Zer0P 5-fold · ${formatClaim('thesis.gainPp', 'ar')} = تحسن على الأساس ${formatClaim('thesis.baseline', 'ar')}`,
   },
 } satisfies Record<string, TranslationMap>
 

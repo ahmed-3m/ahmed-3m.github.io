@@ -1,6 +1,6 @@
 'use client'
 
-import { claimParts } from '@/lib/claims'
+import { claimParts, formatLocaleNumber } from '@/lib/claims'
 import { useI18n, type TranslationMap } from '@/lib/i18n'
 import { BENCHMARK_DATASETS, CIFAR_LAMBDA_SWEEP } from '@/lib/ood-explorer-data'
 
@@ -158,9 +158,9 @@ export default function HeroSignal() {
 
       <p className="cd-signal-run-label">{t(copy.runLabel)}</p>
       <dl className="cd-signal-metrics">
-        <div><dt>AUROC</dt><dd>{ds.auroc.toFixed(2)}<span>%</span></dd></div>
-        <div><dt>FPR@95</dt><dd>{ds.fpr95.toFixed(1)}<span>%</span></dd></div>
-        <div><dt>AUPRC</dt><dd>{ds.auprc.toFixed(2)}<span>%</span></dd></div>
+        <div><dt>AUROC</dt><dd>{formatLocaleNumber(ds.auroc.toFixed(2), lang)}<span>{mean.unit}</span></dd></div>
+        <div><dt>FPR@95</dt><dd>{formatLocaleNumber(ds.fpr95.toFixed(1), lang)}<span>{mean.unit}</span></dd></div>
+        <div><dt>AUPRC</dt><dd>{formatLocaleNumber(ds.auprc.toFixed(2), lang)}<span>{mean.unit}</span></dd></div>
       </dl>
 
       <figcaption className="cd-signal-caption">{t(copy.caption)}</figcaption>

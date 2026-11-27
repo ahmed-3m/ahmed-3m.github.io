@@ -210,7 +210,7 @@ export const KNOWLEDGE_CHUNKS: readonly KnowledgeChunk[] = [
       'cifar-10',
       'airplane',
       THESIS_MEAN_KEYWORD,
-      '98.98',
+      claimParts('thesis.seed42', 'en').number,
       claimParts('thesis.baseline', 'en').number,
       '79.73',
       'seed-42',
