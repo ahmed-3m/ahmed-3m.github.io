@@ -3,11 +3,13 @@
 import type { CSSProperties, FormEvent, MouseEvent, ReactNode } from 'react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { ArrowUp, ChevronRight, RotateCcw, Square, X } from 'lucide-react'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { trackEvent } from '@/lib/analytics'
 import { useI18n } from '@/lib/i18n'
 import { translateValue, type Language } from '@/lib/i18n-config'
 import { CHAT_PROXY_URL } from '@/lib/genie/providers'
+import { CALENDLY_URL, CV_URL, EMAIL_URL, chatLinkAction, resolveLinkProps } from '@/lib/genie/links'
+import { setPortfolioView } from '@/lib/portfolio-view'
 import {
   buildFinalMessage,
   chatErrorKind,
@@ -27,10 +29,12 @@ import {
   pickFollowUpIds,
   resolveSectionForPathname,
   routeLocally,
+  showsHandoff,
   type PromptId,
 } from '@/lib/genie/prompts'
 import { buildSystemPrompt } from '@/lib/genie/retriever'
 import { CHAT_COPY } from './chatbot-dictionaries'
+import FrontDeskButton from './FrontDeskButton'
 
 export type { ChatMessage, ChatRole, PromptId }
 export {
@@ -255,6 +259,64 @@ function SuggestedQuestions({ label, prompts, labelForPrompt, onSelect }: {
   )
 }
 
+const handoffChipClass =
+  'inline-flex min-h-11 items-center rounded-full border border-[var(--cd-b1)] bg-[var(--cd-surf)] px-3 text-sm leading-5 text-[var(--cd-fg1)] hover:border-[var(--cd-accent)]'
+
+/** Same-site CV path in the browser (`/cv.pdf`), so local builds don't link to production. */
+const CV_HREF = resolveLinkProps(CV_URL)?.href ?? CV_URL
+
+/** Direct ways to reach Ahmed, shown under contact, CV and hiring answers. */
+function HandoffRow() {
+  const { t } = useI18n()
+  return (
+    <ul role="list" aria-label={t(CHAT_COPY.handoff)} className="flex list-none flex-wrap gap-2 p-0">
+      <li>
+        <a href={CV_HREF} target="_blank" rel="noopener noreferrer" className={handoffChipClass}>
+          {t(CHAT_COPY.handoffCv)}
+        </a>
+      </li>
+      <li>
+        <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className={handoffChipClass}>
+          {t(CHAT_COPY.handoffCall)}
+        </a>
+      </li>
+      <li>
+        <FrontDeskButton className={handoffChipClass} label={CHAT_COPY.handoffVoice} />
+      </li>
+      <li>
+        <a href={EMAIL_URL} className={handoffChipClass}>
+          {t(CHAT_COPY.handoffEmail)}
+        </a>
+      </li>
+    </ul>
+  )
+}
+
+/** Scrolls to `#id` once it is rendered (a view switch renders it a frame or two later). */
+function scrollWhenReady(id: string, framesLeft = 30) {
+  const element = document.getElementById(id)
+  if (element) {
+    element.scrollIntoView()
+  } else if (framesLeft > 0) {
+    requestAnimationFrame(() => scrollWhenReady(id, framesLeft - 1))
+  }
+}
+
+/**
+ * Moves to `#id` on the current page. The fragment is set and announced first, so
+ * page code that reacts to it runs (the mergeproof playground opens its <details>).
+ */
+function goToSection(id: string) {
+  const oldURL = window.location.href
+  window.history.replaceState(
+    window.history.state,
+    '',
+    `${window.location.pathname}${window.location.search}#${id}`
+  )
+  window.dispatchEvent(new HashChangeEvent('hashchange', { oldURL, newURL: window.location.href }))
+  scrollWhenReady(id)
+}
+
 function LoadingDots({ label }: { label: string }) {
   return (
     <div
@@ -292,6 +354,7 @@ type ChatBotPanelProps = {
 export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
   const { lang, t } = useI18n()
   const pathname = usePathname()
+  const router = useRouter()
   const [input, setInput] = useState('')
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [isLoading, setIsLoading] = useState(false)
@@ -528,23 +591,26 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
     })
   }
 
+  // Same-site links in answers navigate with the client router (or just scroll),
+  // so the conversation stays: the panel lives in the root layout.
   function handleInternalLinkClick(href: string, event: MouseEvent<HTMLAnchorElement>) {
     if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
-    if (!href.includes('#')) return
-    const [linkPath, linkHash] = href.split('#')
-    const normCurrent = pathname.replace(/\/$/, '') || '/'
-    const normTarget = (linkPath || '/').replace(/\/$/, '') || '/'
-    if (normCurrent !== normTarget) return
+    const action = chatLinkAction(href, { pathname: window.location.pathname, search: window.location.search })
+    if (action.kind === 'default') return
     event.preventDefault()
     onClose()
-    if (linkHash) {
-      document.getElementById(linkHash)?.scrollIntoView()
-      window.history.replaceState(
-        null,
-        '',
-        `${window.location.pathname}${window.location.search}#${linkHash}`
-      )
+    if (action.kind === 'route') {
+      router.push(action.href)
+      return
     }
+    if (action.kind === 'view') {
+      // The fragment changes with the view, so the page scrolls to it once the new view renders.
+      setPortfolioView(action.view, true, action.hash)
+      const { hash } = action
+      if (hash) requestAnimationFrame(() => scrollWhenReady(hash))
+      return
+    }
+    if (action.hash) goToSection(action.hash)
   }
 
   return (
@@ -638,6 +704,12 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
                     {t(CHAT_COPY.fallbackNotice)}
                   </p>
                 )}
+
+                {message.role === 'assistant' &&
+                  !message.incomplete &&
+                  !(isLoading && index === messages.length - 1) &&
+                  index > 0 &&
+                  showsHandoff(messages[index - 1].content) && <HandoffRow />}
 
                 {message.incomplete && (
                   <div className="flex flex-wrap items-center gap-2 text-xs" style={{ color: 'var(--cd-warn)' }}>

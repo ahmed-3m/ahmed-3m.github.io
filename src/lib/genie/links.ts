@@ -1,6 +1,7 @@
 import type { Language } from '@/lib/i18n-config'
 import { CALENDLY_URL } from '@/lib/booking'
 import { diffusionExplorerHref } from '@/lib/portfolio-copy'
+import { isHomePathname, type PortfolioView } from '@/lib/portfolio-view-logic'
 
 export const PORTFOLIO = 'https://ahmed-3m.github.io'
 export const CV_URL = `${PORTFOLIO}/cv.pdf`
@@ -100,6 +101,54 @@ export function resolveLinkProps(rawHref: string): { href: string; external: boo
   } catch {
     return null
   }
+}
+
+/** What the chat does when a visitor clicks a same-site link in an answer. */
+export type ChatLinkAction =
+  /** Leave the click to the browser (mailto:, absolute URLs, anything unexpected). */
+  | { kind: 'default' }
+  /** Same page: close the chat and scroll to `hash` (empty: just close). */
+  | { kind: 'scroll'; hash: string }
+  /** Same home page in the other portfolio view: switch view, then scroll to `hash`. */
+  | { kind: 'view'; view: PortfolioView; hash: string }
+  /** Another page: navigate with the client router, so the conversation survives. */
+  | { kind: 'route'; href: string }
+
+function normalizePath(pathname: string): string {
+  return pathname.replace(/\/+$/, '') || '/'
+}
+
+/**
+ * Decides how a same-site chat link is followed. `current` is the page the visitor
+ * is on (`location.pathname` and `location.search`).
+ */
+export function chatLinkAction(href: string, current: { pathname: string; search: string }): ChatLinkAction {
+  if (!href.startsWith('/') || href.startsWith('//')) return { kind: 'default' }
+  let target: URL
+  try {
+    target = new URL(href, PORTFOLIO)
+  } catch {
+    return { kind: 'default' }
+  }
+  if (target.origin !== PORTFOLIO) return { kind: 'default' }
+
+  const hash = decodeURIComponent(target.hash.slice(1))
+  if (normalizePath(target.pathname) !== normalizePath(current.pathname)) {
+    return { kind: 'route', href }
+  }
+
+  const currentParams = new URLSearchParams(current.search)
+  if (target.searchParams.toString() === currentParams.toString()) return { kind: 'scroll', hash }
+
+  // The home page keeps its concise/full view in `?view=`, which the page only
+  // re-reads on a pathname change, so a view switch is applied directly. Other
+  // query parameters (e.g. `utm_source`) stay as they are.
+  const view = target.searchParams.get('view') ?? 'concise'
+  if (isHomePathname(target.pathname) && (view === 'full' || view === 'concise')) {
+    if (view === (currentParams.get('view') ?? 'concise')) return { kind: 'scroll', hash }
+    return { kind: 'view', view, hash }
+  }
+  return { kind: 'route', href }
 }
 
 /**

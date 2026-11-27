@@ -120,6 +120,10 @@ function PanelSkeleton({ onClose }: { onClose?: () => void }) {
   )
 }
 
+function isModalDialogOpen() {
+  return document.querySelector('dialog[open]') !== null
+}
+
 export default function ChatBot() {
   const { t } = useI18n()
   const [isOpen, setIsOpen] = useState(false)
@@ -139,6 +143,8 @@ export default function ChatBot() {
     if (!isOpen) return
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key !== 'Escape') return
+      // A modal dialog opened from the chat (the voice-demo consent) closes first.
+      if (isModalDialogOpen()) return
       event.preventDefault()
       restoreFocusRef.current = true
       setIsOpen(false)
@@ -155,6 +161,8 @@ export default function ChatBot() {
       if (event.pointerType === 'mouse' && event.button !== 0) return
       const target = event.target
       if (!(target instanceof Node)) return
+      // The voice-demo consent dialog is portaled to <body>; clicks in it are not "outside".
+      if (isModalDialogOpen()) return
       if (panelRef.current?.contains(target) || launcherRef.current?.contains(target)) return
       restoreFocusRef.current = false
       setIsOpen(false)

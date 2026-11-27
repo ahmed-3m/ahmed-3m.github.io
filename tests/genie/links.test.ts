@@ -4,7 +4,7 @@ import { describe, it } from 'node:test'
 import { CALENDLY_URL } from '@/lib/booking'
 import * as links from '@/lib/genie/links'
 
-const { formatLocaleNumber, linkKey, publicLinks, resolveLinkProps } = links
+const { chatLinkAction, formatLocaleNumber, linkKey, publicLinks, resolveLinkProps } = links
 
 describe('publicLinks allowlist', () => {
   it('contains every exported *_URL constant', () => {
@@ -87,6 +87,57 @@ describe('formatLocaleNumber', () => {
   it('leaves other languages unchanged', () => {
     for (const lang of ['en', 'es', 'ar'] as const) {
       assert.equal(formatLocaleNumber('99.03% ± 0.07%', lang), '99.03% ± 0.07%')
+    }
+  })
+})
+
+describe('chatLinkAction', () => {
+  const on = (pathname: string, search = '') => ({ pathname, search })
+
+  it('routes links to another page through the client router', () => {
+    assert.deepEqual(chatLinkAction('/about/', on('/')), { kind: 'route', href: '/about/' })
+    assert.deepEqual(chatLinkAction('/#contact', on('/about/')), { kind: 'route', href: '/#contact' })
+    assert.deepEqual(
+      chatLinkAction('/?view=full#mergeproof-playground', on('/blog/')),
+      { kind: 'route', href: '/?view=full#mergeproof-playground' }
+    )
+  })
+
+  it('scrolls on the same page, ignoring a trailing slash', () => {
+    assert.deepEqual(chatLinkAction('/research/#separation-loss', on('/research')), {
+      kind: 'scroll',
+      hash: 'separation-loss',
+    })
+    assert.deepEqual(chatLinkAction('/#contact', on('/')), { kind: 'scroll', hash: 'contact' })
+    assert.deepEqual(chatLinkAction('/about/', on('/about/')), { kind: 'scroll', hash: '' })
+  })
+
+  it('switches the home page view instead of reloading it', () => {
+    assert.deepEqual(chatLinkAction('/?view=full#mergeproof-playground', on('/')), {
+      kind: 'view',
+      view: 'full',
+      hash: 'mergeproof-playground',
+    })
+    assert.deepEqual(chatLinkAction('/#contact', on('/', '?view=full')), {
+      kind: 'view',
+      view: 'concise',
+      hash: 'contact',
+    })
+    assert.deepEqual(chatLinkAction('/?view=full#contact', on('/', '?view=full')), {
+      kind: 'scroll',
+      hash: 'contact',
+    })
+    assert.deepEqual(chatLinkAction('/?view=full#mergeproof-playground', on('/', '?utm_source=linkedin')), {
+      kind: 'view',
+      view: 'full',
+      hash: 'mergeproof-playground',
+    })
+    assert.deepEqual(chatLinkAction('/#contact', on('/', '?utm_source=linkedin')), { kind: 'scroll', hash: 'contact' })
+  })
+
+  it('leaves mailto, absolute and protocol-relative links to the browser', () => {
+    for (const href of ['mailto:ahmed.mo.0595@gmail.com', 'https://github.com/ahmed-3m', '//evil.example/x', 'about/']) {
+      assert.deepEqual(chatLinkAction(href, on('/')), { kind: 'default' }, href)
     }
   })
 })
