@@ -47,12 +47,15 @@ export function decideImmediateReply({
   lang,
   proxyConfigured,
   section,
+  earlierQuestions = [],
 }: {
   content: string
   promptId?: PromptId
   lang: Language
   proxyConfigured: boolean
   section: string
+  /** The visitor's earlier questions in this conversation, oldest first. */
+  earlierQuestions?: readonly string[]
 }): ImmediateReply {
   const curatedTopic = promptId ? REPLY_FOR_PROMPT[promptId] : findCuratedTopic(content)
   const curatedReply = curatedTopic ? translateValue(lang, LOCAL_REPLIES[curatedTopic]) : null
@@ -62,7 +65,7 @@ export function decideImmediateReply({
   if (!local) return { kind: 'unavailable' }
   return {
     kind: 'answer',
-    message: { role: 'assistant', content: local, followUps: pickFollowUpIds(local, content, section) },
+    message: { role: 'assistant', content: local, followUps: pickFollowUpIds(local, content, section, earlierQuestions) },
   }
 }
 
@@ -182,12 +185,15 @@ export function buildFinalMessage({
   stopped,
   question,
   section,
+  earlierQuestions = [],
 }: {
   reply: ChatReply
   streamed: boolean
   stopped: boolean
   question: string
   section: string
+  /** The visitor's earlier questions in this conversation, oldest first. */
+  earlierQuestions?: readonly string[]
 }): ChatMessage {
   const content = streamed ? reply.content : shortenReply(reply.content)
   const incomplete = stopped || reply.incomplete
@@ -195,7 +201,7 @@ export function buildFinalMessage({
     role: 'assistant',
     content,
     incomplete,
-    followUps: incomplete ? undefined : pickFollowUpIds(content, question, section),
+    followUps: incomplete ? undefined : pickFollowUpIds(content, question, section, earlierQuestions),
   }
 }
 

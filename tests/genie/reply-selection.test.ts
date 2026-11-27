@@ -16,6 +16,8 @@ import {
   type PromptId,
 } from '@/lib/genie/prompts'
 
+const LOCALES = ['en', 'de', 'fr', 'es', 'ar'] as const
+
 describe('findCuratedTopic', () => {
   it('maps every suggested-question label, in every language, to its reply', () => {
     for (const [id, labels] of Object.entries(PROMPT_LIBRARY)) {
@@ -101,4 +103,41 @@ describe('pickFollowUpIds', () => {
       'tech_stack',
     ])
   })
+
+  it('does not offer a question asked earlier in the conversation', () => {
+    // The reported case: results, then the separation loss, offered the results again.
+    const followUps = pickFollowUpIds('', PROMPT_LIBRARY.thesis_loss.en, 'hero', [PROMPT_LIBRARY.thesis_results.en])
+    assert.ok(!followUps.includes('thesis_results'), followUps.join())
+    assert.equal(followUps.length, 3)
+  })
+
+  it('does not offer a question whose reply was already given to a typed question', () => {
+    const followUps = pickFollowUpIds('', PROMPT_LIBRARY.background.en, 'hero', ['Download his CV'])
+    assert.ok(!followUps.includes('cv'), followUps.join())
+  })
+
+  for (const lang of LOCALES) {
+    it(`never repeats a question while a visitor clicks through suggestions (${lang})`, () => {
+      for (const start of Object.keys(PROMPT_LIBRARY) as PromptId[]) {
+        const asked: PromptId[] = []
+        let next: PromptId | undefined = start
+        while (next) {
+          const question = PROMPT_LIBRARY[next][lang]!
+          const earlier = asked.map((id) => PROMPT_LIBRARY[id][lang]!)
+          asked.push(next)
+          const followUps = pickFollowUpIds('', question, 'hero', earlier)
+          assert.ok(followUps.length <= 3)
+          assert.equal(new Set(followUps).size, followUps.length, 'no duplicates in one list')
+          for (const id of followUps) {
+            assert.ok(!asked.includes(id), `${start}: ${asked.join(' > ')} offers ${id} again`)
+            assert.ok(
+              asked.every((a) => REPLY_FOR_PROMPT[a] !== REPLY_FOR_PROMPT[id]),
+              `${start}: ${id} repeats an answer already given`
+            )
+          }
+          next = followUps.at(-1)
+        }
+      }
+    })
+  }
 })

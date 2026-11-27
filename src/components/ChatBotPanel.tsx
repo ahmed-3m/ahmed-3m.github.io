@@ -389,6 +389,12 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
     setInput('')
     setError(null)
 
+    // Questions asked before this one, so suggestions do not offer them again.
+    const earlierQuestions = nextMessages
+      .filter((message) => message.role === 'user')
+      .slice(0, -1)
+      .map((message) => message.content)
+
     // Suggested questions point to public facts and can answer immediately.
     const proxyUrl = CHAT_PROXY_URL
     const immediate = decideImmediateReply({
@@ -397,6 +403,7 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
       lang,
       proxyConfigured: Boolean(proxyUrl),
       section: currentSection,
+      earlierQuestions,
     })
     if (immediate.kind === 'answer') {
       setMessages((prev) => [...prev, immediate.message])
@@ -464,6 +471,7 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
           stopped: stopRequestedRef.current,
           question: content,
           section: currentSection,
+          earlierQuestions,
         })
         setMessages((prev) => [...(streamStarted ? prev.slice(0, -1) : prev), finalMessage])
       }

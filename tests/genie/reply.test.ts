@@ -6,7 +6,7 @@ import assert from 'node:assert/strict'
 import { afterEach, beforeEach, describe, it, mock } from 'node:test'
 
 import { MAX_REPLY_CHARS, createChatError, type ChatReply } from '@/lib/genie/providers'
-import { LOCAL_REPLIES, REPLY_FOR_PROMPT, pickFollowUpIds } from '@/lib/genie/prompts'
+import { LOCAL_REPLIES, PROMPT_LIBRARY, REPLY_FOR_PROMPT, pickFollowUpIds } from '@/lib/genie/prompts'
 import {
   buildFinalMessage,
   chatErrorKind,
@@ -37,6 +37,14 @@ describe('decideImmediateReply', () => {
     assert.deepEqual(decideImmediateReply({ ...base, content: 'Tell me about mergeproof', proxyConfigured: true }), {
       kind: 'ask-model',
     })
+  })
+
+  it('leaves earlier questions out of the suggested follow-ups', () => {
+    const earlier = [PROMPT_LIBRARY.cv.en, PROMPT_LIBRARY.background.en]
+    const result = decideImmediateReply({ ...base, content: 'x', promptId: 'contact', proxyConfigured: true, earlierQuestions: earlier })
+    const followUps = result.kind === 'answer' ? result.message.followUps ?? [] : []
+    assert.deepEqual(followUps, pickFollowUpIds(LOCAL_REPLIES.contact.en, 'x', 'hero', earlier))
+    assert.ok(!followUps.includes('cv') && !followUps.includes('background'), followUps.join())
   })
 
   it('answers from keywords without a model, or reports that it cannot', () => {
@@ -181,6 +189,13 @@ describe('buildFinalMessage', () => {
     assert.equal(buildFinalMessage({ ...base, reply: { content: long }, streamed: true }).content, long)
     const shortened = buildFinalMessage({ ...base, reply: { content: long }, streamed: false }).content
     assert.ok(shortened.length <= MAX_REPLY_CHARS + 3)
+  })
+
+  it('leaves earlier questions out of the follow-ups', () => {
+    const earlier = [PROMPT_LIBRARY.guardrails_post.en]
+    const message = buildFinalMessage({ ...base, reply: { content: 'Done.' }, streamed: true, earlierQuestions: earlier })
+    assert.deepEqual(message.followUps, pickFollowUpIds('Done.', base.question, 'hero', earlier))
+    assert.ok(!message.followUps?.includes('guardrails_post'))
   })
 
   it('suggests follow-ups for a complete reply', () => {
