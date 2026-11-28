@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
 import { afterEach, describe, it } from 'node:test'
 
 import {
@@ -112,6 +113,18 @@ describe("today's site against the v2 Worker", () => {
       assert.equal(calls[0].body.model, 'openai/gpt-oss-20b')
     })
   }
+
+  it('the Worker rebuilds every recorded site prompt exactly from a v1 body', async () => {
+    const cases: { input: { lang: string; section: string; pathname: string }; prompt: string }[] = JSON.parse(
+      readFileSync(new URL('./fixtures/system-prompt-baseline.json', import.meta.url), 'utf8'),
+    )
+    assert.equal(cases.length, 9)
+    for (const [index, { input, prompt: sitePrompt }] of cases.entries()) {
+      const calls = connect()
+      await fetchBigModel({ messages, systemPrompt: sitePrompt, proxyUrl: PROXY_URL, lane: 'fast' })
+      assert.equal(calls[0].body.messages[0].content, sitePrompt, `case ${index}: ${input.lang} ${input.section} ${input.pathname}`)
+    }
+  })
 
   it('a planted system prompt never reaches the provider', async () => {
     const calls = connect()

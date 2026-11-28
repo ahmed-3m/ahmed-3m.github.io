@@ -288,7 +288,8 @@ export async function fetchGroq({
   onDelta?: StreamDelta
 }): Promise<ChatReply> {
   // gpt-oss-20b also consumes reasoning tokens out of max_tokens; give both
-  // lanes enough headroom (within worker MAX_TOKENS_CAP = 2000) to finish cleanly.
+  // lanes enough headroom to finish cleanly. (The v2 Worker reads the lane from
+  // this value and sends its own token limits; see worker/README.md.)
   const maxTokens = lane === 'fast' ? 900 : 1600
   const payloadMessages = buildChatMessages(systemPrompt, messages)
 
