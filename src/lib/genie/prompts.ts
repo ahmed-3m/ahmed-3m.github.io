@@ -251,6 +251,19 @@ export const STARTER_PROMPT_IDS: PromptId[] = [
   'open_to_work',
 ]
 
+/** Home-page section IDs the chat panel watches to report the visitor's current section. */
+export const GENIE_VIEWPORT_SECTIONS = [
+  'hero',
+  'about',
+  'projects',
+  'experience',
+  'research',
+  'evidence',
+  'ood-explorer',
+  'writing',
+  'contact',
+] as const
+
 export const ROUTE_SECTIONS: Partial<Record<string, string>> = {
   '/about': 'about',
   '/research': 'research',

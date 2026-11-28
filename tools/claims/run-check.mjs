@@ -8,7 +8,7 @@ import path from 'node:path'
 import { candidateGaps, checkUnit, compareWithBaseline, compileNonResults, formatFindings, lettersOf } from '@/lib/claims/check'
 import { CARDS } from '../generate-og-images.mjs'
 import { OG_DIR, OG_LOCK, staleOgImages } from './og-lock.mjs'
-import { scanExport } from './scan-export.mjs'
+import { scanExport, scanPromptFile } from './scan-export.mjs'
 import { OG_GENERATOR, ogCardLine, scanSources } from './scan-sources.mjs'
 
 export const ROOT = path.resolve(import.meta.dirname, '..', '..')
@@ -82,9 +82,12 @@ export function runClaimsCheck({ scopes, outDir = path.join(ROOT, 'out'), baseli
   const timings = { sourceMs: Math.round(performance.now() - started) }
 
   let exportUnits = []
+  const exportProblems = []
   if (scopes.includes('export')) {
     const exportStarted = performance.now()
-    exportUnits = scanExport(outDir, { thirdParty: thirdPartyRetired(readJson(NEWS_DATA)) })
+    const prompt = scanPromptFile(outDir)
+    exportUnits = [...scanExport(outDir, { thirdParty: thirdPartyRetired(readJson(NEWS_DATA)) }), ...prompt.units]
+    exportProblems.push(...prompt.problems)
     const blockFindings = []
     const rawFindings = []
     for (const unit of exportUnits) {
@@ -103,7 +106,7 @@ export function runClaimsCheck({ scopes, outDir = path.join(ROOT, 'out'), baseli
 
   const { newFindings, staleEntries } = compareWithBaseline(findings, baselineEntries, scopes)
 
-  const problems = []
+  const problems = [...exportProblems]
   if (nonResultEntries.length > MAX_NON_RESULTS) problems.push(`tools/claims/non-results.json has ${nonResultEntries.length} entries (at most ${MAX_NON_RESULTS})`)
   for (const entry of nonResultEntries) {
     if (!entry.id || !entry.pattern || !entry.reason || !entry.example) problems.push(`non-result "${entry.id ?? '?'}" needs an id, pattern, reason and example`)

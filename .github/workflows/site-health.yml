@@ -194,3 +194,31 @@ jobs:
             exit 1
           fi
           echo "OK   $CHAT_PROXY_URL OPTIONS preflight -> 204 (ACAO verified)"
+
+      - name: Genie prompt file is published and well formed
+        shell: bash
+        run: |
+          # Genie's published prompt file (spec 007); the chat Worker will build the prompt from it.
+          set -euo pipefail
+          url="https://ahmed-3m.github.io/genie/prompt.json"
+          file="$RUNNER_TEMP/prompt.json"
+          code=$(curl -s -o "$file" -w '%{http_code}' -L --max-time 30 "$url") || code="000"
+          if [ "$code" != "200" ]; then
+            echo "::error::$url returned HTTP $code (expected 200)"
+            exit 1
+          fi
+          if ! jq -e '
+            .version == 1
+            and (.entries | length > 0)
+            and ([.entries[].id] as $ids | [.defaults[][]] | all(IN($ids[])))
+          ' "$file" > /dev/null; then
+            echo "::error::$url failed the shape check (version 1, entries, defaults that name entries)"
+            exit 1
+          fi
+          for slot in language section pathname entries links; do
+            if ! jq -e --arg s "{{$slot}}" '.rules | contains($s)' "$file" > /dev/null; then
+              echo "::error::$url rules text is missing the {{$slot}} slot"
+              exit 1
+            fi
+          done
+          echo "OK   $url -> 200 ($(jq '.entries | length' "$file") entries, all slots present)"
