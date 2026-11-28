@@ -33,12 +33,49 @@ export const NEWS_LIMITS = {
 const ITEM_KEYS = new Set(['id', 'date', 'category', 'headline', 'source', 'url', 'take', 'tags'])
 const LOCALIZED_KEYS = new Set(['en', 'de', 'fr', 'es', 'ar'])
 const LOCALIZED_LOCALES = ['de', 'fr', 'es', 'ar'] as const
+const ALL_LOCALES = ['en', 'de', 'fr', 'es', 'ar'] as const
 const ID_RE = /^[a-z0-9-]+$/
 const TAG_RE = /^[a-z0-9-]+$/
 const ISO_DATE_RE = /^(\d{4})-(\d{2})-(\d{2})$/
 
-export function canonicalNewsUrl(url: string): string {
+export const TRACKING_QUERY_PARAMS = new Set([
+  'fbclid',
+  'gclid',
+  'mc_cid',
+  'mc_eid',
+  'igshid',
+  'ref_src',
+  '_hsenc',
+  '_hsmi',
+  'mkt_tok',
+])
+
+export const TAG_SYNONYMS: Record<string, string> = {
+  'agent-governance': 'governance',
+  'agentic-coding': 'coding-agents',
+  'agent-memory': 'memory',
+  'agent-reliability': 'reliability',
+  'agent-eval': 'evaluation',
+  'agent-evals': 'evaluation',
+  safeguards: 'guardrails',
+  harness: 'agent-harness',
+  security: 'agent-security',
+  safety: 'ai-safety',
+}
+
+export function stripTrackingParams(url: string): string {
   const parsed = new URL(url)
+  for (const key of [...parsed.searchParams.keys()]) {
+    const lower = key.toLowerCase()
+    if (lower.startsWith('utm_') || TRACKING_QUERY_PARAMS.has(lower)) {
+      parsed.searchParams.delete(key)
+    }
+  }
+  return parsed.toString()
+}
+
+export function canonicalNewsUrl(url: string): string {
+  const parsed = new URL(stripTrackingParams(url))
   parsed.hostname = parsed.hostname.toLowerCase()
   parsed.hash = ''
   if (
@@ -49,6 +86,160 @@ export function canonicalNewsUrl(url: string): string {
   }
   parsed.pathname = parsed.pathname.replace(/\/+$/, '') || '/'
   return parsed.toString()
+}
+
+export function normalizeIncomingTags(tags: readonly string[]): readonly string[] {
+  const normalized: string[] = []
+  const seen = new Set<string>()
+  for (const raw of tags) {
+    const mapped = Object.hasOwn(TAG_SYNONYMS, raw) ? TAG_SYNONYMS[raw] : raw
+    if (seen.has(mapped)) continue
+    seen.add(mapped)
+    normalized.push(mapped)
+  }
+  return normalized
+}
+
+export type DroppedNewsDeltaItem = {
+  id?: string
+  url?: string
+  reason: string
+  kind: 'duplicate' | 'invalid'
+}
+
+export type SanitizedNewsDeltaResult = {
+  accepted: NewsItem[]
+  dropped: DroppedNewsDeltaItem[]
+  nextCatalog: readonly NewsItem[]
+}
+
+/**
+ * Per-item intake filter for incoming automated news deltas:
+ * - Enforces https:, stripped tracking params, normalized tags, and all 5 locales
+ *   (`en`, `de`, `fr`, `es`, `ar`) on both `headline` and `take`.
+ * - Drops duplicate/malformed items individually instead of discarding valid siblings.
+ * - Treats `{ items: [] }` or an all-duplicate batch as a healthy no-op, while failing
+ *   loudly if a non-empty delta contains only invalid (non-duplicate) entries.
+ */
+export function sanitizeIncomingDelta(
+  existing: readonly NewsItem[],
+  delta: unknown,
+  now?: Date,
+): SanitizedNewsDeltaResult {
+  if (!isPlainObject(delta)) {
+    throw new Error('news delta must be a plain object')
+  }
+  const keys = Object.keys(delta)
+  if (keys.length !== 1 || keys[0] !== 'items') {
+    throw new Error('news delta must have exactly one key: items')
+  }
+  const rawItems = delta.items
+  if (!Array.isArray(rawItems)) {
+    throw new Error('news delta items must be an array')
+  }
+  if (rawItems.length > NEWS_LIMITS.maxDelta) {
+    throw new Error(`news delta exceeds maxDelta (${NEWS_LIMITS.maxDelta})`)
+  }
+  if (rawItems.length === 0) {
+    return { accepted: [], dropped: [], nextCatalog: existing }
+  }
+
+  const today = utcYmd(now ?? new Date())
+  const existingIds = new Set(existing.map((item) => item.id))
+  const existingUrls = new Set(existing.map((item) => canonicalNewsUrl(item.url)))
+  const accepted: NewsItem[] = []
+  const dropped: DroppedNewsDeltaItem[] = []
+
+  for (let i = 0; i < rawItems.length; i++) {
+    const raw = rawItems[i]
+    const hintId = isPlainObject(raw) && typeof raw.id === 'string' ? raw.id : undefined
+    const hintUrl = isPlainObject(raw) && typeof raw.url === 'string' ? raw.url : undefined
+
+    try {
+      if (!isPlainObject(raw)) {
+        throw new Error(`news item [${i}]: must be a plain object`)
+      }
+      if (typeof raw.headline === 'string') {
+        throw new Error(`news item "${hintId ?? `(index ${i})`}": incoming headline must localize all 5 languages`)
+      }
+
+      const parsed = parseNewsItem(raw, today, i, false)
+      const parsedUrl = new URL(parsed.url)
+      if (parsedUrl.protocol !== 'https:') {
+        throw new Error(`news item "${parsed.id}": incoming url must use https:`)
+      }
+      for (const locale of ALL_LOCALES) {
+        if (!parsed.headline[locale]?.trim()) {
+          throw new Error(`news item "${parsed.id}": missing headline.${locale}`)
+        }
+        if (!parsed.take[locale]?.trim()) {
+          throw new Error(`news item "${parsed.id}": missing take.${locale}`)
+        }
+      }
+
+      const cleanedUrl = stripTrackingParams(parsed.url)
+      const canonUrl = canonicalNewsUrl(cleanedUrl)
+
+      if (existingIds.has(parsed.id)) {
+        dropped.push({
+          id: parsed.id,
+          url: cleanedUrl,
+          kind: 'duplicate',
+          reason: `id "${parsed.id}" already exists`,
+        })
+        continue
+      }
+      if (existingUrls.has(canonUrl)) {
+        dropped.push({
+          id: parsed.id,
+          url: cleanedUrl,
+          kind: 'duplicate',
+          reason: `url "${cleanedUrl}" already exists`,
+        })
+        continue
+      }
+
+      const normalizedTags = parsed.tags ? normalizeIncomingTags(parsed.tags) : undefined
+      const normalizedItem: NewsItem =
+        normalizedTags && normalizedTags.length > 0
+          ? { ...parsed, url: cleanedUrl, tags: normalizedTags }
+          : {
+              id: parsed.id,
+              date: parsed.date,
+              category: parsed.category,
+              headline: parsed.headline,
+              source: parsed.source,
+              url: cleanedUrl,
+              take: parsed.take,
+            }
+
+      existingIds.add(normalizedItem.id)
+      existingUrls.add(canonUrl)
+      accepted.push(normalizedItem)
+    } catch (err) {
+      dropped.push({
+        id: hintId,
+        url: hintUrl,
+        kind: 'invalid',
+        reason: err instanceof Error ? err.message : String(err),
+      })
+    }
+  }
+
+  if (accepted.length === 0) {
+    const invalidDrops = dropped.filter((d) => d.kind === 'invalid')
+    if (invalidDrops.length > 0) {
+      throw new Error(
+        `all ${rawItems.length} incoming delta item(s) failed intake checks: ${invalidDrops
+          .map((d) => d.reason)
+          .join('; ')}`,
+      )
+    }
+    return { accepted: [], dropped, nextCatalog: existing }
+  }
+
+  const nextCatalog = parseNewsItems(evictOldest([...existing, ...accepted]), now)
+  return { accepted, dropped, nextCatalog }
 }
 
 export function parseNewsItems(

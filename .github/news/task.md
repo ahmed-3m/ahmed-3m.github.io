@@ -21,19 +21,25 @@ field rules, and category definitions are in `AGENTS.md` under "News update prot
 Read the JSON (and AGENTS.md if needed) before researching. Do not edit TypeScript.
 
 ## Steps (do these in order)
-1. **Read** `src/lib/news-items.json` and collect every existing `id`, `url`, and
-   `headline`. These are already-published items — you must NOT duplicate them.
+1. **Read** the dedup index file path given in the Run Context section below (or
+   `src/lib/news-items.json` if no Run Context path is provided) and note every existing
+   `id`, `url`, and English `headline`, plus the `canonicalTags` and `todayUtc` date.
+   These are already-published items — you must NOT duplicate them. Do NOT paginate
+   through `src/lib/news-items.json` when the dedup index is provided.
 2. **Research** via Exa MCP only (`mcp__exa__*`). Find AI and agentic-AI developments
    from roughly the **last 3 days** (look back up to 7 days to catch anything missed
    on a previous quiet day) from credible sources (official labs/company blogs,
-   reputable tech press, arXiv). Capture each item's real URL, source name, and
+   reputable tech press, arXiv). Capture each item's exact `https://` canonical URL
+   (without `utm_*` / `fbclid` / tracking query parameters), source name, and
    publication date. The pipeline runs **daily**, so most days will have few or no
    genuinely new high-signal items — that is normal and expected.
 3. **Filter**:
-   - Drop anything whose URL already appears in `news-items.json`, or that covers the
+   - Drop anything whose URL already appears in the dedup index, or that covers the
      same story as an existing item (even at a different URL).
    - Drop low-signal items (minor releases, pure marketing, rumours).
    - Keep only items you actually retrieved via Exa — never invent a URL or headline.
+   - Ensure `date` is `<= todayUtc` (never a future date, even if a site lists local
+     timezone ahead of UTC).
 4. **Print only** a JSON object `{ "items": [ ... ] }` as the final answer (0–4 items).
    No markdown outside fences if fences are used. An empty day is `{ "items": [] }`.
    For each item:
