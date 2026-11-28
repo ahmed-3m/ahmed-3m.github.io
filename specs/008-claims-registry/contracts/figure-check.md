@@ -23,7 +23,7 @@ export function compareWithBaseline(findings: Finding[], baseline: BaselineEntry
 
 | Rule | Fires when | Message detail |
 |---|---|---|
-| `unregistered` | A result-looking figure is not `isBackedValue` and matches no non-result pattern | `not a registered value — register it in src/lib/claims/registry.ts, or add a non-result pattern with a reason` |
+| `unregistered` | A result-looking figure is not `isBackedValue` and matches no non-result pattern | `not a registered value`; fix: `correct it, register it in src/lib/claims/registry.ts, or add a non-result pattern with a reason to tools/claims/non-results.json` |
 | `retired` | A figure matches a retired value in any form | `retired figure (<reason>)` |
 | `mean-without-spread` | A named claim's mean appears and its spread value is absent from the unit | `mean without its spread (<expected spread form>)` |
 | `missing-qualifier` | A named claim appears and a required qualifier's accepted phrasing is absent from the unit. PR A enforces only today's three rules (research R7). | `missing qualifier: <qualifier text in that language>` |
@@ -51,9 +51,9 @@ For example:
 
 ```text
 src/components/Hero.tsx:72 (de) "99,30 %" — unregistered: not a registered value
-  fix: use formatClaim('thesis.mean', 'de') or correct the figure
-public/llms.txt:41 (en) "0.8673 ± 0.0230" — missing-qualifier: 5-fold CV
-  fix: add "5-fold CV" in the same paragraph or list item
+  fix: correct it, register it in src/lib/claims/registry.ts, or add a non-result pattern with a reason to tools/claims/non-results.json
+public/llms.txt:41 (en) "0.8673 ± 0.0230" — missing-qualifier: missing qualifier: 5-fold CV
+  fix: add "5-fold CV" in the same sentence, list item, row or card
 ```
 
 ## Inputs scanned (FR-006)
@@ -66,6 +66,7 @@ public/llms.txt:41 (en) "0.8673 ± 0.0230" — missing-qualifier: 5-fold CV
 | `tools/generate-og-images.mjs` card definitions (its evaluated `CARDS` export, so `formatClaim` stat lines are scanned as rendered) | One card | `en` |
 | `out/**/*.html` (export only) | Block element, `meta` content or `title` | `en` |
 | `out/_next/static/**/*.js` (export only) | The whole file | Retired rule only |
+| `out/genie/prompt.json` (export only; spec 007, `scanPromptFile`) | Each rules paragraph with its slots blanked, and each entry's title and facts. A missing or unreadable file fails the check | `en` |
 
 **Not scanned**: `specs/`, `tests/`, `docs/`, manuscripts, PDFs,
 `ood-explorer-data.ts` itself, and `src/lib/claims/` (the registry and its qualifier
