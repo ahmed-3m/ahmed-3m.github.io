@@ -20,6 +20,19 @@ FAST_MAX_TOKENS = "900"
 DEEP_MAX_TOKENS = "1600"
 TEMPERATURE = "0.3"
 ZAI_REASONING_EFFORT = "low"
+# Budgets: requests per provider in each fixed UTC window (5 hours, and the day). A request
+# over either cap gets 503 "budget_exhausted" for that provider.
+ZAI_CAP_5H = "100"
+ZAI_CAP_DAY = "300"
+GROQ_CAP_5H = "200"
+GROQ_CAP_DAY = "600"
+# Upstream deadlines in milliseconds, inside the site's own 20 s and 60 s.
+FIRST_BYTE_MS = "18000"
+TOTAL_MS = "58000"
+# How long the budget check may take before the Worker answers 503 (fails closed).
+BUDGET_TIMEOUT_MS = "2000"
+# The stop switch is not a var: it is a secret, so a deploy cannot turn it off.
+#   npx wrangler secret put GENIE_STOP   (value: on)   ... and delete it to resume.
 
 # Per-client limit: 8 requests a minute for each IPv4 address or IPv6 /64, counted at each
 # Cloudflare location. Without this binding the Worker answers 503 and calls no model.
@@ -27,3 +40,19 @@ ZAI_REASONING_EFFORT = "low"
 name = "CHAT_RATE_LIMITER"
 namespace_id = "1001"
 simple = { limit = 8, period = 60 }
+
+# Budgets: one GenieBudget Durable Object per provider (SQLite-backed). Without this binding,
+# or when the object fails or is slow, the Worker answers 503 and calls no model.
+[[durable_objects.bindings]]
+name = "GENIE_BUDGET"
+class_name = "GenieBudget"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["GenieBudget"]
+
+# Content-free telemetry: one data point per request that passes validation (counts and
+# timings only; see README.md). Without this binding the Worker records nothing.
+[[analytics_engine_datasets]]
+binding = "GENIE_EVENTS"
+dataset = "genie_events"

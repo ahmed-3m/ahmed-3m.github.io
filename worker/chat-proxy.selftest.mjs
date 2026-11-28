@@ -1,11 +1,13 @@
 /**
- * Self-test for the chat proxy Worker (spec 007, T015 and T016). It builds a handler with
- * createHandler() around the committed bundled prompt, stub providers, a fake rate limiter,
- * a fake ctx and an injected clock. No network. Run: node worker/chat-proxy.selftest.mjs
+ * Self-test for the chat proxy Worker (spec 007, T015, T016 and T032). It builds a handler
+ * with createHandler() around the committed bundled prompt, stub providers, a fake rate
+ * limiter, budget objects on in-memory storage, a fake telemetry dataset, a fake ctx and an
+ * injected clock. No network. Run: node worker/chat-proxy.selftest.mjs
  */
 import assert from 'node:assert/strict'
 
-import entry from './chat-proxy.js'
+import entry, { GenieBudget as ExportedGenieBudget } from './chat-proxy.js'
+import { FIVE_HOUR_MS, GenieBudget } from './lib/budget.js'
 import { clientKey } from './lib/client-key.js'
 import { composePrompt } from './lib/compose-prompt.js'
 import { createHandler } from './lib/handler.js'
@@ -24,7 +26,7 @@ const RULES_START = 'You are Genie'
 
 const encoder = new TextEncoder()
 const MODEL_NAMES = ['glm-5.4', 'glm-5.3', 'glm-5-turbo', 'glm-5.3-flash', 'gpt-oss-20b']
-const SETTING_NAMES = ['ZAI_API_KEY', 'GROQ_API_KEY', 'GENIE_STOP', 'CHAT_RATE_LIMITER', 'PROMPT_URL', 'ZAI_FAST_MODEL', 'ZAI_DEEP_MODEL', 'GROQ_MODEL']
+const SETTING_NAMES = ['ZAI_API_KEY', 'GROQ_API_KEY', 'GENIE_STOP', 'CHAT_RATE_LIMITER', 'PROMPT_URL', 'ZAI_FAST_MODEL', 'ZAI_DEEP_MODEL', 'GROQ_MODEL', 'GENIE_BUDGET', 'GENIE_EVENTS', 'ZAI_CAP_5H', 'BUDGET_TIMEOUT_MS', 'TOTAL_MS']
 
 let failed = 0
 let passed = 0
@@ -94,14 +96,69 @@ function limiter({ max = Infinity } = {}) {
   }
 }
 
+/** A storage object with the async key-value methods the budget object uses. */
+function memoryStorage() {
+  const map = new Map()
+  return {
+    map,
+    async get(key) {
+      return structuredClone(map.get(key))
+    },
+    async put(key, value) {
+      map.set(key, structuredClone(value))
+    },
+  }
+}
+
+/** A Durable Object namespace that runs the real GenieBudget class on in-memory storage. */
+function budgetNamespace() {
+  const objects = new Map()
+  const calls = []
+  return {
+    calls,
+    objects,
+    idFromName: (name) => ({ name }),
+    get(id) {
+      if (!objects.has(id.name)) objects.set(id.name, new GenieBudget({ storage: memoryStorage() }, {}))
+      const object = objects.get(id.name)
+      return {
+        fetch: async (url, init) => {
+          calls.push(id.name)
+          return object.fetch(new Request(url, init))
+        },
+      }
+    },
+  }
+}
+
+/** A namespace whose stub's fetch is `fetch`. */
+function brokenNamespace(fetch) {
+  return { idFromName: (name) => ({ name }), get: () => ({ fetch }) }
+}
+
+/** A telemetry dataset that keeps its points. */
+function events() {
+  const points = []
+  return { points, writeDataPoint: (point) => points.push(point) }
+}
+
 function env(overrides = {}) {
-  return { ZAI_API_KEY: FAKE_SECRET, GROQ_API_KEY: FAKE_SECRET, CHAT_RATE_LIMITER: limiter(), ...overrides }
+  return {
+    ZAI_API_KEY: FAKE_SECRET,
+    GROQ_API_KEY: FAKE_SECRET,
+    CHAT_RATE_LIMITER: limiter(),
+    GENIE_BUDGET: budgetNamespace(),
+    ...overrides,
+  }
 }
 
 function ctx() {
   const pending = []
   return { pending, waitUntil: (promise) => pending.push(promise) }
 }
+
+/** Every response the run got, so unread bodies can be cancelled at the end, as the runtime would. */
+const responses = []
 
 /** Sends one request and checks the headers every response must have. */
 async function send(handler, body, { origin = SITE, method = 'POST', env: e = env(), ctx: c = ctx(), ip = '203.0.113.7', raw } = {}) {
@@ -110,6 +167,7 @@ async function send(handler, body, { origin = SITE, method = 'POST', env: e = en
   const init = { method, headers }
   if (method === 'POST') init.body = raw ?? JSON.stringify(body)
   const res = await handler.fetch(new Request('https://proxy.test/', init), e, c)
+  responses.push(res)
   assert.match(res.headers.get('X-Request-Id') ?? '', /^[0-9a-f-]{36}$/, 'every response has X-Request-Id')
   assert.equal(res.headers.get('Vary'), 'Origin')
   assert.notEqual(res.headers.get('Access-Control-Allow-Origin'), '*')
@@ -157,8 +215,9 @@ const entryB = bundle.entries[1]
 
 // ---------------------------------------------------------------- the entry point
 
-await test('chat-proxy.js exports a handler built on the bundled prompt', async () => {
+await test('chat-proxy.js exports a handler built on the bundled prompt, and GenieBudget', async () => {
   assert.equal(typeof entry.fetch, 'function')
+  assert.equal(ExportedGenieBudget, GenieBudget)
   const res = await send(entry, undefined, { method: 'OPTIONS' })
   assert.equal(res.status, 204)
 })
@@ -760,6 +819,260 @@ await test('prompt: validatePromptFile accepts the bundle and rejects broken fil
   for (const file of broken) assert.ok(validatePromptFile(file).length > 0, JSON.stringify(file)?.slice(0, 80))
 })
 
+// ---------------------------------------------------------------- budgets (R6, SC-003)
+
+await test('SC-003: with a Z.ai cap of 3 the 4th request is refused, Groq answers, and the next window resets', async () => {
+  let time = T0
+  const w = world()
+  const handler = makeHandler(w, { now: () => time })
+  const e = env({ ZAI_CAP_5H: '3' })
+  for (let i = 0; i < 3; i++) assert.equal((await send(handler, v2Body(), { env: e })).status, 200)
+  const refused = await send(handler, v2Body(), { env: e })
+  const data = await errorOf(refused, { status: 503, code: 'budget_exhausted', scope: 'zai' })
+  assert.equal(data.error.message, 'This model is unavailable right now.')
+  const windowEnd = (Math.floor(T0 / FIVE_HOUR_MS) + 1) * FIVE_HOUR_MS
+  assert.equal(data.retryAfter, Math.ceil((windowEnd - T0) / 1000))
+  assert.equal(refused.headers.get('Retry-After'), String(data.retryAfter))
+  assert.equal(w.calls.provider.length, 3)
+  assert.equal((await send(handler, v2Body({ provider: 'groq' }), { env: e })).status, 200, 'Groq has its own budget')
+  time = windowEnd
+  assert.equal((await send(handler, v2Body(), { env: e })).status, 200, 'a new 5-hour window')
+  assert.equal(w.calls.provider.length, 5)
+})
+
+await test('budget: a full daily count refuses in a fresh 5-hour window', async () => {
+  let time = T0
+  const handler = makeHandler(world(), { now: () => time })
+  const e = env({ ZAI_CAP_5H: '5', ZAI_CAP_DAY: '2' })
+  for (let i = 0; i < 2; i++) assert.equal((await send(handler, v2Body(), { env: e })).status, 200)
+  time += FIVE_HOUR_MS
+  const data = await errorOf(await send(handler, v2Body(), { env: e }), { status: 503, code: 'budget_exhausted', scope: 'zai' })
+  const dayEnd = (Math.floor(time / 86_400_000) + 1) * 86_400_000
+  assert.equal(data.retryAfter, Math.ceil((dayEnd - time) / 1000))
+})
+
+await test('budget: a failing, slow or missing budget store fails closed with no provider call', async () => {
+  const cases = {
+    throws: { GENIE_BUDGET: brokenNamespace(async () => { throw new Error(`budget ${FAKE_SECRET}`) }) },
+    'never answers': { GENIE_BUDGET: brokenNamespace(() => new Promise(() => {})), BUDGET_TIMEOUT_MS: '20' },
+    'answers 500': { GENIE_BUDGET: brokenNamespace(async () => new Response('internal', { status: 500 })) },
+    'answers nonsense': { GENIE_BUDGET: brokenNamespace(async () => Response.json({ allowed: 'maybe' })) },
+    missing: { GENIE_BUDGET: undefined },
+  }
+  for (const [name, overrides] of Object.entries(cases)) {
+    const w = world()
+    const started = Date.now()
+    const data = await errorOf(await send(makeHandler(w), v2Body(), { env: env(overrides) }), { status: 503, code: 'unavailable', scope: 'worker' })
+    assert.equal(data.error.message, 'Models are unavailable right now.', name)
+    assert.equal(w.calls.provider.length, 0, name)
+    assert.ok(Date.now() - started < 1_000, name)
+  }
+})
+
+await test('budget: the GenieBudget object rejects a bad body', async () => {
+  const object = new GenieBudget({ storage: memoryStorage() }, {})
+  for (const body of ['nope', JSON.stringify({ caps: { fiveHour: 0, day: 1 }, now: T0 }), JSON.stringify({ caps: { fiveHour: 1, day: 1 } })]) {
+    const res = await object.fetch(new Request('https://genie-budget/consume', { method: 'POST', body }))
+    assert.equal(res.status, 400)
+  }
+})
+
+// ---------------------------------------------------------------- stop switch (R7)
+
+await test('stop switch: GENIE_STOP=on refuses every POST before the budget; OPTIONS still works', async () => {
+  for (const value of ['on', ' ON ']) {
+    const w = world()
+    const e = env({ GENIE_STOP: value })
+    const data = await errorOf(await send(makeHandler(w), v2Body(), { env: e }), { status: 503, code: 'unavailable', scope: 'worker' })
+    assert.equal(data.error.message, 'Models are unavailable right now.')
+    await errorOf(await send(makeHandler(w), siteBody(), { env: e }), { status: 503, code: 'unavailable', scope: 'worker' })
+    assert.equal(w.calls.provider.length, 0)
+    assert.equal(e.GENIE_BUDGET.calls.length, 0)
+    assert.equal((await send(makeHandler(w), undefined, { method: 'OPTIONS', env: e })).status, 204)
+  }
+  assert.equal((await send(makeHandler(), v2Body(), { env: env({ GENIE_STOP: 'off' }) })).status, 200)
+})
+
+await test('order: requests refused before the budget spend none of it', async () => {
+  const e = env({ CHAT_RATE_LIMITER: limiter({ max: 1 }) })
+  const handler = makeHandler()
+  await send(handler, v2Body({ lane: 'nope' }), { env: e })
+  await send(handler, v2Body(), { env: e, origin: EVIL })
+  await send(handler, v2Body(), { env: e })
+  assert.equal(e.GENIE_BUDGET.calls.length, 0)
+  const noKey = env({ ZAI_API_KEY: '' })
+  await send(handler, v2Body(), { env: noKey })
+  assert.equal(noKey.GENIE_BUDGET.calls.length, 0)
+})
+
+// ---------------------------------------------------------------- deadlines (R10)
+
+await test('deadline: no response headers before FIRST_BYTE_MS gives 504 upstream_timeout', async () => {
+  for (const stream of [true, false]) {
+    let signal
+    const w = world({
+      provider: ({ init }) => {
+        signal = init.signal
+        return new Promise(() => {})
+      },
+    })
+    const points = events()
+    const started = Date.now()
+    const res = await send(makeHandler(w), v2Body({ stream }), { env: env({ FIRST_BYTE_MS: '30', GENIE_EVENTS: points }) })
+    const data = await errorOf(res, { status: 504, code: 'upstream_timeout', scope: 'zai' })
+    assert.equal(data.error.message, 'The model took too long to answer.')
+    assert.ok(Date.now() - started < 1_000)
+    assert.equal(signal?.aborted, true, 'the provider request is aborted')
+    await new Promise((resolve) => setTimeout(resolve, 20))
+    assert.deepEqual(points.points.map((p) => p.blobs[3]), ['upstream_timeout'], 'exactly one point')
+  }
+})
+
+await test('deadline: a stream past TOTAL_MS ends with an upstream_timeout event', async () => {
+  const first = 'data: {"choices":[{"delta":{"content":"Hi"}}]}\n\n'
+  const w = world({
+    provider: () =>
+      new Response(
+        new ReadableStream({
+          start(controller) {
+            controller.enqueue(encoder.encode(first))
+          },
+        }),
+        { status: 200, headers: { 'Content-Type': 'text/event-stream' } },
+      ),
+  })
+  const points = events()
+  const res = await send(makeHandler(w), v2Body(), { env: env({ TOTAL_MS: '60', GENIE_EVENTS: points }) })
+  assert.equal(res.status, 200)
+  const text = await res.text()
+  assert.ok(text.startsWith(first))
+  const rest = text.slice(first.length)
+  errorBodies.push(rest)
+  const event = JSON.parse(rest.trim().slice('data: '.length))
+  assert.equal(event.error.code, 'upstream_timeout')
+  assert.equal(event.scope, 'zai')
+  assert.equal(points.points.length, 1)
+  assert.equal(points.points[0].blobs[3], 'upstream_timeout')
+})
+
+await test('deadline: a non-stream body that never finishes gives 504', async () => {
+  const w = world({ provider: () => new Response(new ReadableStream({ start() {} }), { status: 200 }) })
+  const points = events()
+  await errorOf(await send(makeHandler(w), v2Body({ stream: false }), { env: env({ TOTAL_MS: '40', GENIE_EVENTS: points }) }), {
+    status: 504,
+    code: 'upstream_timeout',
+    scope: 'zai',
+  })
+  await new Promise((resolve) => setTimeout(resolve, 20))
+  assert.deepEqual(points.points.map((p) => p.blobs[3]), ['upstream_timeout'], 'exactly one point')
+})
+
+// ---------------------------------------------------------------- telemetry (R9, SC-007)
+
+await test('telemetry: one point per request that passes validation, none before', async () => {
+  const points = events()
+  const handler = makeHandler()
+  const e = env({ GENIE_EVENTS: points, CHAT_RATE_LIMITER: limiter({ max: 7 }) })
+  await send(handler, v2Body(), { env: e, origin: EVIL })
+  await send(handler, v2Body({ lane: 'nope' }), { env: e })
+  await send(handler, undefined, { env: e, raw: '{' })
+  assert.equal(points.points.length, 0, 'origin and invalid refusals get no point')
+  await (await send(handler, v2Body({ entryIds: [entryA.id, entryB.id] }), { env: e })).text()
+  await (await send(handler, siteBody({ provider: 'groq', lane: 'deep' }), { env: e })).text()
+  await send(handler, v2Body(), { env: { ...e, GENIE_STOP: 'on' } })
+  await send(handler, v2Body(), { env: { ...e, ZAI_API_KEY: undefined } })
+  assert.equal(points.points.length, 4)
+  await send(handler, v2Body(), { env: e })
+  assert.equal(points.points.length, 4, 'a rate-limited request gets no point')
+
+  const [a, b, stop, noKey] = points.points
+  assert.deepEqual(a.indexes, ['zai'])
+  // The invalid request above already fetched the prompt file, so this one reads the cache.
+  assert.deepEqual(a.blobs, ['fast', 'zai', 'glm-5.3-flash', 'ok', 'v2', 'cached'])
+  assert.equal(a.doubles.length, 3)
+  assert.equal(a.doubles[2], 2, 'entry count')
+  assert.deepEqual(b.indexes, ['groq'])
+  assert.deepEqual(b.blobs, ['deep', 'groq', 'openai/gpt-oss-20b', 'ok', 'v1', 'cached'])
+  assert.equal(stop.blobs[3], 'unavailable')
+  assert.equal(noKey.blobs[3], 'unavailable')
+})
+
+await test('telemetry: refusals and failures record their code as the outcome', async () => {
+  const points = events()
+  const w = world({ provider: () => new Response('x', { status: 500 }) })
+  await send(makeHandler(w), v2Body(), { env: env({ GENIE_EVENTS: points }) })
+  const full = env({ GENIE_EVENTS: points, ZAI_CAP_5H: '1' })
+  await (await send(makeHandler(), v2Body(), { env: full })).text()
+  await send(makeHandler(), v2Body(), { env: full })
+  await send(makeHandler(), v2Body(), { env: env({ GENIE_EVENTS: points, GENIE_BUDGET: undefined }) })
+  assert.deepEqual(points.points.map((p) => p.blobs[3]), ['upstream_error', 'ok', 'budget_exhausted', 'unavailable'])
+})
+
+await test('telemetry: a stream the client cancels records client_abort and cancels the provider', async () => {
+  let providerCancelled = false
+  const w = world({
+    provider: () =>
+      new Response(
+        new ReadableStream({
+          start(controller) {
+            controller.enqueue(encoder.encode('data: {"choices":[{"delta":{"content":"Hi"}}]}\n\n'))
+          },
+          cancel() {
+            providerCancelled = true
+          },
+        }),
+        { status: 200 },
+      ),
+  })
+  const points = events()
+  const res = await send(makeHandler(w), v2Body(), { env: env({ GENIE_EVENTS: points }) })
+  const reader = res.body.getReader()
+  await reader.read()
+  await reader.cancel()
+  assert.equal(points.points.length, 1)
+  assert.equal(points.points[0].blobs[3], 'client_abort')
+  assert.ok(providerCancelled)
+})
+
+await test('telemetry: an error event replaced in a stream records upstream_error', async () => {
+  const points = events()
+  const w = world({ provider: () => sseResponse(['data: {"error":"x"}\n\n']) })
+  await (await send(makeHandler(w), v2Body(), { env: env({ GENIE_EVENTS: points }) })).text()
+  assert.equal(points.points.length, 1)
+  assert.equal(points.points[0].blobs[3], 'upstream_error')
+})
+
+await test('SC-007: no point holds message text, an IP address, a user agent or the request ID', async () => {
+  const points = events()
+  const handler = makeHandler()
+  const e = env({ GENIE_EVENTS: points })
+  const question = 'PRIVATE-QUESTION-TEXT about the thesis'
+  const ids = []
+  for (const body of [v2Body({ turns: [{ role: 'user', content: question }] }), siteBody({ turns: [{ role: 'user', content: question }] })]) {
+    const res = await send(handler, body, { env: e, ip: '198.51.100.23' })
+    ids.push(res.headers.get('X-Request-Id'))
+    await res.text()
+  }
+  assert.equal(points.points.length, 2)
+  const text = JSON.stringify(points.points)
+  for (const banned of ['PRIVATE-QUESTION-TEXT', 'thesis', '198.51.100', 'Mozilla', FAKE_SECRET, ...ids, RULES_START]) {
+    assert.ok(!text.includes(banned), `telemetry contains ${banned}`)
+  }
+  for (const point of points.points) {
+    assert.deepEqual(Object.keys(point).sort(), ['blobs', 'doubles', 'indexes'])
+    assert.equal(point.blobs.length, 6)
+    assert.equal(point.doubles.length, 3)
+    assert.ok(point.doubles.every((d) => Number.isInteger(d) && d >= 0))
+  }
+})
+
+await test('telemetry: a throwing dataset never changes the answer', async () => {
+  const e = env({ GENIE_EVENTS: { writeDataPoint() { throw new Error('down') } } })
+  const res = await send(makeHandler(), v2Body(), { env: e })
+  assert.equal(res.status, 200)
+  assert.equal(await res.text(), SSE)
+})
+
 // ---------------------------------------------------------------- leak sweep (FR-011, SC-004)
 
 await test('sweep: no error body holds provider text, a setting or secret name, a model or the prompt', () => {
@@ -770,6 +1083,10 @@ await test('sweep: no error body holds provider text, a setting or secret name, 
     }
   }
 })
+
+// A test that checks only the status leaves the body unread. The runtime would cancel it,
+// which ends the upstream call and clears its deadline timers.
+for (const res of responses) if (!res.bodyUsed) await res.body?.cancel()
 
 console.log(`\n${passed} passed, ${failed} failed`)
 if (failed > 0) process.exit(1)

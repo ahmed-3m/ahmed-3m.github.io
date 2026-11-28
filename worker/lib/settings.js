@@ -20,6 +20,16 @@ export const DEFAULT_SETTINGS = Object.freeze({
   deepMaxTokens: 1600,
   temperature: 0.3,
   zaiReasoningEffort: 'low',
+  // Budgets (research R6): requests per provider per fixed UTC window.
+  zaiCap5h: 100,
+  zaiCapDay: 300,
+  groqCap5h: 200,
+  groqCapDay: 600,
+  // Upstream deadlines (research R10), inside the site's own 20 s and 60 s.
+  firstByteMs: 18_000,
+  totalMs: 58_000,
+  // The budget call's timeout. Conservative until the latency is measured (T038, T042).
+  budgetTimeoutMs: 2_000,
 })
 
 /** A positive whole number, or the fallback. `Number('')` is 0, so empty text is rejected first. */
@@ -64,7 +74,26 @@ export function readSettings(env = {}) {
     deepMaxTokens: positiveInteger(env.DEEP_MAX_TOKENS, d.deepMaxTokens),
     temperature: temperature(env.TEMPERATURE, d.temperature),
     zaiReasoningEffort: REASONING_EFFORTS.has(env.ZAI_REASONING_EFFORT) ? env.ZAI_REASONING_EFFORT : d.zaiReasoningEffort,
+    zaiCap5h: positiveInteger(env.ZAI_CAP_5H, d.zaiCap5h),
+    zaiCapDay: positiveInteger(env.ZAI_CAP_DAY, d.zaiCapDay),
+    groqCap5h: positiveInteger(env.GROQ_CAP_5H, d.groqCap5h),
+    groqCapDay: positiveInteger(env.GROQ_CAP_DAY, d.groqCapDay),
+    firstByteMs: positiveInteger(env.FIRST_BYTE_MS, d.firstByteMs),
+    totalMs: positiveInteger(env.TOTAL_MS, d.totalMs),
+    budgetTimeoutMs: positiveInteger(env.BUDGET_TIMEOUT_MS, d.budgetTimeoutMs),
   }
+}
+
+/** The caps for one provider, as the budget object reads them. */
+export function capsFor(settings, provider) {
+  return provider === 'groq'
+    ? { fiveHour: settings.groqCap5h, day: settings.groqCapDay }
+    : { fiveHour: settings.zaiCap5h, day: settings.zaiCapDay }
+}
+
+/** True when the stop switch is on (research R7). */
+export function isStopped(env = {}) {
+  return typeof env.GENIE_STOP === 'string' && env.GENIE_STOP.trim().toLowerCase() === 'on'
 }
 
 /** The model for a provider and lane. */
