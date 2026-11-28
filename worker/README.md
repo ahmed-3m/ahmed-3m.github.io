@@ -185,9 +185,10 @@ Change a cap by editing its var in `wrangler.toml` and deploying. Counts already
 current window stay.
 
 The budget call's added time, measured with `wrangler dev` on 2026-11-28 (local runtime, not
-production): 31 ms for the first call while the object starts, then a median of 1 ms and at
-most 9 ms over 33 calls. `BUDGET_TIMEOUT_MS` stays at 2000 until the owner measures it in
-production (see the owner steps).
+production): 31 ms for the first counted call while the object started, 5 ms for the second
+counted call, and for 32 refused calls (which read the counts but write nothing) a median of
+1 ms and at most 9 ms. `BUDGET_TIMEOUT_MS` stays at 2000 until the owner measures the counted
+path in production (see the owner steps).
 
 ### Stop switch
 
@@ -307,7 +308,9 @@ An agent never handles keys or deploys the Worker. The owner does these steps.
 **The first deploy with budgets (PR 3):** wait until the site deploy with the new privacy
 notice is live, confirm the caps in `wrangler.toml`, then deploy. The `v1` migration that
 creates `GenieBudget` runs with the deploy. Enable Analytics Engine if the dashboard asks,
-run one telemetry query to check that points arrive, and measure the budget call's time in
+run one telemetry query to check that points arrive (after a few streamed answers, `ok`
+rows should appear, and closing the chat panel during an answer should add a `client_abort`
+row), and measure the budget call's time in
 production once. If it is close to `BUDGET_TIMEOUT_MS`, raise the timeout and record both
 numbers here.
 

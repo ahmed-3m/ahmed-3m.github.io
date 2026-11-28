@@ -157,6 +157,9 @@ function ctx() {
   return { pending, waitUntil: (promise) => pending.push(promise) }
 }
 
+/** Every response the run got, so unread bodies can be cancelled at the end, as the runtime would. */
+const responses = []
+
 /** Sends one request and checks the headers every response must have. */
 async function send(handler, body, { origin = SITE, method = 'POST', env: e = env(), ctx: c = ctx(), ip = '203.0.113.7', raw } = {}) {
   const headers = { 'Content-Type': 'application/json', 'CF-Connecting-IP': ip }
@@ -164,6 +167,7 @@ async function send(handler, body, { origin = SITE, method = 'POST', env: e = en
   const init = { method, headers }
   if (method === 'POST') init.body = raw ?? JSON.stringify(body)
   const res = await handler.fetch(new Request('https://proxy.test/', init), e, c)
+  responses.push(res)
   assert.match(res.headers.get('X-Request-Id') ?? '', /^[0-9a-f-]{36}$/, 'every response has X-Request-Id')
   assert.equal(res.headers.get('Vary'), 'Origin')
   assert.notEqual(res.headers.get('Access-Control-Allow-Origin'), '*')
@@ -912,12 +916,15 @@ await test('deadline: no response headers before FIRST_BYTE_MS gives 504 upstrea
         return new Promise(() => {})
       },
     })
+    const points = events()
     const started = Date.now()
-    const res = await send(makeHandler(w), v2Body({ stream }), { env: env({ FIRST_BYTE_MS: '30' }) })
+    const res = await send(makeHandler(w), v2Body({ stream }), { env: env({ FIRST_BYTE_MS: '30', GENIE_EVENTS: points }) })
     const data = await errorOf(res, { status: 504, code: 'upstream_timeout', scope: 'zai' })
     assert.equal(data.error.message, 'The model took too long to answer.')
     assert.ok(Date.now() - started < 1_000)
     assert.equal(signal?.aborted, true, 'the provider request is aborted')
+    await new Promise((resolve) => setTimeout(resolve, 20))
+    assert.deepEqual(points.points.map((p) => p.blobs[3]), ['upstream_timeout'], 'exactly one point')
   }
 })
 
@@ -950,11 +957,14 @@ await test('deadline: a stream past TOTAL_MS ends with an upstream_timeout event
 
 await test('deadline: a non-stream body that never finishes gives 504', async () => {
   const w = world({ provider: () => new Response(new ReadableStream({ start() {} }), { status: 200 }) })
-  await errorOf(await send(makeHandler(w), v2Body({ stream: false }), { env: env({ TOTAL_MS: '40' }) }), {
+  const points = events()
+  await errorOf(await send(makeHandler(w), v2Body({ stream: false }), { env: env({ TOTAL_MS: '40', GENIE_EVENTS: points }) }), {
     status: 504,
     code: 'upstream_timeout',
     scope: 'zai',
   })
+  await new Promise((resolve) => setTimeout(resolve, 20))
+  assert.deepEqual(points.points.map((p) => p.blobs[3]), ['upstream_timeout'], 'exactly one point')
 })
 
 // ---------------------------------------------------------------- telemetry (R9, SC-007)
@@ -1073,6 +1083,10 @@ await test('sweep: no error body holds provider text, a setting or secret name, 
     }
   }
 })
+
+// A test that checks only the status leaves the body unread. The runtime would cancel it,
+// which ends the upstream call and clears its deadline timers.
+for (const res of responses) if (!res.bodyUsed) await res.body?.cancel()
 
 console.log(`\n${passed} passed, ${failed} failed`)
 if (failed > 0) process.exit(1)
