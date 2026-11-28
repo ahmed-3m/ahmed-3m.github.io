@@ -12,7 +12,8 @@
     "start": "next start",
     "lint": "eslint src tests",
     "typecheck": "tsc --noEmit",
-    "test": "node --import ./tools/test-hooks.mjs --test \"tests/**/*.test.ts\""
+    "test": "node --import ./tools/test-hooks.mjs --test \"tests/**/*.test.ts\"",
+    "genie:worker-prompt": "node --import ./tools/test-hooks.mjs tools/genie/emit-worker-prompt.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.79.0",

@@ -1,107 +1,214 @@
 # ahmed-chat-proxy
 
-The Cloudflare Worker that proxies the portfolio's ChatBot requests to
-the Z.ai API (GLM Coding Plan, `api.z.ai`) and Groq (`api.groq.com`). It keeps
-the real API keys server-side so they are never inlined into the static
-JavaScript bundle that ships to visitors' browsers.
+The Cloudflare Worker that answers Genie's chat requests with Z.ai (GLM Coding Plan,
+`api.z.ai`) or Groq (`api.groq.com`). The API keys live only in the Worker, so they never
+reach the static site's JavaScript.
 
-## Why this exists
+The Worker decides everything that costs money or shapes an answer:
 
-Before this proxy, the ChatBot called Z.ai and Groq **directly from the
-browser** using `NEXT_PUBLIC_BIGMODEL_TOKEN` / `NEXT_PUBLIC_GROQ_TOKEN`. Anything
-prefixed with `NEXT_PUBLIC_` is inlined into the static bundle at build time and
-is therefore publicly extractable by anyone who opens the site's JS. Those keys
-must be treated as disposable and rate-limited — anyone can grab them and burn
-your quota.
+- It **writes the system prompt itself**, from the published prompt file
+  (`https://ahmed-3m.github.io/genie/prompt.json`) or its bundled copy. A client cannot
+  send prompt text.
+- It **chooses the model, the token limit, the temperature and the reasoning effort** from
+  its settings. A client only names a provider (`zai` or `groq`) and a lane (`fast` or
+  `deep`).
+- It **limits each client** to 8 requests a minute.
+- It answers **every failure with one error structure** that holds no provider text.
 
-This Worker fixes that: the browser POSTs to the Worker with **no** API key, and
-the Worker attaches the real `ZAI_API_KEY` or `GROQ_API_KEY` secret (stored only
-in Cloudflare) based on the requested allowlisted model before forwarding the
-request upstream. Secrets never reach the client.
+The full contract is in `specs/007-worker-hardening/contracts/worker-api.md`.
 
-> **Note on the `ZAI_API_KEY` binding name:** this is the Cloudflare secret
-> *binding name* (set via `wrangler secret put ZAI_API_KEY`) and is retained for
-> backward compatibility with existing deployments. The *value* it holds is a
-> Z.ai (`api.z.ai`) GLM Coding Plan key, not an open.bigmodel.cn one.
+## Files
 
-## Deploy
+| File | What it does |
+|---|---|
+| `chat-proxy.js` | The entry point: `createHandler({ bundledPrompt })`. |
+| `lib/handler.js` | The request handler. Runs the checks in the contract's order. |
+| `lib/request.js` | Reads and checks a v2 body, and adapts a v1 body to v2. |
+| `lib/compose-prompt.js` | Builds the system prompt from the prompt file. Matches the site's `buildSystemPrompt`. |
+| `lib/prompt-source.js` | Fetches and checks the published prompt file, with the bundled copy as fallback. |
+| `lib/upstream.js` | Calls the provider and replaces provider errors, including error events in a stream. |
+| `lib/settings.js` | Reads the settings below, with defaults and the model allowlist. |
+| `lib/client-key.js` | The rate-limit key: the IPv4 address, or the IPv6 /64. |
+| `lib/errors.js` | The error codes, messages and response helpers. |
+| `prompt-bundle.js` | **Generated.** The bundled copy of the prompt file. Do not edit. |
+| `chat-proxy.selftest.mjs` | The self-test. No network. CI runs it before each deploy. |
 
-Prerequisites: a free Cloudflare account.
+### The bundled prompt copy
 
-```bash
-# 1. Install the Wrangler CLI (Node 16.17+ required).
-npm i -g wrangler
+`prompt-bundle.js` is generated from the site's knowledge and rules
+(`src/lib/genie/prompt-file.ts`). **After any change to Genie's knowledge or prompt rules,
+regenerate it and commit the result:**
 
-# 2. Authenticate with Cloudflare (opens a browser).
-wrangler login
-
-# 3. From this worker/ directory, set the Z.ai and Groq API keys as secrets.
-#    You will be prompted to paste each key. They are stored encrypted in
-#    Cloudflare and are never written to this repo.
-wrangler secret put ZAI_API_KEY
-wrangler secret put GROQ_API_KEY
-
-# 4. Deploy the Worker.
-wrangler deploy
+```powershell
+npm run genie:worker-prompt
 ```
 
-After deploying, Wrangler prints the Worker URL, e.g.
-`https://ahmed-chat-proxy.<your-subdomain>.workers.dev`.
+`tests/genie/worker-prompt.test.ts` fails when the bundle is out of date.
 
-### Rate limiting (`CHAT_RATE_LIMITER` & `CHAT_RATE_KV` fallback)
+## Request formats
 
-- **Primary (`CHAT_RATE_LIMITER`):** `wrangler.toml` configures Cloudflare's
-  native per-IP `[[ratelimits]]` binding at **60 requests per minute** per
-  Cloudflare location.
-- **Fallback (`CHAT_RATE_KV`):** if `CHAT_RATE_LIMITER` is unavailable and a KV
-  namespace is bound as `CHAT_RATE_KV`, the Worker falls back to a fixed-window
-  per-IP KV counter at **60 requests per hour** (`RATE_LIMIT_PER_HOUR = 60`).
+### v2 (the site's new format)
 
-To enable the optional KV fallback:
-
-```bash
-wrangler kv namespace create CHAT_RATE_KV
-# Copy the printed id into the [[kv_namespaces]] block in wrangler.toml.
-wrangler deploy
+```json
+{
+  "version": 2,
+  "turns": [{ "role": "user", "content": "What did the thesis find?" }],
+  "lane": "fast",
+  "provider": "zai",
+  "lang": "de",
+  "section": "research",
+  "pathname": "/research",
+  "entryIds": ["diffusion-headline"],
+  "stream": true
+}
 ```
 
-### Local development (`ALLOW_LOCALHOST`)
+- `turns`: 1 to 16 turns, `user` or `assistant` only, the last one `user`. A `user` turn
+  holds at most 2,000 characters, an `assistant` turn at most 8,000.
+- `lane`: `fast` or `deep`. `provider`: `zai` or `groq`.
+- `lang`, `section`, `pathname`: an unknown value is replaced by the default (`en`,
+  `hero`, `/`), not echoed.
+- `entryIds`: at most 4 knowledge entry IDs. Unknown IDs are dropped; with none left, the
+  section's default entries are used.
+- `stream`: optional, `true` by default.
+- Any other field (`model`, `max_tokens`, `temperature`, `reasoning_effort`, …) is ignored.
 
-By default (`ALLOW_LOCALHOST = "false"` in `wrangler.toml`), the Worker only
-allows `Origin: https://ahmed-3m.github.io` and rejects missing or unknown
-origins on `POST` and `OPTIONS` with `403`. For local testing against
-`http://localhost:3000`, set `ALLOW_LOCALHOST = "true"` (e.g. via
-`wrangler dev --var ALLOW_LOCALHOST:true`). Never enable `ALLOW_LOCALHOST` in
-production.
+### v1 (today's site, kept until PR 5)
 
-## Enable on the site
+A body without `version` and with `messages` is read as v1 and adapted:
 
-Set `NEXT_PUBLIC_CHAT_PROXY_URL` to the Worker URL in your GitHub repository
-variables before merging the proxy-only frontend. Verify both provider bindings
-using a harmless sample question before switching production. Example value:
+- The provider comes from `model` (an allowlisted Z.ai or Groq model). Another model is
+  `400`.
+- The lane is `deep` when `max_tokens` is 1,200 or more, otherwise `fast`.
+- Every `system` message is dropped. The page context, the language and up to 4 knowledge
+  entries are read from the site's prompt text by exact patterns, and the Worker composes
+  its own prompt from them.
+- An earlier turn over its cap is cut to the cap. A last turn over 2,000 characters is
+  `400`.
+- It streams only when `stream` is `true`.
+
+The v1 format is removed in PR 5, at least 7 days after the site sends v2 (PR 4).
+
+## Checks, in order
+
+1. **Origin.** Only `https://ahmed-3m.github.io` (and `http://localhost:3000` when
+   `ALLOW_LOCALHOST` is `true`), for every method. `OPTIONS` gets `204`. Methods other
+   than `POST` get `405`.
+2. **Per-client limit.** 8 requests a minute for each IPv4 address or IPv6 /64, counted at
+   each Cloudflare location. Without the `CHAT_RATE_LIMITER` binding, the Worker answers
+   `503` and calls no model.
+3. **Body.** At most 64,000 bytes (`413`), valid JSON (`400`).
+4. **Validation** of the v2 or v1 body (`400`).
+5. **Key.** A missing provider key gives `503` for that provider.
+6. **Prompt and upstream call.**
+
+PR 3 adds the stop switch, the shared budgets, deadlines and telemetry.
+
+## Errors
+
+Every error, as a response body or as one event in a stream, has this shape:
+
+```json
+{ "error": { "code": "rate_limited", "message": "Rate limit exceeded. Please try again later." },
+  "scope": "proxy", "retryAfter": 60, "requestId": "…" }
+```
+
+| Code | Status | Message | Scope |
+|---|---|---|---|
+| `invalid_request` | 400, 405, 413 | Invalid request. | `proxy` |
+| `origin_not_allowed` | 403 | Origin not allowed. | `proxy` |
+| `rate_limited` | 429 | Rate limit exceeded. Please try again later. | `proxy` |
+| `unavailable` | 503 | This model is unavailable right now. | `zai` or `groq` |
+| `unavailable` | 503 | Models are unavailable right now. | `worker` |
+| `budget_exhausted` | 503 | This model is unavailable right now. | `zai` or `groq` (PR 3) |
+| `upstream_error` | 502 | The model could not answer. | `zai` or `groq` |
+| `upstream_timeout` | 504 | The model took too long to answer. | `zai` or `groq` (PR 3) |
+
+Every response carries `X-Request-Id`. A `429` also carries `Retry-After: 60`. A provider's
+error body is read and dropped. When a provider sends an error event inside a `200` stream,
+the Worker replaces it with one standard `upstream_error` event and ends the stream.
+
+## Settings
+
+| Setting | Kind | Default |
+|---|---|---|
+| `ZAI_API_KEY`, `GROQ_API_KEY` | secret | none; a missing key makes that provider `unavailable` |
+| `ALLOW_LOCALHOST` | var | `false` |
+| `PROMPT_URL` | var | `https://ahmed-3m.github.io/genie/prompt.json` (must be `https`) |
+| `ZAI_FAST_MODEL`, `ZAI_DEEP_MODEL` | var | `glm-5.3-flash`, `glm-5.4` |
+| `GROQ_MODEL` | var | `openai/gpt-oss-20b` (both lanes) |
+| `FAST_MAX_TOKENS`, `DEEP_MAX_TOKENS` | var | `900`, `1600` |
+| `TEMPERATURE` | var | `0.3` |
+| `ZAI_REASONING_EFFORT` | var | `low` (sent to Z.ai only) |
+| `CHAT_RATE_LIMITER` | binding | `{ limit = 8, period = 60 }` |
+
+A var that is missing or invalid falls back to its default. A model var outside the
+allowlist in `lib/settings.js` falls back to its default.
+
+### The prompt file
+
+On a cold start the Worker waits up to 2 seconds for the published prompt file. If the fetch
+fails, answers with another status than `200`, is over 256 KB or fails the shape check, the
+Worker uses the bundled copy and does not try again for 60 seconds. A copy older than 10
+minutes is used at once and refreshed in the background.
+
+## Owner steps
+
+An agent never handles keys or deploys the Worker. The owner does these steps.
+
+**Before the first deploy of this version:**
+
+1. Create separate Z.ai and Groq keys, with spend limits where the provider offers them.
+2. Check the Z.ai Coding Plan terms for serving a public website, and whether Groq billing
+   is on.
+3. From `worker/`, set the keys:
+
+   ```powershell
+   npx wrangler secret put ZAI_API_KEY
+   ```
+
+   ```powershell
+   npx wrangler secret put GROQ_API_KEY
+   ```
+
+**Each deploy:**
+
+1. Deploy from `main`, in `worker/`:
+
+   ```powershell
+   npx wrangler deploy
+   ```
+
+2. Run the site-health workflow by hand. The preflight and the prompt file must pass.
+3. Ask Genie one question on the live site and check that the answer is about the question.
+
+**Rollout order:** deploy this Worker (it accepts both v1 and v2) before the site starts
+sending v2 (PR 4). Remove v1 (PR 5) only after PR 4 has been live for 7 days.
+
+## Local development
+
+Create `worker/.dev.vars` (ignored by git) with:
 
 ```
-NEXT_PUBLIC_CHAT_PROXY_URL=https://ahmed-chat-proxy.your-subdomain.workers.dev
+ALLOW_LOCALHOST=true
+ZAI_API_KEY=<a development key>
+GROQ_API_KEY=<a development key>
 ```
 
-The build embeds the Worker URL. Once the deployed widget has been verified,
-revoke the former browser keys at their providers and remove the unused
-`NEXT_PUBLIC_BIGMODEL_TOKEN` and `NEXT_PUBLIC_GROQ_TOKEN` GitHub secrets.
+Then run `npx wrangler dev` in `worker/`, and set `NEXT_PUBLIC_CHAT_PROXY_URL` to the local
+Worker URL for `npm run dev`. Never set `ALLOW_LOCALHOST` to `true` in production.
 
-## How it works
+## Tests
 
-- When `NEXT_PUBLIC_CHAT_PROXY_URL` is set, the Z.ai and Groq callers in
-  `src/lib/genie/providers.ts` POST `{ messages, model, max_tokens, temperature, ... }`
-  to the proxy URL **without** an `Authorization` header. The proxy routes
-  allowlisted Z.ai models (`glm-5.4`, `glm-5.3`, `glm-5-turbo`, `glm-5.3-flash`) to
-  `api.z.ai` with `env.ZAI_API_KEY` and allowlisted Groq models
-  (`openai/gpt-oss-20b`) to `api.groq.com` with `env.GROQ_API_KEY`.
-- Without `NEXT_PUBLIC_CHAT_PROXY_URL`, Genie uses its curated answers. It also
-  uses them when the configured providers fail.
-- The proxy requires an allowlisted `Origin` on `POST` and `OPTIONS` (missing or
-  disallowed origins receive `403`), enforces `MAX_TOKENS_CAP = 2_000`, caps
-  body size (`64_000` UTF-8 bytes), allows at most one `system` message (only at
-  `messages[0]`), rejects malformed payloads with `400`, rejects non-`POST`
-  methods with `405`, and passes SSE streaming responses through unbuffered.
-- `ZAI_API_KEY` and `GROQ_API_KEY` live only in Cloudflare (`env.ZAI_API_KEY`
-  and `env.GROQ_API_KEY`) and are never logged or returned to the client.
+```powershell
+node worker/chat-proxy.selftest.mjs
+```
+
+```powershell
+npm test
+```
+
+The self-test covers the checks, the v1 adapter, the errors, the stream error events and the
+prompt source. `tests/genie/worker-compat.test.ts` runs the site's own request code against
+the Worker, and `tests/genie/worker-prompt.test.ts` checks the bundle and that the Worker's
+prompt matches the site's.

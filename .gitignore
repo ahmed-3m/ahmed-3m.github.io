@@ -62,3 +62,7 @@ backup/
 
 *:Zone.Identifier
 .claude/
+
+# Cloudflare Worker local settings and dry-run output
+/worker/.dev.vars
+worker-dist/
