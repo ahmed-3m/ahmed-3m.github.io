@@ -32,8 +32,8 @@ import {
 
 /**
  * Genie's rules, as one template shared by the site's composer and the published prompt
- * file (`/genie/prompt.json`, spec 007). The chat Worker fills the same slots from that
- * file, so the text here is the single source of the prompt.
+ * file (`/genie/prompt.json`, spec 007). The chat Worker will fill the same slots from
+ * that file (later spec 007 PRs), so the text here is the single source of the prompt.
  */
 
 /** The allowlisted public links, as the prompt lists them. */

@@ -198,7 +198,7 @@ jobs:
       - name: Genie prompt file is published and well formed
         shell: bash
         run: |
-          # The chat Worker builds Genie's system prompt from this file (spec 007).
+          # Genie's published prompt file (spec 007); the chat Worker will build the prompt from it.
           set -euo pipefail
           url="https://ahmed-3m.github.io/genie/prompt.json"
           file="$RUNNER_TEMP/prompt.json"

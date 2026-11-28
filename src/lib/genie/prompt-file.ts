@@ -13,9 +13,9 @@ import { GENIE_VIEWPORT_SECTIONS, resolveSectionForPathname } from './prompts'
 import { normalizePathname, retrieveKnowledgeChunks } from './retriever'
 
 /**
- * The published Genie prompt file (`/genie/prompt.json`, spec 007 FR-001). The chat
- * Worker composes the system prompt from it, so a client can pick published entries,
- * a language and a listed page context, but cannot send prompt text.
+ * The published Genie prompt file (`/genie/prompt.json`, spec 007 FR-001). In later spec
+ * 007 PRs the chat Worker composes the system prompt from it, so a client can pick
+ * published entries, a language and a listed page context, but cannot send prompt text.
  * Contract: specs/007-worker-hardening/contracts/prompt-file.md.
  */
 
