@@ -182,6 +182,6 @@ FORBIDDEN:  80.25%, +18.8 pp  (not in thesis)
 
 | Date | Question | Decision | Source |
 | --- | --- | --- | --- |
-| 2026-11-26 | Canonical contact address | Decided by PR #281, which put one address on every public surface (the address set by PR #281); the address named in spec 001 and in the claims matrix is superseded | PR #281 (merged 2026-11-26) |
+| 2026-11-26 | Canonical contact address | One address on every public surface, set by PR #281; the address named in spec 001 and in the claims matrix is superseded by it | PR #281 (merged 2026-11-26) |
 
 **2026-11-27 note.** The "May 2026" cover-date entries in sections 6 and 8 above describe the thesis version that PR #101 replaced on 2026-09-20; the thesis PDF now on the site (git blob `a5ad32d`) reads "June 2026" on its title page under "Submission" (checked 2026-11-27). The thesis submission date published on the site is still an open owner question; this note does not decide it.
