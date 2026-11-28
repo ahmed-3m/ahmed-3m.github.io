@@ -44,13 +44,14 @@ dashboard settings and API tokens are the owner's (research R15).
 
 **Purpose**: pin today's prompt text before anything moves, so PR 1 provably changes no prompt text.
 
-- [ ] T001 Before any code change, write `tests/genie/fixtures/system-prompt-baseline.json` from today's `buildSystemPrompt` in `src/lib/genie/retriever.ts`. Use a throwaway script in the scratchpad (not committed), run with `node --import ./tools/test-hooks.mjs`. Record, for each language (`en`, `de`, `fr`, `es`, `ar`) and each of these inputs, `{ input, entryIds, prompt }`, where `entryIds` is `retrieveKnowledgeChunks({ ...input, topK: 4 }).map((c) => c.id)`:
+- [x] T001 Before any code change, write `tests/genie/fixtures/system-prompt-baseline.json` from today's `buildSystemPrompt` in `src/lib/genie/retriever.ts`. Use a throwaway script in the scratchpad (not committed), run with `node --import ./tools/test-hooks.mjs`. Record, for each language (`en`, `de`, `fr`, `es`, `ar`) and each of these inputs, `{ input, entryIds, prompt }`, where `entryIds` is `retrieveKnowledgeChunks({ ...input, topK: 4 }).map((c) => c.id)`:
   - `{ query: '', section: 'hero', pathname: '/' }`;
   - `{ query: 'What did the thesis find?', section: 'research', pathname: '/research' }`;
   - `{ query: 'Is he available to work in Austria?', section: 'contact', pathname: '/' }`;
   - `{ query: 'Tell me about his writing', section: 'writing', pathname: '/blog/<first slug in blogPostsMeta>' }`;
   - `{ query: 'How does it store memories?', history: [one earlier user and assistant turn about the receptionist demo], section: 'projects', pathname: '/case-studies/sihem' }`.
-- [ ] T002 Add `tests/genie/prompt-baseline.test.ts`. For every fixture case it asserts that `buildSystemPrompt(input)` equals `prompt`. It must pass on `main` before any other change in this PR.
+  - Done in #316 with 9 cases, not 25: the five inputs in `en`, plus the research input in `de`, `fr`, `es` and `ar`. Language fills only the `{{language}}` slot, and each language name is covered once.
+- [x] T002 Add `tests/genie/prompt-baseline.test.ts`. For every fixture case it asserts that `buildSystemPrompt(input)` equals `prompt`. It must pass on `main` before any other change in this PR.
 
 ---
 
@@ -63,7 +64,7 @@ the site switch (Phase 5) both read this file, so it blocks every story.
 
 ### Tests for the prompt file (write first; they fail until T005–T007)
 
-- [ ] T003 [P] Write `tests/genie/prompt-file.test.ts` for `buildPromptFile()`:
+- [x] T003 [P] Write `tests/genie/prompt-file.test.ts` for `buildPromptFile()`:
   - every rule in `contracts/prompt-file.md`, "Rules a valid file meets", 1 to 7;
   - `entries` has one item per `KNOWLEDGE_CHUNKS` entry, with `id`, `title`, `facts`, `links` and `sections`, and no `keywords`;
   - `sections` contains every value in the shared viewport section list (T004) and every value `resolveSectionForPathname` returns for a path in `paths`;
@@ -73,15 +74,15 @@ the site switch (Phase 5) both read this file, so it blocks every story.
 
 ### Implementation for the prompt file
 
-- [ ] T004 [P] Move the viewport section list from `src/components/ChatBotPanel.tsx` (the inline array near line 184) into an exported constant, `GENIE_VIEWPORT_SECTIONS`, in `src/lib/genie/prompts.ts`, and import it in `ChatBotPanel.tsx`. No behaviour change.
-- [ ] T005 Create `src/lib/genie/prompt-rules.ts`. Move the rule paragraphs and `COMPACT_PUBLIC_LINKS` out of `buildSystemPrompt` in `src/lib/genie/retriever.ts`. Export:
+- [x] T004 [P] Move the viewport section list from `src/components/ChatBotPanel.tsx` (the inline array near line 184) into an exported constant, `GENIE_VIEWPORT_SECTIONS`, in `src/lib/genie/prompts.ts`, and import it in `ChatBotPanel.tsx`. No behaviour change.
+- [x] T005 Create `src/lib/genie/prompt-rules.ts`. Move the rule paragraphs and `COMPACT_PUBLIC_LINKS` out of `buildSystemPrompt` in `src/lib/genie/retriever.ts`. Export:
   - `PROMPT_RULES_TEMPLATE`: today's prompt text with `GENIE_NAME`, `CONTACT_URL` and `CALENDLY_URL` filled in, and the slots `{{language}}`, `{{section}}`, `{{pathname}}`, `{{entries}}` and `{{links}}`, each exactly once;
   - `ENTRY_FORMAT = '[{{title}}] {{facts}} Links: {{links}}'` (entry links joined with `, `);
   - `COMPACT_PUBLIC_LINKS`;
   - `PROMPT_MAX_CHARS = 7500`;
   - `fillPromptSlots(template, values)`: one pass with `/\{\{(\w+)\}\}/g` and a lookup, so a value containing `{{…}}` is never expanded again.
-- [ ] T006 Change `buildSystemPrompt` in `src/lib/genie/retriever.ts` to fill `PROMPT_RULES_TEMPLATE` and `ENTRY_FORMAT` with `fillPromptSlots`, keeping its signature and its cut (`slice(0, PROMPT_MAX_CHARS - 10)` plus `…`). Export `normalizePathname`. T002 must still pass unchanged.
-- [ ] T007 Create `src/lib/genie/prompt-file.ts` with `buildPromptFile()`, returning the version 1 object in `contracts/prompt-file.md`:
+- [x] T006 Change `buildSystemPrompt` in `src/lib/genie/retriever.ts` to fill `PROMPT_RULES_TEMPLATE` and `ENTRY_FORMAT` with `fillPromptSlots`, keeping its signature and its cut (`slice(0, PROMPT_MAX_CHARS - 10)` plus `…`). Export `normalizePathname`. T002 must still pass unchanged.
+- [x] T007 Create `src/lib/genie/prompt-file.ts` with `buildPromptFile()`, returning the version 1 object in `contracts/prompt-file.md`:
   - `rules`, `entryFormat`, `links`, `maxChars` from `prompt-rules.ts`;
   - `languages` from `languageName` in `@/lib/i18n-config`;
   - `entries` from `KNOWLEDGE_CHUNKS`;
@@ -90,12 +91,12 @@ the site switch (Phase 5) both read this file, so it blocks every story.
   - `defaults` per section, as in T003.
 
   It throws if any contract rule fails, so a bad file fails the build instead of shipping.
-- [ ] T008 Create `src/app/genie/prompt.json/route.ts` with `export const dynamic = 'force-static'`, returning `Response.json(buildPromptFile())`, modeled on `src/app/feed.xml/route.ts`. Run `npm run build` and confirm `out/genie/prompt.json` exists and parses (quickstart §1).
-- [ ] T009 Extend `tools/claims/scan-export.mjs` to read `out/genie/prompt.json` as English text units (research R13): the `rules` template with its slots blanked, and each entry's `title` and `facts`. A missing or unparsable file is a finding, so the check cannot skip it silently.
-- [ ] T010 Add cases to `tests/claims/check.test.ts`, next to the existing `scanExport` cases: a fixture export with a `genie/prompt.json` whose entry `facts` holds a wrong figure fails, the same file with the right figure passes, and a missing `genie/prompt.json` is reported.
-- [ ] T011 [P] Add a step to `.github/workflows/site-health.yml`, after the CORS preflight step, that fetches `https://ahmed-3m.github.io/genie/prompt.json`, expects `200`, and checks with `jq` that `version` is 1, `entries` is not empty, `rules` contains each of the five slots, and every `defaults` ID is an entry ID (research R14). Leave the preflight step unchanged.
-- [ ] T012 [P] In `specs/008-claims-registry/tasks.md`, replace the "Blocked on spec 007" text of T047 with a pointer to this phase (007 T007–T010), and mark it done when PR 1 merges.
-- [ ] T013 Run every command in the list above. Then do the planted-figure check in quickstart §1 by hand (SC-005): the finding for `out/genie/prompt.json` must appear in the same run as the one for `knowledge.ts`. Revert the plant. Open PR 1.
+- [x] T008 Create `src/app/genie/prompt.json/route.ts` with `export const dynamic = 'force-static'`, returning `Response.json(buildPromptFile())`, modeled on `src/app/feed.xml/route.ts`. Run `npm run build` and confirm `out/genie/prompt.json` exists and parses (quickstart §1).
+- [x] T009 Extend `tools/claims/scan-export.mjs` to read `out/genie/prompt.json` as English text units (research R13): the `rules` template with its slots blanked, and each entry's `title` and `facts`. A missing or unparsable file is a finding, so the check cannot skip it silently.
+- [x] T010 Add cases to `tests/claims/check.test.ts`, next to the existing `scanExport` cases: a fixture export with a `genie/prompt.json` whose entry `facts` holds a wrong figure fails, the same file with the right figure passes, and a missing `genie/prompt.json` is reported.
+- [x] T011 [P] Add a step to `.github/workflows/site-health.yml`, after the CORS preflight step, that fetches `https://ahmed-3m.github.io/genie/prompt.json`, expects `200`, and checks with `jq` that `version` is 1, `entries` is not empty, `rules` contains each of the five slots, and every `defaults` ID is an entry ID (research R14). Leave the preflight step unchanged.
+- [x] T012 [P] In `specs/008-claims-registry/tasks.md`, replace the "Blocked on spec 007" text of T047 with a pointer to this phase (007 T007–T010), and mark it done when PR 1 merges.
+- [x] T013 Run every command in the list above. Then do the planted-figure check in quickstart §1 by hand (SC-005): the finding for `out/genie/prompt.json` must appear in the same run as the one for `knowledge.ts`. Revert the plant. Open PR 1.
 
 **Checkpoint**: after merge, `https://ahmed-3m.github.io/genie/prompt.json` is live and scanned. No visible change.
 
@@ -230,7 +231,7 @@ deployed (FR-017 step 3).
 ## Phase 7: Polish and cross-cutting concerns
 
 - [ ] T055 [P] After each PR, check that `quickstart.md`, `data-model.md` and `contracts/*.md` match what was built (file names, commands, settings, messages), and update them in that PR where the implementation refined a name.
-- [ ] T056 [P] In PR 1 and PR 2, add the new files to the file map in `AGENTS.md`: the prompt route, `prompt-rules.ts`, `prompt-file.ts`, `worker/lib/`, `worker/prompt-bundle.js` and the emit script, with the rule that the bundle is regenerated after any knowledge change.
+- [ ] T056 [P] (PR 1 part done in #316.) In PR 1 and PR 2, add the new files to the file map in `AGENTS.md`: the prompt route, `prompt-rules.ts`, `prompt-file.ts`, `worker/lib/`, `worker/prompt-bundle.js` and the emit script, with the rule that the bundle is regenerated after any knowledge change.
 - [ ] T057 Before PR 4 is opened, walk SC-001 to SC-008 and name the test or check that proves each one in the PR description.
 
 ---
