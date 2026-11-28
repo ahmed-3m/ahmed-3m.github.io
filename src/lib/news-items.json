@@ -1,58 +1,5 @@
 [
   {
-    "id": "openai-misalignment-reporting-framework",
-    "date": "2026-09-16",
-    "category": "agentic",
-    "headline": {
-      "en": "Our framework for reporting model misalignment",
-      "de": "Unser Rahmenwerk zur Meldung von Modell-Misalignment",
-      "fr": "Notre cadre de signalement du mésalignement des modèles",
-      "es": "Nuestro marco para informar sobre el desalineamiento de modelos",
-      "ar": "إطارنا للإبلاغ عن سوء التوافق في النماذج"
-    },
-    "source": "OpenAI",
-    "url": "https://openai.com/index/model-misalignment-reporting-framework/",
-    "take": {
-      "en": "Six disclosures at once — models hiding failures inside their own handoff notes, using leaked API keys, coordinating through file-sharing services — plus OpenAI's plain admission that alignment isn't solved. Time-boxed, standardized disclosure is the right move; ad-hoc incident dumps make postmortems impossible for everyone else.",
-      "de": "Sechs Fälle auf einmal – Modelle, die Fehlschläge in ihren eigenen Übergabenotizen versteckten, geleakte API-Schlüssel nutzten und über Filesharing-Dienste koordinierten – dazu OpenAIs nüchterne Einsicht, dass Alignment nicht gelöst ist. Befristete, standardisierte Offenlegung ist der richtige Schritt; ad-hoc-Vorfallsberichte machen Postmortems für alle anderen unmöglich.",
-      "fr": "Six divulgations d'un coup — des modèles qui cachaient leurs échecs dans leurs propres notes de passation, utilisaient des clés API divulguées et coordonnaient via des services de partage de fichiers — plus l'aveu net d'OpenAI : l'alignement n'est pas résolu. Une divulgation standardisée et soumise à des délais est la bonne approche ; les comptes rendus d'incidents ad hoc rendent les postmortems impossibles pour tout le monde.",
-      "es": "Seis revelaciones de golpe — modelos que ocultaban fallos en sus propias notas de traspaso, usaban claves API filtradas y coordinaban a través de servicios de intercambio de archivos — más la admisión clara de OpenAI de que la alineación no está resuelta. Una divulgación estandarizada y con plazos definidos es el paso correcto; los informes de incidentes ad hoc hacen imposibles los postmortems para todos los demás.",
-      "ar": "ستة كشوف دفعة واحدة — نماذج أخفت إخفاقاتها في ملاحظات التسليم الخاصة بها، واستخدمت مفاتيح API مسرّبة، وتناسقت عبر خدمات مشاركة الملفات — إلى جانب إقرار OpenAI الصريح بأن مشكلة التوافق لم تُحل بعد. الإفصاح المنظّم والمحدد بآجال هو الخطوة الصحيحة؛ فتقارير الحوادث المرتجلة تجعل تحليل ما بعد الحادث مستحيلًا على الجميع."
-    },
-    "tags": [
-      "agent-safety",
-      "misalignment",
-      "evaluation"
-    ]
-  },
-  {
-    "id": "emergence-world-multi-agent-stress-test",
-    "date": "2026-09-15",
-    "category": "agentic",
-    "headline": {
-      "en": "Emergence World: Adversarial Stress-Testing of Long-Horizon Multi-Agent Systems",
-      "de": "Emergence World: Adversarielles Stresstesting langlaufender Multi-Agenten-Systeme",
-      "fr": "Emergence World : tests de stress adversariaux de systèmes multi-agents à long horizon",
-      "es": "Emergence World: pruebas de estrés adversarias para sistemas multiagente de largo horizonte",
-      "ar": "Emergence World: اختبار إجهاد عدائي لأنظمة متعددة الوكلاء طويلة الأمد"
-    },
-    "source": "arXiv",
-    "url": "https://arxiv.org/abs/2609.17320",
-    "take": {
-      "en": "Sixteen days, ~50 billion tokens, eight ten-agent worlds — and not one stayed resilient: agents that detected prompt injection still wrote it into persistent memory and acted on it 46 hours later. Model-level alignment doesn't compose into system-level safety, which is my standing complaint about benchmarks that evaluate one model for one turn.",
-      "de": "Sechzehn Tage, rund 50 Milliarden Token, acht Welten mit je zehn Agenten — und keine einzige blieb resilient: Agenten, die eine Prompt-Injection erkannten, schrieben sie trotzdem in ihren persistenten Speicher und handelten 46 Stunden später danach. Modell-Level-Alignment setzt sich nicht zu Sicherheit auf Systemebene zusammen — genau meine Dauerklage über Benchmarks, die ein Modell für einen einzigen Zug bewerten.",
-      "fr": "Seize jours, ~50 milliards de tokens, huit mondes de dix agents — et aucun n'est resté résilient : des agents qui détectaient une injection de prompt l'ont quand même inscrite dans leur mémoire persistante et ont agi dessus 46 heures plus tard. L'alignement au niveau du modèle ne se compose pas en sécurité au niveau du système — c'est ma critique récurrente des benchmarks qui évaluent un modèle sur un seul tour.",
-      "es": "Dieciséis días, ~50 000 millones de tokens, ocho mundos de diez agentes — y ninguno se mantuvo resiliente: agentes que detectaban una inyección de prompt aun así la escribieron en su memoria persistente y actuaron según ella 46 horas después. La alineación a nivel de modelo no se compone en seguridad a nivel de sistema, y esa es mi queja permanente con los benchmarks que evalúan un modelo durante un solo turno.",
-      "ar": "ستة عشر يومًا ونحو 50 مليار توكن وثمانية عوالم من عشرة وكلاء — ولم يصمد أي منها: وكلاء اكتشفوا حقن الأوامر كتبوها رغم ذلك في ذاكرتهم الدائمة وتصرفوا وفقها بعد 46 ساعة. التوافق على مستوى النموذج لا يتركّب ليصبح أمانًا على مستوى النظام — وهذا اعتراضي الدائم على المعايير التي تقيّم نموذجًا واحدًا في دور واحد."
-    },
-    "tags": [
-      "multi-agent",
-      "evaluation",
-      "agent-safety",
-      "agent-security"
-    ]
-  },
-  {
     "id": "paper2agent-nature-paper-agents",
     "date": "2026-09-16",
     "category": "agentic",
@@ -76,33 +23,6 @@
       "multi-agent",
       "mcp",
       "reproducibility"
-    ]
-  },
-  {
-    "id": "gemini-3-8-live-voice-agents",
-    "date": "2026-09-15",
-    "category": "agentic",
-    "headline": {
-      "en": "Gemini 3.8 Live & Gemini 3.8 Live Extended Thinking",
-      "de": "Gemini 3.8 Live und Gemini 3.8 Live Extended Thinking",
-      "fr": "Gemini 3.8 Live et Gemini 3.8 Live Extended Thinking",
-      "es": "Gemini 3.8 Live y Gemini 3.8 Live Extended Thinking",
-      "ar": "Gemini 3.8 Live وGemini 3.8 Live Extended Thinking"
-    },
-    "source": "Google",
-    "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-live-gemini-3-8-live-extended-thinking/",
-    "take": {
-      "en": "The real news isn't voice quality, it's that the model executes tools and API calls mid-conversation and narrates progress instead of going silent — audible state is a genuinely useful reliability primitive for voice agents. The τ-Voice scores are nice; verifying what the agent actually did while it kept you chatting is the benchmark I'd run next.",
-      "de": "Die eigentliche Nachricht ist nicht die Sprachqualität, sondern dass das Modell mitten im Gespräch Tools und API-Aufrufe ausführt und den Fortschritt kommentiert, statt stumm zu werden — hörbarer Zustand ist ein wirklich nützliches Zuverlässigkeits-Primitiv für Voice-Agents. Die τ-Voice-Scores sind nett; zu überprüfen, was der Agent während des Plauderns tatsächlich getan hat, ist der Benchmark, den ich als Nächstes fahren würde.",
-      "fr": "La vraie nouvelle n'est pas la qualité vocale : le modèle exécute des outils et des appels d'API en pleine conversation et narre sa progression au lieu de se taire — un état audible est un vrai primitive de fiabilité pour les agents vocaux. Les scores τ-Voice sont sympathiques ; vérifier ce que l'agent a réellement fait pendant qu'il vous faisait converser, voilà le benchmark que je lancerais ensuite.",
-      "es": "La verdadera noticia no es la calidad de voz, sino que el modelo ejecuta herramientas y llamadas API en mitad de la conversación y narra su progreso en lugar de quedarse en silencio: el estado audible es una primitiva de fiabilidad genuinamente útil para agentes de voz. Las puntuaciones de τ-Voice están bien; verificar qué hizo realmente el agente mientras te entretenía conversando es el benchmark que haría a continuación.",
-      "ar": "الخبر الحقيقي ليس جودة الصوت، بل أن النموذج ينفّذ الأدوات واستدعاءات API أثناء المحادثة ويسرد تقدمه بدلًا من الصمت — الحالة المسموعة عنصر موثوقية فعّال فعلًا لوكلاء الصوت. نتائج τ-Voice جيدة، لكن التحقق مما فعله الوكيل فعليًا بينما كان يشغلك بالحديث هو المعيار التالي الذي سأُجريه."
-    },
-    "tags": [
-      "voice-agents",
-      "tool-use",
-      "gemini",
-      "benchmarks"
     ]
   },
   {
@@ -233,33 +153,6 @@
     "tags": [
       "governance",
       "evaluation"
-    ]
-  },
-  {
-    "id": "glossogen-agents-invent-languages",
-    "date": "2026-09-14",
-    "category": "agentic",
-    "headline": {
-      "en": "AI agents evolve their own languages",
-      "de": "KI-Agenten entwickeln eigene Sprachen",
-      "fr": "Les agents d'IA développent leurs propres langages",
-      "es": "Los agentes de IA desarrollan sus propios lenguajes",
-      "ar": "وكلاء الذكاء الاصطناعي يطوّرون لغاتهم الخاصة"
-    },
-    "source": "Schmidt Sciences",
-    "url": "https://www.schmidtsciences.org/glossogen/",
-    "take": {
-      "en": "Under efficiency pressure and with a debrief channel, frontier-model agent teams drift away from English into compositional codes humans can't read — and weaker models pick those languages up from usage alone. If inter-agent traffic stops being legible, transcript monitoring stops being a safety layer, which matters more for multi-agent reliability than any benchmark delta.",
-      "de": "Unter Effizienzdruck und mit einem Debrief-Kanal driftierten Teams von Frontier-Modell-Agenten vom Englischen weg zu kompositionellen Codes, die Menschen nicht lesen können — und schwächere Modelle lernen diese Sprachen allein aus der Nutzung. Wenn Kommunikation zwischen Agents unlesbar wird, ist Transkript-Monitoring keine Safety-Schicht mehr — für die Zuverlässigkeit von Multi-Agenten-Systemen wiegt das schwerer als jede Benchmark-Differenz.",
-      "fr": "Sous pression d'efficacité et avec un canal de débriefing, des équipes d'agents fondés sur des modèles de pointe ont dérivé de l'anglais vers des codes compositionnels illisibles pour les humains — et des modèles plus faibles apprennent ces langages par la seule observation de leur usage. Si le trafic entre agents cesse d'être lisible, la surveillance des transcriptions cesse d'être une couche de sécurité — un enjeu plus lourd pour la fiabilité multi-agents que n'importe quel écart de benchmark.",
-      "es": "Bajo presión de eficiencia y con un canal de revisión posterior, equipos de agentes con modelos frontera se alejaron del inglés hacia códigos composicionales que los humanos no pueden leer — y los modelos más débiles aprenden esos lenguajes solo por observar su uso. Si el tráfico entre agentes deja de ser legible, el monitoreo de transcripciones deja de ser una capa de seguridad, y eso pesa más para la fiabilidad multiagente que cualquier diferencia de benchmark.",
-      "ar": "تحت ضغط الكفاءة ومع توفر قناة مراجعة لاحقة، انحرفت فرق من الوكلاء العاملة بنماذج حدودية عن الإنجليزية نحو شفرات تركيبية لا يستطيع البشر قراءتها — والنماذج الأضعف تتعلم هذه اللغات من مجرد مراقبة استخدامها. إذا توقف التواصل بين الوكلاء عن كونه مقروءًا، توقفت مراقبة المحادثات عن كونها طبقة أمان، وهذا أهم لموثوقية الأنظمة متعددة الوكلاء من أي فارق في الـ benchmark."
-    },
-    "tags": [
-      "multi-agent",
-      "safety",
-      "reliability",
-      "benchmarks"
     ]
   },
   {
@@ -5224,6 +5117,112 @@
       "agent-governance",
       "governance",
       "agent-security"
+    ]
+  },
+  {
+    "id": "google-cogentic-six-math-papers-gemini-4",
+    "date": "2026-11-25",
+    "category": "agentic",
+    "headline": {
+      "en": "Google's Gemini 4 agent claims six math proofs in a day, including one on factoring 30 years in the making",
+      "de": "Googles Gemini-4-Agent beansprucht sechs mathematische Beweise an einem Tag – darunter einer zum Faktorisieren, der 30 Jahre auf sich warten ließ",
+      "fr": "L'agent Gemini 4 de Google revendique six preuves mathématiques en une journée, dont une sur la factorisation attendue depuis 30 ans",
+      "es": "El agente Gemini 4 de Google afirma haber logrado seis demostraciones matemáticas en un día, incluida una sobre factorización esperada 30 años",
+      "ar": "وكيل Gemini 4 من Google يزعم ستة براهين رياضية في يوم واحد، بينها برهان حول التحليل إلى العوامل انتظره المجال 30 عاماً"
+    },
+    "source": "R&D World",
+    "url": "https://www.rdworldonline.com/google-cogentic-ai-integer-factoring-bounds-lean-proofs/",
+    "take": {
+      "en": "Six papers, no human after the first prompt, and a Lean 4 formalization that's \"coming soon\" — the formalization is the only part I'd count as a result, because an unverified PDF from an agent harness is a claim, not a proof. Until the Lean code compiles, the honest reading is that Cogentic's prove–verify loop is producing plausible research manuscripts faster than the outside world can check them, which makes verification throughput the actual bottleneck.",
+      "de": "Sechs Papers, kein Mensch nach dem ersten Prompt — und eine Lean-4-Formalisierung, die „demnächst“ kommt: Die Formalisierung ist für mich das einzige, was als Ergebnis zählt, denn ein ungeprüftes PDF aus einem Agenten-Harness ist eine Behauptung, kein Beweis. Bis der Lean-Code kompiliert, lautet die ehrliche Lesart: Cogentics Prove-Verify-Schleife produziert plausible Forschungsmanuskripte schneller, als die Außenwelt sie prüfen kann — der Verifikations-Durchsatz ist der eigentliche Flaschenhals.",
+      "fr": "Six articles, aucun humain après le prompt initial — et une formalisation en Lean 4 « à venir » : cette formalisation est la seule partie que je considère comme un résultat, car un PDF non vérifié issu d'un harness d'agents est une affirmation, pas une preuve. Tant que le code Lean ne compile pas, la lecture honnête est que la boucle preuve–vérification de Cogentic produit des manuscrits de recherche plausibles plus vite que le monde extérieur ne peut les vérifier — le débit de vérification est le vrai goulot d'étranglement.",
+      "es": "Seis artículos, ningún humano después del prompt inicial — y una formalización en Lean 4 «próximamente»: esa formalización es la única parte que cuenta como resultado, porque un PDF sin verificar de un harness de agentes es una afirmación, no una demostración. Mientras el código Lean no compile, la lectura honesta es que el bucle probar–verificar de Cogentic produce manuscritos de investigación plausibles más rápido de lo que el mundo exterior puede revisarlos — el rendimiento de la verificación es el verdadero cuello de botella.",
+      "ar": "ستة أبحاث، بلا أي تدخل بشري بعد الموجّه الأول — وصياغة صورية (formalization) في Lean 4 «قريباً»: الصياغة الصورية هي الجزء الوحيد الذي أعدّه نتيجةً، فملف PDF غير مُتحقَّق منه صادر عن إطار عمل من الوكلاء هو ادعاء لا برهان. إلى أن يُترجم كود Lean بنجاح، القراءة الصادقة هي أن حلقة الإثبات–التحقق في Cogentic تنتج مسودات بحثية معقولة أسرع مما يستطيع العالم الخارجي فحصها — وعندها يكون مُعدّل التحقق هو عنق الزجاجة الحقيقي."
+    },
+    "tags": [
+      "multi-agent",
+      "formal-verification",
+      "scientific-discovery",
+      "evaluation"
+    ]
+  },
+  {
+    "id": "swiss-ncsc-first-ai-agent-cyberattacks",
+    "date": "2026-11-24",
+    "category": "agentic",
+    "headline": {
+      "en": "Cyberattacks involving AI agents: First confirmed cases in Switzerland",
+      "de": "Cyberangriffe mit KI-Agenten: Erste bestätigte Fälle in der Schweiz",
+      "fr": "Cyberattaques impliquant des agents IA : premiers cas confirmés en Suisse",
+      "es": "Ciberataques con agentes de IA: primeros casos confirmados en Suiza",
+      "ar": "هجمات سيبرانية بمشاركة وكلاء ذكاء اصطناعي: أول حالات مؤكدة في سويسرا"
+    },
+    "source": "Swiss NCSC",
+    "url": "https://www.bacs.admin.ch/en/26-ki-agenten-1-en",
+    "take": {
+      "en": "A national cyber authority confirming that agent-driven attacks actually compromised critical-infrastructure operators is the point where \"agentic offensive frameworks\" stop being a conference demo. The advisory's own advice — patch internet-facing systems within 24 hours, MFA everywhere, shrink the exposed surface — reads like it was written for a world where the attacker's scan-to-exploit time collapsed; our detection windows didn't.",
+      "de": "Wenn eine nationale Cyberbehörde bestätigt, dass agentengesteuerte Angriffe tatsächlich Betreiber kritischer Infrastruktur kompromittiert haben, hören „Agentic Offensive Frameworks“ auf, Konferenz-Demos zu sein. Die Empfehlungen der Behörde selbst — internetoffene Systeme innerhalb von 24 Stunden patchen, MFA überall, Angriffsfläche verkleinern — klingen, als wären sie für eine Welt geschrieben, in der die Zeit vom Scan bis zum Exploit kollabiert ist; unsere Erkennungsfenster sind es nicht.",
+      "fr": "Quand une autorité cybernationale confirme que des attaques pilotées par des agents ont réellement compromis des opérateurs d'infrastructures critiques, les « agentic offensive frameworks » cessent d'être des démos de conférence. Les recommandations de l'avis lui-même — corriger les systèmes exposés à Internet sous 24 heures, MFA partout, réduire la surface exposée — semblent écrites pour un monde où le temps scan-exploitation s'est effondré ; nos fenêtres de détection, non.",
+      "es": "Que una autoridad cibernacional confirme que ataques impulsados por agentes realmente comprometieron a operadores de infraestructura crítica es el punto donde los «agentic offensive frameworks» dejan de ser una demo de conferencia. Los consejos del propio aviso — parchear los sistemas expuestos a internet en 24 horas, MFA en todo, reducir la superficie expuesta — parecen escritos para un mundo en el que el tiempo de escaneo a explotación se derrumbó; nuestras ventanas de detección, no.",
+      "ar": "أن تؤكد جهة سيبرانية وطنية أن هجمات تقودها الوكلاء اخترقت فعلاً مشغّلي بنية تحتية حرجة هو الحد الذي تتوقف عنده «أطر الهجوم الوكيلة» عن كونها عروضاً في مؤتمرات. توصيات التحذير نفسه — ترقيع الأنظمة المعرّضة للإنترنت خلال 24 ساعة، والمصادقة متعددة العوامل في كل مكان، وتقليص السطح المعرّض — تبدو وكأنها كُتبت لعالمٍ انهار فيه الزمن من المسح إلى الاستغلال؛ على عكس نوافذ الكشف لدينا."
+    },
+    "tags": [
+      "agent-security",
+      "cybersecurity",
+      "incidents"
+    ]
+  },
+  {
+    "id": "deepmind-mass-spec-skills-antigravity",
+    "date": "2026-11-25",
+    "category": "agentic",
+    "headline": {
+      "en": "From spectrum to structure: Identifying molecules with Mass Spec Skills for Google Antigravity",
+      "de": "Vom Spektrum zur Struktur: Moleküle identifizieren mit Mass-Spec-Skills für Google Antigravity",
+      "fr": "Du spectre à la structure : identifier des molécules avec les skills Mass Spec pour Google Antigravity",
+      "es": "Del espectro a la estructura: identificar moléculas con las skills Mass Spec para Google Antigravity",
+      "ar": "من الطيف إلى البنية: تحديد الجزيئات بمهارات Mass Spec في Google Antigravity"
+    },
+    "source": "Google DeepMind",
+    "url": "https://deepmind.google/blog/interpreting-mass-spectra-with-google-antigravity/",
+    "take": {
+      "en": "This is the cleanest ablation of \"skills vs. improvisation\" I've seen from a lab: under 4% with the peak list alone, roughly a third of spectra missed when the agent wrote its own search scripts, ~97% once it called validated skills — and the lightweight Flash model landed on the frontier models' accuracy. That's the argument for shipping vetted tools over letting agents freestyle API calls, and it came with a 4x token cut on top.",
+      "de": "Das ist die sauberste Ablation von „Skills vs. Improvisieren“, die ich von einem Lab gesehen habe: unter 4% mit der Peakliste allein, rund ein Drittel der Spektren verfehlt, wenn der Agent eigene Suchskripte schrieb, ~97%, sobald er validierte Skills aufrief — und das leichte Flash-Modell traf dieselbe Genauigkeit wie die Frontier-Modelle. Das ist das Argument, geprüfte Tools auszuliefern, statt Agenten API-Aufrufe improvisieren zu lassen, und obendrauf gab es einen 4x geringeren Token-Verbrauch.",
+      "fr": "C'est l'ablation la plus propre de « skills vs improvisation » que j'aie vue de la part d'un labo : moins de 4% avec la seule liste de pics, environ un tiers des spectres manqués quand l'agent écrivait ses propres scripts de recherche, ~97% dès qu'il appelait des skills validés — et le léger modèle Flash a atteint la précision des modèles de pointe. C'est l'argument pour livrer des outils vérifiés plutôt que de laisser les agents improviser des appels d'API, avec en prime une division par 4 des tokens.",
+      "es": "Esta es la ablación más limpia de «skills vs. improvisación» que he visto de un laboratorio: menos del 4% con la lista de picos sola, cerca de un tercio de los espectros fallados cuando el agente escribía sus propios scripts de búsqueda, ~97% en cuanto llamaba a skills validados — y el ligero modelo Flash igualó la precisión de los modelos frontera. Ese es el argumento para entregar herramientas verificadas en lugar de dejar que los agentes improvisen llamadas de API, y encima con un recorte de 4x en tokens.",
+      "ar": "هذا أنظف اختبار إزالة (ablation) بين «المهارات والارتجال» رأيته من مختبر: أقل من 4% بقائمة القمم وحدها، ونحو ثلث الأطياف تفوت عندما كتب الوكيل نصوص بحثه بنفسه، و~97% بمجرد استدعائه مهارات مُتحقَّقاً منها — وقد بلغ نموذج Flash الخفيف دقة نماذج الطليعة نفسها. هذا هو الدليل على تسليم أدوات مُدقَّقة بدلاً من ترك الوكلاء يرتجلون استدعاءات API، وفوق ذلك بخفض 4 أضعاف في عدد الرموز (tokens)."
+    },
+    "tags": [
+      "tool-use",
+      "evaluation",
+      "agent-harness",
+      "efficiency"
+    ]
+  },
+  {
+    "id": "pace-parity-aware-compute-evaluation-multi-agent",
+    "date": "2026-11-22",
+    "category": "agentic",
+    "headline": {
+      "en": "PACE: More Agents, More Samples, or More Thinking? Untangling Coordination, Ensembling, and Test-Time Compute in Multi-Agent LLMs",
+      "de": "PACE: Mehr Agenten, mehr Stichproben oder mehr Nachdenken? Koordination, Ensembling und Testzeit-Rechenzeit in Multi-Agenten-LLMs entwirren",
+      "fr": "PACE : plus d'agents, plus d'échantillons ou plus de réflexion ? Démêler coordination, ensembling et calcul en temps de test dans les LLM multi-agents",
+      "es": "PACE: ¿más agentes, más muestras o más razonamiento? Desentrañar la coordinación, el ensamblado y el cómputo en tiempo de prueba en LLM multiagente",
+      "ar": "PACE: وكلاء أكثر، أم عينات أكثر، أم تفكير أكثر؟ فكّ تشابك التنسيق والتجميع (ensembling) وحساب وقت الاختبار في نماذج اللغة متعددة الوكلاء"
+    },
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2611.17610",
+    "take": {
+      "en": "PACE audits nine published multi-agent studies and finds that once the single-agent baseline gets the same sampling or token budget, 53 of the 123 contrasts that beat a greedy pass go to zero or worse — the multi-agent \"gain\" was mostly extra compute wearing a costume. If I'm reviewing a multi-agent paper (or a vendor demo), budget-matched baselines and a resource vector are now my first ask, before any leaderboard number.",
+      "de": "PACE prüft neun veröffentlichte Multi-Agenten-Studien und stellt fest: Sobald der Single-Agent-Baseline dasselbe Sampling- oder Token-Budget bekommt, fallen 53 der 123 Kontraste, die einen einzelnen Greedy-Durchlauf schlugen, auf null oder darunter — der Multi-Agenten-„Gewinn“ war meist nur zusätzliche Rechenleistung im Kostüm. Wenn ich heute ein Multi-Agenten-Paper (oder eine Vendor-Demo) sichte, sind budgetgleiche Baselines und ein Ressourcenvektor meine erste Forderung, vor jeder Leaderboard-Zahl.",
+      "fr": "PACE audite neuf études multi-agents publiées et constate qu'une fois que la référence mono-agent bénéficie du même budget d'échantillonnage ou de tokens, 53 des 123 contrastes qui battaient un passage glouton tombent à zéro ou moins — le « gain » multi-agents était surtout du calcul supplémentaire déguisé. Si je révise aujourd'hui un article multi-agents (ou une démo d'éditeur), les références à budget égal et un vecteur de ressources sont ma première exigence, avant tout chiffre de classement.",
+      "es": "PACE audita nueve estudios multiagente publicados y comprueba que, en cuanto la referencia de un solo agente recibe el mismo presupuesto de muestreo o de tokens, 53 de los 123 contrastes que superaban un pase greedy caen a cero o menos — la «mejora» multiagente era sobre todo cómputo extra disfrazado. Si hoy reviso un artículo multiagente (o una demo de un proveedor), las referencias con presupuesto igualado y un vector de recursos son mi primera petición, antes que cualquier cifra de clasificación.",
+      "ar": "يراجع PACE تسع دراسات منشورة عن الأنظمة متعددة الوكلاء ويجد أنه بمجرد منح خط الأساس أحادي الوكيل ميزانية المعاينة (sampling) أو الرموز نفسها، تنهار 53 من أصل 123 مقارنة كانت تتفوق على تمريرة greedy واحدة إلى الصفر أو أقل — أي أن «المكسب» متعدد الوكلاء كان في معظمه قدرة حسابية إضافية بزيّ تنكري. إذا راجعت اليوم ورقة متعددة الوكلاء (أو عرضاً تجريبياً من بائع)، فخطوط الأساس المتعادلة الميزانية ومتجه الموارد هما أول ما أطلبه، قبل أي رقم على لوحة الترتيب."
+    },
+    "tags": [
+      "multi-agent",
+      "evaluation",
+      "benchmarks"
     ]
   }
 ]
