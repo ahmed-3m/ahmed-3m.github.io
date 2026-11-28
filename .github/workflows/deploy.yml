@@ -80,11 +80,10 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          # Model credentials are stored in the Worker. Without a URL, Genie uses curated answers.
-          NEXT_PUBLIC_CHAT_PROXY_URL: ${{ vars.NEXT_PUBLIC_CHAT_PROXY_URL }}
-          NEXT_PUBLIC_GROQ_MODEL: ${{ vars.NEXT_PUBLIC_GROQ_MODEL }}
-          NEXT_PUBLIC_BIGMODEL_MODEL: ${{ vars.NEXT_PUBLIC_BIGMODEL_MODEL }}
-          NEXT_PUBLIC_ZAI_FAST_MODEL: ${{ vars.NEXT_PUBLIC_ZAI_FAST_MODEL }}
+          # Model credentials and model choice are in the Worker. Without a URL, Genie uses
+          # curated answers. PR builds are never deployed; they point at a placeholder that the
+          # smoke check answers with a mock Worker (tools/playwright-smoke.mjs).
+          NEXT_PUBLIC_CHAT_PROXY_URL: ${{ github.event_name == 'pull_request' && 'https://chat-proxy.smoke.test/' || vars.NEXT_PUBLIC_CHAT_PROXY_URL }}
           # Optional override. src/lib/booking.ts supplies the default for empty or invalid values.
           NEXT_PUBLIC_CALENDLY_URL: ${{ vars.NEXT_PUBLIC_CALENDLY_URL }}
           # GoatCounter site code (src/lib/analytics.ts). Without it the site loads no

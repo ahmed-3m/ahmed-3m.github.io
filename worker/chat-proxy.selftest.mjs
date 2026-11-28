@@ -190,10 +190,10 @@ function makeHandler(w = world(), options = {}) {
   return createHandler({ bundledPrompt: bundle, fetchImpl: w.fetchImpl, now: () => T0, ...options })
 }
 
-/** The system prompt today's site sends for these entries (equal to buildSystemPrompt; see tests/genie). */
+/** The system prompt a v1 site sent for these entries (the composed prompt; see tests/genie). */
 const sitePrompt = (selection) => composePrompt(bundle, selection)
 
-/** Today's site body, as src/lib/genie/providers.ts sends it. */
+/** A v1 site body, as src/lib/genie/providers.ts sent it before spec 007 PR 4. */
 function siteBody({ provider = 'zai', lane = 'fast', system = sitePrompt({}), turns = [{ role: 'user', content: 'What did the thesis find?' }], stream = true } = {}) {
   const model = provider === 'groq' ? 'openai/gpt-oss-20b' : lane === 'fast' ? 'glm-5.3-flash' : 'glm-5.4'
   return {

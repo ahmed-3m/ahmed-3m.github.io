@@ -2,6 +2,7 @@
 // prepared reply, or ask the model lanes (BigModel, then Groq) and fall back to a
 // prepared reply when both fail. ChatBotPanel owns the UI state around these calls.
 
+import { CHAT_COPY } from '@/components/chatbot-dictionaries'
 import { translateValue, type Language } from '@/lib/i18n-config'
 import {
   LOCAL_REPLIES,
@@ -18,6 +19,7 @@ import {
   fetchGroq,
   shortenReply,
   type ChatCompletionError,
+  type ChatContext,
   type ChatReply,
   type ChatTurn,
   type StreamDelta,
@@ -87,7 +89,7 @@ export function decideImmediateReply({
 
 type ProviderCall = (options: {
   messages: readonly ChatTurn[]
-  systemPrompt: string
+  context: ChatContext
   proxyUrl: string
   lane: ChatLane
   signal?: AbortSignal
@@ -98,22 +100,38 @@ export type ModelProviders = { bigModel: ProviderCall; groq: ProviderCall }
 
 const DEFAULT_PROVIDERS: ModelProviders = { bigModel: fetchBigModel, groq: fetchGroq }
 
+/** The visitor's own per-client limit: no provider is tried and no prepared reply stands in. */
+function isClientRateLimit(error: unknown): boolean {
+  const chatError = error as ChatCompletionError | undefined
+  return Boolean(chatError?.isProxyRateLimit || chatError?.code === 'rate_limited')
+}
+
+/** The Worker itself refuses (stop switch, budget store down): the other provider would too. */
+function isWorkerUnavailable(error: unknown): boolean {
+  const chatError = error as ChatCompletionError | undefined
+  return chatError?.code === 'unavailable' && chatError.scope === 'worker'
+}
+
 /**
- * Asks BigModel, then Groq, then falls back to a prepared reply (marked `fallback`).
+ * Asks BigModel (Z.ai), then Groq, then falls back to a prepared reply (marked `fallback`).
  *
  * - `isStopped` is read live: after the visitor presses stop, a provider error is
  *   rethrown and no further lane or fallback is tried (the result is then null).
- * - A rate limit from the proxy itself skips Groq, which shares that limit.
+ * - The visitor's own rate limit (`rate_limited`) is thrown at once: Groq shares that
+ *   limit, and the panel shows the wait time instead of a prepared reply.
+ * - A refusal by the Worker itself (`unavailable` with scope `worker`) skips Groq and
+ *   goes straight to a prepared reply. A provider's spent budget, missing key or
+ *   failed call tries the other provider first.
  * - `onBeforeGroq` runs right before the Groq attempt (the panel resets its
  *   streaming state there).
- * - When nothing answers, the last provider error is thrown unchanged, so its
- *   `status` still tells a rate limit apart from other failures.
+ * - When nothing answers and no prepared reply fits, the last provider error is thrown
+ *   unchanged, so its `code` still picks the message (see `chatErrorKind`).
  */
 export async function requestModelReply({
   content,
   lang,
   transcript,
-  systemPrompt,
+  context,
   proxyUrl,
   lane,
   signal,
@@ -125,7 +143,7 @@ export async function requestModelReply({
   content: string
   lang: Language
   transcript: readonly ChatTurn[]
-  systemPrompt: string
+  context: ChatContext
   proxyUrl: string
   lane: ChatLane
   signal?: AbortSignal
@@ -140,7 +158,7 @@ export async function requestModelReply({
   try {
     rawReply = await providers.bigModel({
       messages: transcript,
-      systemPrompt,
+      context,
       proxyUrl,
       lane,
       signal,
@@ -154,16 +172,16 @@ export async function requestModelReply({
     console.error('Chat provider BigModel failed:', providerError)
   }
 
-  const proxyRateLimited = Boolean(
-    (lastProviderError as ChatCompletionError | undefined)?.isProxyRateLimit
-  )
+  if (rawReply === null && isClientRateLimit(lastProviderError)) {
+    throw lastProviderError
+  }
 
-  if (rawReply === null && !proxyRateLimited && !isStopped()) {
+  if (rawReply === null && !isWorkerUnavailable(lastProviderError) && !isStopped()) {
     try {
       onBeforeGroq?.()
       rawReply = await providers.groq({
         messages: transcript,
-        systemPrompt,
+        context,
         proxyUrl,
         lane,
         signal,
@@ -176,6 +194,10 @@ export async function requestModelReply({
       lastProviderError = providerError
       console.error('Chat provider Groq failed:', providerError)
     }
+  }
+
+  if (rawReply === null && isClientRateLimit(lastProviderError)) {
+    throw lastProviderError
   }
 
   if (rawReply === null && !isStopped()) {
@@ -222,7 +244,31 @@ export function buildFinalMessage({
   }
 }
 
+export type ChatErrorKind = 'rate-limited' | 'models-unavailable' | 'generic'
+
+/** Codes that mean no model can answer right now (contracts/worker-api.md, "Errors"). */
+const MODELS_UNAVAILABLE_CODES = new Set(['unavailable', 'budget_exhausted', 'upstream_error', 'upstream_timeout'])
+
 /** Which error text to show when every lane failed. */
-export function chatErrorKind(error: unknown): 'rate-limited' | 'generic' {
-  return (error as ChatCompletionError | undefined)?.status === 429 ? 'rate-limited' : 'generic'
+export function chatErrorKind(error: unknown): ChatErrorKind {
+  const chatError = error as ChatCompletionError | undefined
+  if (isClientRateLimit(chatError) || chatError?.status === 429) return 'rate-limited'
+  if (chatError?.code && MODELS_UNAVAILABLE_CODES.has(chatError.code)) return 'models-unavailable'
+  return 'generic'
+}
+
+/**
+ * The message shown when no answer came: the wait time for the visitor's own limit,
+ * the prepared-topics hint when no model can answer, otherwise the generic error.
+ */
+export function chatErrorMessage(error: unknown, lang: Language): string {
+  const kind = chatErrorKind(error)
+  if (kind === 'rate-limited') {
+    const seconds = (error as ChatCompletionError | undefined)?.retryAfter
+    if (seconds && seconds > 0) {
+      return translateValue(lang, CHAT_COPY.rateLimitedRetry).replace('{seconds}', String(seconds))
+    }
+    return translateValue(lang, CHAT_COPY.rateLimited)
+  }
+  return translateValue(lang, kind === 'models-unavailable' ? CHAT_COPY.limitedAnswers : CHAT_COPY.genericError)
 }

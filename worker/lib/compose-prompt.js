@@ -1,6 +1,6 @@
 // Composes Genie's system prompt from the published prompt file (spec 007, data-model.md
-// "Composed prompt", research R12). Plain JavaScript with no imports from `src/`: the site
-// keeps a test that this output equals its own `buildSystemPrompt` until PR 4.
+// "Composed prompt", research R12). Plain JavaScript with no imports from `src/`. Since PR 4
+// the site sends only entry IDs; tests/genie/prompt-baseline.test.ts pins the output.
 
 export const MAX_ENTRIES = 4
 const SLOT_RE = /\{\{(\w+)\}\}/g

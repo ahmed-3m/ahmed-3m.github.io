@@ -7,12 +7,13 @@ import { usePathname, useRouter } from 'next/navigation'
 import { trackEvent } from '@/lib/analytics'
 import { useI18n } from '@/lib/i18n'
 import { translateValue, type Language } from '@/lib/i18n-config'
-import { CHAT_PROXY_URL } from '@/lib/genie/providers'
+import { CHAT_PROXY_URL, MAX_USER_TURN_CHARS } from '@/lib/genie/providers'
 import { CALENDLY_URL, CV_URL, EMAIL_URL, chatLinkAction, resolveLinkProps } from '@/lib/genie/links'
 import { setPortfolioView } from '@/lib/portfolio-view'
 import {
   buildFinalMessage,
   chatErrorKind,
+  chatErrorMessage,
   decideImmediateReply,
   requestModelReply,
   type ChatMessage,
@@ -33,7 +34,7 @@ import {
   showsHandoff,
   type PromptId,
 } from '@/lib/genie/prompts'
-import { buildSystemPrompt } from '@/lib/genie/retriever'
+import { retrieveKnowledgeChunks } from '@/lib/genie/retriever'
 import { CHAT_COPY } from './chatbot-dictionaries'
 import FrontDeskButton from './FrontDeskButton'
 
@@ -540,13 +541,16 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
     activeAbortRef.current = requestAbort
     const transcript = nextMessages.filter((message) => !message.incomplete)
     const lane = routeLocally(content)
-    const systemPrompt = buildSystemPrompt({
-      lang: lang as Language,
+    // The Worker composes the prompt from the published prompt file; the site sends only
+    // the IDs of the entries it retrieved for this question (spec 007, FR-019).
+    const entryIds = retrieveKnowledgeChunks({
       query: content,
       history: transcript.slice(0, -1),
       section: currentSection,
       pathname,
-    })
+      topK: 4,
+    }).map((chunk) => chunk.id)
+    const context = { lang: lang as Language, section: currentSection, pathname, entryIds }
 
     let streamStarted = false
 
@@ -572,7 +576,7 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
         content,
         lang,
         transcript,
-        systemPrompt,
+        context,
         proxyUrl,
         lane,
         signal: requestAbort.signal,
@@ -619,7 +623,7 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
       console.error('Chat failed across all configured providers:', caughtError)
       const errorKind = chatErrorKind(caughtError)
       trackEvent(`genie-error-${errorKind}`)
-      setError(t(errorKind === 'rate-limited' ? CHAT_COPY.rateLimited : CHAT_COPY.genericError))
+      setError(chatErrorMessage(caughtError, lang as Language))
     } finally {
       if (activeAbortRef.current === requestAbort) {
         activeAbortRef.current = null
@@ -812,6 +816,7 @@ export default function ChatBotPanel({ isOpen, onClose }: ChatBotPanelProps) {
             ref={inputRef}
             value={input}
             onChange={(event) => setInput(event.target.value)}
+            maxLength={MAX_USER_TURN_CHARS}
             placeholder={t(CHAT_COPY.placeholder)}
             className="h-12 min-w-0 flex-1 rounded-2xl border px-4 text-base transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--cd-accent)] md:text-sm"
             style={{

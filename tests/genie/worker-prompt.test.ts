@@ -4,7 +4,7 @@ import { describe, it } from 'node:test'
 
 import type { Language } from '@/lib/i18n-config'
 import { buildPromptFile, type PromptFile } from '@/lib/genie/prompt-file'
-import { buildSystemPrompt, normalizePathname } from '@/lib/genie/retriever'
+import { normalizePathname } from '@/lib/genie/retriever'
 import { composePrompt, selectEntries } from '../../worker/lib/compose-prompt.js'
 import { validatePromptFile } from '../../worker/lib/prompt-source.js'
 import bundle from '../../worker/prompt-bundle.js'
@@ -52,7 +52,7 @@ describe('Worker prompt bundle', () => {
 
 describe('Worker composePrompt', () => {
   for (const [index, { input, entryIds, prompt }] of cases.entries()) {
-    it(`matches the site for case ${index}: ${input.lang} ${input.section} ${input.pathname}`, () => {
+    it(`composes the recorded prompt for case ${index}: ${input.lang} ${input.section} ${input.pathname}`, () => {
       const composed = composePrompt(file, {
         entryIds,
         lang: input.lang,
@@ -60,7 +60,6 @@ describe('Worker composePrompt', () => {
         pathname: normalizePathname(input.pathname) || '/',
       })
       assert.equal(composed, prompt)
-      assert.equal(composed, buildSystemPrompt(input))
     })
   }
 
@@ -72,7 +71,7 @@ describe('Worker composePrompt', () => {
     assert.equal(composed.split('Allowlisted public links:').length, 2)
   })
 
-  it('cuts a prompt over maxChars the way buildSystemPrompt does', () => {
+  it('cuts a prompt over maxChars to maxChars - 10 characters and an ellipsis', () => {
     const long = withFacts('x'.repeat(9_000))
     const composed = composePrompt(long, { entryIds: [long.entries[0].id] })
     assert.equal(composed.length, file.maxChars - 9)

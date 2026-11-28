@@ -17,8 +17,8 @@ import { formatLocaleNumber, resolveLinkProps } from '@/lib/genie/links'
 import { parseInlineTokens, type InlineToken } from '@/lib/genie/markdown'
 import { LOCAL_REPLIES, type ReplyId } from '@/lib/genie/prompts'
 import { decideImmediateReply } from '@/lib/genie/reply'
-import { buildSystemPrompt } from '@/lib/genie/retriever'
 import type { Language } from '@/lib/i18n-config'
+import { sitePrompt } from './site-prompt'
 
 const LOCALES = ['en', 'de', 'fr', 'es', 'ar'] as const satisfies readonly Language[]
 
@@ -205,7 +205,7 @@ describe('what the model is given', () => {
 
   for (const lang of LOCALES) {
     it(`gives the headline result with its spread for a results question (${lang})`, () => {
-      const prompt = buildSystemPrompt({ lang, query: TYPED_QUESTIONS[0].questions[lang] })
+      const prompt = sitePrompt({ lang, query: TYPED_QUESTIONS[0].questions[lang] })
       assert.ok(prompt.includes(`${pct(cifarOptimal.withinCifarMean)} ± ${pct(cifarOptimal.withinCifarStd!)}`))
       assert.deepEqual(unlisted(prompt), [])
     })
@@ -241,7 +241,7 @@ describe('what the model is given', () => {
         assert.match(text, RWR_ELIGIBLE[lang])
         assert.doesNotMatch(text, RWR_POSSESSION_OVERCLAIM[lang])
       }
-      const prompt = buildSystemPrompt({ lang, query: RWR_QUESTIONS[lang] })
+      const prompt = sitePrompt({ lang, query: RWR_QUESTIONS[lang] })
       assert.ok(prompt.includes('[Austrian Work Authorization & Role Fit]'))
       assert.ok(prompt.includes('never claim he already holds or has been issued the card'))
       assert.ok(prompt.includes('rather than an already-issued card'))
@@ -250,7 +250,7 @@ describe('what the model is given', () => {
   }
 
   it('normalizes uppercase German ẞ (ROT-WEIẞ-ROT KARTE) when retrieving RWR guidance', () => {
-    const prompt = buildSystemPrompt({ lang: 'de', query: 'Hat Ahmed die ROT-WEIẞ-ROT KARTE?' })
+    const prompt = sitePrompt({ lang: 'de', query: 'Hat Ahmed die ROT-WEIẞ-ROT KARTE?' })
     assert.ok(prompt.includes('[Austrian Work Authorization & Role Fit]'))
     assert.ok(prompt.includes('never claim he already holds or has been issued the card'))
   })

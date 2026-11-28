@@ -7,6 +7,8 @@
 //   5. A privacy notice that disagrees with the build about the GoatCounter script
 //   6. The figure check (spec 008): unregistered, retired, spread-less or unqualified
 //      figures in the source copy and the built pages, against tools/claims/baseline.json
+//   7. Genie's rules in the client JavaScript (spec 007, SC-006): the rule sentences of
+//      out/genie/prompt.json must not appear in any _next/static bundle
 // Runs with plain `node tools/verify-export.mjs`: it registers the TS hooks the figure
 // check needs before loading it.
 
@@ -14,6 +16,7 @@ import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
 import path from 'node:path'
 
 import './test-hooks.mjs'
+import { findRuleLeaks, ruleSentences } from './genie-rules-leak.mjs'
 
 // Loaded after the hooks are registered: a static import would resolve `@/` first.
 const { report, runClaimsCheck } = await import('./claims/run-check.mjs')
@@ -349,6 +352,34 @@ if (!claims.ok) {
   errors.push(`figure check (spec 008) failed:\n${report(claims)}`)
 }
 
+// 7. Genie's rules stay out of the client JavaScript (spec 007, FR-019, research R13).
+let ruleSentenceCount = 0
+const promptFilePath = path.join(outDir, 'genie', 'prompt.json')
+if (existsSync(promptFilePath)) {
+  let rules = ''
+  try {
+    rules = JSON.parse(readFileSync(promptFilePath, 'utf8')).rules
+  } catch (error) {
+    errors.push(`out/genie/prompt.json is not valid JSON: ${error.message}`)
+  }
+  if (typeof rules === 'string' && rules) {
+    const sentences = ruleSentences(rules)
+    ruleSentenceCount = sentences.length
+    if (sentences.length === 0) errors.push('out/genie/prompt.json has no rule sentences to check')
+    const bundles = jsBundleFiles.map((rel) => ({ name: rel, content: readFileSync(path.join(outDir, rel), 'utf8') }))
+    for (const { name, found } of findRuleLeaks(sentences, bundles)) {
+      errors.push(
+        `Genie's rules are in the client bundle out/${name} (${found.length} of ${sentences.length} rule sentences, ` +
+          `first: "${found[0].slice(0, 60)}…"). Only src/lib/genie/prompt-file.ts may import prompt-rules.ts.`,
+      )
+    }
+  } else if (!errors.some((err) => err.includes('prompt.json'))) {
+    errors.push('out/genie/prompt.json has no "rules" text')
+  }
+} else {
+  errors.push('Missing out/genie/prompt.json (the published prompt file)')
+}
+
 if (errors.length > 0) {
   console.error(`verify-export: FAILED with ${errors.length} error(s):`)
   for (const err of errors) {
@@ -364,5 +395,6 @@ console.log(
     `${scanTargets.length} HTML/JS bundles scanned, ` +
     `analytics ${analyticsLoaded ? 'on' : 'off'} and privacy notice consistent, ` +
     `figure check ${claims.units.source} source and ${claims.units.export} export units ` +
-    `in ${claims.timings.totalMs} ms, ${claims.findings.length} known in baseline)`,
+    `in ${claims.timings.totalMs} ms, ${claims.findings.length} known in baseline, ` +
+    `${ruleSentenceCount} Genie rule sentences absent from ${jsBundleFiles.length} JS bundles)`,
 )

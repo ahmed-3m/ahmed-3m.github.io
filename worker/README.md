@@ -28,7 +28,7 @@ The full contract is in `specs/007-worker-hardening/contracts/worker-api.md`.
 | `chat-proxy.js` | The entry point: `createHandler({ bundledPrompt })`, and the `GenieBudget` class. |
 | `lib/handler.js` | The request handler. Runs the checks in the contract's order. |
 | `lib/request.js` | Reads and checks a v2 body, and adapts a v1 body to v2. |
-| `lib/compose-prompt.js` | Builds the system prompt from the prompt file. Matches the site's `buildSystemPrompt`. |
+| `lib/compose-prompt.js` | Builds the system prompt from the prompt file. `tests/genie/prompt-baseline.test.ts` pins its output. |
 | `lib/prompt-source.js` | Fetches and checks the published prompt file, with the bundled copy as fallback. |
 | `lib/upstream.js` | Calls the provider with its deadlines and replaces provider errors, including error events in a stream. |
 | `lib/budget.js` | The budget counter, the `GenieBudget` Durable Object, and `checkBudget`. |

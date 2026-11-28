@@ -4,7 +4,7 @@
 // for console/page errors, RTL attributes, and horizontal overflow. When the build
 // loads GoatCounter, it also checks that page views are counted once per route.
 
-import { createReadStream, existsSync, readFileSync, statSync } from 'node:fs'
+import { createReadStream, existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
 import http from 'node:http'
 import { createRequire } from 'node:module'
 import path from 'node:path'
@@ -537,6 +537,120 @@ async function runAnalyticsCountingCheck(browser, origin, failures) {
   return 1
 }
 
+// Spec 007 T050: the chat proxy URL that PR builds bake in (.github/workflows/deploy.yml).
+// It never resolves; the check below answers it with a mock Worker.
+const SMOKE_PROXY_URL = 'https://chat-proxy.smoke.test/'
+const SMOKE_REPLY = 'Mocked v2 reply from the smoke proxy.'
+const SMOKE_QUESTION = 'Tell me something unusual about his approach to testing'
+const CORS_HEADERS = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+}
+
+function bundleHasSmokeProxy() {
+  const dir = path.join(outDir, '_next', 'static', 'chunks')
+  if (!existsSync(dir)) return false
+  const stack = [dir]
+  while (stack.length > 0) {
+    const current = stack.pop()
+    for (const entry of readdirSync(current, { withFileTypes: true })) {
+      const full = path.join(current, entry.name)
+      if (entry.isDirectory()) stack.push(full)
+      else if (entry.name.endsWith('.js') && readFileSync(full, 'utf8').includes(SMOKE_PROXY_URL)) return true
+    }
+  }
+  return false
+}
+
+// An open question (no prepared answer) goes to the mocked proxy. The request must be v2
+// with retrieved entry IDs, and the streamed reply must be shown. Skipped locally when the
+// build has no smoke proxy URL; on CI that is a failure, since PR builds always set it.
+async function runGenieProxyCheck(browser, origin, failures) {
+  const label = '[genie-v2-proxy] /'
+  if (!bundleHasSmokeProxy()) {
+    if (process.env.GITHUB_ACTIONS) {
+      failures.push(`${label}: the build has no NEXT_PUBLIC_CHAT_PROXY_URL=${SMOKE_PROXY_URL}, so the chat mock cannot run`)
+      return 1
+    }
+    return 0
+  }
+
+  const { context, page, errors } = await createHermeticDesktopPage(browser, origin, { theme: 'light', language: 'en' })
+  const bodies = []
+  // Registered after the hermetic routes, so it takes precedence for this URL.
+  await page.route(`${SMOKE_PROXY_URL}**`, async (route) => {
+    const request = route.request()
+    if (request.method() === 'OPTIONS') {
+      await route.fulfill({ status: 204, headers: CORS_HEADERS, body: '' })
+      return
+    }
+    let body = null
+    try {
+      body = JSON.parse(request.postData() ?? '')
+    } catch {
+      // Recorded as null and reported below.
+    }
+    bodies.push(body)
+    const events = [
+      `data: ${JSON.stringify({ choices: [{ delta: { content: SMOKE_REPLY } }] })}`,
+      `data: ${JSON.stringify({ choices: [{ delta: {}, finish_reason: 'stop' }] })}`,
+      'data: [DONE]',
+    ]
+    await route.fulfill({
+      status: 200,
+      headers: { ...CORS_HEADERS, 'Content-Type': 'text/event-stream' },
+      body: `${events.join('\n\n')}\n\n`,
+    })
+  })
+
+  try {
+    errors.reset()
+    const response = await page.goto(`${origin}/`, { waitUntil: 'load', timeout: 20_000 })
+    if (!response || response.status() !== 200) {
+      failures.push(`${label}: expected HTTP 200, received ${response?.status() ?? 'no response'}`)
+    } else {
+      await waitForSettledLayout(page)
+      await page.locator('button[aria-controls="chatbot-dialog"]').click()
+      const formInput = page.locator('#ahmed-chatbot-panel form input').first()
+      await formInput.waitFor({ state: 'visible', timeout: 10_000 })
+      if ((await formInput.getAttribute('maxlength')) !== '2000') {
+        failures.push(`${label}: the chat input has no 2,000-character limit`)
+      }
+      await formInput.fill(SMOKE_QUESTION)
+      await formInput.press('Enter')
+      try {
+        await page.waitForFunction(
+          (reply) => (document.querySelector('#ahmed-chatbot-panel [role="log"]')?.textContent ?? '').includes(reply),
+          SMOKE_REPLY,
+          { timeout: 10_000 },
+        )
+      } catch {
+        failures.push(`${label}: the mocked reply was not shown`)
+      }
+
+      if (bodies.length === 0) {
+        failures.push(`${label}: the chat proxy mock was never called (the question may have a prepared answer)`)
+      }
+      for (const body of bodies) {
+        if (body?.version !== 2) failures.push(`${label}: request body is not v2: ${JSON.stringify(body)?.slice(0, 200)}`)
+        else if (!Array.isArray(body.entryIds) || body.entryIds.length === 0) {
+          failures.push(`${label}: request body has no entryIds`)
+        } else if ('messages' in body || 'model' in body) {
+          failures.push(`${label}: request body still has v1 fields`)
+        }
+      }
+    }
+    recordCollectedErrors(errors, label, failures)
+  } catch (err) {
+    failures.push(`${label}: ${err instanceof Error ? err.message : String(err)}`)
+    recordCollectedErrors(errors, label, failures)
+  } finally {
+    await context.close()
+  }
+  return 1
+}
+
 async function runInteractiveSmokeChecks(browser, origin, failures) {
   let executed = 0
 
@@ -969,6 +1083,7 @@ let browser = null
 const failures = []
 let checksRun = 0
 let analyticsChecks = 0
+let genieProxyChecks = 0
 
 try {
   browser = await chromium.launch({ headless: true, ...(process.env.PLAYWRIGHT_CHROMIUM_CHANNEL ? { channel: process.env.PLAYWRIGHT_CHROMIUM_CHANNEL } : {}) })
@@ -1084,6 +1199,8 @@ try {
   checksRun += await runInteractiveSmokeChecks(browser, origin, failures)
   analyticsChecks = await runAnalyticsCountingCheck(browser, origin, failures)
   checksRun += analyticsChecks
+  genieProxyChecks = await runGenieProxyCheck(browser, origin, failures)
+  checksRun += genieProxyChecks
 } finally {
   if (browser) {
     await browser.close()
@@ -1102,5 +1219,6 @@ if (failures.length > 0) {
 console.log(
   `playwright-smoke: OK (${checksRun} checks: ${PROFILES.length} profiles × ${ROUTES.length} routes + ${FOOTER_LOCALES.length} desktop footer locales + /research/ chart centering + 6 interactive flows` +
     (analyticsChecks ? ' + GoatCounter page-view counting' : '; analytics off, counting check skipped') +
+    (genieProxyChecks ? ' + Genie v2 request to a mocked proxy' : '; no smoke proxy URL, Genie proxy check skipped') +
     ')',
 )

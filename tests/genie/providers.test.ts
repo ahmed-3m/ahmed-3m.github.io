@@ -1,13 +1,17 @@
 import assert from 'node:assert/strict'
-import { afterEach, before, describe, it } from 'node:test'
+import { afterEach, describe, it } from 'node:test'
 
 import {
   MAX_REPLY_CHARS,
+  buildChatRequest,
+  fetchBigModel,
+  fetchGroq,
   isProxyRateLimitPayload,
   readChatResponse,
   shortenReply,
   throwProviderError,
   type ChatCompletionError,
+  type ChatContext,
   type ChatReply,
 } from '@/lib/genie/providers'
 
@@ -74,6 +78,15 @@ describe('readChatResponse', () => {
   it('rejects an error chunk that arrives before any text', async () => {
     const error = `data: ${JSON.stringify({ error: { message: 'upstream exploded' } })}\n\n`
     await assert.rejects(read(sseResponse([error])), /upstream exploded/)
+  })
+
+  it("keeps the code and scope of the Worker's error event", async () => {
+    const error = `data: ${JSON.stringify({ error: { code: 'upstream_timeout', message: 'Too slow.' }, scope: 'zai' })}\n\n`
+    await assert.rejects(read(sseResponse([error])), (caught: ChatCompletionError) => {
+      assert.equal(caught.code, 'upstream_timeout')
+      assert.equal(caught.scope, 'zai')
+      return true
+    })
   })
 
   it('keeps the text already received when an error chunk follows it', async () => {
@@ -145,10 +158,33 @@ describe('throwProviderError', () => {
     assert.equal(error.status, 502)
   })
 
-  it('uses the warm-up message for a 503 when one is given', async () => {
-    const response = () => Response.json({ error: 'cold start' }, { status: 503 })
-    assert.equal((await caught(throwProviderError(response(), 'Groq', 'Warming up'))).message, 'Warming up')
-    assert.equal((await caught(throwProviderError(response(), 'Groq'))).message, 'cold start')
+  it('keeps the code, scope and retry time of a v2 error body', async () => {
+    const body = { error: { code: 'budget_exhausted', message: 'Spent.' }, scope: 'zai', retryAfter: 120, requestId: 'r' }
+    const error = await caught(throwProviderError(Response.json(body, { status: 503 }), 'BigModel'))
+    assert.equal(error.code, 'budget_exhausted')
+    assert.equal(error.scope, 'zai')
+    assert.equal(error.retryAfter, 120)
+    assert.equal(error.status, 503)
+    assert.equal(error.message, 'Spent.')
+    assert.equal(error.isProxyRateLimit, false)
+  })
+
+  it('reads the retry time from the Retry-After header when the body has none', async () => {
+    const response = Response.json(
+      { error: { code: 'rate_limited', message: 'Slow down.' }, scope: 'proxy' },
+      { status: 429, headers: { 'Retry-After': '42' } }
+    )
+    const error = await caught(throwProviderError(response, 'BigModel'))
+    assert.equal(error.retryAfter, 42)
+    assert.equal(error.isProxyRateLimit, true)
+  })
+
+  it("keeps the Worker's message for a 503 (no warm-up text)", async () => {
+    const response = Response.json({ error: { code: 'unavailable', message: 'Not configured.' }, scope: 'groq' }, { status: 503 })
+    const error = await caught(throwProviderError(response, 'Groq'))
+    assert.equal(error.message, 'Not configured.')
+    assert.equal(error.code, 'unavailable')
+    assert.equal(error.scope, 'groq')
   })
 })
 
@@ -172,27 +208,80 @@ describe('shortenReply', () => {
   })
 })
 
+const context: ChatContext = {
+  lang: 'de',
+  section: 'research',
+  pathname: '/research/',
+  entryIds: ['thesis-ood', 'cifar-results', 'svhn-results', 'methods', 'extra-id'],
+}
+
+describe('buildChatRequest', () => {
+  const turns = (count: number) =>
+    Array.from({ length: count }, (_, index) => ({
+      role: index % 2 === 0 ? ('user' as const) : ('assistant' as const),
+      content: `turn ${index}`,
+    }))
+
+  it('sends the v2 body and nothing of the old one', () => {
+    const body = buildChatRequest({ messages: turns(3), context, lane: 'deep', provider: 'zai', stream: true })
+    assert.deepEqual(Object.keys(body).sort(), [
+      'entryIds',
+      'lane',
+      'lang',
+      'pathname',
+      'provider',
+      'section',
+      'stream',
+      'turns',
+      'version',
+    ])
+    assert.equal(body.version, 2)
+    assert.equal(body.lane, 'deep')
+    assert.equal(body.provider, 'zai')
+    assert.equal(body.lang, 'de')
+    assert.equal(body.section, 'research')
+    assert.equal(body.stream, true)
+    assert.ok(body.turns.every((turn) => turn.role === 'user' || turn.role === 'assistant'))
+  })
+
+  it('sends the pathname normalized, and "/" for an empty one', () => {
+    const at = (pathname: string) =>
+      buildChatRequest({ messages: turns(1), context: { ...context, pathname }, lane: 'fast', provider: 'groq', stream: false })
+        .pathname
+    assert.equal(at('/research/'), '/research')
+    assert.equal(at('/'), '/')
+    assert.equal(at(''), '/')
+  })
+
+  it('sends at most four entry IDs, in the order retrieved', () => {
+    const body = buildChatRequest({ messages: turns(1), context, lane: 'fast', provider: 'zai', stream: false })
+    assert.deepEqual(body.entryIds, context.entryIds.slice(0, 4))
+  })
+
+  it('keeps only the last 16 turns, with role and content only', () => {
+    const messages = turns(17).map((turn) => ({ ...turn, followUps: ['x'], fallback: true }))
+    const body = buildChatRequest({ messages, context, lane: 'fast', provider: 'zai', stream: false })
+    assert.equal(body.turns.length, 16)
+    assert.equal(body.turns[0].content, 'turn 1')
+    assert.ok(body.turns.every((turn) => Object.keys(turn).join() === 'role,content'))
+  })
+
+  it("cuts a turn over the Worker's limit", () => {
+    const messages = [
+      { role: 'user' as const, content: 'u'.repeat(2_500) },
+      { role: 'assistant' as const, content: 'a'.repeat(9_000) },
+      { role: 'user' as const, content: 'last' },
+    ]
+    const body = buildChatRequest({ messages, context, lane: 'fast', provider: 'zai', stream: false })
+    assert.deepEqual(
+      body.turns.map((turn) => turn.content.length),
+      [2_000, 8_000, 4]
+    )
+  })
+})
+
 describe('provider requests', () => {
   const realFetch = globalThis.fetch
-  const MODEL_ENV = ['NEXT_PUBLIC_BIGMODEL_MODEL', 'NEXT_PUBLIC_ZAI_FAST_MODEL', 'NEXT_PUBLIC_GROQ_MODEL']
-  let fetchBigModel: typeof import('@/lib/genie/providers').fetchBigModel
-  let fetchGroq: typeof import('@/lib/genie/providers').fetchGroq
-
-  // The models are read from the environment when the module loads. Load a fresh copy
-  // with the overrides cleared, so these tests check the built-in defaults whatever
-  // the shell running them has set.
-  before(async () => {
-    const saved = MODEL_ENV.map((name) => [name, process.env[name]] as const)
-    for (const name of MODEL_ENV) delete process.env[name]
-    try {
-      const fresh: typeof import('@/lib/genie/providers') = await import(
-        new URL('../../src/lib/genie/providers.ts?defaults', import.meta.url).href
-      )
-      ;({ fetchBigModel, fetchGroq } = fresh)
-    } finally {
-      for (const [name, value] of saved) if (value !== undefined) process.env[name] = value
-    }
-  })
 
   afterEach(() => {
     globalThis.fetch = realFetch
@@ -208,37 +297,43 @@ describe('provider requests', () => {
   }
 
   const ok = () => Response.json({ choices: [{ message: { content: 'ok' }, finish_reason: 'stop' }] })
-  const base = { messages: [{ role: 'user' as const, content: 'hi' }], systemPrompt: 'sys', proxyUrl: 'https://proxy.test' }
+  const base = { messages: [{ role: 'user' as const, content: 'hi' }], context, proxyUrl: 'https://proxy.test' }
+  const OLD_FIELDS = ['model', 'messages', 'max_tokens', 'temperature', 'reasoning_effort']
 
-  it('sends BigModel the lane-specific model and token budget, with low reasoning effort', async () => {
+  it('sends each provider and lane as v2, with no model, prompt or token settings', async () => {
     const bodies = captureFetch(ok)
     await fetchBigModel({ ...base, lane: 'fast' })
-    await fetchBigModel({ ...base, lane: 'deep' })
+    await fetchGroq({ ...base, lane: 'deep' })
     assert.deepEqual(
-      bodies.map((b) => [b.model, b.max_tokens, b.reasoning_effort, b.stream]),
+      bodies.map((b) => [b.version, b.provider, b.lane, b.stream]),
       [
-        ['glm-5.3-flash', 900, 'low', false],
-        ['glm-5.4', 1600, 'low', false],
+        [2, 'zai', 'fast', false],
+        [2, 'groq', 'deep', false],
       ]
     )
-    assert.deepEqual(bodies[0].messages, [
-      { role: 'system', content: 'sys' },
-      { role: 'user', content: 'hi' },
-    ])
+    for (const body of bodies) {
+      assert.deepEqual(OLD_FIELDS.filter((field) => field in body), [])
+      assert.deepEqual(body.turns, [{ role: 'user', content: 'hi' }])
+      assert.equal(body.pathname, '/research')
+      assert.deepEqual(body.entryIds, context.entryIds.slice(0, 4))
+    }
+    assert.ok(!JSON.stringify(bodies).includes('"system"'))
   })
 
   it('streams when a delta callback is given', async () => {
     const bodies = captureFetch(() => sseResponse([delta('ok'), 'data: [DONE]\n\n']))
     assert.deepEqual(await fetchGroq({ ...base, lane: 'deep', onDelta() {} }), { content: 'ok', incomplete: false })
     assert.equal(bodies[0].stream, true)
-    assert.equal(bodies[0].model, 'openai/gpt-oss-20b')
-    assert.equal(bodies[0].max_tokens, 1600)
   })
 
-  it('reports a Groq 503 as warming up', async () => {
-    captureFetch(() => Response.json({ error: 'cold' }, { status: 503 }))
+  it("keeps the Worker's 503 message and code, with no warm-up text", async () => {
+    captureFetch(() =>
+      Response.json({ error: { code: 'budget_exhausted', message: 'Spent.' }, scope: 'groq', retryAfter: 60 }, { status: 503 })
+    )
     await assert.rejects(fetchGroq({ ...base, lane: 'fast' }), (error: ChatCompletionError) => {
-      assert.equal(error.message, 'Model is warming up, try again in a moment.')
+      assert.equal(error.message, 'Spent.')
+      assert.equal(error.code, 'budget_exhausted')
+      assert.equal(error.scope, 'groq')
       assert.equal(error.status, 503)
       assert.equal(error.provider, 'Groq')
       return true
