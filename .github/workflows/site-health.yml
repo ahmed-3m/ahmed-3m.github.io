@@ -72,6 +72,11 @@ jobs:
         with:
           fetch-depth: 1
 
+      - name: Setup Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "24"
+
       - name: Deep pages return 200 (newest blog post)
         shell: bash
         run: |
@@ -100,57 +105,25 @@ jobs:
           fi
           echo "OK   $url -> 200"
 
-      - name: News live/repo date parity
+      - name: News live/repo parity
         shell: bash
-        run: |
-          set -euo pipefail
-          code=$(curl -s -o "$RUNNER_TEMP/news.html" -w '%{http_code}' -L --max-time 30 https://ahmed-3m.github.io/news/) || code="000"
-          if [ "$code" != "200" ]; then
-            echo "::error::https://ahmed-3m.github.io/news/ returned HTTP $code (expected 200)"
-            exit 1
-          fi
-          node <<'EOF'
-          const { readFileSync } = require('node:fs')
-          const html = readFileSync(process.env.RUNNER_TEMP + '/news.html', 'utf8')
-          const live = [...html.matchAll(/"datePublished":"(\d{4}-\d{2}-\d{2})"/g)].map(m => m[1])
-          const repo = JSON.parse(readFileSync('src/lib/news-items.json', 'utf8')).map(i => i.date)
-          if (live.length === 0) process.exit(1)
-          const liveNewest = live.sort().at(-1)
-          const repoNewest = repo.sort().at(-1)
-          if (liveNewest !== repoNewest) {
-            console.error(`::error::Live newest ${liveNewest} != repo newest ${repoNewest}`)
-            process.exit(1)
-          }
-          const today = new Date().toISOString().slice(0, 10)
-          if (liveNewest > today) {
-            console.error(`::error::Live news has a future date ${liveNewest}`)
-            process.exit(1)
-          }
-          const age = (Date.now() - Date.parse(liveNewest + 'T00:00:00Z')) / 86400000
-          if (age > 7) console.warn(`::warning::Newest item is ${age.toFixed(1)} days old (quiet days are allowed)`)
-          console.log(`Live/repo newest ${liveNewest} (${age.toFixed(1)} days old; editorial age is a warning only)`)
-          EOF
+        run: node .github/news/check-news-health.mjs live
 
-      - name: Last scheduled news-update succeeded
+      - name: News schedule health (< 36h window & stall detection)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_REPO: ${{ github.repository }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        shell: bash
+        run: node .github/news/check-news-health.mjs schedule
+
+      - name: Weekly catalog link-rot audit (non-blocking warnings)
+        continue-on-error: true
         shell: bash
         run: |
-          set -euo pipefail
-          json=$(gh run list --workflow news-update.yml --branch main --event schedule --limit 1 --json conclusion,url,status,createdAt)
-          echo "$json"
-          if [ "$json" = "[]" ]; then
-            echo "::error::No scheduled news-update.yml runs found on main"
-            exit 1
-          fi
-          conclusion=$(printf '%s' "$json" | jq -r '.[0].conclusion // empty')
-          url=$(printf '%s' "$json" | jq -r '.[0].url')
-          status=$(printf '%s' "$json" | jq -r '.[0].status')
-          echo "Last scheduled news-update: status=$status conclusion=$conclusion $url"
-          if [ "$conclusion" = "failure" ]; then
-            echo "::error::Last scheduled news-update.yml run is failure: $url"
-            exit 1
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$(date -u +%u)" = "7" ]; then
+            node .github/news/check-news-links.mjs --warn-only
+          else
+            echo "Skipping full 200-URL link-rot audit until Sunday UTC (day=$(date -u +%u))."
           fi
 
       - name: Chat widget present on homepage
