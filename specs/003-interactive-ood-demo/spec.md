@@ -1,6 +1,6 @@
 # Spec 003 — Interactive OOD / Defect-Detection Demo
 
-**Status:** Ready for next session
+**Status:** Implemented in PR #169 and PR #172 (merged 2026-11-07) — `src/components/OodDemo.tsx` ships the explorer on the `diffusion-ood` case-study page and on the homepage.
 **Priority:** P1 (differentiator — "show, don't tell")
 **Depends on:** Spec 002 (claims must be honest before we spotlight the result).
 

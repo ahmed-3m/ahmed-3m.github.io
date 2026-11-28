@@ -1,8 +1,9 @@
 # Claims matrix — portfolio surfaces (T2.2)
 
 **Scope:** quantified / dated / contact claims in `src/`, `public/cv.tex`, `public/llms*.txt`, plus special attention to `JsonLd.tsx` and `ChatBot.tsx`.  
-**Out of scope for the matrix body:** `specs/**`, `README.md`, `GITHUB_PROFILE_README.md`, `hybrid-preview.html` (noted in “extra surfaces” if relevant).  
+**Out of scope for the matrix body:** `specs/**`, `README.md`, `GITHUB_PROFILE_README.md` (not in this repository), `hybrid-preview.html` (noted in “extra surfaces” if relevant).  
 **Method:** ripgrep for `80.25|18.8|6.5|99.03|92.52|0.8673|98.4|98.98|90.50|96.97|ahmed@|Jul 2026|May 2026|Mar 2026` and related date/contact patterns (2026-07-18).  
+**Note (2026-11-27):** the "Canonical email" row below is superseded by PR #281, merged 2026-11-26; see section 9 of `specs/002-cv-claim-reconciliation/ground-truth.md`.
 **Ground truth reference:** `ground-truth.md` (thesis PDF).
 
 Legend: **OK** = matches thesis headline story · **SOFT** = incomplete qualifier or aggregation ambiguity · **DIVERGE** = conflicts with another surface or with thesis · **ABSENT** = string not found on live surfaces · **UNVERIFIED** = not in thesis PDF
@@ -173,6 +174,8 @@ Legend: **OK** = matches thesis headline story · **SOFT** = incomplete qualifie
 | `public/llms.txt:3,37,43` | `submitted Jul 2026`; M.Sc. `Oct 2024 – Jul 2026` |
 | `public/llms-full.txt:3,37,43,73` | Same |
 | Thesis PDF cover/declaration | **May 2026** |
+
+**Note (2026-11-27).** The May 2026 thesis date in the row above describes the thesis version that PR #101 replaced; the PDF now on the site reads "June 2026" (see section 9 of `ground-truth.md`). The submission date published on the site remains an open owner question.
 
 **Status:** **DIVERGE** — portfolio/CV say **Jul 2026 submission**; thesis document date is **May 2026**. Neither **Mar 2026** (candidate CV) nor calendar-day precision appears in thesis PDF.
 

@@ -123,6 +123,8 @@ From **Table 6.1** (PDF p64). Reference pool for external eval = **full CIFAR-10
 
 ## 6. Submission date and supervisors
 
+**Note (2026-11-27).** The May 2026 cells below describe the thesis version that PR #101 replaced on 2026-09-20. The PDF now on the site reads "June 2026" on the title page under "Submission" and on the declaration; see the note in section 9. The submission date published on the site remains an open owner question.
+
 | Field | Thesis value | Citation |
 | --- | --- | --- |
 | Cover date | **May 2026** | Title page PDF p1 |
@@ -169,7 +171,17 @@ Seed-42:   98.98% AUROC, 4.7% FPR95  (λ=0.02, K=100 raw scores)
 External:  SVHN 90.50 / Textures 92.84 / FMNIST 94.03 / Places365 96.50 / CIFAR-100 96.97
            range 90.50–96.97%, mean 94.17%
 Inkjet:    0.8673 ± 0.0230 AUROC (FTI_Zer0P, 5-fold, λ=0)
-Date on PDF: May 2026
+Date on PDF: May 2026   (superseded 2026-09-20: the PDF on the site reads June 2026; see the note in section 9)
 Supervisors: Univ.-Prof. Dr. Sepp Hochreiter; Claus Hofmann, MSc
 FORBIDDEN:  80.25%, +18.8 pp  (not in thesis)
 ```
+
+---
+
+## 9. Owner decisions
+
+| Date | Question | Decision | Source |
+| --- | --- | --- | --- |
+| 2026-11-26 | Canonical contact address | One address on every public surface, set by PR #281; the address named in spec 001 and in the claims matrix is superseded by it | PR #281 (merged 2026-11-26) |
+
+**2026-11-27 note.** The "May 2026" cover-date entries in sections 6 and 8 above describe the thesis version that PR #101 replaced on 2026-09-20; the thesis PDF now on the site (git blob `a5ad32d`) reads "June 2026" on its title page under "Submission" (checked 2026-11-27). The thesis submission date published on the site is still an open owner question; this note does not decide it.

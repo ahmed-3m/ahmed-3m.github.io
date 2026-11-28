@@ -233,8 +233,9 @@ sanctioned exception to the "agents never merge their own PRs" rule.
 ### Claim integrity (numbers on the site)
 
 - Never invent or round up a metric. Thesis figures come from
-  `src/lib/ood-explorer-data.ts`; CV and claims reconciliation lives in `specs/001-*`
-  and `specs/002-*`.
+  `src/lib/ood-explorer-data.ts`; the claim rules live in `specs/001-*`, and the claims
+  matrix and ground truth in `specs/002-*` remain the reference (the remaining tasks
+  there wait for the owner's answers).
 - Keep qualifiers next to headline numbers. Example: the hero's **99.03% ± 0.07 AUROC
   is the 3-seed mean** at λ = 0.02 (`CIFAR_LAMBDA_SWEEP`). The histogram in
   `HeroSignal` is the **single seed-42 run (98.98%)**. When both appear, label which

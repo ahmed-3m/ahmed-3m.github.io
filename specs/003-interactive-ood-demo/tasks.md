@@ -1,5 +1,7 @@
 # Tasks — 003 Interactive OOD Demo
 
+**Status (2026-11-27):** implemented in PR #169 and PR #172; the tasks below are the historical build plan.
+
 **Delegation legend:** `[P]` parallelizable · `→Tnnn` depends on · **Agent** = suggested type.
 
 > ⚠️ **Gate:** T3.1 answers two open questions (flagship case study; do exported weights /

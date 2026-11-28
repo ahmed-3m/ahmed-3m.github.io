@@ -1,5 +1,7 @@
 # RFC 215 implementation coverage
 
+Update 2026-11-26: PR #286 removed Google Analytics and added GoatCounter behind the repository variable `NEXT_PUBLIC_GOATCOUNTER_CODE`; the three Google Analytics lines below describe the state before that change.
+
 Date: 2026-11-18
 Base: ebd8765cd5a2dd34c83c8b9d91dd96adc6e2c163 (current main when branch created).
 
@@ -49,7 +51,7 @@ The starting workspace was 42 commits behind main. This change preserves the new
 - Logical list indentation on case studies.
 - Mobile metric cards stack; scientific numbers explicitly LTR in Arabic.
 - Education-date wrapping retained.
-- Analytics consent defaults initialized synchronously in head before measurement configuration, using Google's documented consent-default command.
+- Analytics consent defaults initialized synchronously in head before measurement configuration, using Google's documented consent-default command. (superseded, see the note at the top)
 - Full automated contrast audit, reduced-motion/no-JS browser matrix, and exhaustive focus/touch-target coverage remain open.
 
 ## Phase 5: checks and release
@@ -72,7 +74,7 @@ The starting workspace was 42 commits behind main. This change preserves the new
   - Owner merge and post-merge deployment verification remain pending.
 
 ## Completion rule
-This report does not mark RFC 215 fully complete. Keep the RFC open until remaining evidence, exhaustive browser/performance checks, successful CI and owner-reviewed deployment verification are recorded.
+This report does not mark RFC 215 (not in this repository) fully complete. Keep the RFC open until remaining evidence, exhaustive browser/performance checks, successful CI and owner-reviewed deployment verification are recorded.
 
 ## Follow-up to the deployed review
 
@@ -94,7 +96,7 @@ export (15 routes), and the news and chat-proxy self-tests. The exported homepag
 and three case studies passed 63 internal link and anchor checks. Of 17 external
 targets checked, 16 returned HTTP 200. LinkedIn returned HTTP 999 to the audit
 client, so its destination remains unverified. The live homepage source had no
-Google Analytics consent or tag markup in this check.
+Google Analytics consent or tag markup in this check. (superseded, see the note at the top)
 
 Against the f3f3fe3 production export, the revised homepage references the
 same 13 initial JS/CSS assets by count. Gzipping each file locally gives
@@ -111,7 +113,7 @@ Remaining acceptance work:
   reduced motion and JavaScript disabled, and native WebKit and Firefox where
   available. Local Chromium could not start because the sandbox blocks its socket.
 - [ ] Verify the LinkedIn link in an ordinary browser. Verify consent behavior if
-  Google Analytics is enabled in another deployment.
+  Google Analytics is enabled in another deployment. (superseded, see the note at the top)
 - [ ] Run walkthroughs with actual recruiters and nontechnical visitors.
 - [ ] Add a screenshot or recorded beta walkthrough when a publishable capture is
   available. The existing public example is illustrative.
