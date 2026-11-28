@@ -80,8 +80,11 @@ const titles = {
   },
 } satisfies Record<string, TranslationMap>
 
+// The German entry is never rendered (the note only shows when `lang !== 'de'`, see below);
+// TranslationMap requires all five languages.
 const bindingNote: TranslationMap = {
   en: 'This is a translation for your convenience. If the versions differ, the German text applies.',
+  de: 'Diese Übersetzung dient nur zur Information. Weichen die Versionen voneinander ab, gilt der deutsche Text.',
   fr: 'Cette traduction est fournie pour votre commodité. En cas de différence, le texte allemand fait foi.',
   es: 'Esta traducción se ofrece para tu comodidad. Si las versiones difieren, prevalece el texto en alemán.',
   ar: 'هذه ترجمة للتيسير فقط. عند وجود اختلاف بين النسخ، يُعتمد النص الألماني.',
