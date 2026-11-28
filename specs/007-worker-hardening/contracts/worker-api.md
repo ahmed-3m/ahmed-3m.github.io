@@ -132,3 +132,8 @@ PR 4 adds code-based handling (US3 scenario 3):
 - `rate_limited`: the rate-limit message with `retryAfter`;
 - `budget_exhausted` or `unavailable` with a provider scope: try the other provider;
 - `unavailable` with scope `worker`, or both providers failed: prepared answers with a "models unavailable" note.
+
+As built (#325): the site asks Z.ai first and Groq second, so "the other provider" is always Groq. Since the
+site's chain only runs Z.ai → Groq, a Groq error goes straight to prepared answers. `requestModelReply` in
+`src/lib/genie/reply.ts` routes by code. A prepared answer carries the `fallbackNotice` line. When no prepared
+answer fits, `chatErrorMessage` shows `rateLimitedRetry` (with the seconds), `limitedAnswers` or `genericError`.
