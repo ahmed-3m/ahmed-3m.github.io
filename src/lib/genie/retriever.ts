@@ -1,6 +1,4 @@
-import { languageName, type Language } from '@/lib/i18n-config'
 import { KNOWLEDGE_CHUNKS, type KnowledgeChunk } from './knowledge'
-import { ENTRY_FORMAT, PROMPT_RULES_TEMPLATE, capPrompt, fillPromptSlots, COMPACT_PUBLIC_LINKS } from './prompt-rules'
 
 const ARABIC_DIACRITICS_RE = /[\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06ED\u0640]/gu
 const COMBINING_MARKS_RE = /[\u0300-\u036f]/gu
@@ -200,37 +198,4 @@ export function retrieveKnowledgeChunks({
   }
 
   return scored.slice(0, topK).map((item) => item.chunk)
-}
-
-export interface BuildSystemPromptOptions {
-  lang: Language
-  query: string
-  history?: readonly { role: string; content: string }[]
-  section?: string
-  pathname?: string
-}
-
-export function buildSystemPrompt({
-  lang,
-  query,
-  history = [],
-  section = 'hero',
-  pathname = '/',
-}: BuildSystemPromptOptions): string {
-  const chunks = retrieveKnowledgeChunks({ query, history, section, pathname, topK: 4 })
-  const entries = chunks
-    .map((chunk) =>
-      fillPromptSlots(ENTRY_FORMAT, { title: chunk.title, facts: chunk.facts, links: chunk.links.join(', ') }),
-    )
-    .join('\n')
-
-  return capPrompt(
-    fillPromptSlots(PROMPT_RULES_TEMPLATE, {
-      language: languageName[lang],
-      section,
-      pathname: normalizePathname(pathname) || '/',
-      entries,
-      links: COMPACT_PUBLIC_LINKS,
-    }),
-  )
 }

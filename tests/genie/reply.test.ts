@@ -5,11 +5,13 @@
 import assert from 'node:assert/strict'
 import { afterEach, beforeEach, describe, it, mock } from 'node:test'
 
-import { MAX_REPLY_CHARS, createChatError, type ChatReply } from '@/lib/genie/providers'
+import { CHAT_COPY } from '@/components/chatbot-dictionaries'
+import { MAX_REPLY_CHARS, createChatError, type ChatContext, type ChatReply } from '@/lib/genie/providers'
 import { LOCAL_REPLIES, PROMPT_LIBRARY, REPLY_FOR_PROMPT, pickFollowUpIds } from '@/lib/genie/prompts'
 import {
   buildFinalMessage,
   chatErrorKind,
+  chatErrorMessage,
   decideImmediateReply,
   requestModelReply,
   type ModelProviders,
@@ -82,7 +84,7 @@ describe('decideImmediateReply', () => {
 })
 
 describe('requestModelReply', () => {
-  type Call = { lane: string; proxyUrl: string; systemPrompt: string; messages: unknown; signal?: AbortSignal }
+  type Call = { lane: string; proxyUrl: string; context: ChatContext; messages: unknown; signal?: AbortSignal }
   let log: string[]
   let consoleError: ReturnType<typeof mock.method>
 
@@ -94,6 +96,9 @@ describe('requestModelReply', () => {
 
   const upstream500 = (provider: 'BigModel' | 'Groq') => createChatError(`${provider} down`, provider, 500)
   const proxy429 = () => createChatError('Rate limit exceeded.', 'BigModel', 429, undefined, true)
+  const coded = (provider: 'BigModel' | 'Groq', status: number, code: string, scope: string) =>
+    createChatError(code, provider, status, code, false, { scope })
+  const context: ChatContext = { lang: 'en', section: 'hero', pathname: '/', entryIds: ['a'] }
 
   /** Fake providers: a reply, or an error to throw. Each call is logged. */
   function providers(bigModel: ChatReply | Error, groq: ChatReply | Error, onCall?: (name: string) => void) {
@@ -119,7 +124,7 @@ describe('requestModelReply', () => {
       content,
       lang: 'en',
       transcript: [{ role: 'user', content }],
-      systemPrompt: 'sys',
+      context,
       proxyUrl: 'https://proxy.test',
       lane: 'deep',
       isStopped,
@@ -140,7 +145,7 @@ describe('requestModelReply', () => {
     for (const call of [fakes.calls.bigModel[0], fakes.calls.groq[0]]) {
       assert.equal(call.lane, 'deep')
       assert.equal(call.proxyUrl, 'https://proxy.test')
-      assert.equal(call.systemPrompt, 'sys')
+      assert.deepEqual(call.context, context)
       assert.deepEqual(call.messages, [{ role: 'user', content: 'Tell me a joke' }])
     }
   })
@@ -173,8 +178,22 @@ describe('requestModelReply', () => {
     assert.equal(chatErrorKind(limit), 'rate-limited')
   })
 
-  it('still offers a prepared reply on a proxy rate limit', async () => {
-    const fakes = providers(proxy429(), { content: 'from Groq' })
+  it('shows the rate-limit message, not a prepared reply, on the visitor\'s own limit', async () => {
+    const limit = createChatError('Slow down.', 'BigModel', 429, 'rate_limited', true, { scope: 'proxy', retryAfter: 30 })
+    await assert.rejects(request('Tell me about mergeproof', providers(limit, { content: 'from Groq' })), (e) => e === limit)
+    assert.deepEqual(log, ['bigModel'])
+  })
+
+  it('tries Groq when the Z.ai budget is spent or its key is missing', async () => {
+    for (const error of [coded('BigModel', 503, 'budget_exhausted', 'zai'), coded('BigModel', 503, 'unavailable', 'zai')]) {
+      log = []
+      assert.deepEqual(await request('Tell me a joke', providers(error, { content: 'from Groq' })), { content: 'from Groq' })
+      assert.deepEqual(log, ['bigModel', 'reset', 'groq'])
+    }
+  })
+
+  it('goes straight to a prepared reply when the Worker itself is unavailable', async () => {
+    const fakes = providers(coded('BigModel', 503, 'unavailable', 'worker'), { content: 'from Groq' })
     assert.deepEqual(await request('Tell me about mergeproof', fakes), { content: LOCAL_REPLIES.mergeproof.en, fallback: true })
     assert.deepEqual(log, ['bigModel'])
   })
@@ -252,10 +271,43 @@ describe('buildFinalMessage', () => {
 })
 
 describe('chatErrorKind', () => {
-  it('shows the rate-limit text only for a 429', () => {
+  it('picks the message kind from the status and code', () => {
     assert.equal(chatErrorKind(createChatError('x', 'Groq', 429)), 'rate-limited')
+    assert.equal(chatErrorKind(createChatError('x', 'Groq', 429, 'rate_limited')), 'rate-limited')
+    for (const code of ['unavailable', 'budget_exhausted', 'upstream_error', 'upstream_timeout']) {
+      assert.equal(chatErrorKind(createChatError('x', 'Groq', 503, code)), 'models-unavailable', code)
+    }
     assert.equal(chatErrorKind(createChatError('x', 'Groq', 500)), 'generic')
     assert.equal(chatErrorKind(new Error('x')), 'generic')
     assert.equal(chatErrorKind(null), 'generic')
+  })
+})
+
+describe('chatErrorMessage', () => {
+  const LANGS = ['en', 'de', 'fr', 'es', 'ar'] as const
+
+  it('has every per-code message in all five languages', () => {
+    for (const key of ['rateLimited', 'rateLimitedRetry', 'limitedAnswers', 'genericError'] as const) {
+      for (const lang of LANGS) assert.ok(CHAT_COPY[key][lang]?.trim(), `${key}.${lang}`)
+    }
+    for (const lang of LANGS) assert.ok(CHAT_COPY.rateLimitedRetry[lang].includes('{seconds}'), lang)
+  })
+
+  it('shows the wait time for the visitor\'s own limit', () => {
+    const limit = createChatError('x', 'BigModel', 429, 'rate_limited', true, { retryAfter: 37 })
+    for (const lang of LANGS) {
+      const text = chatErrorMessage(limit, lang)
+      assert.ok(text.includes('37') && !text.includes('{seconds}'), `${lang}: ${text}`)
+    }
+    assert.equal(chatErrorMessage(createChatError('x', 'BigModel', 429), 'en'), CHAT_COPY.rateLimited.en)
+  })
+
+  it('shows the prepared-topics hint when no model can answer, never a warm-up text', () => {
+    for (const lang of LANGS) {
+      const text = chatErrorMessage(createChatError('x', 'Groq', 503, 'unavailable', false, { scope: 'worker' }), lang)
+      assert.equal(text, CHAT_COPY.limitedAnswers[lang])
+      assert.ok(!/warming up/i.test(text))
+    }
+    assert.equal(chatErrorMessage(new Error('x'), 'de'), CHAT_COPY.genericError.de)
   })
 })

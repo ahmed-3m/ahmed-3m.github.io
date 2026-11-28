@@ -2,7 +2,8 @@ import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 
 import { KNOWLEDGE_CHUNKS } from '@/lib/genie/knowledge'
-import { buildSystemPrompt, retrieveKnowledgeChunks } from '@/lib/genie/retriever'
+import { retrieveKnowledgeChunks } from '@/lib/genie/retriever'
+import { sitePrompt } from './site-prompt'
 
 describe('retrieveKnowledgeChunks', () => {
   it('has a knowledge base of at least 16 chunks', () => {
@@ -44,10 +45,10 @@ describe('retrieveKnowledgeChunks', () => {
   }
 })
 
-describe('buildSystemPrompt', () => {
+describe('the composed prompt for a site question', () => {
   for (const lang of ['en', 'de', 'fr', 'es', 'ar'] as const) {
     it(`stays under 8000 characters without the retired email (${lang})`, () => {
-      const prompt = buildSystemPrompt({
+      const prompt = sitePrompt({
         lang,
         query: 'What is the best AUROC on CIFAR-10 and SVHN?',
         section: 'research',

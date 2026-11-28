@@ -96,6 +96,14 @@ export const CHAT_COPY = {
     es: 'Demasiadas solicitudes en este momento. Espera un momento antes de hacer otra pregunta abierta o prueba las preguntas sugeridas.',
     ar: 'تم تجاوز حد الطلبات حاليًا. يُرجى الانتظار قليلًا قبل طرح سؤال مفتوح جديد، أو تجربة الأسئلة المقترحة.',
   },
+  // The visitor's own request limit, with the wait from the Worker's `retryAfter`.
+  rateLimitedRetry: {
+    en: 'Too many requests right now. Please try another open-ended question in {seconds} seconds, or use the suggested prompts.',
+    de: 'Gerade zu viele Anfragen. Bitte stellen Sie die nächste freie Frage in {seconds} Sekunden oder nutzen Sie die vorgeschlagenen Fragen.',
+    fr: 'Trop de requêtes en ce moment. Réessayez une question libre dans {seconds} secondes ou utilisez les questions suggérées.',
+    es: 'Demasiadas solicitudes en este momento. Prueba otra pregunta abierta dentro de {seconds} segundos o usa las preguntas sugeridas.',
+    ar: 'تم تجاوز حد الطلبات حاليًا. يُرجى طرح سؤال مفتوح جديد بعد {seconds} ثانية، أو تجربة الأسئلة المقترحة.',
+  },
   incompleteReply: {
     en: 'The reply was cut short.',
     de: 'Die Antwort wurde unterbrochen.',
