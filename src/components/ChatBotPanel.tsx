@@ -22,6 +22,7 @@ import { markdownToPlainText, parseInlineTokens, type BidiSegment, type InlineTo
 import {
   PROMPTS,
   PROMPT_LIBRARY,
+  GENIE_VIEWPORT_SECTIONS,
   STARTER_PROMPT_IDS,
   LOCAL_REPLIES,
   getLocalReply,
@@ -181,7 +182,7 @@ function useCurrentSection() {
 
   useEffect(() => {
     if (routeSection) return
-    const sections = ['hero', 'about', 'projects', 'experience', 'research', 'evidence', 'ood-explorer', 'writing', 'contact']
+    const sections = GENIE_VIEWPORT_SECTIONS
 
     const pickFromViewport = () => {
       let best = 'hero'

@@ -25,7 +25,7 @@ import { isBackedValue, QUALIFIERS } from '@/lib/claims'
 import type { Language } from '@/lib/i18n-config'
 import { cardHash, lockOf, staleOgImages } from '../../tools/claims/og-lock.mjs'
 import { renderedFromSource, thirdPartyRetired } from '../../tools/claims/run-check.mjs'
-import { scanExport } from '../../tools/claims/scan-export.mjs'
+import { scanExport, scanPromptFile } from '../../tools/claims/scan-export.mjs'
 import { scanOgCards, scanSvgFile, scanTextFile, scanTsFile } from '../../tools/claims/scan-sources.mjs'
 
 const LOCALES = ['en', 'de', 'fr', 'es', 'ar'] as const satisfies readonly Language[]
@@ -220,6 +220,42 @@ describe('figure check: scanners', () => {
       ['de'],
     )
     assert.deepEqual(check(units), [])
+  })
+
+  describe('Genie prompt file (spec 007)', () => {
+    const promptExport = (facts: string | null) => {
+      const out = path.join(tmp, `out-${++n}`)
+      write(path.relative(tmp, path.join(out, 'index.html')), `<html><body><p>${CLEAN}</p></body></html>`)
+      if (facts !== null) {
+        const file = { version: 1, rules: 'Answer in {{language}}.\n\nRetrieved:\n{{entries}}', entries: [{ id: 'x', title: 'Thesis', facts }] }
+        write(path.relative(tmp, path.join(out, 'genie', 'prompt.json')), JSON.stringify(file))
+      }
+      return scanPromptFile(out)
+    }
+
+    it('fails on a wrong figure in an entry', () => {
+      const { units, problems } = promptExport('AUROC reached 99.30% on CIFAR-10.')
+      assert.deepEqual(problems, [])
+      const findings = check(units as TextUnit[])
+      assert.deepEqual(
+        findings.map((f) => [f.file, f.rule]),
+        [['out/genie/prompt.json', 'unregistered']],
+      )
+    })
+
+    it('passes the same entry with the right figure', () => {
+      const { units, problems } = promptExport(`AUROC reached 99.03% ± 0.07% (${QUALIFIERS.threeSeeds.text.en}).`)
+      assert.deepEqual(problems, [])
+      assert.ok(units.length >= 2)
+      assert.deepEqual(check(units as TextUnit[]), [])
+    })
+
+    it('reports a missing or unreadable prompt file', () => {
+      assert.match(promptExport(null).problems.join(), /out\/genie\/prompt\.json is missing/)
+      const out = path.join(tmp, `out-${++n}`)
+      write(path.relative(tmp, path.join(out, 'genie', 'prompt.json')), '{ not json')
+      assert.match(scanPromptFile(out).problems.join(), /not valid JSON/)
+    })
   })
 
   it('backs a percentage only for 0-1 metric fields, not for other fractions', () => {

@@ -296,7 +296,7 @@ Branch each PR fresh from `origin/main`, never from the spec branch.
 
 **Goal**: once spec 007 publishes Genie's prompt as a site file, its figures are generated from the registry (FR-013).
 
-- [ ] T047 [US4] Blocked on spec 007. When spec 007 defines the published prompt file, add tasks here so it is generated from `@/lib/claims` and scanned by `tools/claims/scan-sources.mjs`. Until then the check (Phase 3) covers Genie.
+- [ ] T047 [US4] Done in spec 007, PR 1 (tasks T007–T010): the build publishes `/genie/prompt.json` from the same knowledge entries, and `scanPromptFile` in `tools/claims/scan-export.mjs` checks its rules and entries in the export scope; a missing or unreadable file fails the check. Mark this done when that PR merges.
 
 ---
 

@@ -158,3 +158,33 @@ export function scanExport(outDir, { thirdParty = [] } = {}) {
   }
   return units
 }
+
+/** The published Genie prompt file (spec 007 FR-001, research R13). */
+export const PROMPT_FILE = 'genie/prompt.json'
+
+/**
+ * English text units of the Genie prompt file: each paragraph of the rules template with
+ * its `{{slots}}` blanked, and one unit per entry (its title and facts, as the prompt
+ * lists them). A missing or unparsable file is a problem, so the check cannot skip it.
+ * @param {string} outDir
+ * @returns {{ units: { file: string, lang: 'en', scope: 'export', text: string }[], problems: string[] }}
+ */
+export function scanPromptFile(outDir) {
+  const file = `out/${PROMPT_FILE}`
+  const abs = path.join(outDir, ...PROMPT_FILE.split('/'))
+  if (!existsSync(abs)) return { units: [], problems: [`${file} is missing; the build must publish the Genie prompt file`] }
+  let data
+  try {
+    data = JSON.parse(readFileSync(abs, 'utf8'))
+  } catch (error) {
+    return { units: [], problems: [`${file} is not valid JSON: ${error.message}`] }
+  }
+  if (typeof data?.rules !== 'string' || !Array.isArray(data?.entries)) {
+    return { units: [], problems: [`${file} has no rules text or entries list`] }
+  }
+  const units = []
+  const add = (text) => units.push({ file, lang: 'en', scope: 'export', text })
+  for (const paragraph of data.rules.replace(/\{\{\w+\}\}/g, ' ').split(/\n{2,}/)) if (paragraph.trim()) add(paragraph)
+  for (const entry of data.entries) add(`${entry?.title ?? ''}. ${entry?.facts ?? ''}`)
+  return { units, problems: [] }
+}
