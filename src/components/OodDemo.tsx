@@ -206,7 +206,7 @@ const copy = {
     de: 'Aus Histogrammen mit 48 Bins der veröffentlichten PyTorch-Score-Tensoren (seed42_*.pt) und Ablations-Artefakten auf Hugging Face (ahmed-3m/DiffusionOOD) erstellt. Erkunden Sie Separation Loss (Gl. 3.23), kontrastives Scoring (Gl. 3.3), Monte-Carlo-Budget K und den Industrietransfer.',
     fr: 'Construit à partir d’histogrammes à 48 bins des tenseurs de scores PyTorch publiés (seed42_*.pt) et des artefacts JSON sur Hugging Face (ahmed-3m/DiffusionOOD). Explorez la perte de séparation (Éq. 3.23), le score contrastif (Éq. 3.3), le budget Monte Carlo K et le transfert industriel.',
     es: 'Construido a partir de histogramas de 48 intervalos de los tensores de puntuación de PyTorch publicados (seed42_*.pt) y artefactos JSON en Hugging Face (ahmed-3m/DiffusionOOD). Explore la pérdida de separación (Ec. 3.23), el puntaje contrastivo (Ec. 3.3), el presupuesto Monte Carlo K y la transferencia industrial.',
-    ar: 'مبني من مدرجات تكرارية ذات 48 فئة لموتورات النتائج المنشورة (seed42_*.pt) وملفات التقييم على Hugging Face (ahmed-3m/DiffusionOOD). استكشف دالة الفصل الشرطية (معادلة 3.23)، التقييم التبايني (معادلة 3.3)، ميزانية مونت كارلو K، والنقل الصناعي.',
+    ar: 'مبني من مدرجات تكرارية ذات 48 فئة لموتورات النتائج المنشورة (seed42_*.pt) وملفات JSON لدراسات الاستئصال على Hugging Face (ahmed-3m/DiffusionOOD). استكشف دالة الفصل الشرطية (معادلة 3.23)، التقييم التبايني (معادلة 3.3)، ميزانية مونت كارلو K، والنقل الصناعي.',
   },
   tabCalibration: {
     en: '1. Score Distributions & Threshold (τ)',
