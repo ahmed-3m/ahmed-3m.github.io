@@ -1,14 +1,16 @@
 // The chat Worker's request handler (spec 007, contracts/worker-api.md). Checks run in the
 // contract's order and the first failing one answers:
-//   origin → per-client limit → body → validation → key → prompt and upstream.
-// Budgets, the stop switch, deadlines and telemetry come in PR 3.
+//   origin → per-client limit → body → validation → stop switch → key → budget → upstream.
+// Requests that pass validation get one telemetry point (research R9).
 
+import { checkBudget } from './budget.js'
 import { clientKey } from './client-key.js'
-import { composePrompt } from './compose-prompt.js'
+import { composePrompt, selectEntries } from './compose-prompt.js'
 import { errorResponse } from './errors.js'
 import { createPromptSource } from './prompt-source.js'
 import { parseRequest } from './request.js'
-import { readSettings } from './settings.js'
+import { capsFor, isStopped, modelFor, readSettings } from './settings.js'
+import { recordPoint } from './telemetry.js'
 import { callUpstream } from './upstream.js'
 
 export const PROD_ORIGIN = 'https://ahmed-3m.github.io'
@@ -130,16 +132,53 @@ export function createHandler({
       }
 
       // 4. Validation, against the sections, paths, titles and languages the file lists.
-      const { file } = await promptSource.get({ url: settings.promptUrl, ctx })
+      const { file, source: promptOrigin } = await promptSource.get({ url: settings.promptUrl, ctx })
       const parsed = parseRequest(body, file)
       if (!parsed.ok) return fail(parsed.code, 'proxy')
-      const { request: chat } = parsed
+      const { request: chat, format } = parsed
+
+      // From here on, each request gets one telemetry point.
+      const started = now()
+      const record = (outcome, { ttfbMs = 0, totalMs = now() - started } = {}) =>
+        recordPoint(env, {
+          lane: chat.lane,
+          provider: chat.provider,
+          model: modelFor(settings, chat.provider, chat.lane),
+          outcome,
+          format,
+          promptSource: promptOrigin,
+          ttfbMs,
+          totalMs,
+          entryCount: selectEntries(file, chat.entryIds, chat.section).length,
+        })
+      const refuse = (code, scope, extra) => {
+        record(code)
+        return fail(code, scope, extra)
+      }
+
+      // 5. The stop switch.
+      if (isStopped(env)) return refuse('unavailable', 'worker')
 
       // 6. The provider's key.
       const apiKey = chat.provider === 'zai' ? env.ZAI_API_KEY : env.GROQ_API_KEY
-      if (typeof apiKey !== 'string' || !apiKey) return fail('unavailable', chat.provider)
+      if (typeof apiKey !== 'string' || !apiKey) return refuse('unavailable', chat.provider)
 
-      // 8. The Worker's own prompt, and the upstream call.
+      // 7. The provider's budget. Any failure of the budget store fails closed.
+      let budget
+      try {
+        budget = await checkBudget({
+          env,
+          provider: chat.provider,
+          caps: capsFor(settings, chat.provider),
+          now: now(),
+          timeoutMs: settings.budgetTimeoutMs,
+        })
+      } catch {
+        return refuse('unavailable', 'worker')
+      }
+      if (!budget.ok) return refuse('budget_exhausted', chat.provider, { retryAfter: budget.retryAfterSeconds })
+
+      // 8. The Worker's own prompt, and the upstream call with its deadlines.
       const prompt = composePrompt(file, chat)
       return callUpstream({
         fetchImpl,
@@ -152,6 +191,8 @@ export function createHandler({
         stream: chat.stream,
         requestId,
         headers,
+        now,
+        onDone: ({ outcome, ttfbMs, totalMs }) => record(outcome, { ttfbMs, totalMs }),
       })
     },
   }

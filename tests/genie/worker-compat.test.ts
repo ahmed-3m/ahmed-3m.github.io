@@ -10,6 +10,7 @@ import {
   type ChatCompletionError,
 } from '@/lib/genie/providers'
 import { buildSystemPrompt } from '@/lib/genie/retriever'
+import { GenieBudget } from '../../worker/lib/budget.js'
 import { createHandler } from '../../worker/lib/handler.js'
 import bundle from '../../worker/prompt-bundle.js'
 
@@ -48,6 +49,23 @@ function limiter(max = Infinity) {
   return { limit: async () => ({ success: ++count <= max }) }
 }
 
+/** The real GenieBudget class, one per provider, on in-memory storage. */
+function budgets() {
+  const objects = new Map<string, GenieBudget>()
+  const storage = () => {
+    const map = new Map<string, unknown>()
+    return { get: async (key: string) => structuredClone(map.get(key)), put: async (key: string, value: unknown) => void map.set(key, structuredClone(value)) }
+  }
+  return {
+    idFromName: (name: string) => name,
+    get: (name: string) => {
+      if (!objects.has(name)) objects.set(name, new GenieBudget({ storage: storage() }, {}))
+      const object = objects.get(name)!
+      return { fetch: (url: string, init: RequestInit) => object.fetch(new Request(url, init)) }
+    },
+  }
+}
+
 const realFetch = globalThis.fetch
 
 /** Routes the site's fetch to the Worker. Returns the upstream calls the Worker made. */
@@ -62,7 +80,7 @@ function connect({ upstream = defaultUpstream, env = {} }: { upstream?: Upstream
       return upstream(call)
     },
   })
-  const workerEnv = { ZAI_API_KEY: FAKE_SECRET, GROQ_API_KEY: FAKE_SECRET, CHAT_RATE_LIMITER: limiter(), ...env }
+  const workerEnv = { ZAI_API_KEY: FAKE_SECRET, GROQ_API_KEY: FAKE_SECRET, CHAT_RATE_LIMITER: limiter(), GENIE_BUDGET: budgets(), ...env }
   globalThis.fetch = (async (input: RequestInfo | URL, init?: RequestInit) => {
     assert.equal(String(input), PROXY_URL)
     const headers = new Headers(init?.headers)
@@ -148,6 +166,22 @@ describe("today's site against the v2 Worker", () => {
     assert.equal(error.message, 'This model is unavailable right now.')
     const reply = await fetchGroq({ messages, systemPrompt: prompt(), proxyUrl: PROXY_URL, lane: 'fast' })
     assert.equal(reply.content, 'Hello there')
+  })
+
+  it('a spent Z.ai budget is a 503 for Z.ai only, so the site can still try Groq', async () => {
+    connect({ env: { ZAI_CAP_5H: '1' } })
+    await fetchBigModel({ messages, systemPrompt: prompt(), proxyUrl: PROXY_URL, lane: 'fast' })
+    const error = await rejection(fetchBigModel({ messages, systemPrompt: prompt(), proxyUrl: PROXY_URL, lane: 'fast' }))
+    assert.deepEqual([error.status, error.code, error.isProxyRateLimit], [503, 'budget_exhausted', false])
+    const reply = await fetchGroq({ messages, systemPrompt: prompt(), proxyUrl: PROXY_URL, lane: 'fast' })
+    assert.equal(reply.content, 'Hello there')
+  })
+
+  it('the stop switch is a 503 the site does not read as a proxy rate limit', async () => {
+    connect({ env: { GENIE_STOP: 'on' } })
+    const error = await rejection(fetchBigModel({ messages, systemPrompt: prompt(), proxyUrl: PROXY_URL, lane: 'fast' }))
+    assert.deepEqual([error.status, error.code, error.isProxyRateLimit], [503, 'unavailable', false])
+    assert.equal(error.message, 'Models are unavailable right now.')
   })
 
   it('a missing Groq key keeps the site’s own 503 wording', async () => {
