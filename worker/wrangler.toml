@@ -2,28 +2,28 @@ name = "ahmed-chat-proxy"
 main = "chat-proxy.js"
 compatibility_date = "2024-01-01"
 
-# Set the Z.ai (api.z.ai) GLM Coding Plan and Groq API keys as Cloudflare secrets:
-#   wrangler secret put ZAI_API_KEY
-#   wrangler secret put GROQ_API_KEY
-# (The binding name `ZAI_API_KEY` is retained for backward compatibility with
-# existing deployments; the value it holds is an api.z.ai GLM Coding Plan key.)
-# These keys are NEVER exposed to the client — they live only in the Worker's environment.
+# Secrets, set by the owner from this folder (never committed, never in [vars]):
+#   npx wrangler secret put ZAI_API_KEY    (an api.z.ai GLM Coding Plan key)
+#   npx wrangler secret put GROQ_API_KEY
+# A missing key makes that provider answer 503 "unavailable". See README.md.
 
-# Keep ALLOW_LOCALHOST disabled in production; set to "true" (or pass
-# `--var ALLOW_LOCALHOST:true` to `wrangler dev`) only for local development
-# from http://localhost:3000.
+# Settings. A value that is missing or invalid falls back to the default shown here, and a
+# model outside the Worker's allowlist (worker/lib/settings.js) falls back to its default.
 [vars]
+# Keep "false" in production. For `wrangler dev`, put ALLOW_LOCALHOST=true in worker/.dev.vars.
 ALLOW_LOCALHOST = "false"
+PROMPT_URL = "https://ahmed-3m.github.io/genie/prompt.json"
+ZAI_FAST_MODEL = "glm-5.3-flash"
+ZAI_DEEP_MODEL = "glm-5.4"
+GROQ_MODEL = "openai/gpt-oss-20b"
+FAST_MAX_TOKENS = "900"
+DEEP_MAX_TOKENS = "1600"
+TEMPERATURE = "0.3"
+ZAI_REASONING_EFFORT = "low"
 
-# Optional: bind a KV namespace to enable simple IP-based rate limiting.
-# Create the namespace first with `wrangler kv namespace create CHAT_RATE_KV`,
-# then paste its id below and remove the leading `#`.
-# [[kv_namespaces]]
-# binding = "CHAT_RATE_KV"
-# id = "your-kv-namespace-id-here"
-
-# Native per-IP limit: 60 requests per minute at each Cloudflare location.
+# Per-client limit: 8 requests a minute for each IPv4 address or IPv6 /64, counted at each
+# Cloudflare location. Without this binding the Worker answers 503 and calls no model.
 [[ratelimits]]
 name = "CHAT_RATE_LIMITER"
 namespace_id = "1001"
-simple = { limit = 60, period = 60 }
+simple = { limit = 8, period = 60 }
