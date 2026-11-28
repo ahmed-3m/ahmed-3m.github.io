@@ -36,5 +36,5 @@ Spec Kit context: the project principles are in `.specify/memory/constitution.md
 feature specs (spec / plan / tasks) are under `specs/NNN-*/`. The active feature
 directory is recorded in `.specify/feature.json`. Read that feature's `spec.md` and
 `tasks.md` before working on it. Current plan:
-`specs/008-claims-registry/plan.md`.
+`specs/007-worker-hardening/plan.md`.
 <!-- SPECKIT END -->
